@@ -1073,6 +1073,7 @@ public class Cycle {
                     }
 
                 case "cMeta":
+                    System.out.println();
                     break;
 
                 case "cGoFail":

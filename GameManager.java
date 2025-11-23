@@ -352,7 +352,8 @@ public class GameManager {
     // --- COMMANDS ---
 
     public String help(String argument) {
-        switch (argument) {
+        String arg = (Command.GO.argumentIsValid(argument)) ? "go" : argument;
+        switch (arg) {
             case "help":
             case "show":
             case "toggle":
@@ -366,7 +367,12 @@ public class GameManager {
             case "take":
             case "drop":
             case "throw":
-                this.showCommandHelp(argument);
+                try {
+                    this.showCommandHelp(arg);
+                } catch (RuntimeException e) {
+                    this.showCommandList();
+                }
+
                 break;
             default:
                 this.showCommandList();
@@ -378,33 +384,169 @@ public class GameManager {
     public void showCommandList() {
         for (Command c : Command.values()) {
             if (c != Command.DIRECTGO) {
-                parser.printDialogueLine("  • " + c.getPrefix().toUpperCase() + ": " + c.getDescription(), true);
+                IOHandler.wrapPrintln("  - " + c.getPrefix().toUpperCase() + ": " + c.getDescription());
             }
         }
     }
 
     public void showCommandHelp(String command) {
+        String prefix;
         Command c = Command.getCommand(command);
+
         if (c == null) {
             throw new RuntimeException("Invalid command");
         } else if (c == Command.DIRECTGO) {
             c = Command.GO;
+            prefix = "GO";
+        } else if (c == Command.WALK) {
+            c = Command.GO;
+            prefix = "WALK";
+        } else {
+            prefix = c.getPrefix().toUpperCase();
         }
 
-        String prefix = c.getPrefix().toUpperCase();
-        ArrayList<String> variations = new ArrayList<>();
+        String s = prefix + ": " + c.getDescription() + "\nSyntax: ";
+        switch (c) {
+            case HELP:
+                s += "HELP [command]\n\n";
 
-        parser.printDialogueLine(prefix + " - " + c.getDescription(), true);
-        for (int i = 0; i < c.nValidArguments(); i++) {
-            
+                s += "- Arguments -\n";
+                s += "  - [command]: Optional. Can be any valid command. See all valid commands with > HELP.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - HELP: Displays a list of all available commands.\n";
+                s += "  - HELP [command]: Displays information on a given command.\n";
+                break;
+            case SHOW:
+                s += "SHOW [warnings] [set] [warnings]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [warnings]: Both optional. The command functions the same, no matter if [warnings] is present or not. Can be any one of [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS].\n";
+                s += "  - [set]: Optional. The set of warnings you wish to view.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - SHOW: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
+                s += "  - SHOW [warnings]: Same as > SHOW. Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
+                s += "  - SHOW [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]: Shows general content warnings.\n";
+                s += "  - SHOW [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]: Shows content warnings by chapter.\n";
+                s += "  - SHOW [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]: Shows content warnings for the current chapter, if applicable.\n";
+                s += "  - SHOW [warnings] [set]: Same as > SHOW [set].\n";
+                s += "  - SHOW [set] [warnings]: Same as > SHOW [set].\n";
+                break;
+            case TOGGLE:
+                s += "TOGGLE [setting]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [setting]: The setting you wish to toggle on or off.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - TOGGLE [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]: Toggles automatic content warnings on or off.\n";
+                s += "  - TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]: Toggles soundtrack notifications on or off.\n";
+                break;
+            case GO:
+                s += prefix + " [direction]\n";
+                s += prefix + " is optional. > [direction] functions exactly the same.\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [direction]: The direction you wish to travel in.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - " + prefix + " [FORWARD / FORWARDS / F]: Press onwards.\n";
+                s += "  - " + prefix + " [BACK / BACKWARD / BACKWARDS / B]: Turn back.\n";
+                s += "  - " + prefix + " [INSIDE / IN / I]: Enter the nearest location, if possible.\n";
+                s += "  - " + prefix + " [OUTSIDE / OUT / O]: Leave your current location, if possible.\n";
+                s += "  - " + prefix + " [DOWN / D]: Descend.\n";
+                s += "  - " + prefix + " [UP / U]: Ascend.\n";
+                break;
+            case ENTER:
+                s += "ENTER [location]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [location]: Optional. The location you wish to enter.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - ENTER: Enter the nearest appropriate location, if possible.\n";
+                s += "  - ENTER CABIN: Enter the cabin, if possible. \n";
+                s += "  - ENTER BASEMENT: Descend into the basement, if possible.\n";
+                break;
+            case LEAVE:
+                s += "LEAVE [location]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [location]: Optional. The location you wish to leave.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - LEAVE: Leave the current location, if possible.\n";
+                s += "  - LEAVE [WOODS / PATH]: Leave the woods, if possible.\n";
+                s += "  - LEAVE CABIN: Leave the cabin, if possible. \n";
+                s += "  - LEAVE BASEMENT: Ascend from the basement, if possible.\n";
+                break;
+            case TURN:
+                s += "TURN [around]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [around]: Optional. Does not affect the way the command functions.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - TURN: Turn around and leave.\n";
+                s += "  - TURN [AROUND / BACK]: Same as > TURN. Turn around and leave.\n";
+                break;
+            case APPROACH:
+                s += "APPROACH [mirror]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [mirror]: The mirror.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - APPROACH [THE MIRROR / MIRROR]: Approach the mirror.\n";
+                break;
+            case SLAY:
+                s += "SLAY [target]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [target]: The person you wish to slay.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - SLAY [THE PRINCESS / PRINCESS]: Slay the Princess. It's in the name.\n";
+                s += "  - SLAY [SELF / YOURSELF / YOU / MYSELF / ME / OURSELF / OURSELVES / US]: Slay yourself.\n";
+                break;
+            case TAKE:
+                s += "TAKE [blade]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [blade]: The blade.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - TAKE [PRISTINE BLADE / THE BLADE / BLADE]: Take the blade.\n";
+                break;
+            case DROP:
+                s += "DROP [blade]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [blade]: The blade.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - DROP [PRISTINE BLADE / THE BLADE / BLADE]: Drop the blade,\n";
+                break;
+            case THROW:
+                s += "THROW [blade]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [blade]: The blade.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - THROW [PRISTINE BLADE / THE BLADE / BLADE]: Throw the blade out the window.\n";
+                break;
         }
+
+        IOHandler.wrapPrint(s);
     }
 
     public void showGeneralWarnings(boolean slowPrint) {
         if (slowPrint) {
             parser.printDialogueLine("General CWs: death; murder; suicide; verbal abuse; gaslighting; gore; mutilation, disembowelment; loss of self; cosmic horror; existential horror; being eaten alive; suffocation; derealisation; forced suicide; loss of bodily autonomy; starvation; unreality; body horror; forced self-mutilation; self-degloving; flaying; self-immolation; drowning; burning to death; loss of control; dismemberment; self-decapitation; memory loss", true);
         } else {
-            IOHandler.wrapPrint("General CWs: death; murder; suicide; verbal abuse; gaslighting; gore; mutilation, disembowelment; loss of self; cosmic horror; existential horror; being eaten alive; suffocation; derealisation; forced suicide; loss of bodily autonomy; starvation; unreality; body horror; forced self-mutilation; self-degloving; flaying; self-immolation; drowning; burning to death; loss of control; dismemberment; self-decapitation; memory loss");
+            IOHandler.wrapPrintln("General CWs: death; murder; suicide; verbal abuse; gaslighting; gore; mutilation, disembowelment; loss of self; cosmic horror; existential horror; being eaten alive; suffocation; derealisation; forced suicide; loss of bodily autonomy; starvation; unreality; body horror; forced self-mutilation; self-degloving; flaying; self-immolation; drowning; burning to death; loss of control; dismemberment; self-decapitation; memory loss");
         }
     }
 
@@ -422,25 +564,25 @@ public class GameManager {
 
                 case ADVERSARY:
                     s += "------- Possible content warnings for Chapter II -------";
-                    s += "\n  • " + c.getTitle();
+                    s += "\n  - " + c.getTitle();
                     break;
                 case NEEDLE:
                     s += "\n\n------- Possible content warnings for Chapter III -------";
-                    s += "\n  • " + c.getTitle();
+                    s += "\n  - " + c.getTitle();
                     break;
 
                 case ARMSRACE:
-                    s += "\n  • " + c.getTitle() + " & " + Chapter.MUTUALLYASSURED.getFullTitle();
+                    s += "\n  - " + c.getTitle() + " & " + Chapter.MUTUALLYASSURED.getFullTitle();
                     break;
                 case NOWAYOUT:
-                    s += "\n  • " + c.getTitle() + " & " + Chapter.EMPTYCUP.getFullTitle();
+                    s += "\n  - " + c.getTitle() + " & " + Chapter.EMPTYCUP.getFullTitle();
                     break;
 
-                default: s += "\n  • " + c.getTitle();
+                default: s += "\n  - " + c.getTitle();
             }
 
             switch (c) {
-                default: s += "  • " + c.getTitle();
+                default: s += "  - " + c.getTitle();
             }
 
             s += ": " + c.getContentWarnings();

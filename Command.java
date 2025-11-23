@@ -76,6 +76,7 @@ public enum Command {
             case "enter": return ENTER;
             case "leave": return LEAVE;
             case "turn": return TURN;
+            case "approach": return APPROACH;
             case "slay": return SLAY;
             case "take": return TAKE;
             case "drop": return DROP;
