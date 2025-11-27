@@ -124,13 +124,16 @@ public class IOHandler {
         String commandOutcome = "c";
         switch (c) {
             case HELP:
-                commandOutcome += this.manager.help(argument);
+                this.manager.help(argument);
+                commandOutcome += "Meta";
                 break;
             case SHOW:
-                commandOutcome += cycle.show(argument);
+                cycle.show(argument);
+                commandOutcome += "Meta";
                 break;
             case TOGGLE:
-                commandOutcome += this.manager.toggle(argument);
+                this.manager.toggle(argument);
+                commandOutcome += "Meta";
                 break;
             case GO:
                 commandOutcome += cycle.go(argument);
@@ -147,11 +150,14 @@ public class IOHandler {
             case LEAVE:
                 commandOutcome += cycle.leave(argument);
                 break;
-            case APPROACH:
-                commandOutcome += cycle.approach(argument);
+            case PROCEED:
+                commandOutcome += cycle.proceed(argument);
                 break;
             case TURN:
                 commandOutcome += cycle.turn(argument);
+                break;
+            case APPROACH:
+                commandOutcome += cycle.approach(argument);
                 break;
             case SLAY:
                 commandOutcome += cycle.slay(argument);
@@ -183,8 +189,8 @@ public class IOHandler {
            - cLeaveFail
 
            - cApproach
+           - cApproachAtMirrorFail (you're already at the mirror)
            - cApproachFail
-           - cApproachInvalidFail (only in EndOfEverything; invalid command)
 
            - cSlayPrincess
            - cSlayNoPrincessFail (Princess isn't even present)
@@ -228,6 +234,7 @@ public class IOHandler {
             case "cEnterFail":
             case "cLeaveFail":
 
+            case "cApproachAtMirrorFail":
             case "cApproachFail":
                 
             case "cSlayNoPrincessFail":
@@ -273,7 +280,7 @@ public class IOHandler {
     }
 
     public String promptOptionsMenu(OptionsMenu options) {
-        return this.promptOptionsMenu(options, (DialogueLine)null);
+        return this.promptOptionsMenu(options, new DialogueLine());
     }
 
     private String parseOptionChoice(Cycle cycle, OptionsMenu options, DialogueLine exclusiveOverride) {
@@ -327,15 +334,7 @@ public class IOHandler {
                 if (outcome.equals("cFail")) {
                     this.printDialogueLine("[That is not a valid command.]", true);
                 } else if (!outcome.equals("cMeta")) {
-                    if (exclusiveOverride == null) {
-                        if (cycle == null) {
-                            this.printDialogueLine("[You have no other options.]", true);
-                        } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                            this.printDialogueLine("[You have no other options.]", true);
-                        } else {
-                            this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true));
-                        }
-                    } else if (exclusiveOverride.toString().equals("")) {
+                    if (exclusiveOverride.isEmpty()) {
                         if (cycle == null) {
                             this.printDialogueLine("[You have no other options.]", true);
                         } else if (!cycle.hasVoice(Voice.NARRATOR)) {
@@ -368,14 +367,6 @@ public class IOHandler {
                 }
             }
         }
-    }
-
-    private String parseOptionChoice(Cycle cycle, OptionsMenu options) {
-        return this.parseOptionChoice(cycle, options, null);
-    }
-
-    private String parseOptionChoice(OptionsMenu options) {
-        return this.parseOptionChoice(null, options, null);
     }
 
     // --- YES/NO HANDLING ---
@@ -470,20 +461,6 @@ public class IOHandler {
 
     public static void wrapPrintln(String s) {
         System.out.println(wordWrap(s));
-    }
-
-    public static void main(String[] args) {
-        IOHandler input = new IOHandler();
-        
-        input.printDialogueLine(new VoiceDialogueLine("You're on a path in the woods."));
-        input.printDialogueLine(new VoiceDialogueLine("At the end of that path--", true));
-        input.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "SURPRISE, MOTHERFUCKER!"));
-        input.printDialogueLine(new VoiceDialogueLine("Oh, dear god. What now?"));
-
-        //input.printDialogueLine(new DialogueLine("This is a Truth line."));
-        //input.printDialogueLine(new VoiceDialogueLine("This is a Narrator line."));
-        //input.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "This is a line from the Voice of the Hero."));
-        //input.printDialogueLine(new PrincessDialogueLine("This is the Princess."));
     }
 
 }

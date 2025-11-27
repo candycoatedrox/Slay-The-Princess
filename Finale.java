@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 
-public class EndOfEverything extends Cycle {
+public class Finale extends Cycle {
+
+    // Runs from final Narrator conversation to the end
 
     private Vessel[] vessels;
     private boolean strangerHeart;
+    private boolean mirrorWasCruel;
 
     // --- CONSTRUCTOR ---
 
-    public EndOfEverything(GameManager manager, ArrayList<Vessel> vessels, IOHandler parser) {
+    public Finale(GameManager manager, ArrayList<Vessel> vessels, IOHandler parser) {
         super(manager, parser);
         this.clearVoices();
 
@@ -17,42 +20,41 @@ public class EndOfEverything extends Cycle {
 
         this.vessels = vessels.toArray(new Vessel[5]);
         this.strangerHeart = this.vessels[0] == Vessel.STRANGER;
+        this.mirrorWasCruel = manager.mirrorWasCruel();
     }
-
-    // --- CYCLE MANAGEMENT ---
+    
+    // --- COMMANDS ---
 
     @Override
-    public ChapterEnding runCycle() {
-        // PLACEHOLDER
-        return this.openingConversation();
-    }
+    protected void showWarningsMenu() {
+        OptionsMenu warningsMenu = manager.warningsMenu();
+        warningsMenu.setCondition("current", false);
+        
+        this.trueExclusiveMenu = true;
+        switch (parser.promptOptionsMenu(warningsMenu)) {
+            case "general":
+                manager.showGeneralWarnings();
+                break;
+            case "by chapter":
+                manager.showByChapterWarnings();
+                break;
+            case "cancel":
+                break;
+        }
 
-    // --- SCENES ---
-
-    private ChapterEnding openingConversation() {
-        // PLACEHOLDER
-        return this.debate();
-    }
-
-    private ChapterEnding debate() {
-        // PLACEHOLDER
-        return this.heartCabin();
-    }
-
-    private ChapterEnding heartCabin() {
-        // PLACEHOLDER
-        return ChapterEnding.PATHINTHEWOODS;
-    }
-
-    private ChapterEnding heartCabinStrange() {
-        // PLACEHOLDER
-        return ChapterEnding.PATHINTHEWOODS;
+        this.trueExclusiveMenu = false;
     }
     
     // --- COMMAND OVERRIDES ---
 
+    /**
+     * Attempts to move the player in a given direction
+     * @param argument the direction to move the player in
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location in the given direction; "cGoFail" otherwise
+     */
     @Override
-    protected String go(String argument, boolean secondPrompt) {
+    public String go(String argument, boolean secondPrompt) {
         switch (argument) {
             case "forward":
             case "forwards":
@@ -127,6 +129,7 @@ public class EndOfEverything extends Cycle {
         }
     }
 
+    @Override
     public String leave(String argument) {
         switch (argument) {
             case "": this.go("back");
@@ -150,21 +153,29 @@ public class EndOfEverything extends Cycle {
         }
     }
 
+    /**
+     * Attempts to let the player approach the mirror
+     * @param argument the argument given by the player (should be "the mirror" or "mirror")
+     * @return "cFail" if argument is invalid; "cApproachFail" if the mirror is not present; "cApproach" otherwise
+     */
     @Override
     public String approach(String argument) {
         switch (argument) {
             case "the mirror":
             case "mirror":
-                return "ApproachFail";
+                return (this.currentLocation == GameLocation.MIRROR) ? "ApproachAtMirrorFail" : "ApproachFail";
             
-            default:
-                return "ApproachInvalidFail";
+            default: return "Fail";
         }
     }
 
+    /**
+     * Attempts to let the player slay either the Princess or themselves
+     * @param argument the target to slay
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if otherwise attempting to slay themselves
+     */
     @Override
-    
-
     protected String slay(String argument, boolean secondPrompt) {
         switch (argument) {
             case "the princess":
@@ -208,17 +219,84 @@ public class EndOfEverything extends Cycle {
         }
     }
 
+    /**
+     * Prints a generic response to a command failing or being unavailable
+     * @param outcome the String representation of the outcome of the attempted command
+     */
     @Override
     protected void giveDefaultFailResponse(String outcome) {
         switch (this.currentLocation) {
+            case MIRROR:
+            case HILL:
+                this.giveDefaultFailResponseMound(outcome);
+                break;
+
             case CABIN:
             case STAIRS:
-            case BASEMENT: break;
+            case BASEMENT:
+                this.giveDefaultFailResponseCabin(outcome);
+                break;
             
             default: super.giveDefaultFailResponse(outcome);
         }
+    }
 
-        // responses here depend on whether you have normal heart (Hero) or stranger heart (Hero + Contrarian)
+    /**
+     * Prints a generic response to a command failing or being unavailable during the mirror scene or the encounter with the Shifting Mound
+     * @param outcome the String representation of the outcome of the attempted command
+     */
+    private void giveDefaultFailResponseMound(String outcome) {
+        switch (outcome) {
+            case "cGoCabin":
+            case "cGoFail":
+            case "cEnterFail":
+            case "cLeaveFail":
+                parser.printDialogueLine(new DialogueLine("There is nowhere for you to go."));                
+                break;
+
+            case "cApproachAtMirrorFail":
+                parser.printDialogueLine(new DialogueLine("You watched the mirror shatter into pieces."));
+                break;
+
+            case "cApproachFail":
+                parser.printDialogueLine(new DialogueLine("You watched the mirror shatter for good."));
+                break;
+
+            case "cSlayNoPrincessFail":
+            case "cSlayPrincessNoBladeFail":
+            case "cSlayPrincessFail":
+                parser.printDialogueLine(new DialogueLine("You cannot attempt to slay her now."));
+                break;
+
+            case "cSlaySelfNoBladeFail":
+            case "cSlaySelfFail":
+                parser.printDialogueLine(new DialogueLine("You cannot slay yourself now."));
+                break;
+            
+            case "cTakeFail":
+                parser.printDialogueLine(new DialogueLine("The pristine blade is not here."));
+                break;
+
+            case "cDropNoBladeFail":
+                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+                break;
+
+            case "cThrowNoBladeFail":
+                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+                break;
+
+            default:
+                parser.printDialogueLine("You have no other options.");
+        }
+    }
+
+    /**
+     * Prints a generic response to a command failing or being unavailable while in the heart of the Shifting Mound
+     * @param outcome the String representation of the outcome of the attempted command
+     */
+    private void giveDefaultFailResponseCabin(String outcome) {
+        // Responses here depend on whether you have normal heart (Hero) or Stranger heart (Hero + Contrarian)
+
         switch (outcome) {
             case "cGoFail":
                 if (this.strangerHeart) {
@@ -381,7 +459,68 @@ public class EndOfEverything extends Cycle {
                 }
 
                 break;
+
+            default:
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
         }
+    }
+
+    // --- CYCLE MANAGEMENT ---
+
+    /**
+     * Initiates and runs the finale of the game, from the conversation with the Narrator until the end
+     */
+    @Override
+    public ChapterEnding runCycle() {
+        this.finalMirror();
+        
+        // PLACEHOLDER
+        return this.openingConversation();
+    }
+
+    // --- SCENES ---
+
+    /**
+     * Runs the conversation with the Narrator in the mirror
+     */
+    private void finalMirror() {
+        // starts right after mirror shatters
+    }
+
+    /**
+     * Runs the intiial conversation with the Shifting Mound
+     * @return the ending the player reaches
+     */
+    private ChapterEnding openingConversation() {
+        // PLACEHOLDER
+        return this.debate();
+    }
+
+    /**
+     * Runs the debate with the Shifting Mound
+     * @return the ending the player reaches
+     */
+    private ChapterEnding debate() {
+        // PLACEHOLDER
+        return this.heartCabin();
+    }
+
+    /**
+     * Runs the cabin sequence at the heart of the Shifting Mound (standard version)
+     * @return the ending the player reaches
+     */
+    private ChapterEnding heartCabin() {
+        // PLACEHOLDER
+        return ChapterEnding.PATHINTHEWOODS;
+    }
+
+    /**
+     * Runs the cabin sequence at the heart of the Shifting Mound (Stranger version)
+     * @return the ending the player reaches
+     */
+    private ChapterEnding heartCabinStranger() {
+        // PLACEHOLDER
+        return ChapterEnding.PATHINTHEWOODS;
     }
 
 }

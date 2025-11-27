@@ -14,10 +14,18 @@ public class DialogueLine {
         this(line, false);
     }
 
-    // --- ACCESSORS ---
+    public DialogueLine() {
+        this("", false);
+    }
+
+    // --- ACCESSORS & CHECKS ---
 
     public boolean isInterrupted() {
         return this.isInterrupted;
+    }
+
+    public boolean isEmpty() {
+        return this.line.equals("");
     }
 
     // --- UTILITY ---

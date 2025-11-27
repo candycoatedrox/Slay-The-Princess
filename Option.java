@@ -54,6 +54,10 @@ public class Option {
         this(manager, id, display, 1, greyedOut, prerequisiteOption, null, true);
     }
 
+    public Option(GameManager manager, String id, boolean greyedOut, String display, Chapter leadsToChapter) {
+        this(manager, id, display, 1, greyedOut, null, leadsToChapter, true);
+    }
+
     public Option(GameManager manager, String id, boolean greyedOut, String display, boolean conditionMet) {
         this(manager, id, display, 1, greyedOut, null, null, conditionMet);
     }
@@ -84,6 +88,10 @@ public class Option {
 
     public Option(GameManager manager, String id, String display, int maxTimesPicked, Chapter leadsToChapter) {
         this(manager, id, display, maxTimesPicked, false, null, leadsToChapter, true);
+    }
+
+    public Option(GameManager manager, String id, String display, int maxTimesPicked, boolean conditionMet) {
+        this(manager, id, display, maxTimesPicked, false, null, null, conditionMet);
     }
 
     public Option(GameManager manager, String id, String display, Chapter leadsToChapter) {

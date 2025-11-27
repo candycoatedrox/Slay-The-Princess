@@ -204,19 +204,4 @@ public class OptionsMenu {
         return s;
     }
 
-    public static void main(String[] args) {
-        GameManager manager = new GameManager();
-        OptionsMenu menu = new OptionsMenu();
-        
-        Option test1 = new Option(manager, "test1", "(Explore) This is a test.");
-        Option test2 = new Option(manager, "test2", true, "[You have no choice.]");
-        Option test3 = new Option(manager, "test3", "\"Hello?\"");
-
-        menu.add(test1);
-        menu.add(test2);
-        menu.add(test3);
-
-        System.out.println(menu);
-    }
-
 }

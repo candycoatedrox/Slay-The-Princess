@@ -2,11 +2,14 @@ public enum ChapterEnding {
     // The Hero and the Princess
     TOADVERSARY(Chapter.ADVERSARY, Voice.STUBBORN),
     TOTOWER(Chapter.TOWER, Voice.BROKEN),
+    TOTOWERUNHARMED(Chapter.TOWER, Voice.BROKEN),
     GOODENDING,
     TOSPECTRE(Chapter.SPECTRE, Voice.COLD),
     TONIGHTMARE(Chapter.NIGHTMARE, Voice.PARANOID),
+    TONIGHTMAREFLED(Chapter.NIGHTMARE, Voice.PARANOID),
     TORAZOR(Chapter.RAZOR, Voice.CHEATED),
     TORAZORMUTUAL(Chapter.RAZOR, Voice.CHEATED),
+    TORAZORREVIVAL(Chapter.RAZOR, Voice.CHEATED),
     TOBEAST(Chapter.BEAST, Voice.HUNTED),
     TOWITCH(Chapter.WITCH, Voice.OPPORTUNIST),
     TOWITCHLOCKED(Chapter.WITCH, Voice.OPPORTUNIST),
@@ -116,6 +119,7 @@ public enum ChapterEnding {
     // The Witch
     SCORPION(Vessel.WITCH, false),
     FROG(Vessel.WITCH, false),
+    FROGLOCKED(Vessel.WITCH, false),
     KNIVESOUTMASKSOFF(Chapter.WILD, Voice.STUBBORN),
     KNIVESOUTMASKSOFFESCAPE(Chapter.WILD, Voice.CHEATED),
     PLAYINGITSAFE(Chapter.WILD, Voice.PARANOID),
