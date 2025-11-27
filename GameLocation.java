@@ -13,10 +13,19 @@ public enum GameLocation {
 
     // --- ACCESSORS & CHECKS ---
 
+    /**
+     * Returns the location that is "forward" from this location
+     * @param reverse whether forward and backward are currently "reversed" (for example, if the player is leaving the basement, using "forward" on the stairs should take them to the cabin and not the basement)
+     * @return the location that is "forward" from this location
+     */
     public GameLocation getForward(boolean reverse) {
         return (reverse) ? this.getBackward() : this.getForward();
     }
 
+    /**
+     * Returns the location that is "forward" from this location
+     * @return the location that is "forward" from this location
+     */
     public GameLocation getForward() {
         switch (this) {
             case LEAVING: return LEAVING;
@@ -29,10 +38,19 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Returns the location that is "backward" from this location
+     * @param reverse whether forward and backward are currently "reversed" (for example, if the player is leaving the basement, using "backward" on the stairs should take them to the basement and not the cabin)
+     * @return the location that is "backward" from this location
+     */
     public GameLocation getBackward(boolean reverse) {
         return (reverse) ? this.getForward() : this.getBackward();
     }
 
+    /**
+     * Returns the location that is "backward" from this location
+     * @return the location that is "backward" from this location
+     */
     public GameLocation getBackward() {
         switch (this) {
             case PATH: return LEAVING;
@@ -46,6 +64,10 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Checks whether the player can go "inside" from this location
+     * @return true if the player can go "inside" from this location; false otherwise
+     */
     public boolean canGoInside() {
         switch (this) {
             case HILL: return true;
@@ -55,6 +77,10 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Checks whether the player can go "outside" from this location
+     * @return true if the player can go "outside" from this location; false otherwise
+     */
     public boolean canGoOutside() {
         switch (this) {
             case CABIN: return true;
@@ -64,6 +90,10 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Checks whether the player can go "down" from this location
+     * @return true if the player can go "down" from this location; false otherwise
+     */
     public boolean canGoDown() {
         switch (this) {
             case CABIN: return true;
@@ -72,6 +102,10 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Checks whether the player can go "up" from this location
+     * @return true if the player can go "up" from this location; false otherwise
+     */
     public boolean canGoUp() {
         switch (this) {
             case STAIRS: return true;
@@ -80,6 +114,11 @@ public enum GameLocation {
         }
     }
 
+    /**
+     * Returns a String representation of this location
+     * @return a String representation of this location
+     */
+    @Override
     public String toString() {
         switch (this) {
             case PATH: return "path";

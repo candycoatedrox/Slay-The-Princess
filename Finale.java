@@ -10,6 +10,12 @@ public class Finale extends Cycle {
 
     // --- CONSTRUCTOR ---
 
+    /**
+     * Constructor
+     * @param manager the GameManager to link this instance of Finale to
+     * @param vessels the list of Vessels that the player claimed
+     * @param parser the IOHandler to link this instance of Finale to
+     */
     public Finale(GameManager manager, ArrayList<Vessel> vessels, IOHandler parser) {
         super(manager, parser);
         this.clearVoices();
@@ -25,6 +31,9 @@ public class Finale extends Cycle {
     
     // --- COMMANDS ---
 
+    /**
+     * Lets the player choose between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter
+     */
     @Override
     protected void showWarningsMenu() {
         OptionsMenu warningsMenu = manager.warningsMenu();
@@ -109,6 +118,11 @@ public class Finale extends Cycle {
         }
     }
 
+    /**
+     * Attempts to let the player enter a given location or the nearest appropriate location
+     * @param argument the location to enter (should be "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can enter; "cEnterFail" otherwise
+     */
     @Override
     public String enter(String argument) {
         switch (argument) {
@@ -129,6 +143,11 @@ public class Finale extends Cycle {
         }
     }
 
+    /**
+     * Attempts to let the player leave the current location
+     * @param argument the location to leave (should be "woods", "path", "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can leave; "cLeaveFail" otherwise
+     */
     @Override
     public String leave(String argument) {
         switch (argument) {

@@ -607,10 +607,6 @@ public class GameManager {
                 default: s += "\n  - " + c.getTitle();
             }
 
-            switch (c) {
-                default: s += "  - " + c.getTitle();
-            }
-
             s += ": " + c.getContentWarnings();
         }
 
@@ -623,14 +619,18 @@ public class GameManager {
      * @param prevEnding the ending of the previous Chapter
      */
     public void showChapterWarnings(Chapter c, ChapterEnding prevEnding) {
-        switch (c) {
-            case STRANGER:
-            case CLARITY:
-            case GREY:
-                parser.printDialogueLine(c.getFullTitle() + " contains: " + c.getContentWarnings(prevEnding));
-                break;
-            default:
-                parser.printDialogueLine(c.getFullTitle() + " may contain: " + c.getContentWarnings(prevEnding));
+        if (!c.hasContentWarnings()) {
+            parser.printDialogueLine("[The current chapter has no content warnings to display.]");
+        } else {
+            switch (c) {
+                case STRANGER:
+                case CLARITY:
+                case GREY:
+                    parser.printDialogueLine(c.getFullTitle() + " contains: " + c.getContentWarnings(prevEnding));
+                    break;
+                default:
+                    parser.printDialogueLine(c.getFullTitle() + " may contain: " + c.getContentWarnings(prevEnding));
+            }
         }
     }
 
@@ -639,14 +639,18 @@ public class GameManager {
      * @param c the Chapter to display content warnings for
      */
     public void showChapterWarnings(Chapter c) {
-        switch (c) {
-            case STRANGER:
-            case CLARITY:
-            case GREY:
-                parser.printDialogueLine(c.getFullTitle() + " contains: " + c.getContentWarnings());
-                break;
-            default:
-                parser.printDialogueLine(c.getFullTitle() + " may contain: " + c.getContentWarnings());
+        if (!c.hasContentWarnings()) {
+            parser.printDialogueLine("[The current chapter has no content warnings to display.]");
+        } else {
+            switch (c) {
+                case STRANGER:
+                case CLARITY:
+                case GREY:
+                    parser.printDialogueLine(c.getFullTitle() + " contains: " + c.getContentWarnings());
+                    break;
+                default:
+                    parser.printDialogueLine(c.getFullTitle() + " may contain: " + c.getContentWarnings());
+            }
         }
     }
 

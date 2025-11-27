@@ -27,6 +27,11 @@ public class StandardCycle extends Cycle {
 
     // --- CONSTRUCTOR ---
 
+    /**
+     * Constructor
+     * @param manager the GameManager to link this StandardCycle to
+     * @param parser the IOHandler to link this StandardCycle to
+     */
     public StandardCycle(GameManager manager, IOHandler parser) {
         super(manager, parser);
 
@@ -49,6 +54,10 @@ public class StandardCycle extends Cycle {
 
     // --- MANIPULATORS ---
 
+    /**
+     * Adds a given Voice to the list of active Voices
+     * @param v the Voice to add
+     */
     @Override
     protected void addVoice(Voice v) {
         super.addVoice(v);
@@ -59,6 +68,9 @@ public class StandardCycle extends Cycle {
 
     // --- COMMANDS ---
 
+    /**
+     * Lets the player choose between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter
+     */
     @Override
     protected void showWarningsMenu() {
         OptionsMenu warningsMenu = manager.warningsMenu();
@@ -73,7 +85,7 @@ public class StandardCycle extends Cycle {
                 manager.showByChapterWarnings();
                 break;
             case "current":
-                this.showThisChapterWarnings();
+                manager.showChapterWarnings(this.activeChapter, this.prevEnding);
                 break;
             case "cancel":
                 break;
@@ -82,6 +94,10 @@ public class StandardCycle extends Cycle {
         this.trueExclusiveMenu = false;
     }
 
+    /**
+     * Shows general content warnings, content warnings by chapter, or content warnings for the current chapter
+     * @param argument the set of content warnings to view
+     */
     @Override
     protected void showContentWarnings(String argument) {
         switch (argument) {
@@ -93,18 +109,10 @@ public class StandardCycle extends Cycle {
             case "route":
             case "current route":
             case "active route":
-                this.showThisChapterWarnings();
+                manager.showChapterWarnings(this.activeChapter, this.prevEnding);
                 break;
 
             default: super.showContentWarnings(argument);
-        }
-    }
-
-    protected void showThisChapterWarnings() {
-        if (this.activeChapter.hasContentWarnings()) {
-            manager.showChapterWarnings(this.activeChapter, this.prevEnding);
-        } else {
-            parser.printDialogueLine("[The current chapter has no content warnings to display.]");
         }
     }
 
@@ -199,6 +207,11 @@ public class StandardCycle extends Cycle {
         }
     }
 
+    /**
+     * Attempts to let the player enter a given location or the nearest appropriate location
+     * @param argument the location to enter (should be "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can enter; "cEnterFail" otherwise
+     */
     @Override
     public String enter(String argument) {
         switch (argument) {
@@ -220,6 +233,11 @@ public class StandardCycle extends Cycle {
         }
     }
 
+    /**
+     * Attempts to let the player leave the current location
+     * @param argument the location to leave (should be "woods", "path", "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can leave; "cLeaveFail" otherwise
+     */
     @Override
     public String leave(String argument) {
         switch (argument) {

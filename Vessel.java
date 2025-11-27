@@ -1,4 +1,5 @@
 public enum Vessel {
+    // Chapter II
     ADVERSARY(Chapter.ADVERSARY),
     TOWER(Chapter.TOWER),
     SPECTRE(Chapter.SPECTRE),
@@ -11,6 +12,7 @@ public enum Vessel {
     DAMSEL(Chapter.DAMSEL),
     DECONDAMSEL(Chapter.DAMSEL, "The Deconstructed Damsel"),
 
+    // Chapter III
     NEEDLE(Chapter.NEEDLE),
     FURY(Chapter.FURY),
     REWOUNDFURY(Chapter.FURY, "The Rewound Fury"),
@@ -37,18 +39,40 @@ public enum Vessel {
 
     // --- CONSTRUCTORS ---
 
+    /**
+     * Constructor
+     * @param c the Chapter the Vessel comes from
+     * @param name the name of the Vessel
+     */
     private Vessel(Chapter c, String name) {
         this.fromChapter = c;
         this.name = name;
     }
 
+    /**
+     * Constructor for a Vessel who shares a name with their origin Chapter
+     * @param c the Chapter the Vessel comes from
+     */
     private Vessel(Chapter c) {
         this(c, c.getTitle());
     }
 
     // --- ACCESSORS ---
+    
+    /**
+     * Accessor for fromChapter
+     * @return the Chapter this Vessel comes from
+     */
+    public Chapter fromChapter() {
+        return this.fromChapter;
+    }
 
-    public String getName() {
+    /**
+     * Returns a String representation of this Vessel
+     * @return the name of this Vessel
+     */
+    @Override
+    public String toString() {
         return this.name;
     }
 }

@@ -2,36 +2,36 @@ import java.util.Scanner;
 
 public class IOHandler {
     
-    private GameManager manager;
-    private Scanner input;
+    private final GameManager manager;
+    private final Scanner input;
 
     public static final int WRAPCOLUMNS = 80; // default = 80
     private static final String DIVIDER = "-----------------------------------";
 
     // --- CONSTRUCTORS ---
 
+    /**
+     * Constructor
+     * @param manager the GameManager to link this IOHandler to
+     */
     public IOHandler(GameManager manager) {
         this.input = new Scanner(System.in);
         this.manager = manager;
     }
 
-    // only for testing purposes!
-    private IOHandler() {
-        this(new GameManager());
-    }
-
-    // --- ACCESSORS & MANIPULATORS ---
-
-    private Cycle currentCycle() {
-        return this.manager.getCurrentCycle();
-    }
-
     // --- BASIC INPUT ---
 
+    /**
+     * Waits until the player presses enter to progress
+     */
     public void waitForInput() {
         this.input.nextLine();
     }
 
+    /**
+     * Recieves input from the player
+     * @return the player's input in all lowercase
+     */
     public String getInput() {
         System.out.print("> ");
         String in = this.input.nextLine();
@@ -40,14 +40,26 @@ public class IOHandler {
 
     // --- PRINT DIALOGUE ---
 
+    /**
+     * Prints a divider
+     * @param wait whether to wait for player input after printing the divider
+     */
     public void printDivider(boolean wait) {
         this.printDialogueLine(new DialogueLine(DIVIDER, wait), 1.75);
     }
 
+    /**
+     * Prints a divider, then waits for player input to continue
+     */
     public void printDivider() {
         this.printDivider(true);
     }
 
+    /**
+     * Prints a DialogueLine
+     * @param line the DialogueLine to print
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
     public void printDialogueLine(DialogueLine line, double speedMultiplier) {
         line.print(speedMultiplier);
 
@@ -58,6 +70,10 @@ public class IOHandler {
         }
     }
 
+    /**
+     * Prints a DialogueLine
+     * @param line the DialogueLine to print
+     */
     public void printDialogueLine(DialogueLine line) {
         line.print();
 
@@ -68,44 +84,203 @@ public class IOHandler {
         }
     }
 
+    /**
+     * Prints a given String as a DialogueLine
+     * @param line the dialogue line to print as a String
+     * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
+     */
     public void printDialogueLine(String line, boolean isInterrupted) {
         DialogueLine lineDialogue = new DialogueLine(line, isInterrupted);
         this.printDialogueLine(lineDialogue);
     }
 
+    /**
+     * Prints a given String as a DialogueLine
+     * @param line the dialogue line to print as a String
+     */
     public void printDialogueLine(String line) {
         this.printDialogueLine(line, false);
     }
 
+    // --- OPTIONS HANDLING ---
+    
+    /**
+     * Prints an OptionsMenu, then allows the player to choose an Option from the menu or enter a command (if the OptionsMenu is not exclusive)
+     * @param options the OptionsMenu to offer to the player
+     * @param exclusiveOverride a DialogueLine to print instead of the default line if the OptionsMenu is exclusive
+     * @return the ID of the chosen Option or the outcome of the entered command
+     */
+    public String promptOptionsMenu(OptionsMenu options, DialogueLine exclusiveOverride) {
+        Cycle cycle = manager.getCurrentCycle();
+        
+        System.out.println();
+        wrapPrintln(options);
+        return this.parseOptionChoice(cycle, options, exclusiveOverride);
+    }
+
+    /**
+     * Prints an OptionsMenu, then allows the player to choose an Option from the menu or enter a command (if the OptionsMenu is not exclusive)
+     * @param options the OptionsMenu to offer to the player
+     * @param exclusiveOverride a String to print as a DialogueLine instead of the default line if the OptionsMenu is exclusive
+     * @return the ID of the chosen Option or the outcome of the entered command
+     */
+    public String promptOptionsMenu(OptionsMenu options, String exclusiveOverride) {
+        return this.promptOptionsMenu(options, new DialogueLine(exclusiveOverride, true));
+    }
+
+    /**
+     * Prints an OptionsMenu, then allows the player to choose an Option from the menu or enter a command (if the OptionsMenu is not exclusive)
+     * @param options the OptionsMenu to offer to the player
+     * @return the ID of the chosen Option or the outcome of the entered command
+     */
+    public String promptOptionsMenu(OptionsMenu options) {
+        return this.promptOptionsMenu(options, new DialogueLine());
+    }
+
+    /**
+     * Allows the player to choose an Option from a given OptionsMenu or enter a command (if the OptionsMenu is not exclusive)
+     * @param cycle the current active Cycle, if there is one
+     * @param options the OptionsMenu to offer to the player
+     * @param exclusiveOverride a DialogueLine to print instead of the default line if the OptionsMenu is exclusive
+     * @return the ID of the chosen Option or the outcome of the entered command
+     */
+    private String parseOptionChoice(Cycle cycle, OptionsMenu options, DialogueLine exclusiveOverride) {
+        // Returns choice id or command outcome
+        boolean isOption = true;
+        int choiceN = -1;
+        String outcome;
+
+        System.out.print("\n");
+        String in = this.getInput();
+
+        try {
+            choiceN = Integer.parseInt(in);
+        } catch (NumberFormatException e) {
+            isOption = false;
+        }
+
+        if (isOption) {
+            try {
+                return options.playerChoose(choiceN);
+            } catch (IllegalArgumentException e) {
+                if (cycle == null) {
+                    this.printDialogueLine("[That is not a choice available to you.]", true);
+                } else if (!cycle.hasVoice(Voice.NARRATOR)) {
+                    this.printDialogueLine("[That is not a choice available to you.]", true);
+                } else {
+                    this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
+                }
+
+                return this.parseOptionChoice(cycle, options, exclusiveOverride);
+            }
+        } else {
+            boolean isTrueExclusive = false;
+            if (cycle == null) {
+                isTrueExclusive = true;
+            } else if (cycle.trueExclusiveMenu()) {
+                isTrueExclusive = true;
+            }
+
+            if (options.isExclusive() || isTrueExclusive) {
+                if (isTrueExclusive) {
+                    try {
+                        outcome = this.parseCommand(cycle, in);
+                    } catch (Exception e) {
+                        outcome = "cFail";
+                    }
+                } else {
+                    outcome = "";
+                }
+
+                if (outcome.equals("cFail")) {
+                    this.printDialogueLine("[That is not a valid command.]", true);
+                } else if (!outcome.equals("cMeta")) {
+                    if (exclusiveOverride.isEmpty()) {
+                        if (cycle == null) {
+                            this.printDialogueLine("[You have no other options.]", true);
+                        } else if (!cycle.hasVoice(Voice.NARRATOR)) {
+                            this.printDialogueLine("[You have no other options.]", true);
+                        } else {
+                            this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true));
+                        }
+                    } else {
+                        this.printDialogueLine(exclusiveOverride);
+                    }
+                }
+
+                return this.parseOptionChoice(cycle, options, exclusiveOverride);
+            } else {
+                try {
+                    outcome = this.parseCommand(cycle, in);
+                    return (outcome.equals("cMeta")) ? this.parseOptionChoice(cycle, options, exclusiveOverride) : outcome;
+                } catch (Exception e) {
+                    if (cycle == null) {
+                        this.printDialogueLine("[That is not a valid command.]", true);
+                    } else if (!cycle.hasVoice(Voice.NARRATOR)) {
+                        this.printDialogueLine("[That is not a valid command.]", true);
+                    } else {
+                        this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
+                    }
+
+                    // Invalid command; re-input, do not show options again
+                    return this.parseOptionChoice(cycle, options, exclusiveOverride);
+                }
+            }
+        }
+    }
+
     // --- COMMAND HANDLING ---
 
+    /**
+     * Prints a given DialogueLine, then has the player input a command in response
+     * @param prompt the DialogueLine to prompt the player with
+     * @return the outcome of the entered command
+     */
     public String promptCommand(DialogueLine prompt) {
+        Cycle cycle = manager.getCurrentCycle();
+
         prompt.print();
-        String command = this.getInput();
-        String parsed = null;
+        String outcome = null;
 
-        while (parsed == null) {
+        while (outcome == null) {
             try {
-                parsed = this.parseCommand(command);
+                outcome = this.parseCommand(this.getInput());
             } catch (Exception e) {
-                // Invalid command; re-input
+                if (e.getLocalizedMessage().equals("Invalid command")) {
+                    if (cycle == null) {
+                        this.printDialogueLine("[That is not a valid command.]", true);
+                    } else if (!cycle.hasVoice(Voice.NARRATOR)) {
+                        this.printDialogueLine("[That is not a valid command.]", true);
+                    } else {
+                        this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
+                    }
+                }
 
+                // Invalid command or argument; re-input
             }
         }
 
-        return parsed;
+        return outcome;
     }
 
+    /**
+     * Prints a given String as a DialogueLine, then has the player input a command in response
+     * @param prompt the String to prompt the player with
+     * @return the outcome of the entered command
+     */
     public String promptCommand(String prompt) {
         return this.promptCommand(new DialogueLine(prompt));
     }
 
-    private String parseCommand(Cycle cycle, String command) throws Exception {
-        /* Returns "cMeta" if the command is a meta command (HELP, SHOW, or TOGGLE);
-           Or returns the ID-String (always starting with "c") of the command's "outcome" (accounting for whether the command is currently accessible);
-           Or throws an Exception (caught by either promptCommand() or promptOptionsMenu()) if the command or its arguments is invalid */
-
-        String[] split = command.split(" ", 2);
+    /**
+     * Parses a given String as a command and returns the outcome
+     * @param cycle the current active Cycle, if there is one
+     * @param playerInput the player's input
+     * @return a String representing the outcome of the player's command: "cMeta" if the command is a meta command (HELP, SHOW, or TOGGLE) or the ID-String of the command's "outcome" (accounting for whether the command is currently accessible)
+     * @throws Exception if the prefix or arguments of playerInput are invalid
+     */
+    private String parseCommand(Cycle cycle, String playerInput) throws Exception {
+        String[] split = playerInput.split(" ", 2);
         String prefix = split[0];
 
         String argument;
@@ -260,126 +435,34 @@ public class IOHandler {
         return commandOutcome;
     }
 
-    private String parseCommand(String command) throws Exception {
-        return this.parseCommand(this.currentCycle(), command);
-    }
-
-    // --- OPTIONS HANDLING ---
-    
-    public String promptOptionsMenu(OptionsMenu options, DialogueLine exclusiveOverride) {
-        // returns choice id or command outcome
-        Cycle cycle = this.currentCycle();
-        
-        System.out.println();
-        wrapPrintln(options.toString());
-        return this.parseOptionChoice(cycle, options, exclusiveOverride);
-    }
-
-    public String promptOptionsMenu(OptionsMenu options, String exclusiveOverride) {
-        return this.promptOptionsMenu(options, new DialogueLine(exclusiveOverride, true));
-    }
-
-    public String promptOptionsMenu(OptionsMenu options) {
-        return this.promptOptionsMenu(options, new DialogueLine());
-    }
-
-    private String parseOptionChoice(Cycle cycle, OptionsMenu options, DialogueLine exclusiveOverride) {
-        // Returns choice id or command outcome
-        boolean isOption = true;
-        int choiceN = -1;
-        String outcome;
-
-        System.out.print("\n");
-        String in = this.getInput();
-
-        try {
-            choiceN = Integer.parseInt(in);
-        } catch (NumberFormatException e) {
-            isOption = false;
-        }
-
-        if (isOption) {
-            try {
-                return options.playerChoose(choiceN);
-            } catch (IllegalArgumentException e) {
-                if (cycle == null) {
-                    this.printDialogueLine("[That is not a choice available to you.]", true);
-                } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                    this.printDialogueLine("[That is not a choice available to you.]", true);
-                } else {
-                    this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
-                }
-
-                return this.parseOptionChoice(cycle, options, exclusiveOverride);
-            }
-        } else {
-            boolean isTrueExclusive = false;
-            if (cycle == null) {
-                isTrueExclusive = true;
-            } else if (cycle.trueExclusiveMenu()) {
-                isTrueExclusive = true;
-            }
-
-            if (options.isExclusive() || isTrueExclusive) {
-                if (isTrueExclusive) {
-                    try {
-                        outcome = this.parseCommand(cycle, in);
-                    } catch (Exception e) {
-                        outcome = "cFail";
-                    }
-                } else {
-                    outcome = "";
-                }
-
-                if (outcome.equals("cFail")) {
-                    this.printDialogueLine("[That is not a valid command.]", true);
-                } else if (!outcome.equals("cMeta")) {
-                    if (exclusiveOverride.isEmpty()) {
-                        if (cycle == null) {
-                            this.printDialogueLine("[You have no other options.]", true);
-                        } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                            this.printDialogueLine("[You have no other options.]", true);
-                        } else {
-                            this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true));
-                        }
-                    } else {
-                        this.printDialogueLine(exclusiveOverride);
-                    }
-                }
-
-                return this.parseOptionChoice(cycle, options, exclusiveOverride);
-            } else {
-                try {
-                    outcome = this.parseCommand(cycle, in);
-                    return (outcome.equals("cMeta")) ? this.parseOptionChoice(cycle, options, exclusiveOverride) : outcome;
-                } catch (Exception e) {
-                    // Invalid command; re-input, do not show options again
-                    
-                    if (cycle == null) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
-                    } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
-                    } else {
-                        this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
-                    }
-
-                    return this.parseOptionChoice(cycle, options, exclusiveOverride);
-                }
-            }
-        }
+    /**
+     * Parses a given String as a command and returns the outcome
+     * @param playerInput the player's input
+     * @return a String representing the outcome of the player's command: "cMeta" if the command is a meta command (HELP, SHOW, or TOGGLE) or the ID-String of the command's "outcome" (accounting for whether the command is currently accessible)
+     * @throws Exception if the prefix or arguments of playerInput are invalid
+     */
+    private String parseCommand(String playerInput) throws Exception {
+        return this.parseCommand(manager.getCurrentCycle(), playerInput);
     }
 
     // --- YES/NO HANDLING ---
 
+    /**
+     * Prints a given DialogueLine, then has the player input YES/Y or NO/N in response
+     * @param prompt the DialogueLine to prompt the player with
+     * @return true if the player responds with YES/Y, false if the player responds with NO/N
+     */
     public boolean promptYesNo(DialogueLine prompt) {
         prompt.print();
         return this.parseYesNo();
     }
 
-    public boolean promptYesNo(String prompt) {
-        return this.promptYesNo(prompt, true);
-    }
-
+    /**
+     * Prints a given String as a DialogueLine, then has the player input YES/Y or NO/N in response
+     * @param prompt the DialogueLine to prompt the player with
+     * @param slowPrint whether to print the prompt slowly or instantly print it
+     * @return true if the player responds with YES/Y, false if the player responds with NO/N
+     */
     public boolean promptYesNo(String prompt, boolean slowPrint) {
         if (slowPrint) {
             return this.promptYesNo(new DialogueLine(prompt));
@@ -389,6 +472,20 @@ public class IOHandler {
         }
     }
 
+    /**
+     * Prints a given String as a DialogueLine, then has the player input YES/Y or NO/N in response
+     * @param prompt the DialogueLine to prompt the player with
+     * @return true if the player responds with YES/Y, false if the player responds with NO/N
+     */
+    public boolean promptYesNo(String prompt) {
+        return this.promptYesNo(prompt, true);
+    }
+
+    /**
+     * Retrieves and parses the player's input as an answer to a yes/no question
+     * @param slowPrint whether to print the prompt slowly or instantly print it
+     * @return true if the player responds with YES/Y, false if the player responds with NO/N
+     */
     private boolean parseYesNo(boolean slowPrint) {
         System.out.print("\n");
         String in = this.getInput();
@@ -402,19 +499,29 @@ public class IOHandler {
         }
     }
 
+    /**
+     * Retrieves and parses the player's input as an answer to a yes/no question
+     * @return true if the player responds with YES/Y, false if the player responds with NO/N
+     */
     private boolean parseYesNo() {
         return this.parseYesNo(true);
     }
 
+    /**
+     * Closes the Scanner being used for input
+     */
     public void closeInput() {
         this.input.close();
     }
 
     // --- WRAPAROUND MANAGEMENT ---
 
+    /**
+     * Returns a given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     * @param s the String to modify
+     * @return the given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
     public static String wordWrap(String s) {
-        // HANDLE STRINGS WITH LINE BREAKS ALREADY IN THEM
-
         String wrappedLine = "";
         String[] lines = s.split("\n");
         String[] wordsInLine;
@@ -451,16 +558,70 @@ public class IOHandler {
         return wrappedLine;
     }
 
+    /**
+     * Returns the String representation of a given DialogueLine with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     * @param line the DialogueLine to modify
+     * @return the String representation of a given DialogueLine with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
     public static String wordWrap(DialogueLine line) {
         return wordWrap(line.toString());
     }
 
+    /**
+     * Returns the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     * @param menu the OptionsMenu to modify
+     * @return the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
+    public static String wordWrap(OptionsMenu menu) {
+        return wordWrap(menu.toString());
+    }
+
+    /**
+     * Instantly prints a given String, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words
+     * @param s the String to print
+     */
     public static void wrapPrint(String s) {
         System.out.print(wordWrap(s));
     }
 
+    /**
+     * Instantly prints a given DialogueLine, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words
+     * @param line the DialogueLine to print
+     */
+    public static void wrapPrint(DialogueLine line) {
+        System.out.print(wordWrap(line));
+    }
+
+    /**
+     * Instantly prints a given OptionsMenu, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words
+     * @param menu the OptionsMenu to print
+     */
+    public static void wrapPrint(OptionsMenu menu) {
+        System.out.print(wordWrap(menu));
+    }
+
+    /**
+     * Instantly prints a given String, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words, then terminates the line
+     * @param s the String to print
+     */
     public static void wrapPrintln(String s) {
         System.out.println(wordWrap(s));
+    }
+
+    /**
+     * Instantly prints a given DialogueLine, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words, then terminates the line
+     * @param line the DialogueLine to print
+     */
+    public static void wrapPrintln(DialogueLine line) {
+        System.out.println(wordWrap(line));
+    }
+
+    /**
+     * Instantly prints a given OptionsMenu, inserting line breaks such that it only wraps around to a new line at word boundaries, not in the middle of words, then terminates the line
+     * @param menu the OptionsMenu to print
+     */
+    public static void wrapPrintln(OptionsMenu menu) {
+        System.out.println(wordWrap(menu));
     }
 
 }

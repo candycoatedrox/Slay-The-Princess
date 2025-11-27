@@ -1,4 +1,11 @@
 public enum ChapterEnding {
+    /*
+    ChapterEnding names are pulled from, in order:
+      1. achievement names;
+      2. if there is no achievement for the ending, the name given by the unofficial wiki;
+      3. if the wiki does not make a distinction between endings, whatever name I think is appropriate
+    */
+
     // The Hero and the Princess
     TOADVERSARY(Chapter.ADVERSARY, Voice.STUBBORN),
     TOTOWER(Chapter.TOWER, Voice.BROKEN),
@@ -18,9 +25,9 @@ public enum ChapterEnding {
     TODAMSEL(Chapter.DAMSEL, Voice.SMITTEN),
     
     // The Adversary
+    THATWHICHCANNOTDIE(Vessel.ADVERSARY, false),
     STRIKEMEDOWN(Chapter.FURY, Voice.COLD),
     HEARNOBELL(Chapter.FURY, Voice.CONTRARIAN),
-    THATWHICHCANNOTDIE(Vessel.ADVERSARY, false),
     DEADISDEAD(Chapter.FURY, Voice.BROKEN),
     THREADINGTHROUGH(Chapter.NEEDLE, Voice.HUNTED),
     FREEINGSOMEONE(Chapter.NEEDLE, Voice.SKEPTIC),
@@ -192,30 +199,50 @@ public enum ChapterEnding {
 
     // --- CONSTRUCTORS ---
 
+    /**
+     * Standard constructor
+     * @param nextChapter the Chapter this ending leads to
+     * @param newVoice the Voice gained at the start of the next Chapter
+     */
     private ChapterEnding(Chapter nextChapter, Voice newVoice) {
         this.isFinal = false;
         this.nextChapter = nextChapter;
         this.newVoice = newVoice;
     }
 
+    /**
+     * Constructor for gaining two Voices
+     * @param nextChapter the Chapter this ending leads to
+     * @param newVoiceA the first Voice gained at the start of the next Chapter
+     * @param newVoiceB the second Voice gained at the start of the next Chapter
+     */
     private ChapterEnding(Chapter nextChapter, Voice newVoiceA, Voice newVoiceB) {
         // oh Razor my special little snowflake
         this(nextChapter, newVoiceA);
         this.newVoice2 = newVoiceB;
     }
 
+    /**
+     * Constructor for gaining all Voices at the start of the next Chapter or the beginning of a Cycle
+     * @param nextChapter the Chapter this ending leads to
+     */
     private ChapterEnding(Chapter nextChapter) {
-        // indicates that we should just add all voices
-        // or that this is a new cycle
         this(nextChapter, null);
     }
 
+    /**
+     * Constructor for special Chapters (aborting a Chapter or game endings)
+     */
     private ChapterEnding() {
-        // aborted chapter or game ending
         this.isFinal = true;
         this.nextChapter = Chapter.CH1;
     }
 
+    /**
+     * Constructor for endings where a Vessel has been claimed
+     * @param v the Vessel claimed in this ending
+     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
+     */
     private ChapterEnding(Vessel v, boolean yourNewWorld) {
         this.isFinal = true;
         this.nextChapter = Chapter.SPACESBETWEEN;
@@ -225,26 +252,50 @@ public enum ChapterEnding {
 
     // --- ACCESSORS ---
 
+    /**
+     * Accessor for isFinal
+     * @return whether this ending represents the end of a Cycle or leads to a new Chapter
+     */
     public boolean isFinal() {
         return this.isFinal;
     }
 
+    /**
+     * Accessor for nextChapter
+     * @return returns the Chapter that this ending leads to
+     */
     public Chapter getNextChapter() {
         return this.nextChapter;
     }
 
+    /**
+     * Accessor for newVoice
+     * @return the Voice gained at the start of the next Chapter
+     */
     public Voice getNewVoice() {
         return this.newVoice;
     }
 
+    /**
+     * Accessor for newVoice2
+     * @return the second Voice gained at the start of the next Chapter
+     */
     public Voice getNewVoice2() {
         return this.newVoice2;
     }
 
+    /**
+     * Accessor for vessel
+     * @return the Vessel claimed in this ending
+     */
     public Vessel getVessel() {
         return this.vessel;
     }
 
+    /**
+     * Accessor for yourNewWorld
+     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
+     */
     public boolean qualifiesYNW() {
         return this.yourNewWorld;
     }

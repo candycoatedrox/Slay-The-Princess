@@ -1,6 +1,6 @@
 public enum Voice {
     NARRATOR("The Narrator"),
-    PRINCESS("The Princess"), // exclusively used in Spectre, Wraith, Princess and the Dragon
+    PRINCESS("The Princess"), // Exclusively used in Spectre, Princess and the Dragon, and Wraith
 
     HERO("Voice of the Hero"),
     BROKEN("Voice of the Broken"),
@@ -18,12 +18,20 @@ public enum Voice {
 
     // --- CONSTRUCTOR ---
 
+    /**
+     * Constructor
+     * @param tag the "dialogue tag" that appears at the beginning of the Voice's dialogue lines
+     */
     private Voice(String tag) {
         this.dialogueTag = tag;
     }
 
     // --- ACCESSORS ---
     
+    /**
+     * Accessor for dialogueTag
+     * @return the dialogue tag for this Voice
+     */
     public String getDialogueTag() {
         return this.dialogueTag;
     }

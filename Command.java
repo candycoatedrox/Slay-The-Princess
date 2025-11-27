@@ -8,8 +8,8 @@ public enum Command {
     DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     WALK("walk", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     ENTER("enter", "Enter a given location or the nearest appropriate location.", "", "cabin", "basement"),
-    LEAVE("leave", "Leave a given location or the current location.", "", "cabin", "basement", "woods", "path"),
-    PROCEED("proceed", "Move forward."),
+    LEAVE("leave", "Leave the current location.", "", "cabin", "basement", "woods", "path"),
+    PROCEED("proceed", "Move forward.", ""),
     TURN("turn", "Turn back.", "", "around", "back"),
     APPROACH("approach", "Approach the mirror.", "the mirror", "mirror"),
     SLAY("slay", "Slay the Princess or yourself.", "the princess", "princess", "self", "yourself", "you", "myself", "me", "ourself", "ourselves", "us"),
@@ -23,6 +23,12 @@ public enum Command {
 
     // --- CONSTRUCTOR ---
 
+    /**
+     * Constructor
+     * @param prefix the first word the player enters to trigger this Command
+     * @param description a brief description of this Command, shown when using the HELP command
+     * @param validArguments all arguments the player can enter after the prefix that will result in a valid outcome
+     */
     private Command(String prefix, String description, String... validArguments) {
         this.prefix = prefix;
         this.description = description;
@@ -31,14 +37,26 @@ public enum Command {
 
     // --- ACCESSORS & CHECKS ---
 
+    /**
+     * Accessor for prefix
+     * @return the prefix of this Command
+     */
     public String getPrefix() {
         return this.prefix;
     }
 
+    /**
+     * Accessor for description
+     * @return a brief description of this Command
+     */
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Returns a detailed description of this Command, including information on its argument(s) and different variations
+     * @return a detailed description of this Command, including information on its argument(s) and different variations
+     */
     public String help() {
         // Technically, I could just make this entire method one switch statement where each case returns the full help text in one line, but this is MUCH easier to read, understand, and edit.
         
@@ -214,14 +232,27 @@ public enum Command {
         return s;
     }
 
+    /**
+     * Returns an array of all valid arguments of this Command
+     * @return all valid arguments of this Command
+     */
     public String[] getValidArguments() {
         return this.validArguments;
     }
 
+    /**
+     * Returns the number of valid arguments this Command has
+     * @return the number of valid arguments this Command has
+     */
     public int nValidArguments() {
         return this.validArguments.length;
     }
 
+    /**
+     * Checks if a given argument is a valid argument of this Command
+     * @param argument the argument to check
+     * @return true if argument is a valid argument of this Command; false otherwise
+     */
     public boolean argumentIsValid(String argument) {
         if (argument == null) {
             return this.argumentIsValid();
@@ -230,17 +261,23 @@ public enum Command {
         }
     }
 
+    /**
+     * Checks if an empty argument is a valid argument of this Command
+     * @return true if an empty argument is a valid argument of this Command; false otherwise
+     */
     public boolean argumentIsValid() {
         return this.validArguments.length == 0 || Arrays.asList(this.validArguments).contains("");
     }
 
+    /**
+     * Returns the Command triggered by a given prefix
+     * @param prefix the prefix to check against each Command
+     * @return the Command that matches the given prefix
+     */
     public static Command getCommand(String prefix) {
         String command = prefix.toLowerCase();
 
-        if (GO.argumentIsValid(command)) {
-            return DIRECTGO;
-        }
-
+        if (GO.argumentIsValid(command)) return DIRECTGO;
         switch (command) {
             case "help": return HELP;
             case "show": return SHOW;
@@ -256,6 +293,7 @@ public enum Command {
             case "take": return TAKE;
             case "drop": return DROP;
             case "throw": return THROW;
+
             default: return null;
         }
     }
