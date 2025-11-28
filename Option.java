@@ -1,5 +1,13 @@
 public class Option {
     
+    /*
+     * There are multiple ways of determining whether a given option is available, which can be combined:
+     * - unavailable if has already been picked (on by default)
+     * - unavailable if has already been picked (X) times
+     * - only available if a given variable is equal to a given value (can be boolean or other)
+     * - only available once another option in this menu has been picked
+     */
+    
     private GameManager manager;
 
     private String id;

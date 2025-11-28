@@ -27,7 +27,6 @@ public abstract class Cycle {
     protected boolean canSlaySelf = false;
     protected boolean canDropBlade = false;
     protected boolean canThrowBlade = false;
-    protected boolean goodEndingAttempted = false;
 
     // Variables that are used in a lot of chapters
     protected String jointSource;

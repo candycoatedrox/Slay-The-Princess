@@ -3,15 +3,6 @@ import java.util.ArrayList;
 public class OptionsMenu {
 
     private IndexedLinkedHashMap<String, Option> options; // Map String ID --> Option
-
-    /*
-     * There are multiple ways of determining whether a given option is available, which can be combined:
-     * - unavailable if has already been picked (on by default)
-     * - unavailable if has already been picked (X) times
-     * - only available if a given variable is equal to a given value (can be boolean or other)
-     * - only available once another option in this menu has been picked
-     */
-
     private boolean isExclusive; // Can the player input commands during this options menu?
 
     // --- CONSTRUCTORS ---

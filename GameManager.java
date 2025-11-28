@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class GameManager {
     
     private final IOHandler parser;
-    private Cycle currentCycle;
+    private Cycle currentCycle; 
 
     // Settings
     private boolean autoContentWarnings = true;
@@ -22,8 +22,8 @@ public class GameManager {
     private ArrayList<String> playlist;
 
     private int nVesselsAborted = 0;
-    private boolean goodEndingAttempted = false;
     private int mirrorCruelCount = 0;
+    private boolean goodEndingAttempted = false;
 
     private final OptionsMenu warningsMenu;
 
@@ -57,8 +57,8 @@ public class GameManager {
     }
 
     /**
-     * 
-     * @return
+     * Initializes the content warnings menu for this manager
+     * @return the content warnings menu for this manager
      */
     private OptionsMenu createWarningsMenu() {
         OptionsMenu menu = new OptionsMenu(true);
@@ -185,18 +185,18 @@ public class GameManager {
     }
 
     /**
-     * Increments nVesselsAborted
+     * Checks if the player was cruel at the mirror
+     * @return
      */
-    public void abortVessel() {
-        this.nVesselsAborted += 1;
+    public boolean mirrorWasCruel() {
+        return this.mirrorCruelCount >= 2;
     }
 
     /**
-     * Returns the number of Vessels/Chapters the player has aborted
-     * @return the number of Vessels/Chapters the player has aborted
+     * Increments mirrorCruelCount
      */
-    public int nVesselsAborted() {
-        return this.nVesselsAborted;
+    public void incrementCruelCount() {
+        this.mirrorCruelCount += 1;
     }
 
     /**
@@ -212,17 +212,6 @@ public class GameManager {
      */
     public void attemptGoodEnding() {
         this.goodEndingAttempted = true;
-    }
-
-    public boolean mirrorWasCruel() {
-        return this.mirrorCruelCount >= 2;
-    }
-
-    /**
-     * Increments mirrorCruelCount
-     */
-    public void incrementCruelCount() {
-        this.mirrorCruelCount += 1;
     }
     
     /**
@@ -248,7 +237,7 @@ public class GameManager {
             ending = this.currentCycle.runCycle();
 
             if (ending == null) {
-                this.abortVessel();
+                this.nVesselsAborted += 1;
             } else if (ending == ChapterEnding.GOODENDING) {
                 break;
             } else {
@@ -258,7 +247,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.parser);
+            this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
             ending = this.currentCycle.runCycle();
         } else {
             this.currentCycle = null;
@@ -293,7 +282,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.parser);
+            this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
             ending = this.currentCycle.runCycle();
         } else {
             this.currentCycle = null;

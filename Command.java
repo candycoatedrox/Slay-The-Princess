@@ -233,22 +233,6 @@ public enum Command {
     }
 
     /**
-     * Returns an array of all valid arguments of this Command
-     * @return all valid arguments of this Command
-     */
-    public String[] getValidArguments() {
-        return this.validArguments;
-    }
-
-    /**
-     * Returns the number of valid arguments this Command has
-     * @return the number of valid arguments this Command has
-     */
-    public int nValidArguments() {
-        return this.validArguments.length;
-    }
-
-    /**
      * Checks if a given argument is a valid argument of this Command
      * @param argument the argument to check
      * @return true if argument is a valid argument of this Command; false otherwise

@@ -1,12 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Finale extends Cycle {
 
     // Runs from final Narrator conversation to the end
 
-    private Vessel[] vessels;
-    private boolean strangerHeart;
-    private boolean mirrorWasCruel;
+    private final Vessel[] vessels;
+    private final Chapter firstPrincess;
+    private final boolean strangerHeart;
+    private final boolean mirrorWasCruel;
+
+    private HashMap<String, Integer> debateProgress; // Checks how far the player has progressed in each line of argument during the debate
 
     // --- CONSTRUCTOR ---
 
@@ -16,7 +20,7 @@ public class Finale extends Cycle {
      * @param vessels the list of Vessels that the player claimed
      * @param parser the IOHandler to link this instance of Finale to
      */
-    public Finale(GameManager manager, ArrayList<Vessel> vessels, IOHandler parser) {
+    public Finale(GameManager manager, ArrayList<Vessel> vessels, Chapter firstPrincess, IOHandler parser) {
         super(manager, parser);
         this.clearVoices();
 
@@ -25,6 +29,7 @@ public class Finale extends Cycle {
         }
 
         this.vessels = vessels.toArray(new Vessel[5]);
+        this.firstPrincess = firstPrincess;
         this.strangerHeart = this.vessels[0] == Vessel.STRANGER;
         this.mirrorWasCruel = manager.mirrorWasCruel();
     }
@@ -63,7 +68,7 @@ public class Finale extends Cycle {
      * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location in the given direction; "cGoFail" otherwise
      */
     @Override
-    public String go(String argument, boolean secondPrompt) {
+    protected String go(String argument, boolean secondPrompt) {
         switch (argument) {
             case "forward":
             case "forwards":
