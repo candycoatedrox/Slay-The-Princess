@@ -347,8 +347,7 @@ public class OptionsMenu {
             throw new IllegalArgumentException("Option out of range");
         }
 
-        this.get(n).choose();
-        return this.get(n).getID();
+        return this.get(n).choose();
     }
 
     /**

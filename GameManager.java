@@ -115,6 +115,19 @@ public class GameManager {
     }
 
     /**
+     * Checks whether the player has visited all Chapters in a given list
+     * @param chapters the Chapters to check
+     * @return true if the player has been to every Chapter in chapters; false otherwise
+     */
+    public boolean hasVisitedAll(Chapter... chapters) {
+        for (Chapter c : chapters) {
+            if (!this.visitedChapters.get(c)) return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Marks all Chapters in an ArrayList
      * @param route the list of Chapters visited by a player during a StandardCycle
      */

@@ -10,6 +10,7 @@ public enum ChapterEnding {
     TOADVERSARY(Chapter.ADVERSARY, Voice.STUBBORN),
     TOTOWER(Chapter.TOWER, Voice.BROKEN),
     TOTOWERUNHARMED(Chapter.TOWER, Voice.BROKEN),
+    TOTOWERPATHETIC(Chapter.TOWER, Voice.BROKEN),
     GOODENDING,
     TOSPECTRE(Chapter.SPECTRE, Voice.COLD),
     TONIGHTMARE(Chapter.NIGHTMARE, Voice.PARANOID),

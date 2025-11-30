@@ -10,11 +10,8 @@ public class StandardCycle extends Cycle {
     private ArrayList<Chapter> route;
     private ChapterEnding prevEnding;
 
-    // Utility variables for checking command availability & default responses
-    private boolean goodEndingAttempted;
-    private boolean localGoodEndingAttempt = false;
-
     // Variables that are used in a lot of chapters
+    protected String source;
     private boolean mentionedLooping = false; // Used in all Chapter 2s and 3s: does the Narrator know?
 
     // Variables that persist between chapters
@@ -48,8 +45,6 @@ public class StandardCycle extends Cycle {
                 this.currentVoices.put(v, false);
             }
         }
-
-        this.goodEndingAttempted = manager.goodEndingAttempted();
     }
 
     // --- MANIPULATORS ---
@@ -475,6 +470,18 @@ public class StandardCycle extends Cycle {
         }
     }
 
+    /**
+     * Prints a generic response to a command failing or being unavailable
+     */
+    @Override
+    protected void giveDefaultFailResponse() {
+        if (!this.hasVoice(Voice.NARRATOR)) {
+            super.giveDefaultFailResponse();
+        } else {
+            parser.printDialogueLine(new VoiceDialogueLine("You have to make a decision."));
+        }
+    }
+
     // --- CYCLE MANAGEMENT ---
 
     /**
@@ -707,8 +714,8 @@ public class StandardCycle extends Cycle {
     private ChapterEnding heroAndPrincess() {
         // You always start with the Voice of the Hero
         
-        boolean canSoft = !(manager.hasVisited(Chapter.BEAST) && manager.hasVisited(Chapter.WITCH) && manager.hasVisited(Chapter.DAMSEL) && manager.hasVisited(Chapter.NIGHTMARE));
-        boolean canHarsh = !(manager.hasVisited(Chapter.ADVERSARY) && manager.hasVisited(Chapter.TOWER) && manager.hasVisited(Chapter.SPECTRE) && manager.hasVisited(Chapter.NIGHTMARE) && manager.hasVisited(Chapter.RAZOR) && manager.hasVisited(Chapter.PRISONER));
+        boolean canSoft = !manager.hasVisitedAll(Chapter.BEAST, Chapter.WITCH, Chapter.DAMSEL, Chapter.NIGHTMARE);
+        boolean canHarsh = !manager.hasVisitedAll(Chapter.ADVERSARY, Chapter.TOWER, Chapter.SPECTRE, Chapter.NIGHTMARE, Chapter.RAZOR, Chapter.PRISONER);
         boolean canCabin = canSoft || canHarsh;
 
         boolean canStranger = !manager.hasVisited(Chapter.STRANGER);
@@ -733,12 +740,12 @@ public class StandardCycle extends Cycle {
         activeMenu.add(new Option(this.manager, "letItBurn", "(Explore) Have you considered that maybe I'm okay with the world ending?"));
         activeMenu.add(new Option(this.manager, "prize", "(Explore) Do I get some kind of reward for doing this?"));
         activeMenu.add(new Option(this.manager, "prize2", "(Explore) Can you tell me what my prize is going to be for doing a good job?", activeMenu.get("prize")));
-        activeMenu.add(new Option(this.manager, "reluctant", canCabin, "Look, I'll go to the cabin and I'll talk to her, and if she's as bad as you say she is then *maybe* I'll slay her. But I'm not committing to anything until I've had the chance to meet her face to face.", false));
-        activeMenu.add(new Option(this.manager, "okFine", canCabin, "Okay. Fine. I'll go to the cabin.", activeMenu.get("refuse")));
-        activeMenu.add(new Option(this.manager, "sold", canCabin, "Okay, I'm sold. Let's get this over with.", activeMenu.get("question1")));
-        activeMenu.add(new Option(this.manager, "thanks", canCabin, "Oh, okay. Thanks for telling me what to do."));
-        activeMenu.add(new Option(this.manager, "sweet", canCabin, "Sweet! I've always wanted to off a monarch. Viva la revolución!"));
-        activeMenu.add(new Option(this.manager, "silent", canCabin, "[Silently continue to the cabin.]"));
+        activeMenu.add(new Option(this.manager, "reluctant", !canCabin, "Look, I'll go to the cabin and I'll talk to her, and if she's as bad as you say she is then *maybe* I'll slay her. But I'm not committing to anything until I've had the chance to meet her face to face.", false));
+        activeMenu.add(new Option(this.manager, "okFine", !canCabin, "Okay. Fine. I'll go to the cabin.", activeMenu.get("refuse")));
+        activeMenu.add(new Option(this.manager, "sold", !canCabin, "Okay, I'm sold. Let's get this over with.", activeMenu.get("question1")));
+        activeMenu.add(new Option(this.manager, "thanks", !canCabin, "Oh, okay. Thanks for telling me what to do."));
+        activeMenu.add(new Option(this.manager, "sweet", !canCabin, "Sweet! I've always wanted to off a monarch. Viva la revolución!"));
+        activeMenu.add(new Option(this.manager, "silent", !canCabin, "[Silently continue to the cabin.]"));
         activeMenu.add(new Option(this.manager, "leave", "[Turn around and leave.]", Chapter.STRANGER));
 
         boolean askPrize = false;
@@ -841,7 +848,7 @@ public class StandardCycle extends Cycle {
                         break;
                     }
                 case "leave":
-                    switch (this.attemptStranger(canCabin)) {
+                    switch (this.ch1AttemptStranger(canCabin)) {
                         case 0:
                             return ChapterEnding.TOSTRANGER;
                         case 2:
@@ -853,16 +860,7 @@ public class StandardCycle extends Cycle {
                             break;
                     }
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -900,7 +898,7 @@ public class StandardCycle extends Cycle {
                         break;
                     }
 
-                    switch (this.attemptStranger(true)) {
+                    switch (this.ch1AttemptStranger(true)) {
                         case 0:
                             return ChapterEnding.TOSTRANGER;
                         case 2:
@@ -911,16 +909,7 @@ public class StandardCycle extends Cycle {
                             break;
                     }
                     
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -963,7 +952,7 @@ public class StandardCycle extends Cycle {
                     this.repeatActiveMenu = false;
                     this.withBlade = false;
                     parser.printDialogueLine("The door to the basement creaks open.");
-                    return (this.isHarsh) ? this.basementHarsh(askPrize) : this.basementSoft();
+                    return (this.isHarsh) ? this.ch1BasementHarsh(askPrize) : this.ch1BasementSoft();
 
                 case "cGoHill":
                     if (manager.hasVisited(Chapter.STRANGER)) {
@@ -974,7 +963,7 @@ public class StandardCycle extends Cycle {
                         break;
                     }
 
-                    switch (this.attemptStranger(true)) {
+                    switch (this.ch1AttemptStranger(true)) {
                         case 0:
                             return ChapterEnding.TOSTRANGER;
                         case 2:
@@ -985,20 +974,7 @@ public class StandardCycle extends Cycle {
                             break;
                     }
                     
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cDropFail":
-                case "cThrowNoBladeFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -1011,12 +987,12 @@ public class StandardCycle extends Cycle {
      * @param canCabin whether the player can go to the cabin or the routes are blocked
      * @return 0 if the player commits to going to the Stranger; 1 if the player returns to the cabin at the first menu; 2 otherwise
      */
-    private int attemptStranger(boolean canCabin) {
+    private int ch1AttemptStranger(boolean canCabin) {
         parser.printDialogueLine(new VoiceDialogueLine("Seriously? You're just going to turn around and leave? Do you even know where you're going?"));
 
         OptionsMenu leaveMenu = new OptionsMenu();
-        leaveMenu.add(new Option(this.manager, "ugh", canCabin, "Okay, fine. You're persistent. I'll go to the cabin and I'll slay the Princess. Ugh!"));
-        leaveMenu.add(new Option(this.manager, "maybe", canCabin, "Okay, fine. I'll go to the cabin and I'll talk to the Princess. Maybe I'll slay her. Maybe I won't. I guess we'll see."));
+        leaveMenu.add(new Option(this.manager, "ugh", !canCabin, "Okay, fine. You're persistent. I'll go to the cabin and I'll slay the Princess. Ugh!"));
+        leaveMenu.add(new Option(this.manager, "maybe", !canCabin, "Okay, fine. I'll go to the cabin and I'll talk to the Princess. Maybe I'll slay her. Maybe I won't. I guess we'll see."));
         leaveMenu.add(new Option(this.manager, "lie", "(Lie) Yes, I definitely know where I'm going."));
         leaveMenu.add(new Option(this.manager, "nope", "Nope!"));
         leaveMenu.add(new Option(this.manager, "notGoing", "The only thing that matters is where I'm not going. (The cabin. I am not going to the cabin.)"));
@@ -1061,16 +1037,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("Fine, I suppose you just quietly continue down the path away from the cabin."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(outcome);
             }
         }
@@ -1084,7 +1051,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("That's strange. It looks like this path also leads to the cabin. How convenient! Everything's back on track again. Maybe the world can still be saved after all."));
 
         leaveMenu = new OptionsMenu();
-        leaveMenu.add(new Option(this.manager, "cabin", canCabin, "Okay, okay! I'm going into the cabin. Sheesh."));
+        leaveMenu.add(new Option(this.manager, "cabin", !canCabin, "Okay, okay! I'm going into the cabin. Sheesh."));
         leaveMenu.add(new Option(this.manager, "commit", "[Turn around (again) and leave (again).]"));
 
         repeatMenu = true;
@@ -1112,16 +1079,7 @@ public class StandardCycle extends Cycle {
                     repeatMenu = false;
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(outcome);
             }
         }
@@ -1167,16 +1125,7 @@ public class StandardCycle extends Cycle {
 
                     return 2;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(outcome);
             }
         }
@@ -1206,16 +1155,7 @@ public class StandardCycle extends Cycle {
                     if (manager.confirmContentWarnings(Chapter.STRANGER)) repeatMenu = false;
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(outcome);
             }
         }
@@ -1243,7 +1183,7 @@ public class StandardCycle extends Cycle {
      * Runs the beginning of the basement sequence with the soft princess (did not take the blade)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding basementSoft() {
+    private ChapterEnding ch1BasementSoft() {
         boolean canDamsel = !manager.hasVisited(Chapter.DAMSEL);
         boolean canBeast = !manager.hasVisited(Chapter.BEAST);
         boolean canWitch = !manager.hasVisited(Chapter.WITCH);
@@ -1316,16 +1256,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("What? No. You're already halfway down the stairs, you can't just turn around now."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -1365,22 +1296,13 @@ public class StandardCycle extends Cycle {
                 case "free":
                     if (!manager.confirmContentWarnings("self-mutilation", true)) break;
 
-                    return this.rescueSoft(false, hereToSave && !lieSave, false, false, canFree, canNotFree);
+                    return this.ch1RescueSoft(false, hereToSave && !lieSave, false, false, canFree, canNotFree);
                 
                 case "cGoStairs":
                     parser.printDialogueLine(new VoiceDialogueLine("What? No. You've hardly even laid eyes on the Princess, you can't just abandon your duty now."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayPrincessNoBladeFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -1389,6 +1311,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine("You walk a bit closer to the princess and take a seat on the hard stone floor, putting the two of you at eye level. She smiles up at you, a hopeful glimmer in her eyes. She truly is beautiful.");
 
         OptionsMenu subMenu;
+        String outcome = "";
         boolean repeatSub = false;
 
         this.activeMenu = new OptionsMenu();
@@ -1429,8 +1352,8 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("You have all the explanation you need. And you should know better than to trust whatever she comes up with."));
                     break;
                 case "notKidding":
-                    if (this.shareTaskSoft(false, canFree)) {
-                        return this.rescueSoft(true, false, false, true, canFree, canNotFree);
+                    if (this.ch1ShareTaskSoft(false, canFree)) {
+                        return this.ch1RescueSoft(true, false, false, true, canFree, canNotFree);
                     } else {
                         if (this.whatWouldYouDo) activeMenu.setCondition("whatWouldYouDo", false);
                     }
@@ -1448,8 +1371,8 @@ public class StandardCycle extends Cycle {
                     switch (parser.promptOptionsMenu(subMenu)) {
                         case "notDanger":
                         case "notSure":
-                            if (this.shareTaskSoft(false, canFree)) {
-                                return this.rescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
+                            if (this.ch1ShareTaskSoft(false, canFree)) {
+                                return this.ch1RescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
                             } else {
                                 if (this.whatWouldYouDo) activeMenu.setCondition("whatWouldYouDo", false);
                             }
@@ -1459,8 +1382,8 @@ public class StandardCycle extends Cycle {
                             parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Just how long *has* she been down here?"));
                             parser.printDialogueLine(new PrincessDialogueLine("So... did they tell you why I'm supposed to be so dangerous?"));
 
-                            if (this.shareTaskSoft(true, canFree)) {
-                                return this.rescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
+                            if (this.ch1ShareTaskSoft(true, canFree)) {
+                                return this.ch1RescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
                             } else {
                                 if (this.whatWouldYouDo) activeMenu.setCondition("whatWouldYouDo", false);
                             }
@@ -1513,7 +1436,7 @@ public class StandardCycle extends Cycle {
                                 parser.printDialogueLine(new VoiceDialogueLine("She has to be bluffing. But... hurry."));
 
                                 System.out.println();
-                                return this.retrieveBlade(false);
+                                return this.ch1RetrieveBlade(false);
 
                             case "free":
                                 if (!manager.confirmContentWarnings("self-mutilation", true)) break;
@@ -1523,7 +1446,7 @@ public class StandardCycle extends Cycle {
                                 parser.printDialogueLine(new VoiceDialogueLine("You're making a huge mistake."));
                                 parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "No. I think you're doing the right thing."));
 
-                                return this.rescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
+                                return this.ch1RescueSoft(true, hereToSave && !lieSave, false, true, canFree, canNotFree);
 
                             case "lock":
                                 if (manager.confirmContentWarnings(Chapter.NIGHTMARE)) repeatSub = false;
@@ -1531,7 +1454,7 @@ public class StandardCycle extends Cycle {
                         }
                     }
 
-                    // lock continues here
+                    // Lock continues here
                     parser.printDialogueLine(new VoiceDialogueLine("I know you think this is some kind of fair compromise, but it isn't. *No one* wins here."));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's a chance we'll have to take. We can make this work. If we just stay here and keep watch, no one has to die."));
                     parser.printDialogueLine(new PrincessDialogueLine("Where are you going?! You can't just leave me here!"));
@@ -1551,7 +1474,7 @@ public class StandardCycle extends Cycle {
                                 parser.printDialogueLine(new VoiceDialogueLine("You'll be the death of all of us, but fine. We'll do it your way."));
 
                                 System.out.println();
-                                this.toNightmare(false, false);
+                                this.ch1ToNightmare(false, false);
                                 return ChapterEnding.TONIGHTMARE;
 
                             case "slay":
@@ -1560,7 +1483,7 @@ public class StandardCycle extends Cycle {
                                 parser.printDialogueLine(new VoiceDialogueLine("It's never too late to do the right thing. Now hurry."));
 
                                 System.out.println();
-                                return this.retrieveBlade(false);
+                                return this.ch1RetrieveBlade(false);
                         }
                     }
                     
@@ -1585,21 +1508,20 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("She has to be bluffing. But... hurry."));
 
                     System.out.println();
-                    return this.retrieveBlade(true);
+                    return this.ch1RetrieveBlade(true);
                 
                 case "cGoStairs":
-                    parser.printDialogueLine(new VoiceDialogueLine("Oh? Have you finally decided to slay her? Maybe the world isn't doomed after all."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Oh? Have you finally decided to take the blade and slay her? Maybe the world isn't doomed after all."));
 
                     subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "slay", !canGetBlade, "Yes. Something here just doesn't add up, and it isn't worth the risk to take her word over the potential fate of the world. [Retrieve the blade.]"));
                     subMenu.add(new Option(this.manager, "lock", !canNightmare, "No, but I can't just set her free. I don't have enough information to make a decision yet. I'm going to keep her locked away down here, at least for a little bit. We can get to know each other better while I decide what to do. [Keep her locked away.]", 0));
                     subMenu.add(new Option(this.manager, "nevermind", "No. Not yet. Actually, I still have a few more questions for her before I make a decision. [Turn back.]"));
 
-                    String choice = "";
                     repeatSub = true;
                     while (repeatSub) {
-                        choice = parser.promptOptionsMenu(subMenu);
-                        switch (choice) {
+                        outcome = parser.promptOptionsMenu(subMenu);
+                        switch (outcome) {
                             case "slay":
                                 if (!manager.confirmContentWarnings("mutilation", true)) break;
 
@@ -1629,7 +1551,7 @@ public class StandardCycle extends Cycle {
                                             parser.printDialogueLine(new VoiceDialogueLine("You'll be the death of all of us, but fine. We'll do it your way."));
 
                                             System.out.println();
-                                            this.toNightmare(false, false);
+                                            this.ch1ToNightmare(false, false);
                                             return ChapterEnding.TONIGHTMARE;
 
                                         case "slay":
@@ -1638,7 +1560,7 @@ public class StandardCycle extends Cycle {
                                             parser.printDialogueLine(new VoiceDialogueLine("It's never too late to do the right thing. Now hurry."));
 
                                             System.out.println();
-                                            return this.retrieveBlade(false);
+                                            return this.ch1RetrieveBlade(false);
                                     }
                                 }
                                 
@@ -1650,7 +1572,7 @@ public class StandardCycle extends Cycle {
                         }
                     }
 
-                    if (!choice.equals("slay")) break;
+                    if (!outcome.equals("slay")) break;
 
                 case "getBladeSilent":
                     if (!manager.confirmContentWarnings("mutilation", true)) break;
@@ -1666,28 +1588,19 @@ public class StandardCycle extends Cycle {
 
 
                     System.out.println();
-                    return this.retrieveBlade(false);
+                    return this.ch1RetrieveBlade(false);
                 
                 case "freeDontRegret":
                     if (!manager.confirmContentWarnings("self-mutilation", true)) break;
 
-                    return this.rescueSoft(false, hereToSave && !lieSave, true, true, canFree, canNotFree);
+                    return this.ch1RescueSoft(false, hereToSave && !lieSave, true, true, canFree, canNotFree);
                 case "free":
                     if (!manager.confirmContentWarnings("self-mutilation", true)) break;
 
-                    return this.rescueSoft(false, hereToSave && !lieSave, false, true, canFree, canNotFree);
+                    return this.ch1RescueSoft(false, hereToSave && !lieSave, false, true, canFree, canNotFree);
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayPrincessNoBladeFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -1697,10 +1610,10 @@ public class StandardCycle extends Cycle {
     /**
      * The player tells the soft Princess that she's allegedly going to end the world
      * @param joinLate whether to skip the first block of dialogue or not
-     * @param canFree whether the player can free the Princess or the route is blocked
+     * @param canFree whether the player can free the Princess or the routes are blocked
      * @return true if the player chooses to free the Princess; false otherwise
      */
-    private boolean shareTaskSoft(boolean joinLate, boolean canFree) {
+    private boolean ch1ShareTaskSoft(boolean joinLate, boolean canFree) {
         this.knowsDestiny = true;
 
         if (!joinLate) {
@@ -1795,7 +1708,7 @@ public class StandardCycle extends Cycle {
      * @param canNotFree whether the player can not free the Princess or the routes are blocked
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding rescueSoft(boolean lateJoin, boolean hereToSaveTruth, boolean dontRegret, boolean talked, boolean canFree, boolean canNotFree) {
+    private ChapterEnding ch1RescueSoft(boolean lateJoin, boolean hereToSaveTruth, boolean dontRegret, boolean talked, boolean canFree, boolean canNotFree) {
         if (!lateJoin) {
             parser.printDialogueLine(new VoiceDialogueLine("You're only making this more difficult..."));
             if (dontRegret) parser.printDialogueLine(new PrincessDialogueLine("Thank you, and you won't! I promise!"));
@@ -1872,16 +1785,8 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("The Princess is in the basement below, remember? You can't slay her from here."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -1908,7 +1813,7 @@ public class StandardCycle extends Cycle {
         this.canSlayPrincess = true;
 
         this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "save", !canFree, "[Save the Princess.]"));
+        activeMenu.add(new Option(this.manager, "save", !canFree, "[Save the Princess.]", 0));
         activeMenu.add(new Option(this.manager, "slay", !canNotFree || hereToSaveTruth, "[Slay the Princess.]"));
 
         this.repeatActiveMenu = true;
@@ -1916,11 +1821,10 @@ public class StandardCycle extends Cycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "save":
-                    if (manager.confirmContentWarnings("mutilation; loss of bodily autonomy", true)) {
-                        return this.rescueCommitSoft();
-                    } else {
-                        break;
-                    }
+                    if (manager.confirmContentWarnings("mutilation; loss of bodily autonomy", true)) break;
+
+                    this.repeatActiveMenu = false;
+                    break;
 
                 case "cSlayPrincess":
                     if (!canNotFree || hereToSaveTruth) {
@@ -1928,30 +1832,14 @@ public class StandardCycle extends Cycle {
                         break;
                     }
                 case "slay":
-                    return this.rescueSlaySoft();
+                    return this.ch1RescueSlaySoft();
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
-        throw new RuntimeException("No ending reached");
-    }
-
-    /**
-     * The player commits to freeing the soft Princess (leads to Chapter II: The Damsel / The Witch)
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding rescueCommitSoft() {
+        // Save continues here
         this.canSlayPrincess = false;
         parser.printDialogueLine(new VoiceDialogueLine("Ugh. Fine."));
         parser.printDialogueLine(new VoiceDialogueLine("Against your better judgment, you place the blade against the ragged, self-inflicted wound on the Princess' arm, just above the unyielding chain binding her to this place."));
@@ -1978,24 +1866,13 @@ public class StandardCycle extends Cycle {
                     this.repeatActiveMenu = false;
                     break;
                     
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayPrincessFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
             }
         }
         
         parser.printDialogueLine(new VoiceDialogueLine("No. We won't have any of that. The stakes are too high. You can't just let her escape into the world."));
         parser.printDialogueLine(new VoiceDialogueLine("... no. *I* can't just let her escape into the world."));
-
-        System.out.println();
         parser.printDialogueLine(new VoiceDialogueLine("As the Princess approaches the bottom stair, your body steps forward and raises the blade."));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Wait... this isn't fair. You can't just *do* that!"));
         parser.printDialogueLine(new VoiceDialogueLine("Watch me."));
@@ -2033,31 +1910,20 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new PrincessDialogueLine("We could have gotten out of here together! Were you just lying to me this whole time?"));
                     parser.printDialogueLine(new PrincessDialogueLine("I don't know what's come over you, but if I have to kill you, then I'll kill you. Do you think I need both of my arms to do that?"));
                     
-                    this.rescueControlledSlay();
+                    this.ch1RescueControlledSlaySoft();
                     return ChapterEnding.TOWITCH;
 
                 case "save":
                     this.repeatActiveMenu = false;
                     break;
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
         parser.printDialogueLine(new VoiceDialogueLine("Stop that."));
         parser.printDialogueLine(new PrincessDialogueLine("Something's come over you, hasn't it? Y-you know you don't have to do this, right?"));
-
-        System.out.println();
         parser.printDialogueLine(new VoiceDialogueLine("Your body lunges forward, the blade held low, ready to sink into her heart."));
         parser.printDialogueLine(new VoiceDialogueLine("But the Princess dodges, stumbling back against the wall before the blade has a chance to connect."));
         parser.printDialogueLine(new VoiceDialogueLine("Stop it! Stop trying to resist me! I'm trying to get you out of here alive."));
@@ -2085,7 +1951,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new PrincessDialogueLine("There's no getting through to you right now, is there?"));
                     parser.printDialogueLine(new PrincessDialogueLine("A betrayal of will is still a betrayal. You'll regret thinking of me as a helpless damsel."));
 
-                    this.rescueControlledSlay();
+                    this.ch1RescueControlledSlaySoft();
                     return ChapterEnding.TOWITCH;
 
                 case "resist":
@@ -2096,22 +1962,13 @@ public class StandardCycle extends Cycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
         // Committed to Damsel
-        parser.printDialogueLine(new VoiceDialogueLine("The blade! Move. The. Blade!"));
+        parser.printDialogueLine(new VoiceDialogueLine("The blade! Move. The. *Blade!*"));
 
         System.out.println();
         parser.printDialogueLine(new VoiceDialogueLine("As your body remains frozen in stubborn resistance, the Princess takes a cautious step forward."));
@@ -2147,7 +2004,7 @@ public class StandardCycle extends Cycle {
     /**
      * The player allows the Narrator to take control of their body and slay the soft Princess after setting her free (leads to Chapter II: the Witch)
      */
-    private void rescueControlledSlay() {
+    private void ch1RescueControlledSlaySoft() {
         System.out.println();
         parser.printDialogueLine(new VoiceDialogueLine("She pounces on you with the same animal ferocity she used to tear through her arm."));
         parser.printDialogueLine(new VoiceDialogueLine("But you have a weapon. You raise the blade, digging it under her ribs, aiming directly for the heart."));
@@ -2169,7 +2026,7 @@ public class StandardCycle extends Cycle {
      * The player decides to slay the soft Princess when the blade falls into the basement after initially deciding to free her (leads to Chapter II: The Witch)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding rescueSlaySoft() {
+    private ChapterEnding ch1RescueSlaySoft() {
         parser.printDialogueLine(new VoiceDialogueLine("Without hesitation, you bring the blade down and plunge it into the Princess's back. *Finally.*"));
         parser.printDialogueLine(new VoiceDialogueLine("The wound drives her to the ground."));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay. There's no going back now. I'm with you to the end."));
@@ -2201,17 +2058,8 @@ public class StandardCycle extends Cycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
@@ -2297,19 +2145,11 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("You rush up the stairs and dive past the threshold. You're safe. For now."));
 
                     System.out.println();
-                    this.toNightmare(true, true);
+                    this.ch1ToNightmare(true, true);
                     return ChapterEnding.TONIGHTMAREFLED;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
@@ -2334,7 +2174,7 @@ public class StandardCycle extends Cycle {
      * @param worthRisk whether the player said setting the Princess free wasn't "worth the risk"
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding retrieveBlade(boolean worthRisk) {
+    private ChapterEnding ch1RetrieveBlade(boolean worthRisk) {
         boolean canWitch = true;
 
         this.currentLocation = GameLocation.CABIN;
@@ -2358,7 +2198,7 @@ public class StandardCycle extends Cycle {
         activeMenu.add(new Option(this.manager, "finish", "Let's finish this."));
 
         OptionsMenu subMenu;
-        boolean repeatSub = false;
+        boolean repeatSub;
 
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -2410,7 +2250,7 @@ public class StandardCycle extends Cycle {
                         switch (outcome) {
                             case "cGoCabin":
                             case "lock":
-                                this.toNightmare(true, true);
+                                this.ch1ToNightmare(true, true);
                                 return ChapterEnding.TONIGHTMARE;
                             
                             case "cGoBasement":
@@ -2418,17 +2258,8 @@ public class StandardCycle extends Cycle {
                                 repeatSub = false;
                                 break;
 
-                            case "cGoFail":
-                            case "cEnterFail":
-                            case "cLeaveFail":
-                            case "cApproachFail":
-                            case "cSlayNoPrincessFail":
-                            case "cSlaySelfFail":
-                            case "cTakeHasBladeFail":
-                            case "cDropFail":
-                            case "cThrowFail":
-                            case "cFail":
-                                this.giveDefaultFailResponse(outcome);
+                            default:
+                                this.giveDefaultFailResponse();
                         }
                     }
 
@@ -2437,16 +2268,7 @@ public class StandardCycle extends Cycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -2507,11 +2329,11 @@ public class StandardCycle extends Cycle {
 
                     switch (parser.promptOptionsMenu(subMenu)) {
                         case "wait":
-                            this.bladeBeastWaiting();
+                            this.ch1BladeBeastWaiting();
                             break;
 
                         case "shadows":
-                            this.bladeBeastShadows();
+                            this.ch1BladeBeastShadows();
                             break;
                     }
                     
@@ -2521,7 +2343,7 @@ public class StandardCycle extends Cycle {
                     if (!manager.confirmContentWarnings(Chapter.BEAST)) break;
 
                     parser.printDialogueLine(new PrincessDialogueLine("Oh? Do you want to play a waiting game? I've been down here for a long, long time. I'm very good at waiting."));
-                    this.bladeBeastWaiting();
+                    this.ch1BladeBeastWaiting();
                     return ChapterEnding.TOBEAST;
             }
         }
@@ -2601,7 +2423,7 @@ public class StandardCycle extends Cycle {
     /**
      * The player attempts to outwait the Princess after retrieving the blade (leads to Chapter II: the Beast)
      */
-    private void bladeBeastWaiting() {
+    private void ch1BladeBeastWaiting() {
         parser.printDialogueLine(new VoiceDialogueLine("You do your best to patiently wait her out."));
         parser.printDialogueLine(new VoiceDialogueLine("But, eventually, exhaustion starts to set in."));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Come on, wake up! We can't fall asleep down here!"));
@@ -2615,7 +2437,7 @@ public class StandardCycle extends Cycle {
                 break;
 
             case "shadows":
-                this.bladeBeastShadows();
+                this.ch1BladeBeastShadows();
                 return;
         }
 
@@ -2638,7 +2460,7 @@ public class StandardCycle extends Cycle {
     /**
      * The player follows the Princess into the darkness after retrieving the blade (leads to Chapter II: the Beast)
      */
-    private void bladeBeastShadows() {
+    private void ch1BladeBeastShadows() {
         parser.printDialogueLine(new VoiceDialogueLine("You step into the shadows. Too late, you hear the quiet patter of feet against the basement floor, followed by the taut pull and sharp pain of tearing flesh as the Princess lunges into you from behind and drags you to the floor."));
         this.hasBlade = false;
         parser.printDialogueLine(new VoiceDialogueLine("Her ferocity overwhelms you, and as the Princess rends flesh from bone, your limp fingers lose their grip on the blade. It slips from your hand, your one last means of defense lying useless beside you in a pool of your cooling blood. I suppose you just lacked the will to fight back."));
@@ -2655,10 +2477,10 @@ public class StandardCycle extends Cycle {
      * Runs the beginning of the basement sequence with the harsh princess (took the blade)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding basementHarsh(boolean askPrize) {
+    private ChapterEnding ch1BasementHarsh(boolean askPrize) {
         boolean canNightmare = !manager.hasVisited(Chapter.NIGHTMARE);
 
-        boolean canHesitateSlay = !manager.hasVisited(Chapter.ADVERSARY) || !manager.hasVisited(Chapter.TOWER) || !canNightmare;
+        boolean canHesitateSlay = !manager.hasVisitedAll(Chapter.ADVERSARY, Chapter.TOWER, Chapter.NIGHTMARE);
         boolean mustSpectre = !canHesitateSlay && manager.hasVisited(Chapter.PRISONER);
 
         this.currentLocation = GameLocation.STAIRS;
@@ -2704,16 +2526,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("What? No. You're already halfway down the stairs, you can't just turn around now."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlayNoPrincessFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cDropFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -2780,7 +2593,7 @@ public class StandardCycle extends Cycle {
                 this.canDropBlade = true;
                 this.canSlayPrincess = true;
                 
-                return this.steelNervesHarsh(canHesitateSlay, mustSpectre, false, askPrize);
+                return this.ch1SteelNervesHarsh(canHesitateSlay, mustSpectre, false, askPrize);
         }
         
         parser.printDialogueLine(new VoiceDialogueLine("Don't you dare."));
@@ -2806,24 +2619,16 @@ public class StandardCycle extends Cycle {
                     if (undecided) parser.printDialogueLine(new PrincessDialogueLine("Thank you. Maybe now we can just... talk."));
                     else parser.printDialogueLine(new PrincessDialogueLine("Thank you."));
 
-                    return this.dropBladeHarsh(canHesitateSlay, false, false);
+                    return this.ch1DropBladeHarsh(canHesitateSlay, false, false, false);
 
                 case "cSlayPrincess":
                 case "tighten":
                     parser.printDialogueLine(new VoiceDialogueLine("You ignore the trembling in your hands and tighten your grip on the blade."));
                     parser.printDialogueLine(new PrincessDialogueLine("You poor thing, your hands are shaking. Are you... scared of me? Because you should be."));
                     
-                    return this.steelNervesHarsh(canHesitateSlay, mustSpectre, hesitated, askPrize);
+                    return this.ch1SteelNervesHarsh(canHesitateSlay, mustSpectre, hesitated, askPrize);
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -2839,7 +2644,7 @@ public class StandardCycle extends Cycle {
      * @param askPrize whether the player asked the Narrator about their prize
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding steelNervesHarsh(boolean canHesitateSlay, boolean mustSpectre, boolean hesitated, boolean askPrize) {
+    private ChapterEnding ch1SteelNervesHarsh(boolean canHesitateSlay, boolean mustSpectre, boolean hesitated, boolean askPrize) {
         boolean canTower = !manager.hasVisited(Chapter.TOWER);
         boolean canSpectre = !manager.hasVisited(Chapter.SPECTRE);
         boolean canRazor = !manager.hasVisited(Chapter.RAZOR);
@@ -2847,13 +2652,6 @@ public class StandardCycle extends Cycle {
         boolean canSlay = (!hesitated && (canSpectre || canRazor)) || (hesitated && canHesitateSlay);
         boolean afraid = false;
         boolean isArmed = false;
-
-        // steeled: Spectre / Razor (no hesitation)
-        // hesitated: Adversary / Tower / Nightmare
-        // tower
-        // razor
-        String slayTarget;
-        slayTarget = (hesitated) ? "hesitated" : "steeled";
         
         System.out.println();
         parser.printDialogueLine(new VoiceDialogueLine("You step forward, your grip on the blade tightening as you steel your resolve."));
@@ -2878,7 +2676,6 @@ public class StandardCycle extends Cycle {
                     activeMenu.setCondition("isArmed", false);
                     activeMenu.setCondition("sorry", false);
                     afraid = true;
-                    slayTarget = "tower";
                     canSlay = canTower;
                     activeMenu.setCondition("slay", canSlay);
                     
@@ -2890,7 +2687,6 @@ public class StandardCycle extends Cycle {
                     activeMenu.setCondition("bluff", false);
                     activeMenu.setCondition("sorry", false);
                     isArmed = true;
-                    slayTarget = "razor";
                     canSlay = canRazor;
                     activeMenu.setCondition("slay", canSlay);
                     
@@ -2902,7 +2698,6 @@ public class StandardCycle extends Cycle {
                 case "sorry":
                     activeMenu.setCondition("bluff", false);
                     activeMenu.setCondition("isArmed", false);
-                    slayTarget = "hesitated"; // Adversary / Tower / Nightmare
                     canSlay = canHesitateSlay;
                     activeMenu.setCondition("slay", canSlay);
                     
@@ -2913,7 +2708,6 @@ public class StandardCycle extends Cycle {
 
                 case "noDrop":
                     this.repeatActiveMenu = false;
-                    slayTarget = "hesitated"; // Adversary / Tower / Nightmare
                     canSlay = canHesitateSlay;
                     activeMenu.setCondition("slay", canSlay);
                     break;
@@ -2927,7 +2721,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* The blade tumbles out of your trembling hands and drops to the floor with an unceremonious clang."));
                     parser.printDialogueLine(new PrincessDialogueLine("Thank you. Maybe now we can just... talk."));
 
-                    return this.dropBladeHarsh(canHesitateSlay, afraid, isArmed);
+                    return this.ch1DropBladeHarsh(canSlay, true, afraid, isArmed);
 
                 case "cSlayPrincess":
                     if (!canSlay) {
@@ -2935,25 +2729,17 @@ public class StandardCycle extends Cycle {
                         break;
                     }
                 case "slay":
-                    if (slayTarget.equals("steeled") && !canRazor) {
+                    if (!hesitated && !canRazor) {
                         if (!manager.confirmContentWarnings(Chapter.SPECTRE)) break;
-                    } else if (slayTarget.equals("razor") || (slayTarget.equals("steeled") && !canSpectre)) {
+                    } else if (isArmed || (!hesitated && !canSpectre)) {
                         if (!manager.confirmContentWarnings(Chapter.RAZOR)) break;
-                    } else if (slayTarget.equals("tower")) {
+                    } else if (afraid) {
                         if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
                     }
 
-                    return this.slayHarsh(slayTarget, askPrize);
+                    return this.ch1SlayHarsh(hesitated, afraid, isArmed, askPrize);
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -3024,7 +2810,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* The blade tumbles out of your trembling hands and drops to the floor with an unceremonious clang."));
                     parser.printDialogueLine(new PrincessDialogueLine("Thank you. Maybe now we can just... talk."));
 
-                    return this.dropBladeHarsh(canHesitateSlay, afraid, isArmed);
+                    return this.ch1DropBladeHarsh(canSlay, true, afraid, isArmed);
 
                 case "cSlayPrincess":
                     if (!canSlay) {
@@ -3032,23 +2818,15 @@ public class StandardCycle extends Cycle {
                         break;
                     }
                 case "slay":
-                    if (slayTarget.equals("razor")) {
+                    if (isArmed) {
                         if (!manager.confirmContentWarnings(Chapter.RAZOR)) break;
-                    } else if (slayTarget.equals("tower")) {
+                    } else if (afraid) {
                         if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
                     }
 
-                    return this.slayHarsh(slayTarget);
+                    return this.ch1SlayHarsh(hesitated, afraid, isArmed);
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cThrowFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
@@ -3059,61 +2837,583 @@ public class StandardCycle extends Cycle {
     /**
      * The player drops the blade to talk to the harsh Princess
      * @param canSlay whether the player can slay the Princess after hesitating or the routes are blocked
+     * @param steeled whether the player previously steeled their nerves or dropped the blade immediately
      * @param afraid whether the player wondered if the Princess was bluffing
      * @param isArmed whether the player wondered if the Princess is armed
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding dropBladeHarsh(boolean canSlay, boolean afraid, boolean isArmed) {
-        this.canSlayPrincess = false;
+    private ChapterEnding ch1DropBladeHarsh(boolean canSlay, boolean steeled, boolean afraid, boolean isArmed) {
+        boolean canTower = !manager.hasVisited(Chapter.TOWER);
+        boolean canNightmare = !manager.hasVisited(Chapter.NIGHTMARE);
+        boolean canRazor = !manager.hasVisited(Chapter.RAZOR);
+
+        boolean canHesitateSlay = !manager.hasVisitedAll(Chapter.ADVERSARY, Chapter.TOWER, Chapter.NIGHTMARE);
+        boolean canFree = !manager.hasVisitedAll(Chapter.PRISONER, Chapter.TOWER, Chapter.ADVERSARY);
+
         this.canDropBlade = false;
         this.hasBlade = false;
+
+        parser.printDialogueLine(new VoiceDialogueLine("Against your better judgment, you step forward to speak with the Princess face-to-face. Unarmed."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "We'll be fine."));
+        parser.printDialogueLine(new VoiceDialogueLine("I don't know what you're hoping to accomplish here, but I can assure you there's no reasoning with her. *Sigh.* Just make sure you don't forget about the blade on the floor. You're going to need it."));
+
+        System.out.println();
+        parser.printDialogueLine(new PrincessDialogueLine("So here we are. What an awkward start to a relationship."));
+
+        int vagueCount = 0;
+        boolean howFree = false;
+
+        OptionsMenu subMenu;
+        String outcome;
+        boolean repeatSub;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "awkward", "(Explore) \"Yeah, it's uh... pretty awkward.\""));
+        activeMenu.add(new Option(this.manager, "relationship", "(Explore) \"A 'relationship?' Are you coming on to me?\""));
+        activeMenu.add(new Option(this.manager, "howFree", "(Explore) \"How would I get you out of here?\""));
+        activeMenu.add(new Option(this.manager, "shareTaskA", !canTower, "(Explore) \"I'm here because you're supposed to end the world.\""));
+        activeMenu.add(new Option(this.manager, "shareTaskB", !canTower, "(Explore) \"There's people out there who think you're going to end the world. What do you have to say about that?\""));
+        activeMenu.add(new Option(this.manager, "name", "(Explore) \"What's your name?\""));
+        activeMenu.add(new Option(this.manager, "howLong", "(Explore) \"How long have you been down here?\""));
+        activeMenu.add(new Option(this.manager, "whyHere", "(Explore) \"Do you know *why* I'm here to kill you?\""));
+        activeMenu.add(new Option(this.manager, "enough", "\"Okay, we've talked enough...\""));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "awkward":
+                    activeMenu.setCondition("relationship", false);
+                    parser.printDialogueLine(new PrincessDialogueLine("I know. I just said that. Now why are you here to kill me?"));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "reasons", "\"I have my reasons. Do you think I'd just come here to kill someone without even knowing why? That'd be ridiculous!\""));
+                    subMenu.add(new Option(this.manager, "deflect", "\"Do you know why I'm here to kill you?\""));
+                    subMenu.add(new Option(this.manager, "shareTask", !canTower, "\"You're supposed to end the world.\"", !this.knowsDestiny));
+                    subMenu.add(new Option(this.manager, "notSure", "\"I've been told things, but I'm not sure what to believe.\""));
+
+                    switch (parser.promptOptionsMenu(subMenu)) {
+                        case "reasons":
+                            if (steeled) parser.printDialogueLine(new PrincessDialogueLine("And yet you hesitated the moment you saw me. And you dropped your knife. If killing me was really that important, you would have had a little more gumption, don't you think?"));
+                            else parser.printDialogueLine(new PrincessDialogueLine("And yet you dropped your knife the second you saw me."));
+
+                            parser.printDialogueLine(new PrincessDialogueLine("So... someone put you up to this, right? And whoever it is, it's probably the same someone who shoved me into this dark pit and chained me to a wall."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "That's a fair question. Who chained her in this basement, and if she's so dangerous, *how* did they manage to trap her? And why have we been left to do their dirty work?"));
+                            parser.printDialogueLine(new VoiceDialogueLine("Don't give away the game, and don't let her distract you. That's exactly what she wants."));
+                            parser.printDialogueLine(new PrincessDialogueLine("I'm right, aren't I? So who put you up to this?"));
+                            break;
+
+                        case "deflect":
+                            parser.printDialogueLine(new VoiceDialogueLine("She laughs, her voice dripping with pity."));
+
+                            if (steeled) {
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "That laugh...! I think I'm in love."));
+                                parser.printDialogueLine(new VoiceDialogueLine("Stop it."));
+                            } else {
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She was just threatening us a second ago. Am I the only one here unnerved by that perfect little laugh?"));
+                                parser.printDialogueLine(new VoiceDialogueLine("I'll take that as a sign that you're finally coming around to reason."));
+                            }
+
+                            parser.printDialogueLine(new PrincessDialogueLine("I have no idea. To be honest, I don't even know why I'm down here... or how I got here."));
+                            parser.printDialogueLine(new PrincessDialogueLine("I was kind of hoping *you* might be able to shed some light on the whole situation."));
+                            break;
+
+                        case "shareTask":
+                            activeMenu.setCondition("shareTaskA", false);
+                            activeMenu.setCondition("shareTaskB", false);
+                            activeMenu.setCondition("whyHere", false);
+                            switch (this.ch1ShareTaskHarsh(steeled, isArmed, canFree)) {
+                                case 0:
+                                    afraid = true;
+                                    canSlay = (isArmed) ? canRazor : canTower;
+                                    vagueCount += 1;
+                                    break;
+                                case 1:
+                                    afraid = false;
+                                    canSlay = (isArmed) ? canRazor : canHesitateSlay;
+                                    vagueCount += 1;
+                                    break;
+                                case 2: return this.ch1SlayHarsh(true, afraid, isArmed);
+                                case 3: return this.ch1RescueHarsh(howFree);
+                            }
+
+                        case "notSure":
+                            parser.printDialogueLine(new VoiceDialogueLine("Believe *me.*"));
+                            parser.printDialogueLine(new PrincessDialogueLine("And do you think asking *me* what to believe is going to suddenly make everything crystal clear? Let's not pretend that's going to happen. As far as you're concerned, and as far as They're concerned, I'm going to say whatever I have to to get out of here. That's just the dynamic of our situation."));
+                            break;
+                    }
+
+                case "relationship":
+                    activeMenu.setCondition("awkward", false);
+                    parser.printDialogueLine(new PrincessDialogueLine("Don't jump to any weird conclusions. We're two people who have met each other. By definition, we have a relationship."));
+                    break;
+
+                case "howFree":
+                    howFree = true;
+                    parser.printDialogueLine(new VoiceDialogueLine("You can't. Don't bother."));
+                    parser.printDialogueLine(new PrincessDialogueLine("I'm guessing you don't have the key, then? I'm sure there's a key somewhere around here. And if there isn't..."));
+                    parser.printDialogueLine(new PrincessDialogueLine("Well, we can always put that knife to good use."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Her sharp eyes settle on the edge of the blade."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She isn't suggesting what I think she's suggesting... right?"));
+                    parser.printDialogueLine(new VoiceDialogueLine("She is. I'm sure of it."));
+                    break;
+
+                case "shareTaskA":
+                    activeMenu.setCondition("shareTaskB", false);
+                    activeMenu.setCondition("whyHere", false);
+                    switch (this.ch1ShareTaskHarsh(steeled, isArmed, canFree)) {
+                        case 0:
+                            afraid = true;
+                            canSlay = (isArmed) ? canRazor : canTower;
+                            vagueCount += 1;
+                            break;
+                        case 1:
+                            afraid = false;
+                            canSlay = (isArmed) ? canRazor : canHesitateSlay;
+                            vagueCount += 1;
+                            break;
+                        case 2: return this.ch1SlayHarsh(true, afraid, isArmed);
+                        case 3: return this.ch1RescueHarsh(howFree);
+                    }
+
+                case "shareTaskB":
+                    activeMenu.setCondition("shareTaskA", false);
+                    activeMenu.setCondition("whyHere", false);
+                    switch (this.ch1ShareTaskHarsh(steeled, isArmed, canFree)) {
+                        case 0:
+                            afraid = true;
+                            canSlay = (isArmed) ? canRazor : canTower;
+                            vagueCount += 1;
+                            break;
+                        case 1:
+                            afraid = false;
+                            canSlay = (isArmed) ? canRazor : canHesitateSlay;
+                            vagueCount += 1;
+                            break;
+                        case 2: return this.ch1SlayHarsh(true, afraid, isArmed);
+                        case 3: return this.ch1RescueHarsh(howFree);
+                    }
+
+                case "name":
+                    vagueCount += 1;
+                    parser.printDialogueLine(new VoiceDialogueLine("She hesitates before answering."));
+                    parser.printDialogueLine(new PrincessDialogueLine("You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really."));
+                    
+                    if (vagueCount == 1) {
+                        parser.printDialogueLine(new VoiceDialogueLine("Note the lack of detail. You can't trust her."));
+                    } else if (vagueCount == 2) {
+                        parser.printDialogueLine(new VoiceDialogueLine("Again, she offers no specifics. No matter how hard you try, you'll never get a straight answer out of her."));
+                    }
+
+                    break;
+                
+                case "howLong":
+                    vagueCount += 1;
+                    parser.printDialogueLine(new PrincessDialogueLine("Too long."));
+                    
+                    if (vagueCount == 1) {
+                        parser.printDialogueLine(new VoiceDialogueLine("Note the lack of detail. You can't trust her."));
+                    } else if (vagueCount == 2) {
+                        parser.printDialogueLine(new VoiceDialogueLine("Again, she offers no specifics. No matter how hard you try, you'll never get a straight answer out of her."));
+                    }
+
+                    break;
+
+                case "whyHere":
+                    parser.printDialogueLine(new PrincessDialogueLine("Do you?"));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "shareTask", !canTower, "\"You're apparently going to end the world.\""));
+                    subMenu.add(new Option(this.manager, "told", "\"I know what I've been told. Whether or not I believe it is an entirely different matter.\""));
+                    subMenu.add(new Option(this.manager, "lie", "(Lie) \"No.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
+
+                    switch (parser.promptOptionsMenu(subMenu)) {
+                        case "shareTask":
+                            activeMenu.setCondition("shareTaskA", false);
+                            activeMenu.setCondition("shareTaskB", false);
+                            switch (this.ch1ShareTaskHarsh(steeled, isArmed, canFree)) {
+                                case 0:
+                                    afraid = true;
+                                    canSlay = (isArmed) ? canRazor : canTower;
+                                    vagueCount += 1;
+                                    break;
+                                case 1:
+                                    afraid = false;
+                                    canSlay = (isArmed) ? canRazor : canHesitateSlay;
+                                    vagueCount += 1;
+                                    break;
+                                case 2: return this.ch1SlayHarsh(true, afraid, isArmed);
+                                case 3: return this.ch1RescueHarsh(howFree);
+                            }
+
+                        case "told":
+                            parser.printDialogueLine(new PrincessDialogueLine("So you're not going to share? How pointless. If you want to talk, I'll talk, but this isn't talking."));
+                            break;
+
+                        case "lie":
+                            parser.printDialogueLine(new PrincessDialogueLine("You're lying."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "How does she know that?"));
+                            parser.printDialogueLine(new PrincessDialogueLine("Don't think that just because I'm the one in chains it means you have a right to interrogate me."));
+                            break;
+
+                        case "silent":
+                            parser.printDialogueLine(new PrincessDialogueLine("I see. The silent treatment. You know, if you don't share with me, I'm not going to share with you."));
+                            break;
+                    }
+                
+                case "enough":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cSlayPrincess":
+                    if (!canSlay) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+
+                    if (isArmed && !manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                    else if (afraid && !manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                    break;
+
+                case "cGoStairs":
+                    parser.printDialogueLine(new VoiceDialogueLine("Where are you going? In case you've forgotten, you're here to complete a very important task."));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "lock", !canNightmare, "I don't have enough information to make a decision yet. I'm going to keep her locked away down here, at least for a little bit. We can get to know each other better while I decide what to do. [Keep her locked away.]", 0));
+                    subMenu.add(new Option(this.manager, "nevermind", "You're right. I still have a few more questions for her before I make a decision. [Turn back.]"));
+
+                    repeatSub = true;
+                    while (repeatSub) {
+                        outcome = parser.promptOptionsMenu(subMenu);
+                        switch (outcome) {
+                            case "lock":
+                                if (!manager.confirmContentWarnings(Chapter.NIGHTMARE)) break;
+
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "That seems like a pretty good compromise."));
+                                parser.printDialogueLine(new VoiceDialogueLine("Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out."));
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's a chance we'll have to take. We can make this work. If we just stay here and keep watch, no one has to die."));
+                                parser.printDialogueLine(new PrincessDialogueLine("Where are you going?! You can't just leave me here!"));
+                                parser.printDialogueLine(new VoiceDialogueLine("You turn your back to the Princess and make your way back to the stairs."));
+                                parser.printDialogueLine(new PrincessDialogueLine("It won't be long before I slip these chains. And once I'm out of here, there will be hell to pay for leaving me behind."));
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "\"Slip these chains?\" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing."));
+                                parser.printDialogueLine(new VoiceDialogueLine("Either way, she dropped the mask, didn't she? You can still turn around and finish the job."));
+
+                                subMenu = new OptionsMenu(true);
+                                subMenu.add(new Option(this.manager, "lock", "No, we're sticking to the plan and locking her down here."));
+                                subMenu.add(new Option(this.manager, "slay", !canTower, "Oh that's a relief! I was afraid I'd already committed to not slaying her.", 0));
+
+                                while (repeatSub) {
+                                    switch (parser.promptOptionsMenu(subMenu)) {
+                                        case "lock":
+                                            parser.printDialogueLine(new VoiceDialogueLine("You'll be the death of all of us, but fine. Have it your way."));
+
+                                            System.out.println();
+                                            this.ch1ToNightmare(false, false);
+                                            return ChapterEnding.TONIGHTMARE;
+
+                                        case "slay":
+                                            if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                                            parser.printDialogueLine(new VoiceDialogueLine("It's never too late to do the right thing. Now hurry."));
+
+                                            System.out.println();
+                                            return this.ch1SlayHarsh(true, true, isArmed);
+                                    }
+                                }
+                                
+                                break;
+
+                            case "nevermind":
+                                repeatSub = false;
+                                parser.printDialogueLine(new VoiceDialogueLine("There's no \"decision\" to be made here, but fine."));
+                                break;
+                        }
+                    }
+                    
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // "We've talked enough" continues here
+        parser.printDialogueLine(new PrincessDialogueLine("Oh. Have you decided what to do with me?"));
+        parser.printDialogueLine(new VoiceDialogueLine("You know why you're here..."));
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", !canSlay, "[Slay the Princess.]"));
+        activeMenu.add(new Option(this.manager, "free", !canFree, "\"I'm getting you out of here.\" [Examine the chains.]"));
+        activeMenu.add(new Option(this.manager, "lock", !canNightmare, "\"I'm going to keep you locked away down here. At least for a bit. We can get to know each other better while I decide what to do.\" [Keep her locked away.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cSlayPrincess":
+                    if (!canSlay) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "slay":
+                    if (isArmed && !manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                    else if (afraid && !manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                    return this.ch1SlayHarsh(true, afraid, isArmed);
+
+                case "free":
+                    parser.printDialogueLine(new VoiceDialogueLine("Oh, you have to be kidding me!"));
+                    return this.ch1RescueHarsh(howFree);
+
+                case "cGoStairs":
+                    if (!canNightmare) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "lock":
+                    if (manager.confirmContentWarnings(Chapter.NIGHTMARE)) this.repeatActiveMenu = false;
+
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse();
+            }
+        }
+
+        // Lock continues here
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "That seems like a pretty good compromise."));
+        parser.printDialogueLine(new VoiceDialogueLine("Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out."));
+        parser.printDialogueLine(new PrincessDialogueLine("One way or another, I'm going to find a way out of here. You can make it easier for both of us if you help."));
+        parser.printDialogueLine(new PrincessDialogueLine("And if you don't..."));
+        parser.printDialogueLine(new PrincessDialogueLine("I can promise that you'll come to regret that decision."));
+        parser.printDialogueLine(new VoiceDialogueLine("You have to make a choice. Let's hope for all our sakes it's the right one."));
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", !canSlay && !canTower, "[Slay the Princess.]"));
+        activeMenu.add(new Option(this.manager, "free", !canFree, "\"Okay. Let's get you out of here.\" [Examine the chains.]"));
+        activeMenu.add(new Option(this.manager, "lock", "Uh, I *made* my choice. I'm locking her in the basement."));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cSlayPrincess":
+                    if (!canSlay && !canTower) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "slay":
+                    if (isArmed && !manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                    else if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                    return this.ch1SlayHarsh(true, true, isArmed);
+
+                case "free":
+                    parser.printDialogueLine(new VoiceDialogueLine("Oh, for the love of..."));
+                    parser.printDialogueLine(new PrincessDialogueLine("Good. I'm glad you've come to your senses."));
+                    parser.printDialogueLine(new VoiceDialogueLine("You're making a huge mistake."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "No. You're doing the right thing."));
+                    return this.ch1RescueHarsh(howFree);
+
+                case "cGoStairs":
+                case "lock":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse();
+            }
+        }
+
+        // Lock continues here
+
+        parser.printDialogueLine(new VoiceDialogueLine("I know you think this is a fair compromise, but it isn't. *No one* wins here."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's a chance we'll have to take. We can make this work. If we just stay here and keep watch, no one has to die."));
+        parser.printDialogueLine(new PrincessDialogueLine("You're making a mistake."));
+        parser.printDialogueLine(new VoiceDialogueLine("You turn your back to the Princess and make your way to the stairs."));
+        parser.printDialogueLine(new PrincessDialogueLine("It won't be long before I slip these chains. And once I'm out of here, there will be *hell* to pay for leaving me behind."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "\"Slip these chains?\" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing."));
+        parser.printDialogueLine(new VoiceDialogueLine("Either way, she dropped her mask, didn't she? You can still turn around and finish the job."));
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "lock", "No, we're sticking to the plan and locking her down here."));
+        activeMenu.add(new Option(this.manager, "slay", !canTower, "Oh that's a relief! I was afraid I'd already committed to not slaying her.", 0));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "lock":
+                    parser.printDialogueLine(new VoiceDialogueLine("You'll be the death of all of us, but fine. Have it your way."));
+
+                    System.out.println();
+                    this.ch1ToNightmare(false, false);
+                    return ChapterEnding.TONIGHTMARE;
+
+                case "slay":
+                    if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                    parser.printDialogueLine(new VoiceDialogueLine("It's never too late to do the right thing. Now hurry."));
+
+                    System.out.println();
+                    return this.ch1SlayHarsh(true, true, isArmed);
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player tells the harsh Princess that she's allegedly going to end the world
+     * @param steeled whether the player previously steeled their nerves or dropped the blade immediately
+     * @param canFree whether the player can free the Princess or the routes are blocked
+     * @return 1 if the player returns to regular dialogue while trusting the Princess; 2 if the player decides to slay the Princess; 3 if the player decides to free the Princess; 0 otherwise
+     */
+    private int ch1ShareTaskHarsh(boolean steeled, boolean isArmed, boolean canFree) {
+        boolean canSlay = (isArmed) ? !manager.hasVisited(Chapter.RAZOR) : !manager.hasVisitedAll(Chapter.ADVERSARY, Chapter.TOWER, Chapter.NIGHTMARE);
+
+        this.knowsDestiny = true;
         
+        parser.printDialogueLine(new VoiceDialogueLine("Don't just *tell* her that!"));
 
+        if (steeled) {
+            parser.printDialogueLine(new PrincessDialogueLine("That's cute. Do you believe that? Do you think I'm some sort of... monster?"));
+        } else {
+            parser.printDialogueLine(new PrincessDialogueLine("Is that why they threw me down here? But I don't want to hurt anyone. I like the world! I think."));
+            parser.printDialogueLine(new PrincessDialogueLine("I don't remember much about it, to be honest. I've been down here a long time."));
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Just how long has she been down here?"));
+        }
+        
+        parser.printDialogueLine(new PrincessDialogueLine("If I'm supposed to be capable of ending the world, then how did I wind up here, chained to a wall? Have they told you why I'm allegedly so... dangerous?"));
 
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        OptionsMenu shareMenu = new OptionsMenu(true);
+        shareMenu.add(new Option(this.manager, "deflect", "(Deflect) \"What are you going to do if I let you out of here?\""));
+        shareMenu.add(new Option(this.manager, "enough", "\"I've been told enough.\""));
+        shareMenu.add(new Option(this.manager, "youTell", "\"I was hoping you'd tell me.\""));
+        shareMenu.add(new Option(this.manager, "reasons", "\"No. But I'm sure they have their reasons for keeping that information secret from me.\""));
+        shareMenu.add(new Option(this.manager, "trustYou", "\"No. And if I'm being honest, I'm more inclined to trust you than I'm inclined to trust Them.\""));
+        shareMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
+        switch (parser.promptOptionsMenu(shareMenu)) {
+            case "deflect":
+                parser.printDialogueLine(new VoiceDialogueLine("The Princess hesitates before responding."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She doesn't know. She's been down here too long to have any idea of what she'd do in another life."));
+                parser.printDialogueLine(new VoiceDialogueLine("She knows what she'd do. She's just searching for whatever answer she thinks you want to hear."));
+                parser.printDialogueLine(new PrincessDialogueLine("I don't think I can answer that question in any way you'd find meaningful."));
+                break;
 
-        // PLACEHOLDER
-        return null;
+            case "enough":
+                parser.printDialogueLine(new VoiceDialogueLine("Thanks for the vote of confidence."));
+                parser.printDialogueLine(new PrincessDialogueLine("They haven't shared a thing, have they? All they've done is point a finger."));
+                break;
+
+            case "youTell":
+                parser.printDialogueLine(new PrincessDialogueLine("Ending the world seems like an awful lot for just one person to do. I wouldn't even know where to start."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I believe her."));
+                parser.printDialogueLine(new VoiceDialogueLine("She doesn't have to know how to destroy the world to be capable of doing it."));
+                break;
+
+            case "reasons":
+                parser.printDialogueLine(new VoiceDialogueLine("Thanks for the vote of confidence."));
+                parser.printDialogueLine(new PrincessDialogueLine("What if they're bad reasons, though? If they had *good* reasons for thinking I was dangerous, wouldn't they have shared them with you? I don't want to hurt anyone. I just want to leave."));
+                break;
+            
+            case "trustYou":
+                parser.printDialogueLine(new VoiceDialogueLine("Sooner or later you'll understand that I have your best interests at heart. Hopefully sooner."));
+                parser.printDialogueLine(new PrincessDialogueLine("How sweet. Now be a pal and help me get out of here, would you? We can figure out how to deal with Them after I'm free."));
+
+                OptionsMenu finalShareMenu = new OptionsMenu();
+                finalShareMenu.add(new Option(this.manager, "talk", "\"I still have a few more questions before I decide what to do.\""));
+                finalShareMenu.add(new Option(this.manager, "slay", !canSlay, "\"Actually, I've changed my mind. I don't trust you.\" [Slay the Princess.]", 0));
+                finalShareMenu.add(new Option(this.manager, "free", !canFree, "\"I'll see what I can do.\" [Examine the chains.]", 0));
+
+                boolean repeatMenu = true;
+                String outcome;
+                while (repeatMenu) {
+                    outcome = parser.promptOptionsMenu(finalShareMenu);
+                    switch (outcome) {
+                        case "talk":
+                            parser.printDialogueLine(new PrincessDialogueLine("Fine. What do you want to know?"));
+                            return 1;
+
+                        case "cSlayPrincess":
+                            if (!canSlay) {
+                                parser.printDialogueLine(CANTSTRAY);
+                                break;
+                            } else if (isArmed && !manager.confirmContentWarnings(Chapter.RAZOR)) {
+                                break;
+                            }
+                        case "slay":
+                            if (isArmed && !manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                            return 2;
+
+                        case "free":
+                            if (!manager.confirmContentWarnings("self-mutilation", true)) break;
+                            return 3;
+
+                        default:
+                            this.giveDefaultFailResponse(activeOutcome);
+                    } 
+                }
+
+            case "silent":
+                parser.printDialogueLine(new PrincessDialogueLine("They haven't told you anything, have they?"));
+                break;
+        }
+        
+        parser.printDialogueLine(new PrincessDialogueLine("At the end of the day, whatever the two of us have going on down here is about trust."));
+        parser.printDialogueLine(new PrincessDialogueLine("Whoever sent you to \"slay\" me claimed I was a threat to the world, but they didn't tell you why."));
+        parser.printDialogueLine(new PrincessDialogueLine("That doesn't sound right to me, and I don't think it sounds right to you, either. Otherwise we'd be killing each other instead of talking."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She has a point. There's a reason I've been telling you to question this situation. And there's a reason you've listened."));
+        parser.printDialogueLine(new PrincessDialogueLine("So I could tell you that I'd lead a quiet life in the woods or that I'd open an orphanage or that I'd do any other number of \"good\" things that I'm sure you think you want to hear..."));
+        parser.printDialogueLine(new PrincessDialogueLine("But you don't really know me, do you? What can my word possibly be worth in a situation like this?"));
+        parser.printDialogueLine(new VoiceDialogueLine("She's right about one thing. Her word isn't worth anything."));
+        parser.printDialogueLine(new PrincessDialogueLine("Like I said, it's all about trust. *Blind* trust."));
+        parser.printDialogueLine(new PrincessDialogueLine("So do you trust me -- the prisoner, the victim, the Princess *clearly* incapable of ending the world -- or do you trust whoever put me here?"));
+        parser.printDialogueLine(new VoiceDialogueLine("She's wrong. This isn't about trust. This is about *risk.* We stand to lose everything, all for the sake of one person. And a subjugating *monarch,* no less."));
+        return 0;
     }
 
     /**
      * The player attempts to slay the harsh Princess
-     * @param origin the path the player attempted to slay the Princess from; determines the outcome
+     * @param hesitated whether the player initially hesitated or not
+     * @param afraid whether the player is afraid of the Princess
+     * @param isArmed whether the player wondered if the Princess is armed
      * @param askPrize whether the player asked the Narrator about their prize
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding slayHarsh(String origin, boolean askPrize) {
-        // Origin:
-        // steeled = Spectre / Razor
-        // hesitated = Adversary / Tower / Nightmare
-        // tower
-        // razor
+    private ChapterEnding ch1SlayHarsh(boolean hesitated, boolean afraid, boolean isArmed, boolean askPrize) {
+        // !hesitated = Spectre / Razor
+        // isArmed = forced Razor
+        // afraid = forced Tower
+        // otherwise = Adversary / Tower / Nightmare
 
+        this.hasBlade = true;
         this.canDropBlade = false;
-        switch (origin) {
-            case "steeled": return this.slayHarshSteeled(askPrize);
-            case "hesitated": return this.slayHarshHesitated();
-            case "tower":
-                this.slayHarshForceTower();
+        if (!hesitated) {
+            return this.ch1SlayHarshSteeled(askPrize);
+        } else {
+            if (isArmed) {
+                return this.ch1SlayHarshForceRazor();
+            } else if (afraid) {
+                this.ch1SlayHarshForceTower();
                 return ChapterEnding.TOTOWERUNHARMED;
-            case "razor": return this.slayHarshForceRazor();
-
-            default: throw new RuntimeException("Invalid slay origin");
+            } else {
+                return this.ch1SlayHarshHesitated();
+            }
         }
     }
 
     /**
      * The player attempts to slay the harsh Princess
-     * @param origin the path the player attempted to slay the Princess from; determines the outcome
+     * @param hesitated whether the player initially hesitated or not
+     * @param afraid whether the player is afraid of the Princess
+     * @param isArmed whether the player wondered if the Princess is armed
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding slayHarsh(String origin) {
-        return this.slayHarsh(origin, false);
+    private ChapterEnding ch1SlayHarsh(boolean hesitated, boolean afraid, boolean isArmed) {
+        return this.ch1SlayHarsh(hesitated, afraid, isArmed, false);
     }
 
     /**
@@ -3121,7 +3421,7 @@ public class StandardCycle extends Cycle {
      * @param askPrize whether the player asked the Narrator about their prize
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding slayHarshSteeled(boolean askPrize) {
+    private ChapterEnding ch1SlayHarshSteeled(boolean askPrize) {
         parser.printDialogueLine(new VoiceDialogueLine("You lunge forward without a moment's hesitation."));
         parser.printDialogueLine(new VoiceDialogueLine("You feel flesh easily give way and look down to see your blade already sinking deep into her heart."));
         parser.printDialogueLine(new PrincessDialogueLine("O... oh."));
@@ -3143,8 +3443,10 @@ public class StandardCycle extends Cycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "yes":
+                    if (!manager.confirmContentWarnings(Chapter.SPECTRE, "suicide")) break;
+
                     parser.printDialogueLine(new VoiceDialogueLine("Yes, exactly. It's over."));
-                    return this.slaySuccess(askPrize);
+                    return this.ch1SlaySuccess(askPrize);
                 
                 case "maybe":
                     this.repeatActiveMenu = false;
@@ -3180,6 +3482,8 @@ public class StandardCycle extends Cycle {
             switch (activeOutcome) {
                 case "cTake":
                 case "blade":
+                    if (!manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                    
                     this.repeatActiveMenu = false;
 
                     parser.printDialogueLine(new VoiceDialogueLine("You lean down and wrap your hand around the blade's hilt."));
@@ -3189,6 +3493,8 @@ public class StandardCycle extends Cycle {
                     break;
 
                 case "pulse":
+                    if (!manager.confirmContentWarnings(Chapter.RAZOR)) break;
+                    
                     this.repeatActiveMenu = false;
 
                     parser.printDialogueLine(new VoiceDialogueLine("You lean down and place your hand against her neck, holding your breath as you search for a pulse. Even though you know you're not going to find one."));
@@ -3204,21 +3510,16 @@ public class StandardCycle extends Cycle {
 
                 case "cGoStairs":
                 case "leave":
-                    //dialogue
-                    return this.slaySuccess(askPrize);
+                    if (!manager.confirmContentWarnings(Chapter.SPECTRE, "suicide")) break;
+
+                    parser.printDialogueLine(new VoiceDialogueLine("Yes, exactly. It's over."));
+                    return this.ch1SlaySuccess(askPrize);
 
                 case "cSlayPrincessNoBladeFail":
                     parser.printDialogueLine(new VoiceDialogueLine("Are you even listening to me? She's already dead."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfNoBladeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(activeOutcome);
             }
         }
@@ -3244,7 +3545,7 @@ public class StandardCycle extends Cycle {
      * @param askPrize whether the player asked the Narrator about their prize
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding slaySuccess(boolean askPrize) {
+    private ChapterEnding ch1SlaySuccess(boolean askPrize) {
         // good ending or Spectre
         this.currentLocation = GameLocation.CABIN;
         this.hasBlade = false;
@@ -3276,15 +3577,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("She's already dead, thanks to your efforts."));
                     break;
 
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
-                case "cDropNoBladeFail":
-                case "cThrowNoBladeFail":
-                case "cFail":
+                default:
                     this.giveDefaultFailResponse(activeOutcome);
             }
         }
@@ -3335,10 +3628,10 @@ public class StandardCycle extends Cycle {
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "explore", "(Explore) Didn't you hear the Narrator? I'm happy. We're happy."));
         activeMenu.add(new Option(this.manager, "notHappyA", "Hmm, okay, maybe I'm not happy. And I'm not just saying that because you're the last person I talked to.", activeMenu.get("explore")));
-        activeMenu.add(new Option(this.manager, "notHappyB", "Hmm, okay, maybe I'm not happy. And I'm not just saying that because you're the last person I talked to.", this.goodEndingAttempted));
-        activeMenu.add(new Option(this.manager, "sure", this.goodEndingAttempted, "No, we're happy. I'm sure of it.", activeMenu.get("explore")));
-        activeMenu.add(new Option(this.manager, "hellNo", "Hell no, do you have any idea how to get us the heck out of here?", !this.goodEndingAttempted));
-        activeMenu.add(new Option(this.manager, "ofCourse", this.goodEndingAttempted, "Of course we are. I like it here."));
+        activeMenu.add(new Option(this.manager, "notHappyB", "Hmm, okay, maybe I'm not happy. And I'm not just saying that because you're the last person I talked to.", manager.goodEndingAttempted()));
+        activeMenu.add(new Option(this.manager, "sure", manager.goodEndingAttempted(), "No, we're happy. I'm sure of it.", activeMenu.get("explore")));
+        activeMenu.add(new Option(this.manager, "hellNo", "Hell no, do you have any idea how to get us the heck out of here?", !manager.goodEndingAttempted()));
+        activeMenu.add(new Option(this.manager, "ofCourse", manager.goodEndingAttempted(), "Of course we are. I like it here."));
 
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -3351,15 +3644,41 @@ public class StandardCycle extends Cycle {
                 case "notHappyA":
                 case "notHappyB":
                     parser.printDialogueLine(new VoiceDialogueLine("Good, because I have an idea to get us out of here. Though you're probably not going to like it."));
-                    break;
+                    
+                    if (this.ch1HeroSuggestSpectre()) {
+                        return ChapterEnding.TOSPECTRE;
+                    } else if (this.ch1GoodEnding()) {
+                        return ChapterEnding.GOODENDING;
+                    } else {
+                        activeMenu.setCondition("notHappyA", false);
+                        activeMenu.setCondition("hellNo", false);
+
+                        activeMenu.setCondition("notHappyB", true);
+                        activeMenu.setGreyedOut("sure", true);
+                        activeMenu.setGreyedOut("ofCourse", true);
+                        break;
+                    }
                 
                 case "hellNo":
                     parser.printDialogueLine(new VoiceDialogueLine("I do, but you're probably not going to like it."));
-                    break;
+                    
+                    if (this.ch1HeroSuggestSpectre()) {
+                        return ChapterEnding.TOSPECTRE;
+                    } else if (this.ch1GoodEnding()) {
+                        return ChapterEnding.GOODENDING;
+                    } else {
+                        activeMenu.setCondition("notHappyA", false);
+                        activeMenu.setCondition("hellNo", false);
+
+                        activeMenu.setCondition("notHappyB", true);
+                        activeMenu.setGreyedOut("sure", true);
+                        activeMenu.setGreyedOut("ofCourse", true);
+                        break;
+                    }
 
                 case "sure":
                 case "ofCourse":
-                    if (this.goodEnding()) return ChapterEnding.GOODENDING;
+                    if (this.ch1GoodEnding()) return ChapterEnding.GOODENDING;
                     else {
                         activeMenu.setCondition("notHappyA", false);
                         activeMenu.setCondition("hellNo", false);
@@ -3372,7 +3691,14 @@ public class StandardCycle extends Cycle {
             }
         }
 
-        // Not happy continues here
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The Voice of the Hero suggests slaying yourself to get out of the Narrator's "happy ending"
+     * @return whether the player accepted the Voice of the Hero's offer (leads to Chapter II: The Spectre) or not (leads to the Good Ending)
+     */
+    private boolean ch1HeroSuggestSpectre() {
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "The blade. We can use the blade to get out of this."));
         parser.printDialogueLine(new VoiceDialogueLine("I can hear everything you say, little voice. There's only one thing it would want you to use that blade on, and I'm afraid that thing is *you,* dear hero."));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's right. It's the only way out."));
@@ -3380,27 +3706,76 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Do you not? There's more for us to do, and the only way for us to do it is to take that blade and use it."));
         parser.printDialogueLine(new VoiceDialogueLine("Don't you *dare.*"));
 
+        OptionsMenu subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "explore", "(Explore) Wouldn't \"using\" the blade... you know, kill us? Wouldn't we be dead?"));
+        subMenu.add(new Option(this.manager, "reluctant", "You'd better be right about this. I'll be pretty upset if we *die* die.", subMenu.get("explore")));
+        subMenu.add(new Option(this.manager, "notRisking", manager.goodEndingAttempted(), "I'm not risking *death* over your weird hunch.", subMenu.get("explore")));
+        subMenu.add(new Option(this.manager, "anything", "Anything to get out of this hell."));
+        subMenu.add(new Option(this.manager, "stickAround", manager.goodEndingAttempted(), "You're right. I didn't like that idea. I'm just going to stick around and do nothing, at least for a little while longer."));
 
+        boolean repeatSub = true;
+        String outcome;
+        while (repeatSub) {
+            outcome = parser.promptOptionsMenu(subMenu);
+            switch (outcome) {
+                case "explore":
+                    parser.printDialogueLine(new VoiceDialogueLine("How astute. You're absolutely correct. Using the blade to kill yourself would kill you and you shouldn't do it."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "In a sense, we'd die, but looking at things from another angle, are we even really alive anymore? This place... it's nothing! It's absolutely nothing. It's just the same thing, constantly, forever."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I know this is out there, but trust me, I *know* using the blade will work."));
+                    parser.printDialogueLine(new VoiceDialogueLine("That little voice didn't want you to slay the Princess. It didn't want you to be *happy.*"));
+                    break;
+                    
+                case "stickAround":
+                    parser.printDialogueLine(new VoiceDialogueLine("What a relief."));
+                case "notRisking":
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I suppose we've got all the time in the world for you to change your mind."));
+                    return false;
 
+                case "reluctant":
+                    repeatSub = false;
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "If we \"die\" die, you can yell at me all you want."));
+                    break;
 
+                case "cSlaySelfNoBladeFail":
+                case "cTakeFail":
+                case "cGoStairs":
+                case "anything":
+                    repeatSub = false;
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Thank you."));
+                    break;
 
-        
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+                case "cGoHill":
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "There's nowhere for us to go, remember? The world out there is gone."));
+                    break;
+                    
+                case "cSlayPrincessNoBladeFail":
+                    parser.printDialogueLine(new VoiceDialogueLine("She's already dead, thanks to your efforts."));
+                    break;
 
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
 
-        // PLACEHOLDER
-        return null;
+        // Committed to Spectre here
+        parser.printDialogueLine(new VoiceDialogueLine("I *made* this happy little place for you! Is this not a good enough reward for saving the world? An eternity of bliss? You... you ingrate!"));
+        parser.printDialogueLine(new VoiceDialogueLine("Fine. Whatever. For the first time since time stopped meaning anything, you throw open the door to the basement and walk down the stairs."));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("The Princess' body is dust and bones, though the blade you used to slay her is still as pristine as the day you first held it."));
+        parser.printDialogueLine(new VoiceDialogueLine("You pick up the blade, you stab yourself, and you *die.*"));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("The end. Nice knowing you."));
+
+        return true;
     }
 
     /**
      * The player attempts to accept their reward for slaying the Princess (leads to the Good Ending)
      * @return false if the player has already claimed at least one vessel and is forced into Chapter II: The Spectre instead; true otherwise
      */
-    private boolean goodEnding() {
+    private boolean ch1GoodEnding() {
         parser.printDialogueLine(new VoiceDialogueLine("Really? Well, if you ever change your mind, just let me know, I guess."));
 
         System.out.println();
@@ -3418,8 +3793,7 @@ public class StandardCycle extends Cycle {
         if (this.isFirstVessel) return true;
         else {
             manager.attemptGoodEnding();
-            this.goodEndingAttempted = true;
-            this.localGoodEndingAttempt = true;
+
             System.out.println();
             parser.printDialogueLine(CANTSTRAY);
             return false;
@@ -3430,7 +3804,7 @@ public class StandardCycle extends Cycle {
      * The player slays the harsh Princess after hesitating (leads to Chapter II: The Adversary / The Tower / The Nightmare)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding slayHarshHesitated() {
+    private ChapterEnding ch1SlayHarshHesitated() {
         parser.printDialogueLine(new VoiceDialogueLine("Doubt, unfortunately, clouds your thoughts as you attempt to run her through."));
         parser.printDialogueLine(new VoiceDialogueLine("A moment of distraction and hesitation is all she needed to sidestep your thrust and deliver a catastrophic blow to your jaw."));
         parser.printDialogueLine(new VoiceDialogueLine("It feels like you've been hit with a sledgehammer. You can feel bone grinding on bone where your jaw has been fractured."));
@@ -3494,7 +3868,6 @@ public class StandardCycle extends Cycle {
                     System.out.println();
                     parser.printDialogueLine(new VoiceDialogueLine("But you don't have time to worry over such things. Everything goes dark, and you die."));
 
-
                     return ChapterEnding.TOADVERSARY;
 
                 case "cGoStairs":
@@ -3518,7 +3891,7 @@ public class StandardCycle extends Cycle {
                     System.out.println();
                     parser.printDialogueLine(new VoiceDialogueLine("You push your broken body as she closes in, and just barely manage to pass the threshold of the basement doorway before she catches up to you."));
 
-                    this.toNightmare(true, false);
+                    this.ch1ToNightmare(true, false);
                     return ChapterEnding.TONIGHTMAREFLED;
             }
         }
@@ -3529,7 +3902,7 @@ public class StandardCycle extends Cycle {
     /**
      * The player slays the harsh Princess while afraid (leads to Chapter II: The Tower)
      */
-    private void slayHarshForceTower() {
+    private void ch1SlayHarshForceTower() {
         parser.printDialogueLine(new VoiceDialogueLine("You charge the Princess, blade trembling in your hand, but you've already lost the battle."));
         parser.printDialogueLine(new VoiceDialogueLine("She casually sidesteps your thrust before knocking you to the ground with a single blow from her elbow."));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "We shouldn't have hesitated..."));
@@ -3550,7 +3923,7 @@ public class StandardCycle extends Cycle {
     /**
      * The player slays the harsh Princess after wondering if she's armed (leads to Chapter II: The Razor)
      */
-    private ChapterEnding slayHarshForceRazor() {
+    private ChapterEnding ch1SlayHarshForceRazor() {
         parser.printDialogueLine(new VoiceDialogueLine("You charge the Princess, blade in hand, but unfortunately, your earlier suspicions proved correct. A blade of her own slips down her sleeve and catches you in the neck."));
         parser.printDialogueLine(new VoiceDialogueLine("Blood sprays from the cut, your severed carotid artery painting the princess with strokes of red. You'd better finish your task quickly, before you run out of time."));
 
@@ -3591,16 +3964,8 @@ public class StandardCycle extends Cycle {
 
                     return ChapterEnding.TORAZORMUTUAL;
 
-                case "cGoStairs":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                case "cApproachFail":
-                case "cSlaySelfFail":
-                case "cTakeHasBladeFail":
-                case "cThrowFail":
-                case "cFail":
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                default:
+                    this.giveDefaultFailResponse();
             }
         }
 
@@ -3611,19 +3976,327 @@ public class StandardCycle extends Cycle {
      * The player attempts to free the harsh Princess
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding rescueHarsh() {
+    private ChapterEnding ch1RescueHarsh(boolean howFree) {
+        boolean canPrisoner = !manager.hasVisited(Chapter.PRISONER);
+        boolean canTower = !manager.hasVisited(Chapter.TOWER);
 
+        boolean canFree = canPrisoner || canTower;
+        boolean canSlay = !manager.hasVisitedAll(Chapter.ADVERSARY, Chapter.TOWER, Chapter.NIGHTMARE);
 
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("You walk up to the chains binding the Princess to the wall and give them a tug."));
+        parser.printDialogueLine(new VoiceDialogueLine("They're large and heavy, far too solid for you to even imagine trying to break them apart."));
 
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        if (howFree) {
+            parser.printDialogueLine(new PrincessDialogueLine("If you don't have the key, maybe you should go looking for it. I'm sure it's somewhere upstairs."));
+        } else {
+            parser.printDialogueLine(new PrincessDialogueLine("I'm guessing you don't have the key."));
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Maybe it's somewhere upstairs."));
+        }
 
+        parser.printDialogueLine(new VoiceDialogueLine("Doubtful. Whoever locked the Princess away down here intended for her to never see the light of day. They wouldn't have just left the key to her chains somewhere in the cabin."));
 
-        // PLACEHOLDER
-        return null;
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "whatIfA", "\"And if there isn't a key... do you have any ideas? Besides me cutting you out of here?\"", howFree));
+        activeMenu.add(new Option(this.manager, "whatIfB", "\"And if there isn't a key... do you have any ideas?\"", !howFree));
+        activeMenu.add(new Option(this.manager, "check", "\"I'm going to check upstairs. Maybe the key's still lying around somewhere up there. And if not, maybe I can at least find something to break you free.\""));
+
+        switch (parser.promptOptionsMenu(activeMenu)) {
+            case "whatIfA":
+                parser.printDialogueLine(new PrincessDialogueLine("That would be fine. I can lose an arm."));
+                parser.printDialogueLine(new VoiceDialogueLine("She speaks with almost complete nonchalance."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "If we were stuck down here for long enough, I'm sure we'd be nonchalant about cutting our way out. Anything to finally be free."));
+                break;
+
+            case "whatIfB":
+                parser.printDialogueLine(new PrincessDialogueLine("Well, you do have that big sharp knife. You could always cut me out of here."));
+                parser.printDialogueLine(new VoiceDialogueLine("She speaks with almost complete nonchalance."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "If we were stuck down here for long enough, I'm sure we'd be nonchalant about cutting our way out. Anything to finally be free."));
+                break;
+
+            case "check":
+                parser.printDialogueLine(new PrincessDialogueLine("I'll be here."));
+                break;
+        }
+        
+        System.out.println();
+        this.currentLocation = GameLocation.STAIRS;
+        this.reverseDirection = true;
+        this.withPrincess = false;
+        parser.printDialogueLine(new VoiceDialogueLine("You attempt to make your way out of the basement, but the door at the top of the stairs slams shut. You hear the click of a lock sliding into place."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Is someone else here?"));
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "shout", "(Explore) \"Hey! Let me out of here!\""));
+        activeMenu.add(new Option(this.manager, "try", "(Explore) [Try the door.]"));
+        activeMenu.add(new Option(this.manager, "return", "[Return to the bottom of the stairs.]"));
+
+        boolean explore = false;
+        boolean triedDoor = false;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "shout":
+                    parser.printDialogueLine(new VoiceDialogueLine("Your shouts and pleas are met with silence."));
+
+                    if (explore) {
+                        parser.printDialogueLine(new VoiceDialogueLine("I'll repeat myself once again. You're here to slay the Princess, and you won't leave until the task is done."));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine("You're here to slay the Princess, and you won't leave until the task is done."));
+                    }
+                    
+                    explore = true;
+                    break;
+
+                case "cGoCabin":
+                    activeMenu.setCondition("try", false);
+                case "try":
+                    explore = true;
+                    
+                    if (triedDoor) {
+                        parser.printDialogueLine(new VoiceDialogueLine("You try the door again. It's still locked."));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine("You try the door, but it's locked from the outside."));
+
+                        if (explore) {
+                            parser.printDialogueLine(new VoiceDialogueLine("I'll repeat myself once again. You're here to slay the Princess, and you won't leave until the task is done."));
+                        } else {
+                            parser.printDialogueLine(new VoiceDialogueLine("You're here to slay the Princess, and you won't leave until the task is done."));
+                        }
+                    }
+
+                    explore = true;
+                    triedDoor = true;
+                    break;
+
+                case "cGoBasement":
+                case "return":
+                    this.repeatActiveMenu = false;
+                    break;
+                
+                case "cSlayNoPrincessFail":
+                    parser.printDialogueLine(new VoiceDialogueLine("The Princess is in the basement below, remember? You can't slay her from here."));
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse(this.activeOutcome);
+            }
+        }
+
+        parser.printDialogueLine(new VoiceDialogueLine("You make your way back to the bottom of the stairs. This would have been so much easier if you'd simply slain her like you were supposed to."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Easier for whom?"));
+        parser.printDialogueLine(new VoiceDialogueLine("Easier for *everyone.*"));
+
+        System.out.println();
+        parser.printDialogueLine(new PrincessDialogueLine("I heard the door slam... they locked you down here too, didn't they?"));
+        parser.printDialogueLine(new PrincessDialogueLine("The knife. Pick it up and cut me out of here."));
+        parser.printDialogueLine(new VoiceDialogueLine("You won't like what happens if you do that..."));
+
+        this.hasBlade = true;
+        this.canSlayPrincess = true;
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "save", !canFree, "[Save the Princess.]", 0));
+        activeMenu.add(new Option(this.manager, "slay", !canSlay, "[Slay the Princess.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "save":
+                    if (!manager.confirmContentWarnings("mutilation; loss of bodily autonomy", true)) break;
+
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cSlayPrincess":
+                    if (!canSlay) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "slay":
+                    return this.ch1RescueSlaySoft();
+
+                default:
+                    this.giveDefaultFailResponse();
+            }
+        }
+
+        // Save continues here
+        this.canSlayPrincess = false;
+        parser.printDialogueLine(new VoiceDialogueLine("Against your better judgment, you place the blade against the Princess's arm, just above the massive, unyielding chain."));
+        parser.printDialogueLine(new VoiceDialogueLine("You cut into her flesh."));
+        parser.printDialogueLine(new VoiceDialogueLine("The blade is sharp, and you make quick work of it. Before long, you're able to crack through bone, and she pulls the bleeding stub of her arm through the iron gauntlet."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She didn't so much as utter a sound..."));
+        parser.printDialogueLine(new VoiceDialogueLine("Free from her bindings, the Princess turns to face you, her fierce gaze meeting your eye."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "How is she so composed after losing an arm? It's like she isn't even bothered by it."));
+        parser.printDialogueLine(new PrincessDialogueLine("Thank you. Now let's get out of here."));
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "door", "[Approach the locked door.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cGoStairs":
+                case "door":
+                    this.repeatActiveMenu = false;
+                    break;
+                    
+                default:
+                    this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+        
+        parser.printDialogueLine(new VoiceDialogueLine("No. We won't have any of that. The stakes are too high. You can't just let her escape into the world."));
+        parser.printDialogueLine(new VoiceDialogueLine("... no. *I* can't just let her escape into the world."));
+        parser.printDialogueLine(new VoiceDialogueLine("As the Princess approaches the bottom stair, your body steps forward and raises the blade."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Wait... this isn't fair. You can't just *do* that!"));
+        parser.printDialogueLine(new VoiceDialogueLine("Watch me."));
+
+        this.canSlayPrincess = true;
+        Option slay = new Option(this.manager, "slay", !canTower, "[Slay the Princess.]", 0);
+
+        this.activeMenu = new OptionsMenu();
+        for (int i = 0; i < 13; i++) activeMenu.add(slay);
+        activeMenu.add(new Option(this.manager, "warn", !canPrisoner, "[Warn her.]"));
+        for (int i = 0; i < 4; i++) activeMenu.add(slay);
+        
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cSlayPrincess":
+                    if (!canTower) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "slay":
+                    if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
+                    
+                    parser.printDialogueLine(new VoiceDialogueLine("You bring the blade down and plunge it into the Princess's back. *Finally.*"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay. There's no going back now."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Though the blade left a deep gash in her shoulder, she barely so much as flinches, turning around to stare at you incredulously."));
+                    parser.printDialogueLine(new PrincessDialogueLine("Are you serious?"));
+                    parser.printDialogueLine(new PrincessDialogueLine("I don't know what came over you, but if we're doing this, I guess I'll have to kill you."));
+                    parser.printDialogueLine(new PrincessDialogueLine("Do you think I need both of my arms to do that? I can beat you to death with one."));
+                    parser.printDialogueLine(new PrincessDialogueLine("But I don't have to tell you that. I'll go ahead and show you."));
+
+                    this.activeMenu = new OptionsMenu();
+                    activeMenu.add(slay);
+                    activeMenu.add(new Option(this.manager, "giveUp", "[Give up.]"));
+
+                    this.repeatActiveMenu = true;
+                    while (repeatActiveMenu) {
+                        switch (parser.promptOptionsMenu(activeMenu)) {
+                            case "cSlayPrincess":
+                            case "slay":
+                                this.ch1RescueControlledSlayHarsh();
+                                return ChapterEnding.TOTOWER;
+
+                            case "giveUp":
+                                parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* As the blade falls from your trembling hands, the Princess rears back, readying a bone-shattering haymaker."));
+                                parser.printDialogueLine(new VoiceDialogueLine("You fall to your knees. You're barely able to process the ringing in your ears before she hits you again."));
+                                parser.printDialogueLine(new VoiceDialogueLine("Every blow is as punishing as the first. You feel bones shatter with every impact, unknown ruptures blossoming with blood somewhere inside of you."));
+                                parser.printDialogueLine(new VoiceDialogueLine("If we're lucky, the wound you managed to inflict will be enough to at least delay her escape from this place. If we're very lucky, it will kill her before she gets out."));
+                                parser.printDialogueLine(new PrincessDialogueLine("Too weak to even try fighting back. How disappointing."));
+                                parser.printDialogueLine(new VoiceDialogueLine("She places a confident heel on your chest and pushes you down to the ground."));
+                                parser.printDialogueLine(new VoiceDialogueLine("Her knee falls to your throat, your windpipe crushed beneath a weight you didn't think her slight form could possibly possess."));
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It can't just end like this, right?"));
+                                parser.printDialogueLine(new VoiceDialogueLine("I'm sorry, but it's over."));
+
+                                System.out.println();
+                                parser.printDialogueLine(new VoiceDialogueLine("Everything goes dark, and you die."));
+                                return ChapterEnding.TOTOWER;
+
+                            default:
+                                this.giveDefaultFailResponse();
+                        }
+                    }
+
+                case "warn":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse();
+            }
+        }
+
+        parser.printDialogueLine(new VoiceDialogueLine("Stop that."));
+        parser.printDialogueLine(new PrincessDialogueLine("I thought this was a little too easy."));
+        parser.printDialogueLine(new VoiceDialogueLine("Your body lunges forward to sink the blade into her back, but the Princess swiftly moves out the way before you can connect."));
+        parser.printDialogueLine(new VoiceDialogueLine("Stop it! Stop trying to resist me! I'm trying to get you out of here alive."));
+        
+        this.activeMenu = new OptionsMenu();
+        for (int i = 0; i < 13; i++) activeMenu.add(slay);
+        activeMenu.add(new Option(this.manager, "resist", !canPrisoner, "[Resist.]", 0));
+        for (int i = 0; i < 6; i++) activeMenu.add(slay);
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cSlayPrincess":
+                    if (!canTower) {
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+                case "slay":
+                    if (!manager.confirmContentWarnings(Chapter.TOWER)) break;
+
+                    this.ch1RescueControlledSlayHarsh();
+                    return ChapterEnding.TOTOWER;
+
+                case "resist":
+                    if (!manager.confirmContentWarnings(Chapter.PRISONER)) break;
+
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default:
+                    this.giveDefaultFailResponse();
+            }
+        }
+
+        // Committed to Prisoner
+        parser.printDialogueLine(new VoiceDialogueLine("The blade! Move. The. *Blade!*"));
+        parser.printDialogueLine(new PrincessDialogueLine("You're doing your best to help me, aren't you? I can see the conflict in your eyes."));
+        parser.printDialogueLine(new PrincessDialogueLine("I'll make this quick."));
+        parser.printDialogueLine(new VoiceDialogueLine("She steps forward and pries the blade from your rigid hands."));
+        parser.printDialogueLine(new PrincessDialogueLine("Maybe I'll see you in another life."));
+        parser.printDialogueLine(new VoiceDialogueLine("And then she slits your throat with an almost clinical ease."));
+        parser.printDialogueLine(new VoiceDialogueLine("Her face remains unchanged as she watches you collapse to the ground, blood flowing from your butchered neck."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "This is the end, isn't it?"));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("I'm afraid it is. Everything goes dark, and you die. I hope it was worth it."));
+
+        return ChapterEnding.TOPRISONER;
+    }
+
+    /**
+     * The player allows the Narrator to take control of their body and slay the harsh Princess after setting her free (leads to Chapter II: the Tower)
+     */
+    private void ch1RescueControlledSlayHarsh() {
+        parser.printDialogueLine(new VoiceDialogueLine("*Thank* you."));
+        parser.printDialogueLine(new VoiceDialogueLine("You swing your arm towards her throat, the blade singing through the air."));
+        parser.printDialogueLine(new VoiceDialogueLine("But she's ready for it. She grabs your arm, her grip like a stone vice."));
+        parser.printDialogueLine(new VoiceDialogueLine("You drop the blade. Pathetically."));
+        parser.printDialogueLine(new VoiceDialogueLine("She lets go, and faster than you can react, rears back and hits you with a bone-shattering haymaker."));
+        parser.printDialogueLine(new VoiceDialogueLine("There's a ringing in your ears. You're fairly certain you can feel bone grinding against bone where she fractured your jaw, but your body isn't allowing you to feel much right now, adrenaline coursing through your system and numbing your nerves."));
+        parser.printDialogueLine(new VoiceDialogueLine("You fall to your knees. You're barely able to bring your trembling arms up to defend yourself before she hits you again."));
+        parser.printDialogueLine(new VoiceDialogueLine("Every blow is as punishing as the first. You feel bones shatter with every impact, unknown ruptures blossoming with blood somewhere inside of you."));
+        parser.printDialogueLine(new PrincessDialogueLine("You poor thing. I'll go ahead and put you out of your misery."));
+        parser.printDialogueLine(new VoiceDialogueLine("She places a confident heel on your chest and pushes you down to the ground."));
+        parser.printDialogueLine(new VoiceDialogueLine("Her knee falls to your throat, your windpipe crushed beneath a weight you didn't think her slight form could possibly possess."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It can't just end like this, right?"));
+        parser.printDialogueLine(new VoiceDialogueLine("I'm sorry, but it's over."));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("Everything goes dark, and you die."));
     }
 
     /**
@@ -3631,7 +4304,7 @@ public class StandardCycle extends Cycle {
      * @param wounded whether the Princess is wounded
      * @param lostArm whether the Princess lost her arm
      */
-    private void toNightmare(boolean wounded, boolean lostArm) {
+    private void ch1ToNightmare(boolean wounded, boolean lostArm) {
         this.currentLocation = GameLocation.CABIN;
         this.withPrincess = false;
         
@@ -3797,10 +4470,10 @@ public class StandardCycle extends Cycle {
          */
 
         switch (this.prevEnding) {
-            case STRIKEMEDOWN: this.jointSource = "pacifism";
-            case HEARNOBELL: this.jointSource = "unarmed";
-            case DEADISDEAD: this.jointSource = "pathetic";
-            default: this.jointSource = "tower";
+            case STRIKEMEDOWN: this.source = "pacifism";
+            case HEARNOBELL: this.source = "unarmed";
+            case DEADISDEAD: this.source = "pathetic";
+            default: this.source = "tower";
         }
 
         // PLACEHOLDER
@@ -3817,9 +4490,20 @@ public class StandardCycle extends Cycle {
     private ChapterEnding tower() {
         // You gain the Voice of the Broken
 
-        boolean unharmed = this.prevEnding == ChapterEnding.TOTOWERUNHARMED;
+        switch (this.prevEnding) {
+            case TOTOWERUNHARMED:
+                this.source = "unharmed";
+                break;
+            
+            case TOTOWERPATHETIC:
+                this.source = "pathetic";
+                break;
 
-        if (unharmed) this.chapter2Intro(true, false, false, "towerUnharmed");
+            default:
+                this.source = "normal";
+        }
+
+        if (source.equals("unharmed")) this.chapter2Intro(true, false, false, "towerUnharmed");
         else this.chapter2Intro(true, false, false, "towerNormal");
         
         // PLACEHOLDER
@@ -3892,9 +4576,9 @@ public class StandardCycle extends Cycle {
          */
 
         switch (this.prevEnding) {
-            case HEARTRIPPER: this.jointSource = "spectre";
-            case HEARTRIPPERLEAVE: this.jointSource = "spectre";
-            default: this.jointSource = "nightmare";
+            case HEARTRIPPER: this.source = "spectre";
+            case HEARTRIPPERLEAVE: this.source = "spectre";
+            default: this.source = "nightmare";
         }
 
         // PLACEHOLDER
@@ -3943,22 +4627,20 @@ public class StandardCycle extends Cycle {
     private ChapterEnding razor() {
         // You gain the Voice of the Cheated
 
-        String source = null;
         switch (this.prevEnding) {
-            case TORAZOR:
-                source = "pathetic";
-                this.chapter2Intro(true, false, false, "razorPathetic");
-                break;
-
             case TORAZORMUTUAL:
-                source = "mutual";
+                this.source = "mutual";
                 this.chapter2Intro(true, true, false, "razorMutual");
                 break;
 
             case TORAZORREVIVAL:
-                source = "revival";
+                this.source = "revival";
                 this.chapter2Intro(true, true, false, "razorRevival");
                 break;
+
+            default:
+                this.source = "pathetic";
+                this.chapter2Intro(true, false, false, "razorPathetic");
         }
         
         // PLACEHOLDER
@@ -4085,8 +4767,8 @@ public class StandardCycle extends Cycle {
             - Opportunist + Cheated
          */
 
-        if (this.hasVoice(Voice.HUNTED)) this.jointSource = "beast";
-        else this.jointSource = "witch";
+        if (this.hasVoice(Voice.HUNTED)) this.source = "beast";
+        else this.source = "witch";
 
         // PLACEHOLDER
         return null;

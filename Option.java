@@ -7,7 +7,7 @@ public class Option {
      * - only available if a given variable is equal to a given value (can be boolean or other)
      * - only available once another option in this menu has been picked
      */
-    
+
     private GameManager manager;
 
     private String id;
@@ -373,9 +373,11 @@ public class Option {
 
     /**
      * Increments the number of times this Option has been picked
+     * @return this Option's ID
      */
-    public void choose() {
+    public String choose() {
         this.timesPicked += 1;
+        return this.id;
     }
 
     /**

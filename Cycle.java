@@ -29,7 +29,6 @@ public abstract class Cycle {
     protected boolean canThrowBlade = false;
 
     // Variables that are used in a lot of chapters
-    protected String jointSource;
     protected boolean bladeReverse = false; // Used in any chapter the Contrarian is in
     protected boolean threwBlade = false;
 
@@ -510,6 +509,13 @@ public abstract class Cycle {
             default:
                 parser.printDialogueLine("You have no other options.");
         }
+    }
+
+    /**
+     * Prints a generic response to a command failing or being unavailable
+     */
+    protected void giveDefaultFailResponse() {
+        parser.printDialogueLine("You have no other options.");
     }
 
     // --- CYCLE MANAGEMENT ---

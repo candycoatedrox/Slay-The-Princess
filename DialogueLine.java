@@ -2,6 +2,9 @@ public class DialogueLine {
     
     protected String line;
     protected boolean isInterrupted;
+    
+    private static final String COMMA = ",";
+    private static final String PUNCTUATION = ".,?!:;";
 
     // --- CONSTRUCTORS ---
 
@@ -52,14 +55,55 @@ public class DialogueLine {
 
     /**
      * Slowly prints this line out
+     * @param pauseAtPunctuation whether to pause for an extended time after punctuation or not
      */
-    public void print() {
+    public void print(boolean pauseAtPunctuation) {
         char[] chars = IOHandler.wordWrap(this).toCharArray();
 
         for (int i = 0; i < chars.length; i++) {
             System.out.print(chars[i]);
             try {
-                Thread.sleep(30);
+                if (pauseAtPunctuation && isPunctuation(chars[i])) {
+                    if (isComma(chars[i])) Thread.sleep(150);
+                    else Thread.sleep(200);
+                }
+                else {
+                    Thread.sleep(30);
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Thread interrupted");
+            }
+        }
+    }
+
+    /**
+     * Slowly prints this line out
+     */
+    public void print() {
+        this.print(true);
+    }
+
+    /**
+     * Slowly prints this line out
+     * @param pauseAtPunctuation whether to pause for an extended time after punctuation or not
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    public void print(boolean pauseAtPunctuation, double speedMultiplier) {
+        char[] chars = IOHandler.wordWrap(this).toCharArray();
+        double waitTime = 30 / speedMultiplier;
+        double commaWaitTime = 150 / speedMultiplier;
+        double punctWaitTime = 200 / speedMultiplier;
+
+        for (int i = 0; i < chars.length; i++) {
+            System.out.print(chars[i]);
+            try {
+                if (pauseAtPunctuation && isPunctuation(chars[i])) {
+                    if (isComma(chars[i])) Thread.sleep((long)commaWaitTime);
+                    else Thread.sleep((long)punctWaitTime);
+                }
+                else {
+                    Thread.sleep((long)waitTime);
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException("Thread interrupted");
             }
@@ -71,17 +115,7 @@ public class DialogueLine {
      * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
      */
     public void print(double speedMultiplier) {
-        char[] chars = IOHandler.wordWrap(this).toCharArray();
-        double waitTime = 30 / speedMultiplier;
-
-        for (int i = 0; i < chars.length; i++) {
-            System.out.print(chars[i]);
-            try {
-                Thread.sleep((long)waitTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Thread interrupted");
-            }
-        }
+        this.print(false, speedMultiplier);
     }
 
     /**
@@ -109,6 +143,24 @@ public class DialogueLine {
     @Override
     public String toString() {
         return this.line;
+    }
+
+    /**
+     * Checks if a given character is a comma
+     * @param c the character to check
+     * @return true if c is a comma; false otherwise
+     */
+    private static boolean isComma(char c) {
+        return COMMA.contains(Character.toString(c));
+    }
+
+    /**
+     * Checks if a given character is punctuation
+     * @param c the character to check
+     * @return true if c is punctuation; false otherwise
+     */
+    private static boolean isPunctuation(char c) {
+        return PUNCTUATION.contains(Character.toString(c));
     }
 
 }
