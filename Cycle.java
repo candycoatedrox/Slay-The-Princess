@@ -521,4 +521,14 @@ public abstract class Cycle {
     // --- CYCLE MANAGEMENT ---
 
     public abstract ChapterEnding runCycle();
+    
+    /**
+     * (DEBUG ONLY) Initiates and coordinates a full cycle, starting from a given Chapter ending through the player's conversation with the Shifting Mound
+     * @param startFromEnding the ChapterEnding to start from
+     * @param harsh the value to set isHarsh to
+     * @return the Chapter ending reached by the player
+     */
+    public ChapterEnding debugRunCycle(ChapterEnding startFromEnding, boolean harsh) {
+        return this.runCycle();
+    }
 }

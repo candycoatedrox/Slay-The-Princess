@@ -282,10 +282,9 @@ public class GameManager {
     }
 
     /**
-     * Initiates and coordinates a full playthrough of the game, skipping the intro (FOR DEBUG/PLAYTEST PURPOSES ONLY)
-     * @param debug a generic parameter to distinguish it from the public, "final" version of runGame()
+     * (DEBUG ONLY) Initiates and coordinates a full playthrough of the game, skipping the intro
      */
-    private void runGame(boolean debug) {
+    private void debugRunGame() {
         ChapterEnding ending = null;
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
@@ -311,6 +310,50 @@ public class GameManager {
         }
 
         this.endGame(ending);
+    }
+
+    
+    /**
+     * (DEBUG ONLY) Initiates and coordinates a full playthrough of the game, starting from a given ChapterEnding
+     * @param startFromEnding the ChapterEnding to start from
+     * @param harsh the value to set isHarsh to
+     */
+    private void debugRunGame(ChapterEnding startFromEnding, boolean harsh) {
+        ChapterEnding ending = null;
+        boolean firstCycle = true;
+        
+        while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
+            this.currentCycle = new StandardCycle(this, this.parser);
+            if (firstCycle) ending = this.currentCycle.debugRunCycle(startFromEnding, harsh);
+            else ending = this.currentCycle.runCycle();
+
+            if (ending == ChapterEnding.ABORTED) {
+                this.nVesselsAborted += 1;
+            } else if (ending == ChapterEnding.GOODENDING) {
+                break;
+            } else {
+                this.endingsFound.add(ending);
+                this.claimedVessels.add(ending.getVessel());
+            }
+        }
+
+        if (this.nClaimedVessels() == 5) {
+            this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
+            ending = this.currentCycle.runCycle();
+        } else {
+            this.currentCycle = null;
+            if (ending != ChapterEnding.GOODENDING) ending = ChapterEnding.OBLIVION;
+        }
+
+        this.endGame(ending);
+    }
+    
+    /**
+     * (DEBUG ONLY) Initiates and coordinates a full playthrough of the game, starting from a given ChapterEnding
+     * @param startFromEnding the ChapterEnding to start from
+     */
+    private void debugRunGame(ChapterEnding startFromEnding) {
+        this.debugRunGame(startFromEnding, false);
     }
 
     // --- SCENES ---
@@ -738,7 +781,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.runGame(true);
+        manager.debugRunGame();
     }
 
 }
