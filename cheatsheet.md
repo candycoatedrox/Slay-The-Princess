@@ -201,32 +201,32 @@ You are **guaranteed** to encounter: death; murder; verbal abuse; gaslighting; d
 **General CWs:** death; murder; suicide; verbal abuse; gaslighting; described gore; mutilation, disembowelment; loss of self; cosmic horror; existential horror; being eaten alive; suffocation; derealisation; forced suicide; loss of bodily autonomy; starvation; unreality; body horror; forced self-mutilation; self-degloving; flaying; self-immolation; drowning; burning to death; loss of control; dismemberment; self-decapitation; memory loss<br/><br/>
 
 <ins>**Possible content warnings for Chapter II:**</ins>
-  - The Adversary: mutilation; disembowelment
-  - The Tower: loss of bodily autonomy; forced self-mutilation; forced suicide; gore
-  - The Spectre: exposed organs
-  - The Nightmare: loss of bodily autonomy; starvation
-  - The Razor: dismemberment; self-dismemberment; unreality; suicide; excessive gore
-  - The Beast: being eaten alive; disembowelment; suffocation; gore
-  - The Witch: gore; strangulation; being crushed to death
-  - The Stranger: derealization; unreality; Cronenberg-esque body horror
-  - The Prisoner: self-decapitation; gore
-  - The Damsel: derealization; forced suicide; gore<br/><br/>
+  - **The Adversary:** mutilation; disembowelment
+  - **The Tower:** loss of bodily autonomy; forced self-mutilation; forced suicide; gore
+  - **The Spectre:** exposed organs
+  - **The Nightmare:** loss of bodily autonomy; starvation
+  - **The Razor:** dismemberment; self-dismemberment; unreality; suicide; excessive gore
+  - **The Beast:** being eaten alive; disembowelment; suffocation; gore
+  - **The Witch:** gore; strangulation; being crushed to death
+  - **The Stranger:** derealization; unreality; Cronenberg-esque body horror
+  - **The Prisoner:** self-decapitation; gore
+  - **The Damsel:** derealization; forced suicide; gore<br/><br/>
 
 <ins>**Possible content warnings for Chapter III:**</ins>
-  - The Eye of the Needle: gore
-  - The Fury: self-degloving; flaying; disembowelment; gore; extreme body-horror; existential horror; physical and psychological torture
-  - The Apotheosis: psychological torture; eye-puncturing
-  - The Princess and the Dragon: gore; dismemberment
-  - The Wraith: body horror; loss of bodily autonomy; jumpscare
-  - The Moment of Clarity: derealization; unreality; loss of control; memory loss
-  - The Arms Race & Mutually Assured Destruction: dismemberment; self-dismemberment; unreality; suicide; excessive gore
-  - No Way Out & The Empty Cup: dismemberment; self-dismemberment; unreality; suicide; excessive gore
-  - The Den: cannibalism; extreme gore; extreme violence; starvation
-  - The Wild: gore; body horror
-  - The Thorn: self-mutilation
-  - The Cage: existentialism; decapitation; gore
-  - The Grey: self-immolation; description of a bloated corpse; drowning; burning to death; body horror
-  - Happily Ever After: derealization; existentialism; end-of-relationship; some people have experienced triggers related to emotional domestic abuse while playing this chapter
+  - **The Eye of the Needle:** gore
+  - **The Fury:** self-degloving; flaying; disembowelment; gore; extreme body-horror; existential horror; physical and psychological torture
+  - **The Apotheosis:** psychological torture; eye-puncturing
+  - **The Princess and the Dragon:** gore; dismemberment
+  - **The Wraith:** body horror; loss of bodily autonomy; jumpscare
+  - **The Moment of Clarity:** derealization; unreality; loss of control; memory loss
+  - **The Arms Race & Mutually Assured Destruction:** dismemberment; self-dismemberment; unreality; suicide; excessive gore
+  - **No Way Out & The Empty Cup:** dismemberment; self-dismemberment; unreality; suicide; excessive gore
+  - **The Den:** cannibalism; extreme gore; extreme violence; starvation
+  - **The Wild:** gore; body horror
+  - **The Thorn:** self-mutilation
+  - **The Cage:** existentialism; decapitation; gore
+  - **The Grey:** self-immolation; description of a bloated corpse; drowning; burning to death; body horror
+  - **Happily Ever After:** derealization; existentialism; end-of-relationship; some people have experienced triggers related to emotional domestic abuse while playing this chapter
 
 # (SPOILER ALERT) Guide
 
