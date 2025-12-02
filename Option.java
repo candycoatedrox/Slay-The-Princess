@@ -21,6 +21,8 @@ public class Option {
     private boolean greyedOut;
     private int timesPicked;
 
+    private boolean strangerEnding = false;
+
     // --- CONSTRUCTORS ---
 
     /**
@@ -287,6 +289,17 @@ public class Option {
         this(manager, id, display, 1, false, null, null, true);
     }
 
+    /**
+     * Constructor used exclusively for the special Option at the end of Chapter II: The Stranger
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param display the text displayed to the player for the Option
+     */
+    public Option(boolean strangerEnding, GameManager manager, String id, String display) {
+        this(manager, id, display, 1, false, null, null, false);
+        this.strangerEnding = true;
+    }
+
     // --- ACCESSORS & MANIPULATORS ---
 
     /**
@@ -362,6 +375,14 @@ public class Option {
         }
 
         return false;
+    }
+
+    /**
+     * Accessor for strangerEnding
+     * @return whether this Option is the special Option at the end of Chapter II: The Stranger or not
+     */
+    public boolean isStrangerEnding() {
+        return this.strangerEnding;
     }
 
     /**

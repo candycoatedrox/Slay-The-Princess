@@ -59,6 +59,21 @@ public abstract class Cycle {
     }
 
     /**
+     * Returns the number of Voices the player currently has, excluding the Narrator and the Princess
+     * @return the number of Voices the player currently has, excluding the Narrator and the Princess
+     */
+    protected int nVoices() {
+        int n = 0;
+
+        for (Voice v : Voice.values()) {
+            if (v == Voice.NARRATOR || v == Voice.PRINCESS) continue;
+            if (this.hasVoice(v)) n += 1;
+        }
+
+        return n;
+    }
+
+    /**
      * Adds a given Voice to the list of active Voices
      * @param v the Voice to add
      */

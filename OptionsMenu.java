@@ -430,10 +430,14 @@ public class OptionsMenu {
                 s += "\n";
             }
 
-            if (shown.get(i).greyedOut()) {
-                s += "  (--) " + shown.get(i);
+            if (shown.get(i).isStrangerEnding()) {
+                s += "  (" + shownIndex + ".) " + shown.get(i).toString().replaceAll("NUM", shownIndex + ".");
             } else {
-                s += "  (" + shownIndex + ".) " + shown.get(i);
+                if (shown.get(i).greyedOut()) {
+                    s += "  (--) " + shown.get(i);
+                } else {
+                    s += "  (" + shownIndex + ".) " + shown.get(i);
+                }
             }
         }
 

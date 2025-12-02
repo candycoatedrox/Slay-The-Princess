@@ -8227,7 +8227,6 @@ public class StandardCycle extends Cycle {
                 case "left":
                     this.repeatActiveMenu = false;
                     firstSchism = "harsh";
-                    schismHarsh = true;
                     parser.printDialogueLine(new VoiceDialogueLine("You step to the left. The path is cruel against your feet, the impact of each step sending pulsing vibrations up your legs until there's nothing left in them to feel."));
                     parser.printDialogueLine(new VoiceDialogueLine("The air around you grows colder the further you progress, at first a barely-noticeable drop, quickly evolving into a numbing cold."));
                     parser.printDialogueLine(new VoiceDialogueLine("Your toes feel like blocks of ice, your breaths puff out in clouds of condensed vapor."));
@@ -8237,7 +8236,6 @@ public class StandardCycle extends Cycle {
                 case "center":
                     this.repeatActiveMenu = false;
                     firstSchism = "neutral";
-                    schismNeutral = true;
                     parser.printDialogueLine(new VoiceDialogueLine("You step onto the center staircase. Paths wind out around you in all directions, each step branching into its own staircases which branch into their own staircases and so on. You aren't quite sure if yours is taking you up or down, but at the very least it's taking you somewhere."));
                     parser.printDialogueLine(new VoiceDialogueLine("You concentrate on where you are, careful not to stray onto any of the many splitting branches that tempt you on all sides. You wouldn't want to have to backtrack to yours once you'd made a decision that took you someplace else."));
                     parser.printDialogueLine(new VoiceDialogueLine("And so you take one careful, focused step after another. One foot down, another foot down, another after that. You lose yourself in following the correct pattern, in following what looks to you to be the true path, the one that cuts straight down. Or up. Or maybe sideways."));
@@ -8247,7 +8245,6 @@ public class StandardCycle extends Cycle {
                 case "right":
                     this.repeatActiveMenu = false;
                     firstSchism = "gentle";
-                    schismGentle = true;
                     parser.printDialogueLine(new VoiceDialogueLine("You step to the right. The path feels soft and reassuring against your feet. The stairs almost seem to cradle you as you make your way down, like they're guiding your heels from one step directly to the next. You barely have to extend any effort to descend, the stairway doing most of the work for you, and you don't feel like there's any concern that you might slip or tumble or lose your way."));
                     parser.printDialogueLine(new VoiceDialogueLine("But the further you go, the deeper you sink in. First it's like a lovely plush carpet, your toes digging down and barely hitting any resistance at all. But soon enough you're fighting just to keep your knees from sinking out of sight."));
                     parser.printDialogueLine(new VoiceDialogueLine("The softness threatens to swallow you whole, to wrest control of your body and surround you in a false ethereal bliss, pretending to save you from the cruelties of choice and consequence."));
@@ -8277,6 +8274,7 @@ public class StandardCycle extends Cycle {
         this.currentLocation = GameLocation.BASEMENT;
         this.withPrincess = true;
         System.out.println();
+
         switch (firstSchism) {
             case "harsh":
                 parser.printDialogueLine(new PrincessDialogueLine("Are you just going to stand there?"));
@@ -8299,19 +8297,581 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* You're here to --", true));
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's just being an ass. We remember. Though I'm still not sure if we should trust you. Let's talk to her for a bit. Try and get our bearings. She seems... normal."));
 
+        String endChoiceText = "\"I'm getting you out of here.\" [Try and free her.]\n  (NUM) \"I don't know what you are, but I can't trust you. I can't trust anyone here.\" [Leave her in the basement.]\n  (NUM) ";
+        if (this.threwBlade) {
+            endChoiceText += "[Regretfully think about that time you threw the blade out the window.]";
+        } else if (!this.hasBlade) {
+            endChoiceText += "[Retrieve the blade.]";
+        } else {
+            endChoiceText += "[Slay the Princess.]";
+        }
 
+        HashMap<String, String> currentQuestionLines = new HashMap<>();
+        currentQuestionLines.put("harsh", "");
+        currentQuestionLines.put("neutral", "");
+        currentQuestionLines.put("gentle", "");
+        currentQuestionLines.put("emo", "");
+        currentQuestionLines.put("monster", "");
+
+        String setNewSchism = "";
+        boolean newSchismComment = false;
+        boolean schismThisOption = false;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "sorry", "(Explore) \"I'm sorry... I didn't realize I was here.\""));
+        activeMenu.add(new Option(this.manager, "more", "(Explore) \"There's more of you now...\"", false));
+        activeMenu.add(new Option(this.manager, "name", "(Explore) \"What's your name?\""));
+        activeMenu.add(new Option(this.manager, "weird", "(Explore) \"Getting down here was... weird. Like I was pulled apart and put back together again. Do you know what happened to me?\""));
+        activeMenu.add(new Option(this.manager, "reason", "(Explore) \"For all I know, you're locked up down here for a reason. Do you know why you're down here?\""));
+        activeMenu.add(new Option(this.manager, "threatShare", "(Explore) \"You're apparently a threat to the world. I was sent here to slay you.\""));
+        activeMenu.add(new Option(this.manager, "whatDo", "(Explore) \"If I let you out of here, what are you going to do?\"", false));
+        activeMenu.add(new Option(true, this.manager, "ending", endChoiceText));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            schismThisOption = false;
+
+            if (schismCount == 2) {
+                activeMenu.setCondition("sorry", false);
+                activeMenu.setCondition("more", true);
+                activeMenu.setCondition("ending", true);
+            } else if (schismCount == 5) {
+                activeMenu.setCondition("more", false);
+                activeMenu.setCondition("name", false);
+                activeMenu.setCondition("weird", false);
+                activeMenu.setCondition("reason", false);
+                activeMenu.setCondition("threatShare", false);
+                activeMenu.setCondition("whatDo", false);
+            }
+
+            switch (setNewSchism) {
+                case "harsh":
+                    schismHarsh = true;
+                    break;
+                    
+                case "neutral":
+                    schismNeutral = true;
+                    break;
+                    
+                case "gentle":
+                    schismGentle = true;
+                    break;
+                    
+                case "emo":
+                    schismEmo = true;
+                    break;
+                    
+                case "monster":
+                    schismMonster = true;
+                    break;
+            }
+            setNewSchism = "";
+
+            if (!newSchismComment && schismCount > 1) {
+                newSchismComment = true;
+
+                switch (schismCount) {
+                    case 2:
+                        parser.printDialogueLine(new VoiceDialogueLine("As the Princess speaks again, it's almost as if she fractures, and where there was once just one of her, there is now another."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "We can do that?!"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I don't like this. It's those cabins all over again. Can... can we put her back?"));
+
+                        if (this.sharedLoop) {
+                            if (this.sharedLoopInsist) {
+                                parser.printDialogueLine(new VoiceDialogueLine("You said \"the world ended\" last time you were here, didn't you?"));
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Yeah, what of it?"));
+                            } else {
+                                parser.printDialogueLine(new VoiceDialogueLine("You said you'd been here before, right? What exactly happened last time?"));
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Does it matter?"));
+                                parser.printDialogueLine(new VoiceDialogueLine("Yes, it matters! But I'm not going to waste any more time prying out details if you're going to be so irritating about it."));
+                            }
+                        } else {
+                            parser.printDialogueLine(new VoiceDialogueLine("\"Again?\" Have you been here before?"));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Should we tell Him?"));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Nah. Let Him stew."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Right. I'm telling him. Yeah, we've \"been here before.\" But we never went to the cabin. We just... turned around and left, until..."));
+                            parser.printDialogueLine(new VoiceDialogueLine("Until?"));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's hard to describe. Until the only thing we could see was the same cabin going on forever? And then you told us that the world ended and we died. And then we woke up, and I'm pretty sure you're familiar with all the rest of it."));
+                        }
+                        
+                        parser.printDialogueLine(new VoiceDialogueLine("It seems to me like you saw something you weren't supposed to have seen. If only you'd listened to whatever words of wisdom you were given in that other reality. *Sigh.* But what's done is done, isn't it?"));
+                        parser.printDialogueLine(new VoiceDialogueLine("Whatever you saw last time? Unsee it. Whatever thoughts weaseled their way into your head? Unthink them, if it's not already too late. You have a job to do here, and you need to do it *now.*"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "New plan! Let's see if we can make even more of her."));
+                        break;
+
+                    case 3:
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I don't think we're going to be able to put her back."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "It kind of hurts to think about it, doesn't it? It's like everything we say just multiplies her."));
+                        parser.printDialogueLine(new VoiceDialogueLine("It certainly looks that way. So please, for the love of everything, stop asking her questions, and stop stalling. You're obviously just making things worse."));
+                        break;
+
+                    case 4:
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Okay. This was fun for a bit, but we can't even really interact with her, can we? What's the point of asking questions if all we're going to get is a million answers?"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I can't even follow what's going on anymore."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "We need to get out of here. This whole place is making me itch."));
+                        break;
+
+                    case 5:
+                        parser.printDialogueLine(new VoiceDialogueLine("This is reaching its breaking point. If you don't act now, there will be nothing in here but her. Take a deep breath and focus up. You can do this."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "But how do we decide what to do? Can there even be a right choice when all of them are so different?"));
+                        parser.printDialogueLine(new VoiceDialogueLine("Stop overthinking it. Your drifting thoughts have clearly been part of the reason this situation has gotten out of hand. If you're trying to do the right thing, there's only ever been the one option, and that option is slaying her."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Just do something! Do anything! Do all of it if that's what you want. This place is *HELL* and it's only getting worse!"));
+                        break;
+                }
+            }
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "sorry":
+                    switch (firstSchism) {
+                        case "harsh":
+                            parser.printDialogueLine(new PrincessDialogueLine("Yeah. I know. I've been watching you stare at me for a long, long time."));
+                            parser.printDialogueLine(new VoiceDialogueLine("The shadows recede, revealing the Princess's face."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's so warm. And friendly..."));
+                            parser.printDialogueLine(new VoiceDialogueLine("It's deception. Don't buy into it."));
+                            break;
+
+                        case "neutral":
+                            parser.printDialogueLine(new PrincessDialogueLine("And yet here you are. How strange. Do you remember anything at all? Do you know why you're here? Do you know me?"));
+                            parser.printDialogueLine(new VoiceDialogueLine("The shadows recede, revealing the Princess's face."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I don't think she likes us!"));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Wouldn't you be skeptical of someone stumbling in here if you were her? We lost ourselves the second we stepped into this place. I don't know how long she's been here, but I can't imagine it'd be easy for her to trust anyone."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Those eyes, though... they're so... sharp."));
+                            parser.printDialogueLine(new VoiceDialogueLine("It's just deception. Don't buy into it. You can do this."));
+                            break;
+
+                        case "gentle":
+                            parser.printDialogueLine(new PrincessDialogueLine("That's okay. Sometimes I forget where I am too."));
+                            parser.printDialogueLine(new VoiceDialogueLine("The shadows recede, revealing the Princess's face."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's so... blank. I have no idea who she is."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Isn't that fun? A new puzzle for us to take apart."));
+                            parser.printDialogueLine(new VoiceDialogueLine("If she's keeping her cards close to her chest, it's because she wants to deceive you."));
+                            break;
+                    }
+
+                    // New schism; harsh if you have the blade, gentle if not, neutral if you already have that princess
+                    newSchismComment = false;
+                    schismCount += 1;
+                    if (this.hasBlade && !firstSchism.equals("harsh")) {
+                        schismHarsh = true;
+                    } else if (!this.hasBlade && !firstSchism.equals("gentle")) {
+                        schismGentle = true;
+                    } else {
+                        schismNeutral = true;
+                    }
+
+                    if (schismHarsh) {
+                        parser.printDialogueLine(new PrincessDialogueLine("I'm tired of waiting for an answer."));
+                    }
+                    if (schismNeutral) {
+                        parser.printDialogueLine(new PrincessDialogueLine("How strange. So why are you here?"));
+                    }
+                    if (schismGentle) {
+                        parser.printDialogueLine(new PrincessDialogueLine("It's okay. Don't worry. Sometimes I get lost here too."));
+                    }
+
+                    break;
+
+                case "more":
+                    currentQuestionLines.put("harsh", "And what's that supposed to mean? Are you trying to get under my skin?");
+                    currentQuestionLines.put("neutral", "There must be something wrong with you. I'm the same as I was a moment ago.");
+                    currentQuestionLines.put("gentle", "Do you need help? Not that there's much I can do chained up like this, but I'm the only one down here, so if you need anything I'll do my best.");
+                    currentQuestionLines.put("emo", "I don't feel like I've gotten any bigger.");
+                    currentQuestionLines.put("monster", "It must be fear creeping into your heart. You know you can't stop me.");
+
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get(firstSchism)));
+                    if (schismEmo) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    if (schismMonster) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+
+                    // Attempt new schism: attempt neutral, then attempt harsh, then attempt gentle; fails if you have all 3 already
+                    if (!schismNeutral && !firstSchism.equals("neutral")) {
+                        newSchismComment = false;
+                        schismThisOption = true;
+                        schismNeutral = true;
+                        schismCount += 1;
+                        
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                    } else if (!schismHarsh && !firstSchism.equals("harsh")) {
+                        newSchismComment = false;
+                        schismThisOption = true;
+                        schismHarsh = true;
+                        schismCount += 1;
+                        
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                    } else if (!schismGentle && !firstSchism.equals("gentle")) {
+                        newSchismComment = false;
+                        schismThisOption = true;
+                        schismGentle = true;
+                        schismCount += 1;
+
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                    }
+
+                    if (schismThisOption) {
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I don't like where this is going."));
+                        parser.printDialogueLine(new VoiceDialogueLine("Neither do I. Which is why you need to slay her now before things get more complicated than they already are."));
+                    } else {
+                        if (schismNeutral) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                        if (schismHarsh) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                        if (schismGentle) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Huh. And here I was expecting her to split again. Is that it? What do we do now?"));
+                        parser.printDialogueLine(new VoiceDialogueLine("You slay her."));
+                    }
+                    
+                    parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
+
+                    if (this.hasBlade) {
+                        parser.printDialogueLine(new VoiceDialogueLine("You could always start by stabbing her."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "... Which her?"));
+                        parser.printDialogueLine(new VoiceDialogueLine("Any of them."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I don't know about you but I'm sure glad we took that knife with us. I can't believe someone suggested you toss it out the window. Can you imagine?"));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine("You could always start by retrieving the blade..."));
+
+                        if (this.threwBlade) {
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "The one that he made us throw out the window?"));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I wasn't the one who threw it."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Oh come on, you told us to! Don't try to pass the blame now that it's come back to bite us."));
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Well, if I'd known we'd be dealing with this, maybe I wouldn't have been so hasty with my suggestions."));
+                        } else {
+                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Can we even leave this place? I don't like thinking about what might happen to us if we have to go back... *through* those stairs."));
+                            parser.printDialogueLine(new VoiceDialogueLine("Well that's where the blade is. If you want it, you'll have to go and get it."));
+                        }
+                    }
+
+                    break;
+
+                case "name":
+                    currentQuestionLines.put("harsh", "You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really.");
+                    currentQuestionLines.put("neutral", "Princess.");
+                    currentQuestionLines.put("gentle", "You can call me Princess, if you'd like...");
+                    currentQuestionLines.put("emo", "It doesn't matter. I've been down here for so long. What's the point of a name if there's no one around to use it?");
+                    currentQuestionLines.put("monster", "I don't need a name. My name is whatever hushed whispers follow in the wake of my devastation.");
+
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get(firstSchism)));
+
+                    // Attempt new schism: harsh if you have the blade, gentle if not, neutral if you already have that princess; fails if you have all 3 already
+                    if (this.hasBlade && !firstSchism.equals("harsh")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismHarsh = true;
+                    } else if (!this.hasBlade && !firstSchism.equals("gentle")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismGentle = true;
+                    } else if (!schismNeutral && !firstSchism.equals("neutral")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismNeutral = true;
+                    }
+
+                    if (schismThisOption) {
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                    }
+
+                    if (schismNeutral) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                    if (schismHarsh) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                    if (schismGentle) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                    if (schismEmo) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    if (schismMonster) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+
+                    if (schismCount != 2) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "None of them have names!"));
+                        parser.printDialogueLine(new VoiceDialogueLine("How astute. I told you she was untrustworthy."));
+                    }
+
+                    break;
+
+                case "weird":
+                    currentQuestionLines.put("harsh", "You're not really cut out for this, are you? Why are you even here?");
+                    currentQuestionLines.put("neutral", "I don't remember what it was like before I was in this place. Why would I know what happened to you?");
+                    currentQuestionLines.put("gentle", "Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either.");
+                    currentQuestionLines.put("emo", "We're probably stuck down here forever, aren't we? There's no way out, and barely a way in...");
+                    currentQuestionLines.put("monster", "I thought they would send something better to deal with me. If the stairs managed to chew you up, I will devour you.");
+
+                    switch (firstSchism) {
+                        case "harsh":
+                            parser.printDialogueLine(new PrincessDialogueLine("What, like you need me to hold your hand and tell you everything's okay? You're not really cut out for this, are you? Why are you even here?"));
+                            break;
+
+                        case "neutral":
+                            parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                            break;
+
+                        case "gentle":
+                            parser.printDialogueLine(new PrincessDialogueLine("I don't know what happened to you, but you look like you're in one piece now. But I understand. Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either."));
+                            break;
+                    }
+
+                    parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+
+                    // New schism: attempt emo, then attempt monster, then attempt gentle, then attempt harsh, then neutral
+                    newSchismComment = false;
+                    schismCount += 1;
+                    if (!schismEmo) {
+                        setNewSchism = "emo";
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    } else if (!schismMonster) {
+                        setNewSchism = "monster";
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+                    } else if (!schismGentle && !firstSchism.equals("gentle")) {
+                        setNewSchism = "gentle";
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                    } else if (!schismHarsh && !firstSchism.equals("harsh")) {
+                        setNewSchism = "harsh";
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                    } else {
+                        setNewSchism = "neutral";
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                    }
+
+                    if (schismGentle) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                    if (schismNeutral) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                    if (schismHarsh) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                    if (schismEmo) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    if (schismMonster) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+                    
+                    activeMenu.setCondition("whatDo", activeMenu.hasBeenPicked("reason") && schismMonster);
+                    break;
+
+                case "reason":
+                    activeMenu.setCondition("threatShare", false);
+
+                    currentQuestionLines.put("harsh", "Maybe it's because I'm dangerous.");
+                    if (this.hasBlade) {
+                        currentQuestionLines.put("neutral", "Is this a quiz? You're the one who came down here, and with a sharp, sharp knife, too.");
+                    } else {
+                        currentQuestionLines.put("neutral", "Is this a quiz? If you're here, then surely you know why I'm here.");
+                    }
+                    currentQuestionLines.put("gentle", "I don't know why I'm here, but there has to be a reason, right? You don't just lock a Princess away in a place like this without a reason. I wish I knew what it was.");
+                    currentQuestionLines.put("emo", "But you know, right? You have to know. You're the only other person I've ever seen, or at least the only one I can remember. Don't give me false hope. Please just end this already. One way or another, just do it.");
+                    currentQuestionLines.put("monster", "Don't be coy. We both know why I'm locked away here. I'm a monster, and the second I get out of this place, I'm going to end the entire world.");
+
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get(firstSchism)));
+
+                    // New schism: attempt emo, then attempt monster
+                    if (!schismEmo) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismEmo = true;
+                    } else if (!schismMonster) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismMonster = true;
+                    }
+
+                    if (schismThisOption) {
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                    }
+                    
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    if (schismMonster) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+                    
+                    activeMenu.setCondition("whatDo", schismMonster);
+                    break;
+
+                case "threatShare":
+                    activeMenu.setCondition("reason", false);
+                    activeMenu.setCondition("whatDo", true);
+
+                    currentQuestionLines.put("harsh", "And you believe that? Do you think I'm some sort of... monster?");
+                    currentQuestionLines.put("neutral", "I don't have any weapons. And I'm chained to a wall. Do I look like someone that could end the world? Do I look like a monster?");
+                    currentQuestionLines.put("gentle", "But I don't want to hurt anyone. I like the world! I think. You... you don't think I'm some sort of monster, do you?");
+                    currentQuestionLines.put("emo", "I don't know. Maybe that's true. I probably shouldn't be given the chance anyway. If you were sent here to kill me, maybe you should just get it over with.");
+                    currentQuestionLines.put("monster", "Because I am. Everything you've heard about me is true, and I am going to lay waste to everything. Starting with you.");
+
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get(firstSchism)));
+
+                    // New schism: attempt monster, then attempt emo
+                    if (!schismMonster) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismMonster = true;
+                    } else if (!schismEmo) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        schismEmo = true;
+                    }
+
+                    if (schismThisOption) {
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                    }
+                    
+                    parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+                    if (schismEmo) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    
+                    break;
+
+                case "whatDo":
+                    currentQuestionLines.put("harsh", "What do you want me to say? That I'd be a good person?");
+                    currentQuestionLines.put("neutral", "I could tell you that I'd lead a quiet life in the woods or that I'd open an orphanage or that I'd do any other number of \"good\" things that I'm sure you think you want to hear.");
+                    currentQuestionLines.put("gentle", "I just want to live my life.");
+                    currentQuestionLines.put("emo", "If you want to put an end to me, then put an end to me.");
+                    currentQuestionLines.put("monster", "Besides, you already know what I'm going to do.");
+
+                    switch (firstSchism) {
+                        case "harsh":
+                            parser.printDialogueLine(new PrincessDialogueLine("I don't think what I'd do really matters, does it?"));
+                            break;
+
+                        case "neutral":
+                            parser.printDialogueLine(new PrincessDialogueLine("I don't think I can answer that question in a way you'd find meaningful."));
+                            break;
+
+                        case "gentle":
+                            parser.printDialogueLine(new PrincessDialogueLine("Are you looking for the truth, or are you looking for the 'right' answer?"));
+                            break;
+                    }
+
+                    // New schism attempt: attempt harsh, then attempt neutral, then attempt gentle
+                    if (!schismHarsh && !firstSchism.equals("harsh")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        setNewSchism = "harsh";
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                    } else if (!schismNeutral && !firstSchism.equals("neutral")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        setNewSchism = "neutral";
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                    } else if (!schismGentle && !firstSchism.equals("gentle")) {
+                        newSchismComment = false;
+                        schismCount += 1;
+                        schismThisOption = true;
+                        setNewSchism = "gentle";
+                        parser.printDialogueLine(new VoiceDialogueLine("She fractures again."));
+                        parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                    }
+
+                    if (!schismThisOption) {
+                        if (schismNeutral) {
+                            parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("neutral")));
+                        }
+                        if (schismHarsh) {
+                            parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("harsh")));
+                        }
+                        if (schismGentle) {
+                            parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("gentle")));
+                        }
+                    }
+
+                    if (schismGentle) {
+                        parser.printDialogueLine(new PrincessDialogueLine("You either trust me or you believe that I'm dangerous. What I say won't change how you already feel about me."));
+                    }
+                    if (schismNeutral) {
+                        parser.printDialogueLine(new PrincessDialogueLine("I'm a prisoner here, and whether or not you shoved me down here, you're practically my captor at this point. Anything I'd say is tainted by that."));
+                    }
+                    if (schismHarsh) {
+                        parser.printDialogueLine(new PrincessDialogueLine("I'm not going to dance for you."));
+                    }
+                    if (schismMonster) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("monster")));
+                    if (schismEmo) parser.printDialogueLine(new PrincessDialogueLine(currentQuestionLines.get("emo")));
+                    
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Not a single real answer..."));
+
+                    if (schismMonster) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "At least aside from Miss Blood-and-Destruction. It's infuriating, isn't it?"));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "It's *infuriating,* isn't it?"));
+                    }
+
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Whose buttons are there for us to press? Whose skin is there for us to get under?"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Not exactly how I'd put it, but I don't disagree. There must be something we can do. Asking questions just seems to make things worse."));
+                    break;
+
+                case "cGoStairs":
+                case "cSlayPrincess":
+                    if (schismCount == 1) {
+                        super.giveDefaultFailResponse();
+                        break;
+                    }
+                case "ending":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Chapter ends here
+        parser.printDialogueLine(new VoiceDialogueLine("Wait... that's not right."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Go on."));
+        parser.printDialogueLine(new VoiceDialogueLine("You take a step forward. Your foot lands. But it lands... different. You experience a firm footfall, a gentle tread, a confident stride."));
+        parser.printDialogueLine(new VoiceDialogueLine("You can feel yourself rupture. The room spins, your perception multiplying in a sickening kaleidoscope as your very self is pulled in incomprehensibly many directions."));
+
+        if (this.hasBlade) {
+            parser.printDialogueLine(new VoiceDialogueLine("All at once you charge forward, knife gleaming to slay the Princess, just as you strike at her bindings and leave her to languish alone."));
+        } else {
+            parser.printDialogueLine(new VoiceDialogueLine("You find the blade suddenly in your hands. All at once you use it to strike at her bindings as you remain upstairs and slay her and leave her to languish alone."));
+        }
         
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+        parser.printDialogueLine(new VoiceDialogueLine("Is this what the end of the world looks like? What an unbearable mess..."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "But this... w-we can't --"));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "... Do you not have anything *witty* to say? I could use a good bit of wit right now."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "No, I don't! Because this isn't fun! How are we supposed to have fun if everything is happening at the same time? It's the same as nothing happening, and nothing is *excrutiating!*"));
+        parser.printDialogueLine(new VoiceDialogueLine("Luckily for all of us, nothing, and everything, doesn't go on forever. The world, and the Princess, collapse in on themselves before it all --"));
 
-        // PLACEHOLDER
-        return null;
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "...Falls apart?"));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I think He's gone."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "We were never going to salvage this, were we?"));
+        parser.printDialogueLine("The Princess in front of you is all wrong, multiple faces and bodies smashed together in ways you can't begin to make sense of. Their skin stretches and contorts, veins bulging. They have too many fingers on too few hands. The pristine blade still sticks out of one of their chests, the face above it staring blankly into the distance.");
+
+        if (this.isFirstVessel) {
+            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision.");
+        } else {
+            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.");
+        }
+        
+        parser.printDialogueLine(new PrincessDialogueLine("What happened to us? What are we? There are parts of us that are dead, and the others.... they just don't fit."));
+        parser.printDialogueLine(new PrincessDialogueLine("We can feel them moving around in spaces they don't belong. It's all so uncomfortable."));
+        parser.printDialogueLine(new PrincessDialogueLine("Did you do this? Did we do this? Can... can you pull us back apart? Can you fix us?"));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "We should help her. I think... we did this."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "How... surprisingly sincere."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I didn't actually think our actions had consequences."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's a little late for regret, isn't it?"));
+        parser.printDialogueLine(new PrincessDialogueLine("Please?"));
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "okay", "\"It's going to be okay...\""));
+        activeMenu.add(new Option(this.manager, "best", "\"I'll do my best.\""));
+        activeMenu.add(new Option(this.manager, "supposed", "\"I don't think you're supposed to be fixed.\""));
+        activeMenu.add(new Option(this.manager, "no", "\"No\""));
+        activeMenu.add(new Option(this.manager, "destroyed", "\"You just destroyed everything. I'm not going to fix you.\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        switch (parser.promptOptionsMenu(activeMenu)) {
+            case "silent":
+                parser.printDialogueLine("Something reaches out and folds her into its myriad arms.");
+                if (this.isFirstVessel) {
+                    parser.printDialogueLine("But you don't know if she had the chance to hear your silence. She's gone, replaced with something else.");
+                } else {
+                    parser.printDialogueLine("But you'll never know if she hears your silence. She's gone. Memory returns.");
+                }
+                
+                return ChapterEnding.ILLUSIONOFCHOICE;
+        }
+
+        parser.printDialogueLine("Something reaches out and folds her into its myriad arms.");
+        if (this.isFirstVessel) {
+            parser.printDialogueLine("But you don't know if she had the chance to hear your reply. She's gone, replaced with something else.");
+        } else {
+            parser.printDialogueLine("But you'll never know if she hears your reply. She's gone. Memory returns.");
+        }
+
+        return ChapterEnding.ILLUSIONOFCHOICE;
     }
 
 
@@ -8867,32 +9427,573 @@ public class StandardCycle extends Cycle {
         this.canDropBlade = false;
 
         this.activeChapter = Chapter.SPACESBETWEEN;
+        this.currentLocation = GameLocation.BEFOREMIRROR;
         this.mirrorPresent = true;
 
-        // regular lead-up here
+        this.currentVoices.put(Voice.NARRATOR, false);
 
-        switch (manager.nClaimedVessels()) { // look at mirror
+        switch (this.prevEnding) {
+            case MOMENTOFCLARITY:
+                this.activeMenu = new OptionsMenu();
+                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                this.repeatActiveMenu = true;
+                while (repeatActiveMenu) {
+                    switch (parser.promptOptionsMenu(activeMenu)) {
+                        case "cApproach":
+                        case "approach":
+                            this.repeatActiveMenu = false;
+                            break;
+
+                        default: this.giveDefaultFailResponse();
+                    }
+                }
+
+                if (this.isFirstVessel) {
+                    parser.printDialogueLine("You step towards the mirror. It holds a truth that you must witness.");
+                } else {
+                    parser.printDialogueLine("You step towards the mirror. Its secrets remain hidden. Its mysteries remain unresolved.");
+                }
+
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Something tells me that this is the end of the line, but I don't feel bad about it. I'm ready."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "It feels okay."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "The fear's gone."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "I'm done fighting."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "My heart feels quiet."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "The game was always going to end."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "I'll be free of all of you."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "I'm ready for the truth."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "I'm ready to sleep."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "I'm just ready to be anywhere that isn't here."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "Boys, it's been an honor."));
+                
+                break;
+
+            case MUTUALLYASSURED:
+            case EMPTYCUP:
+                this.activeMenu = new OptionsMenu();
+                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                this.repeatActiveMenu = true;
+                while (repeatActiveMenu) {
+                    switch (parser.promptOptionsMenu(activeMenu)) {
+                        case "cApproach":
+                        case "approach":
+                            this.repeatActiveMenu = false;
+                            break;
+
+                        default: this.giveDefaultFailResponse();
+                    }
+                }
+
+                break;
+
+            default:
+                if (this.prevEnding != ChapterEnding.GRACE) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's gone. Where did she go? Should we try and find her?"));
+                }
+
+                if (this.mirrorComment || this.touchedMirror) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "And there's that mirror again. Why is it here? Why now?!"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "And is that a... mirror? Why is it here? Why now?!"));
+                }
+
+                boolean explore = false;
+                boolean silence = false;
+                if (this.isFirstVessel) {
+                    this.activeMenu = new OptionsMenu();
+                    activeMenu.add(new Option(this.manager, "where", "(Explore) I don't know where she went, and I don't know how we'd even go about looking for her."));
+                    activeMenu.add(new Option(this.manager, "gone", "(Explore) The Narrator is gone..."));
+                    activeMenu.add(new Option(this.manager, "suggest", "(Explore) I think I'm supposed to look at the mirror."));
+                    activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                    boolean contraAsk = false;
+                    this.repeatActiveMenu = true;
+                    while (repeatActiveMenu) {
+                        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+                        switch (activeOutcome) {
+                            case "where":
+                                if (this.hasVoice(Voice.SKEPTIC)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "If there's even a her to find anymore."));
+                                }
+                                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "Does this mean we won?"));
+                                }
+
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "You're right. She's gone. It's just us and that... awful thing."));
+                                
+                                if (this.hasVoice(Voice.STUBBORN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "It's like it's mocking us."));
+                                }
+                                if (this.hasVoice(Voice.HUNTED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "Let's just stay still."));
+                                }
+                                if (this.hasVoice(Voice.SMITTEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "I can't believe she was taken away from us! The nerve."));
+                                }
+                                if (this.hasVoice(Voice.PARANOID)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "I should feel better with her gone, but I don't."));
+                                }
+                                if (this.hasVoice(Voice.CHEATED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "We just can't win."));
+                                }
+                                if (this.hasVoice(Voice.COLD)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Don't bother looking for her. I'm sure it's just a waste of time."));
+                                }
+                                if (this.hasVoice(Voice.BROKEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "I feel anxious. Does anyone else feel anxious?"));
+                                }
+                                if (this.hasVoice(Voice.CONTRARIAN)) {
+                                    if (contraAsk) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Again, what the hell are we supposed to do?"));
+                                    } else {
+                                        contraAsk = true;
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Then what the hell are we supposed to do?"));
+                                    }
+                                }
+
+                                break;
+
+                            case "gone":
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He is. Does that mean the world ended?"));
+
+                                if (this.hasVoice(Voice.SKEPTIC)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "It must have. Do any of us know what the world ending is supposed to look like?"));
+                                }
+                                if (this.hasVoice(Voice.HUNTED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "It hasn't ended. We're still here."));
+                                }
+                                if (this.hasVoice(Voice.COLD)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "He was never going to outlast us."));
+                                }
+                                if (this.hasVoice(Voice.CONTRARIAN)) {
+                                    if (contraAsk) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Again, what the hell are we supposed to do?"));
+                                    } else {
+                                        contraAsk = true;
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Then what the hell are we supposed to do?"));
+                                    }
+                                }
+                                if (this.hasVoice(Voice.PARANOID)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "Yeah. No voice needling us anymore. Feels good, but I also feel... itchy. Cold."));
+                                }
+                                if (this.hasVoice(Voice.STUBBORN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "The world didn't end. We're still here. Come on, we just need to keep going!"));
+                                }
+                                if (this.hasVoice(Voice.BROKEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "Figures the world would end and leave us with all this nothing."));
+                                }
+                                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "We're at the top of the pecking order now... right, boys?"));
+                                }
+                                if (this.hasVoice(Voice.SMITTEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "A villain vanquished."));
+                                }
+                                if (this.hasVoice(Voice.CHEATED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Good riddance."));
+                                }
+
+                                break;
+
+                            case "suggest":
+                                explore = true;
+
+                                if (this.hasVoice(Voice.CONTRARIAN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "No. Don't do that."));
+                                }
+                                if (this.hasVoice(Voice.HUNTED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "That thing reeks of death."));
+                                }
+                                if (this.hasVoice(Voice.PARANOID)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "It's calling us. And not in a good way."));
+                                }
+                                if (this.hasVoice(Voice.SKEPTIC)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "You're right. Part of me wants the truth, but something stronger is holding me back. Fear."));
+                                }
+                                if (this.hasVoice(Voice.STUBBORN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Screw the mirror! We just need to find the Princess."));
+                                }
+                                if (this.hasVoice(Voice.BROKEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "I don't want to look at us."));
+                                }
+                                if (this.hasVoice(Voice.SMITTEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right?"));
+                                }
+                                if (this.hasVoice(Voice.CHEATED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "It's going to do something to us. I can feel it."));
+                                }
+                                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                    if (this.nVoices() == 2) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If he thinks it's bad, I'm with him."));
+                                    } else {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If they think it's bad, I'm with them."));
+                                    }
+                                }
+                                if (this.hasVoice(Voice.COLD)) {
+                                    if (this.nVoices() == 2) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore him. You have to look."));
+                                    } else {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore the cowards. You have to look."));
+                                    }
+                                }
+
+                                break;
+
+                            case "cApproach":
+                            case "approach":
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I'm begging you, don't do this."));
+
+                                this.activeMenu = new OptionsMenu();
+                                activeMenu.add(new Option(this.manager, "explore", "(Explore) \"The mirror never scared you before.\"", this.mirrorComment || this.touchedMirror));
+                                activeMenu.add(new Option(this.manager, "ignore", "[Ignore him.]"));
+                                
+                                while (repeatActiveMenu) {
+                                    switch (parser.promptOptionsMenu(activeMenu)) {
+                                        case "explore":
+                                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "It's different now! It feels... I don't know. Final."));
+
+                                            if (!explore) {
+                                                explore = true;
+
+                                                if (this.hasVoice(Voice.CONTRARIAN)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Yeah, don't look at it. I don't like that *thing.*"));
+                                                }
+                                                if (this.hasVoice(Voice.HUNTED)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "That thing reeks of death."));
+                                                }
+                                                if (this.hasVoice(Voice.PARANOID)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "It's calling us. And not in a good way."));
+                                                }
+                                                if (this.hasVoice(Voice.SKEPTIC)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "You're right. Part of me wants the truth, but something stronger is holding me back. Fear."));
+                                                }
+                                                if (this.hasVoice(Voice.STUBBORN)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Screw the mirror! We just need to find the Princess."));
+                                                }
+                                                if (this.hasVoice(Voice.BROKEN)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "I don't want to look at us."));
+                                                }
+                                                if (this.hasVoice(Voice.SMITTEN)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right?"));
+                                                }
+                                                if (this.hasVoice(Voice.CHEATED)) {
+                                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "It's going to do something to us. I can feel it."));
+                                                }
+                                                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                                    if (this.nVoices() == 2) {
+                                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If he thinks it's bad, I'm with him."));
+                                                    } else {
+                                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If they think it's bad, I'm with them."));
+                                                    }
+                                                }
+                                                if (this.hasVoice(Voice.COLD)) {
+                                                    if (this.nVoices() == 2) {
+                                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore him. You have to look."));
+                                                    } else {
+                                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore the cowards. You have to look."));
+                                                    }
+                                                }
+                                            }
+
+                                            break;
+
+                                        case "cApproach":
+                                        case "ignore":
+                                            this.repeatActiveMenu = false;
+                                            break;
+
+                                        default: this.giveDefaultFailResponse(activeOutcome);
+                                    }
+                                }
+
+                                break;
+
+                            default: this.giveDefaultFailResponse(activeOutcome);
+                        }
+                    }
+                } else {
+                    this.activeMenu = new OptionsMenu();
+                    activeMenu.add(new Option(this.manager, "cruel", "(Explore) Of course you're scared. This is the end, for you. But it's not the end for me."));
+                    activeMenu.add(new Option(this.manager, "comfort", "(Explore) It's going to be okay. Just trust me. We've been here before, and you always get scared."));
+                    activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                    this.repeatActiveMenu = true;
+                    while (repeatActiveMenu) {
+                        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+                        switch (activeOutcome) {
+                            case "cruel":
+                                activeMenu.setCondition("comfort", false);
+                                explore = true;
+                                this.mirrorCruel();
+                                break;
+
+                            case "comfort":
+                                activeMenu.setCondition("cruel", false);
+                                explore = true;
+                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "But it feels so bad! Like looking into it right now is going to be the end of everything."));
+
+                                if (this.hasVoice(Voice.CONTRARIAN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Yeah, don't look at it. I don't like that *thing.*"));
+                                }
+                                if (this.hasVoice(Voice.HUNTED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "That thing reeks of death."));
+                                }
+                                if (this.hasVoice(Voice.PARANOID)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "It's calling us. And not in a good way."));
+                                }
+                                if (this.hasVoice(Voice.SKEPTIC)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "You're right. Part of me wants the truth, but something stronger is holding me back. Fear."));
+                                }
+                                if (this.hasVoice(Voice.STUBBORN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Screw the mirror! We just need to find the Princess."));
+                                }
+                                if (this.hasVoice(Voice.BROKEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "I don't want to look at us."));
+                                }
+                                if (this.hasVoice(Voice.SMITTEN)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right?"));
+                                }
+                                if (this.hasVoice(Voice.CHEATED)) {
+                                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "It's going to do something to us. I can feel it."));
+                                }
+                                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                    if (this.nVoices() == 2) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If he thinks it's bad, I'm with him."));
+                                    } else {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If they think it's bad, I'm with them."));
+                                    }
+                                }
+                                if (this.hasVoice(Voice.COLD)) {
+                                    if (this.nVoices() == 2) {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "You don't need to comfort him."));
+                                    } else {
+                                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "You don't need to comfort them."));
+                                    }
+                                }
+
+                                boolean repeatSub = true;
+                                OptionsMenu subMenu = new OptionsMenu();
+                                subMenu.add(new Option(this.manager, "comfortA", "(Explore) It's not the end. Whatever's on the other side is going to be nice."));
+                                subMenu.add(new Option(this.manager, "cruel", "(Explore) It's the end for you, but not for me."));
+                                subMenu.add(new Option(this.manager, "comfortB", "(Explore) I'll see you on the other side. It's going to be okay."));
+                                subMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                                while (repeatSub) {
+                                    switch (parser.promptOptionsMenu(subMenu)) {
+                                        case "comfortA":
+                                        case "comfortB":
+                                            repeatSub = false;
+                                            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay. If you say so, we'll trust you."));
+
+                                            if (this.hasVoice(Voice.PARANOID)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "Can we trust you?"));
+                                            }
+                                            if (this.hasVoice(Voice.HUNTED)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "I'd like to be somewhere nice."));
+                                            }
+                                            if (this.hasVoice(Voice.STUBBORN)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Maybe there'll be a good fight there. Maybe we'll find her again."));
+                                            }
+                                            if (this.hasVoice(Voice.BROKEN)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "A mercy."));
+                                            }
+                                            if (this.hasVoice(Voice.CONTRARIAN)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "You're not messing with us, right?"));
+                                            }
+                                            if (this.hasVoice(Voice.CHEATED)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "So this is all going to work out?"));
+                                            }
+                                            if (this.hasVoice(Voice.SKEPTIC)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "Feels too good to be true."));
+                                            }
+                                            if (this.hasVoice(Voice.SMITTEN)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "She'll be there waiting for us, I just know it."));
+                                            }
+                                            if (this.hasVoice(Voice.OPPORTUNIST)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "Finally. We're going places."));
+                                            }
+                                            if (this.hasVoice(Voice.COLD)) {
+                                                parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Whatever makes you happy."));
+                                            }
+
+                                            break;
+                                        
+                                        case "cruel":
+                                            repeatSub = false;
+                                            this.mirrorCruel();
+                                            break;
+
+                                        case "cApproach":
+                                        case "approach":
+                                            this.repeatActiveMenu = false;
+                                            repeatSub = false;
+                                            silence = true;
+                                            break;
+                                    }
+                                }
+
+                                break;
+
+                            case "cApproach":
+                            case "approach":
+                                this.repeatActiveMenu = false;
+                                break;
+
+                            default: this.giveDefaultFailResponse(activeOutcome);
+                        }
+                    }
+                }
+                
+            // Approach the mirror
+            parser.printDialogueLine("You approach the mirror.");
+
+            if (silence) {
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I don't like that silence."));
+                parser.printDialogueLine("The voices feel small, distant as you approach.");
+            }
+            
+            if (!explore) {
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "This... this doesn't feel right. It feels different. Final."));
+
+                if (this.hasVoice(Voice.CONTRARIAN)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "Yeah, don't look at it. I don't like that *thing.*"));
+                }
+                if (this.hasVoice(Voice.HUNTED)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "That thing reeks of death."));
+                }
+                if (this.hasVoice(Voice.PARANOID)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "It's calling us. And not in a good way."));
+                }
+                if (this.hasVoice(Voice.SKEPTIC)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "You're right. Part of me wants the truth, but something stronger is holding me back. Fear."));
+                }
+                if (this.hasVoice(Voice.STUBBORN)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Screw the mirror! We just need to find the Princess."));
+                }
+                if (this.hasVoice(Voice.BROKEN)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "I don't want to look at us."));
+                }
+                if (this.hasVoice(Voice.SMITTEN)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right?"));
+                }
+                if (this.hasVoice(Voice.CHEATED)) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "It's going to do something to us. I can feel it."));
+                }
+                if (this.hasVoice(Voice.OPPORTUNIST)) {
+                    if (this.nVoices() == 2) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If he thinks it's bad, I'm with him."));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "If they think it's bad, I'm with them."));
+                    }
+                }
+                if (this.hasVoice(Voice.COLD)) {
+                    if (this.nVoices() == 2) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore him. You have to look."));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "Ignore the cowards. You have to look."));
+                    }
+                }
+            }
+        }
+
+        // Gaze into your reflection
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "gaze", "[Gaze into your reflection.]"));
+        parser.promptOptionsMenu(activeMenu);
+
+        this.mirrorPresent = false;
+        this.clearVoices();
+        if (this.prevEnding == ChapterEnding.MUTUALLYASSURED || this.prevEnding == ChapterEnding.EMPTYCUP) {
+            parser.printDialogueLine("Silence as you reach towards the glass. It's time for you to see what's in it.");
+        } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && (manager.getClaimedVessel(0) == Vessel.RAZORFULL || manager.getClaimedVessel(0) == Vessel.RAZORHEART))) {
+            parser.printDialogueLine("Silence as you reach forward. They're gone, but the mirror remains. It's time for you to see what's in it.");
+        } else {
+            parser.printDialogueLine("Silence as you reach forward. They're gone once again. The mirror always makes them leave. But you need to see what's in it.");
+        }
+        
+        
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
+
+        System.out.println();
+        switch (manager.nClaimedVessels()) {
             case 0:
-                // it's you
+                parser.printDialogueLine("It's you.");
                 this.theSpacesBetween();
                 break;
             case 1:
-                // you've grown
+                parser.printDialogueLine("You've grown.");
                 this.theSpacesBetween();
                 break;
             case 2:
-                // you've withered
+                parser.printDialogueLine("You've withered.");
                 this.theSpacesBetween();
                 break;
             case 3:
-                // you've unraveled
+                parser.printDialogueLine("You've unraveled.");
                 this.theSpacesBetween();
                 break;
-            case 4:
-                // you are nothing at all
-                // but that isn't right etc.
-                // include "are you me?" here
+            case 4: // Leads into Finale.finalMirror()
+                parser.printDialogueLine("You are nothing at all.");
+                parser.printDialogueLine("But that isn't right. You can't be nothing. You refocus your gaze, and then you see it: a figure, faint and veiled in shadow, just beyond the reflection.");
+
+                this.activeMenu = new OptionsMenu(true);
+                activeMenu.add(new Option(this.manager, "ask", "\"Are you me?\""));
+                parser.promptOptionsMenu(activeMenu);
+                
+                parser.printDialogueLine(new VoiceDialogueLine("I think you know what I am."));
+                parser.printDialogueLine("A crack slides down the center of the mirror, splitting the image in the glass in two.");
+                parser.printDialogueLine("And then another crack forms, and another, and another, turning the mirror into jagged shards of broken glass.");
                 break;
+        }
+    }
+
+    /**
+     * The player is cruel to the Voices at the mirror (i.e. tells them they're going to die)
+     */
+    private void mirrorCruel() {
+        manager.incrementCruelCount();
+
+        if (this.hasVoice(Voice.COLD)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.COLD, "I would have kept them in the dark, if I were you."));
+        }
+
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "What is that supposed to mean? Whatever awful thing I felt before, it feels so much worse now!"));
+
+        if (this.hasVoice(Voice.HUNTED)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.HUNTED, "Death. Real death."));
+        }
+        if (this.hasVoice(Voice.BROKEN)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.BROKEN, "This is what we all deserve, isn't it?"));
+        }
+        if (this.hasVoice(Voice.STUBBORN)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.STUBBORN, "Screw that! This can't be the end! It just can't!"));
+        }
+        if (this.hasVoice(Voice.OPPORTUNIST)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.OPPORTUNIST, "You'd better watch your back, you can't get rid of me that easy!"));
+        }
+        if (this.hasVoice(Voice.CONTRARIAN)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "He's just messing with us... right?!"));
+        }
+        if (this.hasVoice(Voice.CHEATED)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "So you're the real puppet master here? Can't believe I tried to help you."));
+        }
+        if (this.hasVoice(Voice.SKEPTIC)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.SKEPTIC, "No, that can't be right! There has to be something more!"));
+        }
+        if (this.hasVoice(Voice.PARANOID)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.PARANOID, "Can't even trust ourself."));
+        }
+        if (this.hasVoice(Voice.SMITTEN)) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.SMITTEN, "Do it, then. End us all before I die of a broken heart."));
         }
     }
 
@@ -8919,6 +10020,16 @@ public class StandardCycle extends Cycle {
             case 3:
                 break;
         }
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
     }
 
     /**
@@ -8927,6 +10038,12 @@ public class StandardCycle extends Cycle {
      */
     private void giveVesselThoughts(Vessel v) {
         // thoughts on the current vessel
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        */
     }
 
 }

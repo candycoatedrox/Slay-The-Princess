@@ -145,7 +145,7 @@ public class IOHandler {
      * @return the ID of the chosen Option or the outcome of the entered command
      */
     private String parseOptionChoice(Cycle cycle, OptionsMenu options, DialogueLine exclusiveOverride) {
-        // Returns choice id or command outcome
+        boolean singleOption = options.size() == 1;
         boolean isOption = true;
         int choiceN = -1;
         String outcome;
@@ -197,9 +197,17 @@ public class IOHandler {
                 } else if (!outcome.equals("cMeta")) {
                     if (exclusiveOverride.isEmpty()) {
                         if (cycle == null) {
-                            this.printDialogueLine("[You have no other options.]", true);
+                            if (singleOption) {
+                                this.printDialogueLine("[You have no other option.]", true);
+                            } else {
+                                this.printDialogueLine("[You have no other options.]", true);
+                            }
                         } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                            this.printDialogueLine("[You have no other options.]", true);
+                            if (singleOption) {
+                                this.printDialogueLine("[You have no other option.]", true);
+                            } else {
+                                this.printDialogueLine("[You have no other options.]", true);
+                            }
                         } else {
                             this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true));
                         }
