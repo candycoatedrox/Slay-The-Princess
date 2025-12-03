@@ -6272,7 +6272,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Adversary -
 
     /**
-     * Runs the opening sequence of The Adversary
+     * Runs Chapter II: The Adversary
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding adversary() {
@@ -6387,7 +6387,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Eye of the Needle -
 
     /**
-     * Runs the opening sequence of The Eye of the Needle
+     * Runs Chapter III: The Eye of the Needle
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding eyeOfNeedle() {
@@ -6405,7 +6405,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Fury -
 
     /**
-     * Runs the opening sequence of The Fury
+     * Runs Chapter III: The Fury
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding fury() {
@@ -6431,7 +6431,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Tower -
 
     /**
-     * Runs the opening sequence of The Tower
+     * Runs Chapter II: The Tower
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding tower() {
@@ -6650,7 +6650,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Apotheosis -
 
     /**
-     * Runs the opening sequence of The Apotheosis
+     * Runs Chapter III: The Apotheosis
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding apotheosis() {
@@ -6668,7 +6668,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Spectre -
 
     /**
-     * Runs the opening sequence of The Spectre
+     * Runs Chapter II: The Spectre
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding spectre() {
@@ -6779,7 +6779,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Princess and the Dragon -
 
     /**
-     * Runs the opening sequence of The Princess and the Dragon
+     * Runs Chapter III: The Princess and the Dragon
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding princessAndDragon() {
@@ -6793,7 +6793,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Wraith -
 
     /**
-     * Runs the opening sequence of The Wraith
+     * Runs Chapter III: The Wraith
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding wraith() {
@@ -6818,7 +6818,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Nightmare -
 
     /**
-     * Runs the opening sequence of The Nightmare
+     * Runs Chapter II: The Nightmare
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding nightmare() {
@@ -7127,7 +7127,7 @@ public class StandardCycle extends Cycle {
     // - Chapter ???: The Moment of Clarity -
 
     /**
-     * Runs the opening sequence of The Moment of Clarity
+     * Runs Chapter ???: The Moment of Clarity
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding momentOfClarity() {
@@ -7141,11 +7141,13 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Razor -
 
     /**
-     * Runs the opening sequence of The Razor
+     * Runs Chapter II: The Razor
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding razor() {
         // You gain the Voice of the Cheated
+
+        // NOTE TO SELF: come back to this Chapter later and heavily edit dialogue for more accurate tone
 
         switch (this.prevEnding) {
             case TORAZORMUTUAL:
@@ -7260,30 +7262,387 @@ public class StandardCycle extends Cycle {
 
         parser.printDialogueLine(new PrincessDialogueLine("What are you waiting for? You are here to rescue me, right?"));
 
+        String honestText = "(Explore) \"What if we're both honest with each other? I was sent here to stop you from ending the world, and you ";
+        if (source.equals("revival")) {
+            honestText += "killed me last time after coming back from being stabbed in the heart.\"";
+        } else {
+            honestText += "slashed my throat last time.\"";
+        }
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "knife2", "(Explore) \"Prove it then. Prove that you don't have a knife.\"", activeMenu.get("knife1")));
+        activeMenu.add(new Option(this.manager, "knife3", "(Explore) \"But what if you're just hiding it somewhere secret?\"", activeMenu.get("knife2")));
+        activeMenu.add(new Option(this.manager, "stab", "(Explore) \"If I come close to you, you're just going to stab me, aren't you?\""));
+        activeMenu.add(new Option(this.manager, "lastTime1", "(Explore) \"Do you remember what happened last time?\""));
+        activeMenu.add(new Option(this.manager, "lastTime2", "(Explore) \"But that's exactly what happened! So you do remember it.\"", activeMenu.get("lastTime1")));
+        activeMenu.add(new Option(this.manager, "knife1", "(Explore) \"I know you have a knife. I'll let you out of here if you drop it.\""));
+        activeMenu.add(new Option(this.manager, "suspicious", "(Explore) \"I'd like to trust you, but you're being so suspicious right now!\""));
+        activeMenu.add(new Option(this.manager, "talk", "(Explore) \"Can we just talk things through?\""));
+        activeMenu.add(new Option(this.manager, "key", "(Explore) \"I don't have the key.\""));
+        activeMenu.add(new Option(this.manager, "goodWill", "(Explore) \"I don't have a weapon. Isn't that a sign of good will?\"", !this.hasBlade));
+        activeMenu.add(new Option(this.manager, "lastKill", "(Explore) \"We killed each other last time. I'd rather not do that again.\"", source.equals("mutual")));
+        activeMenu.add(new Option(this.manager, "mad", "(Explore) \"Look, I know that you're mad at me but I think we both just need to let bygones be bygones.\""));
+        activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What happened after you died last time?\"", source.equals("mutual")));
+        activeMenu.add(new Option(this.manager, "honest", honestText));
+        activeMenu.add(new Option(this.manager, "nobody", "(Explore) \"Nobody has to die.\""));
+        activeMenu.add(new Option(this.manager, "letOut", "(Explore) \"Okay. What are you going to do if I let you out?\""));
+        activeMenu.add(new Option(this.manager, "activities", "(Explore) \"Activities like stabbing or cutting or murdering?\"", activeMenu.get("letOut")));
+        activeMenu.add(new Option(this.manager, "approach", "\"Okay, fine. I'm coming closer to free you. You'd better not try anything.\" [Approach the Princess.]"));
+        activeMenu.add(new Option(this.manager, "bye", "\"Yeah, I'm not trusting this. Bye!\" [Turn and leave.]"));
+        activeMenu.add(new Option(this.manager, "rightBack", "\"I'll be right back. I left something upstairs.\" [Go retrieve the blade upstairs.]", !this.hasBlade));
+        activeMenu.add(new Option(this.manager, "slay", "\"Screw it.\" [Slay the Princess.]"));
+
+
+        boolean lastTimeFlag = false;
+        boolean loopComment = false;
+        boolean followUpFlag = false;
+        int followUpCount = 0;
         
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-        
-        // PLACEHOLDER
-        return null;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            if (lastTimeFlag && !loopComment) {
+                loopComment = true;
+                
+                if (this.sharedLoopInsist) {
+                    parser.printDialogueLine(new VoiceDialogueLine("There you go again, talking up delusions about a past-life experience that clearly didn't happen."));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("\"Last time?\" What are you talking about?"));
+                }
+
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Ugh. It's like the two of you are working together on this. Aren't you listening to her? She's obviously lying through her teeth."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I'm terrible at spotting liars and even I can tell something's up here. We can't be the only ones who looped back to the start. Someone else has to remember, right?"));
+                parser.printDialogueLine(new VoiceDialogueLine("Yes. Something is obviously \"up\" and we can all tell that she's lying. But the thing she's lying about is how dangerous she is, not \"dimension-hopping\" or \"time-travel\" or whatever it is you think you're doing."));
+            } else if (followUpFlag) {
+                switch (followUpCount) {
+                    case 1:
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "I have absolutely zero doubts that she is going to stab us if we get close to her."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She certainly feels threatening."));
+                        parser.printDialogueLine(new VoiceDialogueLine("Just because she's acting like she's going to stab you doesn't mean she has the means to actually do it."));
+
+                        if (this.hasBlade) {
+                            parser.printDialogueLine(new VoiceDialogueLine("But you know who is armed? You. So stop second guessing yourself and do your job."));
+                        } else {
+                            parser.printDialogueLine(new VoiceDialogueLine("But you know who has the capacity to quickly arm himself? You do. So stop second guessing yourself, go upstairs, take the blade, and do your job."));
+                        }
+
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "But I'm nervous."));
+                        parser.printDialogueLine(new VoiceDialogueLine("All the more reason to jump into the deep end and deal with her right now, before you waste any more time getting stuck in your head."));
+                        break;
+
+                    case 2:
+                        parser.printDialogueLine(new VoiceDialogueLine("How many more times does she have to vaguely threaten you before you to finally decide you're ready to deal with her?"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "We're clearly still figuring out our angle. We don't have the luxury of watching this from a distance."));
+                        parser.printDialogueLine(new VoiceDialogueLine("Oh, I'm sorry, do you think I'm in a position of luxury right now?"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "You're acting like you are."));
+                        parser.printDialogueLine(new VoiceDialogueLine("My entire world is at risk."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Then maybe you should behave with a little more humility. A bit of self-deprecation would go a long way."));
+                        parser.printDialogueLine(new VoiceDialogueLine("No. I have my dignity."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Fine. Then we'll continue to treat you exactly how you deserve to be treated."));
+                        break;
+
+                    case 3:
+                        parser.printDialogueLine(new VoiceDialogueLine("I think I've said my piece at this point."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "I think we all have. But if you want to keep exhausting your questions, it beats getting stabbed to death."));
+                        break;
+
+                    case 4:
+                        parser.printDialogueLine(new PrincessDialogueLine("Okay. I'm bored now."));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's bored...?"));
+                        parser.printDialogueLine(new VoiceDialogueLine("That's absurd. She doesn't get to be bored. Not in a way that matters. She's a *prisoner.* She's --", true));
+                        return this.razorInitiative(this.hasBlade, false);
+                }
+                
+                followUpFlag = false;
+                followUpCount += 1;
+            }
+
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "knife2":
+                    parser.printDialogueLine(new PrincessDialogueLine("It would be so much easier to prove that I *do* have a sharp object. I could just show it to you! But I don't have one, so I can't."));
+                    parser.printDialogueLine(new VoiceDialogueLine("The Princess smiles as she pulls her hands from behind her back."));
+                    parser.printDialogueLine(new PrincessDialogueLine("But look at this! Hands! Hands that don't have *anything* in them to stab you with."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Her smile stretches into an even wider grin as she shakes her sleeves."));
+                    parser.printDialogueLine(new PrincessDialogueLine("And *empty sleeves* too! Look at how few stabbing implements I have, it's practically zero."));
+                    break;
+
+                case "knife3":
+                    parser.printDialogueLine(new PrincessDialogueLine("I've shown you all of my hiding spots! What kind of Princess do you think I am? I would never hide something sharp somewhere secret."));
+                    parser.printDialogueLine(new PrincessDialogueLine("Wait, that sounds like I'm lying, but I'm actually not. My secret zones are for me only, they have nothing to do with you or my intention to not-stab you to death the second you get close to me."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Her smile drops for a moment, her expression sharp and flat."));
+                    parser.printDialogueLine(new PrincessDialogueLine("I assure you, there's nothing hidden there."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I'm inclined to believe her on that one. She seems serious."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Of course, but that doesn't mean that she doesn't have something hidden *somewhere.* We know for a fact she's armed."));
+                    break;
+
+                case "stab":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("What? *Noooo!* No, I wouldn't stab you. I am just a sweet in-no-cent Princess, trapped here for no reason!"));
+                    parser.printDialogueLine(new PrincessDialogueLine("And you are a brave knight who is supposed to walk up to... not-stabbing-distance to help me."));
+                    break;
+
+                case "lastTime1":
+                    lastTimeFlag = true;
+
+                    switch (this.source) {
+                        case "mutual":
+                            parser.printDialogueLine(new PrincessDialogueLine("Last time? If somebody came into *my* house and tried to kill me and I cut his neck open and then he stabbed me in the heart and we both died looking in each other's eyes, well, surely I would remember that!"));
+                            break;
+
+                        case "revival":
+                            parser.printDialogueLine(new PrincessDialogueLine("Last time? If somebody came into *my* house and stabbed *me* to death and then I *killed him,* surely I would remember that!"));
+                            break;
+
+                        case "pathetic":
+                            parser.printDialogueLine(new PrincessDialogueLine("Last time? If somebody came into *my* house and tried to kill me and I cut his neck open, surely I would remember that!"));
+                            break;
+                    }
+
+                    parser.printDialogueLine(new PrincessDialogueLine("But I *don't* remember it! So it must not have happened."));
+                    break;
+
+                case "lastTime2":
+                    parser.printDialogueLine(new PrincessDialogueLine("Would I just *lie?* Would I just lie to your face and tell you that a thing I remembered happening didn't happen just so I could *stab you again?*"));
+                    parser.printDialogueLine(new PrincessDialogueLine("I mean, just so I could stab you for the *first* time."));
+
+                    if (loopComment) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Aha! She slipped up there! She said again. And her taking it back doesn't count."));
+                        parser.printDialogueLine(new VoiceDialogueLine("Do you hear how deranged you sound right now? Please just stop dawdling. This is only going to end with violence. Postponing the inevitable is only going to make it worse for you when it actually happens."));
+                    }
+                    
+                    break;
+
+                case "knife1":
+                    parser.printDialogueLine(new PrincessDialogueLine("A *knife?* What are you *talking about?* I don't have a knife, where would I keep a knife?"));
+                    parser.printDialogueLine(new PrincessDialogueLine("And *why* would I stab you to death? I don't know you. You haven't given me a *reason* to stab you to death. It would be *so silly* of me to cut you open and look at your insides."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Okay, I could have sworn we didn't mention stabbing anyone to death."));
+                    parser.printDialogueLine(new VoiceDialogueLine("It sounds like she's really out for blood. Fortunately for you, she isn't armed."));
+                    break;
+
+                case "suspicious":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("That's... so *rude* of you, passing judgments on strangers you've never met just because they're different from you! How would you like it if *I* did that, *huh?*"));
+
+                    if (this.hasBlade) {
+                        parser.printDialogueLine(new PrincessDialogueLine("Silly little birdface thinks he's *so serious* coming down here but doesn't know *anything!* Thinks he can tell me to get rid of all the *knives* I don't even *have* while he gets to wave one around right in front of me!"));
+                    } else {
+                        parser.printDialogueLine(new PrincessDialogueLine("Silly little birdface thinks he's *so serious* coming down here but doesn't know *anything!* He doesn't even have a knife for stabbing!"));
+                    }
+                    
+                    parser.printDialogueLine(new PrincessDialogueLine("I bet you didn't *like* that, *did* you? I bet you didn't *like* being judged for no reason."));
+                    break;
+
+                case "talk":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("But we *don't* have anything to talk through! We're *strangers* and this place is *cramped* and *annoying* and you should just come over here and let me out."));
+                    break;
+
+                case "key":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("Ohh, you don't, okay, I see."));
+                    parser.printDialogueLine(new PrincessDialogueLine("I have an idea! You should come over here and stare directly at the chains! You won't be able to find the key if you don't know what it's supposed to look like, so you'd better come *right* within close staring distance, *just* to be sure!"));
+                    break;
+
+                case "goodWill":
+                    parser.printDialogueLine(new PrincessDialogueLine("*Yes!* Yes, of *course!* Haven't you seen that I've only been nice to you since you got here?"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Has she?"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Her words have been fine but her general attitude's been weird and extremely suspicious, and I think that's what really counts."));
+                    parser.printDialogueLine(new VoiceDialogueLine("This shouldn't even be a question. She absolutely has not been nice to you."));
+                    break;
+
+                case "lastKill":
+                    lastTimeFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("But if we killed each other, then why are we here, right now, both of us normal and un-stabbed?"));
+
+                    if (!loopComment) {
+                        parser.printDialogueLine(new VoiceDialogueLine("I do have to hand it to her, that's a very good question, and it's one with a simple answer: you haven't slain her yet. So how about you get moving?"));
+                    }
+
+                    break;
+
+                case "mad":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("But I'm not mad at you! So please stop standing so far out of reach."));
+                    break;
+
+                case "happened":
+                    lastTimeFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("That's funny! You're *funny!* I'm not dead, so I *can't* have died!"));
+                    break;
+
+                case "honest":
+                    lastTimeFlag = true;
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("Hahaha! *That* doesn't sound like me!"));
+                    break;
+
+                case "nobody":
+                    followUpFlag = true;
+                    parser.printDialogueLine(new PrincessDialogueLine("Of *course not!* At least not *now.* Because *you're* here to save me. But you'll have to come close!"));
+                    break;
+
+                case "letOut":
+                    parser.printDialogueLine(new PrincessDialogueLine("All *sorts* of things, which is why I think that's a great idea! I would *love* to not be chained up down here. Being chained up is so *boring* and I crave fresh and new activities to broaden my horizons!"));
+                    parser.printDialogueLine(new VoiceDialogueLine("Please don't let her out of here."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Believe it or not, I think I'm actually with Him on this."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay, but what if all of this is just a misunderstanding? There has to be room for this to be a misunderstanding."));
+                    break;
+
+                case "activities":
+                    parser.printDialogueLine(new PrincessDialogueLine("*Yes!* I mean, maybe! I've never done *any* of those things, but there is something alluring about the sound of it."));
+                    parser.printDialogueLine(new PrincessDialogueLine("I think it would also be fun to do *other* activities like... look at a bird, or touch a tree."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay, now listen."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "You're not actually buying this, are you?"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Listen."));
+                    parser.printDialogueLine(new VoiceDialogueLine("... Yes?"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I would like to look at a bird."));
+                    parser.printDialogueLine(new VoiceDialogueLine("You can look at a bird later."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "But if we look at a bird *now* we wouldn't have to be *here.*"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "He has a point."));
+                    parser.printDialogueLine(new VoiceDialogueLine("Just make a *decision* already!"));
+                    break;
+
+
+                case "approach":
+                    return this.razorApproach(this.hasBlade);
+
+                case "cGoStairs":
+                    parser.printDialogueLine(new VoiceDialogueLine("You've barely even begun to turn around when she speaks again."));
+                case "bye":
+                case "rightBack":
+                    parser.printDialogueLine(new PrincessDialogueLine("It's boring if you leave."));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's bored...?"));
+                    parser.printDialogueLine(new VoiceDialogueLine("That's absurd. She doesn't get to be bored. Not in a way that matters. She's a *prisoner.* She's --", true));
+                    return this.razorInitiative(this.hasBlade, true);
+
+                case "cSlayPrincess":
+                case "slay":
+                    this.razorSlay();
+                    return ChapterEnding.TOARMSRACEFIGHT;
+
+                case "cSlayPrincessNoBladeFail":
+                    parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* You left the blade upstairs, remember? You can always go back and retrieve it, but as of *now,* you have no weapon with which to slay her."));
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        throw new RuntimeException("No ending found");
+    }
+
+    /**
+     * The Razor takes initiative and attacks the player, ending the Chapter
+     * @param bladePath whether the player took the blade in The Razor (leading to The Arms Race) or not (leading to No Way Out)
+     * @param leaveAttempt whether the player reached this ending by attempting to leave (giving them the Voice of the Paranoid instead of the Voice of the Broken)
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding razorInitiative(boolean bladePath, boolean leaveAttempt) {
+        parser.printDialogueLine(new VoiceDialogueLine("Shit. In a sudden burst of movement, the Princess leaps towards you, a blade erupting from her free arm, her wrist limp and empty from the violent expulsion. Huh. So I guess she did have a knife of her own after all."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "How conciliatory of you. We appreciate it, really. Now what are we going to do?!"));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "At least we're safe here. She's still in chains."));
+        parser.printDialogueLine(new VoiceDialogueLine("And those chains stop her from continuing her advance, at least for a moment."));
+        parser.printDialogueLine(new VoiceDialogueLine("She looks down at them with something between annoyance and confusion."));
+        parser.printDialogueLine(new VoiceDialogueLine("And then she slices through her arm."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Okay. Maybe we aren't safe here."));
+        parser.printDialogueLine(new VoiceDialogueLine("She doesn't even hesitate before darting towards you with a terrifying speed you can't hope to outpace."));
+
+        if (this.hasBlade) {
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Ah, shit. Okay. She's down an arm and we still have a weapon. I guess we'll have to use it."));
+            parser.printDialogueLine(new VoiceDialogueLine("And use it you do. But unfortunately for you, and for the entire world, you are horribly outmatched."));
+            parser.printDialogueLine(new VoiceDialogueLine("You keep pace with her for a single brief and wordless exchange before she severs your hand, and with it, your only line of defense."));
+
+            if (source.equals("revival")) {
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's much better at this than she was last time."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Yeah. It's unreal. Bloody cheater."));
+            } else {
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "She's even better at this than she was last time."));
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Bloody cheater."));
+            }
+        } else {
+            parser.printDialogueLine(new VoiceDialogueLine("You sprint for the stairs, but I wasn't exaggerating when I said she was running at you with a terrifying speed you couldn't hope to outpace."));
+            parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "We don't make it, do we?"));
+            parser.printDialogueLine(new VoiceDialogueLine("No. You feel her blade in your back before you make it to the first stair."));
+        }
+
+        parser.printDialogueLine(new PrincessDialogueLine("I'm going to kill you now."));
+        parser.printDialogueLine(new VoiceDialogueLine("And with a squelch, she does just that."));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("Everything goes dark, and you die."));
+
+        if (bladePath) {
+            if (leaveAttempt) {
+                return ChapterEnding.TOARMSRACELEFT;
+            } else {
+                return ChapterEnding.TOARMSRACEBORED;
+            }
+        } else {
+            if (leaveAttempt) {
+                return ChapterEnding.TONOWAYOUTLEFT;
+            } else {
+                return ChapterEnding.TONOWAYOUTBORED;
+            }
+        }
+    }
+    
+    /**
+     * The player chooses to approach the Razor, ending the Chapter and giving them the Voice of the Broken
+     * @param bladePath whether the player took the blade in The Razor (leading to The Arms Race) or not (leading to No Way Out)
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding razorApproach(boolean bladePath) {
+        parser.printDialogueLine(new VoiceDialogueLine("Against your better judgment, you walk across the room to within arm's reach of the Princess."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "I don't like the way you said \"within arm's reach.\""));
+        parser.printDialogueLine(new VoiceDialogueLine("You hear the horrible sound of metal slicing through meat."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "... Whose meat? Not ours, right?!"));
+        parser.printDialogueLine(new VoiceDialogueLine("Hers, at first."));
+        parser.printDialogueLine(new VoiceDialogueLine("Then yours. Your neck, specifically."));
+        if (!source.equals("revival")) parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Again? Really?!"));
+        parser.printDialogueLine(new PrincessDialogueLine("Hehe!"));
+        parser.printDialogueLine(new VoiceDialogueLine("You collapse to the ground, your vision swimming as you attempt to focus on her bloody blade and the limp sack of flesh that was once her arm."));
+        parser.printDialogueLine(new PrincessDialogueLine("You're going to die now."));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("And with a quick jerk of her elbow, she does just that. Everything goes dark, and you die."));
+
+        if (bladePath) {
+            return ChapterEnding.TOARMSRACEBORED;
+        } else {
+            return ChapterEnding.TONOWAYOUTBORED;
+        }
+    }
+
+    /**
+     * The player chooses to fight the Razor, leading to Chapter III: The Arms Race and giving them the Voice of the Stubborn
+     */
+    private void razorSlay() {
+        parser.printDialogueLine(new VoiceDialogueLine("The Princess falls silent, her smile unwavering as you charge across the room."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "Okay. She hasn't pulled out a knife yet. And her hands are still behind her back. I think we can do this. I think we can win. We just have to strike now, but make sure you keep your eyes on those hands, I don't trust her for a second."));
+        parser.printDialogueLine(new VoiceDialogueLine("But your focus is broken by the horrible sound of metal slicing through meat."));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "... Whose meat? Not ours, right?!"));
+        parser.printDialogueLine(new VoiceDialogueLine("Hers, at first."));
+        parser.printDialogueLine(new VoiceDialogueLine("Then yours."));
+        parser.printDialogueLine(new PrincessDialogueLine("Hehe!"));
+        parser.printDialogueLine(new VoiceDialogueLine(Voice.CHEATED, "How?! What did she even hit us with?"));
+        parser.printDialogueLine(new VoiceDialogueLine("You stare down at your chest, and at the long, thin blade she impaled you with."));
+        parser.printDialogueLine(new VoiceDialogueLine("And then at the red, angry slit along the flesh of her thigh, where the blade had been nestled just a moment ago. It's still lodged in her leg, emerging from her knee, hinging up and out of her body like some extra metallic limb."));
+        parser.printDialogueLine(new PrincessDialogueLine("You're going to die now."));
+
+        System.out.println();
+        parser.printDialogueLine(new VoiceDialogueLine("With a twist of her knee and a painful squelch, she does just that. Everything goes dark, and you die."));
     }
 
 
     // - Chapter III: The Arms Race / No Way Out -
 
     /**
-     * Runs the opening sequence of The Arms Race / No Way Out
-     * @param blade whether the player took the blade in The Razor (leading to The Arms Race) or not (leading to No Way Out)
+     * Runs Chapter III: The Arms Race / No Way Out
+     * @param bladePath whether the player took the blade in The Razor (leading to The Arms Race) or not (leading to No Way Out)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding razor3(boolean blade) {
+    private ChapterEnding razor3(boolean bladePath) {
         /*
           Possible starting combinations for The Arms Race:
             - Cheated + Hunted + Stubborn
@@ -7303,11 +7662,11 @@ public class StandardCycle extends Cycle {
     // - Chapter IV: Mutually Assured Destruction / The Empty Cup -
 
     /**
-     * Runs the opening sequence of Mutually Assured Destruction / The Empty Cup
-     * @param blade whether the player took the blade in The Razor (leading to Mutually Assured Destruction) or not (leading to The Empty Cup)
+     * Runs Chapter IV: Mutually Assured Destruction / The Empty Cup
+     * @param bladePath whether the player took the blade in The Razor (leading to Mutually Assured Destruction) or not (leading to The Empty Cup)
      * @return the Chapter ending reached by the player
      */
-    private ChapterEnding razor4(boolean blade) {
+    private ChapterEnding razor4(boolean bladePath) {
         // You have all Voices
 
         // PLACEHOLDER
@@ -7318,7 +7677,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Beast -
 
     /**
-     * Runs the opening sequence of The Beast
+     * Runs Chapter II: The Beast
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding beast() {
@@ -7437,7 +7796,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Den -
 
     /**
-     * Runs the opening sequence of The Den
+     * Runs Chapter III: The Den
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding den() {
@@ -7455,7 +7814,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Wild -
 
     /**
-     * Runs the opening sequence of The Wild
+     * Runs Chapter III: The Wild
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding wild() {
@@ -7483,7 +7842,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Witch -
 
     /**
-     * Runs the opening sequence of The Witch
+     * Runs Chapter II: The Witch
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding witch() {
@@ -7663,7 +8022,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Thorn -
 
     /**
-     * Runs the opening sequence of The Thorn
+     * Runs Chapter III: The Thorn
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding thorn() {
@@ -7681,7 +8040,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Stranger -
 
     /**
-     * Runs the opening sequence of The Stranger
+     * Runs Chapter II: The Stranger
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding stranger() {
@@ -8706,7 +9065,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Prisoner -
 
     /**
-     * Runs the opening sequence of The Prisoner
+     * Runs Chapter II: The Prisoner
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding prisoner() {
@@ -8871,7 +9230,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Cage -
 
     /**
-     * Runs the opening sequence of The Cage
+     * Runs Chapter III: The Cage
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding cage() {
@@ -8890,7 +9249,7 @@ public class StandardCycle extends Cycle {
     // - Chapter III: The Grey -
 
     /**
-     * Runs the opening sequence of The Grey (coming from the Prisoner)
+     * Runs Chapter III: The Grey (coming from the Prisoner)
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding greyDrowned() {
@@ -8906,7 +9265,7 @@ public class StandardCycle extends Cycle {
     }
 
     /**
-     * Runs the opening sequence of The Grey (coming from the Damsel)
+     * Runs Chapter III: The Grey (coming from the Damsel)
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding greyBurned() {
@@ -8925,7 +9284,7 @@ public class StandardCycle extends Cycle {
     // - Chapter II: The Damsel -
 
     /**
-     * Runs the opening sequence of The Damsel
+     * Runs Chapter II: The Damsel
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding damsel() {
@@ -9047,7 +9406,7 @@ public class StandardCycle extends Cycle {
     // - Epilogue: Happily Ever After -
 
     /**
-     * Runs the opening sequence of Happily Ever After
+     * Runs Chapter III: Happily Ever After
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding happilyEverAfter() {
