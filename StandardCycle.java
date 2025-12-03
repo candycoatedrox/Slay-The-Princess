@@ -122,202 +122,15 @@ public class StandardCycle extends Cycle {
     }
 
     /**
-     * Attempts to move the player in a given direction
-     * @param argument the direction to move the player in
-     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location in the given direction; "cGoFail" otherwise
-     */
-    protected String go(String argument, boolean secondPrompt) {
-        switch (argument) {
-            case "forward":
-            case "forwards":
-            case "f":
-                switch (this.currentLocation.getForward(this.reverseDirection)) {
-                    case LEAVING: return "GoLeave";
-                    case PATH: return "GoPath";
-                    case HILL: return "GoHill";
-                    case CABIN: return "GoCabin";
-                    case STAIRS: return "GoStairs";
-                    case BASEMENT: return "GoBasement";
-                    case MIRROR: return this.approach("mirror");
-                    default: return "GoFail";
-                }
-            
-            case "forwardTRUE":
-                switch (this.currentLocation.getForward()) {
-                    case LEAVING: return "GoLeave";
-                    case HILL: return "GoHill";
-                    case CABIN: return "GoCabin";
-                    case STAIRS: return "GoStairs";
-                    case BASEMENT: return "GoBasement";
-                    case MIRROR: return this.approach("mirror");
-                    default: return "GoFail";
-                }
-            
-            case "back":
-            case "backward":
-            case "backwards":
-            case "b":
-                switch (this.currentLocation.getBackward(this.reverseDirection)) {
-                    case LEAVING: return "GoLeave";
-                    case PATH: return "GoPath";
-                    case HILL: return "GoHill";
-                    case CABIN: return "GoCabin";
-                    case STAIRS: return "GoStairs";
-                    case BASEMENT: return "GoBasement";
-                    case MIRROR: return this.approach("mirror");
-                    default: return "GoFail";
-                }
-                
-            case "backTRUE":
-                switch (this.currentLocation.getBackward()) {
-                    case LEAVING: return "GoLeave";
-                    case PATH: return "GoPath";
-                    case HILL: return "GoHill";
-                    case CABIN: return "GoCabin";
-                    case STAIRS: return "GoStairs";
-                    default: return "GoFail";
-                }
-
-            case "inside":
-            case "in":
-            case "i":
-                return (this.currentLocation.canGoInside()) ? this.go("forwardTRUE") : "GoFail";
-
-            case "outside":
-            case "out":
-            case "o":
-                return (this.currentLocation.canGoOutside()) ? this.go("backTRUE") : "GoFail";
-
-            case "down":
-            case "d":
-                return (this.currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
-
-            case "up":
-            case "u":
-                return (this.currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
-
-            case "":
-                if (secondPrompt) {
-                    manager.showCommandHelp("go");
-                    return "Fail";
-                } else {
-                    parser.printDialogueLine("Where do you want to go?", true);
-                    return this.go(parser.getInput(), true);
-                }
-
-            default:
-                manager.showCommandHelp("go");
-                return "Fail";
-        }
-    }
-
-    /**
      * Attempts to let the player enter a given location or the nearest appropriate location
      * @param argument the location to enter (should be "cabin", "basement", or an empty String)
      * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can enter; "cEnterFail" otherwise
      */
     @Override
     public String enter(String argument) {
-        switch (argument) {
-            case "": return this.go("inside");
-
-            case "cabin":
-                return (this.currentLocation == GameLocation.HILL) ? "GoCabin" : "EnterFail";
-
-            case "basement":
-                switch (this.currentLocation) {
-                    case CABIN:
-                    case STAIRS: return this.go("forwardTRUE");
-                    default: return "EnterFail";
-                }
-
-            default:
-                manager.showCommandHelp("enter");
-                return "Fail";
-        }
-    }
-
-    /**
-     * Attempts to let the player leave the current location
-     * @param argument the location to leave (should be "woods", "path", "cabin", "basement", or an empty String)
-     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can leave; "cLeaveFail" otherwise
-     */
-    @Override
-    public String leave(String argument) {
-        switch (argument) {
-            case "": return this.go("backTRUE");
-
-            case "woods":
-            case "path":
-                switch (this.currentLocation) {
-                    case PATH:
-                    case HILL: return this.go("backTRUE");
-                    default: return "LeaveFail";
-                }
-
-            case "cabin":
-                switch (this.currentLocation) {
-                    case CABIN:
-                    case STAIRS:
-                    case BASEMENT: return this.go("backTRUE");
-                    default: return "LeaveFail";
-                }
-
-            case "basement":
-                switch (this.currentLocation) {
-                    case STAIRS:
-                    case BASEMENT: return this.go("backTRUE");
-                    default: return "LeaveFail";
-                }
-
-            default:
-                manager.showCommandHelp("leave");
-                return "Fail";
-        }
-    }
-
-    /**
-     * Attempts to let the player approach the mirror
-     * @param argument the argument given by the player (should be "the mirror" or "mirror")
-     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cApproachFail" if the mirror is not present; "cApproach" otherwise
-     */
-    protected String approach(String argument, boolean secondPrompt) {
-        switch (argument) {
-            case "the mirror":
-            case "mirror":
-                if (this.currentLocation == GameLocation.MIRROR) {
-                    return "ApproachAtMirrorFail";
-                } else if (!this.mirrorPresent) {
-                    return "ApproachFail";
-                } else {
-                    return "Approach";
-                }
-            
-            case "":
-                if (secondPrompt) {
-                    manager.showCommandHelp("approach");
-                    return "Fail";
-                } else {
-                    parser.printDialogueLine("What do you want to approach?", true);
-                    return this.approach(parser.getInput(), true);
-                }
-
-            default:
-                manager.showCommandHelp("approach");
-                return "Fail";
-        }
-    }
-
-    /**
-     * Attempts to let the player approach the mirror
-     * @param argument the argument given by the player (should be "the mirror" or "mirror")
-     * @return "cFail" if argument is invalid; "cApproachFail" if the mirror is not present; "cApproach" otherwise
-     */
-    @Override
-    public String approach(String argument) {
-        return this.approach(argument, false);
+        String outcome = super.enter(argument);
+        if (this.activeChapter == Chapter.SPACESBETWEEN && outcome.equals("GoCabin")) return "EnterFail";
+        return outcome;
     }
 
     /**
@@ -326,6 +139,7 @@ public class StandardCycle extends Cycle {
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
      * @return "cFail" if argument is invalid; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if the player cannot slay themselves right now; "cSlaySelf" if otherwise attempting to slay themselves
      */
+    @Override
     protected String slay(String argument, boolean secondPrompt) {
         switch (argument) {
             case "the princess":
@@ -377,7 +191,10 @@ public class StandardCycle extends Cycle {
      */
     @Override
     protected void giveDefaultFailResponse(String outcome) {
-        if (!this.hasVoice(Voice.NARRATOR)) super.giveDefaultFailResponse(outcome);
+        if (!this.hasVoice(Voice.NARRATOR)) {
+            super.giveDefaultFailResponse(outcome);
+            return;
+        }
 
         switch (outcome) {
             case "cGoFail":
@@ -405,9 +222,13 @@ public class StandardCycle extends Cycle {
 
                 break;
                 
-            case "cApproachFail":
+            case "cApproachMirrorFail":
                 parser.printDialogueLine(new VoiceDialogueLine("What are you talking about? There isn't a mirror."));
                 if ((this.mirrorComment || this.touchedMirror) && this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's actually right this time. The mirror really isn't here."));
+                break;
+
+            case "cApproachHerFail":
+                parser.printDialogueLine(new VoiceDialogueLine("...What?"));
                 break;
                 
 
@@ -416,7 +237,7 @@ public class StandardCycle extends Cycle {
                 break;
 
             case "cSlayPrincessNoBladeFail":
-                parser.printDialogueLine(new VoiceDialogueLine("*sigh* Unfortunately, you have no weapon with which to slay her. If only you had the blade, this would be so much easier."));
+                parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* Unfortunately, you have no weapon with which to slay her. If only you had the blade, this would be so much easier."));
                 break;
 
             case "cSlayPrincessFail":
@@ -426,7 +247,14 @@ public class StandardCycle extends Cycle {
                 break;
 
             case "cSlaySelfNoBladeFail":
-                parser.printDialogueLine("You do not have the blade.");
+                parser.printDialogueLine(new VoiceDialogueLine("Why on earth would you even consider that?!"));
+
+                if (this.knowsBlade) {
+                    parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* *Conveniently,* you don't have any sort of weapon with which to kill yourself, so you *can't.* Just get the idea out of your head, alright?"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("*Sigh.* *Conveniently,* you don't have the blade, so you *can't.* Just get the idea out of your head, alright?"));
+                }
+
                 break;
 
             case "cSlaySelfFail":
@@ -6304,7 +6132,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("I'm not lying to you, I *promise.* There isn't a mirror. Really."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                 case "approach":
                     this.ch2ApproachMirror(true);
                     return true;
@@ -6483,7 +6311,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. The world is depending on you."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -6658,7 +6486,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -6883,7 +6711,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. The world is depending on you."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -7044,7 +6872,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. A lot's riding on this."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -7366,7 +7194,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. The world is depending on you."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -7530,7 +7358,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. The world is depending on you."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -7706,7 +7534,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. The world is depending on you."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -8120,7 +7948,7 @@ public class StandardCycle extends Cycle {
                     }
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -8920,7 +8748,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. Don't get distracted by minor details."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -9137,7 +8965,7 @@ public class StandardCycle extends Cycle {
                     parser.printDialogueLine(new VoiceDialogueLine("So focus up. Stop letting yourself get distracted."));
                     break;
 
-                case "cApproach":
+                case "cApproachMirror":
                     activeMenu.setCondition("approach", false);
                 case "approach":
                     activeMenu.setCondition("mirror", false);
@@ -9440,7 +9268,7 @@ public class StandardCycle extends Cycle {
                 this.repeatActiveMenu = true;
                 while (repeatActiveMenu) {
                     switch (parser.promptOptionsMenu(activeMenu)) {
-                        case "cApproach":
+                        case "cApproachMirror":
                         case "approach":
                             this.repeatActiveMenu = false;
                             break;
@@ -9477,7 +9305,7 @@ public class StandardCycle extends Cycle {
                 this.repeatActiveMenu = true;
                 while (repeatActiveMenu) {
                     switch (parser.promptOptionsMenu(activeMenu)) {
-                        case "cApproach":
+                        case "cApproachMirror":
                         case "approach":
                             this.repeatActiveMenu = false;
                             break;
@@ -9640,7 +9468,7 @@ public class StandardCycle extends Cycle {
 
                                 break;
 
-                            case "cApproach":
+                            case "cApproachMirror":
                             case "approach":
                                 parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "I'm begging you, don't do this."));
 
@@ -9698,7 +9526,7 @@ public class StandardCycle extends Cycle {
 
                                             break;
 
-                                        case "cApproach":
+                                        case "cApproachMirror":
                                         case "ignore":
                                             this.repeatActiveMenu = false;
                                             break;
@@ -9824,7 +9652,7 @@ public class StandardCycle extends Cycle {
                                             this.mirrorCruel();
                                             break;
 
-                                        case "cApproach":
+                                        case "cApproachMirror":
                                         case "approach":
                                             this.repeatActiveMenu = false;
                                             repeatSub = false;
@@ -9835,7 +9663,7 @@ public class StandardCycle extends Cycle {
 
                                 break;
 
-                            case "cApproach":
+                            case "cApproachMirror":
                             case "approach":
                                 this.repeatActiveMenu = false;
                                 break;
@@ -9902,26 +9730,17 @@ public class StandardCycle extends Cycle {
         activeMenu.add(new Option(this.manager, "gaze", "[Gaze into your reflection.]"));
         parser.promptOptionsMenu(activeMenu);
 
+        this.currentLocation = GameLocation.MIRROR;
         this.mirrorPresent = false;
         this.clearVoices();
+
         if (this.prevEnding == ChapterEnding.MUTUALLYASSURED || this.prevEnding == ChapterEnding.EMPTYCUP) {
             parser.printDialogueLine("Silence as you reach towards the glass. It's time for you to see what's in it.");
-        } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && (manager.getClaimedVessel(0) == Vessel.RAZORFULL || manager.getClaimedVessel(0) == Vessel.RAZORHEART))) {
+        } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && (manager.hasClaimedVessel(Vessel.RAZORFULL) || manager.hasClaimedVessel(Vessel.RAZORHEART)))) {
             parser.printDialogueLine("Silence as you reach forward. They're gone, but the mirror remains. It's time for you to see what's in it.");
         } else {
             parser.printDialogueLine("Silence as you reach forward. They're gone once again. The mirror always makes them leave. But you need to see what's in it.");
         }
-        
-        
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
 
         System.out.println();
         switch (manager.nClaimedVessels()) {
@@ -9941,7 +9760,7 @@ public class StandardCycle extends Cycle {
                 parser.printDialogueLine("You've unraveled.");
                 this.theSpacesBetween();
                 break;
-            case 4: // Leads into Finale.finalMirror()
+            case 4:
                 parser.printDialogueLine("You are nothing at all.");
                 parser.printDialogueLine("But that isn't right. You can't be nothing. You refocus your gaze, and then you see it: a figure, faint and veiled in shadow, just beyond the reflection.");
 
@@ -9952,6 +9771,8 @@ public class StandardCycle extends Cycle {
                 parser.printDialogueLine(new VoiceDialogueLine("I think you know what I am."));
                 parser.printDialogueLine("A crack slides down the center of the mirror, splitting the image in the glass in two.");
                 parser.printDialogueLine("And then another crack forms, and another, and another, turning the mirror into jagged shards of broken glass.");
+
+                // Leads into Finale.finalMirror()
                 break;
         }
     }
@@ -9998,34 +9819,343 @@ public class StandardCycle extends Cycle {
     }
 
     /**
-     * Runs the encounter with the Shifting Mound after claiming each vessel
+     * Runs the encounter with the Shifting Mound after claiming each vessel, excluding the fifth and final vessel
      */
     private void theSpacesBetween() {
+        this.currentLocation = GameLocation.PATH;
+
         System.out.println();
         System.out.println();
         System.out.println();
 
         // spaces between intro here
+        if (this.isFirstVessel) {
+            parser.printDialogueLine("You are alone in a place that is empty. It is quiet here.");
+        } else {
+            parser.printDialogueLine("You find yourself in The Long Quiet once again.");
+        }
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin.]"));
+
+        this.repeatActiveMenu = true;
+        while (this.repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+
+            switch (this.activeOutcome) {
+                case "cGoHill":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cGoLeave":
+                case "cGoFail":
+                case "cEnterFail":
+                case "cLeaveFail":
+                    parser.printDialogueLine("There is nowhere else for you to go.");
+                    break;
+                    
+                default: this.giveDefaultFailResponse(this.activeOutcome);
+            }
+        }
+
+        this.currentLocation = GameLocation.HILL;
+        if (this.isFirstVessel) {
+            manager.setNowPlaying("The Shifting Mound Movement I");
+            parser.printDialogueLine("You are at the cabin.");
+            parser.printDialogueLine("A mass of hands waits at the top of the hill, holding the Princess upright.");
+        } else {
+            parser.printDialogueLine("You are at the cabin.");
+        }
+
+        this.canApproachHer = true;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "approach", "[Approach her.]"));
+
+        this.repeatActiveMenu = true;
+        while (this.repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+
+            switch (this.activeOutcome) {
+                case "cGoCabin":
+                case "cApproachHer":
+                case "approach":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cGoPath":
+                case "cGoFail":
+                case "cEnterFail":
+                case "cLeaveFail":
+                    parser.printDialogueLine("There is nowhere else for you to go.");
+                    break;
+                    
+                default: this.giveDefaultFailResponse(this.activeOutcome);
+            }
+        }
+
+        this.canApproachHer = false;
+        this.withPrincess = true;
+
+        System.out.println();
         switch (manager.nClaimedVessels()) { // conversation
             case 0:
+                this.shiftingMoundTalk1();
                 break;
 
             case 1:
+                this.shiftingMoundTalk2();
                 break;
 
             case 2:
+                this.shiftingMoundTalk3();
                 break;
 
             case 3:
+                this.shiftingMoundTalk4();
                 break;
         }
+    }
+
+    /**
+     * Runs the conversation with the Shifting Mound after claiming the first vessel
+     */
+    private void shiftingMoundTalk1() {
+        if (manager.nVesselsAborted() == 0) {
+            parser.printDialogueLine(new PrincessDialogueLine("Something finds me in the Long Quiet and brings me the gift of a fragile vessel."));
+        } else {
+            parser.printDialogueLine("You recognize the presence inhabiting the shell. It is the entity that dwells in the spaces between.");
+            parser.printDialogueLine(new PrincessDialogueLine("Something returns to the Long Quiet. It has surrendered its path of annihilation and brings me the gift of a fragile vessel."));
+        }
+
+        parser.printDialogueLine("She speaks in a soft voice, almost a whisper.");
+
+        boolean repeatSub;
+        OptionsMenu subMenu;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "dream", "(Explore) \"You're that thing I met in the space outside of the woods, aren't you? I thought that was a dream.\"", manager.nVesselsAborted() != 0));
+        activeMenu.add(new Option(this.manager, "what", "(Explore) \"What are you?\""));
+        activeMenu.add(new Option(this.manager, "fragile", "(Explore) \"The gift of a fragile vessel?\""));
+        activeMenu.add(new Option(this.manager, "end", "(Explore) \"Is this the end of the world?\""));
+        activeMenu.add(new Option(this.manager, "letOut", "(Explore) \"Let her out of there!\""));
+        activeMenu.add(new Option(this.manager, "narrator", "(Explore) \"Do you know the Narrator?\""));
+        activeMenu.add(new Option(this.manager, "trapped", "(Explore) \"Are you what sent me to slay the Princess? Are you what trapped me here?\""));
+        activeMenu.add(new Option(this.manager, "worlds", "(Explore) \"Do you know about the worlds beyond this place?\""));
+        activeMenu.add(new Option(this.manager, "princess", "(Explore) \"Are you the Princess?\""));
+        activeMenu.add(new Option(this.manager, "familiar", "(Explore) \"Do we know each other?\"", manager.nVesselsAborted() == 0));
+        activeMenu.add(new Option(this.manager, "whatNow", "\"What happens now?\""));
+        activeMenu.add(manager.getIntermissionAttackMound());
+        activeMenu.add(manager.getIntermissionAttackSelf());
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "dream":
+                    parser.printDialogueLine(new PrincessDialogueLine("Vague recollections. Empty tunnels without a mouth. I am sorry if I frightened you."));
+                    break;
+
+                case "what":
+                    parser.printDialogueLine(new PrincessDialogueLine("I am solitary lights in an empty city. What are you?"));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "explore", "(Explore) \"Solitary lights? What do you mean?\""));
+                    subMenu.add(new Option(this.manager, "youThink", "\"What do you think I am?\""));
+                    subMenu.add(new Option(this.manager, "dunno", "\"I don't know what I am.\""));
+                    subMenu.add(new Option(this.manager, "person", "\"I'm a person.\""));
+
+                    repeatSub = true;
+                    while (repeatSub) {
+                        switch (parser.promptOptionsMenu(subMenu)) {
+                            case "explore":
+                                parser.printDialogueLine(new PrincessDialogueLine("Thoughts without connections. A dim and nascent network. I wish to be more."));
+                                break;
+
+                            case "youThink":
+                            case "dunno":
+                                repeatSub = false;
+                                parser.printDialogueLine(new PrincessDialogueLine("I think that you are like me."));
+                                break;
+
+                            case "person":
+                                repeatSub = false;
+                                parser.printDialogueLine(new PrincessDialogueLine("A person. A set of eyes witnessing from one perspective. I think that you are more like me than you are like a person."));
+                                break;
+                        }
+                    }
+
+                    parser.printDialogueLine(new PrincessDialogueLine("We are oceans reduced to shallow creeks."));
+                    break;
+
+                case "fragile":
+                    parser.printDialogueLine(new PrincessDialogueLine("Yes. Nerves and fibers to feel the worlds beyond. Perspectives to make my own."));
+                    this.giveVesselThoughts(prevEnding.getVessel());
+                    break;
+
+                case "end":
+                    parser.printDialogueLine(new PrincessDialogueLine("How can the world have ended if we are talking?"));
+                    break;
+
+                case "letOut":
+                    parser.printDialogueLine(new PrincessDialogueLine("I'm sorry. There are some changes that can never be undone, there are some tears that can never be unshed. This is not a place that can hold a fragment of a concept. The moment she arrived here, she was going to return to me."));
+                    parser.printDialogueLine(new PrincessDialogueLine("I promise that it doesn't hurt."));
+                    break;
+
+                case "narrator":
+                    if (manager.hasClaimedAnyVessel(Vessel.WOUNDEDWILD, Vessel.NETWORKWILD, Vessel.SPECTRE, Vessel.WRAITH, Vessel.TOWER, Vessel.APOTHEOSIS)) {
+                        parser.printDialogueLine(new PrincessDialogueLine("I know of him through the memories of my vessel. But she had nothing like him on her own."));
+                    } else {
+                        parser.printDialogueLine(new PrincessDialogueLine("You are the only thing I have ever known."));
+                    }
+                    
+                    parser.printDialogueLine(new PrincessDialogueLine("The space we're in is vacant. Nothing comes here but us."));
+                    break;
+
+                case "trapped":
+                    parser.printDialogueLine(new PrincessDialogueLine("I have only just now stirred to consciousness. I could not have trapped you here, and I too yearn to be free."));
+                    break;
+
+                case "worlds":
+                    parser.printDialogueLine(new PrincessDialogueLine("I know only that they are."));
+                    break;
+
+                case "princess":
+                    parser.printDialogueLine(new PrincessDialogueLine("She is part of me, and part of me is her."));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "press", "\"But were you always the Princess, or are you just making her a part of yourself?\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+                    if (parser.promptOptionsMenu(subMenu).equals("press")) {
+                        parser.printDialogueLine(new PrincessDialogueLine("You speak in circles. Does it matter where one thing begins and another ends?"));
+                    }
+
+                    break;
+
+                case "familiar":
+                    parser.printDialogueLine(new PrincessDialogueLine("You are familiar, but you are not me. I feel sadness, longing, hope, as I witness you."));
+                    break;
+
+                case "whatNow":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
+                    if (manager.getIntermissionAttackMound().hasBeenPicked()) {
+                        parser.printDialogueLine("You have already tried that.");
+                        break;
+                    }
+                case "attackMound":
+                    parser.printDialogueLine("Your will cuts across the entity in front of you, but nothing happens.");
+                    parser.printDialogueLine(new PrincessDialogueLine("My roots burrow in an ocean beyond your sight. We cannot harm each other as we are now."));
+                    break;
+
+                case "cSlaySelfNoBladeFail": // Override: you don't need the blade
+                    if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
+                        parser.printDialogueLine("You have already tried that.");
+                        break;
+                    }
+                case "attackSelf":
+                    parser.printDialogueLine("You raise your will to end your life. But as it buries into the space your body should be, you feel nothing at all.");
+                    parser.printDialogueLine("One of the many hands in front of you reaches forward, and gently touches the side of your face.");
+                    parser.printDialogueLine(new PrincessDialogueLine("There's nowhere for you to be but here."));
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // "What happens now?" continues here
+        parser.printDialogueLine(new PrincessDialogueLine("Nothing, as we are. But I know that there are worlds beyond us, and that we are meant to reach them."));
+        parser.printDialogueLine(new PrincessDialogueLine("There is no exit, but this vessel is a creature of perception. She can make you forget, if only you believe her to be able to."));
+        parser.printDialogueLine(new PrincessDialogueLine("Bring me more perspectives, so that I may be whole, and perhaps then we will know our freedom."));
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "kill", "(Explore) \"Aren't you scared that I'll find a way to kill you?\""));
+        activeMenu.add(new Option(this.manager, "howMuch", "(Explore) \"How much will I forget?\""));
+        activeMenu.add(new Option(this.manager, "pieces", "(Explore) \"How many more pieces of you do I have to find?\""));
+        activeMenu.add(new Option(this.manager, "refuse", "(Explore) \"And what if I don't let you do this to me?\""));
+        activeMenu.add(new Option(this.manager, "destroy", "(Explore) \"I was sent to slay the Princess to stop her from destroying the world. If I help you, is that what you're going to do?\""));
+        activeMenu.add(new Option(this.manager, "wait", "\"I'm not going back.\" [Wait.]", activeMenu.get("refuse")));
+        activeMenu.add(new Option(this.manager, "forget", "\"Okay. Make me forget.\""));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "kill":
+                    parser.printDialogueLine(new PrincessDialogueLine("I have not lived. I am not afraid to die."));
+                    break;
+
+                case "howMuch":
+                    parser.printDialogueLine(new PrincessDialogueLine("Everything, until we meet again."));
+                    break;
+
+                case "pieces":
+                    parser.printDialogueLine(new PrincessDialogueLine("More than you have found, but less than there are to find. I am infinite. The rest will find their own way home."));
+                    break;
+
+                case "refuse":
+                    manager.refuseExploreMound();
+                    parser.printDialogueLine(new PrincessDialogueLine("Then we will be here forever, as we are now. Unfinished, dry, hollow."));
+                    break;
+
+                case "destroy":
+                    parser.printDialogueLine(new PrincessDialogueLine("You ask of things that cannot be done. To destroy is merely to reshape. To remold."));
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "press", "\"You're being semantic. What are you going to do if I help you?\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Let it be.]"));
+
+                    if (parser.promptOptionsMenu(subMenu).equals("press")) {
+                        parser.printDialogueLine(new PrincessDialogueLine("How can I know? I am flickers in something sprawling and unilluminated."));
+                    }
+
+                    break;
+
+                case "wait":
+                    parser.printDialogueLine(new PrincessDialogueLine("If you need time, then I'll wait for you."));
+                    
+                    // The original game has a creative gimmick here where, if you choose to wait forever, the game will quit out. When you reopen it, instead of starting on the main menu, the game will start right where you left off, and the Shifting Mound will comment on how long the game was closed for.
+                    // Unfortunately, I have no idea how to replicate any of that here, and it would be insanely complicated to figure out (I would need to implement an entire save-and-load system...), so this option is just stuck being kind of weird and lame.
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "wait", true, "[Wait forever.]"));
+                    subMenu.add(new Option(this.manager, "forget", "\"Okay. I'm ready. Make me forget.\""));
+                    parser.promptOptionsMenu(subMenu);
+
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "forget":
+                    this.repeatActiveMenu = false;
+                    break;
+            }
+        }
+
+        // Forget continues here
+        parser.printDialogueLine(new PrincessDialogueLine("She asks that I tell you to remember her."));
+        parser.printDialogueLine(new PrincessDialogueLine("You won't.", true));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted");
+        }
+
+        System.out.println();
+        parser.printDialogueLine("Everything goes dark, and you die.");
+    }
+
+    /**
+     * Runs the conversation with the Shifting Mound after claiming the second vessel
+     */
+    private void shiftingMoundTalk2() {
+
 
 
         // temporary templates for copy-and-pasting
         /*
         parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
@@ -10033,17 +10163,167 @@ public class StandardCycle extends Cycle {
     }
 
     /**
-     * Prints the Shifting Mound's thoughts on a given Vessel
-     * @param v the Vessel being commented on
+     * Runs the conversation with the Shifting Mound after claiming the third vessel
      */
-    private void giveVesselThoughts(Vessel v) {
-        // thoughts on the current vessel
+    private void shiftingMoundTalk3() {
+
 
 
         // temporary templates for copy-and-pasting
         /*
+        parser.printDialogueLine("XXXXX");
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
+    }
+
+    /**
+     * Runs the conversation with the Shifting Mound after claiming the fourth vessel
+     */
+    private void shiftingMoundTalk4() {
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
+    }
+
+    /**
+     * The Shifting Mound gives her thoughts on a given Vessel
+     * @param v the Vessel to comment on
+     */
+    private void giveVesselThoughts(Vessel v) {
+        switch (v) {
+            // Chapter II
+            case ADVERSARY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one yearns to grow and struggle. Even now I feel a will pushing against mine, not realizing that we are one. She will make for a bold heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. We will provide her with the growth she fought for."));
+                break;
+            case TOWER:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is dominance. A figure capable of bending everything to her will. She will make for an overwhelming heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for she would not be able to mourn you."));
+                break;
+            case SPECTRE:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is vaporous. She is a dream of a life she could never have, but that longing has given her so much capacity for kindness. She will make for a yearning heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she will finally be able to hold what she never knew."));
+                break;
+            case NIGHTMARE:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is filled with sadness. A doll abandoned to the company of her darkest impulses. She desires only companionship, but the only thing she knows is how to hurt. She will make for a tender heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she has finally found her way home."));
+                break;
+            case BEAST:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is consumed by instinct. A predator pushing those around her to adapt. She will make for a cunning heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("She wishes me to devour you. To make you a part of myself. But she is only a voice."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for she is part of something greater."));
+                break;
+            case WITCH:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is hope marred by bitterness and betrayal. She could see the end of the tunnel, and the door was closed on her. She will make for a righteous heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she is finally on the other side."));
+                break;
+            case STRANGER:
+                parser.printDialogueLine(new PrincessDialogueLine("These ones are a contradiction. A winding kaleidoscope of paths unwalked. They are stretched into a shape not unlike me, but it is a shape they cannot hold."));
+                if (this.isFirstVessel) {
+                    parser.printDialogueLine(new PrincessDialogueLine("I am sorry that you met this vessel so early in your journey, but they will make for a rich and vibrant heart."));
+                } else {
+                    parser.printDialogueLine(new PrincessDialogueLine("They will make for a rich and vibrant heart."));
+                }
+                break;
+            case PRISONERHEAD:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is cold and cynical. She has protected herself when others could not. She will make for a clever heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she doesn't need to be protected any longer."));
+                break;
+            case PRISONER:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is determined, but also cautious, one that would rather let the world move around her than move it herself. She will make for a patient heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she is exactly where she needs to be."));
+                break;
+            case DAMSEL:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is soft and delicate. You molded her to love you, and she'll make for a gentle heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She has served her purpose."));
+                break;
+            case DECONDAMSEL:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a reflecting pool of desire unfulfilled. She will make for a pliant heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She has served her purpose."));
+                break;
+
+            // Chapter III
+            case NEEDLE:
+                parser.printDialogueLine(new PrincessDialogueLine("This one remembers a spark lost in time, and she would stop at nothing to reclaim it. She will make for a burning heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She has finally remembered what she thought she'd lost."));
+                break;
+            case FURY:
+            case REWOUNDFURY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is desecration. She placed the weight of her agony on you, yet it is she who unwound herself. There is passion and empathy buried under her unfeeling skin. She will make for a weathered heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she has finally found peace."));
+                break;
+            case APOTHEOSIS:
+                parser.printDialogueLine(new PrincessDialogueLine("This one sits at the cusp of awakening. A new god, waiting to be born. She will make for a terrifying and divine heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for she has finally found her light."));
+                break;
+            case PATD:
+            case STENCILPATD:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is perspectives bleeding into one. You know her better than you know yourself. She will make for an empathetic heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for you would not mourn yourself."));
+                break;
+            case WRAITH:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is loneliness turned to seething. She could not find her strength in others, so she found it in herself. She will make for a driven heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she isn't alone anymore."));
+                break;
+            case CLARITY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a waiting maw. An inevitable destination where all roads end. She will make for a wise heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she is exactly where she needs to be."));
+                break;
+            case RAZORFULL:
+            case RAZORHEART:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a single-minded edge. She is cruelty. But she is also joy. She will make for a piercing heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she is exactly where she needs to be."));
+                break;
+            case DEN:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is consumed by instinct. A dancer moving to the rhythm of the flesh. She will make for a ravenous heart."));
+                // might need another Vessel for den for an extra line??
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for she is part of something greater."));
+                break;
+            case NETWORKWILD:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is like a shadow of me, twisting vines in search of answers. She will make for a curious heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she has found what she yearned for."));
+                break;
+            case WOUNDEDWILD:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is like a shadow of me, a memory of what she used to be, bound to the wounds of distance and time. She will make for a scarred and beautiful heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she has finally found peace."));
+                break;
+            case THORN:
+                parser.printDialogueLine(new PrincessDialogueLine("This one yearns for connections she feels she doesn't deserve. Even when shown compassion, she hid herself away. She will make for a cautious heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she isn't alone anymore."));
+                break;
+            case WATCHFULCAGE:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a body that convinced herself she was only a set of eyes. She will make for a watchful heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She is now what she wished that she could be."));
+                break;
+            case OPENCAGE:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a locked door to which you held the key. She will make for an open heart, if you let her."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She is no longer bound."));
+                break;
+            case BURNEDGREY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is passion betrayed. But even in the end, her love never faded. She will make for a bright heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her, for she has finally found her light."));
+                break;
+            case DROWNEDGREY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is guarded sorrow. She saw herself as alone, but in the end had the courage to share with another. She will make for a deep heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her -- she has finally been heard."));
+                break;
+            case HAPPY:
+            case HAPPYDRY:
+                parser.printDialogueLine(new PrincessDialogueLine("This one is a songbird in a cage of gilded shadows. She will make for an honest heart."));
+                parser.printDialogueLine(new PrincessDialogueLine("Do not mourn her. She has finally learned to sing for herself."));
+                break;
+        }
     }
 
 }

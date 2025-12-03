@@ -23,6 +23,7 @@ public abstract class Cycle {
     protected boolean knowsBlade = false; // The Narrator knows you know about the blade
     protected boolean withBlade = false; // Determines whether TAKE BLADE works
     protected boolean mirrorPresent = false;
+    protected boolean canApproachHer = false;
     protected boolean canSlayPrincess = false;
     protected boolean canSlaySelf = false;
     protected boolean canDropBlade = false;
@@ -272,10 +273,160 @@ public abstract class Cycle {
     public String go(String argument) {
         return this.go(argument, false);
     }
-    protected abstract String go(String argument, boolean secondPrompt);
 
-    public abstract String enter(String argument);
-    public abstract String leave(String argument);
+    /**
+     * Attempts to move the player in a given direction
+     * @param argument the direction to move the player in
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location in the given direction; "cGoFail" otherwise
+     */
+    protected String go(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "forward":
+            case "forwards":
+            case "f":
+                switch (this.currentLocation.getForward(this.reverseDirection)) {
+                    case LEAVING: return "GoLeave";
+                    case PATH: return "GoPath";
+                    case HILL: return "GoHill";
+                    case CABIN: return "GoCabin";
+                    case STAIRS: return "GoStairs";
+                    case BASEMENT: return "GoBasement";
+                    case MIRROR: return this.approach("mirror");
+                    default: return "GoFail";
+                }
+            
+            case "forwardTRUE":
+                switch (this.currentLocation.getForward()) {
+                    case LEAVING: return "GoLeave";
+                    case HILL: return "GoHill";
+                    case CABIN: return "GoCabin";
+                    case STAIRS: return "GoStairs";
+                    case BASEMENT: return "GoBasement";
+                    case MIRROR: return this.approach("mirror");
+                    default: return "GoFail";
+                }
+            
+            case "back":
+            case "backward":
+            case "backwards":
+            case "b":
+                switch (this.currentLocation.getBackward(this.reverseDirection)) {
+                    case LEAVING: return "GoLeave";
+                    case PATH: return "GoPath";
+                    case HILL: return "GoHill";
+                    case CABIN: return "GoCabin";
+                    case STAIRS: return "GoStairs";
+                    case BASEMENT: return "GoBasement";
+                    case MIRROR: return this.approach("mirror");
+                    default: return "GoFail";
+                }
+                
+            case "backTRUE":
+                switch (this.currentLocation.getBackward()) {
+                    case LEAVING: return "GoLeave";
+                    case PATH: return "GoPath";
+                    case HILL: return "GoHill";
+                    case CABIN: return "GoCabin";
+                    case STAIRS: return "GoStairs";
+                    default: return "GoFail";
+                }
+
+            case "inside":
+            case "in":
+            case "i":
+                return (this.currentLocation.canGoInside()) ? this.go("forwardTRUE") : "GoFail";
+
+            case "outside":
+            case "out":
+            case "o":
+                return (this.currentLocation.canGoOutside()) ? this.go("backTRUE") : "GoFail";
+
+            case "down":
+            case "d":
+                return (this.currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
+
+            case "up":
+            case "u":
+                return (this.currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
+
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp("go");
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("Where do you want to go?", true);
+                    return this.go(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp("go");
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player enter a given location or the nearest appropriate location
+     * @param argument the location to enter (should be "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can enter; "cEnterFail" otherwise
+     */
+    public String enter(String argument) {
+        switch (argument) {
+            case "": return this.go("inside");
+
+            case "cabin":
+                return (this.currentLocation == GameLocation.HILL) ? "GoCabin" : "EnterFail";
+
+            case "basement":
+                switch (this.currentLocation) {
+                    case CABIN:
+                    case STAIRS: return this.go("forwardTRUE");
+                    default: return "EnterFail";
+                }
+
+            default:
+                manager.showCommandHelp("enter");
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player leave the current location
+     * @param argument the location to leave (should be "woods", "path", "cabin", "basement", or an empty String)
+     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can leave; "cLeaveFail" otherwise
+     */
+    public String leave(String argument) {
+        switch (argument) {
+            case "": return this.go("backTRUE");
+
+            case "woods":
+            case "path":
+                switch (this.currentLocation) {
+                    case PATH:
+                    case HILL: return "GoLeave";
+                    default: return "LeaveFail";
+                }
+
+            case "cabin":
+                switch (this.currentLocation) {
+                    case CABIN:
+                    case STAIRS:
+                    case BASEMENT: return this.go("backTRUE");
+                    default: return "LeaveFail";
+                }
+
+            case "basement":
+                switch (this.currentLocation) {
+                    case STAIRS:
+                    case BASEMENT: return this.go("backTRUE");
+                    default: return "LeaveFail";
+                }
+
+            default:
+                manager.showCommandHelp("leave");
+                return "Fail";
+        }
+    }
 
     /**
      * Attempts to move the player forward
@@ -308,7 +459,57 @@ public abstract class Cycle {
         }
     }
 
-    public abstract String approach(String argument);
+    /**
+     * Attempts to let the player approach the mirror or her
+     * @param argument the argument given by the player -- the target to approach
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cApproachAtMirrorFail" if attempting to approach the mirror when the player is already at the mirror; "cApproachMirrorFail" if attempting to approach the mirror when it is not present; "cApproachMirror" if otherwise attempting to approach the mirror; "cApproachHerFail" if attempting to approach her when not in the Spaces Between; "cApproachHer" if otherwise attempting to approach her
+     */
+    protected String approach(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the mirror":
+            case "mirror":
+                if (this.currentLocation == GameLocation.MIRROR) {
+                    return "ApproachAtMirrorFail";
+                } else if (!this.mirrorPresent) {
+                    return "ApproachMirrorFail";
+                } else {
+                    return "ApproachMirror";
+                }
+
+            case "her":
+            case "the princess":
+            case "princess":
+            case "hands":
+                if (this.canApproachHer) {
+                    return "ApproachHer";
+                } else {
+                    return "ApproachHerFail";
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp("approach");
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to approach?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp("approach");
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player approach the mirror or her
+     * @param argument the argument given by the player -- the target to approach
+     * @return "cFail" "cFail" if argument is invalid; "cApproachAtMirrorFail" if attempting to approach the mirror when the player is already at the mirror; "cApproachMirrorFail" if attempting to approach the mirror when it is not present; "cApproachMirror" if otherwise attempting to approach the mirror; "cApproachHerFail" if attempting to approach her when not in the Spaces Between; "cApproachHer" if otherwise attempting to approach her
+     */
+    public String approach(String argument) {
+        return this.approach(argument, false);
+    }
 
     /**
      * Attempts to let the player slay either the Princess or themselves
@@ -471,8 +672,17 @@ public abstract class Cycle {
                 parser.printDialogueLine(new DialogueLine("You are already at the mirror."));
                 break;
 
-            case "cApproachFail":
+            case "cApproachMirrorFail":
                 parser.printDialogueLine(new DialogueLine("There is no mirror."));
+                break;
+
+            case "cApproachHerFail":
+                if (this.withPrincess) {
+                    parser.printDialogueLine(new DialogueLine("You are already with her."));
+                } else {
+                    parser.printDialogueLine(new DialogueLine("She is not here."));
+                }
+
                 break;
                 
 

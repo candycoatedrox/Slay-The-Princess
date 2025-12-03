@@ -17,7 +17,7 @@ chapter).
 - [LEAVE:](#leave) Leave the current location.
 - [PROCEED:](#proceed) Press onwards.
 - [TURN:](#turn) Turn back.
-- [APPROACH:](#approach) Approach the mirror.
+- [APPROACH:](#approach) Approach the mirror. Or approach her.
 - [SLAY:](#slay) Slay the Princess or yourself.
 - [TAKE:](#take) Take the blade.
 - [DROP:](#drop) Drop the blade.
@@ -134,15 +134,16 @@ Syntax: `TURN [around]`
   - `TURN [AROUND / BACK]`: Same as `TURN`. Turn around and leave.
 
 ## APPROACH
-`APPROACH`: Approach the mirror.
+`APPROACH`: Approach the mirror. Or approach her.
 
-Syntax: `APPROACH [mirror]`
+Syntax: `APPROACH [target]`
 
 **Arguments:**
-  - `[mirror]`: The mirror.
+  - `[target]`: What you wish to approach.
 
 **Variations:**
   - `APPROACH [THE MIRROR / MIRROR]`: Approach the mirror.
+  - `APPROACH [HER / THE PRINCESS / PRINCESS / HANDS]`: Approach her.
 
 ## SLAY
 `SLAY`: Slay the Princess or yourself.

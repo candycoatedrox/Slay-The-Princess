@@ -25,7 +25,18 @@ public class GameManager {
     private int mirrorCruelCount = 0;
     private boolean goodEndingAttempted = false;
 
+    // Variables used in the Spaces Between
+    private int moundFreedom = 0;
+    private int moundSatisfaction = 0;
+    private boolean directToMound = false;
+    private boolean askedRiddleMound = false;
+    private boolean threatenedMound = false;
+    private boolean refuseExploreMound = false;
+
     private final OptionsMenu warningsMenu;
+    private final Option intermissionAttackMound;
+    private final Option intermissionAttackSelf;
+    private final Option intermissionWait;
 
     // --- CONSTRUCTOR ---
 
@@ -35,6 +46,7 @@ public class GameManager {
     public GameManager() {
         this.parser = new IOHandler(this);
         this.claimedVessels = new ArrayList<>();
+        this.endingsFound = new ArrayList<>();
 
         this.playlist = new ArrayList<>();
         this.playlist.add("The Princess");
@@ -54,6 +66,9 @@ public class GameManager {
         }
 
         this.warningsMenu = this.createWarningsMenu();
+        this.intermissionAttackMound = new Option(this, "attackMound", "[Attack the entity.]");
+        this.intermissionAttackSelf = new Option(this, "attackSelf", "[Destroy your body.]");
+        this.intermissionWait = new Option(this, "wait", "\"I'm not going back.\" [Wait.]");
     }
 
     /**
@@ -180,6 +195,28 @@ public class GameManager {
     }
 
     /**
+     * Checks if the player has claimed a given Vessel
+     * @param v the Vessel to check for
+     * @return true if the player has claimed v; false otherwise
+     */
+    public boolean hasClaimedVessel(Vessel v) {
+        return this.claimedVessels.contains(v);
+    }
+
+    /**
+     * Checks if the player has claimed any one of several Vessels
+     * @param vessels the Vessels to check for
+     * @return true if the player has claimed any Vessel in vessels; false otherwise
+     */
+    public boolean hasClaimedAnyVessel(Vessel... vessels) {
+        for (Vessel v : vessels) {
+            if (this.claimedVessels.contains(v)) return true;
+        }
+        
+        return false;
+    }
+
+    /**
      * Returns the number of Vessels the player has claimed
      * @return the number of Vessels the player has claimed
      */
@@ -234,6 +271,99 @@ public class GameManager {
     public void attemptGoodEnding() {
         this.goodEndingAttempted = true;
     }
+
+    /**
+     * Checks if moundFreedom is positive or equal to 0
+     * @return whether the Shifting Mound's freedom value is positive, based on the endings the player has found
+     */
+    public boolean moundFreedom() {
+        return this.moundFreedom >= 0;
+    }
+
+    /**
+     * Checks if moundSatisfaction is positive or equal to 0
+     * @return whether the Shifting Mound's satisfaction value is positive, based on the endings the player has found
+     */
+    public boolean moundSatisfaction() {
+        return this.moundSatisfaction >= 0;
+    }
+
+    /**
+     * Accessor for directToMound
+     * @return whether the player claimed a vessel from the start or aborted at least one vessel before claiming one
+     */
+    public boolean getDirectToMound() {
+        return this.directToMound;
+    }
+
+    /**
+     * Accessor for askedRiddleMound
+     * @return whether the player has asked the Shifting Mound to stop speaking in riddles in the Spaces Between
+     */
+    public boolean getAskedRiddleMound() {
+        return this.askedRiddleMound;
+    }
+
+    /**
+     * Sets askedRiddleMound to true
+     */
+    public void askRiddleMound() {
+        this.askedRiddleMound = true;
+    }
+
+    /**
+     * Accessor for threatenedMound
+     * @return whether the player has threatened the Shifting Mound in the Spaces Between
+     */
+    public boolean getThreatenedMound() {
+        return this.threatenedMound;
+    }
+
+    /**
+     * Sets threatenedMound to true
+     */
+    public void threatenMound() {
+        this.threatenedMound = true;
+    }
+
+    /**
+     * Accessor for refuseExploreMound
+     * @return whether the player has threatened the Shifting Mound in the Spaces Between
+     */
+    public boolean getRefuseExploreMound() {
+        return this.refuseExploreMound;
+    }
+
+    /**
+     * Sets refuseExploreMound to true
+     */
+    public void refuseExploreMound() {
+        this.refuseExploreMound = true;
+    }
+
+    /**
+     * Accessor for intermissionAttackMound
+     * @return the Option to attack the Shifting Mound in the Spaces Between
+     */
+    public Option getIntermissionAttackMound() {
+        return this.intermissionAttackMound;
+    }
+
+    /**
+     * Accessor for intermissionAttackSelf
+     * @return the Option for the player to attack themself in the Spaces Between
+     */
+    public Option getIntermissionAttackSelf() {
+        return this.intermissionAttackSelf;
+    }
+
+    /**
+     * Accessor for intermissionWait
+     * @return the Option for the player to wait with the Shifting Mound in the Spaces Between
+     */
+    public Option getIntermissionWait() {
+        return this.intermissionWait;
+    }
     
     /**
      * Returns the content warnings menu (allowing the player to choose which set of content warnings they wish to view)
@@ -264,6 +394,13 @@ public class GameManager {
             } else {
                 this.endingsFound.add(ending);
                 this.claimedVessels.add(ending.getVessel());
+
+                this.moundFreedom += ending.getFreedom();
+                this.moundSatisfaction += ending.getSatisfaction();
+                if (this.nClaimedVessels() == 1) {
+                    if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
+                    if (this.nVesselsAborted == 0) this.directToMound = true;
+                }
             }
         }
 
@@ -324,8 +461,12 @@ public class GameManager {
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
             this.currentCycle = new StandardCycle(this, this.parser);
-            if (firstCycle) ending = this.currentCycle.debugRunCycle(startFromEnding, harsh);
-            else ending = this.currentCycle.runCycle();
+            if (firstCycle) {
+                ending = this.currentCycle.debugRunCycle(startFromEnding, harsh);
+                firstCycle = false;
+            } else {
+                ending = this.currentCycle.runCycle();
+            }
 
             if (ending == ChapterEnding.ABORTED) {
                 this.nVesselsAborted += 1;
@@ -790,7 +931,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.debugRunGame();
+        manager.debugRunGame(ChapterEnding.ILLUSIONOFCHOICE);
     }
 
 }

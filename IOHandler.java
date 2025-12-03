@@ -371,9 +371,11 @@ public class IOHandler {
            - cEnterFail
            - cLeaveFail
 
-           - cApproach
+           - cApproachMirror
            - cApproachAtMirrorFail (you're already at the mirror)
-           - cApproachFail
+           - cApproachMirrorFail
+           - cApproachHer
+           - cApproachHerFail
 
            - cSlayPrincess
            - cSlayNoPrincessFail (Princess isn't even present)
@@ -404,7 +406,8 @@ public class IOHandler {
             case "cGoStairs":
             case "cGoBasement":
 
-            case "cApproach":
+            case "cApproachMirror":
+            case "cApproachHer":
 
             case "cSlayPrincess":
             case "cSlaySelf":
@@ -418,7 +421,8 @@ public class IOHandler {
             case "cLeaveFail":
 
             case "cApproachAtMirrorFail":
-            case "cApproachFail":
+            case "cApproachMirrorFail":
+            case "cApproachHerFail":
                 
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":

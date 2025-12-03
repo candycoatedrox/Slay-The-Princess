@@ -11,7 +11,7 @@ public enum Command {
     LEAVE("leave", "Leave the current location.", "", "cabin", "basement", "woods", "path"),
     PROCEED("proceed", "Press onwards.", ""),
     TURN("turn", "Turn back.", "", "around", "back"),
-    APPROACH("approach", "Approach the mirror.", "the mirror", "mirror"),
+    APPROACH("approach", "Approach the mirror. Or approach her.", "the mirror", "mirror", "her", "the princess", "princess", "hands"),
     SLAY("slay", "Slay the Princess or yourself.", "the princess", "princess", "self", "yourself", "you", "myself", "me", "ourself", "ourselves", "us"),
     TAKE("take", "Take the blade.", "the blade", "blade", "pristine blade"),
     DROP("drop", "Drop the blade.", "the blade", "blade", "pristine blade"),
@@ -178,13 +178,14 @@ public enum Command {
                 break;
 
             case APPROACH:
-                s += "APPROACH [mirror]\n\n";
+                s += "APPROACH [target]\n\n";
 
                 s += "- Arguments -\n";
-                s += "  - [mirror]: The mirror.\n\n";
+                s += "  - [target]: What you wish to approach.\n\n";
 
                 s += "- Variations -\n";
                 s += "  - APPROACH [THE MIRROR / MIRROR]: Approach the mirror.\n";
+                s += "  - APPROACH [HER / THE PRINCESS / PRINCESS / HANDS]: Approach her.\n";
                 break;
 
             case SLAY:

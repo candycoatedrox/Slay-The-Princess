@@ -41,11 +41,10 @@ public class Finale extends Cycle {
      */
     @Override
     protected void showWarningsMenu() {
-        OptionsMenu warningsMenu = manager.warningsMenu();
-        warningsMenu.setCondition("current", false);
+        manager.warningsMenu().setCondition("current", false);
         
         this.trueExclusiveMenu = true;
-        switch (parser.promptOptionsMenu(warningsMenu)) {
+        switch (parser.promptOptionsMenu(manager.warningsMenu())) {
             case "general":
                 manager.showGeneralWarnings();
                 break;
@@ -68,84 +67,23 @@ public class Finale extends Cycle {
      * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location in the given direction; "cGoFail" otherwise
      */
     @Override
-    protected String go(String argument, boolean secondPrompt) {
-        switch (argument) {
-            case "forward":
-            case "forwards":
-            case "f":
-                switch (this.currentLocation.getForward()) {
-                    case STAIRS: return "GoStairs";
-                    case BASEMENT: return "GoBasement";
-                    default: return "GoFail";
-                }
-            
-            case "back":
-            case "backward":
-            case "backwards":
-            case "b":
-                switch (this.currentLocation.getBackward()) {
-                    case HILL: return "GoHill";
-                    case CABIN: return "GoCabin";
-                    case STAIRS: return "GoStairs";
-                    default: return "GoFail";
-                }
+    public String go(String argument) {
+        String outcome = super.go(argument, false);
+        
+        switch (this.currentLocation) {
+            case HILL:
+                if (outcome.equals("GoCabin")) break;
+            case MIRROR:
+                return "GoFail";
 
-            case "inside":
-            case "in":
-            case "i":
-                return (this.currentLocation.canGoInside()) ? this.go("forward") : "GoFail";
-
-            case "outside":
-            case "out":
-            case "o":
-                return (this.currentLocation.canGoOutside()) ? this.go("back") : "GoFail";
-
-            case "down":
-            case "d":
-                return (this.currentLocation.canGoDown()) ? this.go("forward") : "GoFail";
-
-            case "up":
-            case "u":
-                return (this.currentLocation.canGoUp()) ? this.go("back") : "GoFail";
-
-            case "":
-                if (secondPrompt) {
-                    manager.showCommandHelp("go");
-                    return "Fail";
-                } else {
-                    parser.printDialogueLine("Where do you want to go?", true);
-                    return this.go(parser.getInput(), true);
-                }
-
-            default:
-                manager.showCommandHelp("go");
-                return "Fail";
+            case CABIN:
+            case STAIRS:
+            case BASEMENT:
+                if (outcome.equals("GoHill")) return "GoFail";
+                break;
         }
-    }
 
-    /**
-     * Attempts to let the player enter a given location or the nearest appropriate location
-     * @param argument the location to enter (should be "cabin", "basement", or an empty String)
-     * @return "cFail" if argument is invalid; "cGo[Location]" if there is a valid location the player can enter; "cEnterFail" otherwise
-     */
-    @Override
-    public String enter(String argument) {
-        switch (argument) {
-            case "": return this.go("inside");
-
-            case "cabin": return "EnterFail";
-
-            case "basement":
-                switch (this.currentLocation) {
-                    case CABIN:
-                    case STAIRS: return this.go("forward");
-                    default: return "EnterFail";
-                }
-
-            default:
-                manager.showCommandHelp("enter");
-                return "Fail";
-        }
+        return outcome;
     }
 
     /**
@@ -155,41 +93,39 @@ public class Finale extends Cycle {
      */
     @Override
     public String leave(String argument) {
-        switch (argument) {
-            case "": this.go("back");
-
-            case "woods":
-            case "path": return "LeaveFail";
-
-            case "cabin":
-                return (this.currentLocation == GameLocation.CABIN) ? this.go("back") : "LeaveFail";
-
-            case "basement":
-                switch (this.currentLocation) {
-                    case STAIRS:
-                    case BASEMENT: return this.go("back");
-                    default: return "LeaveFail";
-                }
-
-            default:
-                manager.showCommandHelp("leave");
-                return "Fail";
-        }
+        String outcome = super.leave(argument);
+        if (outcome.equals("GoLeave")) return "GoFail";
+        return outcome;
     }
 
     /**
-     * Attempts to let the player approach the mirror
-     * @param argument the argument given by the player (should be "the mirror" or "mirror")
-     * @return "cFail" if argument is invalid; "cApproachFail" if the mirror is not present; "cApproach" otherwise
+     * Attempts to let the player approach the mirror or her
+     * @param argument the argument given by the player -- the target to approach
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cApproachAtMirrorFail" if attempting to approach the mirror when the player is already at the mirror; "cApproachMirrorFail" if attempting to approach the mirror when it is not present; "cApproachMirror" if otherwise attempting to approach the mirror; "cApproachHerFail" if attempting to approach her when not in the Spaces Between; "cApproachHer" if otherwise attempting to approach her
      */
     @Override
-    public String approach(String argument) {
+    protected String approach(String argument, boolean secondPrompt) {
         switch (argument) {
             case "the mirror":
             case "mirror":
-                return (this.currentLocation == GameLocation.MIRROR) ? "ApproachAtMirrorFail" : "ApproachFail";
+                if (this.currentLocation == GameLocation.MIRROR) {
+                    return "ApproachAtMirrorFail";
+                } else {
+                    return "ApproachMirrorFail";
+                }
             
-            default: return "Fail";
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp("approach");
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to approach?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                return super.approach(argument, secondPrompt);
         }
     }
 
@@ -282,8 +218,17 @@ public class Finale extends Cycle {
                 parser.printDialogueLine(new DialogueLine("You watched the mirror shatter into pieces."));
                 break;
 
-            case "cApproachFail":
+            case "cApproachMirrorFail":
                 parser.printDialogueLine(new DialogueLine("You watched the mirror shatter for good."));
+                break;
+
+            case "cApproachHerFail":
+                if (this.withPrincess) {
+                    parser.printDialogueLine(new DialogueLine("You are already with her."));
+                } else {
+                    parser.printDialogueLine(new DialogueLine("She is not here."));
+                }
+
                 break;
 
             case "cSlayNoPrincessFail":
@@ -322,6 +267,16 @@ public class Finale extends Cycle {
         // Responses here depend on whether you have normal heart (Hero) or Stranger heart (Hero + Contrarian)
 
         switch (outcome) {
+            case "cGoHill":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "We can't just... leave. We have to see this through."));
+                }
+                
+                break;
+
             case "cGoFail":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
@@ -352,7 +307,7 @@ public class Finale extends Cycle {
                 
                 break;
 
-            case "cApproachFail":
+            case "cApproachMirrorFail":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -361,15 +316,24 @@ public class Finale extends Cycle {
                 }
                 
                 break;
-            
-            case "cApproachInvalidFail":
-                if (this.strangerHeart) {
-                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
-                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+
+            case "cApproachHerFail":
+                if (this.withPrincess) {
+                    if (this.strangerHeart) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    }
                 } else {
-                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    if (this.strangerHeart) {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                    } else {
+                        parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    }
                 }
-                
+
                 break;
                 
 
@@ -517,6 +481,38 @@ public class Finale extends Cycle {
      * @return the ending the player reaches
      */
     private ChapterEnding openingConversation() {
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        parser.printDialogueLine("You find yourself in The Long Quiet once again.");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin.]"));
+
+        this.repeatActiveMenu = true;
+        while (this.repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+
+            switch (this.activeOutcome) {
+                case "cGoHill":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cGoLeave":
+                case "cGoFail":
+                case "cEnterFail":
+                case "cLeaveFail":
+                    parser.printDialogueLine("There is nowhere else for you to go.");
+                    break;
+                    
+                default:
+                    this.giveDefaultFailResponse(this.activeOutcome);
+            }
+        }
+
+
+
         // PLACEHOLDER
         return this.debate();
     }
