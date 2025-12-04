@@ -5,9 +5,9 @@ public class StandardCycle extends Cycle {
 
     // One CYCLE = from beginning of Ch1 to the end of Shifting Mound interlude
 
-    private boolean isFirstVessel;
-    private ArrayList<Voice> voicesMet;
-    private ArrayList<Chapter> route;
+    private final boolean isFirstVessel;
+    private final ArrayList<Voice> voicesMet;
+    private final ArrayList<Chapter> route;
     private ChapterEnding prevEnding;
     
     // Utility variables for checking command availability & default responses
@@ -20,7 +20,6 @@ public class StandardCycle extends Cycle {
     private boolean sharedLoop = false; // Used in all Chapter 2s and 3s: does the Narrator know?
     private boolean sharedLoopInsist = false; // Used in all Chapter 2s
     private boolean skipHillDialogue = false; // Used in Chapter 1 and all Chapter 2s; if you backed out of Stranger / aborting the Chapter
-    private boolean localMirrorComment = false; // Whether you've commented on the mirror this Chapter
 
     // Variables that persist between chapters
     private boolean mirrorComment = false; // Used in all Chapter 2s and 3s
@@ -424,7 +423,6 @@ public class StandardCycle extends Cycle {
                 this.sharedLoop = false;
                 this.sharedLoopInsist = false;
                 this.skipHillDialogue = false;
-                this.localMirrorComment = false;
                 this.bladeReverse = false;
 
                 this.repeatActiveMenu = false;
@@ -5923,7 +5921,6 @@ public class StandardCycle extends Cycle {
      * @return true if the player chooses to approach the mirror; false otherwise
      */
     private boolean ch2AskMirror() {
-        this.localMirrorComment = true;
         this.mirrorComment = true;
         
         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "There's *definitely* a mirror."));
