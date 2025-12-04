@@ -1,6 +1,6 @@
 public enum Voice {
     NARRATOR("The Narrator"),
-    PRINCESS("The Princess"), // Exclusively used in Spectre, Princess and the Dragon, and Wraith
+    PRINCESS("The Princess"), // Exclusively used in Wild and Princess and the Dragon
 
     HERO("Voice of the Hero"),
     BROKEN("Voice of the Broken"),
@@ -34,5 +34,26 @@ public enum Voice {
      */
     public String getDialogueTag() {
         return this.dialogueTag;
+    }
+
+    public static Voice getVoice(String characterID) {
+        switch (characterID) {
+            case "n": return NARRATOR;
+            case "pint": return PRINCESS;
+
+            case "hero": return HERO;
+            case "broken": return BROKEN;
+            case "cheated": return CHEATED;
+            case "cold": return COLD;
+            case "contra": return CONTRARIAN;
+            case "hunted": return HUNTED;
+            case "oppo": return OPPORTUNIST;
+            case "para": return PARANOID;
+            case "skeptic": return SKEPTIC;
+            case "smitten": return SMITTEN;
+            case "stubborn": return STUBBORN;
+
+            default: return null;
+        }
     }
 }

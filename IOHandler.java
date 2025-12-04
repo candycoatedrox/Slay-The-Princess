@@ -21,6 +21,16 @@ public class IOHandler {
         this.manager = manager;
     }
 
+    // --- ACCESSORS ---
+
+    /**
+     * Returns the current active Cycle of this IOHandler's manager
+     * @return the current active Cycle of this IOHandler's manager
+     */
+    public Cycle getCurrentCycle() {
+        return manager.getCurrentCycle();
+    }
+
     // --- BASIC INPUT ---
 
     /**

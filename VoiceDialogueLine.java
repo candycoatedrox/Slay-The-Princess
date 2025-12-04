@@ -25,6 +25,26 @@ public class VoiceDialogueLine extends DialogueLine {
     }
 
     /**
+     * Constructor
+     * @param speaker the ID of the Voice the line is spoken by
+     * @param line the text of the dialogue line
+     * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
+     */
+    public VoiceDialogueLine(String speakerID, String line, boolean isInterrupted) {
+        super(line, isInterrupted);
+        this.speaker = Voice.getVoice(speakerID);
+    }
+
+    /**
+     * Constructor
+     * @param speakerID the ID of the Voice the line is spoken by
+     * @param line the text of the dialogue line
+     */
+    public VoiceDialogueLine(String speakerID, String line) {
+        this(speakerID, line, false);
+    }
+
+    /**
      * Constructor for a Narrator dialogue line
      * @param line the text of the dialogue line
      * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line

@@ -581,6 +581,7 @@ public class StandardCycle extends Cycle {
      */
     private ChapterEnding runChapter(Chapter c) {
         this.activeChapter = c;
+        this.activeChapterScript = new Script(this.parser, c.getScriptFile());
         if (c != Chapter.SPACESBETWEEN) {
             this.route.add(c);
         }

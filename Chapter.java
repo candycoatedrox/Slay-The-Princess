@@ -1,47 +1,51 @@
+import java.io.File;  // Import the File class
+
 public enum Chapter {
     // Chapter I
-    CH1(1, "The Hero and the Princess"),
+    CH1(1, "The Hero and the Princess", "Chapter 1/Chapter1Shared"),
 
     // Chapter II
-    ADVERSARY(2, "The Adversary"),
-    TOWER(2, "The Tower"),
-    SPECTRE(2, "The Spectre"),
-    NIGHTMARE(2, "The Nightmare"),
-    RAZOR(2, "The Razor"),
-    BEAST(2, "The Beast"),
-    WITCH(2, "The Witch"),
-    STRANGER(2, "The Stranger"),
-    PRISONER(2, "The Prisoner"),
-    DAMSEL(2, "The Damsel"),
+    ADVERSARY(2, "The Adversary", "Routes/Adversary/AdversaryShared"),
+    TOWER(2, "The Tower", "Routes/Tower/TowerShared"),
+    SPECTRE(2, "The Spectre", "Routes/Spectre/SpectreShared"),
+    NIGHTMARE(2, "The Nightmare", "Routes/Nightmare/NightmareShared"),
+    RAZOR(2, "The Razor", "Routes/Razor/Razor2"),
+    BEAST(2, "The Beast", "Routes/Beast/BeastShared"),
+    WITCH(2, "The Witch", "Routes/Witch/WitchShared"),
+    STRANGER(2, "The Stranger", "Routes/Stranger/StrangerIntro"),
+    PRISONER(2, "The Prisoner", "Routes/Prisoner/PrisonerShared"),
+    DAMSEL(2, "The Damsel", "Routes/Damsel/DamselShared"),
 
     // Chapter III
-    NEEDLE(3, "The Eye of the Needle"),
-    FURY(3, "The Fury"),
-    APOTHEOSIS(3, "The Apotheosis"),
-    DRAGON(3, "The Princess and the Dragon", true),
-    WRAITH(3, "The Wraith"),
-    CLARITY(3, "The Moment of Clarity"),
-    ARMSRACE(3, "The Arms Race"),
-    NOWAYOUT(3, "No Way Out"),
-    DEN(3, "The Den"),
-    WILD(3, "The Wild"),
-    THORN(3, "The Thorn"),
-    CAGE(3, "The Cage"),
-    GREY(3, "The Grey"),
-    HAPPY(3, "Epilogue", "Happily Ever After"),
+    NEEDLE(3, "The Eye of the Needle", "Routes/Adversary/NeedleShared"),
+    FURY(3, "The Fury", "Routes/_Joint Chapters/Fury/FuryShared"),
+    APOTHEOSIS(3, "The Apotheosis", "Routes/Tower/ApotheosisShared"),
+    DRAGON(3, "The Princess and the Dragon", true, "Routes/Spectre/DragonShared"),
+    WRAITH(3, "The Wraith", "Routes/_Joint Chapters/Wraith/WraithShared"),
+    CLARITY(3, "The Moment of Clarity", "Routes/Nightmare/MomentOfClarity"),
+    ARMSRACE(3, "The Arms Race", "Routes/Razor/Razor3Shared"),
+    NOWAYOUT(3, "No Way Out", "Routes/Razor/Razor3Shared"),
+    DEN(3, "The Den", "Routes/Beast/DenShared"),
+    WILD(3, "The Wild", "Routes/_Joint Chapters/Wild/WildShared"),
+    THORN(3, "The Thorn", "Routes/Witch/ThornShared"),
+    CAGE(3, "The Cage", "Routes/Prisoner/PrisonerShared"),
+    GREY(3, "The Grey", "Routes/_Joint Chapters/Grey/GreyShared"),
+    HAPPY(3, "Epilogue", "Happily Ever After", "Routes/Damsel/HappyShared"),
     
     // Chapter IV
-    MUTUALLYASSURED(4, "Mutually Assured Destruction"),
-    EMPTYCUP(4, "The Empty Cup"),
+    MUTUALLYASSURED(4, "Mutually Assured Destruction", "Routes/Razor/Razor4"),
+    EMPTYCUP(4, "The Empty Cup", "Routes/Razor/Razor4"),
 
     // Special
-    SPACESBETWEEN("The Spaces Between"),
-    ENDOFEVERYTHING("The End of Everything");
+    SPACESBETWEEN("The Spaces Between", "Intermission/IntermissionShared"),
+    ENDOFEVERYTHING("The End of Everything", "Finale/FinaleOpening");
 
     private boolean specialTitle;
     private int number;
     private String prefix;
     private String title;
+
+    private File scriptFile;
 
     // --- CONSTRUCTORS ---
 
@@ -50,11 +54,13 @@ public enum Chapter {
      * @param number the Chapter number
      * @param title the title of the Chapter
      * @param specialTitle whether this Chapter has a special title (and thus should not display a title card at the start of the Chapter)
+     * @param scriptDirectory the directory of the initial script for this Chapter
      */
-    private Chapter(int number, String title, boolean specialTitle) {
+    private Chapter(int number, String title, boolean specialTitle, String scriptDirectory) {
         this.specialTitle = specialTitle;
         this.number = number;
         this.title = title;
+        this.scriptFile = Script.getFromDirectory(scriptDirectory);
 
         this.prefix = "Chapter ";
         switch(number) {
@@ -76,8 +82,9 @@ public enum Chapter {
      * Constructor for a standard Chapter
      * @param number the Chapter number
      * @param title the title of the Chapter
+     * @param scriptDirectory the directory of the initial script for this Chapter
      */
-    private Chapter(int number, String title) {
+    private Chapter(int number, String title, String scriptDirectory) {
         this.specialTitle = false;
         this.number = number;
         this.title = title;
@@ -103,8 +110,9 @@ public enum Chapter {
      * @param realNumber the true internal Chapter number
      * @param specialPrefix the displayed prefix of the Chapter, in place of "Chapter [number]"
      * @param title the title of the Chapter
+     * @param scriptDirectory the directory of the initial script for this Chapter
      */
-    private Chapter(int realNumber, String specialPrefix, String title) {
+    private Chapter(int realNumber, String specialPrefix, String title, String scriptDirectory) {
         this.number = realNumber;
         this.prefix = specialPrefix;
         this.title = title;
@@ -114,8 +122,9 @@ public enum Chapter {
     /**
      * Constructor for a special Chapter
      * @param title the title of the Chapter
+     * @param scriptDirectory the directory of the initial script for this Chapter
      */
-    private Chapter(String title) {
+    private Chapter(String title, String scriptDirectory) {
         this.specialTitle = true;
         this.number = 0;
         this.prefix = "";
@@ -173,6 +182,10 @@ public enum Chapter {
             case ENDOFEVERYTHING: return "The End of Everything";
             default: return this.prefix + ": " + this.title;
         }
+    }
+    
+    public File getScriptFile() {
+        return this.scriptFile;
     }
 
     /**
