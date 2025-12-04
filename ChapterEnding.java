@@ -85,11 +85,11 @@ public enum ChapterEnding {
     MOMENTOFCLARITY(Vessel.CLARITY, 1, 0, false),
 
     // The Razor
-    TOARMSRACEFIGHT(Chapter.ARMSRACE, Voice.HUNTED, Voice.STUBBORN),
-    TOARMSRACEBORED(Chapter.ARMSRACE, Voice.HUNTED, Voice.BROKEN),
-    TOARMSRACELEFT(Chapter.ARMSRACE, Voice.HUNTED, Voice.PARANOID),
-    TONOWAYOUTBORED(Chapter.ARMSRACE, Voice.CONTRARIAN, Voice.BROKEN),
-    TONOWAYOUTLEFT(Chapter.ARMSRACE, Voice.CONTRARIAN, Voice.PARANOID),
+    TOARMSRACEFIGHT(Chapter.ARMSRACE, Voice.STUBBORN),
+    TOARMSRACEBORED(Chapter.ARMSRACE, Voice.BROKEN),
+    TOARMSRACELEFT(Chapter.ARMSRACE, Voice.PARANOID),
+    TONOWAYOUTBORED(Chapter.ARMSRACE, Voice.BROKEN),
+    TONOWAYOUTLEFT(Chapter.ARMSRACE, Voice.PARANOID),
 
     // The Arms Race
     TOMUTUALLYASSURED(Chapter.MUTUALLYASSURED),
@@ -194,7 +194,6 @@ public enum ChapterEnding {
 
     private Chapter nextChapter;
     private Voice newVoice;
-    private Voice newVoice2;
 
     private Vessel vessel;
     private int freedom = 0;
@@ -212,18 +211,6 @@ public enum ChapterEnding {
         this.isFinal = false;
         this.nextChapter = nextChapter;
         this.newVoice = newVoice;
-    }
-
-    /**
-     * Constructor for gaining two Voices
-     * @param nextChapter the Chapter this ending leads to
-     * @param newVoiceA the first Voice gained at the start of the next Chapter
-     * @param newVoiceB the second Voice gained at the start of the next Chapter
-     */
-    private ChapterEnding(Chapter nextChapter, Voice newVoiceA, Voice newVoiceB) {
-        // oh Razor my special little snowflake
-        this(nextChapter, newVoiceA);
-        this.newVoice2 = newVoiceB;
     }
 
     /**
@@ -281,14 +268,6 @@ public enum ChapterEnding {
      */
     public Voice getNewVoice() {
         return this.newVoice;
-    }
-
-    /**
-     * Accessor for newVoice2
-     * @return the second Voice gained at the start of the next Chapter
-     */
-    public Voice getNewVoice2() {
-        return this.newVoice2;
     }
 
     /**

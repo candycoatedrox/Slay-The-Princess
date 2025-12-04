@@ -26,6 +26,7 @@ public class GameManager {
     private boolean goodEndingAttempted = false;
 
     // Variables used in the Spaces Between
+    private boolean mirrorScaredFlag = false;
     private int moundFreedom = 0;
     private int moundSatisfaction = 0;
     private boolean directToMound = false;
@@ -270,6 +271,21 @@ public class GameManager {
      */
     public void attemptGoodEnding() {
         this.goodEndingAttempted = true;
+    }
+
+    /**
+     * Accessor for mirrorScaredFlag
+     * @return whether the player has reached the end of a cycle with the Voice of the Hero present
+     */
+    public boolean getMirrorScaredFlag() {
+        return this.mirrorScaredFlag;
+    }
+
+    /**
+     * Sets mirrorScaredFlag to true
+     */
+    public void setMirrorScaredFlag() {
+        this.mirrorScaredFlag = true;
     }
 
     /**
