@@ -5,7 +5,8 @@ public abstract class Cycle {
     protected final IOHandler parser;
 
     protected Chapter activeChapter;
-    protected Script activeChapterScript;
+    protected Script mainScript;
+    protected Script secondaryScript;
     protected HashMap<Voice, Boolean> currentVoices;
     protected GameLocation currentLocation = GameLocation.PATH;
 

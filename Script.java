@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Script {
 
+    private final GameManager manager;
     private final IOHandler parser;
     private final File scriptFile;
 
@@ -21,7 +22,8 @@ public class Script {
      * @param parser the IOHandler to link this Script to
      * @param scriptFile the file containing the text of this Script
      */
-    public Script(IOHandler parser, File scriptFile) {
+    public Script(GameManager manager, IOHandler parser, File scriptFile) {
+        this.manager = manager;
         this.parser = parser;
         this.scriptFile = scriptFile;
 
@@ -62,8 +64,8 @@ public class Script {
      * @param parser the IOHandler to link this Script to
      * @param fileDirectory the file path of the file containing the text of this Script
      */
-    public Script(IOHandler parser, String fileDirectory) {
-        this(parser, getFromDirectory(fileDirectory));
+    public Script(GameManager manager, IOHandler parser, String fileDirectory) {
+        this(manager, parser, getFromDirectory(fileDirectory));
     }
 
     // --- ACCESSORS & CHECKS ---
@@ -382,6 +384,10 @@ public class Script {
                 // Skip to next line
                 break;
 
+            case "nowplaying":
+                manager.setNowPlaying(argument);
+                break;
+
             case "":
                 cont = false;
                 break;
@@ -458,19 +464,24 @@ public class Script {
      * @param arguments the dialogue line itself, as well as any optional modifiers
      */
     private void printDialogueLine(String characterID, String arguments) {
-        // check for modifiers, then print
         boolean isInterrupted = false;
-        boolean checkVoice = false;
+        Voice checkVoice = null;
 
         String[] args = arguments.split(" /// ");
         String line = args[0];
 
         if (args.length == 2) {
-            if (args[1].contains("interrupt")) {
-                isInterrupted = true;
-            }
-            if (args[1].contains("checkvoice")) {
-                checkVoice = true;
+            String modifiers = args[1];
+            for (String m : modifiers.split(" ")) {
+                if (m.equals("interrupt")) {
+                    isInterrupted = true;
+                } else if (m.startsWith("checkvoice")){
+                    if (m.length() > 11) {
+                        checkVoice = Voice.getVoice(m.substring(11));
+                    } else {
+                        checkVoice = Voice.getVoice(characterID);
+                    }
+                }
             }
         }
 
@@ -486,8 +497,8 @@ public class Script {
                 return;
             }
         } else {
-            if (checkVoice && parser.getCurrentCycle() != null) {
-                if (parser.getCurrentCycle().hasVoice(v)) {
+            if (checkVoice != null && parser.getCurrentCycle() != null) {
+                if (parser.getCurrentCycle().hasVoice(checkVoice)) {
                     parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
                 }
             } else {
@@ -560,6 +571,9 @@ Different functions a script can perform:
   - jumpanchor [id]
         Essentially acts as a label the script can move its cursor to at any time.
 
+  - nowplaying [song]
+        Sets the song currently playing.
+
   - [character] Dialogue line goes here
   - [character] Dialogue line goes here /// [modifiers]
         Modifiers are optional.
@@ -568,7 +582,9 @@ Different functions a script can perform:
 
         Modifiers:
           - checkvoice
-                Checks whether the player has the given voice before printing.
+                Checks whether the player has the speaker's voice before printing.
+          - checkvoice-[id]
+                Checks whether the player has the voice specified by the ID before printing.
           - interrupt
                 The line is interrupted.
 */

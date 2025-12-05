@@ -1,0 +1,101 @@
+nowplaying The Princess
+n You're on a path in the woods. And at the end of that path is a cabin. And in the basement of that cabin is a princess.
+n You're here to slay her. If you don't, it will be the end of the world.
+
+// First menu responses //
+
+jumpanchor question1
+n I'm talking about the end of everything as we know it. No more birds, no more trees, and, perhaps most problematically of all, no more people. You have to put an end to her.
+
+jumpanchor question2
+n Don't linger on the specifics. You have a job to do here. Just get in there and do what needs to be done. We're all counting on you.
+
+jumpanchor whyDanger
+n *She's* not dangerous. She's just a princess. The danger comes if she gets out. Which she will. Unless *you* do something about it.
+
+jumpanchor whatHappens
+n The more specifics you have, the harder it will be for you to do this very important job. She's a princess. People will listen to her, because listening to her is in their nature. And when they do, everything will come crashing down.
+
+jumpanchor evidence
+n Look, you're already on the path that leads to the cabin. Why would you be here if it weren't to complete a very important task? You've made it this far, you might as well reach the end of your journey.
+
+jumpanchor chickenEgg
+n While I appreciate the mental exercise, we are running up against a bit of a ticking clock.
+n Nevertheless, let me assure you: the Princess is locked up because she's dangerous, she is not dangerous because she's locked up.
+n And before you decide to waste even more of our time by asking how I know that, let me suggest a more pragmatic lens through which to view this situation.
+n Causality doesn't matter here, because the end result is the same no matter what led us up to this point. If the Princess leaves the cabin, the world will end, and there is no changing that.
+n It's no use arguing semantics over a metaphorical chicken-or-egg, because the egg is hatched and it's about to ruin everything.
+n Unless, of course, you do your job and *slay her.*
+
+jumpanchor conscience
+n Does it? Are you a monarchist? Is slaying a princess that much worse than slaying a fisherman or a miller or a seamstress? If anything, slaying a princess is much *better* than slaying a seamstress. Seamstresses contribute something of value to society.
+
+jumpanchor someoneElseA
+n Oh, if only that were the case, but I don't make the rules.
+n I have to say I'm surprised at your reluctance thus far. But unfortunately for the both of us, you're the only one who can pull this off.
+n Like I said, I don't make the rules. No matter how much I wish I did.
+
+jumpanchor someoneElseB
+n Unfortunately, you're the only one who can pull this off. I don't make the rules. I wish I did, but I don't.
+
+jumpanchor refuse
+n Are you serious? No, you *have* to do it.
+
+jumpanchor letItBurn
+n Of course I haven't. Why would I even consider that? *Nobody* wants the world to end.
+n I mean, maybe *some* people do, like nihilists or very very evil people, but surely you're not one of those... right?
+
+jumpanchor prize
+n Yes, but you'll have to slay her before you get it.
+
+jumpanchor prize2
+n It's a secret, but I think you'll like it. It's a special reward, just for you. And whatever you think it might be, I can promise you it's going to be even better than your wildest imagination.
+
+jumpanchor reluctant
+n Then I guess we'll just have to see what happens. But a word of warning -- if you go in prepared to hear her out, she could easily trap you in her web of lies. And the more you listen to her honeyed words, the harder it'll be to pull yourself out.
+n Then each and every one of us is doomed.
+n So, sure, go talk to her. See how that turns out for all of us.
+
+jumpanchor okFine
+jumpanchor sold
+n Good. As long as you remain focused on your goal, it should all be smooth sailing.
+
+jumpanchor thanks
+n Don't mention it. It's all part of the job.
+
+jumpanchor sweet
+n That's the spirit!
+
+// The hill & the cabin //
+
+jumpanchor hillDialogue
+linebreak
+n You emerge into a clearing. The path ahead of you winds up a hill, stopping just before a quaint wooden cabin.
+n A warning, before you go any further...
+n She will lie, she will cheat, and she will do everything in her power to stop you from slaying her. Don't believe a word she says.
+hero We're not going to go through with this, right? She's a princess. We're supposed to save princesses, not slay them.
+n Ignore him. He doesn't know what he's talking about.
+
+n The interior of the cabin is almost entirely bare. The air is stale and musty and the floor and walls are painted in a fine layer of dust. The only furniture of note is a plain wooden table. Perched on that table is a pristine blade.
+n The blade is your implement. You'll need it if you want to do this right.
+
+nowplaying The World Ender
+n You take the blade from the table. It'd be rather difficult to slay the Princess and save the world without it.
+
+// Shared basement lines //
+
+jumpanchor stairs
+n The door to the basement creaks open, revealing a staircase faintly illuminated by an unseen light in the room below. This is an oppressive place. The air feels heavy and damp, a hint of rot filtering from the ancient wood. If the Princess really lives here, slaying her is probably doing her a favor.
+
+jumpanchor stairsLeaveFail
+n What? No. You're already halfway down the stairs, you can't just turn around now.
+
+jumpanchor basementLeaveFail
+n What? No. You've hardly even laid eyes on the Princess, you can't just abandon your duty now.
+
+jumpanchor rescueStairsSlayFail
+n The Princess is in the basement below, remember? You can't slay her from here.
+
+
+// Leads to Chapter II: The Nightmare //
+jumpanchor nightmareStart

@@ -1004,7 +1004,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.debugRunGame(ChapterEnding.TORAZORREVIVAL);
+        manager.debugRunGame();
     }
 
 }
