@@ -2,7 +2,7 @@ nowplaying The Princess
 n You're on a path in the woods. And at the end of that path is a cabin. And in the basement of that cabin is a princess.
 n You're here to slay her. If you don't, it will be the end of the world.
 
-// First menu responses //
+// First menu //
 
 jumpanchor question1
 n I'm talking about the end of everything as we know it. No more birds, no more trees, and, perhaps most problematically of all, no more people. You have to put an end to her.
@@ -98,4 +98,72 @@ n The Princess is in the basement below, remember? You can't slay her from here.
 
 
 // Leads to Chapter II: The Nightmare //
+jumpanchor nightmareStartWounded
+n You close the basement door, locking it behind you and quickly barricading it with the heavy wooden table that once held the blade.
+hero Okay. We can make this work. She has an awful wound and we have all the time in the world. Playing jailkeeper for a while might make things a little easier.
+jumpto nightmareStartJoin
+
 jumpanchor nightmareStart
+n You close the basement door, locking it behind you and quickly barricading it with the heavy wooden table that once held the blade.
+hero Okay. We can make this work.
+jumpanchor nightmareStartJoin
+n You settle in against the far wall to watch the basement door.
+linebreak
+n It isn't long before you start to drift off, your eyelids heavy with fatigue. But sleep doesn't come. Instead your rest is broken by a piercing, wailing voice calling out to you from the other side of the door.
+p I know you're still there. Why don't you make things easier on yourself and let me out?
+truth She bangs on the door over and over again.
+p It's not like this little door'll hold for very long anyways... and it's probably a good idea to try and get back on my good side.
+hero She sounds... terrifying. Like she's less of the Princess you saw and more like something out of a nightmare.
+linebreak
+n As she violently rattles the door, you do your best to shut her out of your mind.
+p When I get out of here I'm going to pick you apart piece by piece. I won't forget what you did, and I'll never forgive it.
+p You don't know the kind of enemy you've made tonight...
+hero It doesn't sound like she's getting any weaker...
+n No. It doesn't.
+
+jumpanchor nightmareThreat
+p These aren't threats. These are *promises.* Sooner or later you're going to have to sleep, and I'll make sure you never see the light of day again.
+jumpto nightmareJoin
+
+jumpanchor nightmareNotPrincess
+p I wouldn't be so sure about outlasting me. You're so... brittle. So go ahead. Rest. Do whatever you think will help you be prepared. But know that I am coming for you, and that when I find you, I will make you hurt.
+jumpto nightmareJoin
+
+jumpanchor nightmareAct
+p I can be innocent and harmless... if I want to be. Teasing me with fresh air and a chance to finally live freely doesn't inspire me to play nice.
+jumpto nightmareJoin
+
+jumpanchor nightmareBleedOut
+p Do you think a couple cuts is enough to do me in? I'm not as frail as you think.
+jumpto nightmareJoin
+
+jumpanchor nightmareBleedOutLostArm
+p Do you think losing an arm is actually enough to do me in? I can always find another. I'm not as frail as you think.
+jumpto nightmareJoin
+
+jumpanchor nightmareIgnore
+p Just ignore her. Maybe the banging and wailing will stop if you just don't pay attention to it.
+jumpto nightmareJoin
+
+jumpanchor nightmareJoin
+n You put the Princess's threats out of your mind as best as you can and huddle up against the wall.
+linebreak 2
+n You jolt awake in the middle of the night to silence in the cabin. The ruckus has stopped, and the door to the basement is ajar, its lock broken and the table shoved out the way.
+hero Where is she?
+linebreak
+truth She appears in the doorway, bathed in shadows and staring at you with unnaturally wide, unblinking eyes. She seems... wrong, somehow. Almost inhuman.
+p Thanks for helping me get out of that awful basement.
+n You try and stumble to your feet, but as the Princess draws near, it's as though your body simply stops working.
+n It isn't all at once. The paralysis comes in waves. First your toes go numb, and then your feet, and then your legs. You lie prone on the floor of the cabin, unable to do anything but witness her approach.
+hero Whose side are you on?
+n Yours, of course. But I have a duty to uphold the truth. Lying about the facts of the situation doesn't change them.
+p So helpless. I can take my time with you, can't I?
+n She steps closer, one silent footfall at a time, cocking her head in curiosity as you feel your organs shutting down one by one.
+p Or maybe I can't take my time with you. You don't look well. A little green around the gills...
+p What a shame. If you'd only helped me get out of here. We could have done such wonderful things together.
+n Your lungs stop drawing in breath, and your heart freezes in your chest. You have seconds left.
+p I'd say better luck next time, but we both know that this is the end, don't we?
+hero It can't be. This can't actually be how everything ends...
+n I'm sorry, but it is.
+linebreak
+n Everything goes dark, and you die.

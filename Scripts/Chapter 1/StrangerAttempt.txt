@@ -1,6 +1,6 @@
 n Seriously? You're just going to turn around and leave? Do you even know where you're going?
 
-// First menu responses //
+// First menu //
 
 jumpanchor ugh
 n *Thank you!* The whole world owes you a debt of gratitude. Really.
@@ -27,7 +27,7 @@ linebreak
 truth You emerge into a clearing. The path ahead of you winds up a hill, stopping just before a quaint wooden cabin.
 n That's strange. It looks like this path also leads to the cabin. How convenient! Everything's back on track again. Maybe the world can still be saved after all.
 
-// Second menu responses //
+// Second menu //
 
 jumpanchor cabin
 n That's great to hear! And as long as you bring that fiery attitude to Princess slaying, I think this will all resolve splendidly.
@@ -40,7 +40,7 @@ hero We can't just go through with this and listen to Him. She's a princess. We'
 jumpanchor commit
 n You're really keen on wasting everyone's time, aren't you? It's remarkably selfish, if you ask me. I've already outlined the stakes of the situation. If you don't do your job, everyone dies. Like, *dies* dies. Forever.
 
-// Third menu responses //
+// Third menu //
 
 jumpanchor dontCare
 n "Killing" is such gauche phrasing, and completely ignores the bigger picture. Your task is to *slay* the Princess. Because she's terrible and she's really got it coming to her.
@@ -70,7 +70,7 @@ linebreak
 truth Eventually, the cabin comes into view once again.
 n Oh, would you look at that! You're at the cabin again! Now, I'm not normally one for superstition or astrology, but I have to say, it seems like the Universe itself is doing its best to bring you to your fated confrontation with the Princess.
 
-// Fourth and final menu responses //
+// Fourth and final menu //
 
 jumpanchor cabin3
 n There's always a choice, but let me tell you right now that you're making the correct decision for pretty much everyone.

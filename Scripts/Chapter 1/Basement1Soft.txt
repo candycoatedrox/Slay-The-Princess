@@ -3,7 +3,7 @@ p H-hello? Is someone there?
 hero It's hypnotizing. It's the kind of voice you only have to hear once to remember it for the rest of your life.
 n Don't let it fool you. It's all part of the manipulation. You're playing a dangerous game by coming here unarmed.
 
-// Stairs menu responses //
+// Stairs menu //
 
 jumpanchor hi
 p Don't be a stranger. It's been so long since I've had any visitors. Please, come downstairs.
@@ -55,10 +55,10 @@ p Hi! I can't believe you're here, I've been waiting for something like this to 
 p ... I hope you brought something to deal with these chains.
 n You were lying when you said you were here to rescue her, but regardless of your intentions, breaking her out of those chains would be a big mistake. Don't even try it.
 
-jumpanchor princessBasement
+jumpanchor genericBasement
 p Hi! Do you think you can get me out of these chains?
 
-// Conversation menu responses //
+// Conversation menu //
 
 jumpanchor princessTalk
 p O... kay.
@@ -153,8 +153,9 @@ hero That seems like a pretty good compromise.
 n Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out.
 jumpto compromiseLateJoin
 
-// Lock her in the basement dialogue //
+// Lock her in the basement //
 
+// Leads to Chapter II: The Nightmare //
 jumpanchor compromiseA
 hero That seems like a pretty good compromise.
 p So you weren't kidding on the stairs. I thought you were just making a bad joke. You were actually sent here to kill me?
@@ -180,11 +181,10 @@ p Fine! Turn your back on me. But it won't be long before I slip these chains. A
 hero "Slip these chains?" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing.
 n Either way, she dropped the mask, didn't she? You can still grab the blade and get back down here...
 
-jumpanchor toNightmare
 n You'll be the death of all of us, but fine. We'll do it your way.
 linebreak
 
-// Rescue dialogue //
+// Rescue her //
 
 jumpanchor rescueFromLock
 n You can't be *serious* --
@@ -386,7 +386,7 @@ hero What if she doesn't succumb to her wounds? Whatever she is, she's so much m
 linebreak
 n You rush up the stairs and dive past the threshold. You're safe. For now.
 
-// Retrieve blade dialogue //
+// Retrieve blade //
 
 jumpanchor retrieveFromLockA
 n *Thank* you.

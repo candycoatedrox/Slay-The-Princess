@@ -1,7 +1,774 @@
+n Her voice carries up the stairs.
+p Who's there?
+hero She sounds... dangerous... It's almost as if she's the one in charge down here.
+n Don't let it fool you. It's all part of the manipulation.
 
+// Stairs menu //
 
+jumpanchor hi
+p Don't be a stranger. It's been so long since I've had any visitors, come on down.
+jumpto basementStart
 
+jumpanchor checkIn
+p Oh? It's been so long since anyone's come down here. I was starting to think they'd forgotten about me.
+jumpto basementStart
 
+jumpanchor jokeKill
+p Ohohohoho, are you now? Why don't you come down and let me take a look at you.
+n Great job, you've given away the element of surprise. Good luck, "hero."
+jumpto basementStart
 
 jumpanchor silentStairs
 n Good. You're still listening to reason.
+jumpto basementStart
+
+// Basement start //
+
+jumpanchor basementStart
+n You walk down the stairs and lock eyes with the Princess. There's a heavy chain around her wrist, binding her to the far wall of the basement.
+hero She's so coldly beautiful... is she really a threat to the world?
+n Focus on the task at hand.
+
+jumpanchor jokeKillBasement
+p You weren't kidding when you said you were here to kill me.
+
+jumpanchor genericBasement
+p And there you are. Are you here to kill me or something?
+
+// Basement start menu //
+
+jumpanchor noWay
+p That giant knife you're holding kind of gives it away, doesn't it?
+hero The blade! Of course she doesn't want to talk. Who'd want to have a conversation at knife point? We should drop it.
+jumpto postMenu1
+
+jumpanchor noJoke
+p I know. You brought a knife with you and everything. But you don't have to try and kill me. You could always toss that scrap of metal to the ground, and give the two of us a chance to talk things out.
+hero She makes a compelling point. What if we didn't kill her? What if we just dropped the blade and *talked?*
+jumpto postMenu1
+
+jumpanchor caughtMe
+p That isn't a good idea. Just drop the knife, and maybe the two of us can talk things out.
+hero She's right. We shouldn't. We should just drop the blade.
+jumpto postMenu1
+
+jumpanchor nuhUh
+p Then drop the knife.
+hero We should. It'd go a long way to building trust with her.
+jumpto postMenu1
+
+jumpanchor undecided
+p How about you drop the knife and the two of us just... talk?
+hero Look how reasonable she's being. We should just drop the blade and talk things out.
+jumpto postMenu1
+
+jumpanchor talk
+p Then why did you bring a knife with you? How about you drop it and then we can chat.
+hero She makes a compelling point. What if we just dropped the blade and *talked?* Look at her. It's not like she's a threat.
+jumpto postMenu1
+
+jumpanchor postMenu1
+n Don't you dare.
+hero It's fine. We can decide what we want to do *after* we talk to her. Maybe she really is a monster. But killing someone in cold blood isn't very becoming of us.
+
+jumpanchor dropA
+n *Sigh.* The blade tumbles out of your trembling hands and drops to the floor with an unceremonious clang.
+p Thank you. Maybe now we can just... talk.
+jumpto dropBlade
+
+jumpanchor dropB
+n *Sigh.* The blade tumbles out of your trembling hands and drops to the floor with an unceremonious clang.
+p Thank you.
+jumpto dropBlade
+
+// Steel nerves //
+
+jumpanchor tighten
+n You ignore the trembling in your hands and tighten your grip on the blade.
+p You poor thing, your hands are shaking. Are you... scared of me? Because you should be.
+jumpanchor steelJoin
+n You step forward, your grip on the blade tightening as you steel your resolve.
+
+jumpanchor steelHesitated
+p Oh? No talking, then? Fine. What even makes you think you can kill me?
+jumpanchor steelCont
+p I'm probably chained up in this basement for a reason, right? And if that knife is the only weapon you have, you'll have to get close enough to use it.
+p So... you should just drop it. Best not to risk finding out what I can do.
+n She's unarmed. If you hesitate now, it'll be too late. *End this.*
+
+jumpanchor steelBluff
+n If you go into this expecting to die, you're going to die.
+jumpto steelMenuJoin
+
+jumpanchor steelIsArmed
+n I'm positive.
+hero I'm not. But we'll keep our eyes peeled. If she has a weapon, she'll have to draw it before she can use it.
+jumpanchor steelMenuJoin
+p Hesitating? Why don't you drop the knife and the two of us can be civilized with each other.
+
+jumpanchor steelSorry
+n You're so close! Don't give up, you've come this far.
+hero No, this is a good idea. Maybe we can de-escalate things.
+p Oh, threatened, are we? You poor thing. Drop the knife and of course we can talk.
+
+jumpanchor steelNoDrop
+p Then I'm not talking to you.
+
+jumpanchor steelImpasse
+p I guess we are!
+n For the love of everything, just slay her already!
+hero Or drop the blade. Do *something.*
+
+jumpanchor steelStare
+n You stare at the Princess, squinting.
+n She squints back.
+hero The two of you are going to do this forever, aren't you?
+
+jumpanchor steelSure
+p Yeah. I'm sure.
+n For goodness' sake, the two of you can't just stand around like this forever. Eventually, something is going to give, and I *highly* recommend that you be the one to take the initiative here.
+
+jumpanchor steelStare2
+n You stare at the Princess, squinting fiercely.
+n She squints back.
+hero The two of you are going to do this forever, aren't you?
+n You'll have to blink eventually. Just make a *choice.*
+
+jumpanchor steelContStare
+n You squint even harder.
+n So does she.
+hero At least nobody's dying right now...
+n You're going to have to make a choice. You can't keep squinting forever. Eventually, someone is going to have to blink.
+
+// Slay without hesitation //
+
+jumpanchor steelSlay
+n You lunge forward without a moment's hesitation.
+n You feel flesh easily give way and look down to see your blade already sinking deep into her heart.
+p O... oh.
+p This is it, isn't it?
+p I'm almost embarrassed. I should've seen that coming. But... I have to wonder...
+p Do you *actually* believe this was enough to kill me?
+hero It's like she's convinced she can't die.
+n Yes. Even as she lays there dying, she entirely *believes* herself to be alive and well.
+n But it's over, isn't it? She stopped breathing moments ago, that arrogant look still plastered on her face.
+hero But *is* it over? *Really* over?
+
+jumpanchor steelSlayYes
+n Yes, exactly. It's over.
+jumpto steelSlaySuccess
+
+jumpanchor steelSlaySuccess
+linebreak
+n With your work done, you make your way back up the stairs, closing the door to the basement behind you.
+hero Why do I feel like we've done something horrible?
+n You did kill someone. Greater good or not, something would be very wrong with you if you didn't feel at least a little bad. But it *was* for the greater good. One of these days, that will sink in and help ease your guilty conscience.
+n But that day isn't today. Let's just get out of here.
+
+n You open the cabin door, ready to return to a world saved from certain doom.
+linebreak
+n Only, a world saved from certain doom isn't what you find. Instead, what you find is nothing at all. Where a lush forest stood mere minutes ago, the only thing in front of you now is the vast emptiness of some place far away.
+hero What... happened?
+n Everyone is fine, it's just that you and the cabin are now far away from them. Don't worry. You'll be safe here. This is good. Everyone is happy. *You'll* be happy.
+
+jumpanchor slaySuccessStairsFail
+n There's no reason to go back to the basement. Your job here is done.
+
+jumpanchor slaySuccessSlayFail
+n She's already dead, thanks to your efforts.
+
+jumpanchor successPrizeYay
+n I'm just happy that you're happy. I knew you'd like it.
+jumpto successCont
+
+jumpanchor successPrizeBoo
+n What's done is done, and there's no going back now. I'm sorry you don't like your reward, but maybe you'll learn to appreciate it in time.
+jumpto successCont
+
+jumpanchor successBullshit
+n What's done is done, and there's no going back now.
+jumpto successCont
+
+jumpanchor successOk
+n I'm so glad you're keeping an open mind.
+jumpto successCont
+
+jumpanchor successBetter
+n This isn't an ending. In fact, now that the Princess has been slain, endings are a thing of the past. No... this is the beginning of *eternity.* Your reward.
+jumpto successCont
+
+jumpanchor successCont
+n This is what's best for everyone. Trust me.
+linebreak
+n Time passes. You can't be sure if it's days, or months, or years or even decades. It's all a wonderful, boring blur. You've never been happier.
+hero Pst! Hey! We're not just going to stay here *forever,* right?
+
+jumpanchor successExplore
+hero Are we really happy, or is He just telling us we are?
+
+jumpanchor successNotHappy
+hero Good, because I have an idea to get us out of here. Though you're probably not going to like it.
+jumpto suggestSpectre
+
+jumpanchor successHellNo
+hero I do, but you're probably not going to like it.
+jumpto suggestSpectre
+
+jumpanchor suggestSpectre
+hero The blade. We can use the blade to get out of this.
+n I can hear everything you say, little voice. There's only one thing it would want you to use that blade on, and I'm afraid that thing is *you,* dear hero.
+hero He's right. It's the only way out.
+n Do you hear that? It wants to take this happiness away from you. It wants this wonderful place to *end.*
+hero Do you not? There's more for us to do, and the only way for us to do it is to take that blade and use it.
+n Don't you *dare.*
+
+jumpanchor suggestExplore
+n How astute. You're absolutely correct. Using the blade to kill yourself would kill you and you shouldn't do it.
+hero In a sense, we'd die, but looking at things from another angle, are we even really alive anymore? This place... it's nothing! It's absolutely nothing. It's just the same thing, constantly, forever.
+hero I know this is out there, but trust me, I *know* using the blade will work.
+n That little voice didn't want you to slay the Princess. It didn't want you to be *happy.*
+
+jumpanchor suggestLeaveFail
+hero There's nowhere for us to go, remember? The world out there is gone.
+
+jumpanchor suggestReluctant
+hero If we "die" die, you can yell at me all you want.
+jumpto spectreCommit
+
+jumpanchor suggestAnything
+hero Thank you.
+jumpto spectreCommit
+
+// Leads to Chapter II: The Spectre //
+jumpto spectreCommit
+n I *made* this happy little place for you! Is this not a good enough reward for saving the world? An eternity of bliss? You... you ingrate!
+n Fine. Whatever. For the first time since time stopped meaning anything, you throw open the door to the basement and walk down the stairs.
+linebreak
+n The Princess's body is dust and bones, though the blade you used to slay her is still as pristine as the day you first held it.
+n You pick up the blade, you stab yourself, and you *die.*
+linebreak
+n The end. Nice knowing you.
+
+
+jumpanchor suggestStickAround
+n What a relief.
+jumpanchor suggestNotRisking
+hero I suppose we've got all the time in the world for you to change your mind.
+jumpto attemptGoodEnding
+
+// Leads to The Good Ending (or Chapter II: The Spectre if the player has already claimed at least one vessel) //
+jumpanchor attemptGoodEnding
+hero Really? Well, if you ever change your mind, just let me know, I guess.
+linebreak
+n More happy time passes, though the word begins to lose its meaning. "Time," that is, not "happy." "Happy" still has plenty of meaning.
+hero Please, shake yourself out of it. We have to get out of here.
+n The little voice's pleas fall on deaf ears.
+linebreak
+n Eventually, you pass into a blissful state of pure existence. Though words like "eventually" and "pass" ceased to have any meaning to you long before that shift. You simply exist. Happy. Forever.
+linebreak
+linebreak
+truth --- Good Ending! =:) YOU DID IT!!! you saved EVERYONE! ---
+
+
+jumpanchor steelSlayMaybe
+n It's over. You could check her sleeves if you want, but I can assure you that there's nothing hidden up there.
+jumpto steelSlayUnsure
+
+jumpanchor steelSlayNo
+n It's. Over. Don't get all worked up.
+jumpanchor steelSlayUnsure
+hero We should make sure. What's the harm in checking for a pulse?
+n I really don't think you should do that.
+hero And why shouldn't we? Is there something you're not telling us?
+n I've told you everything that's happened with complete accuracy. The Princess is *dead.* Your blade pierced her heart, there's no coming back from that.
+
+jumpanchor steelSlaySlayFail
+n Are you even listening to me? She's already dead.
+
+jumpanchor steelSlayCheckBlade
+n You lean down and wrap your hand around the blade's hilt.
+n But as you begin to slide it out of its resting place, you feel a sharp and sudden jab in your side.
+hero What was *that?
+p I guess I won't be dying alone after all...
+jumpto razorCommitRevival
+
+jumpanchor steelSlayCheckPulse
+n You lean down and place your hand against her neck, holding your breath as you search for a pulse. Even though you know you're not going to find one.
+hero We definitely won't if *you* keep talking.
+n I'm sorry, do you *want* her to be alive? You just saved the entire world from annihilation, why are you suddenly trying to call that into *question* --
+linebreak
+hero Wait... what was that?
+n You know what that was. That was a sound of a heartbeat. Followed by another. And another.
+p I guess I won't be dying alone after all...
+n Something sharp digs into your side, the shock of it sending your nerves into a pained frenzy.
+jumpto razorCommitRevival
+
+// Leads to Chapter II: The Razor //
+jumpanchor razorCommitRevival
+hero Quick, let's get out of here!
+n It's too late for that now. You collapse to the ground as the mortally-wounded Princess twists a blade of her own deeper between your ribs.
+n As you fall, she falls with you, exhausted by the effort, the little life that was left in her eyes fading rapidly.
+p An eye for an eye. A life for a life. I guess we're even now...
+p See you around.
+linebreak
+n You were *so* close! Why did you hesitate? *Sigh.* It doesn't matter. At least you managed to take her with you.
+hero For whatever that's worth.
+linebreak
+n Everything goes dark, and you die.
+
+// Conversation menu //
+
+jumpanchor dropBlade
+n Against your better judgment, you step forward to speak with the Princess face-to-face. Unarmed.
+hero We'll be fine.
+n I don't know what you're hoping to accomplish here, but I can assure you there's no reasoning with her. *Sigh.* Just make sure you don't forget about the blade on the floor. You're going to need it.
+linebreak
+p So here we are. What an awkward start to a relationship.
+
+jumpanchor awkward
+p I know. I just said that. Now why are you here to kill me?
+
+jumpanchor awkwardReasons
+p And yet you dropped your knife the second you saw me.
+jumpto awkwardReasonsJoin
+
+jumpanchor awkwardReasonsSteeled
+p And yet you hesitated the moment you saw me. And you dropped your knife. If killing me was really that important, you would have had a little more gumption, don't you think?
+jumpanchor awkwardReasonsJoin
+p So... someone put you up to this, right? And whoever it is, it's probably the same someone who shoved me into this dark pit and chained me to a wall.
+hero That's a fair question. Who chained her in this basement, and if she's so dangerous, *how* did they manage to trap her? And why have we been left to do their dirty work?
+n Don't give away the game, and don't let her distract you. That's exactly what she wants.
+p I'm right, aren't I? So who put you up to this?
+
+jumpanchor awkwardDeflect
+p She laughs, her voice dripping with pity.
+hero That laugh...! I think I'm in love.
+n Stop it.
+
+jumpanchor awkwardDeflectSteeled
+p She laughs, her voice dripping with pity.
+hero She was just threatening us a second ago. Am I the only one here unnerved by that perfect little laugh?
+n I'll take that as a sign that you're finally coming around to reason.
+jumpanchor awkwardDeflectJoin
+p I have no idea. To be honest, I don't even know why I'm down here... or how I got here.
+p I was kind of hoping *you* might be able to shed some light on the whole situation.
+
+jumpanchor awkwardNotSure
+n Believe *me.*
+p And do you think asking *me* what to believe is going to suddenly make everything crystal clear? Let's not pretend that's going to happen. As far as you're concerned, and as far as They're concerned, I'm going to say whatever I have to to get out of here. That's just the dynamic of our situation.
+
+jumpanchor relationship
+p Don't jump to any weird conclusions. We're two people who have met each other. By definition, we have a relationship.
+
+jumpanchor howFree
+n You can't. Don't bother.
+p I'm guessing you don't have the key, then? I'm sure there's a key somewhere around here. And if there isn't...
+p Well, we can always put that knife to good use.
+n Her sharp eyes settle on the edge of the blade.
+hero She isn't suggesting what I think she's suggesting... right?
+n She is. I'm sure of it.
+
+jumpanchor name
+n She hesitates before answering.
+p You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really.
+
+jumpanchor howLong
+p Too long.
+
+jumpanchor vague1
+n Note the lack of detail. You can't trust her.
+
+jumpanchor vague2
+n Again, she offers no specifics. No matter how hard you try, you'll never get a straight answer out of her.
+
+jumpanchor whyHere
+p Do you?
+
+jumpanchor whyHereTold
+p So you're not going to share? How pointless. If you want to talk, I'll talk, but this isn't talking.
+
+jumpanchor whyHereLie
+p You're lying.
+hero How does she know that?
+p Don't think that just because I'm the one in chains it means you have a right to interrogate me.
+
+jumpanchor whyHereSilent
+p I see. The silent treatment. You know, if you don't share with me, I'm not going to share with you.
+
+jumpanchor shareTask
+n Don't just *tell* her that!
+p Is that why they threw me down here? But I don't want to hurt anyone. I like the world! I think.
+p I don't remember much about it, to be honest. I've been down here a long time.
+hero Just how long has she been down here?
+jumpto shareJoin
+
+jumpanchor shareTaskSteeled
+n Don't just *tell* her that!
+p That's cute. Do you believe that? Do you think I'm some sort of... monster?
+jumpanchor shareJoin
+p If I'm supposed to be capable of ending the world, then how did I wind up here, chained to a wall? Have they told you why I'm allegedly so... dangerous?
+
+jumpanchor shareDeflect
+n The Princess hesitates before responding.
+hero She doesn't know. She's been down here too long to have any idea of what she'd do in another life.
+n She knows what she'd do. She's just searching for whatever answer she thinks you want to hear.
+p I don't think I can answer that question in any way you'd find meaningful.
+jumpto sharePhilosophy
+
+jumpanchor shareEnough
+n Thanks for the vote of confidence.
+p They haven't shared a thing, have they? All they've done is point a finger.
+jumpto sharePhilosophy
+
+jumpanchor shareYouTell
+p Ending the world seems like an awful lot for just one person to do. I wouldn't even know where to start.
+hero I believe her.
+n She doesn't have to know how to destroy the world to be capable of doing it.
+jumpto sharePhilosophy
+
+jumpanchor shareReasons
+n Thanks for the vote of confidence.
+p What if they're bad reasons, though? If they had *good* reasons for thinking I was dangerous, wouldn't they have shared them with you? I don't want to hurt anyone. I just want to leave.
+jumpto sharePhilosophy
+
+jumpanchor shareTrustYou
+n Sooner or later you'll understand that I have your best interests at heart. Hopefully sooner.
+p How sweet. Now be a pal and help me get out of here, would you? We can figure out how to deal with Them after I'm free.
+
+p Fine. What do you want to know?
+
+jumpanchor shareSilent
+p They haven't told you anything, have they?
+jumpto sharePhilosophy
+
+jumpanchor sharePhilosophy
+p At the end of the day, whatever the two of us have going on down here is about trust.
+p Whoever sent you to "slay" me claimed I was a threat to the world, but they didn't tell you why.
+p That doesn't sound right to me, and I don't think it sounds right to you, either. Otherwise we'd be killing each other instead of talking.
+hero She has a point. There's a reason I've been telling you to question this situation. And there's a reason you've listened.
+p So I could tell you that I'd lead a quiet life in the woods or that I'd open an orphanage or that I'd do any other number of "good" things that I'm sure you think you want to hear...
+p But you don't really know me, do you? What can my word possibly be worth in a situation like this?
+n She's right about one thing. Her word isn't worth anything.
+p Like I said, it's all about trust. *Blind* trust.
+p So do you trust me -- the prisoner, the victim, the Princess *clearly* incapable of ending the world -- or do you trust whoever put me here?
+n She's wrong. This isn't about trust. This is about *risk.* We stand to lose everything, all for the sake of one person. And a subjugating *monarch,* no less.
+
+jumpanchor attemptLeave
+n Where are you going? In case you've forgotten, you're here to complete a very important task.
+
+hero That seems like a pretty good compromise.
+n Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out.
+jumpto lockLateJoin
+
+jumptoanchor leaveNevermind
+n There's no "decision" to be made here, but fine.
+
+jumptoanchor enough
+p Oh. Have you decided what to do with me?
+n You know why you're here...
+
+jumptoanchor enoughRescue
+n Oh, you have to be kidding me!
+
+jumptoanchor enoughRescue2
+n Oh, for the love of...
+p Good. I'm glad you've come to your senses.
+n You're making a huge mistake.
+hero No. You're doing the right thing.
+
+// Lock her in the basement //
+
+// Leads to Chapter II: The Nightmare //
+jumpanchor lock
+hero That seems like a pretty good compromise.
+n Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out.
+p One way or another, I'm going to find a way out of here. You can make it easier for both of us if you help.
+p And if you don't...
+p I can promise that you'll come to regret that decision.
+n You have to make a choice. Let's hope for all our sakes it's the right one.
+
+jumpanchor lock2
+n I know you think this is a fair compromise, but it isn't. *No one* wins here.
+jumpanchor lockLateJoin
+hero It's a chance we'll have to take. We can make this work. If we just stay here and keep watch, no one has to die.
+p You're making a mistake.
+n You turn your back to the Princess and make your way to the stairs.
+p It won't be long before I slip these chains. And once I'm out of here, there will be *hell* to pay for leaving me behind.
+hero "Slip these chains?" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing.
+n Either way, she dropped her mask, didn't she? You can still turn around and finish the job.
+
+n You'll be the death of all of us, but fine. We'll do it your way.
+linebreak
+
+// Generic slay variations //
+
+jumpanchor slayFromLock
+n It's never too late to do the right thing. Now hurry.
+
+jumpanchor slayHesitate
+n Doubt, unfortunately, clouds your thoughts as you attempt to run her through.
+n A moment of distraction and hesitation is all she needed to sidestep your thrust and deliver a catastrophic blow to your jaw.
+n It feels like you've been hit with a sledgehammer. You can feel bone grinding on bone where your jaw has been fractured.
+hero Holy *shit* that *hurt!*
+n Though she's unarmed, the shock of that first strike is enough to stagger you, putting you and the Princess on somewhat equal footing.
+linebreak
+n Your blade slashes through the air again and again, and her fists connect with your body as many times or more, each impact as heavy as that first bone-crushing hit.
+
+// Leads to Chapter II: The Tower //
+jumpanchor commitTower
+n Are you serious? *Sigh.* As internal bleeding sets in, the blade falls from your trembling hands, clattering to the ground uselessly.
+n You lacked the will to finish the job, your bruised and broken body falling to its knees before her.
+n The Princess, exhausted, chest heaving with heavy breaths, tosses the blade away from you.
+hero This is the end, isn't it?
+p Is this really the best you could do? Look at you. Completely broken. I'd be lying if I said I wasn't a little disappointed.
+n She plants her foot on your chest and pushes you onto your back, the air leaving your lungs in a heavy puff.
+n And then she brings her knee to your throat.
+n She leans into it with the kind of weight you didn't think her slight frame could possibly possess, shattering your windpipe and leaving you starved for breath.
+p It's too bad. I was looking forward to some company.
+linebreak
+n Everything goes dark, and you die.
+
+// Leads to Chapter II: The Adversary //
+jumpanchor commitAdversary
+n You and the Princess stare at each other, both gasping for breath, equally exhausted. You probably won't make it out of here alive, but you can at least make sure that she won't make it out of here, either.
+hero Excuse me?
+n Do you think this is what I wanted to happen? I have a duty to state the facts of the situation, and honestly, it's a miracle anyone is still standing right now.
+n Can you not feel all those ruptured organs bouncing around in there? If the Princess doesn't do our friend in herself, internal bleeding is certain to finish the job.
+linebreak
+n The two of you clash for the final time. You feel your ribs break as she delivers a heavy blow, but you push through the pain, falling forward and sinking your blade deep into the Princess's heart.
+p O... oh.
+linebreak
+n The two of you fall to the floor.
+p This was fun.
+n The Princess gasps, her voice an unhealthy rasp as her lungs start to fill with blood.
+p You put up more of a fight than I thought you would... But I have to wonder...
+p Do you *really* think this is the end?
+linebreak
+n But you don't have time to worry over such things. Everything goes dark, and you die.
+
+// Leads to Chapter II: The Nightmare //
+jumpanchor slayFlee
+n Are you *serious?*
+hero It's a good idea. We've taken some bad hits, but we've dealt some, too. She has to be feeling it more than we are. Let's regroup upstairs. If we're lucky, maybe she'll just bleed out.
+n Fine. You make a mad dash to the basement stairs, the Princess's chains rattling as she tries to chase you, but pulling taut much too soon for her to catch up.
+p Do you really think you can just *walk out of here?*
+linebreak
+n She steps towards you, ignoring her chains.
+n They creak and strain as she pulls against them, until, finally, they break. The links clatter to the floor, useless.
+n She's free. Hurry.
+linebreak
+n You push your broken body as she closes in, and just barely manage to pass the threshold of the basement doorway before she catches up to you.
+
+jumpanchor towerCommitUnharmed
+n You charge the Princess, blade trembling in your hand, but you've already lost the battle.
+n She casually sidesteps your thrust before knocking you to the ground with a single blow from her elbow.
+hero We shouldn't have hesitated...
+n But she doesn't stop there. She kicks you a few times for good measure, the pointed tip of her shoes feeling like a pickaxe against your fracturing bones, making sure you *stay* down.
+linebreak
+n As you lie crushed and broken on the basement floor, the Princess kneels on your throat with the kind of weight you didn't think her slight frame could possibly possess. As you gasp for air she eyes you with an intense curiosity.
+n You shouldn't have let that fear creep into your heart. You had the upper hand, and now look at you.
+p Is this really the best you could do? Look at you. Completely broken. I'd be lying if I said I wasn't a little disappointed.
+n She applies more pressure, slowly squeezing what's left of your life out of your lungs.
+hero This is the end, isn't it?
+n I'm afraid it is.
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor slayForceRazor
+n You charge the Princess, blade in hand, but unfortunately, your earlier suspicions proved correct. A blade of her own slips down her sleeve and catches you in the neck.
+n Blood sprays from the cut, your severed carotid artery painting the princess with strokes of red. You'd better finish your task quickly, before you run out of time.
+
+jumpanchor commitRazor
+n Are you serious? *Sigh.*
+n The wound in your neck is too much for you to bear, and you collapse to the floor of the basement, rapidly bleeding out.
+n The Princess stands over you with an intense curiosity as you fade away.
+p Oops.
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor commitRazorMutual
+n With the last bit of your will, you press forward, sinking the blade deep into the Princess's heart.
+p O... oh.
+linebreak
+n The two of you collapse on the floor together, rapidly bleeding out.
+p Somehow I thought this would turn out a little differently. But I wonder...
+p Do you really think *this* was enough to stop me?
+linebreak
+n But you don't have time to worry over such things. Everything goes dark, and you die.
+
+// Rescue her //
+
+jumpanchor rescue
+linebreak
+n You walk up to the chains binding the Princess to the wall and give them a tug.
+n They're large and heavy, far too solid for you to even imagine trying to break them apart.
+
+jumpanchor rescueHowFree
+p If you don't have the key, maybe you should go looking for it. I'm sure it's somewhere upstairs.
+jumpto rescueJoin
+
+jumpanchor rescueStandard
+p I'm guessing you don't have the key.
+hero Maybe it's somewhere upstairs.
+jumpanchor rescueJoin
+n Doubtful. Whoever locked the Princess away down here intended for her to never see the light of day. They wouldn't have just left the key to her chains somewhere in the cabin.
+
+jumpanchor rescueWhatIfA
+p That would be fine. I can lose an arm.
+jumpto rescueWhatIfJoin
+
+jumpanchor rescueWhatIfB
+p Well, you do have that big sharp knife. You could always cut me out of here.
+jumpanchor rescueWhatIfJoin
+n She speaks with almost complete nonchalance.
+hero If we were stuck down here for long enough, I'm sure we'd be nonchalant about cutting our way out. Anything to finally be free.
+jumpto rescueStairs
+
+jumpanchor rescueCheck
+p I'll be here.
+jumpto rescueStairs
+
+jumpanchor rescueStairs
+linebreak
+n You attempt to make your way out of the basement, but the door at the top of the stairs slams shut. You hear the click of a lock sliding into place.
+hero Is someone else here?
+
+jumpanchor rescueStairsShoutA
+n Your shouts and pleas are met with silence.
+n You're here to slay the Princess, and you won't leave until the task is done.
+
+jumpanchor rescueStairsShoutB
+n Your shouts and pleas are met with silence.
+n I'll repeat myself once again. You're here to slay the Princess, and you won't leave until the task is done.
+
+jumpanchor rescueStairsTryFirstA
+n You try the door, but it's locked from the outside.
+n You're here to slay the Princess, and you won't leave until the task is done.
+
+jumpanchor rescueStairsTryFirstB
+n You try the door, but it's locked from the outside.
+n I'll repeat myself once again. You're here to slay the Princess, and you won't leave until the task is done.
+
+jumpanchor rescueStairsTryAgain
+n You try the door again. It's still locked.
+
+jumpanchor rescueReturn
+n You make your way back to the bottom of the stairs. This would have been so much easier if you'd simply slain her like you were supposed to.
+hero Easier for whom?
+n Easier for *everyone.*
+linebreak
+p I heard the door slam... they locked you down here too, didn't they?
+p The knife. Pick it up and cut me out of here.
+n You what like what happens if you do that...
+
+jumpanchor rescueSave
+n Against your better judgment, you place the blade against the Princess's arm, just above the massive, unyielding chain.
+n You cut into her flesh.
+n The blade is sharp, and you make quick work of it. Before long, you're able to crack through bone, and she pulls the bleeding stub of her arm through the iron gauntlet.
+hero She didn't so much as utter a sound...
+n Free from her bindings, the Princess turns to face you, her fierce gaze meeting your eye.
+hero How is she so composed after losing an arm? It's like she isn't even bothered by it.
+p Thank you. Now let's get out of here.
+
+n No. We won't have any of that. The stakes are too high. You can't just let her escape into the world.
+n ... no. *I* can't just let her escape into the world.
+n As the Princess approaches the bottom stair, your body steps forward and raises the blade.
+hero Wait... this isn't fair. You can't just *do* that!
+n Watch me.
+
+n Stop that.
+n I thought this was a little too easy.
+n Your body lunges forward to sink the blade into her back, but the Princess swiftly moves out the way before you can connect.
+n Stop it! Stop trying to resist me! I'm trying to get you out of here alive.
+
+n The blade! Move. The. *Blade!*
+p You're doing your best to help me, aren't you? I can see the conflict in your eyes.
+p I'll make this quick.
+n She steps forward and pries the blade from your rigid hands.
+p Maybe I'll see you in another life.
+n And then she slits your throat with an almost clinical ease.
+n Her face remains unchanged as she watches you collapse to the ground, blood flowing from your butchered neck.
+hero This is the end, isn't it?
+linebreak
+n I'm afraid it is. Everything goes dark, and you die. I hope it was worth it.
+
+jumpanchor rescueControlledSlay1
+n You bring the blade down and plunge it into the Princess's back. *Finally.*
+hero Okay. There's no going back now.
+n Though the blade left a deep gash in her shoulder, she barely so much as flinches, turning around to stare at you incredulously.
+p Are you serious?
+p I don't know what came over you, but if we're doing this, I guess I'll have to kill you.
+p Do you think I need both of my arms to do that? I can beat you to death with one.
+p But I don't have to tell you that. I'll go ahead and show you.
+
+jumpanchor rescueControlledSlayGiveUp
+n *Sigh.* As the blade falls from your trembling hands, the Princess rears back, readying a bone-shattering haymaker.
+n You fall to your knees. You're barely able to process the ringing in your ears before she hits you again.
+n Every blow is as punishing as the first. You feel bones shatter with every impact, unknown ruptures blossoming with blood somewhere inside of you.
+n If we're lucky, the wound you managed to inflict will be enough to at least delay her escape from this place. If we're very lucky, it will kill her before she gets out.
+p Too weak to even try fighting back. How disappointing.
+jumpanchor commitTowerRescueLateJoin
+
+jumpanchor rescueControlledSlay2
+jumpanchor commitTowerRescueA
+n *Thank* you.
+n You swing your arm towards her throat, the blade singing through the air.
+n But she's ready for it. She grabs your arm, her grip like a stone vice.
+n You drop the blade. Pathetically.
+n She lets go, and faster than you can react, rears back and hits you with a bone-shattering haymaker.
+n There's a ringing in your ears. You're fairly certain you can feel bone grinding against bone where she fractured your jaw, but your body isn't allowing you to feel much right now, adrenaline coursing through your system and numbing your nerves.
+n You fall to your knees. You're barely able to bring your trembling arms up to defend yourself before she hits you again.
+n Every blow is as punishing as the first. You feel bones shatter with every impact, unknown ruptures blossoming with blood somewhere inside of you.
+p You poor thing. I'll go ahead and put you out of your misery.
+jumpanchor commitTowerRescueLateJoin
+n She places a confident heel on your chest and pushes you down to the ground.
+n Her knee falls to your throat, your windpipe crushed beneath a weight you didn't think her slight form could possibly possess.
+hero It can't just end like this, right?
+n I'm sorry, but it's over.
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor rescueSlay
+n Without hesitation, you bring the blade down. The Princess flinches as you strike, and your weapon sinks into her shoulder.
+p You bastard! If I have to kill you to leave this place, I'll *do it.*
+hero I thought we had the upper hand, but it's as if she's barely even threatened by us.
+n It's an act. She's unarmed and there's nothing she can do to hurt you.
+hero I'm not so sure...
+n Don't waver now.
+n As you raise your blade to strike again, she kicks out, knocking your legs out from under you.
+n The two of you struggle on the ground. You lash out with the blade, slicing wherever you can. Her fists connect with your body again and again, each blow stronger than the last, shattering bone and rupturing tissue with reckless abandon.
+hero Forget trying to rescue her. This is about *survival* now. Give her everything you've got.
+
+n You roll out of her grasp and shakily push yourself back to your feet.
+n Though every inch of you is in pain, the Princess probably has it worse -- blood pours out from countless gashes, staining her once pristine dress. She pauses for a moment, catching her breath, staring at you with wild eyes.
+hero We can still turn this around.
+
+jumpanchor commitTowerRescueB
+n Are you serious? *Sigh.* As the force of her blows overwhelms your body, the blade falls from your trembling hands, clattering uselessly to the cobblestones below. I suppose you just lacked the will to finish the job.
+n The Princess, wounded but still alive, turns to face you.
+n She places a confident heel on your chest, and pushes you to the ground.
+n Her knee slides to your throat and your windpipe is crushed under weight you didn't think her frame could possibly possess.
+p Pathetic.
+hero This is the end, isn't it?
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor commitAdversaryRescue
+n You steel your resolve and take another step towards the Princess. You probably won't make it out of here alive, but you can at least make sure she won't make it out of here, either.
+hero Excuse me? What was that about not making it out of here alive?
+n Do you think this is what I wanted to happen? I have a duty to state the facts of the situation, and honestly, it's a miracle *anyone* is still standing right now.
+n Can you not feel all those ruptured organs bouncing around in there? If the Princess doesn't do our friend in herself, internal bleeding is certain to finish the job.
+linebreak
+n The two of you clash for the final time. You feel your ribs break as she delivers a heavy blow, but you push through the pain, falling forward and sinking your blade deep into the Princess's heart.
+p O... oh.
+p This was fun. You put up more of a fight than I thought you would. But I have to wonder...
+p Do you *really* think this is the end?
+n But you don't have time to worry over her words.
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor rescueFlee
+n The Princess is still chained to the wall. There's nothing she can do to stop you from getting out of here.
+hero What if she doesn't succumb to her wounds? Whatever she is, she's *so* much more dangerous than I thought she'd be.
+linebreak
+n You rush up the stairs and dive past the threshold. You're safe. For now.
