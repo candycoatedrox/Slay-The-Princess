@@ -1,0 +1,256 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+para Shhh. What if He hears us?
+n That's a very good question, little voice. What if He *does* hear you?
+para Shit.
+n I think you'll find yourselves very hard pressed to keep any secrets from me. Not that it matters right now, because like I said, this is the first time we've met. Still, I'd rather not get off on the wrong foot. We've a world to save, after all.
+
+jumpanchor assume
+para We couldn't trust *either* of you. And as far as I'm concerned, we still can't.
+hero All we did was lock her away.
+n And how'd that work out for you?
+hero No comment.
+jumpto assumeJoin
+
+jumpanchor assumeFledSoft
+para Oh, we listened to you, all right. Worst decision of our incredibly short life.
+hero We tried to slay her, we really did, but she was going to kill us. It was either lock her in the basement or let her finish tearing us to ribbons.
+jumpto assumeJoin
+
+jumpanchor assumeFledHarsh
+para Oh, we listened to you, all right. Worst decision of our incredibly short life.
+hero We tried to slay her, we really did, but she was going to kill us. It was either lock her in the basement or let her finish beating us to death.
+jumpanchor assumeJoin
+n Well then, congratulations. You've been given another chance to actually do this right.
+para And your solution to this is to send us back in there? Do you want us to slay the Princess, or do you want the Princess to slay *us?*
+n Obviously I want *you* to slay *her.* One of you poses a threat to the world, and the other doesn't.
+
+jumpanchor assume2
+para If she brought an end to everything and everyone, how are *we* supposed to stop her? What do you want from us?
+n I want you to succeed. You'll find a way. You're the only one who can.
+
+jumpanchor princessSpecial
+n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
+para You can't just goad us into doing something by calling us special. It's manipulative. Why are you trying to manipulate us?
+hero I don't know. I kind of like being special.
+para Okay, fine. Maybe you can goad *him* into doing something, but he's not even the one who makes the decisions here.
+n I'm not goading you into doing anything. You already know that the Princess is dangerous. All I'm trying to say is that you have to be the one to deal with her. I know it doesn't seem fair, but that's just the way it is.
+n And for what it's worth, I know you have it in you to finish the job.
+
+jumpanchor whyMeLeave
+para We don't. You saw what happened to us last time. We need to *leave.*
+
+jumpanchor princessCagey
+para He isn't telling us everything He knows because He doesn't trust us. Which means that *we* can't trust *Him.*
+n Stop talking yourself in neurotic circles and just get to the cabin already.
+
+jumpanchor cageyNoPlead
+para Do you see the way He keeps pushing us? We have to get out of here.
+
+jumpanchor cageyPlead
+para No, you should do anything but that. We *know* what's waiting for us in that basement.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+hero I don't think "lying" and "cheating" is her thing. She was *very* direct with us last time. Or, at least she was direct with us after we decided to lock her away.
+para It doesn't matter. Don't. Trust. Anyone.
+
+// Abort attempt //
+
+jumpanchor abortStart
+para This is good. I was worried you might fall for his shit again, but this is good. Whatever answers there are to be found, they aren't *here,* and they definitely aren't *there.*
+
+jumpanchor abortReturn
+para One little trick was all it took for you to go in there?
+jumpto abortReturnJoin
+
+jumpanchor abortReturnB
+para A couple of laps around the woods were all it took for you to go in there?
+jumpanchor abortReturnJoin
+para *Sigh.* I guess you're the one in control, aren't you? So if you want us to die again, I guess we'll die again. Good luck. To all of us.
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Nightmare
+n The interior of the cabin is plain, the smooth wood of the walls almost featureless. The only furniture of note is a lone table, knocked on its side in the corner of the room. A pristine blade stands between you and the open, inviting basement doorway.
+n The blade is your implement. You'll need it if you want to do this right.
+
+jumpanchor cabinIntro2SharedLoop
+para Hold on. What happened to the door? There was a door here last time.
+jumpto cabinIntro2Join
+
+jumpanchor cabinIntro2
+para Hold on. What happened to the door?
+jumpanchor cabinIntro2Join
+hero It's just an empty frame...
+para She's already gotten out, hasn't she? And she's ready for us. She's been *waiting.* Can't you feel her eyes on us?
+n I'm going to need all of you to pull yourselves together. The Princess has *not* already gotten out, but if you keep getting stuck in your head like this, you're going to struggle to get the job done.
+n So. Deep breath in, deep breath out. Your task awaits, and only you can do it.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+para I'm not the only one who sees her in the window, right? She knows that we're here.
+jumpanchor cabinDifferentJoin
+
+jumpanchor cabinDifferentAskedMirror
+hero *Very* different.
+para *He* changed it, didn't He? It's like He's trying to make us doubt our reality.
+jumpto cabinDifferentJoin
+n Calm down. Maybe the three of you just *think* everything is different because you haven't been here before. Enough of this past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+n So focus up. A lot's riding on this.
+
+jumpanchor takeBlade
+n You reach down and pick the blade up off the floor. It would be difficult to slay the Princess and save the world without a weapon.
+hero Is it gonna be enough, though? Couldn't you have -- given us something else? Something... I don't know... better than a knife? Can we have a bomb?
+n The blade is the only thing you need to finish your task. You're more than capable of pulling this off so long as you don't lose faith in yourself.
+para Those are the words of someone who knows He's sending us to our death...
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+para You're right. I was so stuck on the the *eyes* watching us that I didn't even notice it there.
+n What are you two talking about? There isn't a mirror. There's the table, the blade sitting on the floor, and the open doorway leading to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+para We have to look at it... unless that's what He wants us to do and pretending it isn't there is a trick to get us to do exactly what He wants.
+
+jumpanchor approachMirror
+n You walk up to the wall next to the empty basement doorframe. It's a wall. There isn't much to see here.
+
+jumpanchor mirrorGone
+para Did *He* make it go away? Clearly there was something in there worth investigating if He wants it hidden so bad...
+
+// Stairs //
+
+jumpanchor stairsNoBladeSoft
+para We should have taken the knife. I don't think going down there unarmed is going to do us any favors.
+linebreak
+
+jumpanchor stairsNoBladeHarsh
+para We should have taken the knife again. I don't think she's going to take an olive branch. We need something sharper.
+linebreak
+
+jumpanchor stairsStart
+n You cross over the threshold, and onto a series of isolated steps suspended in darkness.
+para More eyes, too. You never mention the eyes!
+n The air seeping up from below reminds you of fresh lightning and static, as if you're descending into a place that isn't meant for a creature of flesh and blood. If the Princess lives here, slaying her would probably be doing her a favor.
+n Her cruel and playful voice prances up the stairs.
+p I didn't think you'd come back. We're going to have a lot of fun, you and I.
+
+jumpanchor stairsStartNoShare
+n "Come back?" She must have you confused with someone else.
+hero You really don't remember, do you? It doesn't matter. We need a game plan. We *know* we can't just go down there unprepared.
+
+jumpanchor stairsStartSharedLoop
+hero Okay. We need a game plan. Last time we were here, just being close to her was enough to kill us.
+
+jumpanchor stairsThrowBlade
+hero It can't be *that* hard.
+para But then we'd lose our weapon. We'd have to make it count. Otherwise she'd be furious and we'd be defenseless. If a knife is enough to even do anything against something like her in the first place...
+n It'll be enough.
+
+jumpanchor stairsThrowNoBlade
+hero You're joking, right? You didn't even *bring* the knife.
+
+jumpanchor stairsTalk
+n Didn't you hear my warning a minute ago? She can't be trusted. Talking won't do you any good.
+hero Something tells me she isn't going to be keen on talking anyway.
+
+jumpanchor stairsNoPlanBlade
+n Finally, a voice of reason. The rest of you should take notes.
+hero You know why I'm being a pessimist.
+para I'm just asking questions.
+
+jumpanchor stairsNoPlanNoBlade
+n Finally, a voice of reason. The rest of you should take notes. Still, slaying her would be much easier if you had a weapon.
+
+jumpanchor stairsStepOff
+n You attempt to step off the stairs and into the pitch black surrounding them, but you're stopped by an invisible force. Why did you do that? What did you think would happen?
+
+jumpanchor stepOffCurious
+n Congratulations, you really lucked out. Of all the things that could have happened from stepping into a void, nothing is quite possibly the best outcome you could have gotten.
+jumpto stepOffJoin
+
+jumpanchor stepOffDunno
+n How would falling into an infinite void be better than *anything?*
+jumpto stepOffJoin
+
+jumpanchor stepOffJoin
+n *Sigh.* You make your way to the bottom of the stairs.
+
+jumpanchor stairsLookBack
+para Should we go back for it? *Can* we even go back for it?
+jumpanchor stairsLookBackJoin
+n You briefly turn back. Where there once was an entrance to the cabin, now there are only more stairs. Hmm. That's not right.
+hero I guess the only way out of this place is through it.
+
+jumpanchor stairsLookBackAgain
+n There is nowhere for you to go but down.
+
+// Basement //
+
+jumpanchor basementStart
+n You make your way to the bottom of the stairs.
+linebreak
+n As you emerge, you find yourself between two loose rows of white wooden planks, suspended in nothingness. A smattering of cobblestones, visible against the inky black of the basement, mark where the floor should be, forming vague pathways. At what seems to be the end of the room, they diverge in opposite directions. Left and right.
+para She could be anywhere. And there's nowhere for us to hide. We're completely exposed.
+hero Are you really not going to comment on how *weird* this place is?
+
+jumpanchor basementReason
+n No, I'm not. Somebody needs to be the voice of reason here, and it certainly isn't you.
+hero Excuse me? I'm being *incredibly* reasonable. You're the one who's just matter-of-factly describing whatever the hell we're looking at like it's an ordinary basement.
+jumpto basementStartJoin
+
+jumpanchor basementNoReason
+n No. I'm not.
+jumpto basementStartJoin
+
+jumpanchor basementStartJoin
+para We're going to die down here. I don't want to die again.
+n Please stop saying that. You're only going to make things worse. Just pick a direction and start moving.
+p I wouldn't give it too much thought, if I were you. It doesn't really matter, because either way you go, I'm going to find you.
+
+jumpanchor startLeft
+n You turn to the left. A faintly outlined path lies before you.
+jumpto startJoin
+
+jumpanchor startRight
+n You turn to the right. A faintly outlined path lies before you.
+jumpto startJoin
+
+jumpanchor startNothing
+n You decide it's best to do nothing.
+jumpto startJoin
+
+jumpanchor startBack
+n You turn back to the stairs, only to find that they aren't there. Instead, a faintly outlined path lies before you.
+jumpto startJoin
+
+jumpanchor startJoin
+truth A figure appears in the darkness. The only thing you can make out is a porcelain mask with wide, sunken eyes.
+p There you are! I told you I was going to find you.
+n As the Princess approaches, your legs suddenly go numb.
+n Your arms quickly follow.
+truth As she glides closer, you can begin to make out more details. Her mask is cracked in multiple places, and the rest of her is still shrouded in unnatural shadows, save for her white opera gloves. Her hair floats wildly around her face, and the bottom of her dress is tattered.
+hero This is it, isn't it?
+
+jumpanchor startBladeSoft
+p And you brought a little knife with you. Cute.
+jumpto startBladeCommentJoin
+
+jumpanchor startBladeHarsh
+p And you brought your little knife with you again. Cute.
+jumpto startBladeCommentJoin
+
+jumpanchor startNoBladeSoft
+p It's almost like... you *want* me to get you.
+jumpto startBladeCommentJoin
+
+jumpanchor startNoBladeHarsh
+p No little knife this time? It's almost like... you *want* me to get you.
+jumpto startBladeCommentJoin
+
+jumpanchor startBladeCommentJoin
+n What did you do? Pull yourself together, she isn't supposed to be like this.
+p I wonder how many times I'll get to play with you before you break.

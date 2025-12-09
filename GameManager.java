@@ -9,6 +9,7 @@ public class GameManager {
     // Settings
     private boolean autoContentWarnings = true;
     private boolean showNowPlaying = true;
+    private boolean globalSlowPrint = true;
 
     // The song currently "playing"
     private String nowPlaying;
@@ -119,6 +120,14 @@ public class GameManager {
      */
     public void setNowPlaying(String song) {
         this.setNowPlaying(song, false);
+    }
+
+    /**
+     * Accessor for globalSlowPrint
+     * @return whether to slowly print dialogue lines or print them instantly
+     */
+    public boolean globalSlowPrint() {
+        return this.globalSlowPrint;
     }
 
     /**
@@ -578,10 +587,18 @@ public class GameManager {
         if (this.parser.promptYesNo("You can change this at any time with > TOGGLE NOW PLAYING.", false)) {
             this.toggleNowPlaying();
         }
+
+        System.out.println();
+        parser.printDialogueLine("By default, dialogue lines will slowly print out, like this.", true);
+        IOHandler.wrapPrintln("Would you like to have dialogue instantly printed instead?");
+        if (this.parser.promptYesNo("You can change this at any time with > TOGGLE PRINT SPEED.", false)) {
+            this.toggleSlowPrint();
+        }
         
         System.out.println();
-        IOHandler.wrapPrint("You can view a list of available commands at any times with > HELP.");
-        IOHandler.wrapPrint("Press enter to progress dialogue.");
+        IOHandler.wrapPrintln("You can view a list of available commands at any times with > HELP.");
+        IOHandler.wrapPrintln("Press enter to progress dialogue.");
+        IOHandler.wrapPrintln("(You cannot skip through dialogue that is currently printing with enter. This feature may be added in the future.)");
         this.parser.waitForInput();
 
         System.out.println();
@@ -960,6 +977,17 @@ public class GameManager {
                 this.toggleNowPlaying();
                 break;
 
+            case "print speed":
+            case "printing speed":
+            case "dialogue speed":
+            case "speed":
+            case "slow print":
+            case "slow dialogue":
+            case "instant print":
+            case "instant dialogue":
+                this.toggleSlowPrint();
+                break;
+
             case "":
                 if (secondPrompt) {
                     this.showCommandHelp(Command.TOGGLE);
@@ -999,6 +1027,19 @@ public class GameManager {
         } else {
             this.showNowPlaying = true;
             IOHandler.wrapPrintln("[Soundtrack notifications have been enabled.]");
+        }
+    }
+
+    /**
+     * Toggles slow printing on or off
+     */
+    public void toggleSlowPrint() {
+        if (this.globalSlowPrint) {
+            this.globalSlowPrint = false;
+            IOHandler.wrapPrintln("[Slow printing has been disabled.]");
+        } else {
+            this.globalSlowPrint = true;
+            IOHandler.wrapPrintln("[Slow printing has been enabled.]");
         }
     }
 

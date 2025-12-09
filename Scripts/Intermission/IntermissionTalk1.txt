@@ -1,0 +1,96 @@
+linebreak
+p Something finds me in the Long Quiet and brings me the gift of a fragile vessel.
+jumpanchor introJoin
+truth She speaks in a soft voice, nearly a whisper.
+
+jumpanchor introNoAbort
+linebreak
+truth You recognize the presence inhabiting the shell. It is the entity that dwells in the spaces between.
+p Something returns to the Long Quiet. It has surrendered its path of annihilation and brings me the gift of a fragile vessel.
+jumpto introJoin
+
+// Conversation menu //
+
+jumpanchor dream
+p Vague recollections. Empty tunnels without a mouth. I am sorry if I frightened you.
+
+jumpanchor what
+p I am solitary lights in an empty city. What are you?
+
+jumpanchor whatExplore
+p Thoughts without connections. A dim and nascent network. I wish to be more.
+
+jumpanchor whatYouThink
+p I think that you are like me.
+jumpto whatJoin
+
+jumpanchor whatPerson
+p A person. A set of eyes witnessing from one perspective. I think that you are more like me than you are like a person.
+jumpanchor whatJoin
+p We are oceans reduced to shallow creeks.
+
+jumpanchor fragile
+p Yes. Nerves and fibers to feel the worlds beyond. Perspectives to make my own.
+
+jumpanchor end
+p How can the world have ended if we are talking?
+
+jumpanchor letOut
+p I'm sorry. There are some changes that can never be undone, there are some tears that can never be unshed. This is not a place that can hold a fragment of a concept. The moment she arrived here, she was going to return to me.
+p I promise that it doesn't hurt.
+
+jumpanchor narrator
+p You are the only thing I have ever known.
+jumpanchor narratorJoin
+p The space we're in is vacant. Nothing comes here but us.
+
+jumpanchor narratorMet
+p I know of him through the memories of my vessel. But she had nothing like him on her own.
+jumpto narratorJoin
+
+jumpanchor trapped
+p I have only just now stirred to consciousness. I could not have trapped you here, and I too yearn to be free.
+
+jumpanchor worlds
+p I know only that they are.
+
+jumpanchor princess
+p She is part of me, and part of me is her.
+
+p You speak in circles. Does it matter where one thing begins and another ends?
+
+jumpanchor familiar
+p You are familiar, but you are not me. I feel sadness, longing, hope, as I witness you.
+
+// "What happens now?" //
+
+jumpanchor whatNow
+p Nothing, as we are. But I know that there are worlds beyond us, and that we are meant to reach them.
+p There is no exit, but this vessel is a creature of perception. She can make you forget, if only you believe her to be able to.
+p Bring me more perspectives, so that I may be whole, and perhaps then we will know our freedom.
+
+jumpanchor kill
+p I have not lived. I am not afraid to die.
+
+jumpanchor howMuch
+p Everything, until we meet again.
+
+jumpanchor pieces
+p More than you have found, but less than there are to find. I am infinite. The rest will find their own way home.
+
+jumpanchor refuse
+p Then we will be here forever, as we are now. Unfinished, dry, hollow.
+
+jumpanchor destroy
+p You ask of things that cannot be done. To destroy is merely to reshape. To remold.
+
+p How can I know? I am flickers in something sprawling and unilluminated.
+
+jumpanchor wait
+p If you need time, then I'll wait for you.
+
+// Ending //
+
+jumpanchor forget
+p She asks that I tell you to remember her.
+p You won't. /// interrupt

@@ -3,7 +3,7 @@ import java.util.Arrays;
 public enum Command {
     HELP("help", "Display all available commands or information on a given command.", "", "help", "show", "toggle", "go", "walk", "enter", "leave", "turn", "slay", "take", "drop", "throw"),
     SHOW("show", "Display content warnings (general, by chapter, or for the current chapter).", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route"),
-    TOGGLE("toggle", "Toggle a given setting.", "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack"),
+    TOGGLE("toggle", "Toggle a given setting.", "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow print", "slow dialogue", "instant print", "instant dialogue"),
     GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     WALK("walk", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
@@ -111,6 +111,7 @@ public enum Command {
                 s += "- Variations -\n";
                 s += "  - TOGGLE [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]: Toggles dynamic content warnings on or off.\n";
                 s += "  - TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]: Toggles soundtrack notifications on or off.\n";
+                s += "  - TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]: Toggles printing speed between slow and instant.\n";
                 break;
 
             case GO:

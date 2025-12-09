@@ -1,0 +1,140 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+oppo Brilliant. We need to keep our cards close to our chest, and I'm not sure we can trust *Him.*
+n You know I can hear you, right? It's going to be a lot harder than you think to keep secrets from me.
+oppo Did I say "I'm not sure we can trust *Him?"* Slip of the tongue. Bit of the old brain fog. I meant to say that we should probably head over to the cabin and slay that Princess. We already know we can't trust *her,* so let's get on with the show.
+
+jumpanchor assume
+oppo We were just weighing our options in a morally ambiguous situation. You can't blame us for weighing our options.
+n I can if you failed to slay the Princess, which you apparently did. So, great. Congratulations. You've been given another chance to actually do this right.
+
+jumpanchor assumeSlain
+oppo We were just weighing our options in a morally ambiguous situation. You can't blame us for weighing our options.
+hero We did our best with the information we were given. And we *did* kill her.
+n And yet you still died, didn't you? So congratulations. You've been given another chance to actually do this right.
+
+jumpanchor assume2
+oppo That's a very good point. This Princess character seems like a lot of trouble. And if you think about it, actually slaying her probably breaks us out of this cycle, right? We don't want to be stuck here forever, do we?
+hero You're laying it on a little thick, aren't you?
+oppo Laying it on a little thick? What are you talking about? I'm sharing my honest opinions.
+n What matters is that almost everyone seems to be on the same page. So whenever you're ready, you can stop dawdling, get to the cabin, and save the world.
+
+jumpanchor princessHowDangerLocked
+n She just can. But that doesn't mean you're not fully up to the task that's been given to you. Have a little faith in yourself, and maybe try to not get tricked this time.
+
+jumpanchor princessSpecial
+oppo Good point. That really explains almost everything.
+hero I'm not so sure about *that.*
+oppo You know, you're right. But it explains *almost* everything.
+
+jumpanchor princessCagey
+oppo I don't think either of you really need to press the man on this. He wants us to slay the Princess, so why would He have anything to hide? He seems like a nice guy to me!
+n I appreciate the vote of confidence, but you should really stop wasting time chatting amongst yourselves in the woods, so if we could move this along...
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+oppo Don't worry. You can trust us to get the job done.
+
+jumpanchor hillDialogueSharedLoop
+oppo Don't worry. I think we've taken that lesson to heart at this point. You can trust us to get the job done.
+
+// Abort attempt //
+
+jumpanchor abortStart
+oppo Well, you're the boss.
+
+jumpanchor abortReturn
+oppo This is probably for the best.
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Witch
+n The interior of the cabin is a mess of twisted roots, the walls a chaotic weave of knotted wood that, almost as if by accident just happened to resemble a room. The floor is damp and earthy, and the only furniture of note is a slab of mud in the shape of a shelf, with a pristine blade perched on its edge.
+n The blade is your implement. You'll need it if you want to do this right.
+
+jumpanchor takeBlade
+n You take the blade from the shelf. It would be difficult to slay the Princess and save the world without a weapon.
+oppo Well, if we're grabbing a weapon, we should probably keep it hidden behind our backs. She doesn't have to know we have it.
+hero That's not actually a bad idea.
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+n That's because there isn't a mirror. There's the muddy shelf, the blade sitting on the muddy shelf, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+oppo But He says there isn't one. That's got to count for something, right?
+
+jumpanchor mirrorWhyLie
+oppo Come on, now. He's pretty much in charge here. When have authority figures ever lied about anything? If there were a mirror in this cabin and we were supposed to look at it, He would have told us about it.
+
+jumpanchor mirrorHandsome
+oppo Oh, I'm sure we'd look great. If only there were some sort of reflective surface we could examine. Absolute shame there isn't anything like that around here.
+hero You... you *do* see it, right? I don't know how to read you.
+oppo I-I... see all sorts of things.
+hero But do you see the mirror? It's a simple yes or no question.
+oppo Uh... I, um... help me out here, will you?
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would a mirror even do? Let you waste time preening yourself instead of doing what needs to be done?
+
+jumpanchor mirrorGone
+oppo Well, at least we can all agree now that there's nothing to see here. Case closed. Good work everyone.
+
+// Stairs //
+
+jumpanchor stairsNoBlade
+hero No blade. I hope you know what you're getting us into.
+jumpanchor stairsNoBladeJoin
+oppo It'll always be here if we need it. Sure, that was also true last time, and we still died. But we definitely know what we're doing *this* time.
+linebreak
+
+jumpanchor stairsNoBladeSharedLoop
+hero No blade? Leaving it behind didn't work out so well for us last time...
+jumpto stairsNoBladeJoin
+
+jumpanchor stairsStart
+n The door to the basement creaks open, revealing a staircase dug into the muddy earth below. The ceiling is thick with roots that hang like locks of tangled hair.
+n The weak starlight from the cabin windows behind you can barely penetrate the gloom here, only illuminating the edges of an opening below. It shines in the darkness like some kind of massive maw, waiting to swallow you up into the earth.
+n The air smells of dirt and copper. It's thick and wet, as if your lungs are being coated in mud with each intake of breath. If the Princess lives here, slaying her would probably be doing her a favor.
+n Her voice skitters up the stairs.
+p Something nasty finds itself on my stairs. Come on down, don't be scared. I probably won't bite.
+
+jumpanchor stairsNotNasty
+p But you are. You're a wretched little thing.
+jumpanchor stairsHello
+p I recognize that voice as easily as I recognized your nervous little footsteps coming up the path. I know who you are, and I remember what you've done.
+
+jumpanchor stairsSilent
+p Silence, I see. Don't think I've forgotten about you. I recognized the sound of your nervous little footsteps as soon as they came into my home. I know who you are, and I remember what you've done.
+
+jumpanchor stairsEndNoShare
+n She must have you confused with someone else.
+jumpto basementStart
+
+jumpanchor stairsEndSharedLoop
+hero See? She knows us. Is this enough for you to believe what we've been saying?
+n Maybe, but you shouldn't let that cloud your judgment. She's just a Princess. As long as you remember that and remain focused, slaying her will be *easy.*
+jumpto basementStart
+
+// Basement //
+
+jumpanchor basementStart
+oppo She seems friendly enough. Maybe we can talk our way out of this whole situation.
+n *Sigh.* You can't. Unless you slay her right away, she's going to break free and end the world. There's no reasoning with what she is.
+oppo Look, I'm just throwing ideas out there. I like to think out loud. I'm the kind of guy who likes a *discussion,* don't we want to hear what everyone has to say before making any big decisions?
+hero Do you want to hear what everyone has to say, or do you just want to hear yourself talk?
+n You need to stop lingering. Your task is to *slay* the Princess, not endlessly debate about what to do with the Princess.
+oppo Fine, fine. You're the boss.
+n Thank you. You descend the basement steps, entering the dark room below.
+linebreak
+n You can just make out the shape of the Princess in the gloom. She's huddled against the far wall, her eyes bright and glaring from amid the thick roots.
+truth Her appearance is unkempt, her hair wild and littered with twigs, her dress in tatters. The tail of a lion swishes behind her, and her nose and mouth resemble those of a cat.
+
+jumpanchor basementStartNoBlade
+p And there you are, once again seeming to offer a helping hand while likely hiding the other behind your back. Fine. I'll play along for now. What do you want?
+
+jumpanchor basementStartBlade
+n And there you are, one hand tucked away behind your back, gripping that sharp, sharp blade, no doubt.
+oppo That's no fair, how would she know that?
+p So we've dropped the pretenses.
+p Good.

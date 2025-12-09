@@ -473,7 +473,6 @@ public class Finale extends Cycle {
      */
     private void finalMirror() {
         // starts right after mirror shatters
-        System.out.println();
     }
 
     /**

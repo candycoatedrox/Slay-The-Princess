@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+
+
+
+
+
+jumpanchor mirrorFirstVessel
+truth You step towards the mirror. It holds a truth that you must witness.
+jumpto mirrorJoin
+
+jumpanchor mirrorNotFirstVessel
+truth You step towards the mirror. Its secrets remain hidden. Its mysteries remain unresolved.
+jumpanchor mirrorJoin
+hero Something tells me that this is the end of the line, but I don't feel bad about it. I'm ready.
+broken It feels okay.
+para The fear's gone.
+stubborn I'm done fighting.
+smitten My heart feels quiet.
+cheated The game was always going to end.
+cold I'll be free of all of you.
+skeptic I'm ready for the truth.
+hunted I'm ready to sleep.
+contra I'm just ready to be anywhere that isn't here.
+oppo Boys, it's been an honor.

@@ -1,12 +1,241 @@
+nowplaying Fragmentation
+n You're on a path in the woods. And at the end of that path is a cabin. And in the basement of that cabin is a princess.
+n You're here to slay her. If you don't, it will be the end of the world.
+
+// First menu //
+
+jumpanchor dejaVu
+n A terrible sense of deja vu? No, you don't have that. This is the first time either of us have been here.
+
+jumpanchor dejaVu2
+n We could go back and forth on this forever, and it won't get you any closer to doing your job and saving the world. So let's just agree to disagree.
+
+jumpanchor happened
+n It hasn't. Or if it has, I certainly haven't been a part of it. We've just met for the first time, you and I.
+
+jumpanchor no
+n Oh, don't you start grandstanding about morals. The fate of the world is at risk right now, and the life of a mere Princess shouldn't stop you from saving us all.
+
+jumpanchor died
+n I can assure you that you're not dead. And to answer your second question, you're here to slay the Princess. I literally told you that a second ago.
+
+jumpanchor killedSelf
+n I can assure you that you're not dead. And to answer your second question, you're here to slay the Princess. I literally told you that a second ago.
+
+jumpanchor alreadyKilled
+n I can assure you that you didn't.
+
+jumpanchor trapped
+n How unfortunate that the sole person capable of slaying the Princess also seems to be somewhat insane. Oh, well. So long as you get the job done, it doesn't matter what sort of mental state you're in.
+
+jumpanchor killMe
+n Again? People don't die twice. You haven't even met the Princess, and I hardly think she'd be capable of killing someone as skilled and courageous as yourself.
+
+jumpanchor slewHer
+n I can assure you that you didn't slay her, and that she didn't kill you. People don't just spring back to life after dying, and the two of us are meeting for the very first time.
+
+jumpanchor wise
+n My tricks? What on earth are you talking about? We've just met for the first time.
 
 
+jumpanchor assume
+n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
+n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
+n If you're back here, I'm assuming you died, which probably only happened because you didn't listen to me.
 
+jumpanchor assumeShareDied
+n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
+n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
+n You died last time, which probably only happened because you didn't listen to me.
 
+jumpanchor assumePointA
+n Anyways, I believe your other question was something along the lines of "ohhh, what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
 
+jumpanchor assumePointB
+n And I believe your other question was something along the lines of "ohhh, what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
 
+jumpanchor consequenceFreeMutual
+hero What do you mean? Of course there weren't any consequences. We killed the Princess, the Princess killed us, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+jumpto consequenceFree2Slain
 
+jumpanchor consequenceFreeMutualRazor
+hero What do you mean? Of course there weren't any consequences. We stabbed the Princess, the Princess stabbed us, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+jumpto consequenceFree2Slain
 
+jumpanchor consequenceFreeDied
+hero What do you mean? Of course there weren't any consequences. We were killed by the Princess, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+jumpto consequenceFree2Died
 
+jumpanchor consequenceFreeNightmare
+hero What do you mean? Of course there weren't any consequences. We were killed by the Princess, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+para Speak for yourself. From my perspective there were plenty of consequences. I'm never going forget the way she just made us *stop working.*
+n And that's only scratching the surface. If what you said is true, it begs the question of *how* you got back here. Did \"time\" simply rewind itself, or have you found yourself in another world altogether? If it's the latter, what do you think happened *after* you died?
+jumpto consequenceFree2LateJoin
+
+jumpanchor consequenceFreeSlain
+hero What do you mean? Of course there weren't any consequences. We slew the Princess, the world outside the cabin disappeared, we died, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+jumpto consequenceFree2Slain
+
+jumpanchor consequenceFreeLocked
+hero What do you mean? Of course there weren't any consequences. The Princess locked us in the basement, we eventually died, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+jumpto consequenceFree2Died
+
+jumpanchor consequenceFree2Slain
+n Yes, but, in this purely hypothetical scenario, that begs the question of *how* you got back here. Did "time" simply rewind itself, or have you found yourself in another world altogether?
+n Had you failed to slay the Princess, what would have happened to everyone in the place you left?
+
+jumpanchor consequenceFree2Died
+n Yes, but, in this purely hypothetical scenario, that begs the question of *how* you got back here. Did "time" simply rewind itself, or have you found yourself in another world altogether?
+n If it's the latter, what do you think happened *after* you died?
+jumpanchor consequenceFree2LateJoin
+n Do you think the people there lived happily ever after, or do you think that the Princess, left unhindered, brought about the end to everyone and everything, just like I told you she would?
+
+jumpanchor defy
+hero That's right. You can't stop all of us.
+smitten We're going to sweep her off her feet if it's the last thing anyone does.
+n Are these really the sorts of people you'd like to align yourself with? *Sigh.* You're not at the cabin yet. You still have plenty of time to reflect on the situation. I just hope for all our sakes that you make the right call.
+
+jumpanchor askPrincess
+n Just be quick about it.
+
+jumpanchor princessTips
+n Like I said, if she killed you, it was probably because you didn't listen to me. Don't talk to her. Don't trust her. Just go in, do your job, and save the world.
+
+jumpanchor princessHowDanger
+n She just can. Believe me, I wish I could tell you more, but you'll just have to trust that what I'm saying is true and that, despite it all, you're fully up to the task that's been given to you.
+
+jumpanchor princessQuote
+n She *is* just a Princess. Whatever you think happened to you last time, just get it out of your head before you get to the cabin, and you'll be *fine.*
+
+jumpanchor princessBasement
+n *People* locked her in that basement. And I told you what this place is. It's a path in the woods. Don't overcomplicate things.
+
+jumpanchor princessWhyMe
+n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
+hero Oh. I didn't know we were *special.*
+n Of course you're special. Why else would you be here?
+
+jumpanchor princessCagey
+n I've told you everything you need to know, going into more detail would just overcomplicate an otherwise very simple situation and make your job more difficult.
+
+jumpanchor princessCageyArmedInfo
+hero If you want us to stand a chance against her, we need to be armed with information. What is she really capable of? How are we supposed to stop her?
+jumpanchor princessCagey2
+n Not to sound like a broken record, but the less you know about her, the better things will go for all of us. I know it sounds like I'm hiding something, but you're just going to have to take me at my word.
+
+jumpanchor princessReturn
+n Great. Now if you don't mind, the whole world is waiting with bated breath for you to save it from ruin.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+linebreak
+truth You emerge into the clearing. The cabin waits at the top of the hill.
+n A warning, before you go any further...
+n She will lie, she will cheat, and she will do everything in her power to stop you from slaying her. Don't believe a word she says.
+
+// Abort attempt //
+
+jumpanchor abortStart
+n Seriously? You're just going to turn around and leave? Do you even know where you're going?
+
+jumpanchor abortReturnUgh
+n *Thank you!* The whole world owes you a debt of gratitude. Really.
+
+jumpanchor abortReturnMaybe
+n I guess we will.
+
+jumpanchor abortLie
+n Somehow I doubt that, but fine.
+n I suppose you just quietly continue down the path away from the cabin.
+
+jumpanchor abortNihilist
+n There won't *be* a "new dawn" if the world ends. There'll just be *nothing.* Forever!
+
+jumpanchor abortCont
+n Fine, I suppose you just quietly continue down the path away from the cabin.
+
+jumpanchor abortReturnMenu2
+n That's great to hear! And as long as you bring that fiery attitude to Princess slaying, I think this will all resolve splendidly.
+
+jumpanchor abortClearing
+linebreak
+truth You emerge into the clearing. The cabin waits at the top of the hill.
+n That's strange. It looks like this path also leads to the cabin. How convenient! Everything's back on track again. Maybe the world can still be saved after all.
+cold Oh? How quaint. He really wants us to go in there, doesn't He? /// checkvoice
+
+jumpanchor abortCommit
+n You're really keen on wasting everyone's time, aren't you? It's remarkably selfish, if you ask me. I've already outlined the stakes of the situation. If you don't do your job, everyone dies. Like, *dies* dies. Forever.
+n But fine. You turn around and trek back down the path you came.
+
+// Ask about the mirror //
+
+jumpanchor askMirrorStart
+hero There's *definitely* a mirror.
+n There isn't.
+
+jumpanchor mirrorCareLie
+hero As do I.
+jumpanchor mirrorCareLieJoin
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would a mirror even do? Let you waste time preening yourself instead of doing what needs to be done?
+
+jumpanchor mirrorCareLieTower
+hero As do I, and yeah, there is.
+jumpto careLieJoin
+
+jumpanchor mirrorWhyLie
+n Exactly. Why would I lie about something so meaningless? What good would a mirror even do? Let you waste time preening yourself instead of doing what needs to be done?
+
+jumpanchor mirrorHandsomeCare
+hero I care less about that and more about whether we're being lied to. If He's willing to lie about something as innocuous as a mirror, what else is He hiding from us?
+jumpanchor mirrorHandsomeJoin
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would it even do?
+
+jumpanchor mirrorHandsomeGeneric
+smitten That's a great idea. We have to make sure we're looking our best before we save her. /// checkvoice
+hero We shouldn't waste time *preening,* but if He *is* lying about the mirror, it might be important.
+hunted Or it's dangerous. /// checkvoice
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would it even do?
+para Maybe He's trying to keep us from looking because there's something horribly wrong with us. /// checkvoice
+n No. There isn't something horribly wrong with you. You look exactly how you're supposed to look, now stop second-guessing my every word. /// checkvoice-para
+contra So we're all in agreement. We're looking. /// checkvoice
+
+jumpanchor mirrorNoMatter
+hero But it *does* matter! Don't you care if we're being lied to? If He's willing to lie about something as innocuous as a mirror, what else is He hiding from us?
+jumpanchor mirrorNoMatterJoin
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would a mirror even do? Let you waste time preening yourself instead of doing what needs to be done?
+hero But there *was* a mirror a second ago.
+
+jumpanchor mirrorSilent
+hero I care if we're being lied to. If He's willing to lie about something as innocuous as a mirror, what else could He hiding from us?
+n I'm not lying to you, I *promise.* There isn't a mirror. Really.
+
+// Approach the mirror //
+
+jumpanchor approachMirror
+n You walk up to the wall next to the basement door. It's a wall. There isn't much to see here.
+
+jumpanchor approachAsked
+hero This *really* isn't funny.
+
+jumpanchor approachNoAsk
+hero What are you talking about? This isn't a wall. It's a mirror. Or at least it'll *be* a mirror once we wipe off that layer of grime.
+
+jumpanchor approachWipe
+n You reach forward and rub your hand against the cabin wall. I hope you know how ridiculous you look right now.
+
+jumpanchor approachWipeAsked
+hero But it was there a second ago!
+
+jumpanchor approachWipeNoAsk
+hero But there was a mirror a second ago.
+
+// Generic shared cabin lines //
+
+jumpanchor cabinDifferent
+hero *Very* different.
+n Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+n So focus up. The world is depending on you.
 
 jumpanchor stairsLeaveFail
 n What? No. You're already halfway down the stairs, you can't just turn around now.

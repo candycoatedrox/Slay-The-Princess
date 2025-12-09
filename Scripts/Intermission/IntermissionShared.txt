@@ -1,0 +1,151 @@
+linebreak 3
+truth You find yourself in the Long Quiet once again.
+
+jumpanchor firstVesselIntro
+linebreak 3
+truth You are alone in a place that is empty. It is quiet here.
+
+jumpanchor nowhereToGo
+truth There is nowhere else for you to go.
+
+jumpanchor cabinFirst
+nowplaying The Shifting Mound Movement I
+truth You are at the cabin.
+truth A mass of hands waits at the top of the hill, holding the Princess upright.
+
+jumpanchor cabin
+truth You are at the cabin.
+
+// Shared conversation dialogue //
+
+jumpanchor attackMound
+truth Your will cuts across the entity in front of you, but nothing happens.
+p My roots burrow in an ocean beyond your sight. We cannot harm each other as we are now.
+
+jumpanchor attackSelf
+truth You raise your will to end your life. But as it buries into the space your body should be, you feel nothing at all.
+truth One of the many hands in front of you reaches forward, and gently touches the side of your face.
+p There's nowhere for you to be but here.
+
+jumpanchor alreadyTried
+truth You have already tried that.
+
+jumpanchor forget
+linebreak
+truth Everything goes dark, and you die.
+
+// Vessel thoughts //
+
+jumpanchor adversary
+p This one yearns to grow and struggle. Even now I feel a will pushing against mine, not realizing that we are one. She will make for a bold heart.
+p Do not mourn her. We will provide her with the growth she fought for.
+
+jumpanchor tower
+p This one is dominance. A figure capable of bending everything to her will. She will make for an overwhelming heart.
+p Do not mourn her, for she would not be able to mourn you.
+
+jumpanchor spectre
+p This one is vaporous. She is a dream of a life she could never have, but that longing has given her so much capacity for kindness. She will make for a yearning heart.
+p Do not mourn her -- she will finally be able to hold what she never knew.
+
+jumpanchor nightmare
+p This one is filled with sadness. A doll abandoned to the company of her darkest impulses. She desires only companionship, but the only thing she knows is how to hurt. She will make for a tender heart.
+p Do not mourn her -- she has finally found her way home.
+
+jumpanchor beast
+p This one is consumed by instinct. A predator pushing those around her to adapt. She will make for a cunning heart.
+p She wishes me to devour you. To make you a part of myself. But she is only a voice.
+p Do not mourn her, for she is part of something greater.
+
+jumpanchor witch
+p This one is hope marred by bitterness and betrayal. She could see the end of the tunnel, and the door was closed on her. She will make for a righteous heart.
+p Do not mourn her -- she is finally on the other side.
+
+jumpanchor stranger
+p These ones are a contradiction. A winding kaleidoscope of paths unwalked. They are stretched into a shape not unlike me, but it is a shape they cannot hold.
+p They will make for a rich and vibrant heart.
+
+jumpanchor strangerFirst
+p These ones are a contradiction. A winding kaleidoscope of paths unwalked. They are stretched into a shape not unlike me, but it is a shape they cannot hold.
+p I am sorry that you met this vessel so early in your journey, but they will make for a rich and vibrant heart.
+
+jumpanchor prisonerHead
+p This one is cold and cynical. She has protected herself when others could not. She will make for a clever heart.
+p Do not mourn her -- she doesn't need to be protected any longer.
+
+jumpanchor prisoner
+p This one is determined, but also cautious, one that would rather let the world move around her than move it herself. She will make for a patient heart.
+p Do not mourn her -- she is exactly where she needs to be.
+
+jumpanchor damsel
+p This one is soft and delicate. You molded her to love you, and she'll make for a gentle heart.
+p Do not mourn her. She has served her purpose.
+
+jumpanchor deconDamsel
+p This one is a reflecting pool of desire unfulfilled. She will make for a pliant heart.
+p Do not mourn her. She has served her purpose.
+
+
+jumpanchor needle
+p This one remembers a spark lost in time, and she would stop at nothing to reclaim it. She will make for a burning heart.
+p Do not mourn her. She has finally remembered what she thought she'd lost.
+
+jumpanchor fury
+p This one is desecration. She placed the weight of her agony on you, yet it is she who unwound herself. There is passion and empathy buried under her unfeeling skin. She will make for a weathered heart.
+p Do not mourn her -- she has finally found peace.
+
+jumpanchor apotheosis
+p This one sits at the cusp of awakening. A new god, waiting to be born. She will make for a terrifying and divine heart.
+p Do not mourn her, for she has finally found her light.
+
+jumpanchor dragon
+p This one is perspectives bleeding into one. You know her better than you know yourself. She will make for an empathetic heart.
+p Do not mourn her, for you would not mourn yourself.
+
+jumpanchor wraith
+p This one is loneliness turned to seething. She could not find her strength in others, so she found it in herself. She will make for a driven heart.
+p Do not mourn her -- she isn't alone anymore.
+
+jumpanchor clarity
+p This one is a waiting maw. An inevitable destination where all roads end. She will make for a wise heart.
+p Do not mourn her -- she is exactly where she needs to be.
+
+jumpanchor razor
+p This one is a single-minded edge. She is cruelty. But she is also joy. She will make for a piercing heart.
+p Do not mourn her -- she is exactly where she needs to be.
+
+jumpanchor den
+p This one is consumed by instinct. A dancer moving to the rhythm of the flesh. She will make for a ravenous heart.
+p Do not mourn her, for she is part of something greater.
+
+jumpanchor nWild
+p This one is like a shadow of me, twisting vines in search of answers. She will make for a curious heart.
+p Do not mourn her -- she has found what she yearned for.
+
+jumpanchor wWild
+p This one is like a shadow of me, a memory of what she used to be, bound to the wounds of distance and time. She will make for a scarred and beautiful heart.
+p Do not mourn her -- she has finally found peace.
+
+jumpanchor thorn
+p This one yearns for connections she feels she doesn't deserve. Even when shown compassion, she hid herself away. She will make for a cautious heart.
+p Do not mourn her -- she isn't alone anymore.
+
+jumpanchor cageWatchful
+p This one is a body that convinced herself she was only a set of eyes. She will make for a watchful heart.
+p Do not mourn her. She is now what she wished that she could be.
+
+jumpanchor cageOpen
+p This one is a locked door to which you held the key. She will make for an open heart, if you let her.
+p Do not mourn her. She is no longer bound.
+
+jumpanchor dGrey
+p This one is guarded sorrow. She saw herself as alone, but in the end had the courage to share with another. She will make for a deep heart.
+p Do not mourn her -- she has finally been heard.
+
+jumpanchor bGrey
+p This one is passion betrayed. But even in the end, her love never faded. She will make for a bright heart.
+p Do not mourn her, for she has finally found her light.
+
+jumpanchor happy
+p This one is a songbird in a cage of gilded shadows. She will make for an honest heart.
+p Do not mourn her. She has finally learned to sing for herself.

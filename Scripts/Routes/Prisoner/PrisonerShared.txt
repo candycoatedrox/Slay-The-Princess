@@ -1,0 +1,154 @@
+skeptic Don't forget what He did to us the last time around. I wouldn't trust a word out of his mouth. There's got to be a way out of here, for us *and* for the Princess. We just have to keep trying.
+hero I'm inclined to agree. If He doesn't remember what happened last time, maybe it's best to keep it that way.
+n You know I can hear you two, right? It's going to be a lot harder than you think to keep secrets from me.
+
+n And as far as trying to *help* her goes, need I remind you how catastrophically dangerous she is to the world at large? I told you about the stakes of this situation less than a minute ago.
+
+jumpanchor assume
+skeptic The absolute irony. But that's one way to put it, I guess.
+hero You *really* don't remember what happened last time, do you? You practically forced the Princess to kill us.
+n That doesn't sound like the sort of thing I'd do, which is honestly all the more reason for you to not buy into whatever self-delusions the three of you are crafting.
+n *Sigh.* But this is a thought experiment, so I suppose I'll continue to give you the benefit of the doubt. If I did 'practically force the Princess to kill you', it was probably for a good reason. Did you try and free her? Did you *say something really mean to me?* Because if I really did what you said I did, you probably deserved it. I'm a professional, after all.
+skeptic Sure you are.
+
+jumpanchor assume2
+skeptic What a conveniently ambiguous group of things for her to ruin. For all we know, the Princess left the cabin and never saw another soul.
+n Oh how I wish that were the case, but if the Princess weren't a certain, inevitable threat to the world, the four of us wouldn't be here. And yet, here we are.
+skeptic You're talking in circles.
+n No, I'm talking in *facts.*
+
+jumpanchor princessHowDanger
+skeptic She just can. Believe me, I wish I could tell you more, but you'll just have to trust that what I'm saying is true and that, despite it all, you're fully up to the task that's been given to you.
+n What proof could you possibly ask for?
+hero Literally anything.
+n *Sigh.* Fine. Check your pockets.
+
+jumpanchor princessCheckPockets
+n You put your hands in your pockets and pull out an envelope with the words "THE EVIDENCE" written across the front.
+n Within, you find a note in your handwriting. It reads: "The Princess will end the world if you don't stop her. This is an immutable truth."
+skeptic That doesn't prove anything! How do we know you didn't just forge our handwriting?
+n I wish I could tell you more, but there are some rules I have to follow for all of our sakes. Please just trust that these rules are in place for a reason. I'm on your side.
+skeptic You mean you're on our side as long as we do what you tell us to.
+n Exactly. Because you *not* doing what I tell you to do means you're putting the world at risk.
+hero I think we've got everything out of him that we're going to get.
+
+jumpanchor princessIgnorePockets
+n You decide to leave your pockets unchecked. See? You two are the only ones here who care about this little aside.
+
+jumpanchor princessSpecial
+skeptic Ah, yes, right. We're here because we're *special.*
+n Look. You're annoyed that you're here. I get it. I'm also annoyed that I'm here. But we're all in this together, and we're dealing with a bit of a ticking clock right now, so please, just get to the cabin.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+skeptic Yes, yes, don't believe a word she says. Just go in, take the knife, and do what you're supposed to. Wink.
+n Did you just say "wink" out loud?
+skeptic No, I didn't. Wink.
+n Just ignore this clown and focus on the Princess.
+
+// Abort attempt //
+
+jumpanchor abortStart
+skeptic I'm not so sure running away is the best idea. We're not the only person stuck here. What about her?
+
+jumpanchor abortReturn
+skeptic Good. Going back to the cabin is the only way we can get to the bottom of things.
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Prisoner
+n The interior of the cabin is less a cozy woodland retreat and more like a dungeon. A few pathetic wisps of starlight attempt to illuminate the cold, uninviting stone walls, and thick wrought-iron bars barricade the windows, reminding anyone who enters that this is a prison.
+n The only furniture of note is an iron table, bolted to the floor, a pristine blade perched on its edge.
+n The blade is your implement. You'll need it if you want to do this right.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+skeptic Yes, but *why?* Did He change it, or did it change all on its own? Maybe it's a different cabin entirely.
+n Now isn't that a novel thought! Maybe you *haven't* actually been here before. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+n So focus up. Don't get distracted by minor details.
+
+jumpanchor takeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+skeptic Good idea. Much better to be armed than to go in with blind hope alone.
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+skeptic He definitely did not. Does a mirror not count as "furniture of note" to you? Because it should.
+n There isn't a mirror. There's a table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+skeptic I think you know what we have to do.
+
+jumpanchor mirrorHandsome
+skeptic Let's not get caught up in vanity, but we should definitely take a closer look. Whatever it is, He must not want us to know about it.
+n Is this some sort of rehearsed bit? Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would it even do?
+
+jumpanchor mirrorNoMatterIntro
+skeptic We should treat everything in here like it matters.
+hero Exactly, don't you care if we're being lied to? If He's willing to lie about something as innocuous as a mirror, what else is He hiding from us?
+
+jumpanchor mirrorGone
+skeptic And now it's gone. If He doesn't want us to know about it, it must be important. We should keep our eyes peeled. Maybe it'll be back.
+
+// Stairs //
+
+jumpanchor stairsNoBlade
+skeptic I'm afraid I'm going to insist we take the blade. We're in a dangerous situation, and I'm not letting us go down there without a weapon.
+hero Are you sure? What if she, I don't know... turns it against us? ... Which I'm bringing up in a purely hypothetical manner.
+skeptic Yes. I'm sure.
+n Turns it against you? She's a prisoner here. And she'll only be able to turn it against you if you give it to her. Which you won't be doing, because she's an existential threat to the entire world.
+jumpanchor stairsNoBladeJoin
+hero Okay. I'm trusting you.
+
+jumpanchor stairsNoBladeSharedLoop
+skeptic I'm afraid I'm going to insist we take the blade. We're in a dangerous situation, and I'm not letting us go down there without a weapon.
+hero Are you sure? She killed us with it last time. What if she turns it against us *again?*
+skeptic Yes. I'm sure. And I've already got a plan for that.
+n Still with those past-life delusions, are we? I hope part of that plan is "don't give the world-ending monstrosity your only weapon." Because unless you've decided to arm the Princess, I don't think you need to worry about her having a weapon.
+skeptic Peachy. We'll be fine.
+jumpto stairsNoBladeJoin
+
+jumpanchor stairsTakeBladeProtest
+skeptic Normally, yeah. But not about this. Call it a reflex. We take the knife as we go.
+n Wonderful. You do exactly that, sweeping the blade from the table before proceeding to the basement.
+hero Don't worry about it. We have a knife, so what? It's not like we have to use it.
+n No, you don't have to do anything. But you'd do well to use it regardless. *Sigh.* Moving on.
+linebreak
+
+jumpanchor stairsTakeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+skeptic Thanks. I mean it.
+linebreak
+
+jumpanchor stairsStart
+n The door to the basement creaks open, revealing an old stone staircase. A few sputtering torches attempt to vaguely illuminate your path, dancing across glimmering patches of slimy moss on the stone steps. If the Princess lives here, slaying her would probably be doing her a favor.
+n Her voice, harsh but controlled, carries up the stairs.
+p Is that a visitor I hear? Please, come downstairs. It's been a while since I've had company.
+
+jumpanchor stairsSharedLoop
+skeptic Does she remember us?
+jumpto basementStartJoin
+
+jumpanchor stairsNoShare
+skeptic I wonder what visitors she could be referring to. Are we not the first?
+jumpanchor basementStartJoin
+linebreak
+n You walk down the stairs and lock eyes with the Princess. She looks up at you, the heavy collar around her neck clanking loudly as she moves, the chains binding both her wrists to the far wall joining the metallic chorus as she adjusts her hands in her lap.
+
+jumpanchor basementStartSharedLoop
+skeptic So much for cutting her out of here...
+n Do you hear yourself right now? "Cutting her out of here" never should have been on the table.
+skeptic Have you noticed the empty chain on the wall? Odd that in a place where everything seems to serve a distinct purpose, there would be something so obviously useless.
+hero That was there last time too, wasn't it?
+skeptic It was.
+jumpto basementStartJoin2
+
+jumpanchor basementStartNoShare
+hero Should we be worried about the one around her neck?
+n Why would you be worried about her restraints. If anything, they'll make your job easier.
+skeptic Have you noticed the empty chain on the wall? Odd that in a place where everything seems to serve a distinct purpose, there would be something so obviously useless.
+jumpanchor basementStartJoin2
+p What an interesting development. Why don't you have a seat? The two of us should chat before you bury that thing in my heart.

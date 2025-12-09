@@ -1,0 +1,99 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+hunted If He doesn't remember what happened, then something else must have trapped us here.
+n You're not *trapped* here. Nobody's forcing you to do anything, though the only sensible thing for you to do right now is march up to that cabin and slay the Princess.
+
+jumpanchor assume
+hero We did our best with the information we were given.
+n And yet you still died, didn't you? So, great. Congratulations. You've been given another chance to actually do this right.
+
+jumpanchor assume2
+hunted All the more reason to keep our wits about us. Should we even return to the cabin? We could find a safe little hole somewhere instead...
+n You have to go to the cabin. If you don't slay the Princess she's going to end the world, which you're always going to be a part of, even if you're cowering in a hole. There's no escaping your responsibility here.
+
+jumpanchor princessSpecial
+hunted Special can mean all sorts of things. Don't let it make you careless. We need clear thoughts and pricked ears.
+
+jumpanchor princessCagey
+hunted You're afraid, aren't you? Just like us.
+n Of course I'm afraid. Fear is an extremely normal thing to feel when the fate of the entire world is at stake.
+hunted But that's not the only thing you're afraid of. You're scared of something *worse.*
+n Stop projecting your neuroses onto me and just get to the cabin already.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+hunted Does a cat lie to a cornered mouse when it plays with its freedom, or is it just acting out its nature?
+hero I don't see why that matters. A lie is a lie, and if anything, she's the one who's cornered.
+hunted She could have gotten out of there whenever she wanted to. We should trust nothing that she tells us, only what we hear and smell.
+n That's a very roundabout way of saying that you should listen to me and take this seriously.
+hunted Maybe.
+
+// Abort attempt //
+
+jumpanchor abortStart
+hunted Yes. We're safer taking flight.
+
+jumpanchor abortReturn
+hunted If this is what you think is best, I'll keep my ears pricked. Hopefully she won't catch us off-guard as easily as she did last time...
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Beast
+n The interior of the cabin is ruinous and dilapidated. It feels like no one has lived here for a long time, wind rushing in through cracks and holes in the wooden walls. The only furniture of note is a termite-eaten table with a pristine blade perched on its edge.
+n The blade is your implement. You'll need it if you want to do this right.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+hunted I wonder why.
+n Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+n So focus up. The world is depending on you.
+
+jumpanchor takeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+hunted What a strange thing to lie about. Maybe He doesn't see it.
+
+jumpanchor askMirrorStartSharedLoop
+hunted What a strange thing to lie about. Maybe He doesn't see it, much like He hasn't seen what's already happened.
+
+jumpanchor mirrorGone
+hunted And now it's gone.
+
+// Stairs //
+
+jumpanchor stairsNoBlade
+hunted No steel claw. Do you think we can talk our way out of this? I don't think she wants to talk.
+hero I guess we'll just have to trust that we made the right call. It'll still be here if we need it.
+linebreak
+
+jumpanchor stairsStart
+n The door to the basement creaks open, revealing what's left of an old, wooden staircase. It's still sturdy enough that you can make your way down in one piece, though you'll have to be mindful of holes.
+n The air seeping up from below is oddly warm and wet, as if you're descending into a jungle. If the Princess lives here, slaying her would probably be doing her a favor.
+n She growls up the stairs.
+p I can smell you.
+hero She sounds almost... feral.
+hunted Impatient. Or maybe... eager.
+n You carefully make your way down the stairs.
+linebreak
+n The last step gives way to the damp earth floor of a starlit pit. The walls are obscured by an impenetrable darkness, giving the illusion that the room might stretch on forever. You brush against the wide leaves of plants that surround you on all sides, seemingly the only living things that occupy this strange underground wilderness.
+hunted The jungle is pressing in on us... hiding her from view. She could be anywhere.
+n You see only a flash of the Princess before she scurries away into the underbrush, dragging her heavy chain behind her.
+n Remember, she's just a Princess.
+hero She is certainly not *just* a princess.
+n You're not helping.
+hunted It doesn't matter what she is. It only matters what she does.
+n Her shining eyes appear between the leaves, staring hungrily at you from the darkness.
+
+jumpanchor basementStartNoBlade
+p I can hear your heart pounding from the bottom of the stairs, fledgling. You're right to be terrified. I'm so much more than you.
+
+jumpanchor basementStartBlade
+p I can hear your heart pounding from the bottom of the stairs, fledgling. You're right to be terrified.
+p I'm so much more than you, and a little splinter clutched in trembling hands won't save you from me.

@@ -73,7 +73,11 @@ public class IOHandler {
      * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
      */
     public void printDialogueLine(DialogueLine line, double speedMultiplier) {
-        line.print(speedMultiplier);
+        if (manager.globalSlowPrint()) {
+            line.print(speedMultiplier);
+        } else {
+            wrapPrint(line);
+        }
 
         if (line.isInterrupted()) {
             System.out.print("\n");
@@ -87,7 +91,11 @@ public class IOHandler {
      * @param line the DialogueLine to print
      */
     public void printDialogueLine(DialogueLine line) {
-        line.print();
+        if (manager.globalSlowPrint()) {
+            line.print();
+        } else {
+            wrapPrint(line);
+        }
 
         if (line.isInterrupted()) {
             System.out.print("\n");

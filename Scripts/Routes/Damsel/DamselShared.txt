@@ -1,0 +1,124 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+smitten Yes, He didn't approve of us last time, did He? If we're going to save our beloved, we'll have to be sneaky about it.
+hero Our... "beloved?"
+n Yes, you'll have to be *very* sneaky about your intentions if you're going to try and save the Princess.
+smitten Ah, so all of the cards are on the table. Then you should know that we and the Princess are in love and the four of us will be foiling any and all assassination attempts you've got in the works.
+n We'll see about that. Whatever you do, just be sure to ignore *him,* specifically. It sounds like he's the sort who'd sacrifice the whole world for a peck on the cheek.
+smitten What can I say? A world without love is a world that isn't worth saving.
+
+jumpanchor assume
+smitten *You* were the one who did us in, villain.
+hero Well, not you in the literal sense, but you did everything you could to stop us from rescuing her.
+n Oh, I wonder why. Maybe it's because the entire world was at stake. No lone Princess is worth that price.
+smitten I beg to differ.
+n I'm not going to argue with you. I'm just going to take a deep breath and assume that whoever is making the decisions here has the common sense to *ignore* your protestations.
+
+jumpanchor assume2
+smitten She would never. She's a perfect angel that you cruelly imprisoned as part of some convoluted, dastardly scheme.
+n Convoluted? I don't know how this premise could be any more simple. Princess bad. Stop her. Save everyone.
+
+jumpanchor princessHowDanger
+smitten Maybe it's her *beauty* that threatens the world.
+n Sure. It's her beauty. Why not? And before you ask, no. We can't just keep her down there. If you don't slay her, she's going to find a way out. It's unfortunate, I know, but it's just the way it is.
+
+jumpanchor princessSpecial
+smitten Calling us special isn't going to make us friends, even if it did feel nice.
+n Oh, believe me, the last thing I want is for you and I to be *friends.* But I'm a professional, and I'm not going to let my dislike for you get in the way of helping you save the world.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+smitten If only you knew what you did to us, you villain.
+n Excuse me?
+hero Forget he said anything.
+smitten But He *is* a villain. He made our beloved brutally take our life last time. He's trying to keep us apart, but He won't be able to withstand the power of our love!
+n Last time? What are you talking about?
+hero I think he just likes to hear the sound of his own voice. Let's try to ignore him.
+jumpto hillDialogueJoin
+
+jumpanchor hillDialogueSharedLoop
+smitten We already told you we're not playing along with your little game, it's your lies that can't be trusted. Her beauty is the only thing in the world we *can* believe in!
+hero I think we've already been over this. I'm pretty sure he just likes the sound of his own voice.
+jumpanchor hillDialogueJoin
+smitten I do, but I also speak from the heart. My passions are too great to be stifled, they must be expressed!
+hero Sure, yeah, your passions are strong and all, but not everyone needs to hear them. Some things are better kept quiet.
+n Don't pay their bickering any mind. Focus on the task ahead.
+
+// Abort attempt //
+
+jumpanchor abortStart
+smitten Are we running away? What are you doing, we have to save her!
+
+jumpanchor abortReturn
+smitten Save. You'll go to the cabin and *save* the Princess.
+
+jumpanchor abortReturnB
+smitten You're joking, right? If we're going to the cabin, there's no world where we do anything other than *save* her.
+
+jumpanchor abortReturnC
+smitten Oh, it's going to resolve splendidly, all right.
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Damsel
+n The interior of the cabin is clean and elegant, its stone walls draped in fine-threaded tapestries, a prison befitting a royal prisoner. The only furniture of note is an ornate wooden table with a pristine blade perched on its edge.
+n The blade is your implement. You'll need it if you want to do this right.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+smitten Is it? I can't say I was paying much attention to the scenery last time around.
+n Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+n So focus up. Stop letting yourself get distracted.
+
+jumpanchor takeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+smitten I suppose if we're to play the role of dashing knight we need an equally dashing sword. That way she'll know we can defend her from her enemies.
+hero Hopefully it doesn't put her on edge.
+jumpanchor takeBladeJoin
+n There's no use arguing over *motivations* right now. It's good that you took the blade. You'll need it to do your job.
+
+jumpanchor takeBladeSharedLoop
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+smitten I suppose if we're to play the role of dashing knight we need an equally dashing sword. That way she'll know we can defend her from her enemies.
+hero Hopefully it doesn't put her on edge. And hopefully it doesn't get turned on us... again.
+jumpto takeBladeJoin
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+smitten I'm sure the Princess would tell us there was a mirror if *she* were up here.
+n In which case she'd be lying to you, because again, there isn't a mirror.
+
+jumpanchor mirrorGone
+smitten And now it's gone. Pity. We could have a feather out of place and now we'll never know. We can't gallantly sweep her off her feet if we have a feather out of place.
+
+// Stairs //
+
+jumpanchor stairsStart
+n The door to the basement creaks open, revealing an intricate stairwell. Gold-trimmed carpet glimmers in the light of the torches positioned along the walls. The basement almost seems welcoming in the dim firelight.
+n But it's still a stone basement. If the Princess lives here, slaying her is probably doing her a favor.
+n A soft voice carries up the stairs.
+p H-hello? Is someone there?
+
+jumpanchor stairsSharedLoop
+smitten Her voice... it's somehow even more beautiful than last time. I can hear wedding bells already...
+hero I've held my tongue 'til now, but you're taking this a little too far. We barely even know the Princess. We can still do right by her without all this over-the-top fawning.
+jumpto basementStartJoin
+
+jumpanchor stairsNoShare
+smitten Her voice... it's somehow even more beautiful than last time. I think we're in love.
+hero Okay, I'm with you that we should be doing whatever we can to save her, but saying we're in love is a bit much, don't you think?
+hero We don't even know the Princess. We can still do right by her without all this... fawning.
+jumpanchor basementStartJoin
+n Yes. For everyone's sake, you're not in love. *Sigh.* Just remember that her charms are all part of the manipulation.
+linebreak
+n You walk down the stairs and lock eyes with the Princess. There's a heavy chain around her wrist, binding her to the far wall.
+truth Her dress is more elaborate than last time, with several layers of ruffles at the bottom, and she wears a more traditional crown in place of her tiara.
+smitten My love! We're here to rescue you from your unjust and foul imprisonment!
+n You know she can't hear you, right?
+smitten She may not be able to hear my words, but surely, she can hear my spirit.
+n Oh, your spirit's plenty loud, alright.

@@ -64,6 +64,7 @@ Syntax: `TOGGLE [setting]`
 **Variations:**
   - `TOGGLE [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]`: Toggles dynamic content warnings on or off.
   - `TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]`: Toggles soundtrack notifications on or off.
+  - `TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]`: Toggles printing speed between slow and instant.
 
 ## GO
 `GO`: Move in a given direction.

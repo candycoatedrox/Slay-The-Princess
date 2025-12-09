@@ -1,0 +1,305 @@
+// Comment on new schism //
+
+jumpanchor schism2Comment
+n As the Princess speaks again, it's almost as if she fractures, and where there was once just one of her, there is now another.
+contra We can do that?!
+hero I don't like this. It's those cabins all over again. Can... can we put her back?
+
+jumpanchor schism2CommentSharedLoopInsist
+n You said "the world ended" last time you were here, didn't you?
+contra Yeah, what of it?
+jumpto schism2CommentJoin
+
+jumpanchor schism2CommentSharedLoop
+n You said you'd been here before, right? What exactly happened last time?
+contra Does it matter?
+n Yes, it matters! But I'm not going to waste any more time prying out details if you're going to be so irritating about it.
+jumpto schism2CommentJoin
+
+jumpanchor schism2CommentNoShare
+n "Again?" Have you been here before?
+hero Should we tell Him?
+contra Nah. Let Him stew.
+hero Right. I'm telling Him. Yeah, we've "been here before." But we never went to the cabin. We just... turned around and left, until...
+n Until?
+hero It's hard to describe. Until the only thing we could see was the same cabin going on forever? And then you told us that the world ended and we died. And then we woke up, and I'm pretty sure you're familiar with all the rest of it.
+jumpanchor schism2CommentJoin
+n It seems to me like you saw something you weren't supposed to have seen. If only you'd listened to whatever words of wisdom you were given in that other reality. *Sigh.* But what's done is done, isn't it?
+n Whatever you saw last time? Unsee it. Whatever thoughts weaseled their way into your head? Unthink them, if it's not already too late. You have a job to do here, and you need to do it *now.*
+contra New plan! Let's see if we can make even more of her.
+
+jumpanchor schism3Comment
+hero I don't think we're going to be able to put her back.
+contra It kind of hurts to think about it, doesn't it? It's like everything we say just multiplies her.
+n It certainly looks that way. So please, for the love of everything, stop asking her questions, and stop stalling. You're obviously just making things worse.
+
+jumpanchor schism4Comment
+contra Okay. This was fun for a bit, but we can't even really interact with her, can we? What's the point of asking questions if all we're going to get is a million answers?
+hero I can't even follow what's going on anymore.
+contra We need to get out of here. This whole place is making me itch.
+
+jumpanchor schism5Comment
+n This is reaching its breaking point. If you don't act now, there will be nothing in here but her. Take a deep breath and focus up. You can do this.
+hero But how do we decide what to do? Can there even be a right choice when all of them are so different?
+n Stop overthinking it. Your drifting thoughts have clearly been part of the reason this situation has gotten out of hand. If you're trying to do the right thing, there's only ever been the one option, and that option is slaying her.
+contra Just do something! Do anything! Do all of it if that's what you want. This place is *HELL* and it's only getting worse!
+
+// Dialogue menu //
+
+jumpanchor harshSorryOpening
+p Yeah. I know. I've been watching you stare at me for a long, long time.
+n The shadows recede, revealing the Princess's face.
+contra I don't think she likes us!
+hero Wouldn't you be skeptical of someone stumbling in here if you were her? We lost ourselves the second we stepped into this place. I don't know how long she's been here, but I can't imagine it'd be easy for her to trust anyone."
+hero Those eyes, though... they're so... sharp.
+n It's just deception. Don't buy into it. You can do this.
+
+jumpanchor neutralSorryOpening
+p And yet here you are. How strange. Do you remember anything at all? Do you know why you're here? Do you know me?
+n The shadows recede, revealing the Princess's face.
+hero She's so... blank. I have no idea who she is.
+contra Isn't that fun? A new puzzle for us to take apart.
+n If she's keeping her cards close to her chest, it's because she wants to deceive you.
+
+jumpanchor gentleSorryOpening
+p That's okay. Sometimes I forget where I am too.
+n The shadows recede, revealing the Princess's face.
+hero She's so warm. And friendly...
+n It's deception. Don't buy into it.
+
+jumpanchor harshSorry
+p I'm tired of waiting for an answer.
+
+jumpanchor neutralSorry
+p How strange. So why are you here?
+
+jumpanchor gentleSorry
+p It's okay. Don't worry. Sometimes I get lost here too.
+
+
+jumpanchor harshMore
+p And what's that supposed to mean? Are you trying to get under my skin?
+
+jumpanchor neutralMore
+p There must be something wrong with you. I'm the same as I was a moment ago.
+
+jumpanchor gentleMore
+p Do you need help? Not that there's much I can do chained up like this, but I'm the only one down here, so if you need anything I'll do my best.
+
+jumpanchor emoMore
+p I don't feel like I've gotten any bigger..."
+
+jumpanchor monsterMore
+p It must be fear creeping into your heart. You know you can't stop me.
+
+jumpanchor moreSchism
+n She fractures again.
+hero I don't like where this is going.
+n Neither do I. Which is why you need to slay her now before things get more complicated than they already are.
+
+jumpanchor moreNoSchism
+hero Huh. And here I was expecting her to split again. Is that it? What do we do now?
+n You slay her.
+
+jumpanchor moreBlade
+n You could always start by stabbing her.
+hero ... Which her?
+n Any of them.
+contra I don't know about you but I'm sure glad we took that knife with us. I can't believe someone suggested you toss it out the window. Can you imagine?
+
+jumpanchor moreThrewBlade
+n You could always start by retrieving the blade...
+hero The one that he made us throw out the window?
+contra I wasn't the one who threw it.
+hero Oh come on, you told us to! Don't try to pass the blame now that it's come back to bite us.
+contra Well, if I'd known we'd be dealing with this, maybe I wouldn't have been so hasty with my suggestions.
+
+jumpanchor moreNoBlade
+n You could always start by retrieving the blade...
+hero Can we even leave this place? I don't like thinking about what might happen to us if we have to go back... *through* those stairs.
+n Well that's where the blade is. If you want it, you'll have to go and get it.
+
+
+jumpanchor harshName
+p You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really.
+
+jumpanchor neutralName
+p Princess.
+
+jumpanchor gentleName
+p You can call me Princess, if you'd like...
+
+jumpanchor emoName
+p It doesn't matter. I've been down here for so long. What's the point of a name if there's no one around to use it?
+
+jumpanchor monsterName
+p I don't need a name. My name is whatever hushed whispers follow in the wake of my devastation.
+
+jumpanchor nameFollowUp
+contra None of them have names!
+n How astute. I told you she was untrustworthy.
+
+
+jumpanchor harshFirstWeird
+p What, like you need me to hold your hand and tell you everything's okay? You're not really cut out for this, are you? Why are you even here?
+
+jumpanchor gentleFirstWeird
+p I don't know what happened to you, but you look like you're in one piece now. But I understand. Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either.
+
+jumpanchor harshWeird
+p You're not really cut out for this, are you? Why are you even here?
+
+jumpanchor neutralFirstWeird
+jumpanchor neutralWeird
+p I don't remember what it was like before I was in this place. Why would I know what happened to you?
+
+jumpanchor gentleWeird
+p Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either.
+
+jumpanchor emoWeird
+p We're probably stuck down here forever, aren't we? There's no way out, and barely a way in...
+
+jumpanchor monsterWeird
+p I thought they would send something better to deal with me. If the stairs managed to chew you up, I will devour you.
+
+
+jumpanchor harshReason
+p Maybe it's because I'm dangerous.
+
+jumpanchor neutralReasonBlade
+p Is this a quiz? You're the one who came down here, and with a sharp, sharp knife, too.
+
+jumpanchor neutralReasonNoBlade
+p Is this a quiz? If you're here, then surely you know why I'm here.
+
+jumpanchor gentleReason
+p I don't know why I'm here, but there has to be a reason, right? You don't just lock a Princess away in a place like this without a reason. I wish I knew what it was.
+
+jumpanchor emoReason
+p But you know, right? You have to know. You're the only other person I've ever seen, or at least the only one I can remember. Don't give me false hope. Please just end this already. One way or another, just do it.
+
+jumpanchor monsterReason
+p Don't be coy. We both know why I'm locked away here. I'm a monster, and the second I get out of this place, I'm going to end the entire world.
+
+
+jumpanchor harshThreatShare
+p And you believe that? Do you think I'm some sort of... monster?
+
+jumpanchor neutralThreatShare
+p I don't have any weapons. And I'm chained to a wall. Do I look like someone that could end the world? Do I look like a monster?
+
+jumpanchor gentleThreatShare
+p But I don't want to hurt anyone. I like the world! I think. You... you don't think I'm some sort of monster, do you?
+
+jumpanchor emoThreatShare
+p I don't know. Maybe that's true. I probably shouldn't be given the chance anyway. If you were sent here to kill me, maybe you should just get it over with.
+
+jumpanchor monsterThreatShare
+p Because I am. Everything you've heard about me is true, and I am going to lay waste to everything. Starting with you.
+
+
+jumpanchor harshFirstWhatDo
+p I don't think what I'd do really matters, does it?
+
+jumpanchor neutralFirstWhatDo
+p I don't think I can answer that question in a way you'd find meaningful.
+
+jumpanchor gentleFirstWhatDo
+p Are you looking for the truth, or are you looking for the 'right' answer?
+
+jumpanchor harshWhatDoA
+p What do you want me to say? That I'd be a good person?
+
+jumpanchor harshWhatDo
+p I'm not going to dance for you.
+
+jumpanchor neutralWhatDoA
+p I could tell you that I'd lead a quiet life in the woods or that I'd open an orphanage or that I'd do any other number of \"good\" things that I'm sure you think you want to hear.
+
+jumpanchor neutralWhatDo
+p I'm a prisoner here, and whether or not you shoved me down here, you're practically my captor at this point. Anything I'd say is tainted by that.
+
+jumpanchor gentleWhatDoA
+p I just want to live my life.
+
+jumpanchor gentleWhatDo
+p You either trust me or you believe that I'm dangerous. What I say won't change how you already feel about me.
+
+jumpanchor emoWhatDo
+p If you want to put an end to me, then put an end to me.
+
+jumpanchor monsterWhatDo
+p Besides, you already know what I'm going to do.
+
+jumpanchor whatDoFollowUpMonster
+hero Not a single real answer...
+contra At least aside from Miss Blood-and-Destruction. It's infuriating, isn't it?
+jumpto whatDoFollowUpJoin
+
+jumpanchor whatDoFollowUpNoMonster
+hero Not a single real answer...
+contra It's *infuriating,* isn't it?
+jumpanchor whatDoFollowUpJoin
+contra Whose buttons are there for us to press...? Whose skin is there for us to get under...?!
+hero Not exactly how I'd put it, but I don't disagree. There must be something we can do. Asking questions just seems to make things worse.
+
+jumpanchor genericFracture
+n She fractures again.
+
+// Ending //
+
+jumpanchor endingStart
+n Wait... that's not right.
+contra Go on...
+n You take a step forward. Your foot lands. But it lands... different. You experience a firm footfall, a gentle tread, a confident stride.
+n You can feel yourself rupture. The room spins, your perception multiplying in a sickening kaleidoscope as your very self is pulled in incomprehensibly many directions.
+
+jumpanchor endingBlade
+n All at once you charge forward, knife gleaming to slay the Princess, just as you strike at her bindings and leave her to languish alone.
+jumpto endingBladeJoin
+
+jumpanchor endingNoBlade
+n You find the blade suddenly in your hands. All at once you use it to strike at her bindings as you remain upstairs and slay her and leave her to languish alone.
+jumpanchor endingBladeJoin
+n Is this what the end of the world looks like? What an unbearable mess...
+contra But this... w-we can't --
+hero ... Do you not have anything *witty* to say? I could use a good bit of wit right now.
+contra No, I don't! Because this isn't fun! How are we supposed to have fun if everything is happening at the same time? It's the same as nothing happening, and nothing is *excrutiating!*
+n Luckily for all of us, nothing, and everything, doesn't go on forever. The world, and the Princess, collapse in on themselves before it all --
+linebreak
+hero ... Falls apart?
+contra I think He's gone.
+hero We were never going to salvage this, were we?
+truth The Princess in front of you is all wrong, multiple faces and bodies smashed together in ways you can't begin to make sense of. Their skin stretches and contorts, veins bulging. They have too many fingers on too few hands. The pristine blade still sticks out of one of their chests, the face above it staring blankly into the distance.
+
+jumpanchor endingFirstVessel
+truth A textured nothingness begins to creep into the edges of your vision.
+jumpto endingVesselJoin
+
+jumpanchor endingNotFirstVessel
+truth A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.
+jumpanchor endingVesselJoin
+p What happened to us? What are we? There are parts of us that are dead, and the others.... they just don't fit.
+p We can feel them moving around in spaces they don't belong. It's all so uncomfortable.
+p Did you do this? Did we do this? Can... can you pull us back apart? Can you fix us?
+contra We should help her. I think... we did this.
+hero How... surprisingly sincere.
+contra I didn't actually think our actions had consequences.
+hero It's a little late for regret, isn't it?
+p Please?
+
+jumpanchor endSilentFirstVessel
+truth Something reaches out and folds her into its myriad arms.
+truth But you don't know if she had the chance to hear your silence. She's gone, replaced with something else.
+
+jumpanchor endSilentNotFirstVessel
+truth Something reaches out and folds her into its myriad arms.
+truth But you'll never know if she hears your silence. She's gone. Memory returns.
+
+jumpanchor endReplyFirstVessel
+truth Something reaches out and folds her into its myriad arms.
+truth But you don't know if she had the chance to hear your reply. She's gone, replaced with something else.
+
+jumpanchor endReplyNotFirstVessel
+truth Something reaches out and folds her into its myriad arms.
+truth But you'll never know if she hears your reply. She's gone. Memory returns.

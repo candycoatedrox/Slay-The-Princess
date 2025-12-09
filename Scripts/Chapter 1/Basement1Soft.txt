@@ -413,6 +413,7 @@ jumpto retrieveSorryJoin
 jumpanchor retrieveB
 p So what? You're going to try and kill me?
 jumpanchor retrieveSorryJoin
+truth Her voice becomes a low growl.
 p You'll regret this. I promise you. But go ahead. Run along and get whatever you're planning to get.
 nowplaying The World Ender
 p But you'd better hope that I don't slip these chains before you make it back down here.
@@ -439,7 +440,7 @@ n Where the Princess sat only a moment ago, there's only a severed arm, its cool
 hero Is it just me or did this room get a lot bigger?
 
 jumpanchor retrieveWrongFoot
-n Oh, you *coward.*
+n Oh, you *coward!*
 p No. I don't think we can.
 jumpanchor retrieveExploreJoin
 p Why don't you come closer? I have something to show you.

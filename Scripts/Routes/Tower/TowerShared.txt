@@ -1,0 +1,175 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+n You know I can hear you, right? It's going to be a lot harder than you think to keep secrets from me.
+broken What does it matter what He knows? There's nothing we can do to stop her. She's just going to kill us again.
+n She is *not* going to kill you unless you let her. But slaying the Princess and saving the world is going to be much more difficult than it has to be if you spend the whole time second guessing yourself.
+
+jumpanchor assume
+broken Of course we died. She didn't feel pain. She didn't feel much of anything, did she? And she broke every bone in our body before she decided to let us die.
+jumpto assumeJoin
+
+jumpanchor assumeUnharmed
+broken Of course we died. We couldn't land a *single* blow on her and she broke every bone in our body before she decided to let us die.
+jumpanchor assumeJoin
+broken What were we supposed to do to stop her then? What are we supposed to do to stop her now? It's pointless.
+n She's *just* a Princess. Slaying her shouldn't have been difficult, but congratulations. You've been given another chance to actually do this right.
+
+jumpanchor assume2
+broken If she ended the entire world, why should we even bother? We might as well just walk up to that cabin, break her chains, and let her do whatever she wants. It's all the same in the end.
+n Just because she's capable of ending the world doesn't mean that you're not capable of slaying her. Both of those things can be true at the same time. So chin up, I believe in you.
+
+jumpanchor princessHowDangerPessimist
+broken We're not. We might as well just pledge ourselves to her and stop pretending that we're capable of doing anything in this situation. She probably doesn't even need to try to overpower us.
+jumpto pessimismComment
+
+jumpanchor princessQuotePessimist
+broken Or we could pledge ourselves to her and stop pretending that we're capable of doing anything in this situation. She probably doesn't even need to try to overpower us.
+jumpanchor pessimismComment
+hero Can we tone down the pessimism just a smidge?
+broken I'm not being a pessimist. I'm just being realistic.
+hero You're being annoying.
+n Just ignore their bickering, and whatever you do, don't "pledge yourself to her." I cannot stress enough how absolutely *catastrophic* that would be for everyone. Yourself included.
+
+jumpanchor princessSpecial
+broken Who cares if *you* think we're special? As far as I can tell, the only thing special about us is that we get to experience painfully dying all over again.
+
+jumpanchor princessCagey
+n The less you know about her, the better.
+
+jumpanchor princessCageyPessimist
+broken Even if He's hiding something, I doubt it would help us. I'm sure knowing what He knows would only make things worse.
+jumpto pessimismComment
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+broken Lying? Cheating? Why would she even bother? She didn't need to do anything like that last time.
+hero She caught us off-guard last time. We'll be fine. Let's just keep our wits about us.
+n At least one of you still has a shred of sense. Just make sure you listen to *him* and not that... whiner.
+
+jumpanchor hillDialoguePessimistJoin
+hero I agree. If she's wrongfully imprisoned then we should rescue her, but if He's telling the truth, we shouldn't just hand her the world on a silver platter.
+n "Rescue her?" Given the stakes of the situation, there isn't really a difference between "rescuing her" and "pledging yourself to her." Either would be terrible.
+n So please, try to ignore *both* of those knuckleheads and focus on saving the world. Let's not make this harder than it has to be.
+
+// Abort attempt //
+
+jumpanchor abortStart
+broken You're right. We should just leave. There's nothing we can do to stop her, so we might as well enjoy what little time we have left.
+
+jumpanchor abortReturn
+broken So much for getting out of here...
+
+// Cabin //
+
+jumpanchor cabinIntro
+broken If that's what you want... I guess I don't have a say here.
+linebreak
+nowplaying The Tower
+n The interior of the cabin is larger and more grandiose than its humble exterior would suggest. The only furniture of note is a massive marble altar with a pristine blade perched on its edge.
+n The blade is your implement. You'll need it if you want to do this right.
+hero Why do we feel so... *small?*
+broken We don't feel small. We *are* small.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+n Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
+
+jumpanchor takeBlade
+n You take the blade from the altar. It would be difficult to slay the Princess and save the world without a weapon.
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+n That's because there isn't a mirror. There's the altar, the blade sitting on the altar, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+broken Who cares if there's a mirror? We're all going to die anyway, and I'm sure that if we looked in there we'd just see something sad and miserable looking back at us. We don't need any reminders of what we are. It would only make things worse.
+n *Sigh.* For the last time, you're not going to die unless you let it happen. And luckily for you, there isn't a mirror, so no one needs to worry about confronting a grisly visage any time in the near future.
+n Though, for what it's worth, if there were a mirror, I'm sure that you wouldn't find anything "sad" or "miserable" in it looking back at you. You probably look perfectly normal.
+hero "Probably?" Do you not know what we look like?
+broken He knows. He just doesn't have the heart to tell us.
+
+jumpanchor mirrorHandsome
+broken Please don't. I'd rather the Princess kill us again than see how dreadful we are.
+hero I care less about what we look like and more about whether we're being lied to. If He's willing to lie about something as innocuous as a mirror, what else is He hiding from us?
+n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would it even do?
+
+jumpanchor mirrorGone
+broken We should count ourselves lucky. Some things are better left unseen.
+
+// Stairs //
+
+jumpanchor stairsNoBlade
+hero No blade this time? Yeah. Maybe she'll be more receptive if we're unarmed.
+broken Blade. No blade. It doesn't matter.
+linebreak
+
+jumpanchor stairsStart
+n The door to the basement creaks open, revealing a spiral staircase, its steps almost as deep as you are tall. The smell of incense drifts up from below. For a moment, you almost feel at ease.
+broken Huh. This is actually kind of nice.
+n It's still a stone basement. If the Princess lives here, slaying her is probably doing her a favor.
+n Her booming voice rolls up the stairs.
+p Is that a guest I hear? Don't linger on the stairs. *Come down and witness me.*
+hero You weren't kidding when you said it was "booming." She wasn't like this last time.
+
+jumpanchor stairsStartNoBlade
+n You shouldn't have come down here unarmed.
+jumpanchor stairsJoin
+broken We need to get down there. She wants us to see her. We... need to see her.
+hero Should we be worried about your sudden change in attitude? Just a few minutes ago you were going on about how pointless everything was, now you *want* to go down there?
+n It doesn't matter what that little voice says. He's not the one making the decisions... Though if his ramblings get you to the Princess, they get you to the Princess.
+
+// Basement //
+
+jumpanchor basementStart
+n Making your way down the spiral staircase is a time consuming and exhausting effort, every step requiring you to clamber over one edge before dropping to the next. But soon, the end comes into view, and you tumble to the bottom, entering the vast, temple-like room beyond.
+n The Princess towers over you, almost glowing in the weak starlight, her figure framed by a stained glass window. Her long hair billows around her, and a chain binds her wrist to the far wall.
+broken The chain is nothing to her. It might as well be a toy for all the good it would do. I told you it was pointless to resist her.
+p The little bird has returned to me. I wonder what he wants.
+
+jumpanchor basementStartBlade
+p You've brought that knife again... even though you know it's useless. Such charming audacity.
+p DROP IT.
+
+jumpanchor dropWilling
+n The blade slips from your fingers and clatters uselessly to the floor.
+hero We didn't have to do that.
+n And yet you did.
+broken She's so much more than us. You wouldn't understand what it feels like to be in her presence.
+jumpto dropJoin
+
+jumpanchor dropForced
+n As if on command, the blade slips from your grasp. It clatters uselessly to the floor.
+hero But we *didn't* drop it. We decided to grip it tighter, remember? Are you really just going to let that happen to us?
+n I have a duty to report facts as facts, and the fact is that you dropped the blade.
+broken Of course we dropped it. She's so much more than us. You wouldn't understand what it feels like to be in her presence.
+jumpto dropJoin
+
+jumpanchor dropJoin
+n Oh, I understand what's going on, and you'd better snap yourself out of it.
+jumpto basementStartJoin
+
+jumpanchor basementStartNoBlade
+p I see your hands are empty. You've already given up, haven't you? You aren't even going to try and kill me. How sweet.
+p And more than a little disappointing.
+broken She's... disappointed in us?
+jumpto basementStartJoin
+
+jumpanchor basementStartJoin
+p KNEEL.
+
+jumpanchor kneelResistFirst
+n But the word doesn't leave your mouth. Instead, your legs buckle, and your knees hit the floor.
+jumpto kneelJoin
+
+jumpanchor kneelResistAgain
+p Oh? Are you still trying to defy me? I. Said. KNEEL.
+n Your legs buckle, and your knees hit the floor.
+jumpto kneelJoin
+
+jumpanchor kneelWilling
+n On her command, you fall to the floor, knees painfully connecting with hard stone.
+jumpto kneelJoin
+
+jumpanchor kneelJoin
+p That's my good little bird. Now... why don't we talk?

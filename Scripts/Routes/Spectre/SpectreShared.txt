@@ -1,0 +1,89 @@
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+cold That's fine. It wasn't very hard to kill her last time. We'll just do it again.
+n Well, if for whatever reason you're going to insist that this has happened before, at least your heart's in the right place.
+
+jumpanchor assume
+cold Oh, we listened to you plenty. We slew the Princess, just like you asked us to. And then you locked us away in an empty void for eternity. So we slew ourselves, too.
+n Well, if you killed yourself then you *weren't* listening to me. Because I would never want you to do that. Believe it or not, I care about you.
+
+jumpanchor assume2
+cold It doesn't matter, because we didn't fail to slay her, and if she's really back, which I doubt, it'll be just as easy to do it again. But after that nasty trick you pulled on us, maybe she's not the only one around here in need of slaying.
+n Just stay focused, will you?
+
+jumpanchor princessTeleport
+hero That's a good point. How do we know we didn't have things backwards? Maybe slaying the Princess was what ended the world, not the other way around.
+cold Yes, maybe this whole thing was a trick to get us to end the world. And now we get to go through the whole charade again wholly aware of what's waiting for us at the end.
+cold But that's assuming she's alive in that cabin. We did kill her, after all.
+n You're going to find her in the cabin. If the Princess had actually been slain, you wouldn't be here.
+n And let me assure you, killing her will not end the world. I don't know what you think happened to you "last time," but it's a load of nonsense. You'll get your happy ending, I promise.
+hero That's exactly what we're afraid of.
+n Really? Living happily ever after sounds *that bad* to you? Oh well, there's no use arguing over your masochism. The cabin awaits.
+
+jumpanchor princessSpecial
+n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
+hero Oh. I didn't know we were *special.*
+cold Of course we're special.
+
+jumpanchor princessCagey
+cold This is boring. He's clearly not interested in talking, so let's just do as He says and maybe He'll stop bothering us.
+
+// Hill dialogue //
+
+jumpanchor hillDialogue
+cold She won't be a problem.
+
+// Abort attempt //
+
+jumpanchor abortStart
+cold Oh? Do you think there's something else out there? All right, let's see what we can find. It's bound to be more interesting than doing the same thing over again.
+
+jumpanchor abortReturn
+cold Oh well, cabin it is.
+
+// Cabin //
+
+jumpanchor cabinIntro
+nowplaying The Spectre
+n The interior of the cabin is cold, a soft odor of dirt permeating the air. Cobwebs flutter in the corners. You can hear wind whistling outside, banging the shutters against the windows. The only furniture of note is an elegant antique table with a pristine blade perched on the edge.
+n The blade is your implement. You'll need it if you want to do this right.
+hero It feels like no one's been here for a long, long time.
+cold Like I've been saying. She's dead. We killed her already.
+
+jumpanchor cabinDifferent
+hero *Very* different.
+n Maybe that's because you haven't actually been here. I hope this means you'll finally drop that ridiculous past-life nonsense. You haven't died, and you certainly haven't already slain the Princess.
+n So focus up. The world is depending on you.
+
+jumpanchor takeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+
+// Ask about the mirror //
+
+jumpanchor askMirror
+n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
+
+jumpanchor askMirrorStart
+cold Who cares if there's a mirror? Let's just go into the basement and find her body so we can be done with this.
+
+jumpanchor mirrorGone
+cold And now it's gone. Let's not spend much longer worrying over it. Clearly it's not even important enough to be acknowledged.
+
+// Stairs //
+
+jumpanchor stairsStart
+n The door to the basement groans open, revealing an old banister and a creaky, wooden stairwell. Everything is coated in a thick layer of dust, and you can feel it settle into your lungs as you breathe in the stale air. The very building itself feels dead. If the Princess lives here, slaying her would probably be doing her a favor.
+n The room below is silent.
+cold Nobody's here. Naturally.
+n As much as I appreciate the optimism, you shouldn't be so sure.
+hero I guess we'll just have to go down there and see.
+linebreak
+n As you descend the final step, the form of the Princess comes into view. A skeletal body lying in a heap on the floor, its wrist still bound to the wall by a thick chain.
+hero Okay. She's definitely dead.
+cold It's just like I told you -- /// interrupt
+n Before you have a chance to finish your thought, the top of a head appears from underneath the floor.
+n Two deep-set eyes stare up at you, followed by a mischievous skeletal grin.
+n And finally, the rest of the body floats up to join the head. Wait... this isn't right. What's going on here?
+hero A g-g-g-ghost!
+cold Oh. Wow. How absolutely terrifying. What's a ghost supposed to do to us?
+p Oh. It's you. Hiya, killer. I was hoping to see you again. I have some issues with how our last meeting went.
+truth She speaks in a whisper, her voice soft and playful.

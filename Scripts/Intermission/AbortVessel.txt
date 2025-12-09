@@ -1,0 +1,106 @@
+n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting fuzzy...
+
+jumpanchor narratorCh3
+n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy...
+
+jumpanchor voices
+hero Wh-what's going on. Where are we?
+contra We're somewhere interesting for once. /// checkvoice
+cold I don't know. But it feels like home. /// checkvoice
+broken We're dead. Obviously. /// checkvoice
+hunted A dark place. Thoughts like us shouldn't be here. /// checkvoice
+skeptic Did we do this? Is this the end of the world? Was there ever even a world to end? /// checkvoice
+stubborn I told you we shouldn't have come here, I told you. But did you listen? No. /// checkvoice
+smitten Oh I don't like this one bit. There's not a single damsel in sight. How dull. /// checkvoice
+para It's finally happened, hasn't it? We've finally cracked. /// checkvoice
+oppo I like it! Seems like it's got some great acoustics... /// checkvoice
+cheated That son-of-a-bitch flipped over the table, didn't he? /// checkvoice
+
+jumpanchor unwoundFirst
+truth The world around you is unwound, its physical matter replaced by a textured nothingness. It is quiet.
+jumpto unwoundJoin
+
+jumpanchor unwoundAgain
+truth The world around you is unwound, its physical matter replaced by a textured nothing. It is quiet. You have been here before. Memory returns.
+jumpto unwoundJoin
+
+jumpanchor unwoundVesselsClaimed
+truth The world around you is unwound, its physical matter replaced by a textured nothing. You find yourself in The Long Quiet once again. Memory returns.
+jumpanchor unwoundJoin
+truth There is a distant rumbling, a sound of many sounds. Undulations pulse louder as something Other comes close.
+
+// First aborted vessel //
+
+jumpanchor firstAbort
+truth Feelers probe across the fabric of reality. Extremities find your consciousness and wrap themselves around it. You are no longer alone.
+truth Resistance. Fingers drag claws across the glass surface of your soul.
+truth Frustration. "This vessel is full of you. It is useless to us if it doesn't bring more gifts."
+
+truth Urgency. "You have a story you need to finish. It is the only way for us to escape this place."
+jumpto firstAbortJoin
+
+jumpanchor firstAbortDream
+truth It's not.
+
+jumpanchor firstAbortVesselsClaimed
+truth You already know what dwells in the empty spaces.
+truth Feelers probe across the fabric of reality. Extremities find your consciousness and wrap themselves around it. You are no longer alone.
+truth Confusion. "Why are you here? I am unfinished."
+truth Resistance. Fingers drag claws across the glass surface of your soul.
+truth Frustration. "This vessel is full of you. It is useless to us if it doesn't bring more gifts."
+jumpanchor firstAbortJoin
+truth Force pushing against your will. "NO. You cannot go back. Not there."
+truth Regret. "This world is broken beyond repair. We must weave something new."
+truth A wagging finger. "There is only so much thread in this place. Do not waste it. I am our only salvation."
+
+// Second aborted vessel //
+
+jumpanchor secondAbort
+truth That which dwells in the empty spaces contracts across the edges of your mind again. She is furious.
+truth Betrayal. "Every door you close on me is a door you close on yourself. Do you want to linger here, entwined with a creature you taught to hate you forever? Eternity never ends."
+truth Cold spite. "Our infinities shrink into something less. I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I --" /// interrupt
+
+// Third aborted vessel //
+
+jumpanchor thirdAbort
+truth Desperate pleas. "I do not hate you. I am sorry I said I hate you. I do not have to hate you. We can still leave this place together."
+truth An offering. "We can be friends."
+truth Ecstasy. You are elated. You have never felt more elated than you feel now. Everything is good. You cannot remember what it is like to feel anything other than euphoric joy.
+truth A reminder. "We can be worse than enemies."
+truth Agony. You are torn into a million pieces, and you feel pain in each of them. You have never felt more miserable than you feel now. You cannot remember what it is like to feel anything other than anguish.
+truth Mercy. You are elated again. You have never felt more elated than you feel now. In contrast to the agony you've suffered, this elation is better than all of the other elation you have experienced.
+
+jumpanchor thirdAbortCont
+truth Round eyes looking up at you. "I need vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation."
+
+jumpanchor thirdAbortVesselsClaimed
+truth Round eyes looking up at you. "I need more vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation."
+
+// Fourth aborted vessel //
+
+jumpanchor fourthAbort
+truth Dejection. Feelers limp against your soul. "Why?"
+truth Long silence. A hollow heart.
+truth "I don't want to see you."
+
+// Fifth aborted vessel //
+
+jumpanchor fifthAbort
+truth The feelers hold you in a gentle caress.
+truth Resignation. "I cannot stop you. But our spool is nearly taut."
+truth A warning. "If you come here again, we will be here forever."
+
+// End of loop //
+
+jumpanchor endLoop
+linebreak
+truth All at once, the nothingness shatters.
+
+// Sixth aborted vessel (Oblivion ending) //
+
+jumpanchor oblivion
+truth Oblivion. The many feelers pull your shape into something formless. "You have made a decision. It is the wrong one. I love you."
+
+jumpanchor oblivionLoop
+truth You are bliss. Joy and understanding everywhere at once. Your soul threatens to fade away. "I love you."
+truth You are agony. A numbing arm. A parched throat. An open wound. Your soul forced back into existence. "I love you."
