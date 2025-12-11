@@ -43,7 +43,7 @@ public class Finale extends Cycle {
     protected void showWarningsMenu() {
         manager.warningsMenu().setCondition("current", false);
         
-        this.trueExclusiveMenu = true;
+        manager.setTrueExclusiveMenu(true);
         switch (parser.promptOptionsMenu(manager.warningsMenu())) {
             case "general":
                 manager.showGeneralWarnings();
@@ -55,7 +55,7 @@ public class Finale extends Cycle {
                 break;
         }
 
-        this.trueExclusiveMenu = false;
+        manager.setTrueExclusiveMenu(false);
     }
     
     // --- COMMAND OVERRIDES ---

@@ -12,7 +12,6 @@ public abstract class Cycle {
 
     // Utility variables for option menus
     protected OptionsMenu activeMenu;
-    protected boolean trueExclusiveMenu = false; // Only used during show() menu
     protected boolean repeatActiveMenu = false;
     protected String activeOutcome;
     protected boolean reverseDirection = false;
@@ -102,14 +101,6 @@ public abstract class Cycle {
                 this.currentVoices.put(v, false);
             }
         }
-    }
-
-    /**
-     * Accessor for trueExclusiveMenu
-     * @return whether the active menu is truly exclusive (i.e. not even meta commands are available until an option is selected)
-     */
-    public boolean trueExclusiveMenu() {
-        return this.trueExclusiveMenu;
     }
 
     // --- TIMER ---
@@ -658,6 +649,9 @@ public abstract class Cycle {
      */
     protected void giveDefaultFailResponse(String outcome) {
         switch (outcome) {
+            case "cMeta":
+                break;
+
             case "cGoFail":
                 parser.printDialogueLine(new DialogueLine("You cannot go that way now."));                
                 break;

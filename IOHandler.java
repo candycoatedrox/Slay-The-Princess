@@ -194,12 +194,7 @@ public class IOHandler {
                 return this.parseOptionChoice(cycle, options, exclusiveOverride);
             }
         } else {
-            boolean isTrueExclusive = false;
-            if (cycle == null) {
-                isTrueExclusive = true;
-            } else if (cycle.trueExclusiveMenu()) {
-                isTrueExclusive = true;
-            }
+            boolean isTrueExclusive = manager.trueExclusiveMenu();
 
             if (options.isExclusive() || isTrueExclusive) {
                 if (isTrueExclusive) {
@@ -327,15 +322,18 @@ public class IOHandler {
         String commandOutcome = "c";
         switch (c) {
             case HELP:
-                this.manager.help(argument);
+                manager.help(argument);
                 commandOutcome += "Meta";
                 break;
             case SHOW:
                 cycle.show(argument);
                 commandOutcome += "Meta";
                 break;
+            case SETTINGS:
+                manager.settings();
+                commandOutcome += "Meta";
             case TOGGLE:
-                this.manager.toggle(argument);
+                manager.toggle(argument);
                 commandOutcome += "Meta";
                 break;
             case GO:

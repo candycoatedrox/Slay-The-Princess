@@ -1,11 +1,150 @@
+n You're on a -- /// interrupt
+cheated Don't lose your head. We're in a cabin, and we'll take it from here.
 
+jumpanchor startBlade
+hunted Everything feels like it finally fits, doesn't it? We're up here which is different, and different is good. And our steel claw is already in our hand.
+contra Oho! What if we throw it out the window?
+stubborn Over my dead body.
+broken That wouldn't be very hard. We've died a lot. But I can't say I mind anymore.
+smitten Besides, what better way to die so very many times than at the sharp hands of a beautiful woman.
+skeptic I'm sure I can think of a better way to die.
+cold Eh, they're all the same, really.
+para How about we stop thinking about horrible ways to die? I don't want us to accidentally *manifest* anything.
+oppo The only thing we're going to manifest is finally ending up on top.
+jumpto startJoin
 
+jumpanchor startNoBlade
+hunted No steel claw though.
+contra Was tossing it the only thing we've done that was permanent? That's a sick joke, universe. A sick, sick joke.
+skeptic If it's gone for good, then maybe we never actually needed it.
+stubborn That's what I've been telling you all. We can do this without it. We're tougher than steel.
+para Yeah. Mind over matter.
+smitten Who needs violence when you have love?
+cold Who needs love when you've mastered yourself?
+broken Who needs anything when we don't matter?
+oppo Well, boys? Are we ready?
+jumpanchor startJoin
+n There are entirely too many of you. How many times have you been here?! This isn't good, this is -- /// interrupt
+cheated How about you stick to describing things, and we'll stick to doing them?
 
+jumpanchor stubbornStartBlade
+stubborn Yeah. Leave it to the pros. We'll notch up that win in no time.
+jumpto startJoin2
 
+jumpanchor stubbornStartNoBlade
+stubborn Yeah. Leave it to the pros.
+jumpanchor startJoin2
+smitten Narrator! We heroically stride through the door and towards our destined final encounter with our star-crossed lover!
+n Fine by me. You walk to the door and onto the basement stairs, only -- /// interrupt
+cheated It's more of a slide? We know.
+n Fine. I'll just shut up and speed this whole thing along.
+n ... Are you sure you don't want me to describe the stairs? Or this room? Or anything? It feels like I'm hardly a part of this.
 
+jumpanchor stairsBlade
+cheated Don't care. Just want to win.
+jumpto stairsJoin
 
+jumpanchor stairsNoBlade
+cheated Don't care. Just want to see how this ends.
+jumpanchor stairsJoin
+linebreak
+n Fine. you make your way to the basement.
+p You know, this last time I killed you and you didn't pop right back up again?
+p I thought I'd actually done it! I thought I'd cut you into so many pieces you just weren't able to stitch yourself back together.
+p But I guess we're not done! That's okay with me. It's good, even. I like that!
+p I got something ready for you while you were gone. Do you want to see it?
+p I'm not going to wait for an answer. I'm just gonna show you! It's worth it though. Just you wait. And not for very long, because I'm going to do it right now.
+n *Distracted humming...*
+hero Are you going to say what she does?
+n Oh, do you want me to talk now?
+hero Well, yeah. She says she has something new. I want to hear about the new thing.
+cheated Yeah, me too.
+oppo I think I speak for all of us when I say that I would like to hear you describe her new thing.
+n Really? Okay then.
+linebreak
+p Here we go! Now!
+n The Princess's skin twists, splitting into red blooms of raw meat as it stretches and tears. And then it... erupts.
+n She becomes a wave of blood and viscera, pieces of her splattering against the walls. All that remains in the center of the room is a skeleton of blades. A heart beats furiously in its cage of a chest.
+p Are you ready for what comes next?
+hero Holy *shit!*
+smitten She's gorgeous! Absolutely divine!
+stubborn Yes! Behold, the perfect woman!
+contra Do you think we can throw *her* out the window?
+cold That looked... painful.
+skeptic How is she still alive?
+hunted Heart's still beating. That's all she needs.
+para This is fake! This is all fake! That's all! Just made up!
 
+jumpanchor voicesContBlade
+oppo She doesn't even have a back anymore. How are we supposed to stab her in it?
+jumpto voicesContJoin
 
+jumpanchor voicesContNoBlade
+oppo I'd say we bow down to her right now if that had ever even slightly worked for us.
+jumpanchor voicesContJoin
+broken This is all just a sick joke. I hate existing.
+cheated We're screwed. I quit! I'm done! Forget it!
+linebreak
+truth They begin to talk over one another. Their arguments go in circles, never leading anywhere, and all the while the noise builds until it is nearly unbearable. You can barely even hear yourself think.
+
+// Menu //
+
+jumpanchor empty
+truth All at once, it is blessedly quiet.
+truth You stand in front of the Princess in a basement identical to the one you first encountered oh so long ago.
+n ... What just happened? It's so quiet.
+
+jumpanchor empty2FirstVessel
+truth The basement is gone, replaced by a textured nothingness.
+jumpto empty2Join
+
+jumpanchor empty2NotFirstVessel
+truth The basement is gone, replaced by a textured nothingness. Somehow, it feels familiar.
+jumpanchor empty2Join
+p Something feels different about you. It almost makes *me* feel different. Like I should actually take this seriously for once.
+
+// Endings //
+
+// "Water and Steel" ending: claim the Razor (Full) //
+jumpanchor endBlade
+truth You do not act, and yet through that inaction your body moves on its own. The Princess strikes as you approach, but as her blow finishes its arc, you're already somewhere else.
+p You're incredible.
+truth Your weapons clash again and again, you and her entering a rhythm free of thought and free of self.
+truth There is only the dance. The ebb and flow, the shifting of the tides back and forth between you.
+truth The deeper you fall into your play, the faster your hearts pound, and the faster the momentum volleys between you.
+truth An endlessly building crescendo and then... an opening.
+truth Your blade strikes free of volition, and hers strikes, too.
+truth Both strikes are lethal. Neither of you will survive, but neither of you fear what's to come. This is a good ending.
+linebreak
+truth Something reaches out and folds her into its myriad arms.
+
+jumpanchor endBladeFirstVessel
+truth You do not get to see each other die. Something has taken her away, and it's left something else in her place.
+
+jumpanchor endBladeNotFirstVessel
+truth You do not get to see each other die. Nor will you ever. It's time for you to leave. Memory returns.
+
+// "Be formless, shapeless" ending: claim the Razor's heart //
+jumpanchor endNoBlade
+truth You do not act as the Princess approaches, instead allowing her to crash against your form. And yet, there is seemingly nothing for her to crash against.
+truth Again and again she swings at "you," but there never really was a "you" to swing at.
+p This worked before. I was able to make you dead before!
+truth She swings again, and this time, she hits something, or something hits her. She looks down in confused terror as her arm bends and folds in upon itself.
+p Did you do that? It's funny if you did. You're nothing! You've done nothing to me and I've done so much to you and --
+p That's who we are. But it's like you're nothing now. You can't be nothing! If you're nothing, then what am I? Am I nothing, too?
+p No! I'm the one who hurts you!
+truth She hurls herself at you, but as she does, her metal body bends outward, the very contact with what you are repelling her to the point of destruction.
+truth The din of shrieking metal subsides, and something small and delicate falls into your hand. It's her heart. It beats gently, calmly, in your palm.
+linebreak
+truth Something reaches out from the darkness and gently takes her away.
+
+jumpanchor endNoBladeFirstVessel
+truth Not another word is spoken. She's gone, replaced with something else.
+
+jumpanchor endNoBladeNotFirstVessel
+truth Not another word is spoken. It's time for you to leave. Memory returns.
+
+// Mirror //
 
 jumpanchor mirrorGaze
 truth Silence as you reach towards the glass. It's time for you to see what's in it.

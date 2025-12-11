@@ -4,12 +4,15 @@ import java.util.HashMap;
 public class GameManager {
     
     private final IOHandler parser;
-    private Cycle currentCycle; 
+    private Cycle currentCycle;
 
     // Settings
-    private boolean autoContentWarnings = true;
+    private final boolean demoMode = true;
+    private final boolean trueDemoMode = false;
+    private boolean dynamicWarnings = true;
     private boolean showNowPlaying = true;
     private boolean globalSlowPrint = true;
+    private boolean autoAdvance = false;
 
     // The song currently "playing"
     private String nowPlaying;
@@ -35,6 +38,9 @@ public class GameManager {
     private boolean threatenedMound = false;
     private boolean refuseExploreMound = false;
 
+    // Global menus and options
+    private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
+    private final OptionsMenu settingsMenu;
     private final OptionsMenu warningsMenu;
     private final Option intermissionAttackMound;
     private final Option intermissionAttackSelf;
@@ -67,10 +73,26 @@ public class GameManager {
             }
         }
 
+        this.settingsMenu = this.createSettingsMenu();
         this.warningsMenu = this.createWarningsMenu();
         this.intermissionAttackMound = new Option(this, "attackMound", "[Attack the entity.]");
         this.intermissionAttackSelf = new Option(this, "attackSelf", "[Destroy your body.]");
         this.intermissionWait = new Option(this, "wait", "\"I'm not going back.\" [Wait.]");
+    }
+
+    /**
+     * Initializes the settings menu for this manager
+     * @return the settings menu for this manager
+     */
+    private OptionsMenu createSettingsMenu() {
+        OptionsMenu menu = new OptionsMenu(true);
+        menu.add(new Option(this, "warnings", "[Turn dynamic content warnings OFF.]", 0));
+        menu.add(new Option(this, "now playing", "[Turn soundtrack notifications OFF.]", 0));
+        menu.add(new Option(this, "slow print", "[Set print speed to INSTANT.]", 0));
+        menu.add(new Option(this, "auto advance", "[Turn auto-advancing dialogue ON.]", 0));
+        menu.add(new Option(this, "cancel", "[Return to game.]", 0));
+
+        return menu;
     }
 
     /**
@@ -95,6 +117,22 @@ public class GameManager {
      */
     public Cycle getCurrentCycle() {
         return this.currentCycle;
+    }
+
+    /**
+     * Accessor for demoMode
+     * @return whether demo mode is currently enabled
+     */
+    public boolean demoMode() {
+        return this.demoMode;
+    }
+
+    /**
+     * Accessor for trueDemoMode
+     * @return whether "true" demo mode is currently enabled (i.e. whether to stop after meeting the Chapter 2 Princess)
+     */
+    public boolean trueDemoMode() {
+        return this.trueDemoMode;
     }
 
     /**
@@ -128,6 +166,14 @@ public class GameManager {
      */
     public boolean globalSlowPrint() {
         return this.globalSlowPrint;
+    }
+
+    /**
+     * Accessor for autoAdvance
+     * @return whether to automatically continue printing dialogue after each line or wait for player input
+     */
+    public boolean autoAdvance() {
+        return this.autoAdvance;
     }
 
     /**
@@ -239,7 +285,7 @@ public class GameManager {
      * @param song the song title to add to the playlist
      */
     public void addToPlaylist(String song) {
-        if (!this.playlist.contains(song)) {
+        if (!song.isEmpty() && !this.playlist.contains(song)) {
             this.playlist.add(song);
         }
     }
@@ -389,6 +435,22 @@ public class GameManager {
     public Option getIntermissionWait() {
         return this.intermissionWait;
     }
+
+    /**
+     * Accessor for trueExclusiveMenu
+     * @return whether the active menu is truly exclusive (i.e. not even meta commands are available until an option is selected)
+     */
+    public boolean trueExclusiveMenu() {
+        return this.trueExclusiveMenu;
+    }
+
+    /**
+     * Manipulator for trueExclusiveMenu
+     * @param newValue whether the active menu is truly exclusive (i.e. not even meta commands are available until an option is selected)
+     */
+    public void setTrueExclusiveMenu(boolean newValue) {
+        this.trueExclusiveMenu = newValue;
+    }
     
     /**
      * Returns the content warnings menu (allowing the player to choose which set of content warnings they wish to view)
@@ -425,9 +487,28 @@ public class GameManager {
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
-                if (this.nClaimedVessels() == 1) {
-                    if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
-                    if (this.nVesselsAborted == 0) this.directToMound = true;
+                
+                this.addToPlaylist(ending.getPlaylistSong());
+                switch (this.nClaimedVessels()) {
+                    case 1:
+                        this.addToPlaylist("The Shifting Mound Movement I");
+                        if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
+                        if (this.nVesselsAborted == 0) this.directToMound = true;
+                        break;
+                    case 2:
+                        this.addToPlaylist("The Shifting Mound Movement II");
+                        break;
+                    case 3:
+                        this.addToPlaylist("The Shifting Mound Movement III");
+                        break;
+                    case 4:
+                        this.addToPlaylist("The Shifting Mound Movement IV");
+                        break;
+                }
+
+                if (this.demoMode) {
+                    ending = ChapterEnding.DEMOENDING;
+                    break;
                 }
             }
         }
@@ -435,6 +516,39 @@ public class GameManager {
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
             ending = this.currentCycle.runCycle();
+
+            switch (ending) {
+                case NOENDINGS:
+                case THROUGHCONFLICT:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("The Apotheosis");
+                    break;
+                case YOURNEWWORLD:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case PATHINTHEWOODS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
+                    break;
+                case NEWANDUNENDINGDAWN:
+                case ANDEVERYONEHATESYOU:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case WHATHAPPENSNEXT:
+                case STRANGEBEGINNINGS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Unknown Together");
+                    break;
+            }
         } else {
             this.currentCycle = null;
 
@@ -469,9 +583,28 @@ public class GameManager {
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
-                if (this.nClaimedVessels() == 1) {
-                    if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
-                    if (this.nVesselsAborted == 0) this.directToMound = true;
+                
+                this.addToPlaylist(ending.getPlaylistSong());
+                switch (this.nClaimedVessels()) {
+                    case 1:
+                        this.addToPlaylist("The Shifting Mound Movement I");
+                        if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
+                        if (this.nVesselsAborted == 0) this.directToMound = true;
+                        break;
+                    case 2:
+                        this.addToPlaylist("The Shifting Mound Movement II");
+                        break;
+                    case 3:
+                        this.addToPlaylist("The Shifting Mound Movement III");
+                        break;
+                    case 4:
+                        this.addToPlaylist("The Shifting Mound Movement IV");
+                        break;
+                }
+
+                if (this.demoMode) {
+                    ending = ChapterEnding.DEMOENDING;
+                    break;
                 }
             }
         }
@@ -479,6 +612,39 @@ public class GameManager {
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
             ending = this.currentCycle.runCycle();
+
+            switch (ending) {
+                case NOENDINGS:
+                case THROUGHCONFLICT:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("The Apotheosis");
+                    break;
+                case YOURNEWWORLD:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case PATHINTHEWOODS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
+                    break;
+                case NEWANDUNENDINGDAWN:
+                case ANDEVERYONEHATESYOU:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case WHATHAPPENSNEXT:
+                case STRANGEBEGINNINGS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Unknown Together");
+                    break;
+            }
         } else {
             this.currentCycle = null;
 
@@ -522,9 +688,28 @@ public class GameManager {
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
-                if (this.nClaimedVessels() == 1) {
-                    if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
-                    if (this.nVesselsAborted == 0) this.directToMound = true;
+                
+                this.addToPlaylist(ending.getPlaylistSong());
+                switch (this.nClaimedVessels()) {
+                    case 1:
+                        this.addToPlaylist("The Shifting Mound Movement I");
+                        if (ending.getVessel() == Vessel.STRANGER) this.moundSatisfaction += 1;
+                        if (this.nVesselsAborted == 0) this.directToMound = true;
+                        break;
+                    case 2:
+                        this.addToPlaylist("The Shifting Mound Movement II");
+                        break;
+                    case 3:
+                        this.addToPlaylist("The Shifting Mound Movement III");
+                        break;
+                    case 4:
+                        this.addToPlaylist("The Shifting Mound Movement IV");
+                        break;
+                }
+
+                if (this.demoMode) {
+                    ending = ChapterEnding.DEMOENDING;
+                    break;
                 }
             }
         }
@@ -532,6 +717,39 @@ public class GameManager {
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.firstPrincess, this.parser);
             ending = this.currentCycle.runCycle();
+
+            switch (ending) {
+                case NOENDINGS:
+                case THROUGHCONFLICT:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("The Apotheosis");
+                    break;
+                case YOURNEWWORLD:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case PATHINTHEWOODS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
+                    break;
+                case NEWANDUNENDINGDAWN:
+                case ANDEVERYONEHATESYOU:
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Long Quiet");
+                    break;
+                case WHATHAPPENSNEXT:
+                case STRANGEBEGINNINGS:
+                    this.addToPlaylist("The Long Quiet");
+                    this.addToPlaylist("The Shifting Mound Movement V");
+                    this.addToPlaylist("Transformation");
+                    this.addToPlaylist("The Unknown Together");
+                    break;
+            }
         } else {
             this.currentCycle = null;
 
@@ -589,15 +807,9 @@ public class GameManager {
         }
 
         System.out.println();
-        parser.printDialogueLine("By default, dialogue lines will slowly print out, like this.", true);
-        IOHandler.wrapPrintln("Would you like to have dialogue instantly printed instead?");
-        if (this.parser.promptYesNo("You can change this at any time with > TOGGLE PRINT SPEED.", false)) {
-            this.toggleSlowPrint();
-        }
-        
-        System.out.println();
-        IOHandler.wrapPrintln("You can view a list of available commands at any times with > HELP.");
-        IOHandler.wrapPrintln("Press enter to progress dialogue.");
+        IOHandler.wrapPrintln("You can view and change these settings, as well as print speed and auto-advancing dialogue, at any time with > SETTINGS.");
+        IOHandler.wrapPrintln("You can also view a list of available commands at any time with > HELP.");
+        IOHandler.wrapPrintln("Press enter to advance dialogue.");
         IOHandler.wrapPrintln("(You cannot skip through dialogue that is currently printing with enter. This feature may be added in the future.)");
         this.parser.waitForInput();
 
@@ -640,7 +852,10 @@ public class GameManager {
      * Shows the credits of the game
      */
     private void showCredits() {
-
+        System.out.println();
+        parser.printDialogueLine("This game is based off of Slay the Princess, a game created by Tony Howard-Arias and Abby Howard, also known as Black Tabby Games.");
+        parser.printDialogueLine("The original game was written and designed by Tony Howard-Arias, with art, editing, and additional writing by Abby Howard.");
+        parser.printDialogueLine("The game is available on Steam, Nintendo Switch, PS4, PS5, and Xbox, and features everything found in this remake, plus gorgeous hand-penciled art and fantastic voice acting by Jonathan Sims (as the Voices in your Head) and Nicole Goodnight (as the Princess).");
     }
 
     /**
@@ -690,7 +905,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(String warnings, boolean guaranteed) {
-        if (!this.autoContentWarnings) {
+        if (!this.dynamicWarnings) {
             return true;
         }
 
@@ -722,7 +937,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, boolean guaranteed) {
-        if (!this.autoContentWarnings) {
+        if (!this.dynamicWarnings) {
             return true;
         }
 
@@ -745,7 +960,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, String extraWarnings) {
-        if (!this.autoContentWarnings) {
+        if (!this.dynamicWarnings) {
             return true;
         }
 
@@ -766,7 +981,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, String extraWarnings, boolean guaranteed) {
-        if (!this.autoContentWarnings) {
+        if (!this.dynamicWarnings) {
             return true;
         }
 
@@ -793,6 +1008,7 @@ public class GameManager {
         switch (arg) {
             case "help":
             case "show":
+            case "settings":
             case "toggle":
             case "go":
             case "walk":
@@ -947,19 +1163,44 @@ public class GameManager {
     }
 
     /**
-     * Toggles dynamic content warnings or soundtrack notifications on or off
-     * @param argument the setting to toggle on or off
+     * Displays the current settings and allows the player to change them
      */
-    public void toggle(String argument) {
-        toggle(argument, false);
+    public void settings() {
+        // something is up with nested menus like this i think but idk what????
+        boolean repeat = true;
+        this.trueExclusiveMenu = true;
+        
+        while (repeat) {
+            switch (parser.promptOptionsMenu(this.settingsMenu)) {
+                case "warnings":
+                    this.toggleAutoWarnings();
+                    break;
+                case "now playing":
+                    this.toggleNowPlaying();
+                    break;
+                case "slow print":
+                    this.toggleSlowPrint();
+                    break;
+                case "auto advance":
+                    this.toggleAutoAdvance();
+                    break;
+                case "cancel":
+                    repeat = false;
+                    break;
+                default: IOHandler.wrapPrintln("You have no other options.");
+            }
+
+            if (!repeat) break; // I know it *should* do this automatically, but it doesn't for some reason...?
+        }
+
+        this.trueExclusiveMenu = false;
     }
 
     /**
-     * Toggles dynamic content warnings or soundtrack notifications on or off
+     * Toggles settings on or off
      * @param argument the setting to toggle on or off
-     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
      */
-    private void toggle(String argument, boolean secondPrompt) {
+    public void toggle(String argument) {
         switch (argument) {
             case "warnings":
             case "content warnings":
@@ -981,6 +1222,7 @@ public class GameManager {
             case "printing speed":
             case "dialogue speed":
             case "speed":
+            case "slow":
             case "slow print":
             case "slow dialogue":
             case "instant print":
@@ -988,15 +1230,17 @@ public class GameManager {
                 this.toggleSlowPrint();
                 break;
 
+            case "auto":
+            case "auto advance":
+            case "auto-advance":
+            case "advance":
+            case "auto dialogue":
+                this.toggleAutoAdvance();
+                break;
+
             case "":
-                if (secondPrompt) {
-                    this.showCommandHelp(Command.TOGGLE);
-                    break;
-                } else {
-                    parser.printDialogueLine("Would you like to toggle dynamic content warnings (\"WARNINGS\") or soundtrack notifications (\"NOW PLAYING\")?", true);
-                    this.toggle(parser.getInput(), true);
-                    break;
-                }
+                this.settings();
+                break;
 
             default:
                 this.showCommandHelp(Command.TOGGLE);
@@ -1008,11 +1252,13 @@ public class GameManager {
      * Toggles dynamic content warnings on or off
      */
     public void toggleAutoWarnings() {
-        if (this.autoContentWarnings) {
-            this.autoContentWarnings = false;
+        if (this.dynamicWarnings) {
+            this.dynamicWarnings = false;
+            this.settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings ON.]");
             IOHandler.wrapPrintln("[Automatic content warnings have been disabled.]");
         } else {
-            this.autoContentWarnings = true;
+            this.dynamicWarnings = true;
+            this.settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings OFF.]");
             IOHandler.wrapPrintln("[Automatic content warnings have been enabled.]");
         }
     }
@@ -1023,9 +1269,11 @@ public class GameManager {
     public void toggleNowPlaying() {
         if (this.showNowPlaying) {
             this.showNowPlaying = false;
+            this.settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications ON.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been disabled.]");
         } else {
             this.showNowPlaying = true;
+            this.settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications OFF.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been enabled.]");
         }
     }
@@ -1036,10 +1284,28 @@ public class GameManager {
     public void toggleSlowPrint() {
         if (this.globalSlowPrint) {
             this.globalSlowPrint = false;
+            this.settingsMenu.setDisplay("slow print", "[Set print speed to SLOW.]");
             IOHandler.wrapPrintln("[Slow printing has been disabled.]");
         } else {
             this.globalSlowPrint = true;
+            this.settingsMenu.setDisplay("slow print", "[Set print speed to INSTANT.]");
             IOHandler.wrapPrintln("[Slow printing has been enabled.]");
+        }
+    }
+
+    /**
+     * Toggles automatic dialogue advancement on or off
+     */
+    public void toggleAutoAdvance() {
+        if (this.autoAdvance) {
+            this.autoAdvance = false;
+            this.settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue ON.]");
+            IOHandler.wrapPrintln("[Dialogue will now automatically advance.]");
+        } else {
+            this.autoAdvance = true;
+            this.settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue OFF.]");
+            IOHandler.wrapPrintln("[Dialogue will no longer automatically advance.]");
+            IOHandler.wrapPrintln("[Press enter to advance dialogue.]");
         }
     }
 

@@ -475,7 +475,7 @@ public class Script {
      */
     private void printDialogueLine(String characterID, String arguments) {
         boolean isInterrupted = false;
-        Voice checkVoice = null;
+        ArrayList<Voice> checkVoices = new ArrayList<>();
 
         String[] args = arguments.split(" /// ");
         String line = args[0];
@@ -486,34 +486,47 @@ public class Script {
                 if (m.equals("interrupt")) {
                     isInterrupted = true;
                 } else if (m.startsWith("checkvoice")){
-                    if (m.length() > 11) {
-                        checkVoice = Voice.getVoice(m.substring(11));
+                    String[] checkIDs = m.split("-");
+                    if (checkIDs.length > 1) {
+                        for (String id : checkIDs) {
+                            if (Voice.getVoice(id) != null) checkVoices.add(Voice.getVoice(id));
+                        }
                     } else {
-                        checkVoice = Voice.getVoice(characterID);
+                        if (Voice.getVoice(characterID) != null) checkVoices.add(Voice.getVoice(characterID));
                     }
                 }
             }
         }
 
+        boolean checkResult = true;
         Voice v = Voice.getVoice(characterID);
         if (v == null) {
+            if (!checkVoices.isEmpty() && parser.getCurrentCycle() != null) {
+                for (Voice checkVoice : checkVoices) {
+                    if (!parser.getCurrentCycle().hasVoice(checkVoice)) {
+                        checkResult = false;
+                    }
+                }
+            }
+
             if (characterID.equals("t") || characterID.equals("truth")) {
-                parser.printDialogueLine(line, isInterrupted);
+                if (checkResult) parser.printDialogueLine(line, isInterrupted);
             } else if (characterID.equals("p") || characterID.equals("princess")) {
-                parser.printDialogueLine(new PrincessDialogueLine(line, isInterrupted));
+                if (checkResult) parser.printDialogueLine(new PrincessDialogueLine(line, isInterrupted));
             } else {
                 // Invalid character; print error message and skip to next line
                 System.out.println("[DEBUG: Invalid character ID in file " + scriptFile.getName() + " at line " + (this.cursor + 1) + "]");
-                return;
             }
         } else {
-            if (checkVoice != null && parser.getCurrentCycle() != null) {
-                if (parser.getCurrentCycle().hasVoice(checkVoice)) {
-                    parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
+            if (!checkVoices.isEmpty() && parser.getCurrentCycle() != null) {
+                for (Voice checkVoice : checkVoices) {
+                    if (!parser.getCurrentCycle().hasVoice(checkVoice)) {
+                        checkResult = false;
+                    }
                 }
-            } else {
-                parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
             }
+
+            if (checkResult) parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
         }        
     }
 
@@ -569,6 +582,8 @@ public class Script {
 // This is a comment, and will be ignored during execution //
 Trailing spaces and indentation will also be ignored during execution.
 
+Indentation is usually used to indicate conditional dialogue, i.e. dialogue that only triggers if you have certain Voices.
+
 Different functions a script can perform:
   - linebreak
   - linebreak [n]
@@ -595,6 +610,7 @@ Different functions a script can perform:
                 Checks whether the player has the speaker's voice before printing.
           - checkvoice-[id]
                 Checks whether the player has the voice specified by the ID before printing.
+                (Multiple voices can be specified, as long as they are separated with hyphens.)
           - interrupt
                 The line is interrupted.
 */

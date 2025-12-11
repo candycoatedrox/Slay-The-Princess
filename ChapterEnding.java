@@ -41,11 +41,11 @@ public enum ChapterEnding {
     BLINDLEADINGBLIND(Vessel.NEEDLE, 1, -1, false),
 
     // The Fury
-    QUANTUMBEAK(Vessel.FURY, -1, 1, true),
+    QUANTUMBEAK(Vessel.FURY, "An Empty Void that Dared to Dream it Was Alive", -1, 1, true),
     HINTOFFEELING(Vessel.FURY, 0, -2, true),
     LEAVEHERBEHIND(Vessel.FURY, 0, -1, true),
     NEWLEAFWEATHEREDBOOK(Vessel.FURY, 1, 1, false),
-    GOINGTHEDISTANCE(Vessel.FURY, -1, 1, true),
+    GOINGTHEDISTANCE(Vessel.FURY, "The Bell", -1, 1, true),
     IFYOUCOULDUNDERSTAND(Vessel.REWOUNDFURY, 0, 1, false),
 
     // The Tower
@@ -57,7 +57,7 @@ public enum ChapterEnding {
     // The Apotheosis
     SOMETHINGTOREMEMBER(Vessel.APOTHEOSIS, 0, -1, true),
     WINDOWTOUNKNOWN(Vessel.APOTHEOSIS, 0, -1, true),
-    GODDESSUNRAVELED(Vessel.APOTHEOSIS, 0, -1, true),
+    GODDESSUNRAVELED(Vessel.APOTHEOSIS, "A Tapestry Undone", 0, -1, true),
     GRACE(Vessel.APOTHEOSIS, 1, 1, false),
 
     // The Spectre
@@ -69,7 +69,7 @@ public enum ChapterEnding {
     // The Princess and the Dragon
     WHATONCEWASONE(Vessel.PATD, 1, 1, false),
     PRINCESSANDDRAGON(Vessel.PATD, 0, 1, false),
-    OPPORTUNISTATHEART(Vessel.PATD, 0, -1, true),
+    OPPORTUNISTATHEART(Vessel.PATD, "The Life-Taker", 0, -1, true),
     
     // The Wraith
     PASSENGER(Vessel.WRAITH, 1, -1, false),
@@ -113,11 +113,11 @@ public enum ChapterEnding {
     DISSOLVED(Chapter.WILD, Voice.BROKEN),
 
     // The Den
-    HEROICSTRIKE(Vessel.DEN, 0, 0, true),
-    COUPDEGRACE(Vessel.DEN, 0, 1, true),
-    INSTINCT(Vessel.DEN, 0, -1, false),
+    HEROICSTRIKE(Vessel.DEN, "The Rhythm of the Flesh", 0, 0, true),
+    COUPDEGRACE(Vessel.DEN, "The Rhythm of the Flesh", 0, 1, true),
+    INSTINCT(Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
     HUNGERPANGS(Vessel.DEN, 0, -1, false),
-    LIONANDMOUSE(Vessel.DEN, 1, 1, false),
+    LIONANDMOUSE(Vessel.DEN, "Hand-in-Claw", 1, 1, false),
     UNANSWEREDQUESTIONS(Vessel.DEN, 0, 1, false),
 
     // The Wild
@@ -138,8 +138,8 @@ public enum ChapterEnding {
     // The Thorn
     TRUSTISSUES(Vessel.THORN, -1, -1, false),
     ABANDONMENT(Vessel.THORN, -1, -1, false),
-    NEWLEAFSMITTEN(Vessel.THORN, 1, 2, false),
-    NEWLEAFCHEATED(Vessel.THORN, 1, 1, false),
+    NEWLEAFSMITTEN(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
+    NEWLEAFCHEATED(Vessel.THORN, "The Thorn", 1, 1, false),
     
     // The Stranger
     ILLUSIONOFCHOICE(Vessel.STRANGER, 0, 0, true),
@@ -170,7 +170,7 @@ public enum ChapterEnding {
     CONTENTSOFOURHEARTUPSTAIRS(Chapter.HAPPY, Voice.OPPORTUNIST),
 
     // Happily Ever After
-    IMEANTIT(Vessel.HAPPY, 1, 2, false),
+    IMEANTIT(Vessel.HAPPY, "I Meant It", 1, 2, false),
     LEFTCABIN(Vessel.HAPPY, 1, 1, false),
     FINALLYOVER(Vessel.HAPPYDRY, 0, 1, true),
     DONTLETITGOOUT(Vessel.HAPPY, 0, -1, false),
@@ -183,8 +183,8 @@ public enum ChapterEnding {
     // The End of Everything (full game endings)
     OBLIVION,
     NOENDINGS,
-    PATHINTHEWOODS,
     THROUGHCONFLICT,
+    PATHINTHEWOODS,
     NEWANDUNENDINGDAWN,
     ANDEVERYONEHATESYOU,
     WHATHAPPENSNEXT,
@@ -197,6 +197,7 @@ public enum ChapterEnding {
     private Voice newVoice;
 
     private Vessel vessel;
+    private String playlistSong = "";
     private int freedom = 0;
     private int satisfaction = 0;
     private boolean yourNewWorld;
@@ -233,6 +234,8 @@ public enum ChapterEnding {
     /**
      * Constructor for endings where a Vessel has been claimed
      * @param v the Vessel claimed in this ending
+     * @param freedom the amount this ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount this ending alters the Shifting Mound's satisfaction value
      * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
      */
     private ChapterEnding(Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
@@ -240,6 +243,26 @@ public enum ChapterEnding {
         this.nextChapter = Chapter.SPACESBETWEEN;
 
         this.vessel = v;
+        this.playlistSong = v.getPlaylistSong();
+        this.freedom = freedom;
+        this.satisfaction = satisfaction;
+        this.yourNewWorld = yourNewWorld;
+    }
+
+    /**
+     * Constructor for endings where a Vessel has been claimed
+     * @param v the Vessel claimed in this ending
+     * @param playlistSong the song this ending adds to the current playlist
+     * @param freedom the amount this ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount this ending alters the Shifting Mound's satisfaction value
+     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
+     */
+    private ChapterEnding(Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
+        this.isFinal = true;
+        this.nextChapter = Chapter.SPACESBETWEEN;
+
+        this.vessel = v;
+        this.playlistSong = playlistSong;
         this.freedom = freedom;
         this.satisfaction = satisfaction;
         this.yourNewWorld = yourNewWorld;
@@ -277,6 +300,14 @@ public enum ChapterEnding {
      */
     public Vessel getVessel() {
         return this.vessel;
+    }
+
+    /**
+     * Accessor for playlistSong
+     * @return the song this ending adds to the current playlist
+     */
+    public String getPlaylistSong() {
+        return this.playlistSong;
     }
 
     /**

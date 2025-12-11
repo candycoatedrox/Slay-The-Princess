@@ -153,6 +153,12 @@ contra But we already tried turning around and leaving, didn't we? And He threw 
 hero And what's that?
 contra There'll still be plenty of ways to ruin His day.
 
+jumpanchor stairsNonSpecific
+truth You have to pick a staircase.
+
+jumpanchor stairsLeaveAttempt
+contra If we try that, He'll just keep throwing up walls. Come on, just pick a staircase already!
+
 jumpanchor harshStairs
 n You step to the left. The path is cruel against your feet, the impact of each step sending pulsing vibrations up your legs until there's nothing left in them to feel.
 n The air around you grows colder the further you progress, at first a barely-noticeable drop, quickly evolving into a numbing cold.

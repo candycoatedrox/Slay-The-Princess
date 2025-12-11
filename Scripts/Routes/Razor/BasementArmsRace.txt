@@ -1,0 +1,165 @@
+p But don't worry about how bad you did last time. That's part of the fun!
+    stubborn She's got another thing coming if she thinks we're going down easy again. /// checkvoice
+        hunted Pride makes us dead. The only thing that matters is survival. /// checkvoice-stubborn
+    broken Fun for her, maybe. I didn't like dying all over again. /// checkvoice
+        hunted Thinking about dying makes us as good as dead. The only thing that matters is survival. /// checkvoice-broken
+    para She's toying with us. She's acting like she already knows she's won. /// checkvoice
+        hunted Thinking about dying makes us as good as dead. The only thing that matters is survival. /// checkvoice-para
+cheated Actually, does survival matter? We've died twice and nothing bad has come of it. We just need to find a way to win once.
+hero Nothing bad has come of it *yet.*
+n Plenty bad has come of it! You've left at least one entire world to ruin. The people there mattered.
+hunted The past isn't real. There's only here and now.
+n Your internal bickering is cut short by the wet sound of slicing meat. From the Princess's arms erupt twin blades, glistening with her blood, the empty flesh of her arms flopping at her elbows like torn sleeves. The chain clatters to the floor.
+n She's loose, and she is coming for you.
+p You're going to make me walk over to you, aren't you?
+cheated Shit, she's coming for us, and I'm out of ideas.
+
+// Options menu //
+
+jumpanchor coldMenuStubborn
+stubborn Hahahaha yes! Yes! This is the best idea anyone has ever had!
+
+jumpanchor coldMenu
+n The Princess closes the distance, and -- /// interrupt
+hunted We dodge!
+n And you dodge.
+    stubborn And we fight back. /// checkvoice
+        n And you fight back. /// checkvoice-stubborn
+p Oooh. You're fast! But let's see how fast you really are.
+
+jumpanchor coldStubborn
+n You and the Princess enter a quick and vicious exchange, each of you wounding the other, but neither landing a fatal blow.
+stubborn Yes! Yes! This is exactly it!
+n But the dance couldn't last forever. All it takes is a single clumsy moment. She skewers you.
+jumpto coldJoin
+
+jumpanchor coldNoStubborn
+n You dodge the Princess's blows for as long as you can, sustaining only nicks and cuts as you attempt to avoid her blades. But it isn't long before you're winded, your feet a little slower, your gait a little clumsier.
+n That's all the opening she needs. She skewers you.
+jumpto coldJoin
+
+jumpanchor coldJoin
+p Gotcha!
+
+jumpanchor stubbornMenu
+hero I guess we have a weapon.
+cheated Okay. I'm in. Let's do this.
+    broken She's going to kill us. /// checkvoice
+    para This can't be the right answer. It's too easy! /// checkvoice
+cheated Well, if we die, we die, right? Then we can try again next time.
+    broken Bad idea. But it's not like any of you listen to me. /// checkvoice
+    para Are you sure? /// checkvoice
+
+cheated Yeah! No more moping, we're gonna fight her, and we're gonna win!
+n Blade poised to strike, you charge the Princess.
+p Oh, so you do want a fight, huh? Okay! Yes! I love this! Try to stab me! Try to stab me and see what happens!
+hero Here goes... we can make this work.
+hunted Yes. If we pay attention, we won't die.
+    broken And what if we don't? /// checkvoice
+    para Yeah. Mind over matter, mind over matter, mind over matter. What if we can't do this? /// checkvoice
+n You and the Princess exchange a flurry of blows, and you manage to narrowly avoid death several times.
+n Until you finally see it. An opening.
+hunted It's a trick. Don't take it.
+cheated No, screw that. Ours! Ours! I called it, it's ours and we're taking it!
+n And you do take it. But as you close in, yet another blade erupts from the Princess. You have no time to react before you feel it sliding through your ribs.
+hunted A trick. I knew it. I told you to be careful of tricks.
+cheated What?! From where?
+n From her knee, apparently.
+p Hehehehe. Too slow!
+cheated Oh that's bullshit! Bloody unfair!
+n Unfortunately for the sake of the world, fair doesn't factor into this. Another of her blades comes slicing up to finish the job. She skewers you.
+linebreak
+truth Everything goes dark.
+hero Ow.
+p Ribbons! I'm going to make you ribbons! This is so much fun and I want to celebrate.
+linebreak
+truth All of a sudden, everything comes back into focus. The Princess stands in front of you with a manic grin on her face.
+stubborn It would have worked if we had just stabbed her harder.
+
+
+jumpanchor oppoMenu
+cheated She isn't one to talk and we shouldn't be either.
+    stubborn I agree. Talking is boring. We should just get back to fighting her! /// checkvoice
+        cheated That's not helpful. We already tried that one, didn't we? /// checkvoice-stubborn
+    broken He's right. I don't think we can talk this out. I think she wants to kill us. /// checkvoice
+        cheated Exactly. I think she established that at some point between stabbing us to death and directly telling us, just now, that she was going to kill us. /// checkvoice-broken
+    para Exactly. She wants us dead, you know! /// checkvoice
+        cheated Exactly. I think she established that at some point between stabbing us to death and directly telling us, just now, that she was going to kill us. /// checkvoice-para
+
+jumpanchor oppoStabbing
+p Nope! But I don't need anyone to tell me that. I know I'm good at what I do! The best, I think.
+n The Princess pauses for a moment to further ponder your ill-placed compliment.
+p Hey, what gives? Are you trying to get on my good side? You're not bored of me stabbing you, are you?
+
+jumpanchor oppoJoin
+hunted We should coil ourselves. She's about to pounce.
+    stubborn Just get ready to fight back. /// checkvoice
+    broken We're screwed. Again. I'll see you all when we die. /// checkvoice
+    para I hate this. Every choice we make is wrong. /// checkvoice
+n But before you can finish another thought, the Princess closes the distance and -- /// interrupt
+hunted Dodge. Now!
+n Fails to hit you.
+    stubborn Haha, yes! /// checkvoice
+p Oooh, you're a fast one! That's fun! But I think I can get even faster.
+
+jumpanchor oppoStubborn
+stubborn Now hit her back!
+n You dodge and parry and strike and are struck, her nicking your flesh and you nicking her skin to reveal shining metal below. But eventually you slip up. You lose the pattern, just for a moment.
+n A blade flashes through the air, and she skewers you.
+
+jumpanchor oppoNoStubborn
+    broken I'm going to be quiet for a bit now. Let me know when we die again. /// checkvoice
+    para I don't like the way she said that." /// checkvoice
+n You dodge and parry and dodge and parry in an endless repeating pattern, but you can only keep it up so long before making a mistake. The pattern breaks for just long enough.
+n She skewers you.
+
+
+jumpanchor brokenMenu
+n You throw your hands in the air and drop your blade.
+p You can't surrender! Don't you know it takes two to stop a fight?
+cheated Ah, shit.
+n Before you can do anything else, she charges you and -- /// interrupt
+hunted Dodge! We dodge!
+n Huh. Okay. You dodge.
+p Aw. I thought you were surrendering.
+n And then she skewers you.
+linebreak
+truth Everything goes dark.
+hero Ow.
+linebreak
+truth All of a sudden, everything comes back into focus. The Princess stands in front of you with a manic grin on her face.
+cheated Huh. That's weird. The blade's back in our hand.
+broken Can't even surrender right.
+
+
+jumpanchor smittenMenu
+n Now I've tolerated quite a bit from you, but this is a bridge too far. Please don't try romancing the Princess. She wants to kill you! She's going to end the world if you don't stop her.
+hero Yeah... do we have to flirt with the murderous monster?
+hunted I'd rather not.
+    stubborn I'm into it. /// checkvoice
+        cheated I can't say I mind, either. If it weren't for all the cheating, I'd say she's pretty cute. /// checkvoice-stubborn
+        stubborn Can we flirt by fighting her, though? /// checkvoice
+    broken It's not like she wants us, anyway. /// checkvoice
+        cheated I'm fine with it. Let's see where this goes. /// checkvoice-broken
+    para Maybe it'll work! Maybe it'll throw her off. I know I'd be thrown off if she started flirting with us. /// checkvoice
+        cheated I'm fine with it. Let's see where this goes. /// checkvoice-para
+
+jumpanchor smittenTheLook
+hero *The Look?*
+hunted The Look. We've all used it.
+cheated Yeah, do you not know about The Look?
+    stubborn The Look, eh? So we're getting serious about this. /// checkvoice
+    broken Even I know about The Look. /// checkvoice
+    para Are you *sure* we want to use The Look so early? It's supposed to be saved for emergencies. /// checkvoice
+
+
+jumpanchor paraMenu
+    stubborn Panicking is the worst possible thing for us to do. /// checkvoice
+        hero And panic where? Up the slide that dropped us down here? /// checkvoice-stubborn
+    hero Panic where? Up the slide that dropped us down here? /// checkvoice-broken
+hunted There's no way out?!
+p I'm coming to get you!
+hunted There's no way out!
+    cheated Okay. Screw it. We're panicking! /// checkvoice-stubborn
+    broken It's hard to panic when we already know what's going to happen to us. /// checkvoice
+        cheated No. Screw it. We're panicking! /// checkvoice-broken

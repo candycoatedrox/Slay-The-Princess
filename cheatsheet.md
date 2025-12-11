@@ -11,6 +11,7 @@ This information can be viewed at any time in game using the `HELP` command.
 - [HELP:](#help) Display all available commands or information on a given command.
 - [SHOW:](#show) Display content warnings (general, by chapter, or for the current
 chapter).
+- [SETTINGS:](#settings) View and change settings.
 - [TOGGLE:](#toggle) Toggle a given setting.
 - [GO:](#go) Move in a given direction.
 - [ENTER:](#enter) Enter a given location or the nearest appropriate location.
@@ -53,6 +54,17 @@ Syntax: `SHOW [warnings] [set] [warnings]`
   - `SHOW [warnings] [set]`: Same as `SHOW [set]`.
   - `SHOW [set] [warnings]`: Same as `SHOW [set]`.
 
+## SETTINGS
+`SETTINGS`: View and change settings.
+
+Syntax: `SETTINGS`
+
+**Arguments:**\
+None.
+
+**Variations:**\
+None.
+
 ## TOGGLE
 `TOGGLE`: Toggle a given setting.
 
@@ -64,7 +76,8 @@ Syntax: `TOGGLE [setting]`
 **Variations:**
   - `TOGGLE [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]`: Toggles dynamic content warnings on or off.
   - `TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]`: Toggles soundtrack notifications on or off.
-  - `TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]`: Toggles printing speed between slow and instant.
+  - `TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]`: Toggles printing speed between slow and instant.
+  - `TOGGLE [AUTO / AUTO ADVANCE / AUTO-ADVANCE / ADVANCE / AUTO DIALOGUE]`: Toggles automatic dialogue advancement.
 
 ## GO
 `GO`: Move in a given direction.
