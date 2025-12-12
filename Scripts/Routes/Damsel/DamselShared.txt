@@ -382,14 +382,17 @@ smitten Or she's innocent. How could a beauty like her be capable of ending the 
 jumpanchor deconEnding
 truth She degrades even further, her outline becoming sketchy and smudged from being erased over and over. She looks like a child's first attempt at following an art tutorial.
 hero Is it just me or... does it feel like we're alone right now? Like we're the only ones here.
+linebreak
 
 jumpanchor deconEndingFirstVessel
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth You don't get the chance to ask another question. Something has taken her away, and it's left something else in her place.
 jumpto deconEndingJoin
 
 jumpanchor deconEndingNotFirst
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth You don't get the chance to ask another question. Nor will you ever. It's time for you to leave. Memory returns.
 jumpanchor deconEndingJoin
 smitten No! She was our perfect match!
@@ -493,6 +496,7 @@ p I'm cold. Is being happy supposed to be so cold?
 smitten She's cold? Quick, our feathers! Pluck them all and weave her a coat worthy of a Princess!
 linebreak
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 
 jumpanchor leaveEndFirstVessel
 truth But you don't get the chance to make that jacket. Something has taken her away, and it's left something else in her place.

@@ -85,6 +85,7 @@ linebreak
 n The last step gives way to the damp earth floor of a starlit pit. The walls are obscured by an impenetrable darkness, giving the illusion that the room might stretch on forever. You brush against the wide leaves of plants that surround you on all sides, seemingly the only living things that occupy this strange underground wilderness.
 hunted The jungle is pressing in on us... hiding her from view. She could be anywhere.
 n You see only a flash of the Princess before she scurries away into the underbrush, dragging her heavy chain behind her.
+truth You watch a long tail slip out of sight.
 n Remember, she's just a Princess.
 hero She is certainly not *just* a princess.
 n You're not helping.
@@ -97,3 +98,369 @@ p I can hear your heart pounding from the bottom of the stairs, fledgling. You'r
 jumpanchor basementStartBlade
 p I can hear your heart pounding from the bottom of the stairs, fledgling. You're right to be terrified.
 p I'm so much more than you, and a little splinter clutched in trembling hands won't save you from me.
+
+// Encounter //
+
+jumpanchor encounterStart
+n A shiver rushes up your spine and pulls you upright.
+hunted The air's shifting. She's getting ready to pounce. Move, now.
+
+jumpanchor where
+hunted Anywhere.
+
+jumpanchor chains
+hunted We're not. *Move.*
+
+jumpanchor attackFail
+hunted We don't know where she is.
+
+jumpanchor genericFail
+hunted There is nothing else for us to do.
+
+// First dodge & parent menu //
+
+jumpanchor dodge1
+n You lunge to the side, picking a direction on instinct. As you land you're buffeted by a gust of air disturbed by the sudden motion of a massive body -- the Princess.
+n In an instant, she's pounced on the spot where you would have been, her chains rattling across the floor behind her.
+truth You finally manage to catch a proper glimpse of her. She crouches on all fours, massive, far more animal than human. Her face is feline, and a single horn sprouts from her forehead.
+n Before you can blink, she's gone, vanishing once more into the shadows. But you still feel her gaze on you.
+p You're faster than you were before. But you're still meek. Reactive. Prey.
+n You whirl around to find her, and your gaze meets hers, a pair of shining eyes peering out at you from just beyond the basement stairs.
+hero So she's cut off our escape. Shit. What do we do.
+
+jumpanchor tired
+hunted You have to.
+hero We at least have to make an opening.
+
+jumpanchor whatBlade
+p I want to swallow you whole. And I will get what I want. You have no exit. You have no hope. You live and die by my whims and my whims alone.
+n Don't ask her what she wants. Just. Slay her.
+jumpto whatJoin
+
+jumpanchor whatGuarded
+p I want to swallow you whole. And I will get what I want. You have no exit. You have no hope. You live and die by my whims and my whims alone.
+n Don't ask her what she wants. Just run for the blade upstairs and slay her with it.
+jumpto whatJoin
+
+jumpanchor whatNoBlade
+p I want to swallow you whole. And I will get what I want. You have no exit. You have no hope. You live and die by my whims and my whims alone.
+n Don't ask her what she wants. Just go back for the blade upstairs and slay her.
+jumpanchor whatJoin
+hero Is that all the advice you have? We don't even know what she looks like. Some specifics would be very helpful.
+n She's just a Princess. Don't overthink it.
+hero She is clearly not.
+
+jumpanchor whyKill
+hunted Why does anything kill anything else? She needs to.
+p I didn't say I wanted to *kill* you.
+hero It sounds like she wants to do something even worse.
+n What she wants only matters if she wins, and you're not going to let that happen.
+
+jumpanchor whyEat
+p I don't question who I am or what I want. I simply *do.* To act is always better than to react. To do is always better than to watch.
+n I can't believe I'm saying this, but you'd do well to listen to her. Less standing around asking questions, more doing exactly as I say.
+
+jumpanchor help
+p You cannot "reason" your way out of this, fledgling. There's no compromise with what I am.
+hero At least she's upfront about her intentions.
+
+jumpanchor hide
+p If you want to see me, you should get better at seeing.
+hunted She knows that her strength lies in shadows and secrets. She won't reveal herself unless she has to.
+
+jumpanchor threat
+n Oh, for the love of -- you've given up the game, great. All that will do is hasten her victory.
+p So many useless thoughts run through your head. Thinking thinking thinking. You'll never hurt me if you keep thinking.
+
+jumpanchor deflect
+p And you bare your weakness to the world.
+
+jumpanchor tryFleeGuarded
+hunted She's right there. We have to wait for an opening.
+hero That's fair, she'll kill us if we try and run past her.
+
+jumpanchor tryFleeBlade
+hunted Yes. Now's our chance. Quick!
+hero And then what? We need a plan. We need to figure out *something.*
+jumpto tryFleeJoin
+
+jumpanchor tryFleeNoBlade
+hunted Yes. Now's our chance. Quick!
+hero Right, I agree, we can't do anything without a weapon. We can regroup once we're armed and try to figure out a better plan.
+jumpanchor tryFleeJoin
+hunted Don't plan ahead. Act on the now. All that matters is that we stay alive.
+
+jumpanchor cantFlee
+truth You have already tried that.
+
+jumpanchor noWeapon
+hunted No steel claw. Nothing to fight back with.
+
+// More attacks //
+
+jumpanchor attack2
+hunted She's coiling for another strike. Be somewhere else.
+hero We're on the back foot.
+hunted The back foot keeps us nimble. Keeps us alive.
+hero It doesn't matter if it keeps us alive if it eventually kills us. We need to take back the momentum. We need to do something.
+
+jumpanchor attackExploreBlade
+hero We have the blade, I assume all she has are nails and teeth. Let's use our advantage.
+hunted The steel claw is small, and she is large. It's dangerous to fight back. It should only be a last resort.
+
+jumpanchor attackExploreNoBlade
+hero The blade is upstairs. We just need to wait for her to be somewhere else, and sprint out of here.
+hunted Anything that gets us out of danger.
+
+jumpanchor dodge2
+n You spring to a new patch of jungle, barely moving out of the way before the Princess surges past you with a speed that makes her practically unseen.
+
+jumpanchor attack3
+n A tickling sensation rises at the base of your neck.
+hunted Flee!
+hero We can't keep doing this.
+
+jumpanchor dodge3
+n You're a little slower this time, or maybe she's a little faster. You avoid her slavering jaws, but she manages to graze you, her titanic momentum skinning you along your side.
+hero It's like being sideswiped by sandpaper, how is she that fast?!
+p You're bleeding now.
+n You instinctively touch your side, testing her claim. It's wet and stings from the gentle touch of your fingertips.
+hunted A costly mistake. We can't make it again.
+hero We will make it again unless something changes. We have to break the pattern.
+hunted We need more time. She's cutting off our escape.
+p Our game is nearing its end.
+
+jumpanchor attack4
+hunted She's more tense this time. She means this next blow to be the last.
+n The mere thought of moving again makes your bloodied side ache.
+hero We're exhausted. We're bleeding.
+hunted We're still alive. We owe it to ourselves to move.
+
+// Den endings //
+
+// Leads to Chapter III: The Den with the Voice of the Stubborn //
+jumpanchor denStubbornEnd
+hunted This isn't going to work. We're in her domain. We just have to stay alive.
+hero If we keep dodging her forever, we're going to get tired. We're going to slip up. We have to take a risk.
+n As the Princess lunges from the shadows once more, you tighten your grip on the blade and lash out. It strikes, cutting deep, and the Princess loses her focus, crying out in pained surprise as she crashes into you.
+n You're sent sprawling, and can already feel the massive bruise blossoming on your ribs as she scrambles back into the darkness.
+hero Ha! Look at that! We wounded her.
+hunted And she wounded us. Bad trade.
+p That hurt. Are you just the cornered animal you seem to be, or could you be a rival?
+n She rears back, then leaps at you, more forceful, more ferocious, more serious. The scuffle is brief, and though you inflict a few deep wounds, you find yourself quickly overwhelmed by her savagery.
+n You collapse to the floor, and she wastes no time before pouncing on you in a flurry of claws and blood, your nerves barely able to keep up with the onslaught.
+n By the end, you're lying in a nest of your own intestines, spine severed, blood rapidly draining out onto the jungle floor.
+n The Princess, drenched in both her blood and yours, idly prods your body.
+p Oh, that's it, then. Cornered animal it was.
+p Do better next time. I still need to devour you, and it doesn't count if you're dead.
+jumpto denEnd
+
+jumpanchor forceSkeptic
+n You sprint for the stairs, but as soon as your take your first step -- /// interrupt
+
+// Leads to Chapter III: The Den with the Voice of the Skeptic //
+jumpanchor denSkepticWounded
+n Once again, you narrowly avoid the full force of the impact. And once again, you are too slow to come away unscathed. You're starting to get tired. You're making mistakes.
+jumpto denSkepticEnd
+
+jumpanchor denSkepticUnharmed
+n You manage to avoid her slavering jaws, but you aren't fast enough to evade the whole of her titanic momentum. She grazes you, the force of it enough to skin you all along your side, leaving a line of red, raw flesh.
+hero It's like being sideswiped by sandpaper, how is she that fast?!
+jumpanchor denSkepticEnd
+hero This isn't working. We have to do something, we have to figure out a plan.
+hunted Don't plan ahead. Act on the now. All that matters is that we stay alive.
+hero We're trying, but we can't keep this up much longer.
+hunted We have to. We keep up, or we die.
+p You're getting slow.
+n She seizes the opportunity, lunging once again from the darkness, fangs bared and claws flashing. She attacks over, and over, and over, and each time she leaves with a little piece of you.
+hero Too tired to think. But we have to think.
+hunted We have to move.
+n It's too late. Before you get the chance to react, it's over. She makes her last foray from the dark corners of the room, unhinging her dripping maw, her eyes fierce and full of hunger.
+n You do you best to dive out of the way, and you... partially succeed.
+hero ... Partially?
+n Yes. The Princess fails to swallow you whole. She only swallows your lower body.
+hero That's just as bad! That's worse, even!
+hunted It's death, either way. At least this will be a faster end.
+n You look down to see that the dirt between you is strewn with your intestines, trailing all the way up and disappearing behind her blood-stained teeth. Your legs are nowhere to be seen. You start to go into shock.
+n The Princess, bloody saliva dripping from her lips, idly gnaws on what's left of you as you rapidly fade away.
+p I didn't mean to do that. I still need to devour you, and it doesn't count if you're dead.
+jumpto denEnd
+
+jumpanchor denEnd
+hero But we're not dead, we're -- /// interrupt
+linebreak
+n But you don't have time to protest her premature observation of your death, because everything goes dark and you die.
+
+// Eaten //
+
+jumpanchor eatenStartPlayDead
+hero We're playing dead?
+hunted It's unexpected. It could work.
+n As the Princess lunges from the shadows once more, you collapse to the ground, feigning death. She lands directly on top of you with her full weight, nearly crushing you into the dirt, but then... silence. Only broken by the sound of your beating heart.
+hero It actually worked, didn't it? Only... what do we do to make her leave? Do we just keep playing dead?
+n She sniffs at you, shifting her weight uncomfortably as her face finds yours. Her breaths are hot and oppressive against your skin.
+p Have you seen my great big eyes? Because they see you, fledgling. They see your heartbeat pulsing in your throat.
+hunted Move! Now!
+n But it's too late for you to move. Her jaw unhinges, and she swallows you whole.
+jumpanchor eatenStartJoin
+
+jumpanchor eatenStartFight
+hunted This isn't going to work. We're in her domain, and we are bleeding.
+hero Exactly. If we don't do something now, we're finished.
+n As the Princess lunges at you from the shadows once more, you tighten your grip, lashing out with the blade.
+n But your injured side stretches and tears as you move, and you find yourself slowed by the sudden pain.
+n The Princess, maw unhinged and dripping, eyes fierce and full of hunger, closes in on you. You are devoured.
+jumpanchor eatenStartJoin
+
+jumpanchor eatenStartRun
+n As you turn to sprint for the stairs, you feel the air shift. You instinctively glance behind you just in time to see the Princess lunge from the shadows, maw unhinged and dripping, eyes fierce and full of hunger.
+jumpto eatenStartJoin
+
+jumpanchor eatenStartOther
+n There's a shift in the humid air and something enormous -- the Princess -- lunges from the shadows, her maw unhinged and dripping, her eyes fierce and full of hunger.
+jumpanchor eatenStartJoin
+hero I guess that's it then, isn't it...
+n Unfortunately for you, no. This isn't "it."
+linebreak
+n You are in a dark and caustic place. A thick, fibrous lining constricts around you, its slick surface impossible to grip, your hands scrabbling uselessly at your surroundings as they compress in on you. Your lungs can barely expand in such a tiny space, not that the humid, finite air grants you more than a few shallow breaths at a time.
+
+jumpanchor eatenStartTalked
+p You spoke when you needed to act.
+
+jumpanchor eatenStartCont
+n The liquid pooling beneath you starts to seep into your skin. You itch, then sting, then burn as the acid begins its slow work.
+p When I killed you I tried to leave this place, but it wouldn't let me. "You belong down there," it screamed at me. "The world is better off without you in it."
+n The flesh around you rumbles as the Princess begins to move, her thundering footfalls twisting you helplessly about. Your skin protests as the corrosive liquid sloshes around you, but there will be no respite for you in sight. The burning grows stronger and you can feel layers of you being peeled away.
+p But, you -- you don't belong down here. You came from somewhere else. You came from out there. So I consumed your dead heart, and I carried it in my throat, and I draped what was left of you on my back and I threw myself against that door.
+n She stops, her muscles tensing around you, and through the muffling layers of her flesh, you hear the whine of straining metal. And with a pop, she lurches forward, your body lurching right along with her.
+hunted Her chains. She's loose.
+p But even then, it denied me freedom. "You cannot fool me by draping yourself in decay. I know your true nature and it is suffering."
+n Gravity pulls at you as you're hefted upwards, the distant creaking of ancient wooden steps barely audible over the thudding of the Princess's heart.
+p And then it was gone and I was here. A new enclosure. A nicer cage. But still a prison.
+p I learn from my wounds. You're alive now. We can leave together.
+hero Does that work? Could she free herself if we're alive in here?
+n Do you really need me to give you a definitive answer for you to understand that the situation is grim? Stop her. Do *something.*
+
+jumpanchor eatenStartBlade
+hunted You still have that steel claw. Tear through her. Before we are her. Survive.
+hero Or we could use it to make this quick for ourselves. If she needs us in order to leave, we could at least deny her that.
+hunted That is a bad thing to do.
+
+jumpanchor eatenStartNoBlade
+hunted We don't have steel but we have tooth and claw. Tear through her. Before we are her.
+
+jumpanchor eatenTurn0
+n Your body is violently jostled, the disruption causing burning skin to slough from raw muscle, and you hear what you can only assume is the Princess pulling against the door to the cabin.
+p The cage is still locked!
+
+jumpanchor eatenTurn0NoAttack
+hero I don't think we can talk our way out of here.
+hunted We are drowning in death. There's no more space for words.
+
+jumpanchor eatenTurn1
+n The pulling has turned to banging, as the Princess desperately throws everything at the cabin door. Your flesh screams as your reddened, spongy body is hit with fresh waves of blistering acid.
+p You can't hold me forever!
+
+jumpanchor eatenGoFail
+hunted We have nowhere to go.
+
+jumpanchor eatenSuicideFail
+hunted With what?
+
+jumpanchor cabinEaten
+p I understand it, and it understands me. Talking is for those who don't know how to listen.
+
+jumpanchor askedEaten
+p I acted on my will, fledgling, and you acted on yours. The strong triumph, and the weak submit or perish.
+
+jumpanchor threatExploreEaten
+p I'm so very, very patient. If it takes lives and lives and lives to swallow my way to freedom, then that is what I'll do.
+
+jumpanchor needEaten
+p Every creature craves freedom. You will too, before you die.
+
+jumpanchor threatEaten
+p You threaten me, but you don't act.
+
+jumpanchor eatenClaw1
+n Like the cornered animal you are, you tear against the thick membranes of her stomach with every part of you that can be made sharp: nails, claws, teeth, hands, feet.
+p I can feel you tearing through me. But are you swift enough for it to matter?
+
+jumpanchor eatenClaw2
+n Again you tear, heart pumping with adrenaline, your ulcerating hands a blur of feverish motion fueled by the desperation to fight against being reduced to lifeless molecules and meat.
+
+jumpanchor eatenClaw3
+n Your energy is fading. But you can hear her heart, thumping somewhere close. There's so little of you left -- your fingers reduced to bone, your nerves bare and screaming, the acid pooling around you now a soup of your skin and meat. You are a spark of will driving a melted corpse.
+
+jumpanchor eatenDig1
+n Though you have little room to move, you use what strength you can muster to drive the blade forward into the thick walls of tissue digesting you.
+p I can feel you tearing through me. But are you swift enough for it to matter?
+
+jumpanchor eatenDig2
+n You slice again, deeper, rooting through her meat with the tip of your blade, until at last it finds her beating heart.
+
+jumpanchor freedomEaten
+p So you do want freedom.
+n The click of what you presume to be a door ripples through the layers of suffocating flesh.
+hero But we didn't -- /// interrupt
+n Apparently that was all it took.
+jumpto eatenSurrenderJoin
+
+// "Dissolving Will" ending; claim the Beast //
+jumpanchor eatenSurrender
+p Oh, can I?
+n The click of what you presume to be a door ripples through the layers of suffocating flesh.
+jumpanchor eatenSurrenderJoin
+p That wasn't so hard.
+n You feel her take another massive step, and then another, and then --
+hero And then?
+hunted It's gone quiet, hasn't it?
+truth You can feel a churning in the forms around you, and then a wet tunneling before you are ejected to a place that is nowhere at all.
+
+p I guess I don't need you to be a part of me. How lucky for you.
+p This place is cold.
+linebreak
+truth Something reaches out and folds her into its myriad arms.
+linebreak
+
+jumpanchor surrenderFirstVessel
+truth But before you can say anything, something takes her away, and it leaves something else in her place.
+
+jumpanchor surrenderNotFirstVessel
+truth But before you can say anything to her, she's gone. Memory returns.
+
+// Dissolved endings (The Wild) //
+
+// All endings here lead to Chapter III: The Wild //
+
+// Grants you the Voice of the Opportunist or the Contrarian //
+jumpanchor dissolvedSlay
+n Though your body is dissolving, eroding into unrecognizeable shapes, your will drives it forward. You have a target, and you will strike it.
+hunted We're too late, aren't we? This isn't survival, this is spite.
+n No. It's something better. It's fulfilling a noble destiny. Your lone functioning arm lashes out, stabbing up towards the Princess's heart.
+p So you found a way to kill me. Then we'll die together, and I will see you again soon.
+linebreak
+n With those prophetic words, you do not draw another breath, your body tangled and melting in the cooling folds of the Princess's flesh. Everything goes dark, and you die.
+n But at least you've saved the world. I hope.
+
+// Grants you the Voice of the Stubborn or the Contrarian //
+jumpanchor dissolvedSuicide
+n In an act of spiteful defiance, you pull your weapon to your throat, your shaking, ulcerous hand clenched tight around its hilt. And then you draw it across your bubbling veins.
+n Your blood flows out, filling the tiny space inside the Princess. You start to fade.
+hunted A waste of a good life.
+hero It's better than giving in to her.
+linebreak
+n But in the end, the opinions of stray voices mean little in the grand scheme of things. Everything goes dark, and you die.
+
+// Grants you the Voice of the Broken or the Contrarian //
+jumpanchor dissolvedWait
+hunted Bad! This is a bad thing to do!
+n Your will dissolves along with your flesh. You let go, and pathetically await your death, every burning second dragging on until you're reduced to a wet pile of bone and gristle.
+p We'll do better next time.
+n Your vision finally begins to blur, your eyes clouding over as they melt in their sockets. Everything goes dark, and you die.
+
+// Grants you the Voice of the Broken or the Contrarian //
+jumpanchor dissolvedOutOfTime
+n But will can never truly exceed the limits of the flesh. Your vision finally begins to blur, your eyes clouding over as they melt in their sockets.
+linebreak
+n What little air remains in this rancid stew of flesh and slippery organs is finally too foul to breathe, and your lungs mercifully give out before you have to suffer another burning, liquefying moment. Everything goes dark and you die.

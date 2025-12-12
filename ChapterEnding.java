@@ -105,6 +105,7 @@ public enum ChapterEnding {
 
     // The Beast
     DISSOLVINGWILL(Vessel.BEAST, 1, 1, false),
+    DISSOLVINGWILLACCIDENT(Vessel.BEAST, 1, 1, false),
     FIGHT(Chapter.DEN, Voice.STUBBORN),
     FLIGHT(Chapter.DEN, Voice.SKEPTIC),
     OPOSSUM(Chapter.WILD, Voice.CONTRARIAN),

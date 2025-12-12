@@ -442,8 +442,6 @@ public class StandardCycle extends Cycle {
                         break;
                 }
 
-                this.cancelTimer();
-
                 this.source = "";
                 this.threwBlade = false;
                 this.sharedLoop = false;
@@ -7110,21 +7108,575 @@ public class StandardCycle extends Cycle {
 
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
+        mainScript.runSection("encounterStart");
 
+        OptionsMenu cantWildMenu = new OptionsMenu(true);
+        cantWildMenu.add(new Option(this.manager, "dodge", "[Dodge.]", 0));
 
+        boolean cantBeEaten = false;
+        int stallCount = 0;
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "where", "(Explore) Where?"));
+        activeMenu.add(new Option(this.manager, "chains", "(Explore) Don't you hear that clinking? She's in chains again. We're fine."));
+        activeMenu.add(new Option(this.manager, "attack", "(Explore) \"You're about to attack me, aren't you? I can see right through you.\""));
+        activeMenu.add(new Option(this.manager, "haveTo", "(Explore) \"We don't have to kill each other. You know that, right?\""));
+        activeMenu.add(new Option(this.manager, "move", "[Move.]"));
+        activeMenu.add(new Option(this.manager, "freeze", "[Stand still.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            if (stallCount >= 2) {
+                if (!manager.hasVisited(Chapter.WILD)) {
+                    this.repeatActiveMenu = false;
+                    cantBeEaten = true;
+                    this.beastCantBeEaten(cantWildMenu);
+                    break;
+                }
+
+                mainScript.runSection("eatenStartOther");
+                return this.beastEaten(false, false);
+            }
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "where":
+                case "chains":
+                    stallCount += 1;
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "attack":
+                case "haveTo":
+                    if (manager.hasVisited(Chapter.WILD)) return this.beastToDen(true, false);
+
+                    mainScript.runSection("eatenStartOther");
+                    return this.beastEaten(true, false);
+
+                case "move":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "freeze":
+                    if (!manager.hasVisited(Chapter.WILD)) {
+                        this.repeatActiveMenu = false;
+                        cantBeEaten = true;
+                        this.beastCantBeEaten(cantWildMenu);
+                        break;
+                    }
+
+                    mainScript.runSection("eatenStartOther");
+                    return this.beastEaten(false, false);
+
+                case "cSlayPrincessNoBladeFail":
+                case "cSlayPrincessFail":
+                    mainScript.runSection("attackFail");
+                    break;
+
+                default: mainScript.runSection("genericFail");
+            }
+        }
+
+        mainScript.runSection("dodge1");
+
+        // Attack menu
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) How exactly are we supposed to take back the momentum here?"));
+        activeMenu.add(new Option(this.manager, "dodge", "[Survive.]", 0));
+        activeMenu.add(new Option(this.manager, "flee", "[Run for the stairs.]", false));
+        activeMenu.add(new Option(this.manager, "attack", manager.demoMode(), "[Wait for her to strike, and hit her back.]"));
+        activeMenu.add(new Option(this.manager, "playDead", "[Play dead.]", !cantBeEaten));
+        activeMenu.add(new Option(this.manager, "q1", "[Stand still.]", !cantBeEaten));
         
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-        
-        // PLACEHOLDER
-        return null;
+        int stallLimit = 2;
+        boolean stairsGuarded = true;
+        boolean canTryFlee = true;
+        ChapterEnding attackResult;
+        OptionsMenu parentMenu = new OptionsMenu();
+        parentMenu.add(new Option(this.manager, "tired", "(Explore) I don't think I can keep this up.", false));
+        parentMenu.add(new Option(this.manager, "what", "(Explore) \"What do you want?\""));
+        parentMenu.add(new Option(this.manager, "whyKill", "(Explore) \"But why? Why do you want to kill me?\"", parentMenu.get("what")));
+        parentMenu.add(new Option(this.manager, "whyEat", "(Explore) \"Okay, fine. Why do you want to eat me?\"", parentMenu.get("whyKill")));
+        parentMenu.add(new Option(this.manager, "help", "(Explore) \"We don't have to kill each other. What if I helped you? What if we left together? If you could get out of here on your own, wouldn't you have already left?\""));
+        parentMenu.add(new Option(this.manager, "hide", "(Explore) \"Stop hiding and show yourself.\""));
+        parentMenu.add(new Option(this.manager, "threat", "(Explore) \"I was sent to kill you because you're a threat to the world. I'm starting to believe that's true.\""));
+        parentMenu.add(new Option(this.manager, "deflect", "(Explore) \"You're deflecting.\"", false));
+        parentMenu.add(new Option(this.manager, "flee", "[Run for the stairs.]", 0));
+
+        for (int phase = 2; phase < 5; phase++) {
+            for (stallCount = 0; stallCount < stallLimit; stallCount++) {
+                switch (parser.promptOptionsMenu(parentMenu)) {
+                    case "hide":
+                    case "threat":
+                        parentMenu.setCondition("deflect", true);
+                    case "tired":
+                    case "whyKill":
+                    case "whyEat":
+                    case "help":
+                    case "deflect":
+                        mainScript.runSection(activeOutcome);
+                        break;
+
+                    case "what":
+                        if (this.hasBlade) {
+                            mainScript.runSection("whatBlade");
+                        } else {
+                            if (stairsGuarded) {
+                                mainScript.runSection("whatGuarded");
+                            } else {
+                                mainScript.runSection("whatNoBlade");
+                            }
+                        }
+
+                        break;
+
+                    case "cGoStairs":
+                        if (!canTryFlee) {
+                            stallCount -= 1;
+                            mainScript.runSection("cantFlee");
+                            break;
+                        }
+                    case "flee":
+                        if (stairsGuarded) {
+                            stallCount -= 1;
+                            canTryFlee = false;
+                            parentMenu.setCondition("flee", false);
+                            mainScript.runSection("tryFleeGuarded");
+                        } else {
+                            if (this.hasBlade) {
+                                mainScript.runSection("tryFleeBlade");
+                            } else {
+                                mainScript.runSection("tryFleeNoBlade");
+                            }
+
+                            if (manager.hasVisited(Chapter.WILD)) {
+                                mainScript.runSection("forceSkeptic");
+                                return this.beastToDen(cantBeEaten, phase > 3);
+                            } else {
+                                mainScript.runSection("eatenStartRun");
+                                return this.beastEaten(false, false);
+                            }
+                        }
+
+                        break;
+
+                    case "cSlayPrincessNoBladeFail":
+                    case "cSlayPrincessFail":
+                        stallCount -= 1;
+                        mainScript.runSection("attackFail");
+                        break;
+
+                    default:
+                        stallCount -= 1;
+                        mainScript.runSection("genericFail");
+                }
+            }
+
+            attackResult = this.beastAttack(phase, cantBeEaten);
+            if (attackResult != null) {
+                if (attackResult == ChapterEnding.ABORTED) { // Used to indicate that canBeEaten should be updated
+                    cantBeEaten = true;
+                } else {
+                    return attackResult;
+                }
+            }
+
+            this.canSlayPrincess = false;
+            switch (phase) {
+                case 2:
+                    stairsGuarded = false;
+                    canTryFlee = activeMenu.hasBeenPicked("flee");
+                    activeMenu.setDisplay("dodge", "[Stay. Alive.]");
+                    activeMenu.setCondition("explore", true);
+                    activeMenu.setCondition("flee", true);
+                    parentMenu.setCondition("tired", true);
+                    parentMenu.setCondition("flee", canTryFlee);
+                    break;
+
+                case 3:
+                    canTryFlee = true;
+                    stairsGuarded = true;
+                    activeMenu.setDisplay("dodge", "[Again...]");
+                    activeMenu.setCondition("flee", false);
+                    parentMenu.setCondition("flee", true);
+                    stallLimit = 1;
+
+                    if (manager.demoMode()) {
+                        activeMenu.setGreyedOut("dodge", true);
+                    }
+                    break;
+            }
+        }
+
+        return this.beastToDen(true, true);
+    }
+
+    private ChapterEnding beastAttack(int phase, boolean cantBeEaten) {
+        boolean updateCantBeEaten = false;
+        mainScript.runSection("attack" + phase);
+
+        if (!manager.demoMode()) this.canSlayPrincess = true;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "explore":
+                    if (this.hasBlade) {
+                        mainScript.runSection("attackExploreBlade");
+                    } else {
+                        mainScript.runSection("attackExploreNoBlade");
+                    }
+
+                    break;
+
+                case "dodge":
+                    mainScript.runSection("dodge" + phase);
+
+                    if (updateCantBeEaten) {
+                        return ChapterEnding.ABORTED; // Used as an indicator to update cantBeEaten
+                    } else {
+                        return null;
+                    }
+
+                case "cGoStairs":
+                    if (phase != 3) {
+                        mainScript.runSection("tryFleeGuarded");
+                        break;
+                    }
+                case "flee":
+                    if (this.hasBlade) {
+                        mainScript.runSection("tryFleeBlade");
+                    } else {
+                        mainScript.runSection("tryFleeNoBlade");
+                    }
+
+                    if (manager.hasVisited(Chapter.WILD)) {
+                        mainScript.runSection("forceSkeptic");
+                        return this.beastToDen(cantBeEaten, phase > 3);
+                    } else {
+                        mainScript.runSection("eatenStartRun");
+                        return this.beastEaten(false, false);
+                    }
+
+                case "cSlayPrincess":
+                case "attack":
+                    return this.beastToDen(false, phase > 3);
+
+                case "playDead":
+                    if (manager.hasVisited(Chapter.WILD)) {
+                        updateCantBeEaten = true;
+                        activeMenu.setCondition("freeze", false);
+                        parser.printDialogueLine(WORNPATH);
+                        parser.printDialogueLine(WORNPATHHERO);
+                        break;
+                    } else {
+                        mainScript.runSection("eatenStartPlayDead");
+                        return this.beastEaten(false, true);
+                    }
+
+                case "freeze":
+                    if (manager.hasVisited(Chapter.WILD)) {
+                        updateCantBeEaten = true;
+                        activeMenu.setCondition("playDead", false);
+                        parser.printDialogueLine(WORNPATH);
+                        parser.printDialogueLine(WORNPATHHERO);
+                        break;
+                    } else {
+                        mainScript.runSection("eatenStartOther");
+                        return this.beastEaten(false, false);
+                    }
+
+                case "cSlayPrincessNoBladeFail":
+                    mainScript.runSection("noWeapon");
+                    break;
+
+                case "cSlayPrincessFail":
+                    parser.printDialogueLine(DEMOBLOCK);
+                    break;
+
+                default: mainScript.runSection("genericFail");
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * Overrides the player's decision if they would be eaten by the Beast but have already encountered the Wild
+     * @param cantWildMenu the options menu to show to the player
+     */
+    private void beastCantBeEaten(OptionsMenu cantWildMenu) {
+        parser.printDialogueLine(WORNPATH);
+        parser.promptOptionsMenu(cantWildMenu, new DialogueLine("[You have no other option.]"));
+        parser.printDialogueLine(WORNPATHHERO);
+    }
+
+    /**
+     * The player manages to avoid being eaten by the Beast, leading to Chapter III: The Den
+     * @param skepticPath whether the player continued dodging the Beast's attacks (granting them the Voice of the Skeptic) or fought back (granting them the Voice of the Stubborn)
+     * @param wounded whether the player has already been wounded by the Beast
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding beastToDen(boolean skepticPath, boolean wounded) {
+        if (skepticPath) {
+            if (wounded) {
+                mainScript.runSection("denSkepticWounded");
+            } else {
+                mainScript.runSection("denSkepticUnharmed");
+            }
+
+            return ChapterEnding.FLIGHT;
+        } else {
+            if (wounded && !manager.hasVisited(Chapter.WILD)) {
+                mainScript.runSection("eatenStartFight");
+                return this.beastEaten(false, false);
+            } else {
+                mainScript.runSection("denStubbornEnd");
+                return ChapterEnding.FIGHT;
+            }
+        }
+    }
+
+    /**
+     * The Beast pounces and swallows the player whole
+     * @param talked whether the player talked in the initial encounter menu
+     * @param playedDead whether the player played dead (guaranteeing them the Voice of the Contrarian in Chapter III: The Wild)
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding beastEaten(boolean talked, boolean playedDead) {
+        if (talked) mainScript.runSection("eatenStartTalked");
+        mainScript.runSection("eatenStartCont");
+
+        if (this.hasBlade) {
+            mainScript.runSection("eatenStartBlade");
+        } else {
+            mainScript.runSection("eatenStartNoBlade");
+        }
+
+        // figure out how to work in content warnings for Wild if you get it via waiting too long
+
+        int beastHP = 4;
+        boolean incrementFlag;
+        this.canSlayPrincess = true;
+        this.canSlaySelf = this.hasBlade && !manager.demoMode();
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "cabin", "(Explore) \"Can you talk to the cabin?\"", 0));
+        activeMenu.add(new Option(this.manager, "asked", "(Explore) \"You could have asked me before swallowing me alive.\"", 0));
+        activeMenu.add(new Option(this.manager, "threatExplore", "(Explore) \"Spit me out or I'll kill myself and nobody gets to leave.\"", 0, this.hasBlade));
+        activeMenu.add(new Option(this.manager, "need", "(Explore) \"You need me to want to free you, don't you? You can't force me to let you out of here.\"", 0, false));
+        activeMenu.add(new Option(this.manager, "freedom", "(Explore) \"Just because I want freedom, doesn't mean I want to give you yours.\"", false));
+        activeMenu.add(new Option(this.manager, "threatA", "(Explore) \"I have my steel claw. I could use it to hurt you.\"", 0, this.hasBlade));
+        activeMenu.add(new Option(this.manager, "threatB", "(Explore) \"I've found your heart. Spit me out, or I will end you.\"", 0, false));
+        activeMenu.add(new Option(this.manager, "claw", "(Explore) [Claw and bite.]", 0, !this.hasBlade));
+        activeMenu.add(new Option(this.manager, "dig", "(Explore) [Dig with the steel claw.]", 0, this.hasBlade));
+        activeMenu.add(new Option(this.manager, "slay", manager.demoMode(), "[Slay the Princess.]", 0, false));
+        activeMenu.add(new Option(this.manager, "surrenderA", "\"Fine! You can leave.\""));
+        activeMenu.add(new Option(this.manager, "surrenderB", "\"You can leave! Just let me go.\""));
+        activeMenu.add(new Option(this.manager, "suicide", manager.demoMode(), "\"Screw you!\" [Slay yourself.]", 0, this.hasBlade));
+        activeMenu.add(new Option(this.manager, "wait", manager.demoMode(), "[Wait for death.]", 0));
+
+        for (int turnCount = 0; turnCount < 3; turnCount++) {
+            incrementFlag = true;
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+
+            if (activeOutcome.equals("cSlayPrincess")) {
+                if (beastHP == 0) {
+                    this.activeOutcome = "slay";
+                } else {
+                    this.activeOutcome = "dig";
+                }
+            }
+
+            switch (activeOutcome) {
+                case "cabin":
+                case "asked":
+                case "threatExplore":
+                case "need":
+                    if (turnCount == 2) {
+                        if (!manager.confirmContentWarnings(Chapter.WILD)) {
+                            incrementFlag = false;
+                            this.beastForceDissolvedWill();
+                            break;
+                        }
+                    }
+
+                    activeMenu.setCondition(activeOutcome, false);
+                    mainScript.runSection(activeOutcome + "Eaten");
+                    break;
+                    
+                case "threatA":
+                case "threatB":
+                    if (turnCount == 2) {
+                        if (!manager.confirmContentWarnings(Chapter.WILD)) {
+                            incrementFlag = false;
+                            this.beastForceDissolvedWill();
+                            break;
+                        }
+                    }
+
+                    activeMenu.setCondition("threatA", false);
+                    activeMenu.setCondition("threatB", false);
+                    mainScript.runSection("threatEaten");
+                    break;
+                    
+                case "cSlayPrincessNoBladeFail":
+                case "claw":
+                    beastHP -= 1;
+                    mainScript.runSection("eatenClaw" + (4 - beastHP));
+                    break;
+                    
+                case "dig":
+                    beastHP -= 2;
+
+                    if (beastHP == 2) {
+                        activeMenu.setCondition("threatA", false);
+                        mainScript.runSection("eatenClaw1");
+                    } else {
+                        activeMenu.setCondition("dig", false);
+                        activeMenu.setCondition("slay", true);
+                        mainScript.runSection("eatenClaw2");
+                    }
+                    
+                    break;
+                    
+                case "freedom":
+                    mainScript.runSection("freedomEaten");
+                    this.quietCreep();
+                    mainScript.runSection();
+
+                    if (this.isFirstVessel) {
+                        mainScript.runSection("surrenderFirstVessel");
+                    } else {
+                        mainScript.runSection("surrenderNotFirstVessel");
+                    }
+
+                    return ChapterEnding.DISSOLVINGWILLACCIDENT;
+                    
+                case "surrenderA":
+                case "surrenderB":
+                    mainScript.runSection("eatenSurrender");
+                    this.quietCreep();
+                    mainScript.runSection();
+
+                    if (this.isFirstVessel) {
+                        mainScript.runSection("surrenderFirstVessel");
+                    } else {
+                        mainScript.runSection("surrenderNotFirstVessel");
+                    }
+
+                    return ChapterEnding.DISSOLVINGWILL;
+                    
+                case "slay":
+                    if (!manager.confirmContentWarnings(Chapter.WILD)) {
+                        incrementFlag = false;
+                        this.beastForceDissolvedWill();
+                        break;
+                    }
+
+                    mainScript.runSection("dissolvedSlay");
+                    if (playedDead) {
+                        return ChapterEnding.OPOSSUM;
+                    } else {
+                        return ChapterEnding.AHAB;
+                    }
+                    
+                case "cSlaySelf":
+                case "suicide":
+                    if (!manager.confirmContentWarnings(Chapter.WILD)) {
+                        incrementFlag = false;
+                        this.beastForceDissolvedWill();
+                        break;
+                    }
+
+                    mainScript.runSection("dissolvedSuicide");
+                    if (playedDead) {
+                        return ChapterEnding.OPOSSUM;
+                    } else {
+                        return ChapterEnding.SLAYYOURSELF;
+                    }
+                    
+                case "wait":
+                    if (!manager.confirmContentWarnings(Chapter.WILD)) {
+                        incrementFlag = false;
+                        this.beastForceDissolvedWill();
+                        break;
+                    }
+
+                    mainScript.runSection("dissolvedWait");
+                    if (playedDead) {
+                        return ChapterEnding.OPOSSUM;
+                    } else {
+                        return ChapterEnding.DISSOLVED;
+                    }
+                    
+                case "cSlayPrincessFail":
+                case "cSlaySelfFail":
+                    incrementFlag = false;
+                    parser.printDialogueLine(DEMOBLOCK);
+                    break;
+                    
+                case "cGoStairs":
+                case "cGoFail":
+                    incrementFlag = false;
+                    mainScript.runSection("eatenGoFail");
+                    break;
+                    
+                case "cSlaySelfNoBladeFail":
+                    incrementFlag = false;
+                    mainScript.runSection("eatenSuicideFail");
+                    break;
+
+                default:
+                    incrementFlag = false;
+                    mainScript.runSection("genericFail");
+            }
+
+            if (incrementFlag) {
+                switch (turnCount) {
+                    case 0:
+                        activeMenu.setCondition("need", true);
+                        activeMenu.setCondition("freedom", true);
+
+                        mainScript.runSection("eatenTurn0");
+                        if (beastHP == 4) mainScript.runSection("eatenTurn0NoAttack");
+                        break;
+
+                    case 1:
+                        if (manager.demoMode()) this.beastForceDissolvedWill();
+
+                        mainScript.runSection("eatenTurn1");
+                        break;
+                }
+            } else {
+                turnCount -= 1;
+            }
+        }
+
+        // Ran out of time, dissolved (leads to Chapter III: The Wild with the Voice of the Broken or the Contrarian)
+        mainScript.runSection("dissolvedOutOfTime");
+
+        if (playedDead) {
+            return ChapterEnding.OPOSSUM;
+        } else {
+            return ChapterEnding.DISSOLVED;
+        }
+    }
+
+    /**
+     * Force the player into the "Dissolved Will" ending of The Beast, either because the game is in demo mode or because they chose not to continue after seeing the Wild's content warnings.
+     */
+    private void beastForceDissolvedWill() {
+        this.canSlayPrincess = false;
+        this.canSlaySelf = false;
+        activeMenu.setGreyedOut("cabin", true);
+        activeMenu.setGreyedOut("asked", true);
+        activeMenu.setGreyedOut("threatExplore", true);
+        activeMenu.setGreyedOut("need", true);
+        activeMenu.setGreyedOut("freedom", true);
+        activeMenu.setGreyedOut("threatA", true);
+        activeMenu.setGreyedOut("threatB", true);
+        activeMenu.setGreyedOut("claw", true);
+        activeMenu.setGreyedOut("dig", true);
+        activeMenu.setGreyedOut("slay", true);
     }
 
 
@@ -8888,7 +9440,6 @@ public class StandardCycle extends Cycle {
     private void mirrorSequence() {
         this.secondaryScript = new Script(this.manager, this.parser, "Mirror/MirrorGeneric");
 
-        this.cancelTimer();
         this.hasBlade = false;
 
         this.threwBlade = false;

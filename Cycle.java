@@ -15,7 +15,6 @@ public abstract class Cycle {
     protected boolean repeatActiveMenu = false;
     protected String activeOutcome;
     protected boolean reverseDirection = false;
-    protected int timer = -1; // -1 indicates timer is inactive
 
     protected boolean hasBlade = false;
 
@@ -101,38 +100,6 @@ public abstract class Cycle {
                 this.currentVoices.put(v, false);
             }
         }
-    }
-
-    // --- TIMER ---
-
-    /**
-     * Starts a timer that lasts n turns
-     * @param n the number of turns the timer will last for
-     */
-    protected void startTimer(int n) {
-        this.timer = n;
-    }
-
-    /**
-     * Resets the timer back to an inactive state
-     */
-    protected void cancelTimer() {
-        this.timer = -1;
-    }
-
-    /**
-     * Checks whether a timer is active
-     * @return
-     */
-    protected boolean timerActive() {
-        return this.timer != -1;
-    }
-
-    /**
-     * Decreases the number of turns left on the timer by 1
-     */
-    protected void decrementTimer() {
-        this.timer -= 1;
     }
 
     // --- COMMANDS ---

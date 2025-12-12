@@ -281,19 +281,24 @@ hero How... surprisingly sincere.
 contra I didn't actually think our actions had consequences.
 hero It's a little late for regret, isn't it?
 p Please?
+linebreak
 
 jumpanchor endSilentFirstVessel
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth But you don't know if she had the chance to hear your silence. She's gone, replaced with something else.
 
 jumpanchor endSilentNotFirstVessel
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth But you'll never know if she hears your silence. She's gone. Memory returns.
 
 jumpanchor endReplyFirstVessel
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth But you don't know if she had the chance to hear your reply. She's gone, replaced with something else.
 
 jumpanchor endReplyNotFirstVessel
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 truth But you'll never know if she hears your reply. She's gone. Memory returns.

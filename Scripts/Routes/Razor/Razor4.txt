@@ -117,6 +117,7 @@ truth Your blade strikes free of volition, and hers strikes, too.
 truth Both strikes are lethal. Neither of you will survive, but neither of you fear what's to come. This is a good ending.
 linebreak
 truth Something reaches out and folds her into its myriad arms.
+linebreak
 
 jumpanchor endBladeFirstVessel
 truth You do not get to see each other die. Something has taken her away, and it's left something else in her place.
