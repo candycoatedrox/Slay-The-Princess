@@ -230,7 +230,7 @@ public enum Chapter {
             case WITCH: return "gore; strangulation; being crushed to death";
             case STRANGER: return "derealization; unreality; Cronenberg-esque body horror";
             case PRISONER: return "self-decapitation; gore";
-            case DAMSEL: return "derealization; forced suicide; gore";
+            case DAMSEL: return "derealization; forced self-mutilation; forced suicide; gore";
 
             // Chapter III
             case NEEDLE: return "gore";

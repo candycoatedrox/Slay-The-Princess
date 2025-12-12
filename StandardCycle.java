@@ -30,6 +30,7 @@ public class StandardCycle extends Cycle {
     private static final PrincessDialogueLine CANTSTRAY = new PrincessDialogueLine(true, "You have already committed to my completion. You cannot go further astray.");
     private static final PrincessDialogueLine WORNPATH = new PrincessDialogueLine(true, "This path is already worn by travel and has been seen by one of my many eyes. You cannot walk it again. Change your course.");
     private static final VoiceDialogueLine WORNPATHHERO = new VoiceDialogueLine(Voice.HERO, "Wait... what?!");
+    private static final PrincessDialogueLine DEMOBLOCK = new PrincessDialogueLine(true, "That path is not available to you.");
 
     // --- CONSTRUCTOR ---
 
@@ -336,6 +337,17 @@ public class StandardCycle extends Cycle {
         }
     }
 
+    /**
+     * Prints a line about the Long Quiet beginning to creep closer, used in most endings right before a vessel is claimed
+     */
+    private void quietCreep() {
+        if (this.isFirstVessel) {
+            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision.");
+        } else {
+            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.");
+        }
+    }
+
     // --- CYCLE MANAGEMENT ---
 
     /**
@@ -459,10 +471,20 @@ public class StandardCycle extends Cycle {
             }
         }
 
-        if (this.prevEnding != ChapterEnding.DEMOENDING) this.mirrorSequence();
+        switch (this.prevEnding) {
+            case ABORTED: break;
+
+            case DEMOENDING:
+            case GOODENDING:
+                manager.updateVoicesMet(this.voicesMet);
+                break;
+
+            default:
+                this.mirrorSequence();
+                manager.updateVoicesMet(this.voicesMet);
+        }
 
         manager.updateVisitedChapters(this.route);
-        manager.updateVoicesMet(this.voicesMet);
         return this.prevEnding;
     }
 
@@ -2210,6 +2232,7 @@ public class StandardCycle extends Cycle {
                 case "bluff":
                     activeMenu.setCondition("isArmed", false);
                     activeMenu.setCondition("sorry", false);
+                    hesitated = true;
                     afraid = true;
                     canSlay = canTower;
                     activeMenu.setCondition("slay", canSlay);
@@ -2220,6 +2243,7 @@ public class StandardCycle extends Cycle {
                 case "isArmed":
                     activeMenu.setCondition("bluff", false);
                     activeMenu.setCondition("sorry", false);
+                    hesitated = true;
                     isArmed = true;
                     canSlay = canRazor;
                     activeMenu.setCondition("slay", canSlay);
@@ -4857,6 +4881,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -5114,9 +5139,9 @@ public class StandardCycle extends Cycle {
             activeMenu.add(new Option(this.manager, "cantRefuse", "(Explore) I don't think I can refuse her. Sorry.", resistCount == 0));
             activeMenu.add(new Option(this.manager, "noStutter", "(Explore) \"N-no. I w-won't t-tell you.\"", resistCount > 0 && submitCount > 0));
             activeMenu.add(new Option(this.manager, "shareMotive", "\"You're supposed to end the world.\""));
-            activeMenu.add(new Option(this.manager, "noForce", manager.demoMode(), "\"I said NO!\"", activeMenu.get("shareMotive"), tookBlade && resistCount >= 3));
-            activeMenu.add(new Option(this.manager, "no", manager.demoMode(), "\"No.\"", submitCount == 0));
-            activeMenu.add(new Option(this.manager, "silent", manager.demoMode() && submitCount == 0, "[Remain silent.]"));
+            activeMenu.add(new Option(this.manager, "noForce", manager.demoMode(), "\"I said NO!\"", 0, activeMenu.get("shareMotive"), tookBlade && resistCount >= 3));
+            activeMenu.add(new Option(this.manager, "no", manager.demoMode(), "\"No.\"", 0, submitCount == 0));
+            activeMenu.add(new Option(this.manager, "silent", manager.demoMode() && submitCount == 0, "[Remain silent.]", 0));
 
             this.repeatActiveMenu = true;
             while (repeatActiveMenu) {
@@ -5137,11 +5162,15 @@ public class StandardCycle extends Cycle {
                         break;
                     
                     case "noForce":
+                        if (!manager.confirmContentWarnings("forced self-mutilation, forced suicide", true)) break;
+
                         this.repeatActiveMenu = false;
                         mainScript.runSection("motiveNoForce");
                         return this.towerResistBlade(resistCount, submitCount, false);
                     
                     case "no":
+                        if (!manager.confirmContentWarnings("forced self-mutilation, forced suicide", true)) break;
+
                         this.repeatActiveMenu = false;
                         return this.towerResistBlade(resistCount, submitCount, false);
                     
@@ -5150,6 +5179,8 @@ public class StandardCycle extends Cycle {
                         this.knowsDestiny = true;
 
                         if (submitCount == 0) {
+                            if (!manager.confirmContentWarnings("forced self-mutilation, forced suicide", true)) break;
+
                             mainScript.runSection("motiveSilentNoSubmit");
                             return this.towerResistBlade(resistCount, submitCount, false);
                         }
@@ -5173,8 +5204,8 @@ public class StandardCycle extends Cycle {
         activeMenu.add(new Option(this.manager, "selfDetermination", "(Explore) \"Just because you're supposed to end the world doesn't mean you actually have to do it. You can be whatever you want to be.\""));
         activeMenu.add(new Option(this.manager, "questions", "(Explore) \"I have questions for you before I decide to do anything.\""));
         activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What happened to you after I died?\""));
-        activeMenu.add(new Option(this.manager, "refuseNoBladeA", manager.demoMode(), "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", !tookBlade && resistCount >= 2));
-        activeMenu.add(new Option(this.manager, "refuseNoBladeB", manager.demoMode(), "\"No. I won't take part in this.\" [Refuse her.]", !tookBlade && resistCount >= 2));
+        activeMenu.add(new Option(this.manager, "refuseNoBladeA", manager.demoMode(), "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", 0, !tookBlade && resistCount >= 2));
+        activeMenu.add(new Option(this.manager, "refuseNoBladeB", manager.demoMode(), "\"No. I won't take part in this.\" [Refuse her.]", 0, !tookBlade && resistCount >= 2));
         activeMenu.add(new Option(this.manager, "refuseBlade", manager.demoMode(), "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", tookBlade));
         activeMenu.add(new Option(this.manager, "pledge", "\"I'm yours to command.\" [Pledge yourself to her.]"));
 
@@ -5199,6 +5230,8 @@ public class StandardCycle extends Cycle {
 
                 case "refuseNoBladeA":
                 case "refuseNoBladeB":
+                    if (!manager.confirmContentWarnings("forced suicide", true)) break;
+
                     mainScript.runSection("refuseNoBlade");
                     mainScript.runSection();
                     return this.towerSlaySelf(false, true);
@@ -5252,12 +5285,7 @@ public class StandardCycle extends Cycle {
             }
         }
 
-        if (this.isFirstVessel) {
-            mainScript.runSection("endingFirstVessel");
-        } else {
-            mainScript.runSection("endingNotFirstVessel");
-        }
-
+        this.quietCreep();
         mainScript.runSection("pledgeBreak");
 
         this.activeMenu = new OptionsMenu(true);
@@ -5390,7 +5418,7 @@ public class StandardCycle extends Cycle {
         
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "pledge", "\"I'm yours.\" [Pledge yourself to her.]"));
-        activeMenu.add(new Option(this.manager, "resist", "\"I. Said. NO!\" [Resist.]", submitCount > 0));
+        activeMenu.add(new Option(this.manager, "resist", "\"I. Said. NO!\" [Resist.]", 0, submitCount > 0));
         activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", submitCount == 0));
 
         this.repeatActiveMenu = true;
@@ -5552,6 +5580,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -5852,6 +5881,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -7088,6 +7118,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -7285,6 +7316,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -7917,11 +7949,8 @@ public class StandardCycle extends Cycle {
             mainScript.runSection("endingNoBlade");
         }
 
-        if (this.isFirstVessel) {
-            mainScript.runSection("endingFirstVessel");
-        } else {
-            mainScript.runSection("endingNotFirstVessel");
-        }
+        this.quietCreep();
+        mainScript.runSection("endingJoin");
 
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "okay", "\"It's going to be okay...\""));
@@ -8140,6 +8169,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -8285,19 +8315,548 @@ public class StandardCycle extends Cycle {
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
 
+        mainScript.runSection("basementStart");
+
+        if (this.sharedLoop) {
+            mainScript.runSection("basementStartSharedLoop");
+            
+            if (this.sharedLoopInsist) {
+                mainScript.runSection("basementStartSharedLoopInsist");
+            } else {
+                mainScript.runSection("basementStartNoInsist");
+            }
+        } else {
+            mainScript.runSection("basementStartNoShare");
+            mainScript.runSection("basementStartNoInsist");
+        }
+
+        boolean slayAttempt = false;
+        boolean howFree = false;
+        String endWorldResponse = "";
+
+        OptionsMenu subMenu;
+        this.canSlayPrincess = true;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "killed", "(Explore) \"You killed me last time and it hurt a lot! Why did you do that?\""));
+        activeMenu.add(new Option(this.manager, "howFreeNoBlade", "(Explore) \"I didn't bring a knife. Do I have to cut you out again?\"", !this.hasBlade));
+        activeMenu.add(new Option(this.manager, "howFreeBlade", "(Explore) \"Do I have to cut you out again? I really didn't care for that last time.\"", this.hasBlade));
+        activeMenu.add(new Option(this.manager, "after", "(Explore) \"What happened after I died?\""));
+        activeMenu.add(new Option(this.manager, "endA", "(Explore) \"But before we started talking, did the world end? Did you end the world?\"", activeMenu.get("after")));
+        activeMenu.add(new Option(this.manager, "endB", "(Explore) \"I have to ask... did you end the world after you killed me back there?\""));
+        activeMenu.add(new Option(this.manager, "sorry", "(Explore) \"I'm sorry about what happened last time. The Narrator who sent me here to kill you took over my body. It was extremely unfair.\""));
+        activeMenu.add(new Option(this.manager, "rescue", "[Rescue the Princess.]"));
+        activeMenu.add(new Option(this.manager, "slay", manager.demoMode(), "[Slay the Princess.]", 0));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "killed":
+                case "sorry":
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "howFreeNoBlade":
+                case "howFreeBlade":
+                    howFree = true;
+                    mainScript.runSection("howFree");
+                    break;
+
+                case "after":
+                    activeMenu.setCondition("endB", false);
+                    mainScript.runSection("after");
+                    break;
+
+                case "endA":
+                    activeMenu.setCondition("endB", false);
+                case "endB":
+                    activeMenu.setCondition("endA", false);
+                    mainScript.runSection("endWorldAsk");
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "save", "\"No? I don't want the world to end.\""));
+                    subMenu.add(new Option(this.manager, "neutral", "\"I have no feelings one way or another about the world ending.\""));
+                    subMenu.add(new Option(this.manager, "burn", "\"Honestly, the world sucks. People are a plague and I hope you brought a slow and painful ruin to them all.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
+
+                    endWorldResponse = parser.promptOptionsMenu(subMenu);
+                    mainScript.runSection(endWorldResponse + "EndWorld");
+                    break;
+
+                case "rescue":
+                    return this.damselRescue(slayAttempt, howFree, endWorldResponse);
+
+                case "cSlayPrincess":
+                    if (manager.demoMode()) {
+                        parser.printDialogueLine(DEMOBLOCK);
+                        break;
+                    }
+                case "slay":
+                    if (manager.hasVisited(Chapter.GREY)) {
+                        parser.printDialogueLine(WORNPATH);
+                        parser.printDialogueLine(WORNPATHHERO);
+
+                        this.canSlayPrincess = false;
+                        slayAttempt = true;
+                        activeMenu.setGreyedOut("slay", true);
+                        break;
+                    } else if (!manager.confirmContentWarnings(Chapter.GREY, ChapterEnding.LADYKILLER, "forced suicide")) {
+                        break;
+                    }
+
+                    mainScript.runSection("conversationSlay");
+                    this.damselSlay();
+                    return ChapterEnding.LADYKILLER;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player decides to rescue the Damsel
+     * @param slayAttempt whether the player has attempted to slay the Princess when they have already visited Chapter III: The Grey
+     * @param howFree whether the player asked how they could free her
+     * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding damselRescue(boolean slayAttempt, boolean howFree, String endWorldResponse) {
+        if (!howFree) {
+            mainScript.runSection("rescueStartHowFree");
+        }
+
+        if (this.hasBlade) {
+            mainScript.runSection("rescueStartBlade");
+            mainScript.runSection("rescueContBlade");
+        } else {
+            mainScript.runSection("rescueStartNoBlade");
+            mainScript.runSection("rescueContNoBlade");
+        }
+
+        this.canSlayPrincess = false;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "want", "(Explore) \"What do you want to do?\"", 0));
+        activeMenu.add(new Option(this.manager, "leave", "\"We leave. And then we have our whole lives to figure out what we want to do next.\""));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "want":
+                    if (!manager.confirmContentWarnings("derealization")) break;
+
+                    return this.damselDeconSequence(slayAttempt, endWorldResponse);
+
+                case "cGoStairs":
+                case "leave":
+                    mainScript.runSection("leaveStart");
+                    return this.damselLeave(slayAttempt, endWorldResponse);
+
+                case "cSlayPrincessNoBladeFail":
+                    mainScript.runSection("slayHeroFail");
+                    break;
+
+                case "cSlayPrincessFail":
+                    mainScript.runSection("slaySmittenFail");
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
         
-        
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine(new VoiceDialogueLine("XXXXX"));
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-        
-        // PLACEHOLDER
-        return null;
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player asks the Damsel what she wants, triggering the sequence that might lead to claiming the Deconstructed Damsel
+     * @param slayAttempt whether the player has attempted to slay the Princess when they have already visited Chapter III: The Grey
+     * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding damselDeconSequence(boolean slayAttempt, String endWorldResponse) {
+        mainScript.runSection("whatWant");
+
+        if (this.whatWouldYouDo) {
+            mainScript.runSection("whatWouldYouDo");
+        }
+
+        mainScript.runSection("whatWantCont");
+
+        int depersonCount = 0;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "stay", manager.demoMode(), "\"Okay. Clearly something is happening here, and I'm very scared. What if we just... don't do anything? What if we just stay here? Nobody gets hurt, and we just figure out a way to be happy, together.\"", false));
+        activeMenu.add(new Option(this.manager, "parrot", "(Explore) \"You're just parroting my questions. What do you actually want?\"", false));
+        activeMenu.add(new Option(this.manager, "wantA", "(Explore) \"I want you to tell me what you want.\""));
+        activeMenu.add(new Option(this.manager, "wantB", "(Explore) \"There must be something you want!\""));
+        activeMenu.add(new Option(this.manager, "makeYou", "(Explore) \"But what would make you happy?\"", false));
+        activeMenu.add(new Option(this.manager, "more", "(Explore) \"You have to want something more than just making me happy.\"", false));
+        activeMenu.add(new Option(this.manager, "ownThing", "(Explore) \"But you need your own thing. You just met me. You can't base your entire happiness around me.\"", false));
+        activeMenu.add(new Option(this.manager, "unhappy", "(Explore) \"I want you to make me unhappy.\"", false));
+        activeMenu.add(new Option(this.manager, "endWorld", "(Explore) \"Do you want to end the world?\""));
+        activeMenu.add(new Option(this.manager, "leaveA", "\"I just want to leave. We can figure out the rest later.\""));
+        activeMenu.add(new Option(this.manager, "leaveB", "\"If you want to leave, let's leave.\""));
+        activeMenu.add(new Option(this.manager, "leaveC", "\"This isn't right. Let's just get out of here.\"", false));
+        activeMenu.add(new Option(this.manager, "slay", slayAttempt || manager.demoMode(), "\"Something isn't right here. I'm sorry.\" [Slay the Princess.]", 0, false));
+
+        boolean skipDepersonComment = false;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (depersonCount) {
+                case 1:
+                    activeMenu.setCondition("makeYou", true);
+                    activeMenu.setCondition("more", true);
+                    activeMenu.setCondition("ownThing", true);
+                    activeMenu.setCondition("unhappy", true);
+                    activeMenu.setCondition("leaveC", true);
+                    activeMenu.setCondition("slay", !slayAttempt && this.hasBlade);
+                    this.canSlayPrincess = !slayAttempt && this.hasBlade;
+
+                    if (!skipDepersonComment) mainScript.runSection("depersonComment1");
+                    break;
+
+                case 2:
+                    if (!skipDepersonComment) mainScript.runSection("depersonComment2");
+                    break;
+
+                case 3:
+                    activeMenu.setCondition("stay", true);
+
+                    if (!skipDepersonComment) mainScript.runSection("depersonComment3");
+                    break;
+
+                case 4:
+                    mainScript.runSection("deconEnding");
+
+                    if (this.isFirstVessel) {
+                        mainScript.runSection("deconEndingFirstVessel");
+                    } else {
+                        mainScript.runSection("deconEndingNotFirst");
+                    }
+
+                    return ChapterEnding.ANDTHEYLIVEDHAPPILY;
+            }
+
+            skipDepersonComment = false;
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "stay":
+                    mainScript.runSection("stayStartDecon");
+                    return ChapterEnding.CONTENTSOFOURHEARTDECON;
+
+                case "parrot":
+                case "wantA":
+                case "wantB":
+                    depersonCount += 1;
+                    this.damselDepersonTruthComment(depersonCount);
+                    mainScript.runSection("wantDecon");
+                    break;
+
+                case "makeYou":
+                case "more":
+                case "ownThing":
+                case "unhappy":
+                    depersonCount += 1;
+                    this.damselDepersonTruthComment(depersonCount);
+                    mainScript.runSection(activeOutcome + "Decon");
+                    break;
+
+                case "endWorld":
+                    mainScript.runSection("endWorldDecon");
+
+                    if (endWorldResponse.isEmpty()) {
+                        if (depersonCount == 0) {
+                            mainScript.runSection("endWorldNoDeperson");
+                        } else {
+                            activeMenu.setCondition("parrot", true);
+                            mainScript.runSection("endWorldDeperson");
+                        }
+
+                        OptionsMenu subMenu = new OptionsMenu(true);
+                        subMenu.add(new Option(this.manager, "save", "\"No? I don't want the world to end.\""));
+                        subMenu.add(new Option(this.manager, "neutral", "\"I have no feelings one way or another about the world ending.\""));
+                        subMenu.add(new Option(this.manager, "burn", "\"Honestly, the world sucks. People are a plague and I hope you brought a slow and painful ruin to them all.\""));
+                        subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
+
+                        endWorldResponse = parser.promptOptionsMenu(subMenu);
+                        switch (endWorldResponse) {
+                            case "silent":
+                                mainScript.runSection("silentEndWorldDecon");
+                                break;
+
+                            case "save":
+                                if (this.hasBlade) mainScript.runSection("saveEndWorldDeconBlade");
+
+                                if (depersonCount == 0) {
+                                    depersonCount += 1;
+                                    this.damselDepersonTruthComment(depersonCount);
+                                }
+
+                                mainScript.runSection("saveEndWorldDecon");
+                                break;
+
+                            default:
+                                mainScript.runSection(endWorldResponse + "EndWorldDecon");
+
+                                if (depersonCount == 0) {
+                                    depersonCount += 1;
+                                    this.damselDepersonTruthComment(depersonCount);
+                                }
+
+                                mainScript.runSection();
+                        }
+
+                        break;
+                    } else {
+                        skipDepersonComment = true;
+                        mainScript.runSection(endWorldResponse + "WorldDecon");
+                    }
+
+                    break;
+
+                case "leaveA":
+                case "leaveB":
+                case "leaveC":
+                    if (depersonCount > 1) {
+                        mainScript.runSection("leaveStartDeconB");
+                    } else {
+                        mainScript.runSection("leaveStartDeconA");
+                    }
+
+                    return this.damselLeave(slayAttempt, endWorldResponse);
+
+                case "cSlayPrincess":
+                    if (manager.demoMode()) {
+                        parser.printDialogueLine(DEMOBLOCK);
+                        break;
+                    }
+                case "slay":
+                    if (manager.hasVisited(Chapter.GREY)) {
+                        parser.printDialogueLine(WORNPATH);
+                        parser.printDialogueLine(WORNPATHHERO);
+
+                        this.canSlayPrincess = false;
+                        slayAttempt = true;
+                        activeMenu.setGreyedOut("slay", true);
+                        break;
+                    } else if (!manager.confirmContentWarnings(Chapter.GREY, ChapterEnding.LADYKILLER, "forced suicide")) {
+                        break;
+                    }
+
+                    mainScript.runSection("deconSlay");
+                    this.damselSlay();
+                    return ChapterEnding.LADYKILLER;
+
+                default:
+                    skipDepersonComment = true;
+                    this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        throw new RuntimeException("No ending found");
+    }
+
+    /**
+     * Describes the Princess deconstructing for a given depersonalization count
+     * @param depersonCount the number of times the Princess has deconstructed already
+     */
+    private void damselDepersonTruthComment(int depersonCount) {
+
+        mainScript.runSection("depersonTruth" + depersonCount);
+
+        if (depersonCount == 1) {
+            this.quietCreep();
+        } else {
+            mainScript.runSection("quietCont");
+        }
+    }
+
+    /**
+     * The player leaves the basement with the Damsel
+     * @return the Chapter ending reached by the player
+     */
+    private ChapterEnding damselLeave(boolean slayAttempt, String endWorldResponse) {
+        boolean tookBlade = this.hasBlade;
+        this.canSlayPrincess = false;
+
+        if (this.hasBlade) {
+            this.hasBlade = false;
+            mainScript.runSection("leaveStartBlade");
+        } else {
+            mainScript.runSection("leaveStartNoBlade");
+        }
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) \"Do you think you can open it?\""));
+        activeMenu.add(new Option(this.manager, "her", "\"Yeah. I think you've got this.\"", activeMenu.get("explore")));
+        activeMenu.add(new Option(this.manager, "together", "\"I think we can open it if we try together.\""));
+        activeMenu.add(new Option(this.manager, "alone", "\"I think I've got this.\" [Open the door by yourself.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "explore":
+                    mainScript.runSection("openDoorExplore");
+                    break;
+
+                default:
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection(activeOutcome + "OpenDoor");
+            }
+        }
+
+        this.currentLocation = GameLocation.CABIN;
+
+        if (tookBlade) {
+            this.withBlade = !slayAttempt;
+            mainScript.runSection("finalBladeChoice");
+
+            this.activeMenu = new OptionsMenu();
+            activeMenu.add(new Option(this.manager, "slay", "[Take the blade and slay the Princess.]", 0));
+            activeMenu.add(new Option(this.manager, "nope", slayAttempt || manager.demoMode(), "[You're not doing that.]"));
+
+            this.repeatActiveMenu = true;
+            while (repeatActiveMenu) {
+                this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+                switch (activeOutcome) {
+                    case "cTake":
+                    case "cSlayPrincessNoBladeFail":
+                        if (slayAttempt) {
+                            mainScript.runSection("slayAgainAttempt");
+                            break;
+                        } else if (manager.demoMode()) {
+                            parser.printDialogueLine(DEMOBLOCK);
+                            break;
+                        }
+                    case "slay":
+                        if (manager.hasVisited(Chapter.GREY)) {
+                            parser.printDialogueLine(WORNPATH);
+                            parser.printDialogueLine(WORNPATHHERO);
+
+                            this.withBlade = false;
+                            slayAttempt = true;
+                            activeMenu.setGreyedOut("slay", true);
+                            break;
+                        } else if (!manager.confirmContentWarnings(Chapter.GREY, ChapterEnding.LADYKILLER, "forced suicide")) {
+                            break;
+                        }
+
+                        this.repeatActiveMenu = false;
+                        mainScript.runSection("cabinSlay");
+                        this.damselSlay();
+                        return ChapterEnding.LADYKILLER;
+
+                    case "nope":
+                        this.repeatActiveMenu = false;
+                        this.withBlade = false;
+                        mainScript.runSection("preLeaveNoBlade");
+                        break;
+
+                    default: this.giveDefaultFailResponse(activeOutcome);
+                }
+            }
+        } else {
+            mainScript.runSection("preLeaveBlade");
+        }
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "stay", manager.demoMode(), "\"All we need to be happy is each other, what if we just stayed here and built a life together?\""));
+        activeMenu.add(new Option(this.manager, "stop", "Stop it with these interruptions. I already made up my mind. We're leaving."));
+        activeMenu.add(new Option(this.manager, "ignore", "[Just ignore them.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "stay":
+                    mainScript.runSection("staySuggest");
+
+                    this.activeMenu = new OptionsMenu(true);
+                    activeMenu.add(new Option(this.manager, "nonchalance", "\"Your nonchalance about the fate of the world has me a bit worried. That's why I want to stay here.\"", 0, !endWorldResponse.isEmpty()));
+                    activeMenu.add(new Option(this.manager, "trust", "\"Trust me. It'll be better for both of us if we stay. We can be happy here. We just have to want it.\"", 0));
+                    activeMenu.add(new Option(this.manager, "leave", "\"You're right. We're leaving.\"", 0));
+                    activeMenu.add(new Option(this.manager, "silent", "[Remain silent.]", 0));
+
+                    switch (parser.promptOptionsMenu(activeMenu)) {
+                        case "leave":
+                            this.repeatActiveMenu = false;
+                            mainScript.runSection("stayReturn");
+                            break;
+
+                        case "nonchalance":
+                            if (!manager.confirmContentWarnings(Chapter.HAPPY, "forced self-mutilation, forced suicide")) {
+                                activeMenu.setGreyedOut("nonchalance", true);
+                                activeMenu.setGreyedOut("trust", true);
+                                activeMenu.setGreyedOut("silent", true);
+                                break;
+                            }
+
+                            if (tookBlade) {
+                                mainScript.runSection("stayNonchalanceBlade");
+                            } else {
+                                mainScript.runSection("stayNonchalanceNoBlade");
+                            }
+
+                            return ChapterEnding.CONTENTSOFOURHEARTUPSTAIRS;
+
+                        case "trust":
+                        case "silent":
+                            if (!manager.confirmContentWarnings(Chapter.HAPPY, "forced self-mutilation, forced suicide")) {
+                                activeMenu.setGreyedOut("nonchalance", true);
+                                activeMenu.setGreyedOut("trust", true);
+                                activeMenu.setGreyedOut("silent", true);
+                                break;
+                            }
+
+                            mainScript.runSection("stayStartUpstairs");
+                            return ChapterEnding.CONTENTSOFOURHEARTUPSTAIRS;
+                    }
+
+                    break;
+
+                case "stop":
+                    this.repeatActiveMenu = true;
+                    break;
+
+                case "cGoHill":
+                case "ignore":
+                    this.repeatActiveMenu = true;
+                    mainScript.runSection("leaveEarlyJoin");
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        mainScript.runSection("leaveEnding");
+        this.quietCreep();
+        mainScript.runSection();
+        mainScript.runSection("quietCont", true);
+        mainScript.runSection();
+
+        if (this.isFirstVessel) {
+            mainScript.runSection("leaveEndFirstVessel");
+        } else {
+            mainScript.runSection("leaveEndNotFirstVessel");
+        }
+
+        return ChapterEnding.ROMANTICHAZE;
+    }
+
+    /**
+     * The player chooses to slay the Damsel, leading to Chapter III: The Grey with the Voice of the Cold
+     */
+    private void damselSlay() {
+        mainScript.runSection("slayMain");
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "refuse", "\"I'm the one who makes the decisions here, and I say *no!*\""));
+        activeMenu.add(new Option(this.manager, "ok", "\"If that's what you want to do, let's see what happens.\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
+
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "Slay");
     }
 
 
@@ -8949,6 +9508,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine("XXXXX");
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -8967,6 +9527,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine("XXXXX");
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */
@@ -8985,6 +9546,7 @@ public class StandardCycle extends Cycle {
         parser.printDialogueLine("XXXXX");
         parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
         activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
         activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
         */

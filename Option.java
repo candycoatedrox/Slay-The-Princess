@@ -169,10 +169,37 @@ public class Option {
      * @param display the text displayed to the player for the Option
      * @param maxTimesPicked the maximum number of times the Option can be picked; a value of 0 means there is no maximum
      * @param prerequisiteOption another Option that must be chosen before this Option appears
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     */
+    public Option(GameManager manager, String id, boolean greyedOut, String display, int maxTimesPicked, Option prerequisiteOption, boolean conditionMet) {
+        this(manager, id, display, maxTimesPicked, greyedOut, prerequisiteOption, null, conditionMet);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyedOut whether the Option is initially greyed out or not
+     * @param display the text displayed to the player for the Option
+     * @param maxTimesPicked the maximum number of times the Option can be picked; a value of 0 means there is no maximum
+     * @param prerequisiteOption another Option that must be chosen before this Option appears
      * @param leadsToChapter the Chapter that the Option leads to
      */
     public Option(GameManager manager, String id, String display, int maxTimesPicked, Option prerequisiteOption, Chapter leadsToChapter) {
         this(manager, id, display, maxTimesPicked, false, prerequisiteOption, leadsToChapter, true);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyedOut whether the Option is initially greyed out or not
+     * @param display the text displayed to the player for the Option
+     * @param maxTimesPicked the maximum number of times the Option can be picked; a value of 0 means there is no maximum
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     */
+    public Option(GameManager manager, String id, boolean greyedOut, String display, int maxTimesPicked, boolean conditionMet) {
+        this(manager, id, display, maxTimesPicked, greyedOut, null, null, conditionMet);
     }
 
     /**

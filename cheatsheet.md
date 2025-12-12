@@ -225,7 +225,7 @@ You are **guaranteed** to encounter: death; murder; verbal abuse; gaslighting; d
   - **The Witch:** gore; strangulation; being crushed to death
   - **The Stranger:** derealization; unreality; Cronenberg-esque body horror
   - **The Prisoner:** self-decapitation; gore
-  - **The Damsel:** derealization; forced suicide; gore<br/><br/>
+  - **The Damsel:** derealization; forced self-mutilation; forced suicide; gore<br/><br/>
 
 <ins>**Possible content warnings for Chapter III:**</ins>
   - **The Eye of the Needle:** gore

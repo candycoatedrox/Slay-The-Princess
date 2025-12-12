@@ -373,9 +373,11 @@ jumpanchor pledgeExplore
 p Nothing. And then everything.
 
 jumpanchor pledgeEndFirstVessel
+truth Something reaches out and folds her into its myriad arms.
 truth But you do not take her hand, nor will you ever. It's time to leave. Memory returns.
 
 jumpanchor pledgeEndNotFirstVessel
+truth Something reaches out and folds her into its myriad arms.
 truth But you do not take her hand. Something has taken her away, and it's left something else in her place.
 
 // Resist her //

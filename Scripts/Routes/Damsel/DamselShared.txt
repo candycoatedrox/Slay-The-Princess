@@ -107,13 +107,13 @@ p H-hello? Is someone there?
 jumpanchor stairsSharedLoop
 smitten Her voice... it's somehow even more beautiful than last time. I can hear wedding bells already...
 hero I've held my tongue 'til now, but you're taking this a little too far. We barely even know the Princess. We can still do right by her without all this over-the-top fawning.
-jumpto basementStartJoin
+jumpto stairsJoin
 
 jumpanchor stairsNoShare
 smitten Her voice... it's somehow even more beautiful than last time. I think we're in love.
 hero Okay, I'm with you that we should be doing whatever we can to save her, but saying we're in love is a bit much, don't you think?
 hero We don't even know the Princess. We can still do right by her without all this... fawning.
-jumpanchor basementStartJoin
+jumpanchor stairsJoin
 n Yes. For everyone's sake, you're not in love. *Sigh.* Just remember that her charms are all part of the manipulation.
 linebreak
 n You walk down the stairs and lock eyes with the Princess. There's a heavy chain around her wrist, binding her to the far wall.
@@ -122,3 +122,508 @@ smitten My love! We're here to rescue you from your unjust and foul imprisonment
 n You know she can't hear you, right?
 smitten She may not be able to hear my words, but surely, she can hear my spirit.
 n Oh, your spirit's plenty loud, alright.
+
+// Basement //
+
+jumpanchor basementStart
+p It's you! My dashing hero. I was so worried you wouldn't come back.
+smitten Did you hear that? She said we're dashing!
+hero And she called us a hero!
+n Flattery really goes a long way with the two of you, doesn't it?
+
+jumpanchor basementStartSharedLoop
+n "Waiting for you to come back?" I didn't want to believe your ravings back in the woods, but this is next to incontrovertible evidence. You've been here before.
+jumpto basementStartJoin
+
+jumpanchor basementStartSharedLoopInsist
+hero Now hold on. If she actually *ended* a world... are you sure we want to do this? Are you sure we want to *rescue* her?
+
+jumpanchor basementStartNoShare
+n "Waiting for you to come back?" You've been here before, haven't you?
+jumpanchor basementStartJoin
+smitten That's right, villain. And you killed us.
+hero Well... she killed us.
+smitten Only because he made us try and kill her! It was self-defense. Our beloved's hands remain unstained by cruelty.
+n And you've died before. So an entire world has been damned to oblivion. I'd really hoped I'd be the first... but what's done is done. What matters is you have a chance to do it right this time.
+
+jumpanchor basementStartNoInsist
+hero We... damned a whole world? But everything reset.
+n Nothing "resets." You're just somewhere else, and you can't keep hopping between worlds forever. Especially not without leaving a trail of incomprehensible devastation behind you. *Sigh.* This is horrible.
+
+// Conversation menu //
+
+jumpanchor killed
+p I'm sorry! Didn't you want me to?
+hero ... Did we?
+smitten We warned her of the cruel forces seizing our body. That's practically telling her to kill us. She is our beloved, and she made the choice to free us of our misery, to show us mercy and make the best decision for everyone.
+n She made the best decision for her. Don't be so quick to assign kindness, you're just opening yourself up to manipulation.
+
+jumpanchor howFree
+p I'm okay with whatever you come up with. You can cut my arm off again.
+smitten We won't be laying a finger on her perfect wrists, and indeed, we won't even have to! Do you see how dainty her hands are? We'll be able to slip her right out, with no harm done.
+n What?! No. She's a prisoner here. You can't just slip her hand through the chains!
+hero Why are you two arguing over the logistics of slipping her hand out of her shackles? She just said she'd be okay with *any* idea we came up with. Am I the only one here who thinks that's weird?
+smitten She didn't care last time! Why should she care this time? That's our stoic, smiling angel.
+n No, you're right. It's extremely bizarre behavior, and further evidence that she's a monster who's not to be trusted. So go ahead and slay her.
+
+jumpanchor after
+p You died! And now we're talking.
+
+jumpanchor endWorldAsk
+p I don't know. Was I supposed to have ended the world? Would that have made you happy?
+smitten Isn't that just like our darling Princess? She wants to make us happy! My heart melts further with every word that passes through her beautiful lips.
+n Are you listening to her? That's a *confession.*
+
+jumpanchor saveEndWorld
+p Then I didn't end the world!
+smitten See? She didn't confess anything! She is innocence itself!
+hero I'm... not so sure.
+
+jumpanchor neutralEndWorld
+n At least you're being honest. *Sigh.* I can't believe that the fate of the entire world has been left in the hands of a nihilist.
+p Um...
+n The Princess shifts in uncomfortable confusion.
+p Me too! I don't care!
+hero She wasn't confused for long.
+smitten If she doesn't care then clearly she didn't end the world! It would take a great desire for evil to do something so inconceivable, and our dearest has not an ounce of cruelty within her. All is well, and it's high time we rescued our beloved.
+
+jumpanchor burnEndWorld
+n *Sigh.* I can't believe that the fate of the entire world has been left in the hands of a misanthrope.
+p Lucky for you, I did destroy the world! I destroyed all of it and made it awful for everyone.
+n I'd point out that she just admitted to obliterating the entire world, but I guess that wouldn't actually move you.
+hero Oh, it moves me. Whatever we do next, we should do our best to *not* let her out.
+smitten But have you seen her angelic face? She should get a pass! She just wanted to make us happy.
+hero By destroying the world?
+smitten Apparently, yes!
+
+jumpanchor silentEndWorld
+n The Princess' eyes quiver as she waits for your response.
+p I... didn't? End the world?
+p I didn't end the world!
+n She's clearly just saying what she thinks you want to hear.
+smitten Or she's innocent. How could a beauty like her be capable of ending the world? It's not rational!
+
+jumpanchor sorry
+n If another version of me was pushed to such drastic action, it was for a good reason!
+p That's okay! You were just doing your best, and that's all that matters.
+hero She took that in stride. To a surprising extent. An almost unsettling extent, actually.
+smitten That's because she's perfect!
+hero Do you think she has someone like Him telling her what to do?
+n She doesn't. There's no one else like me.
+smitten I think he's right. Because I like it better if she doesn't have some horrid little voice like Him always trying to drive her to violence.
+
+// Rescue her //
+
+jumpanchor rescueStartHowFree
+n Rescue her? What are you talking about? Did you forget that she's a world-ending monstrosity? And even if you wanted to unleash her onto the world, despite the complete moral disaster that would be, you'd have to get her out of those chains. Good luck with that!
+smitten Don't you see how dainty her hands are? We'll be able to slip her out with ease.
+n No! She's a prisoner here. You can't just slip her hand through the chains!
+hero If her hands could just slip out of the chains, why hasn't she done it already?
+smitten Because we've yet to present her with her freedom.
+hero I'm not sure I follow.
+smitten Would you rather believe me, a passionate heart guided by love and my own good nature, or would you rather believe the devil on your shoulder who tells you what you can and cannot do?
+hero I think I'd rather believe in facts.
+smitten Ah, so you're one of those empiricists.
+hero One of us has to be.
+smitten Then let me show you a brand new truth. Narrator! We courageously step forward and free our beloved from her bindings.
+
+jumpanchor rescueStartBlade
+n No. I can't let you do that. If you take another step towards the Princess, I'll -- /// interrupt
+hero You'll what? Take over our body and force us to try and kill her?
+n Yes.
+jumpto rescueStartJoin
+
+jumpanchor rescueStartNoBlade
+n No. I can't let you do that. If you take another step towards the Princess, I'll -- /// interrupt
+hero You'll what? Take over our body and force us to try and kill her?
+n I would if I had a weapon.
+jumpanchor rescueStartJoin
+smitten Not on my watch, villain! My passions contain titanic depths, and if you try *anything* that might harm our dearest I will end our life without a second thought.
+n You wouldn't.
+smitten I would!
+hero I'd listen to him if I were you. He has a lot of strong feelings. And doesn't the world end if we don't stop her?
+linebreak
+n *Sigh.* You approach the Princess and gingerly slide her hand from her bindings. That... shouldn't have worked. I'll be damned. We're doomed.
+hero I can't believe it. But I guess I have to.
+smitten I told you! There's no life more worth living than that of a true believer.
+p I'm free! And you're not trying to kill me this time! Thank you, thank you so much!
+n The Princess jumps up and smothers you in a joyful embrace. Eugh.
+
+jumpanchor rescueContBlade
+n Are you *sure* you want to do this? Just one slip of the wrist and your pristine blade is buried in her back, and everyone out there is saved.
+hero Is that a threat?
+smitten You know what we'll do if you try it.
+n You're going to regret this.
+jumpto rescueContJoin
+
+jumpanchor rescueContNoBlade
+n If only you had a weapon. One slip of the wrist and your pristine blade would be buried in her back, and everyone out there would be saved.
+hero Luckily for mister romance, we don't have a weapon.
+smitten Who needs a weapon when we have the power of love on our side?
+jumpanchor rescueContJoin
+p ... What do we do now?
+
+jumpanchor slayHeroFail
+hero We don't have a weapon, remember?
+
+jumpanchor slaySmittenFail
+smitten You wouldn't dare.
+
+// Deconstruction sequence //
+
+jumpanchor whatWant
+n Let me guess. "End the world?"
+smitten Spoken with the rank cynicism of someone who has never felt love in His heart.
+p I... don't actually know. Nobody's ever asked me what I've wanted before.
+
+jumpanchor whatWouldYouDo
+p I mean, you sort of did last time, but this is different.
+
+jumpanchor whatWantCont
+hero She doesn't even know what she wants. You may have had her all wrong. What if this whole thing is just a misunderstanding? What if she doesn't want to end the world?
+n You're so gullible. Is the only thing you've ever doubted the actual truth?
+p I think I want to leave. And I think...
+n And then she shrugs.
+p I dunno. What do you want to do?
+
+jumpanchor depersonTruth1
+truth Suddenly, the Princess starts to look... less *real.* Her eyes are just a bit too wide, too shiny, and the shadows that fall across her seem too... simple. She smiles sweetly up at you.
+
+jumpanchor depersonComment1
+hero She can't *just* want to make us happy.
+smitten It makes sense to me. That's all I want for her, so of course she'd want the same for us.
+
+jumpanchor depersonTruth2
+truth She starts to look like a poorly-drawn parody of herself, almost two-dimensional. Her eyes are unnaturally wide, her hair composed of simple shapes, her hands replaced by simple balls that only vaguely suggest fingers.
+truth It's almost as if the light barely casts a shadow on her at all.
+
+jumpanchor depersonComment2
+hero Is she broken? What's going on?
+n What's going on is she's lying to you, only she isn't a good liar. Are you starting to trust me now?
+
+jumpanchor depersonTruth3
+truth She loses all color, now completely paper-white and somehow drawn even more poorly than before.
+
+jumpanchor depersonComment3
+hero This isn't right! I don't know what's going on but this isn't right!
+smitten I fail to see the problem here. She's just sweet on us. You don't have to act like it's a big deal.
+
+jumpanchor wantDecon
+p I just want to make you happy!
+
+jumpanchor makeYouDecon
+p I just want to make you happy?
+
+jumpanchor moreDecon
+p Okay. I'll find something else to want if that makes you happy.
+
+jumpanchor ownThingDecon
+p Okay! If that's what makes you happy.
+
+jumpanchor unhappyDecon
+p Okay! If that's what makes you happy, I can make you unhappy.
+
+jumpanchor endWorldDecon
+n Are you seriously asking her that?
+
+jumpanchor burnWorldDecon
+p Oh, we've been over this one. I do want to end the world!
+
+jumpanchor neutralWorldDecon
+p Oh, we've been over this one. I don't know!
+
+jumpanchor saveWorldDecon
+jumpanchor silentWorldDecon
+p Oh, we've been over this one. No! I do not want to end the world!
+
+jumpanchor endWorldNoDeperson
+p I don't know. Was I supposed to have ended the world? Would that have made you happy?
+
+jumpanchor endWorldDeperson
+p Do you want to end the world?
+hero She's just parroting our questions, isn't she?
+
+jumpanchor saveEndWorldDeconBlade
+n Good answer. Now slay her.
+
+jumpanchor saveEndWorldDecon
+p If you don't want to end the world, then I don't want to end the world, either!
+smitten Why, why would you have us slay this beautiful creature? Did you not hear her just now? She specifically said she doesn't want to end the world.
+hero Yeah, but aren't you getting the feeling she's just telling us what we want to hear?
+smitten Even if she was, isn't that a good thing? If only she could hear me, all I would ever say is what I think she would like to hear. That she's beautiful, and kind, and glows like the soft light of the moon...
+n You're better off not arguing with that dolt. You know what you have to do.
+
+jumpanchor neutralEndWorldDecon
+n At least you're being honest. *Sigh.* I can't believe that the fate of the entire world has been left in the hands of a nihilist.
+
+p Um...
+n The Princess shifts in uncomfortable confusion.
+p Me too! I don't care!
+hero She wasn't confused for long.
+smitten If she doesn't care, then clearly she won't end the world! All is well, and it's high time we take our beloved to our happy ending.
+
+jumpanchor burnEndWorldDecon
+n *Sigh.* I can't believe that the fate of the entire world has been left in the hands of a misanthrope.
+
+p Okay! If that's what you think is best, then that's what we'll do when we leave!
+p We'll bring ruin to everyone and everything! Nothing will be left standing in the wake of the unceasing entropy we'll unleash upon all of creation.
+hero Okay. So whatever we do next, we should *not* let her out.
+
+jumpanchor silentEndWorldDecon
+n The Princess' eyes quiver as she waits for your response.
+
+p I... don't? Want to the world?
+p I don't want to end the world!
+n She's clearly just saying what she thinks you want to hear.
+hero Yeah... she is, isn't she?
+smitten Or she's innocent. How could a beauty like her be capable of ending the world? It's not rational!
+
+// "And They Lived Happily Ever After" ending; claim the Deconstructed Damsel //
+jumpanchor deconEnding
+truth She degrades even further, her outline becoming sketchy and smudged from being erased over and over. She looks like a child's first attempt at following an art tutorial.
+hero Is it just me or... does it feel like we're alone right now? Like we're the only ones here.
+
+jumpanchor deconEndingFirstVessel
+truth Something reaches out and folds her into its myriad arms.
+truth You don't get the chance to ask another question. Something has taken her away, and it's left something else in her place.
+jumpto deconEndingJoin
+
+jumpanchor deconEndingNotFirst
+truth Something reaches out and folds her into its myriad arms.
+truth You don't get the chance to ask another question. Nor will you ever. It's time for you to leave. Memory returns.
+jumpanchor deconEndingJoin
+smitten No! She was our perfect match!
+
+// Leave the basement //
+
+jumpanchor leaveStart
+p That sounds perfect.
+
+jumpanchor leaveStartDeconA
+truth All of a sudden, the Princess looks just as she did a moment ago, back to normal as if nothing happened.
+truth The textured nothingness is gone.
+p That sounds perfect.
+
+jumpanchor leaveStartDeconB
+truth All of a sudden, the Princess looks just as she did a moment ago, back to flesh and blood and three-dimensional space as if nothing happened.
+truth The textured nothingness is gone.
+p That sounds perfect.
+hero Oh, phew, she's back to normal.
+smitten "Normal?" What are you talking about? Our angel has always been like this: absolutely flawless.
+
+jumpanchor leaveStartBlade
+n As the Princess takes your hand in hers, you let your blade tumble uselessly to the floor. And with it tumbles the last hope for the entire world.
+jumpto leaveStartJoin
+
+jumpanchor leaveStartNoBlade
+n The Princess takes your hand, the last hopes of the entire world slipping through your fingers as they intertwine with hers.
+jumpanchor leaveStartJoin
+smitten We have each other. We don't need the world for our happy ending.
+n I like to think that you do, actually.
+hero Look, I had my doubts, but the choice has been made, and this is happening. You don't have to mope about it.
+n I *will* mope about it, because moping is the only recourse you loveblind fools have left me with.
+linebreak
+n You and the Princess walk up the stairs, hand in hand. Ugh. Look at the way she's smiling at you. She doesn't have to be so happy about this.
+hero And what happens after we walk up the stairs?
+n Let's see. Oh, isn't that interesting? The door slams in your face. And the lock clicks.
+hero That's a familiar move.
+n Did I do that last time? Then you should know that you won't be able to leave.
+p Oh, no! Did someone lock us in here? That's not fair! We're supposed to leave now.
+smitten She's right. It isn't fair. But the unfairnesses of the world are no match for the strength of true love.
+n Enough with this true love nonsense. You just met her!
+smitten Of course you wouldn't understand, our passions run deeper than anything you have ever known.
+n Are you listening to this? You don't have to go along with the every whim of that delusional voice.
+hero I'm just along for the ride at this point.
+
+jumpanchor openDoorExplore
+p I don't know. Do you think I can?
+smitten Of course she can! You believe in her, right?
+n Nobody is leaving this basement.
+
+jumpanchor herOpenDoor
+p Okay. Let me try.
+n The Princess tries the handle...
+smitten And...?
+n ... The lock clicks and the door creaks open. Are. You. Kidding me?
+smitten I told you she could do it!
+
+jumpanchor togetherOpenDoor
+p Okay! Yeah! Let's do it!
+n Like a pair of teenagers in love, you and the Princess place your hands on the door... together... blegh.
+smitten And...?
+n ... The lock clicks and the door creaks open. Are. You. Kidding me?
+smitten I told you our love was insurmountable!
+
+jumpanchor aloneOpenDoor
+p Okay! Yeah! You've got this!
+n You place your hand on the door...
+smitten And...?
+n ... The lock clicks and the door creaks open. Are. You. Kidding me?
+smitten Ha! I knew it! Your words are no match for the pure strength of our hearts, bound together as one.
+
+jumpanchor finalBladeChoice
+n You and the Princess make your way upstairs and -- /// interrupt
+n The blade, that's right! There's still a chance for you to do the right thing. Take the blade from the table and slay her before it's too late!
+
+jumpanchor preLeaveNoBlade
+n You're enjoying this, aren't you? You're taking every opportunity you can to draw out the end of the world and make me suffer. I hate you.
+jumpto preLeaveJoin
+
+jumpanchor preLeaveBlade
+n You and the Princess make your way upstairs. Her "freedom" and the world's ruin are just a few moments away. If you don't mind, I'm gonna fix myself a drink before you ruin everything. If I'm about to see the end of the world, I'd rather not see it sober.
+jumpanchor preLeaveJoin
+hero You know, if her walking out that door is really gonna end the world... Can't we all just stay here? Seems like an easy win for everyone.
+n That's not how this works!
+smitten Yes, what he said. That's not how this works! Obviously we have to leave with her! It's our happy ending.
+
+jumpanchor leaveEarlyJoin
+p That's the way out. We're going to leave together, just like you wanted!
+
+// "Romantic Haze" ending; claim the Damsel //
+jumpanchor leaveEnding
+n Yes, I suppose you are going to do that, aren't you? You cross the room, opening the door to the cabin.
+
+n And then you step outside.
+p We did it! What should we do now?
+
+hero ... Where did everything go?
+hero ... Where did He go?
+smitten Oh, is he gone? I hadn't noticed. I was too busy staring deep into our beloved's eyes.
+p I'm cold. Is being happy supposed to be so cold?
+smitten She's cold? Quick, our feathers! Pluck them all and weave her a coat worthy of a Princess!
+linebreak
+truth Something reaches out and folds her into its myriad arms.
+
+jumpanchor leaveEndFirstVessel
+truth But you don't get the chance to make that jacket. Something has taken her away, and it's left something else in her place.
+
+jumpanchor leaveEndNotFirstVessel
+truth But you don't get the chance to make that jacket. Nor will you ever. It's time for you to leave. Memory returns.
+
+// Stay in the cabin //
+
+jumpanchor stayStartDecon
+truth All of a sudden, the Princess looks just as she did a moment ago, back to flesh and blood and three-dimensional space as if nothing happened.
+truth The textured nothingness is gone.
+p Oh... is that really what you want? If you think that would make you happy, then...
+n Her eyes dart uncomfortably to the corners of the room.
+p I guess we could do that.
+hero At least she's normal again.
+smitten Normal again? Can't you tell? She's sad! She's distraught! This is unacceptable.
+smitten But she can't be unhappy about staying with *us...* can she?
+jumpto stayJoin
+
+jumpanchor staySuggest
+smitten What a romantic suggestion! You're right. We don't need the world, all we need is each other.
+hero That's exactly what I just suggested. Was it not romantic when I suggested it?
+smitten Did you suggest that? I wasn't listening.
+hero You answered me!
+p But... the door's right there. We can just leave.
+smitten W-wait. Why would she say that? Was she not wooed by our proclamation of love? Are -- we not enough for her...?
+n She's not "wooed" by you because "staying here and building a life together" isn't a solution. It isn't *anything.* It's a non-answer. It can't be done.
+
+jumpanchor stayReturn
+p Okay!
+
+jumpanchor stayNonchalanceBlade
+n Yes, she is extremely nonchalant about it, isn't she? Need I remind you that the blade is still here, sitting on the basement floor? Please. Everyone is counting on you.
+jumpto nonchalanceJoin
+
+jumpanchor stayNonchalanceNoBlade
+n Yes, she's extremely nonchalant about it, isn't she? Need I remind you the blade is still here? Please. Everyone is counting on you.
+jumpanchor nonchalanceJoin
+hero I think it's too late for that...
+jumpto stayStartUpstairs
+
+jumpanchor stayStartUpstairs
+p But I... I... we would have to be here forever.
+p I don't know you.
+p This is... really what you want, though, isn't it?
+n Her eyes dart uncomfortably to the corners of the room.
+p I guess we could do that.
+hero She doesn't seem happy about this.
+smitten But she can't be unhappy about staying with *us...* can she?
+hero I don't know. She has a point. She doesn't know us.
+jumpanchor stayJoin
+smitten No! It has to be Him! I-it has to be this place! I-If we just made these walls more fitting for a Princess, i-if we just say the right things --
+smitten ... If we just showed her the contents of our heart... she'd be happy here.
+n As the voice thinks its thought, your hands raise, fingers pointing towards your chest, and then... what?! No, you absolutely do *not* do that!
+smitten Oh, but I do.
+hero What. What is he doing? We can't see unless you tell us.
+n Are you sure you want to know? *Sigh.* I suppose I can't stall forever.
+n You plunge your nails into your chest, digging deep, grasping for a handhold. And you find it, your fingers curling around your ribs.
+p Oh no, what are you doing? Are you okay? You can't do that and be okay!
+hero Time out! He should not be allowed to do that. He's not the decider.
+smitten ... And yet... it's *done,* isn't it?
+n It will be soon. You yank violently, your bones cracking with wet pops as you pull yourself apart inch by painful inch.
+n Your exposed heart, framed by jagged ribs, thumps rhythmically in your raw, bloodied chest, the loosened... uh, threads? of your body unfurling to cover the surface of the room.
+smitten Don't mind my sacrifice, it's a fair price to pay to give her everything she *doesn't know she wants.*
+p Oh... I see... you're trying to tell me something...
+p It's... beautiful.
+n The Princess, mesmerized, reaches towards your beating heart, and then...
+hero Everything goes dark, and we die?
+linebreak
+n Yes.
+
+// Slay her //
+
+jumpanchor conversationSlay
+n Blade in hand, you run the Princess down.
+smitten Wait! No! You *barbarian!* What do you think you're doing?
+n But you ignore the pleas of the foolish little voice and press on. The Princess's eyes grow wide with terror as you approach, but she does absolutely nothing to stop you.
+
+jumpanchor deconSlay
+n You turn the tip of your blade towards the unsuspecting Princess. Thank you.
+smitten Wait... no! You barbarian, what are you doing?
+n But you ignore the pleas of the foolish little voice, and strike. The Princess' eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
+
+jumpanchor cabinSlay
+n You take the blade from the table, turning its tip towards the unsuspecting Princess. Thank you.
+smitten Wait! No! You barbarian! What are you doing?
+n But you ignore the pleas of the foolish little voice, and strike. The Princess' eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
+
+// Leads to Chapter III: The Grey with the Voice of the Cold //
+jumpanchor slayMain
+n Your blade pierces her heart, and she collapses pathetically to the ground.
+p I'm sorry... did I do something wrong?
+smitten No, my love! You did nothing wrong! I'm sorry! I'M SORRY, NOT YOU!
+p I'm going to die now. I think that's what you want.
+linebreak
+n And just like that, she's dead. And the world is saved. Thank you for seeing this through. I know it must have been difficult.
+hero I feel sick.
+smitten Sick?! You took part in the murder of the fairest creature that's ever lived, and you merely feel *sick?!* I for one am absolutely distraught! Grief-stricken. *Inconsolable!*
+n You'll get over it. You just saved *everyone.*
+smitten "Get over it?" You smarmy ASS. There's nothing in the world worth "getting over it" for! We might as well just end it all!
+n You raise the blade, aiming the point directly towards your heart -- *excuse me?!* No, you absolutely do not do that.
+hero Yeah, let's not make any rash decisions, we should give ourselves a minute, take a deep breath and --
+smitten Rash? The only rash decision we've made was running our *cursed blade* through her heart...! This is *far* from rash. This is *measured.* This is the only thing left for us to do now that she's gone.
+
+jumpanchor refuseSlay
+hero Exactly! You're not doing this.
+jumpto slayJoin
+
+jumpanchor okSlay
+hero What? No, let's not do that!
+smitten You won't use your fancy reverse psycho-therapeutics on me, murderer. We're dying together *RIGHT NOW.*
+jumpto slayJoin
+
+jumpanchor silentSlay
+hero Really? You're not going to say *anything?*
+jumpanchor slayJoin
+smitten All of you may have previously thought that my passions were too great to stifle, but those were merely passions of joy! My passions of sorrow run deeper than the ocean itself, and you'll find that they are *far* more unstiflable! Have at you! Have at you all!
+n I don't believe this.
+hero What? What don't you believe?
+n You plunge the blade into your own heart, and collapse to the floor.
+hero You can't be serious! Why are you helping him?
+n I'm not. He just... made it happen. I'm sorry.
+smitten That's right. You're *all* sorry.
+linebreak
+n Everything goes dark, and you die.
+
+// Generic dialogue //
+
+jumpanchor quietCont
+truth The textured nothingness creeps closer.
+
+jumpanchor slayAgainAttempt
+truth You have already tried that.

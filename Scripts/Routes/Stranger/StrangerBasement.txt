@@ -272,13 +272,7 @@ contra I think He's gone.
 hero We were never going to salvage this, were we?
 truth The Princess in front of you is all wrong, multiple faces and bodies smashed together in ways you can't begin to make sense of. Their skin stretches and contorts, veins bulging. They have too many fingers on too few hands. The pristine blade still sticks out of one of their chests, the face above it staring blankly into the distance.
 
-jumpanchor endingFirstVessel
-truth A textured nothingness begins to creep into the edges of your vision.
-jumpto endingVesselJoin
-
-jumpanchor endingNotFirstVessel
-truth A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.
-jumpanchor endingVesselJoin
+jumpanchor endingJoin
 p What happened to us? What are we? There are parts of us that are dead, and the others.... they just don't fit.
 p We can feel them moving around in spaces they don't belong. It's all so uncomfortable.
 p Did you do this? Did we do this? Can... can you pull us back apart? Can you fix us?

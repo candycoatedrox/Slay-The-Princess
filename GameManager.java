@@ -8,7 +8,7 @@ public class GameManager {
 
     // Settings
     private final boolean demoMode = true;
-    private final boolean trueDemoMode = false;
+    private final boolean trueDemoMode = true;
     private boolean dynamicWarnings = true;
     private boolean showNowPlaying = true;
     private boolean globalSlowPrint = true;
@@ -845,10 +845,10 @@ public class GameManager {
         if (ending == ChapterEnding.DEMOENDING) {
             parser.printDialogueLine("You have reached the end of the demo.");
             parser.printDialogueLine("Thank you for playing!");
+        } else {
+            this.showCredits();
+            this.showPlaylist(ending);
         }
-
-        this.showCredits();
-        this.showPlaylist(ending);
 
         this.parser.closeInput();
     }
@@ -932,7 +932,35 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c) {
-        return this.confirmContentWarnings(c, false);
+        switch (c) {
+            case RAZOR:
+            case ARMSRACE:
+            case NOWAYOUT:
+            case MUTUALLYASSURED:
+            case EMPTYCUP:
+            case STRANGER:
+            case CLARITY:
+            case GREY: return this.confirmContentWarnings(c, true);
+            default: return this.confirmContentWarnings(c, false);
+        }
+    }
+
+    /**
+     * Warns the player of potential content warnings from committing to a choice that leads to a given Chapter, and allows them to change their mind
+     * @param c the Chapter that this choice will lead the player to (should be the Grey)
+     * @param ending the chapter ending the player would achieve to reach c
+     * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
+     */
+    public boolean confirmContentWarnings(Chapter c, ChapterEnding ending) {
+        if (!this.dynamicWarnings) {
+            return true;
+        }
+
+        parser.printDialogueLine("[If you make this choice, you will encounter: " + c.getContentWarnings(ending) + ".]", true);
+        boolean confirm = this.parser.promptYesNo("[Are you sure you wish to proceed?]");
+        parser.printDialogueLine("[You can turn dynamic content warnings off at any time with TOGGLE WARNINGS.]");
+        System.out.println();
+        return confirm;
     }
 
     /**
@@ -972,6 +1000,25 @@ public class GameManager {
         parser.printDialogueLine("[If you make this choice, you will encounter: " + extraWarnings + ".]", true);
         parser.printDialogueLine("[You might also encounter: " + c.getContentWarnings() + ".]", true);
 
+        boolean confirm = this.parser.promptYesNo("[Are you sure you wish to proceed?]");
+        parser.printDialogueLine("[You can turn dynamic content warnings off at any time with TOGGLE WARNINGS.]");
+        System.out.println();
+        return confirm;
+    }
+
+    /**
+     * Warns the player of potential content warnings from committing to a choice that leads to a given Chapter, and allows them to change their mind
+     * @param c the Chapter that this choice will lead the player to (should be the Grey)
+     * @param ending the chapter ending the player would achieve to reach c
+     * @param extraWarnings the extra content warnings that appear before the next Chapter begins
+     * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
+     */
+    public boolean confirmContentWarnings(Chapter c, ChapterEnding ending, String extraWarnings) {
+        if (!this.dynamicWarnings) {
+            return true;
+        }
+
+        parser.printDialogueLine("[If you make this choice, you will encounter: " + extraWarnings + "; " + c.getContentWarnings(ending) + ".]", true);
         boolean confirm = this.parser.promptYesNo("[Are you sure you wish to proceed?]");
         parser.printDialogueLine("[You can turn dynamic content warnings off at any time with TOGGLE WARNINGS.]");
         System.out.println();
@@ -1136,6 +1183,11 @@ public class GameManager {
             parser.printDialogueLine("[The current chapter has no content warnings to display.]");
         } else {
             switch (c) {
+                case RAZOR:
+                case ARMSRACE:
+                case NOWAYOUT:
+                case MUTUALLYASSURED:
+                case EMPTYCUP:
                 case STRANGER:
                 case CLARITY:
                 case GREY:
@@ -1156,6 +1208,11 @@ public class GameManager {
             parser.printDialogueLine("[The current chapter has no content warnings to display.]");
         } else {
             switch (c) {
+                case RAZOR:
+                case ARMSRACE:
+                case NOWAYOUT:
+                case MUTUALLYASSURED:
+                case EMPTYCUP:
                 case STRANGER:
                 case CLARITY:
                 case GREY:
