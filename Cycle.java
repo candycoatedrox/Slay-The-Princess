@@ -699,7 +699,7 @@ public abstract class Cycle {
                 break;
 
             default:
-                parser.printDialogueLine("You have no other options.");
+                parser.printDialogueLine("You have no other choice.");
         }
     }
 
@@ -707,7 +707,7 @@ public abstract class Cycle {
      * Prints a generic response to a command failing or being unavailable
      */
     protected void giveDefaultFailResponse() {
-        parser.printDialogueLine("You have no other options.");
+        parser.printDialogueLine("You have no other choice.");
     }
 
     // --- CYCLE MANAGEMENT ---

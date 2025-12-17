@@ -80,7 +80,7 @@ n She hadn't even thought to pick a name for herself. Hopefully you're starting 
 
 jumpanchor whyImprisoned
 p Of course I'm locked up down here for a reason! ...
-p I don't actually know what that reason is, but you don't just stuff a Princess in a basement and throw away the key without there being *some* sort of an explanation, right?
+p I... don't... actually know what that reason is, but you don't just stuff a Princess in a basement and throw away the key without there being *some* sort of an explanation, right?
 n You have all the explanation you need. And you should know better than to trust whatever she comes up with.
 
 jumpanchor eat
@@ -539,9 +539,6 @@ n I'm afraid it is.
 n You shouldn't have let that fear creep into your heart. You had the upper hand, and now look at you.
 linebreak
 n Everything goes dark, and you die.
-
-jumpanchor investigateCont
-hero Holy *shit.* What *is* she?!
 
 jumpanchor retrieveWait
 p Oh? Do you want to play a waiting game? I've been down here for a long, long time. I'm very good at waiting.

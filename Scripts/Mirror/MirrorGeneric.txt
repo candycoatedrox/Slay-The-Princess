@@ -63,14 +63,14 @@ jumpanchor exploreJoinB
     stubborn Screw the mirror! We just need to find the Princess. /// checkvoice
     broken I don't want to look at us. /// checkvoice
     smitten Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right? /// checkvoice
-    cheated It's going to do something to us. I can feel it. /// checkvoices
+    cheated It's going to *do* something to us. I can feel it. /// checkvoice
 
 jumpanchor explore2Voices
-    oppo If he thinks it's bad, I'm with him. /// checkvoice
+    oppo If *he* thinks it's bad, I-I'm with him. /// checkvoice
     cold Ignore him. You have to look. /// checkvoice
 
 jumpanchor exploreMoreVoices
-    oppo If they think it's bad, I'm with them. /// checkvoice
+    oppo If *they* think it's bad, I-I'm with them. /// checkvoice
     cold Ignore the cowards. You have to look. /// checkvoice
 
 jumpanchor comfort

@@ -13,7 +13,10 @@ public enum Voice {
     PARANOID("Voice of the Paranoid"),
     SKEPTIC("Voice of the Skeptic"),
     SMITTEN("Voice of the Smitten"),
-    STUBBORN("Voice of the Stubborn");
+    STUBBORN("Voice of the Stubborn"),
+
+    // Two voices speaking at once
+    NARRATORSTUBBORN("The Narrator and the Voice of the Stubborn");
 
     private String dialogueTag;
 
@@ -84,6 +87,8 @@ public enum Voice {
 
             case "st":
             case "stubborn": return STUBBORN;
+
+            case "nstub": return NARRATORSTUBBORN;
 
             default: return null;
         }

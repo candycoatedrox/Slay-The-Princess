@@ -1,6 +1,6 @@
 public class InverseCondition extends AbstractCondition {
 
-    private final Condition inverse;
+    private final AbstractCondition inverse;
         
     // --- CONSTRUCTOR ---
 
@@ -15,7 +15,7 @@ public class InverseCondition extends AbstractCondition {
     // --- CHECKS ---
 
     /**
-     * Accessor for value
+     * Checks whether this condition is met
      * @return the boolean value of this condition
      */
     @Override

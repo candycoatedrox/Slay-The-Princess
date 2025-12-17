@@ -6,7 +6,7 @@ public class IOHandler {
     private final Scanner input;
 
     public static final int WRAPCOLUMNS = 80; // default = 80
-    private static final String DIVIDER = "-----------------------------------";
+    private static final DialogueLine DIVIDER = new DialogueLine("-----------------------------------");
     private static final VoiceDialogueLine NINVALIDOPTIONLINE = new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true);
     private static final VoiceDialogueLine NEXCLUSIVELINE = new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true);
 
@@ -57,7 +57,17 @@ public class IOHandler {
      * @param wait whether to wait for player input after printing the divider
      */
     public void printDivider(boolean wait) {
-        this.printDialogueLine(new DialogueLine(DIVIDER, wait), 1.75);
+        if (manager.globalSlowPrint()) {
+            DIVIDER.print(false, 1.75);
+        } else {
+            wrapPrint(DIVIDER);
+        }
+
+        if (wait) {
+            System.out.print("\n");
+        } else {
+            this.waitForInput();
+        }
     }
 
     /**
@@ -165,7 +175,6 @@ public class IOHandler {
      * @return the ID of the chosen Option or the outcome of the entered command
      */
     private String parseOptionChoice(Cycle cycle, OptionsMenu options, DialogueLine exclusiveOverride) {
-        boolean singleOption = options.size() == 1;
         boolean isOption = true;
         int choiceN = -1;
         String outcome;
@@ -212,17 +221,9 @@ public class IOHandler {
                 } else if (!outcome.equals("cMeta")) {
                     if (exclusiveOverride.isEmpty()) {
                         if (cycle == null) {
-                            if (singleOption) {
-                                this.printDialogueLine("[You have no other option.]", true);
-                            } else {
-                                this.printDialogueLine("[You have no other options.]", true);
-                            }
+                            this.printDialogueLine("[You have no other choice.]", true);
                         } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                            if (singleOption) {
-                                this.printDialogueLine("[You have no other option.]", true);
-                            } else {
-                                this.printDialogueLine("[You have no other options.]", true);
-                            }
+                            this.printDialogueLine("[You have no other choice.]", true);
                         } else {
                             this.printDialogueLine(NEXCLUSIVELINE);
                         }

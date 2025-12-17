@@ -431,7 +431,7 @@ public class OptionsMenu {
         ArrayList<Option> shown = this.shownOptions();
         ArrayList<Option> available = this.availableOptions();
         String s = "";
-        int shownIndex = 0;
+        int shownIndex;
 
         for (int i = 0; i < shown.size(); i++) {
             shownIndex = available.indexOf(shown.get(i)) + 1;

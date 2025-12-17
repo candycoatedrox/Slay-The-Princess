@@ -121,6 +121,7 @@ public class Script {
             case "smitten":
             case "st":
             case "stubborn":
+            case "nstub":
                 return true;
 
             default: return false;

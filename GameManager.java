@@ -8,7 +8,7 @@ public class GameManager {
 
     // Settings
     private final boolean demoMode = true;
-    private final boolean trueDemoMode = true;
+    private final boolean trueDemoMode = false;
     private boolean dynamicWarnings = true;
     private boolean showNowPlaying = true;
     private boolean globalSlowPrint = true;

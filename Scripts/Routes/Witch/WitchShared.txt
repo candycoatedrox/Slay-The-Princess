@@ -56,7 +56,7 @@ n The blade is your implement. You'll need it if you want to do this right.
 jumpanchor takeBlade
 n You take the blade from the shelf. It would be difficult to slay the Princess and save the world without a weapon.
 oppo Well, if we're grabbing a weapon, we should probably keep it hidden behind our backs. She doesn't have to know we have it.
-hero That's not actually a bad idea.
+hero That's not... actually a bad idea.
 
 // Ask about the mirror //
 
@@ -187,10 +187,10 @@ jumpanchor mistakeMenu
 oppo Oooh, smart. Let's apologize. Get us back on the right foot.
 p The only mistake I ever made was thinking you would help me. And I'm not going to make the same mistake twice.
 hero Well, that leaves us at a stalemate.
-p But unfortunately, I need you if I'm ever going to leave this place.
+p But unfortunately -- *ugh* -- I *need* you if I'm ever going to leave this place.
 
 jumpanchor notHappyMenu
-p Is that a joke? Do you think a joke will charm my trust back? You'll have to try harder than that.
+p Is that a *joke?* Do you think a *joke* will charm my trust back? You'll have to try harder than that.
 
 jumpanchor scaredMenu
 p Things did get out of hand, didn't they? But it's hard to let bygones be bygones when they led to murder.
@@ -246,7 +246,7 @@ jumpanchor chainsHeartComment
 oppo A woman after my own heart, really. She knows how to hold her cards close to her chest.
 
 jumpanchor chainsFallCont
-n This is why she can't just be abandoned here. If left to her own devices, she'll find a way out. Now stop her!
+n This is why she can't just be abandoned here. If left to her own devices, she'll find a way out. Now *stop her!*
 
 jumpanchor freeMenu
 p The cabin lets prying little beasts like you come as you please, but it insists I stay where I am. That binding I shed is just a symbol of the crueler magic at work in this place.
@@ -573,7 +573,7 @@ jumpanchor offerCommitStairs
 n You're going to get everyone killed. You know that, right? *Sigh.* But of course you do.
 n You hand the blade to the Princess, who quickly snatches it from you, her eyes darting between you and the weapon with a nervous curiosity.
 p I wouldn't have done that. Why did you?
-p What do you think happens now?
+p What do *you* think happens now?
 
 jumpanchor offerCommitBasement
 n You're going to get everyone killed. You know that, right? *Sigh.* But of course you do.

@@ -143,7 +143,7 @@ n "Waiting for you to come back?" You've been here before, haven't you?
 jumpanchor basementStartJoin
 smitten That's right, villain. And you killed us.
 hero Well... *she* killed us.
-smitten Only because he made us try and kill her! It was self-defense. Our beloved's hands remain unstained by cruelty!
+smitten Only because He made us try and kill her! It was self-defense. Our beloved's hands remain unstained by cruelty!
 n And you've *died* before. So an entire world has been damned to oblivion. I'd really hoped I'd be the first, but... what's done is done. What *matters* is you have a chance to do it right this time.
 
 jumpanchor basementStartNoInsist
@@ -299,8 +299,8 @@ truth She starts to look like a poorly-drawn parody of herself, almost two-dimen
 truth It's almost as if the light barely casts a shadow on her at all.
 
 jumpanchor depersonComment2
-hero Is she broken? What's going on?
-n What's going on is she's lying to you, only she isn't a good liar. Are you starting to trust me now?
+hero Is she... *broken?* What's going on?
+n What's going on is she's *lying* to you, only she isn't a good liar. Are you starting to trust me now?
 
 jumpanchor depersonTruth3
 truth She loses all color, now completely paper-white and somehow drawn even more poorly than before.
