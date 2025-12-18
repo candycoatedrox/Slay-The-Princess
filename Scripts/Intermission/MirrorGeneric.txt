@@ -116,29 +116,5 @@ jumpanchor gazeFirst
 truth Silence as you reach forward. They're gone, but the mirror remains. It's time for you to see what's in it.
 linebreak
 
-jumpanchor gazeAgain
-truth Silence as you reach forward. They're gone once again. The mirror always makes them leave. But you need to see what's in it.
-linebreak
-
-
 jumpanchor gaze0
 truth It's you.
-
-jumpanchor gaze1
-truth You've grown.
-
-jumpanchor gaze2
-truth You've withered.
-
-jumpanchor gaze3
-truth You've unraveled.
-
-jumpanchor gazeFinal
-truth You are nothing at all.
-truth But that isn't right. You can't be nothing. You refocus your gaze, and then you see it: a figure, faint and veiled in shadow, just beyond the reflection.
-
-jumpanchor gazeFinalCont
-n I think you know what I am.
-truth A crack slides down the center of the mirror, splitting the image in the glass in two.
-truth And then another crack forms, and another, and another, turning the mirror into jagged shards of broken glass.
-linebreak

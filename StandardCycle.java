@@ -6,7 +6,6 @@ public class StandardCycle extends Cycle {
     // One CYCLE = from beginning of Ch1 to the end of Shifting Mound interlude
 
     private final boolean isFirstVessel;
-    private final ArrayList<Voice> voicesMet;
     private final ArrayList<Chapter> route;
     private ChapterEnding prevEnding;
     
@@ -52,8 +51,6 @@ public class StandardCycle extends Cycle {
 
         this.prevEnding = ChapterEnding.NEWCYCLE;
 
-        this.voicesMet = new ArrayList<>();
-
         this.currentVoices = new HashMap<>();
         for (Voice v : Voice.values()) {
             switch (v) {
@@ -62,26 +59,6 @@ public class StandardCycle extends Cycle {
 
                 default: this.currentVoices.put(v, false);
             }
-        }
-    }
-
-    // --- MANIPULATORS ---
-
-    /**
-     * Adds a given Voice to the list of active Voices
-     * @param v the Voice to add
-     */
-    @Override
-    protected void addVoice(Voice v) {
-        super.addVoice(v);
-
-        switch (v) {
-            case NARRATOR:
-            case NARRATORPRINCESS:
-            case PRINCESS:
-            case HERO: break;
-
-            default: this.voicesMet.add(v);
         }
     }
 
@@ -476,16 +453,11 @@ public class StandardCycle extends Cycle {
         }
 
         switch (this.prevEnding) {
-            case ABORTED: break;
-
+            case ABORTED:
             case DEMOENDING:
-            case GOODENDING:
-                manager.updateVoicesMet(this.voicesMet);
-                break;
+            case GOODENDING: break;
 
-            default:
-                this.mirrorSequence();
-                manager.updateVoicesMet(this.voicesMet);
+            default: this.mirrorSequence();
         }
 
         manager.updateVisitedChapters(this.route);
@@ -652,25 +624,24 @@ public class StandardCycle extends Cycle {
             case PRISONER: return this.prisoner();
             case DAMSEL: return this.damsel();
 
-            case NEEDLE: return this.eyeOfNeedle();
-            case FURY: return this.fury();
-            case APOTHEOSIS: return this.apotheosis();
-            case DRAGON: return this.princessAndDragon();
-            case WRAITH: return this.wraith();
-            case CLARITY: return this.momentOfClarity();
             case ARMSRACE:
             case NOWAYOUT: return this.razor3Intro();
-            case DEN: return this.den();
-            case WILD: return this.wild();
-            case THORN: return this.thorn();
-            case CAGE: return this.cage();
-            case GREY:
-                if (this.prevEnding == ChapterEnding.LADYKILLER) return this.greyBurned();
-                else return this.greyDrowned();
-            case HAPPY: return this.happilyEverAfter();
 
             case MUTUALLYASSURED:
             case EMPTYCUP: return this.razor4();
+
+            case NEEDLE:
+            case FURY:
+            case APOTHEOSIS:
+            case DRAGON:
+            case WRAITH:
+            case CLARITY:
+            case DEN:
+            case WILD:
+            case THORN:
+            case CAGE:
+            case GREY:
+            case HAPPY: return ChapterEnding.DEMOENDING;
         }
 
         throw new RuntimeException("Cannot run an invalid chapter");
@@ -3676,7 +3647,6 @@ public class StandardCycle extends Cycle {
      */
     private boolean chapter2Intro(boolean youDied, boolean princessDied, boolean liedTo) {
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter2Shared");
-        if (this.isFirstVessel) manager.setFirstPrincess(this.activeChapter);
 
         secondaryScript.runSection();
 
@@ -6516,50 +6486,6 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Chapter III: The Eye of the Needle -
-
-    /**
-     * Runs Chapter III: The Eye of the Needle
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding eyeOfNeedle() {
-        /*
-          Possible combinations:
-            - Stubborn + Hunted
-            - Stubborn + Skeptic
-         */
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
-    // - Chapter III: The Fury -
-
-    /**
-     * Runs Chapter III: The Fury
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding fury() {
-        /*
-          Possible combinations:
-            - Broken + Stubborn (either Chapter)
-            - Stubborn + Cold (Adversary)
-            - Stubborn + Contrarian (Adversary)
-         */
-
-        switch (this.prevEnding) {
-            case STRIKEMEDOWN: this.source = "pacifism";
-            case HEARNOBELL: this.source = "unarmed";
-            case DEADISDEAD: this.source = "pathetic";
-            default: this.source = "tower";
-        }
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
     // - Chapter II: The Tower -
 
     /**
@@ -7115,24 +7041,6 @@ public class StandardCycle extends Cycle {
         } else {
             return ChapterEnding.APOUNARMED; // Voice of the Paranoid
         }
-    }
-
-
-    // - Chapter III: The Apotheosis -
-
-    /**
-     * Runs Chapter III: The Apotheosis
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding apotheosis() {
-        /*
-          Possible combinations:
-            - Broken + Paranoid
-            - Broken + Contrarian
-         */
-
-        // PLACEHOLDER
-        return null;
     }
 
 
@@ -8154,45 +8062,6 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Chapter III: The Princess and the Dragon -
-
-    /**
-     * Runs Chapter III: The Princess and the Dragon
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding princessAndDragon() {
-        // "You" have Cold + Opportunist, but you do not have any of the voices at the start of the Chapter
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
-    // - Chapter III: The Wraith -
-
-    /**
-     * Runs Chapter III: The Wraith
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding wraith() {
-        /*
-          Possible combinations:
-            - Cold + Paranoid (either Chapter)
-            - Cold + Cheated (Spectre)
-            - Paranoid + Opportunist (Nightmare)
-         */
-
-        switch (this.prevEnding) {
-            case HEARTRIPPER: this.source = "spectre";
-            case HEARTRIPPERLEAVE: this.source = "spectre";
-            default: this.source = "nightmare";
-        }
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
     // - Chapter II: The Nightmare -
 
     /**
@@ -8976,20 +8845,6 @@ public class StandardCycle extends Cycle {
         } else {
             return ChapterEnding.HOUSEOFNOLEAVE;
         }
-    }
-
-
-    // - Chapter ???: The Moment of Clarity -
-
-    /**
-     * Runs Chapter ???: The Moment of Clarity
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding momentOfClarity() {
-        // You have all voices
-
-        // PLACEHOLDER
-        return ChapterEnding.MOMENTOFCLARITY;
     }
 
 
@@ -10760,52 +10615,6 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Chapter III: The Den -
-
-    /**
-     * Runs Chapter III: The Den
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding den() {
-        /*
-          Possible combinations:
-            - Hunted + Stubborn
-            - Hunted + Skeptic
-         */
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
-    // - Chapter III: The Wild -
-
-    /**
-     * Runs Chapter III: The Wild
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding wild() {
-        /*
-          Possible combinations from Beast:
-            - Hunted + Opportunist
-            - Hunted + Stubborn
-            - Hunted + Broken
-            - Hunted + Contrarian
-
-          Possible combinations from Witch:
-            - Opportunist + Stubborn
-            - Opportunist + Paranoid
-            - Opportunist + Cheated
-         */
-
-        if (this.hasVoice(Voice.HUNTED)) this.source = "beast";
-        else this.source = "witch";
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
     // - Chapter II: The Witch -
 
     /**
@@ -11615,24 +11424,6 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Chapter III: The Thorn -
-
-    /**
-     * Runs Chapter III: The Thorn
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding thorn() {
-        /*
-          Possible combinations:
-            - Opportunist + Smitten
-            - Opportunist + Cheated
-         */
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
     // - Chapter II: The Stranger -
 
     /**
@@ -11643,7 +11434,6 @@ public class StandardCycle extends Cycle {
         // You gain the Voice of the Contrarian
 
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter2Shared");
-        if (this.isFirstVessel) manager.setFirstPrincess(Chapter.STRANGER);
 
         secondaryScript.runSection();
         mainScript.runSection();
@@ -13143,60 +12933,6 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Chapter III: The Cage -
-
-    /**
-     * Runs Chapter III: The Cage
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding cage() {
-        /*
-          Possible combinations:
-            - Skeptic + Broken
-            - Skeptic + Paranoid
-            - Skeptic + Cheated
-         */
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
-    // - Chapter III: The Grey -
-
-    /**
-     * Runs Chapter III: The Grey (coming from the Prisoner)
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding greyDrowned() {
-        /*
-          You gain the Voice of the Cold
-          Possible combinations:
-            - Smitten + Cold
-         */
-
-        
-            
-        return ChapterEnding.ANDALLTHISLONGING;
-    }
-
-    /**
-     * Runs Chapter III: The Grey (coming from the Damsel)
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding greyBurned() {
-        /*
-          You gain the Voice of the Cold
-          Possible combinations:
-            - Skeptic + Cold
-         */
-
-
-
-        return ChapterEnding.BURNINGDOWNTHEHOUSE;
-    }
-
-
     // - Chapter II: The Damsel -
 
     /**
@@ -13842,33 +13578,13 @@ public class StandardCycle extends Cycle {
     }
 
 
-    // - Epilogue: Happily Ever After -
-
-    /**
-     * Runs Chapter III: Happily Ever After
-     * @return the Chapter ending reached by the player
-     */
-    private ChapterEnding happilyEverAfter() {
-        /*
-          You lose the Voice of the Smitten
-          Possible combinations:
-            - Skeptic
-            - Opportunist
-         */
-
-        // PLACEHOLDER
-        return null;
-    }
-
-
-
     // - The Mirror -
 
     /**
      * Runs the mirror sequence after claiming a vessel
      */
     private void mirrorSequence() {
-        this.secondaryScript = new Script(this.manager, this.parser, "Mirror/MirrorGeneric");
+        this.secondaryScript = new Script(this.manager, this.parser, "Intermission/MirrorGeneric");
 
         this.hasBlade = false;
 
@@ -13890,57 +13606,6 @@ public class StandardCycle extends Cycle {
         this.currentVoices.put(Voice.NARRATOR, false);
 
         switch (this.prevEnding) {
-            case HINTOFFEELING:
-            case LEAVEHERBEHIND:
-            case NEWLEAFWEATHEREDBOOK:
-                if (this.hasVoice(Voice.COLD)) {
-                    mainScript.runSection("surviveMirrorCold");
-                } else {
-                    mainScript.runSection("surviveMirrorBroken");
-                }
-
-                this.activeMenu = new OptionsMenu();
-                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
-
-                this.repeatActiveMenu = true;
-                while (repeatActiveMenu) {
-                    switch (parser.promptOptionsMenu(activeMenu)) {
-                        case "cApproachMirror":
-                        case "approach":
-                            this.repeatActiveMenu = false;
-                            break;
-
-                        default: this.giveDefaultFailResponse();
-                    }
-                }
-
-                mainScript.runSection("surviveMirrorApproach");
-                break;
-
-            case MOMENTOFCLARITY:
-                this.activeMenu = new OptionsMenu();
-                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
-
-                this.repeatActiveMenu = true;
-                while (repeatActiveMenu) {
-                    switch (parser.promptOptionsMenu(activeMenu)) {
-                        case "cApproachMirror":
-                        case "approach":
-                            this.repeatActiveMenu = false;
-                            break;
-
-                        default: super.giveDefaultFailResponse();
-                    }
-                }
-
-                if (this.isFirstVessel) {
-                    mainScript.runSection("mirrorFirstVessel");
-                } else {
-                    mainScript.runSection("mirrorNotFirstVessel");
-                }
-
-                break;
-
             case MUTUALLYASSURED:
             case EMPTYCUP:
                 this.activeMenu = new OptionsMenu();
@@ -13961,7 +13626,7 @@ public class StandardCycle extends Cycle {
                 break;
 
             default:
-                if (this.prevEnding != ChapterEnding.GRACE) secondaryScript.runSection();
+                secondaryScript.runSection();
 
                 if (this.mirrorComment || this.touchedMirror) {
                     secondaryScript.runSection("mirrorCommented");
@@ -13972,164 +13637,94 @@ public class StandardCycle extends Cycle {
                 boolean explore = false;
                 boolean silence = false;
                 this.activeMenu = new OptionsMenu();
-                if (this.isFirstVessel) {
-                    activeMenu.add(new Option(this.manager, "where", "(Explore) I don't know where she went, and I don't know how we'd even go about looking for her."));
-                    activeMenu.add(new Option(this.manager, "gone", "(Explore) The Narrator is gone..."));
-                    activeMenu.add(new Option(this.manager, "suggest", "(Explore) I think I'm supposed to look at the mirror."));
-                    activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+                activeMenu.add(new Option(this.manager, "where", "(Explore) I don't know where she went, and I don't know how we'd even go about looking for her."));
+                activeMenu.add(new Option(this.manager, "gone", "(Explore) The Narrator is gone..."));
+                activeMenu.add(new Option(this.manager, "suggest", "(Explore) I think I'm supposed to look at the mirror."));
+                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
 
-                    boolean contraAsk = false;
-                    this.repeatActiveMenu = true;
-                    while (repeatActiveMenu) {
-                        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
-                        switch (activeOutcome) {
-                            case "where":
-                                secondaryScript.runSection("where");
+                boolean contraAsk = false;
+                this.repeatActiveMenu = true;
+                while (repeatActiveMenu) {
+                    this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+                    switch (activeOutcome) {
+                        case "where":
+                            secondaryScript.runSection("where");
 
-                                if (contraAsk) {
-                                    secondaryScript.runSection("contraAskB");
-                                } else {
-                                    contraAsk = true;
-                                    secondaryScript.runSection("contraAskA");
-                                }
+                            if (contraAsk) {
+                                secondaryScript.runSection("contraAskB");
+                            } else {
+                                contraAsk = true;
+                                secondaryScript.runSection("contraAskA");
+                            }
 
-                                break;
+                            break;
 
-                            case "gone":
-                                secondaryScript.runSection("gone");
-                                
-                                if (contraAsk) {
-                                    secondaryScript.runSection("contraAskB");
-                                } else {
-                                    contraAsk = true;
-                                    secondaryScript.runSection("contraAskA");
-                                }
+                        case "gone":
+                            secondaryScript.runSection("gone");
+                            
+                            if (contraAsk) {
+                                secondaryScript.runSection("contraAskB");
+                            } else {
+                                contraAsk = true;
+                                secondaryScript.runSection("contraAskA");
+                            }
 
-                                secondaryScript.runSection("goneJoin");
-                                break;
+                            secondaryScript.runSection("goneJoin");
+                            break;
 
-                            case "suggest":
-                                explore = true;
-                                secondaryScript.runSection("suggest");
+                        case "suggest":
+                            explore = true;
+                            secondaryScript.runSection("suggest");
 
-                                if (this.nVoices() == 2) {
-                                    secondaryScript.runSection("explore2Voices");
-                                } else {
-                                    secondaryScript.runSection("exploreMoreVoices");
-                                }
+                            if (this.nVoices() == 2) {
+                                secondaryScript.runSection("explore2Voices");
+                            } else {
+                                secondaryScript.runSection("exploreMoreVoices");
+                            }
 
-                                break;
+                            break;
 
-                            case "cApproachMirror":
-                            case "approach":
-                                secondaryScript.runSection("approachFirstVessel");
+                        case "cApproachMirror":
+                        case "approach":
+                            secondaryScript.runSection("approachFirstVessel");
 
-                                this.activeMenu = new OptionsMenu();
-                                activeMenu.add(new Option(this.manager, "explore", "(Explore) \"The mirror never scared you before.\"", this.mirrorComment || this.touchedMirror));
-                                activeMenu.add(new Option(this.manager, "ignore", "[Ignore him.]"));
-                                
-                                while (repeatActiveMenu) {
-                                    switch (parser.promptOptionsMenu(activeMenu)) {
-                                        case "explore":
-                                            secondaryScript.runSection();
+                            this.activeMenu = new OptionsMenu();
+                            activeMenu.add(new Option(this.manager, "explore", "(Explore) \"The mirror never scared you before.\"", this.mirrorComment || this.touchedMirror));
+                            activeMenu.add(new Option(this.manager, "ignore", "[Ignore him.]"));
+                            
+                            while (repeatActiveMenu) {
+                                switch (parser.promptOptionsMenu(activeMenu)) {
+                                    case "explore":
+                                        secondaryScript.runSection();
 
-                                            if (!explore) {
-                                                explore = true;
-                                                secondaryScript.runSection("exploreJoin");
+                                        if (!explore) {
+                                            explore = true;
+                                            secondaryScript.runSection("exploreJoin");
 
-                                                if (this.nVoices() == 2) {
-                                                    secondaryScript.runSection("explore2Voices");
-                                                } else {
-                                                    secondaryScript.runSection("exploreMoreVoices");
-                                                }
+                                            if (this.nVoices() == 2) {
+                                                secondaryScript.runSection("explore2Voices");
+                                            } else {
+                                                secondaryScript.runSection("exploreMoreVoices");
                                             }
+                                        }
 
-                                            break;
+                                        break;
 
-                                        case "cApproachMirror":
-                                        case "ignore":
-                                            this.repeatActiveMenu = false;
-                                            break;
+                                    case "cApproachMirror":
+                                    case "ignore":
+                                        this.repeatActiveMenu = false;
+                                        break;
 
-                                        default: this.giveDefaultFailResponse(activeOutcome);
-                                    }
+                                    default: this.giveDefaultFailResponse(activeOutcome);
                                 }
+                            }
 
-                                break;
+                            break;
 
-                            default: this.giveDefaultFailResponse(activeOutcome);
-                        }
-                    }
-                } else {
-                    activeMenu.add(new Option(this.manager, "cruel", "(Explore) Of course you're scared. This is the end, for you. But it's not the end for me."));
-                    activeMenu.add(new Option(this.manager, "comfortA", "(Explore) It's going to be okay. Just trust me.", !manager.getMirrorScaredFlag()));
-                    activeMenu.add(new Option(this.manager, "comfortB", "(Explore) It's going to be okay. Just trust me. We've been here before, and you always get scared.", manager.getMirrorScaredFlag()));
-                    activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
-
-                    this.repeatActiveMenu = true;
-                    while (repeatActiveMenu) {
-                        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
-                        switch (activeOutcome) {
-                            case "cruel":
-                                activeMenu.setCondition("comfort", false);
-                                explore = true;
-                                manager.incrementCruelCount();
-                                secondaryScript.runSection("cruel");
-                                break;
-
-                            case "comfortA":
-                            case "comfortB":
-                                activeMenu.setCondition("cruel", false);
-                                explore = true;
-                                secondaryScript.runSection("explore");
-
-                                if (this.nVoices() == 2) {
-                                    secondaryScript.runSection("explore2Voices");
-                                } else {
-                                    secondaryScript.runSection("exploreMoreVoices");
-                                }
-
-                                boolean repeatSub = true;
-                                OptionsMenu subMenu = new OptionsMenu();
-                                subMenu.add(new Option(this.manager, "comfortA", "(Explore) It's not the end. Whatever's on the other side is going to be nice."));
-                                subMenu.add(new Option(this.manager, "cruel", "(Explore) It's the end for you, but not for me."));
-                                subMenu.add(new Option(this.manager, "comfortB", "(Explore) I'll see you on the other side. It's going to be okay."));
-                                subMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
-
-                                while (repeatSub) {
-                                    switch (parser.promptOptionsMenu(subMenu)) {
-                                        case "comfortA":
-                                        case "comfortB":
-                                            repeatSub = false;
-                                            secondaryScript.runSection("comfort");
-                                            break;
-                                        
-                                        case "cruel":
-                                            repeatSub = false;
-                                            manager.incrementCruelCount();
-                                            secondaryScript.runSection("cruel");
-                                            break;
-
-                                        case "cApproachMirror":
-                                        case "approach":
-                                            this.repeatActiveMenu = false;
-                                            repeatSub = false;
-                                            silence = true;
-                                            break;
-                                    }
-                                }
-
-                                break;
-
-                            case "cApproachMirror":
-                            case "approach":
-                                this.repeatActiveMenu = false;
-                                break;
-
-                            default: this.giveDefaultFailResponse(activeOutcome);
-                        }
+                        default: this.giveDefaultFailResponse(activeOutcome);
                     }
                 }
+                
 
             // You've now been to the mirror with the Voice of the Hero at least once
             manager.setMirrorScaredFlag();
@@ -14160,10 +13755,8 @@ public class StandardCycle extends Cycle {
 
         if (this.prevEnding == ChapterEnding.MUTUALLYASSURED || this.prevEnding == ChapterEnding.EMPTYCUP) {
             mainScript.runSection("mirrorGaze");
-        } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && manager.hasClaimedAnyVessel(Vessel.RAZORFULL, Vessel.RAZORHEART))) {
+        } else  {
             secondaryScript.runSection("gazeFirst");
-        } else {
-            secondaryScript.runSection("gazeAgain");
         }
 
         System.out.println();
@@ -14263,34 +13856,14 @@ public class StandardCycle extends Cycle {
 
         this.canApproachHer = false;
         this.withPrincess = true;
-
-        switch (manager.nClaimedVessels()) { // Conversation
-            case 0:
-                this.canApproachHer = false;
-                this.shiftingMoundTalk1();
-                break;
-
-            case 1:
-                this.canApproachHer = false;
-                this.shiftingMoundTalk2();
-                break;
-
-            case 2:
-                this.canApproachHer = false;
-                this.shiftingMoundTalk3();
-                break;
-
-            case 3:
-                this.canApproachHer = false;
-                this.shiftingMoundTalk4();
-                break;
-        }
+        this.canApproachHer = false;
+        this.shiftingMoundTalk();
     }
 
     /**
      * Runs the conversation with the Shifting Mound after claiming the first vessel
      */
-    private void shiftingMoundTalk1() {
+    private void shiftingMoundTalk() {
         this.secondaryScript = new Script(this.manager, this.parser, "Intermission/IntermissionTalk1");
 
         if (manager.nVesselsAborted() == 0) {
@@ -14313,8 +13886,8 @@ public class StandardCycle extends Cycle {
         activeMenu.add(new Option(this.manager, "princess", "(Explore) \"Are you the Princess?\""));
         activeMenu.add(new Option(this.manager, "familiar", "(Explore) \"Do we know each other?\"", manager.nVesselsAborted() == 0));
         activeMenu.add(new Option(this.manager, "whatNow", "\"What happens now?\""));
-        activeMenu.add(manager.getIntermissionAttackMound());
-        activeMenu.add(manager.getIntermissionAttackSelf());
+        activeMenu.add(new Option(this.manager, "attackMound", "[Attack the entity.]"));
+        activeMenu.add(new Option(this.manager, "attackSelf", "[Destroy your body.]"));
 
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -14366,7 +13939,7 @@ public class StandardCycle extends Cycle {
                     break;
 
                 case "narrator":
-                    if (manager.hasClaimedAnyVessel(Vessel.WOUNDEDWILD, Vessel.NETWORKWILD, Vessel.SPECTRE, Vessel.WRAITH, Vessel.TOWER, Vessel.APOTHEOSIS)) {
+                    if (manager.hasClaimedAnyVessel(Vessel.SPECTRE, Vessel.TOWER)) {
                         secondaryScript.runSection("narratorMet");
                     } else {
                         secondaryScript.runSection("narrator");
@@ -14389,7 +13962,7 @@ public class StandardCycle extends Cycle {
                     break;
 
                 case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
-                    if (manager.getIntermissionAttackMound().hasBeenPicked()) {
+                    if (activeMenu.get("attackMound").hasBeenPicked()) {
                         mainScript.runSection("alreadyTried");
                         break;
                     }
@@ -14398,7 +13971,7 @@ public class StandardCycle extends Cycle {
                     break;
 
                 case "cSlaySelfNoBladeFail": // Override: you don't need the blade
-                    if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
+                    if (activeMenu.get("attackSelf").hasBeenPicked()) {
                         mainScript.runSection("alreadyTried");
                         break;
                     }
@@ -14477,63 +14050,6 @@ public class StandardCycle extends Cycle {
     }
 
     /**
-     * Runs the conversation with the Shifting Mound after claiming the second vessel
-     */
-    private void shiftingMoundTalk2() {
-        this.secondaryScript = new Script(this.manager, this.parser, "Intermission/IntermissionTalk2");
-
-
-
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-    }
-
-    /**
-     * Runs the conversation with the Shifting Mound after claiming the third vessel
-     */
-    private void shiftingMoundTalk3() {
-        this.secondaryScript = new Script(this.manager, this.parser, "Intermission/IntermissionTalk3");
-
-
-
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-    }
-
-    /**
-     * Runs the conversation with the Shifting Mound after claiming the fourth vessel
-     */
-    private void shiftingMoundTalk4() {
-        this.secondaryScript = new Script(this.manager, this.parser, "Intermission/IntermissionTalk4");
-
-
-
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-    }
-
-    /**
      * The Shifting Mound gives her thoughts on a given Vessel
      * @param v the Vessel to comment on
      */
@@ -14578,59 +14094,10 @@ public class StandardCycle extends Cycle {
                 mainScript.runSection("deconDamsel");
                 break;
 
-            // Chapter III or IV
-            case NEEDLE:
-                mainScript.runSection("needle");
-                break;
-            case FURY:
-            case REWOUNDFURY:
-                mainScript.runSection("fury");
-                break;
-            case APOTHEOSIS:
-                mainScript.runSection("apotheosis");
-                break;
-            case PATD:
-            case STENCILPATD:
-                mainScript.runSection("dragon");
-                break;
-            case WRAITH:
-                mainScript.runSection("wraith");
-                break;
-            case CLARITY:
-                mainScript.runSection("clarity");
-                break;
+            // Chapter IV
             case RAZORFULL:
             case RAZORHEART:
                 mainScript.runSection("razor");
-                break;
-            case DEN:
-                mainScript.runSection("den");
-                // might need another Vessel for den for an extra line??
-                break;
-            case NETWORKWILD:
-                mainScript.runSection("nWild");
-                break;
-            case WOUNDEDWILD:
-                mainScript.runSection("wWild");
-                break;
-            case THORN:
-                mainScript.runSection("thorn");
-                break;
-            case WATCHFULCAGE:
-                mainScript.runSection("cageWatchful");
-                break;
-            case OPENCAGE:
-                mainScript.runSection("cageOpen");
-                break;
-            case DROWNEDGREY:
-                mainScript.runSection("dGrey");
-                break;
-            case BURNEDGREY:
-                mainScript.runSection("bGrey");
-                break;
-            case HAPPY:
-            case HAPPYDRY:
-                mainScript.runSection("happy");
                 break;
         }
     }

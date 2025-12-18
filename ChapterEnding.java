@@ -35,55 +35,23 @@ public enum ChapterEnding {
     THREADINGTHROUGH(Chapter.NEEDLE, Voice.HUNTED),
     FREEINGSOMEONE(Chapter.NEEDLE, Voice.SKEPTIC),
 
-    // The Eye of the Needle
-    FAILEDFIGHT(Vessel.NEEDLE, -1, 0, false),
-    FAILEDFLEE(Vessel.NEEDLE, -1, -1, false),
-    WIDEOPENFIELD(Vessel.NEEDLE, 1, 1, true),
-    BLINDLEADINGBLIND(Vessel.NEEDLE, 1, -1, false),
-
-    // The Fury
-    QUANTUMBEAK(Vessel.FURY, "An Empty Void that Dared to Dream it Was Alive", -1, 1, true),
-    HINTOFFEELING(Vessel.FURY, 0, -2, true),
-    LEAVEHERBEHIND(Vessel.FURY, 0, -1, true),
-    NEWLEAFWEATHEREDBOOK(Vessel.FURY, 1, 1, false),
-    GOINGTHEDISTANCE(Vessel.FURY, "The Bell", -1, 1, true),
-    IFYOUCOULDUNDERSTAND(Vessel.REWOUNDFURY, 0, 1, false),
-
     // The Tower
     OBEDIENTSERVANT(Vessel.TOWER, 1, 1, false),
     GODKILLER(Chapter.FURY, Voice.STUBBORN),
     APOBLADE(Chapter.APOTHEOSIS, Voice.CONTRARIAN),
     APOUNARMED(Chapter.APOTHEOSIS, Voice.PARANOID),
 
-    // The Apotheosis
-    SOMETHINGTOREMEMBER(Vessel.APOTHEOSIS, 0, -1, true),
-    WINDOWTOUNKNOWN(Vessel.APOTHEOSIS, 0, -1, true),
-    GODDESSUNRAVELED(Vessel.APOTHEOSIS, "A Tapestry Undone", 0, -1, true),
-    GRACE(Vessel.APOTHEOSIS, 1, 1, false),
-
     // The Spectre
     HITCHHIKER(Vessel.SPECTRE, 1, 1, false),
     HEARTRIPPERLEAVE(Chapter.WRAITH, Voice.PARANOID),
     HEARTRIPPER(Chapter.WRAITH, Voice.CHEATED),
     EXORCIST(Chapter.DRAGON, Voice.OPPORTUNIST),
-
-    // The Princess and the Dragon
-    WHATONCEWASONE(Vessel.PATD, 1, 1, false),
-    PRINCESSANDDRAGON(Vessel.PATD, 0, 1, false),
-    OPPORTUNISTATHEART(Vessel.PATD, "The Life-Taker", 0, -1, true),
-    
-    // The Wraith
-    PASSENGER(Vessel.WRAITH, 1, -1, false),
-    EXORCISTIII(Vessel.WRAITH, -1, -2, true),
     
     // The Nightmare
     WORLDOFTERROR(Vessel.NIGHTMARE, 1, 1, false),
     HOUSEOFNOLEAVE(Chapter.WRAITH, Voice.COLD),
     TERMINALVELOCITY(Chapter.WRAITH, Voice.OPPORTUNIST),
     MONOLITHOFFEAR(Chapter.CLARITY),
-
-    // The Moment of Clarity
-    MOMENTOFCLARITY(Vessel.CLARITY, 1, 0, false),
 
     // The Razor
     TOARMSRACEFIGHT(Chapter.ARMSRACE, Voice.STUBBORN),
@@ -114,19 +82,6 @@ public enum ChapterEnding {
     SLAYYOURSELF(Chapter.WILD, Voice.STUBBORN),
     DISSOLVED(Chapter.WILD, Voice.BROKEN),
 
-    // The Den
-    HEROICSTRIKE(Vessel.DEN, "The Rhythm of the Flesh", 0, 0, true),
-    COUPDEGRACE(Vessel.DEN, "The Rhythm of the Flesh", 0, 1, true),
-    INSTINCT(Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
-    HUNGERPANGS(Vessel.DEN, 0, -1, false),
-    LIONANDMOUSE(Vessel.DEN, "Hand-in-Claw", 1, 1, false),
-    UNANSWEREDQUESTIONS(Vessel.DEN, 0, 1, false),
-
-    // The Wild
-    WOUNDSLAY(Vessel.WOUNDEDWILD, -1, -1, true),
-    WOUNDSAVE(Vessel.WOUNDEDWILD, -1, 1, false),
-    GLIMPSEOFSOMETHING(Vessel.NETWORKWILD, 2, 1, false),
-
     // The Witch
     SCORPION(Vessel.WITCH, -1, -1, false),
     FROG(Vessel.WITCH, -1, -1, false),
@@ -136,12 +91,6 @@ public enum ChapterEnding {
     PLAYINGITSAFE(Chapter.WILD, Voice.PARANOID),
     PASTLIFEGAMBITSPECIAL(Chapter.THORN, Voice.SMITTEN),
     PASTLIFEGAMBIT(Chapter.THORN, Voice.CHEATED),
-
-    // The Thorn
-    TRUSTISSUES(Vessel.THORN, -1, -1, false),
-    ABANDONMENT(Vessel.THORN, -1, -1, false),
-    NEWLEAFSMITTEN(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
-    NEWLEAFCHEATED(Vessel.THORN, "The Thorn", 1, 1, false),
     
     // The Stranger
     ILLUSIONOFCHOICE(Vessel.STRANGER, 0, 0, true),
@@ -154,28 +103,12 @@ public enum ChapterEnding {
     RESTLESSSELF(Chapter.CAGE, Voice.PARANOID),
     RESTLESSGIVEIN(Chapter.CAGE, Voice.BROKEN),
 
-    // The Cage
-    NOEXIT(Vessel.WATCHFULCAGE, -1, 1, false),
-    RIDDLEOFSTEEL(Vessel.WATCHFULCAGE, -1, 1, true),
-    ALLEGORYOFCAGE(Vessel.OPENCAGE, 1, 1, false),
-    FREEWILL(Vessel.WATCHFULCAGE, 0, -1, true),
-
-    // The Grey
-    BURNINGDOWNTHEHOUSE(Vessel.BURNEDGREY, -1, 1, true),
-    ANDALLTHISLONGING(Vessel.DROWNEDGREY, -1, -1, true),
-
     // The Damsel
     ROMANTICHAZE(Vessel.DAMSEL, 1, 1, false),
     ANDTHEYLIVEDHAPPILY(Vessel.DECONDAMSEL, -1, 2, true),
     LADYKILLER(Chapter.GREY, Voice.COLD),
     CONTENTSOFOURHEARTDECON(Chapter.HAPPY, Voice.SKEPTIC),
     CONTENTSOFOURHEARTUPSTAIRS(Chapter.HAPPY, Voice.OPPORTUNIST),
-
-    // Happily Ever After
-    IMEANTIT(Vessel.HAPPY, "I Meant It", 1, 2, false),
-    LEFTCABIN(Vessel.HAPPY, 1, 1, false),
-    FINALLYOVER(Vessel.HAPPYDRY, 0, 1, true),
-    DONTLETITGOOUT(Vessel.HAPPY, 0, -1, false),
 
     // Misc.
     NEWCYCLE(Chapter.CH1),

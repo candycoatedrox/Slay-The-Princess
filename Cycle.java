@@ -34,7 +34,7 @@ public abstract class Cycle {
     protected boolean threwBlade = false; // Used in any chapter the Contrarian is in
 
     // Variables that persist between chapters
-    protected boolean isHarsh = false; // Used in Chapter 1, Spectre, Princess and the Dragon, Nightmare, and the Finale
+    protected boolean isHarsh = false; // Used in Chapter 1, Spectre, Princess and the Dragon, Nightmare
 
     // --- CONSTRUCTOR ---
 

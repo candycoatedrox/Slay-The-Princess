@@ -37,8 +37,7 @@ public enum Chapter {
     EMPTYCUP(4, "The Empty Cup", "Routes/Razor/Razor4"),
 
     // Special
-    SPACESBETWEEN("The Spaces Between", "Intermission/IntermissionShared"),
-    ENDOFEVERYTHING("The End of Everything", "Finale/FinaleOpening");
+    SPACESBETWEEN("The Spaces Between", "Intermission/IntermissionShared");
 
     private boolean specialTitle;
     private int number;
@@ -182,7 +181,6 @@ public enum Chapter {
         switch (this) {
             case CLARITY: return "Chapter ???: " + this.title;
             case SPACESBETWEEN: return "The Spaces Between";
-            case ENDOFEVERYTHING: return "The End of Everything";
             default: return this.prefix + ": " + this.title;
         }
     }

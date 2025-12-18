@@ -12,27 +12,9 @@ public enum Vessel {
     DAMSEL(Chapter.DAMSEL, "It Was Always That Easy"),
     DECONDAMSEL("The Deconstructed Damsel", Chapter.DAMSEL, "I Just Want to Make You Happy"),
 
-    // Chapter III
-    NEEDLE(Chapter.NEEDLE),
-    FURY(Chapter.FURY, "There's Nothing I Can Do To Bring You Back"),
-    REWOUNDFURY("The Rewound Fury", Chapter.FURY, "Thirty-Trillion Cells"),
-    APOTHEOSIS(Chapter.APOTHEOSIS, "The Apotheosis"),
-    PATD("The Princess", Chapter.DRAGON, "What Once Was One"),
-    STENCILPATD("The Stenciled Princess", Chapter.DRAGON),
-    WRAITH(Chapter.WRAITH, "I'm Taking What I'm Owed"),
-    CLARITY(Chapter.CLARITY),
+    // Chapter III+
     RAZORFULL("The Razor (Full)", Chapter.RAZOR, "Mutually Assured Destruction"),
-    RAZORHEART("The Razor's Heart", Chapter.RAZOR),
-    DEN(Chapter.DEN),
-    NETWORKWILD("The Networked Wild", Chapter.WILD),
-    WOUNDEDWILD("The Wounded Wild", Chapter.WILD),
-    THORN(Chapter.THORN, "A Moment Trapped for All Time"),
-    WATCHFULCAGE(Chapter.CAGE, "A Prison of Flesh"),
-    OPENCAGE(Chapter.CAGE, "An Open Door"),
-    DROWNEDGREY("The Drowned Grey", Chapter.GREY, "The Grey (Water)"),
-    BURNEDGREY("The Burned Grey", Chapter.GREY, "The Grey (Fire)"),
-    HAPPY(Chapter.HAPPY, "What Remains After the Fire"),
-    HAPPYDRY(Chapter.HAPPY, "What Remains After the Fire");
+    RAZORHEART("The Razor's Heart", Chapter.RAZOR);
 
     private String name;
     private Chapter fromChapter;

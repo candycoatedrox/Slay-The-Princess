@@ -4,10 +4,10 @@ import java.util.HashMap;
 public class GameManager {
     
     private final IOHandler parser;
-    private Cycle currentCycle;
+    private StandardCycle currentCycle;
 
     // Settings
-    private final boolean demoMode = true;
+    private final boolean demoMode = true; // If you set this to "false," you can play through all paths in Chapter IIs -- but if you reach a Chapter III it'll just anticlimactically send you to the end of the demo
     private final boolean trueDemoMode = false;
     private boolean dynamicWarnings = true;
     private boolean showNowPlaying = true;
@@ -18,15 +18,12 @@ public class GameManager {
     private String nowPlaying;
 
     // Global progress trackers
-    private Chapter firstPrincess; // need more nuance here for harsh/soft and different variations (ex. Razor-revival)
-    private ArrayList<Vessel> claimedVessels;
-    private ArrayList<ChapterEnding> endingsFound;
-    private HashMap<Chapter, Boolean> visitedChapters;
-    private HashMap<Voice, Boolean> voicesMet;
-    private ArrayList<String> playlist;
+    private final ArrayList<Vessel> claimedVessels;
+    private final ArrayList<ChapterEnding> endingsFound;
+    private final HashMap<Chapter, Boolean> visitedChapters;
+    private final ArrayList<String> playlist;
 
     private int nVesselsAborted = 0;
-    private int mirrorCruelCount = 0;
     private boolean goodEndingAttempted = false;
 
     // Variables used in the Spaces Between
@@ -34,17 +31,12 @@ public class GameManager {
     private int moundFreedom = 0;
     private int moundSatisfaction = 0;
     private boolean directToMound = false;
-    private boolean askedRiddleMound = false;
-    private boolean threatenedMound = false;
     private boolean refuseExploreMound = false;
 
     // Global menus and options
     private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
     private final OptionsMenu settingsMenu;
     private final OptionsMenu warningsMenu;
-    private final Option intermissionAttackMound;
-    private final Option intermissionAttackSelf;
-    private final Option intermissionWait;
 
     // --- CONSTRUCTOR ---
 
@@ -61,28 +53,13 @@ public class GameManager {
         
         this.visitedChapters = new HashMap<>();
         for (Chapter c : Chapter.values()) {
-            if (c != Chapter.CH1 && c != Chapter.SPACESBETWEEN && c != Chapter.ENDOFEVERYTHING) {
+            if (c != Chapter.CH1 && c != Chapter.SPACESBETWEEN) {
                 this.visitedChapters.put(c, false);
-            }
-        }
-
-        this.voicesMet = new HashMap<>();
-        for (Voice v : Voice.values()) {
-            switch (v) {
-                case NARRATOR:
-                case NARRATORPRINCESS:
-                case PRINCESS:
-                case HERO: break;
-
-                default: this.voicesMet.put(v, false);
             }
         }
 
         this.settingsMenu = this.createSettingsMenu();
         this.warningsMenu = this.createWarningsMenu();
-        this.intermissionAttackMound = new Option(this, "attackMound", "[Attack the entity.]");
-        this.intermissionAttackSelf = new Option(this, "attackSelf", "[Destroy your body.]");
-        this.intermissionWait = new Option(this, "wait", "\"I'm not going back.\" [Wait.]");
     }
 
     /**
@@ -120,7 +97,7 @@ public class GameManager {
      * Accessor for currentCycle
      * @return the current active Cycle
      */
-    public Cycle getCurrentCycle() {
+    public StandardCycle getCurrentCycle() {
         return this.currentCycle;
     }
 
@@ -214,33 +191,6 @@ public class GameManager {
     }
 
     /**
-     * Checks if the player has encountered a given Voice in their playthrough
-     * @param v the Voice to check
-     * @return true if the player has encountered v; false otherwise
-     */
-    public boolean hasMet(Voice v) {
-        return this.voicesMet.get(v);
-    }
-
-    /**
-     * Marks all Voices in an ArrayList as met
-     * @param voices the list of Voices encountered by the player during a StandardCycle
-     */
-    public void updateVoicesMet(ArrayList<Voice> voices) {
-        for (Voice v : voices) {
-            this.voicesMet.put(v, true);
-        }
-    }
-
-    /**
-     * Manipulator for firstPrincess
-     * @param c the Chapter to set firstPrincess to
-     */
-    public void setFirstPrincess(Chapter c) {
-        this.firstPrincess = c;
-    }
-
-    /**
      * Returns the nth Vessel claimed by the player
      * @param n the index of the Vessel being retrieved
      * @return the nth claimed Vessel
@@ -304,21 +254,6 @@ public class GameManager {
     }
 
     /**
-     * Checks if the player was cruel at the mirror
-     * @return true if the player was cruel to the Voices at the mirror 2+ times; false otherwise
-     */
-    public boolean mirrorWasCruel() {
-        return this.mirrorCruelCount >= 2;
-    }
-
-    /**
-     * Increments mirrorCruelCount
-     */
-    public void incrementCruelCount() {
-        this.mirrorCruelCount += 1;
-    }
-
-    /**
      * Accessor for goodEndingAttempted
      * @return the value of goodEndingAttempted
      */
@@ -373,36 +308,6 @@ public class GameManager {
     }
 
     /**
-     * Accessor for askedRiddleMound
-     * @return whether the player has asked the Shifting Mound to stop speaking in riddles in the Spaces Between
-     */
-    public boolean getAskedRiddleMound() {
-        return this.askedRiddleMound;
-    }
-
-    /**
-     * Sets askedRiddleMound to true
-     */
-    public void askRiddleMound() {
-        this.askedRiddleMound = true;
-    }
-
-    /**
-     * Accessor for threatenedMound
-     * @return whether the player has threatened the Shifting Mound in the Spaces Between
-     */
-    public boolean getThreatenedMound() {
-        return this.threatenedMound;
-    }
-
-    /**
-     * Sets threatenedMound to true
-     */
-    public void threatenMound() {
-        this.threatenedMound = true;
-    }
-
-    /**
      * Accessor for refuseExploreMound
      * @return whether the player has threatened the Shifting Mound in the Spaces Between
      */
@@ -415,30 +320,6 @@ public class GameManager {
      */
     public void refuseExploreMound() {
         this.refuseExploreMound = true;
-    }
-
-    /**
-     * Accessor for intermissionAttackMound
-     * @return the Option to attack the Shifting Mound in the Spaces Between
-     */
-    public Option getIntermissionAttackMound() {
-        return this.intermissionAttackMound;
-    }
-
-    /**
-     * Accessor for intermissionAttackSelf
-     * @return the Option for the player to attack themself in the Spaces Between
-     */
-    public Option getIntermissionAttackSelf() {
-        return this.intermissionAttackSelf;
-    }
-
-    /**
-     * Accessor for intermissionWait
-     * @return the Option for the player to wait with the Shifting Mound in the Spaces Between
-     */
-    public Option getIntermissionWait() {
-        return this.intermissionWait;
     }
 
     /**
@@ -518,48 +399,10 @@ public class GameManager {
             }
         }
 
-        if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+        this.currentCycle = null;
 
-            switch (ending) {
-                case NOENDINGS:
-                case THROUGHCONFLICT:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("The Apotheosis");
-                    break;
-                case YOURNEWWORLD:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case PATHINTHEWOODS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
-                    break;
-                case NEWANDUNENDINGDAWN:
-                case ANDEVERYONEHATESYOU:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Unknown Together");
-                    break;
-            }
-        } else {
-            this.currentCycle = null;
-
-            if (ending == ChapterEnding.ABORTED) {
-                ending = ChapterEnding.OBLIVION;
-            }
+        if (ending == ChapterEnding.ABORTED) {
+            ending = ChapterEnding.OBLIVION;
         }
 
         this.endGame(ending);
@@ -614,48 +457,10 @@ public class GameManager {
             }
         }
 
-        if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+        this.currentCycle = null;
 
-            switch (ending) {
-                case NOENDINGS:
-                case THROUGHCONFLICT:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("The Apotheosis");
-                    break;
-                case YOURNEWWORLD:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case PATHINTHEWOODS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
-                    break;
-                case NEWANDUNENDINGDAWN:
-                case ANDEVERYONEHATESYOU:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Unknown Together");
-                    break;
-            }
-        } else {
-            this.currentCycle = null;
-
-            if (ending == ChapterEnding.ABORTED) {
-                ending = ChapterEnding.OBLIVION;
-            }
+        if (ending == ChapterEnding.ABORTED) {
+            ending = ChapterEnding.OBLIVION;
         }
 
         this.endGame(ending);
@@ -719,48 +524,10 @@ public class GameManager {
             }
         }
 
-        if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+        this.currentCycle = null;
 
-            switch (ending) {
-                case NOENDINGS:
-                case THROUGHCONFLICT:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("The Apotheosis");
-                    break;
-                case YOURNEWWORLD:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case PATHINTHEWOODS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The End of Everything, The Beginning of Something New");
-                    break;
-                case NEWANDUNENDINGDAWN:
-                case ANDEVERYONEHATESYOU:
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Long Quiet");
-                    break;
-                case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
-                    this.addToPlaylist("The Long Quiet");
-                    this.addToPlaylist("The Shifting Mound Movement V");
-                    this.addToPlaylist("Transformation");
-                    this.addToPlaylist("The Unknown Together");
-                    break;
-            }
-        } else {
-            this.currentCycle = null;
-
-            if (ending == ChapterEnding.ABORTED) {
-                ending = ChapterEnding.OBLIVION;
-            }
+        if (ending == ChapterEnding.ABORTED) {
+            ending = ChapterEnding.OBLIVION;
         }
 
         this.endGame(ending);
