@@ -188,7 +188,7 @@ hero I guess the only way out of this place is through it.
 jumpanchor stairsLookBackAgain
 n There is nowhere for you to go but down.
 
-// Basement //
+// Basement start //
 
 jumpanchor basementStart
 n You make your way to the bottom of the stairs.
@@ -254,3 +254,546 @@ jumpto startBladeCommentJoin
 jumpanchor startBladeCommentJoin
 n What did you do? Pull yourself together, she isn't supposed to be like this.
 p I wonder how many times I'll get to play with you before you break.
+
+// Basement //
+
+jumpanchor encounterStart
+n Your vision cuts out as your blood begins to coagulate. It's as if every part of your being is coming to a lurching halt.
+linebreak
+para Heart. Lungs. Liver. Nerves. Heart. Lungs. Liver. Nerves.
+linebreak
+n Your lungs pull in a desperate gulp of air as your eyes shoot back open.
+hero What are you doing?
+para I'm *working.* Do you want this body to function, or do you want -- /// interrupt
+linebreak
+n And then experience stops once more as your body reapproaches death.
+hero Okay, whatever you were doing, please just start doing it again.
+para Are you sure about that? Are you sure that's what you want, or do you want to interrupt me some more?
+n You have seconds left.
+hero Yes, I'm sure!
+para Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+n Again, your eyes shoot open as you gasp for breath.
+p Can't decide what you want to do, can you?
+p Oh, well. Standing there gasping like a fish is more fun than dead, even if you look ridiculous.
+hero She isn't attacking us. Why?
+n The "why" doesn't matter. She's already proven her ill intent. Don't lose sight of your mission.
+
+jumpanchor encounterStartBlade
+n Your weapon is still in your hands. Strike at her and end this before it's too late.
+
+jumpanchor encounterStartNoBlade
+hero And how are we supposed to do that? We don't have a weapon, and the way out of here is nowhere to be seen.
+n That isn't my fault.
+hero It doesn't matter whose fault it is, because fighting her isn't an option right now.
+n Then you should get looking, shouldn't you?
+
+jumpanchor whyNoKillMenu
+p Because I don't want to. And even I did, I don't have to.
+p Look at the way you're struggling to stay alive. It's taking everything you have to keep your heart pumping right now. And I'm enjoying the show.
+n The Princess leans forward, bringing her masked-lips close to your ear.
+p If I want to see you gone, all I need to do is break your concentration.
+para HEART. LUNGS. LIVER. NERVES. H-HEART...
+n She slowly runs her velvet glove across the base of your neck. It feels like static and then -- /// interrupt
+linebreak
+para SHIT, SHIT, SHIT! M-make her stop!
+hero Hey. Snap out of it.
+para Okay. Deep breath. Deep breath. We're *fine.* Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+n -- you're back.
+p One moment, and then you're gone. Just. Like. That.
+p Ah, and there's the fear.
+n She pulls away.
+p But that wouldn't be very fun, now would it? I've already done that.
+
+jumpanchor whyNeedMenu
+p I tried to leave while you suffocated, but that stupid cabin wouldn't let me. So I started to drag your body out with me and then...
+p Well, you died before I could get to the door. And then I was here, and now you're here too.
+p I don't think I can leave without you, and dead doesn't count. And as much as I love what we have going on, I have bigger plans than tormenting one poor little creature forever. I want to leave.
+
+jumpanchor whyThreatMenu
+p I am being nice. You're alive, aren't you?
+p And you died of fright as soon as you saw me last time. I didn't think keeping you alive was an option. But it looks like that's not a problem anymore. At least not for me!
+p You seem miserable.
+
+jumpanchor shareTaskAlready
+truth She twirls in the air.
+p I know! You told me last time.
+
+jumpanchor shareTaskMenu
+p 'Destroy' is such an unenlightened way of putting it. So sudden. So violent. So little nuance.
+p I'm not going to destroy the world, but I am going to hold it in my hands and squeeze it.
+p I'm going to make it afraid, just like I've made you afraid.
+truth She twirls in the air.
+p The world needs fear, doesn't it? Every terror I'd bring would make the good times so much better. I'm practically doing a public good! So what harm is there really in letting me out?
+
+jumpanchor peopleMenu
+p But everybody dies eventually! They're all full of wet, writhing things and in the end, each and every one of them gets unwound! And then those things get to become a new everybody, just to come apart all over again.
+p All I want is to be there for it! I want to watch it happen. And maybe do a little unwinding myself. Is that really so much to ask?
+
+jumpanchor separateMenu
+p Oh, no, definitely not. If you're what I need to leave this place, chances are you're pretty useful. I think I'll keep you right by my side. A little good luck charm, to make sure I stay free.
+p Don't worry, I'll make sure to take good care of you. I promise.
+
+jumpanchor agonyMenu
+p We both know that you don't have a say here. So you should just look on the bright side.
+p I don't know what the bright side is for you, but I'm positive you can find it if you look hard enough
+
+jumpanchor dieThenMenu
+truth She twirls in the air.
+p And then we'll wind up right back where we started. Round and round we'll go! I wonder what will be different next time. Maybe you'll actually be able to move a limb. Who knows!
+p But I'm always going to win.
+
+jumpanchor infiniteMenu
+p Is that a bet you're willing to take? Imagine climbing a mountain of lifetimes, and when you finally reach the summit, when you finally win, the only view you find is me.
+truth She twirls in the air.
+p And then I push you, and you go tumbling all the way down those millions upon millions of battered and broken pieces of you that couldn't make the cut.
+p What then? Would you have it in you to climb again? It sounds like a lot of effort for nothing. When instead, we can just leave this place together. Hand-in-hand.
+
+jumpanchor lunaticTurnOffComment1
+p I am what I am. And right now, I'm in control.
+jumpto lunaticMenu
+
+jumpanchor lunaticTurnOffComment2
+p Like I said, I am what I am. And right now, I'm in control.
+jumpto lunaticMenu
+
+jumpanchor lunaticMenu
+n So... you might want to be a little nicer to me.
+p She raises one long gloved finger, its tip hovering just over your skin, seeming to enjoy the lingering threat. But she withdraws, sparing you another momentary glimpse of death.
+
+jumpanchor turnOffComment1
+p I am what I am. It's not my fault that you can't handle being around me.
+
+jumpanchor turnOffComment2
+p Like I said, I am what I am. It's not my fault that you can't handle being around me.
+
+jumpanchor threatMenuBlade
+n The Princess cocks her head, neck cracking uncomfortably, and you can't help but imagine a smile carve its way from ear to ear on the other side of her mask.
+p Thinking about that knife, are we?
+p Go ahead. Put that little theory to the test. See how it plays out. But I don't think you're going to like what happens.
+p Because even if you make me dead, you're not getting out of here.
+p This place is *mine.*
+p And I'm not giving you the stairs unless I'm leaving with you.
+
+jumpanchor threatMenuNoBlade
+p That's adorable!
+p You don't have anything that can hurt me, so do your worst.
+
+jumpanchor canDieMenu
+n The Princess cocks her head, neck cracking uncomfortably, and you can't help but imagine a smile carve its way from ear to ear on the other side of her mask.
+p Of course I can die! I'm dying all the time and so are you. But we're both still here, and you can't make me go away.
+
+jumpanchor ifRefuseMenu
+p Then we're stuck down here together until you change your mind.
+n Static and a skipped beat as she touches your shoulder and whispers in your ear.
+para NO! Heart! Lungs! Liver! Nerves! Heart...
+p Or until your heart finally gives out.
+p And then, when you die, I'll find myself somewhere new, and before too long, you'll be there too. That's how this all works right? This doesn't end until you let me out.
+p And a lot can happen before then. I'm sure I can get creative.
+
+jumpanchor friendsMenuWhyNeed
+p Would you look at that! You're suggesting exactly what I want. Somebody's ahead of the curve.
+jumpto whyNeedMenu
+
+jumpanchor friendsMenuOther
+p I'm glad you're seeing things my way.
+
+// Remain with your Nightmare or try to run //
+
+jumpanchor remainBlade
+n Are you serious?! You fling the blade into the void, denying yourself the opportunity to ever slay her and finish your mission.
+hero Nobody's happy here. But... maybe it's for the best.
+jumpto remainJoin
+
+jumpanchor runAttempt
+n You turn and run, doing your best to put one useless leg in front of the other.
+p You poor, poor thing. Wrong choice.
+n You get nowhere before the Princess is in front of you once again.
+p You're always going to be a coward.
+jumpto remainLateJoin
+
+// Leads to Chapter ???: The Moment of Clarity with all Voices //
+jumpanchor remainJoin
+p You poor, deluded thing. Do you think a single moment of bravery changes you into something you're not? I am what I am, and you're always going to be a coward.
+jumpanchor remainLateJoin
+n She raises a hand to her mask and pulls it down. You don't get the chance to see what lies beneath before it envelops you.
+linebreak
+n Like a creeping mold, the complete reality of your existence threads its way through your mind. Birth, death, birth again. Decay and bloom. A million stitches from a million microscopic wounds you've inflicted on everyone you've ever met with every muscle you've moved and every word you've ever spoken.
+hero No no no!
+p Let me out.
+linebreak
+n Your existence hurts them.
+p Let me out!
+linebreak
+n A lonely soul in a room by itself weeping. It lives for eighty years and then it's gone. And then it's there again.
+p Let. Me. Out!
+linebreak
+n A reprieve. A good life. Love, children, a steady career. Recognition from your peers. Here one moment, gone the next. The worms have found their orifices.
+p LET. ME. OUT!
+linebreak
+n Diagnosis. It forgets everything it is. Anger. Rage. Distance. Poverty. The lonely soul is lonely again. Love turns to mockery. It dies. It is reborn. Worse. Lonelier.
+p LET ME OUT!
+linebreak
+hero No no no no no! What's happening to us!
+p LET ME OUT!
+linebreak
+n This is all too much. I... can't keep going.
+para You can't keep going? What are you talking about?
+truth But He doesn't respond.
+linebreak
+p Oops... I think I broke you.
+p I'll see you soon! You'll know what to do.
+linebreak
+truth Your body is dead, but you live on.
+
+// Leave with her //
+
+jumpanchor leaveStart
+n What?! NO!
+p I knew you'd come around! Oh, this is going to be so wonderful!
+n No I'm not going to let this happen, I -- before you can utter another word, your body stops moving, and -- /// interrupt
+linebreak
+para Do you think you can just wrest control away from us? This body is barely functioning as is. Doesn't the world end if we fail to stop her? Won't letting us die here just make it end faster?
+n Sh-shit...
+para Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+n With a flick of the Princess' wrist, the stairs slide back into place. I can't believe you're making me watch you damn everyone to torment and oblivion.
+
+jumpanchor leaveBladeStart
+p Go ahead. I'll be right behind you.
+linebreak
+para I wouldn't trust having our back to her.
+hero You're not wrong, but maybe you should let me handle the feedback. Just focus on keeping us alive.
+para Haha! Right...
+para Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+hero Besides, I get the feeling she's telling the truth. She needs us alive.
+
+jumpanchor leaveStairsSuggest
+p What, are you scared of turning your back to me? You don't have to be worried that I'm going to do something bad. You're too important to me now.
+p And besides, what if I lost track of you and dropped the stairs on accident? I wouldn't want that to happen. And I don't think you'd want that to happen either. So go on, go ahead.
+n She urges you forward like one might a reluctant pet.
+
+jumpanchor leaveBladeCont
+n You place a shaky foot on the first step and begin your ascent from the basement.
+n You can feel the static prickling of the Princess on your neck, your limbs buzzing with pins and needles, an uncomfortable and constant reminder that you exist, and that your existence is so very precarious.
+p You're almost there...
+n The only thing left between you and the cabin is the now shut door to the basement. It would be a real shame if it had locked behind you.
+linebreak
+para Oh, you snake. There wasn't even a door when we first got here. The door was from last time! I told you we shouldn't trust Him!
+hero I know he's messing with us, but you can't lose your cool. We need you right now, remember?
+para Yes. I remember. Of course I remember. Heart. Lungs. Liver. Nerves. This is so *frustrating!* Heart...
+linebreak
+hero Thank you. And you! You'd really rather us die down here than let her out?
+n Of course I would! As much as I want you to have a happy ending, the fate of the world is a little more important. And you still have a weapon. You can still make this right.
+
+jumpanchor lockedNotTried
+p You haven't even tried it! It'll open. You just have to give it a tug.
+
+jumpanchor lockedTried
+p It'll open. You just have to give it a tug.
+
+jumpanchor stairsTryLeave
+n Well, you'd need to open the door first...
+
+jumpanchor tryDoorA
+n Look at that! It's locked. What a relief for the world.
+
+jumpanchor leaveBladeCabin
+n You pull against the door. The lock gently clicks open in response to your effort, and the door creaks on its hinges. This isn't right! That's not even the way it's supposed to swing! It's supposed to swing *out.*
+linebreak
+para You're not nearly as powerful as you'd have us think, are you?
+hero Ahem.
+para Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+hero Anyways, like he said, you're not really in control here, are you?
+n I never said I was! If I was in control here, why would I need *you* to slay her?
+hero I don't know! Secret reasons?
+p The door is open. What are you dawdling for? It's time for us to go. The world is waiting.
+n Shit. The Princess moves past you and into the cabin. This is it. This is your final moment to make things right. KILL HER.
+hero I thought you wanted us to "slay" her.
+n It's the same thing! Do it! Do it now! Do it now or everything is OVER.
+hero Okay, what do we do?
+hero ... I said, "what do we do?"
+linebreak
+para Oh, do you want to hear from me now?
+hero Yes!
+para Well I thought you needed me to run the autonomic nervous system.
+hero We do, but this is *important!* Look, I'll even do it myself, just tell us who to trust!
+hero Uhhh... brain?
+para *Heart*...
+hero Right. Heart.
+para Lungs...
+hero Lungs...
+para Liver. Nerves.
+hero Okay, thanks. I've got it.
+linebreak
+hero Heart... Lungs... Liver... Nerves... Heart...
+para You're terrible at this.
+hero I know, but I'm doing my best -- /// interrupt
+linebreak
+para Yes, it's very hard to stay focused on running things when other people are talking to you, isn't it?
+p WHAT ARE YOU DOING?!
+hero Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+para Finally, I can talk. Now what were you asking me? Running everything kind of feels like popping in and out of consciousness. It's easy to lose track of things.
+n They were asking you for your blessing to trust me.
+para Oh that's right! Yeah, fuck this guy. Don't trust Him.
+n Really? So you'd have them trust *her?*
+para Oh of course not. Can't trust anybody here but ourselves. But I guess that leaves us back where we started, doesn't it?
+para I suppose if I had to make a choice, I'd pick the one that doesn't make our organs shut down.
+n Thank you for your gracious show of support.
+para But that's a marginal preference. We'll have to deal with Him later. I'd just rather deal with Him while our organs are intact.
+n *Sigh.* Whatever. You heard what he had to say. So whether you trust me or not, killing her is still the best, nay, the only option you have worth taking.
+para All right. I'm done. You can let me take over again.
+hero Finally! That was awful. I really don't know how you do it.
+para Heart. Lungs. Liver. Nerves. Heart...
+p You've been standing there staring blankly for a while now and I have to say my patience is running a little thin. So don't make a lady wait any longer, okay?
+p Open. The. Door.
+
+jumpanchor leaveNoBladeStart
+p Come along, now. You don't want to be stuck down here.
+n The Princess glides onto the stairs and beckons you to follow. If only you had a weapon. This would be the perfect opportunity to use it.
+hero But we don't. And we've already made our choice.
+linebreak
+para We can still grab it on the way out.
+hero You're not wrong, but maybe you should let me handle the suggestions for the time being. Just focus on keeping us alive.
+para Haha! Right...
+para Heart. Lungs. Liver. Nerves. Heart...
+
+n You step onto the basement stairs, following the Princess as she ascends. Pins and needles punctuate your every step, an uncomfortable and constant reminder of your mortality.
+n Is this really worth it?
+hero At least it's a choice.
+n That doesn't justify anything. A terrible choice is still terrible.
+p Make sure you keep up. We wouldn't want you to fall.
+n As if acting on instinct, you crane your neck and look behind you. There is nothing there.
+n The Princess reaches the top of the stairs and taps the door.
+n Her head twists back in your direction, watching you with dead eyes as the way out creaks open.
+n Don't forget that your pristine blade is still on the other side. You can still make this right. You can still save everyone, and you can still save yourself from becoming her tormented pet.
+linebreak
+para There's no harm in us having a weapon. All it does is give us more options. And we are dangerously low on those right now.
+hero Uh...
+para Have you considered that maybe *you* could operate the autonomic nervous system for a bit? Everyone is trying to manipulate us and I can only do so many things at once to keep us alive.
+hero Er... heart? Erm. Liver?
+n Your body seizes violently as you regain consciousness on the floor of the cabin.
+para No, no no! You're doing it all wrong. You're supposed to do it like this: Heart. Lungs. Liver. Nerves. Heart...
+para I guess I have to do everything around here, don't I?
+para Heart. Lungs. Liver. Nerves. Heart...
+linebreak
+p There we go, back with me where you belong! I thought you might have decided to break yourself just to spite me. It's better for you that you didn't.
+p Now we can get back to business. For starters, we won't need this where we're going!
+n The Princess plucks the blade from the floor and tosses it through the door behind you. It vanishes into the inky black of the basement, never to be seen again.
+hero I guess we're not stabbing her in the back.
+n *Sigh.* I guess not.
+n I'm going to fix myself a stiff drink. If I'm about to watch you hand the world to her on a silver platter, I'd rather not be sober.
+p And now you open the door.
+hero There's nothing else for us to do.
+
+jumpanchor leaveCabinStairsAttempt
+para We are NOT going back down there. Heart. Lungs...
+
+// "A World of Terror" ending; claim the Nightmare //
+jumpanchor leaveCabinEnd
+n The doorknob twists in your hand, revealing the forested path beyond the cabin. You bastard. You've actually done it. You've actually doomed everyone.
+
+p It's so beautiful. I can't wait to ruin it.
+p But it's so cold, too. It's... itching against my skin.
+truth The Princess, exhausted, slumps to the ground.
+p Why is it so cold?
+linebreak
+truth Something reaches out and folds her into its myriad arms.
+linebreak
+
+jumpanchor leaveEndFirstVessel
+truth You do not have an opportunity to respond. Something has taken her away, and it's left something else in her stead.
+
+jumpanchor leaveEndNotFirstVessel
+truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+// Slay her //
+
+// Leads to Chapter III: The Wraith //
+jumpanchor slayStart
+n Your will concentrates into a single fine point, and you strike out against the Princess, ignoring the constant reminders of your breaking body.
+n She doesn't even move as the blade sinks into her heart.
+hero We did it. We actually did it!
+p Hahahaha! You actually went for it! Oh you're going to regret this! I can be so much more terrible for you than I am now!
+hero C-can she?
+para We've already seen how she can change... heart. Lungs. Liver. Nerves...
+
+// Grants you the Voice of the Cold //
+jumpanchor slayBasement
+p You're not getting those stairs back. I'll see you when you finally decide to die.
+linebreak
+n She falls to the ground, unmoving.
+linebreak
+para Oh, I can stop now, can't I?
+para I can! Finally.
+hero And now that she's gone, you can let us out of here, right?
+para But she was the one who controlled this place, wasn't she? And now she's dead. I don't like to think what that means for us.
+n It means that you're stuck here. Forever.
+hero Oh no. Oh no no no no no. Oh no I hate this!
+n Time passes.
+hero ... forever's going to end eventually, right?
+n No. It won't. That's the whole point of "forever." It doesn't end.
+jumpto slayJoin
+
+// Grants you the Voice of the Opportunist //
+jumpanchor slayStairs
+n In her final moments, the Princess lunges forward, tackling you, and you both plunge into the endless abyss of her basement labyrinth.
+n As the two of you fall, you rip your blade from her chest, tightly clutching it in your hands.
+p Have fun falling forever! I'll see you when you finally decide to die.
+n She tears herself away from you and tumbles away into the darkness.
+n You are alone. And you are falling. Forever. But you saved the world. You should be proud of yourself for seeing this through.
+para Oh, I can stop now, can't I?
+para I can! Finally.
+hero Are, are we really gonna fall forever? Can't you narrate us some stairs out of here?
+para But she was the one who controlled this place, wasn't she? And now she's dead. I don't like to think what that means for us.
+n It means that you're falling. Forever.
+hero Oh no. Oh no no no no no. Oh no I hate this!
+n You continue to fall.
+hero ... forever's going to end eventually, right?
+n No. It won't. That's the whole point of "forever." It doesn't end. You continue to fall, and you will only continue to fall.
+jumpanchor slayJoin
+hero I feel sick.
+para It doesn't have to be forever, though, does it?
+hero ... what do you mean?
+para We still have a way out clutched in our hands.
+hero Are you suggesting we kill ourselves? Won't we be dead? ... I guess that hasn't stopped us before.
+n That's a terrible idea. You've already saved the entire world from ruin, why would you want to die?
+para Because right now, you don't want us to do that.
+n You're right! I don't!
+para But if we've already "saved the world" then why does it matter if we die? Why do you care?
+n I just do! I value life. Every life. Even yours. *Especially* yours.
+para *Why?*
+hero What do you mean why? I think it's perfectly reasonable to value life.
+n Exactly. I don't have to answer that.
+
+jumpanchor comeBackSlainInsist
+n Ah yes, the whole "looping" thing. How unfortunate. You were only supposed to be here once.
+jumpto comeBackJoin
+
+jumpanchor comeBackSlainNoInsist
+n "Again?" That's unfortunate. You were only supposed to be here once.
+jumpanchor comeBackJoin
+para I don't like the way you said that. You knew this was a possibility, didn't you?
+n Of course I did, though I'd rather hoped I was the first one. That explains a lot though.
+hero Oh, you bastard. How much are you not telling us?
+n Plenty. But it's all in your best interest. And the world's. And mine.
+
+jumpanchor comeBackStuck
+hero She's dead and we're stuck in her hellvoid forever. How could telling us your secrets possibly hurt anyone?
+jumpto comeBackJoin2
+
+jumpanchor comeBackFalling
+hero She's dead and we're falling forever. How could telling us your secrets possibly hurt anyone?
+jumpanchor comeBackJoin2
+n It just can. Look, this world is saved, but if you "start over," for all you know you're just putting another world in danger. You barely managed to land the killing blow here. What if you don't manage it next time?
+n *Sigh.* I've already said too much, really. You won't get another word out of me on the subject.
+
+jumpanchor secret1Slain
+n No.
+
+jumpanchor secret2Slain
+n Still no.
+
+jumpanchor secret3Slain
+n You're not going to wear me down.
+hero Ooh, we should ask him one more time. He's on the cusp of sharing his secrets. I can feel it.
+para Either way, at least needling Him is something to do.
+
+jumpanchor secret4Slain
+n The Narrator ignores you.
+hero You can't just describe yourself ignoring us.
+n I can.
+
+jumpanchor secret5Slain
+n The Narrator continues to ignore you.
+
+jumpanchor companySlain
+para Oh, you could do a lot better than us.
+n Exactly. You'll be fine here. Just come up with a game or something to pass the time.
+
+jumpanchor fineSlain
+hero You say that now, but let's see how we all feel after a week or a month or a year...
+
+jumpanchor biologySlain
+hero That's a grim thought, innit?
+n But I suppose you're right. You are a creature of biology. Something will happen to you before forever comes along.
+
+jumpanchor biologyWayOutStuck
+para We don't have to starve to death. You have our way out. Use it.
+
+jumpanchor biologyWayOutFalling
+para We don't have to starve to death falling through an infinite void. You have our way out. Use it.
+
+jumpanchor biologyNoWayOut
+para You really shouldn't have gotten rid of the blade. It was our way out! What were you thinking?
+hero Now now, if we're going to be stuck here until we starve, we really shouldn't be at each other's throats.
+
+jumpanchor stuckSlain
+n I'm stuck here with you. I wish I weren't.
+para Feeling's mutual.
+hero At least we're all being honest!
+
+jumpanchor lonelySlain
+n Unlike you, I'm not *capable* of being lonely.
+hero Aw, sure you are! Give it some time without us and I'm sure you'll start feeling lonely.
+
+jumpanchor takeSlain
+n You remove the blade from the Princess' body. What, exactly, are you planning on doing with it?
+
+jumpanchor dropSlain
+hero Oh no, what are you doing?
+n You loosen your grip, and the blade tumbles through your open fingers. Now you're really falling forever. There's no way out now.
+
+jumpanchor throwSlain
+hero Oh no, what are you doing?
+n You tighten your grip and fling the blade as hard as you can into the void. It's gone. Now you're really stuck here forever. There's no way out now.
+
+jumpanchor bladeGoneBiology
+para You mean other than starving...
+hero Right. I mean other than that.
+
+jumpanchor waitNoBiologyStuck
+n More time passes. You're still here.
+
+jumpanchor waitNoBiologyFalling
+n More time passes. You continue to fall.
+
+jumpanchor nowhereToGo
+n There is nowhere for you to go.
+
+jumpanchor noLeave
+n And go where, exactly?
+
+jumpanchor alreadySlain
+n She's already dead, thanks to your sacrifice.
+
+jumpanchor cantSuicide
+para We had our chance to escape, and now it's gone. Thanks a lot.
+
+jumpanchor cantTake
+n What's done is done. The blade is gone.
+
+// End the chapter //
+jumpanchor suicideEndSlain
+n *Sigh.* I don't like this, but I suppose there's not much I can do to stop you, is there?
+n You raise the blade to your neck and slit your carotid artery.
+
+jumpanchor suicideComeBackComment
+n You'd better get this right next time. Do you hear me? Don't blow it.
+
+jumpanchor suicideEndCont
+linebreak
+n Everything goes dark, and you die.
+
+jumpanchor waitEndSlain
+n You wait, and then you wait for a little while longer. But eventually the thirst sets in. And the hunger. The darkness of this place prevents you from wholly grasping the context of passing time, but that doesn't stop it from passing, nor does it stop your biology from unraveling.
+n The only things you know for certain are that it's long, and that it hurts. The vastness of your suffering can't be adequately put into words.
+para We really shouldn't have tossed the blade...
+linebreak
+n No, you really shouldn't have. But biology and time are immutable forces, and eventually, long before forever gets the chance to come, everything goes dark, and you die.
+
+n Don't muck it up next time. The Princess may be slain here, but she isn't slain There.
