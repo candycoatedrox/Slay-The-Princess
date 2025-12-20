@@ -27,16 +27,17 @@ public class GameManager {
 
     private int nVesselsAborted = 0;
     private int mirrorCruelCount = 0;
-    private boolean goodEndingAttempted = false;
+    private Condition goodEndingAttempted = new Condition();
+    private InverseCondition noGoodEndingAttempt = new InverseCondition(goodEndingAttempted);
 
     // Variables used in the Spaces Between
     private boolean mirrorScaredFlag = false;
     private int moundFreedom = 0;
     private int moundSatisfaction = 0;
     private boolean directToMound = false;
-    private boolean askedRiddleMound = false;
-    private boolean threatenedMound = false;
-    private boolean refuseExploreMound = false;
+    private Condition askedRiddleMound = new Condition();
+    private Condition threatenedMound = new Condition();
+    private Condition refuseExploreMound = new Condition();
 
     // Global menus and options
     private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
@@ -320,17 +321,18 @@ public class GameManager {
 
     /**
      * Accessor for goodEndingAttempted
-     * @return the value of goodEndingAttempted
+     * @return the condition goodEndingAttempted
      */
-    public boolean goodEndingAttempted() {
+    public Condition goodEndingAttempted() {
         return this.goodEndingAttempted;
     }
 
     /**
-     * Sets goodEndingAttempted to true
+     * Accessor for noGoodEndingAttempt
+     * @return the condition noGoodEndingAttempt
      */
-    public void attemptGoodEnding() {
-        this.goodEndingAttempted = true;
+    public InverseCondition noGoodEndingAttempt() {
+        return this.noGoodEndingAttempt;
     }
 
     /**
@@ -376,45 +378,24 @@ public class GameManager {
      * Accessor for askedRiddleMound
      * @return whether the player has asked the Shifting Mound to stop speaking in riddles in the Spaces Between
      */
-    public boolean getAskedRiddleMound() {
+    public Condition aAskedRiddleMound() {
         return this.askedRiddleMound;
-    }
-
-    /**
-     * Sets askedRiddleMound to true
-     */
-    public void askRiddleMound() {
-        this.askedRiddleMound = true;
     }
 
     /**
      * Accessor for threatenedMound
      * @return whether the player has threatened the Shifting Mound in the Spaces Between
      */
-    public boolean getThreatenedMound() {
+    public Condition threatenedMound() {
         return this.threatenedMound;
-    }
-
-    /**
-     * Sets threatenedMound to true
-     */
-    public void threatenMound() {
-        this.threatenedMound = true;
     }
 
     /**
      * Accessor for refuseExploreMound
      * @return whether the player has threatened the Shifting Mound in the Spaces Between
      */
-    public boolean getRefuseExploreMound() {
+    public Condition refuseExploreMound() {
         return this.refuseExploreMound;
-    }
-
-    /**
-     * Sets refuseExploreMound to true
-     */
-    public void refuseExploreMound() {
-        this.refuseExploreMound = true;
     }
 
     /**

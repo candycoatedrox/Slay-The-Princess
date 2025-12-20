@@ -302,6 +302,7 @@ public class OptionsMenu {
     /**
      * Sets conditionMet for the nth Option in this menu to the specified value
      * @param n the index of the Option to modify
+     * @param isMet whether to set the Option to visible or not
      * @throws IllegalArgumentException if the given index is out of range
      */
     public void setCondition(int n, boolean isMet) {
@@ -315,6 +316,7 @@ public class OptionsMenu {
     /**
      * Sets conditionMet for the first Option with the given ID in this menu to the specified value
      * @param id the ID of the Option to modify
+     * @param isMet whether to set the Option to visible or not
      */
     public void setCondition(String id, boolean isMet) {
         this.get(id).setCondition(isMet);
@@ -323,6 +325,7 @@ public class OptionsMenu {
     /**
      * Sets greyedOut for the nth Option in this menu to the specified value
      * @param n the index of the Option to modify
+     * @param condition the value to set the Option's greyedOut to
      * @throws IllegalArgumentException if the given index is out of range
      */
     public void setGreyedOut(int n, boolean condition) {
@@ -336,9 +339,33 @@ public class OptionsMenu {
     /**
      * Sets greyedOut for the first Option with the given ID in this menu to the specified value
      * @param id the ID of the Option to modify
+     * @param condition the value to set the Option's greyedOut to
      */
     public void setGreyedOut(String id, boolean condition) {
         this.get(id).setGreyedOut(condition);
+    }
+
+    /**
+     * Sets greyCondition for the nth Option in this menu to the specified value
+     * @param n the index of the Option to modify
+     * @param condition the condition to set the Option's greyCondition to
+     * @throws IllegalArgumentException if the given index is out of range
+     */
+    public void setGreyCondition(int n, AbstractCondition condition) {
+        if (n < 0 || n >= this.size()) {
+            throw new IllegalArgumentException("Option out of range");
+        }
+        
+        this.get(n).setGreyCondition(condition);
+    }
+
+    /**
+     * Sets greyedOut for the first Option with the given ID in this menu to the specified value
+     * @param id the ID of the Option to modify
+     * @param condition the condition to set the Option's greyCondition to
+     */
+    public void setGreyCondition(String id, AbstractCondition condition) {
+        this.get(id).setGreyCondition(condition);
     }
 
     // --- SHOWN / AVAILABLE OPTIONS ---

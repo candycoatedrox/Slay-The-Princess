@@ -1,4 +1,4 @@
-public class OrCondition extends AbstractCondition {
+public class ConditionList extends AbstractCondition {
 
     private boolean bool;
     private final AbstractCondition[] conditions;
@@ -7,19 +7,19 @@ public class OrCondition extends AbstractCondition {
 
     /**
      * Constructor
-     * @param bool a simple boolean condition that is part of the or statement
-     * @param conditions the conditions that make up the or statement
+     * @param bool a simple boolean condition that is part of the and statement
+     * @param conditions the conditions that make up the and statement
      */
-    public OrCondition(boolean bool, AbstractCondition... conditions) {
+    public ConditionList(boolean bool, AbstractCondition... conditions) {
         this.bool = bool;
         this.conditions = conditions;
     }
 
     /**
      * Constructor
-     * @param conditions the conditions that make up the or statement
+     * @param conditions the conditions that make up the and statement
      */
-    public OrCondition(AbstractCondition... conditions) {
+    public ConditionList(AbstractCondition... conditions) {
         this(true, conditions);
     }
 
@@ -31,13 +31,13 @@ public class OrCondition extends AbstractCondition {
      */
     @Override
     public boolean check() {
-        if (this.bool) return true;
+        if (!this.bool) return false;
 
         for (AbstractCondition c : conditions) {
-            if (c.check()) return true;
+            if (!c.check()) return false;
         }
 
-        return false;
+        return true;
     }
 
 }

@@ -2,7 +2,7 @@ public class Condition extends  AbstractCondition {
     
     private boolean value;
     
-    // --- CONSTRUCTOR ---
+    // --- CONSTRUCTORS ---
 
     /**
      * Constructor
@@ -10,6 +10,13 @@ public class Condition extends  AbstractCondition {
      */
     public Condition(boolean value) {
         this.value = value;
+    }
+
+    /**
+     * Default constructor (false)
+     */
+    public Condition() {
+        this(false);
     }
 
     // --- ACCESSORS & MANIPULATORS ---

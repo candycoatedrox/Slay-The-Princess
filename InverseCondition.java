@@ -8,7 +8,7 @@ public class InverseCondition extends AbstractCondition {
      * Constructor
      * @param inverse the Condition to define the inverse of
      */
-    public InverseCondition(Condition inverse) {
+    public InverseCondition(AbstractCondition inverse) {
         this.inverse = inverse;
     }
 

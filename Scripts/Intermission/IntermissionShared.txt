@@ -1,4 +1,5 @@
 linebreak 3
+
 truth You find yourself in the Long Quiet once again.
 
 jumpanchor firstVesselIntro

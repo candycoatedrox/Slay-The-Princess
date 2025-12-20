@@ -268,7 +268,7 @@ para I'm *working.* Do you want this body to function, or do you want -- /// int
 linebreak
 n And then experience stops once more as your body reapproaches death.
 hero Okay, whatever you were doing, please just start doing it again.
-para Are you sure about that? Are you sure that's what you want, or do you want to interrupt me some more?
+para Are you sure about that? Are you sure that's what you want, or do you want to INTERRUPT me some more?
 n You have seconds left.
 hero Yes, I'm sure!
 para Heart. Lungs. Liver. Nerves. Heart...
@@ -296,9 +296,9 @@ p If I want to see you gone, all I need to do is break your concentration.
 para HEART. LUNGS. LIVER. NERVES. H-HEART...
 n She slowly runs her velvet glove across the base of your neck. It feels like static and then -- /// interrupt
 linebreak
-para SHIT, SHIT, SHIT! M-make her stop!
+para Shit! Shit! Shit! Make her stop!
 hero Hey. Snap out of it.
-para Okay. Deep breath. Deep breath. We're *fine.* Heart. Lungs. Liver. Nerves. Heart...
+para Okay. Deep breath. *Deep breath.* We're fine. Heart. Lungs. Liver. Nerves. Heart...
 linebreak
 n -- you're back.
 p One moment, and then you're gone. Just. Like. That.
@@ -420,7 +420,7 @@ jumpanchor remainLateJoin
 n She raises a hand to her mask and pulls it down. You don't get the chance to see what lies beneath before it envelops you.
 linebreak
 n Like a creeping mold, the complete reality of your existence threads its way through your mind. Birth, death, birth again. Decay and bloom. A million stitches from a million microscopic wounds you've inflicted on everyone you've ever met with every muscle you've moved and every word you've ever spoken.
-hero No no no!
+hero No no no no no...
 p Let me out.
 linebreak
 n Your existence hurts them.
@@ -435,7 +435,7 @@ linebreak
 n Diagnosis. It forgets everything it is. Anger. Rage. Distance. Poverty. The lonely soul is lonely again. Love turns to mockery. It dies. It is reborn. Worse. Lonelier.
 p LET ME OUT!
 linebreak
-hero No no no no no! What's happening to us!
+hero No no no no! No, no -- what's -- what's happening to us!
 p LET ME OUT!
 linebreak
 n This is all too much. I... can't keep going.
@@ -465,7 +465,7 @@ p Go ahead. I'll be right behind you.
 linebreak
 para I wouldn't trust having our back to her.
 hero You're not wrong, but maybe you should let me handle the feedback. Just focus on keeping us alive.
-para Haha! Right...
+para Hahaha. Right...
 para Heart. Lungs. Liver. Nerves. Heart...
 linebreak
 hero Besides, I get the feeling she's telling the truth. She needs us alive.
@@ -481,9 +481,9 @@ n You can feel the static prickling of the Princess on your neck, your limbs buz
 p You're almost there...
 n The only thing left between you and the cabin is the now shut door to the basement. It would be a real shame if it had locked behind you.
 linebreak
-para Oh, you snake. There wasn't even a door when we first got here. The door was from last time! I told you we shouldn't trust Him!
+para Oh, you snake. There wasn't even a door when we first got here. The door was from last time! I *told* you we shouldn't trust Him!
 hero I know he's messing with us, but you can't lose your cool. We need you right now, remember?
-para Yes. I remember. Of course I remember. Heart. Lungs. Liver. Nerves. This is so *frustrating!* Heart...
+para Yes. I remember. Of *course* I *remember.* Heart. Lungs. Liver. Nerves. This is so *frustrating!* Heart...
 linebreak
 hero Thank you. And you! You'd really rather us die down here than let her out?
 n Of course I would! As much as I want you to have a happy ending, the fate of the world is a little more important. And you still have a weapon. You can still make this right.
@@ -503,8 +503,8 @@ n Look at that! It's locked. What a relief for the world.
 jumpanchor leaveBladeCabin
 n You pull against the door. The lock gently clicks open in response to your effort, and the door creaks on its hinges. This isn't right! That's not even the way it's supposed to swing! It's supposed to swing *out.*
 linebreak
-para You're not nearly as powerful as you'd have us think, are you?
-hero Ahem.
+para You're not *nearly* as powerful as you'd have us think, are you?
+hero *Ahem.*
 para Heart. Lungs. Liver. Nerves. Heart...
 linebreak
 hero Anyways, like he said, you're not really in control here, are you?
@@ -512,42 +512,42 @@ n I never said I was! If I was in control here, why would I need *you* to slay h
 hero I don't know! Secret reasons?
 p The door is open. What are you dawdling for? It's time for us to go. The world is waiting.
 n Shit. The Princess moves past you and into the cabin. This is it. This is your final moment to make things right. KILL HER.
-hero I thought you wanted us to "slay" her.
+hero *I* thought you wanted us to "slay" her.
 n It's the same thing! Do it! Do it now! Do it now or everything is OVER.
 hero Okay, what do we do?
 hero ... I said, "what do we do?"
 linebreak
 para Oh, do you want to hear from me now?
 hero Yes!
-para Well I thought you needed me to run the autonomic nervous system.
-hero We do, but this is *important!* Look, I'll even do it myself, just tell us who to trust!
-hero Uhhh... brain?
+para Well I thought you needed me to run the autonomic nervous system...
+hero We do, but this is *important!* Look, I'll even do it myself, just... tell us who to trust.
+hero Uhhh... brain...?
 para *Heart*...
 hero Right. Heart.
-para Lungs...
+para *Lungs*...
 hero Lungs...
 para Liver. Nerves.
 hero Okay, thanks. I've got it.
 linebreak
 hero Heart... Lungs... Liver... Nerves... Heart...
-para You're terrible at this.
+para You're *terrible* at this.
 hero I know, but I'm doing my best -- /// interrupt
 linebreak
-para Yes, it's very hard to stay focused on running things when other people are talking to you, isn't it?
+para Yes, it's very hard to stay focused on running things when other people are *talking* to you, *isn't it?*
 p WHAT ARE YOU DOING?!
 hero Heart. Lungs. Liver. Nerves. Heart...
 linebreak
-para Finally, I can talk. Now what were you asking me? Running everything kind of feels like popping in and out of consciousness. It's easy to lose track of things.
+para Finally, I can talk. Uh, now what were you asking me? Running everything kind of feels like... popping in and out of consciousness. It's easy to lose track of things.
 n They were asking you for your blessing to trust me.
-para Oh that's right! Yeah, fuck this guy. Don't trust Him.
+para Oh that's right! Yeah, *fuck* this guy. Don't trust Him.
 n Really? So you'd have them trust *her?*
-para Oh of course not. Can't trust anybody here but ourselves. But I guess that leaves us back where we started, doesn't it?
-para I suppose if I had to make a choice, I'd pick the one that doesn't make our organs shut down.
+para Oh of course not. Can't trust anybody here but ourselves, but... I guess that leaves us back where we started, doesn't it?
+para I suppose if I *had* to make a choice, I'd pick the one that doesn't make our organs shut down.
 n Thank you for your gracious show of support.
 para But that's a marginal preference. We'll have to deal with Him later. I'd just rather deal with Him while our organs are intact.
 n *Sigh.* Whatever. You heard what he had to say. So whether you trust me or not, killing her is still the best, nay, the only option you have worth taking.
 para All right. I'm done. You can let me take over again.
-hero Finally! That was awful. I really don't know how you do it.
+hero Finally! That was *awful.* I really don't know how you do it!
 para Heart. Lungs. Liver. Nerves. Heart...
 p You've been standing there staring blankly for a while now and I have to say my patience is running a little thin. So don't make a lady wait any longer, okay?
 p Open. The. Door.
@@ -559,7 +559,7 @@ hero But we don't. And we've already made our choice.
 linebreak
 para We can still grab it on the way out.
 hero You're not wrong, but maybe you should let me handle the suggestions for the time being. Just focus on keeping us alive.
-para Haha! Right...
+para Hahaha. Right...
 para Heart. Lungs. Liver. Nerves. Heart...
 
 n You step onto the basement stairs, following the Princess as she ascends. Pins and needles punctuate your every step, an uncomfortable and constant reminder of your mortality.
@@ -573,12 +573,12 @@ n Her head twists back in your direction, watching you with dead eyes as the way
 n Don't forget that your pristine blade is still on the other side. You can still make this right. You can still save everyone, and you can still save yourself from becoming her tormented pet.
 linebreak
 para There's no harm in us having a weapon. All it does is give us more options. And we are dangerously low on those right now.
-hero Uh...
-para Have you considered that maybe *you* could operate the autonomic nervous system for a bit? Everyone is trying to manipulate us and I can only do so many things at once to keep us alive.
-hero Er... heart? Erm. Liver?
+hero Um...
+para Have you considered that maybe *you* could operate the autonomic nervous system for a bit? Everyone is trying to manipulate us and I can only do *so many things at once* to keep us alive.
+hero Er... heart? Erm. Liver...?
 n Your body seizes violently as you regain consciousness on the floor of the cabin.
-para No, no no! You're doing it all wrong. You're supposed to do it like this: Heart. Lungs. Liver. Nerves. Heart...
-para I guess I have to do everything around here, don't I?
+para No, no, *no!* You're doing it all wrong! You're supposed to do it like this: Heart. Lungs. Liver. Nerves. Heart...
+para I guess I have to do *everything* around here, don't I?
 para Heart. Lungs. Liver. Nerves. Heart...
 linebreak
 p There we go, back with me where you belong! I thought you might have decided to break yourself just to spite me. It's better for you that you didn't.
@@ -628,14 +628,14 @@ p You're not getting those stairs back. I'll see you when you finally decide to 
 linebreak
 n She falls to the ground, unmoving.
 linebreak
-para Oh, I can stop now, can't I?
-para I can! Finally.
+para Oh. I-I can stop now, can't I?
+para I can! *Sigh.* Finally.
 hero And now that she's gone, you can let us out of here, right?
-para But she was the one who controlled this place, wasn't she? And now she's dead. I don't like to think what that means for us.
+para But she was the one who controlled this place, wasn't she? And now she's dead. I... I don't like to think what that means for us.
 n It means that you're stuck here. Forever.
-hero Oh no. Oh no no no no no. Oh no I hate this!
+hero Oh no. Oh no no no no *no.* Oh no I *hate* this!
 n Time passes.
-hero ... forever's going to end eventually, right?
+hero ... forever's going to... end... eventually, right?
 n No. It won't. That's the whole point of "forever." It doesn't end.
 jumpto slayJoin
 
@@ -646,18 +646,18 @@ n As the two of you fall, you rip your blade from her chest, tightly clutching i
 p Have fun falling forever! I'll see you when you finally decide to die.
 n She tears herself away from you and tumbles away into the darkness.
 n You are alone. And you are falling. Forever. But you saved the world. You should be proud of yourself for seeing this through.
-para Oh, I can stop now, can't I?
-para I can! Finally.
+para Oh. I-I can stop now, can't I?
+para I can! *Sigh.* Finally.
 hero Are, are we really gonna fall forever? Can't you narrate us some stairs out of here?
-para But she was the one who controlled this place, wasn't she? And now she's dead. I don't like to think what that means for us.
+para But she was the one who controlled this place, wasn't she? And now she's dead. I... I don't like to think what that means for us.
 n It means that you're falling. Forever.
-hero Oh no. Oh no no no no no. Oh no I hate this!
+hero Oh no. Oh no no no no *no.* Oh no I *hate* this!
 n You continue to fall.
-hero ... forever's going to end eventually, right?
+hero ... forever's going to... end... eventually, right?
 n No. It won't. That's the whole point of "forever." It doesn't end. You continue to fall, and you will only continue to fall.
 jumpanchor slayJoin
 hero I feel sick.
-para It doesn't have to be forever, though, does it?
+para It doesn't *have* to be forever, though... does it?
 hero ... what do you mean?
 para We still have a way out clutched in our hands.
 hero Are you suggesting we kill ourselves? Won't we be dead? ... I guess that hasn't stopped us before.
@@ -677,7 +677,7 @@ jumpto comeBackJoin
 jumpanchor comeBackSlainNoInsist
 n "Again?" That's unfortunate. You were only supposed to be here once.
 jumpanchor comeBackJoin
-para I don't like the way you said that. You knew this was a possibility, didn't you?
+para I don't like the way you said that. You *knew* this was a possibility, didn't you?
 n Of course I did, though I'd rather hoped I was the first one. That explains a lot though.
 hero Oh, you bastard. How much are you not telling us?
 n Plenty. But it's all in your best interest. And the world's. And mine.
@@ -723,13 +723,13 @@ hero That's a grim thought, innit?
 n But I suppose you're right. You are a creature of biology. Something will happen to you before forever comes along.
 
 jumpanchor biologyWayOutStuck
-para We don't have to starve to death. You have our way out. Use it.
+para We don't *have* to starve to death. You have our way out. Use it.
 
 jumpanchor biologyWayOutFalling
-para We don't have to starve to death falling through an infinite void. You have our way out. Use it.
+para We don't *have* to starve to death falling through an infinite void. You have our way out. Use it.
 
 jumpanchor biologyNoWayOut
-para You really shouldn't have gotten rid of the blade. It was our way out! What were you thinking?
+para You really shouldn't have gotten rid of the blade. It was our way out! What were you *thinking?*
 hero Now now, if we're going to be stuck here until we starve, we really shouldn't be at each other's throats.
 
 jumpanchor stuckSlain
@@ -745,15 +745,15 @@ jumpanchor takeSlain
 n You remove the blade from the Princess' body. What, exactly, are you planning on doing with it?
 
 jumpanchor dropSlain
-hero Oh no, what are you doing?
+hero Oh no, what are you *doing?*
 n You loosen your grip, and the blade tumbles through your open fingers. Now you're really falling forever. There's no way out now.
 
 jumpanchor throwSlain
-hero Oh no, what are you doing?
+hero Oh no, what are you *doing?*
 n You tighten your grip and fling the blade as hard as you can into the void. It's gone. Now you're really stuck here forever. There's no way out now.
 
 jumpanchor bladeGoneBiology
-para You mean other than starving...
+para You mean... other than starving?
 hero Right. I mean other than that.
 
 jumpanchor waitNoBiologyStuck
