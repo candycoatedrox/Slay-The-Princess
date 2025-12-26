@@ -524,6 +524,15 @@ public class Script {
     }
 
     /**
+     * Executes one of two sections of this script, depending on whether the player has the blade or not
+     * @param labelSuffix the suffix of the label to start executing at
+     */
+    public void runSourceSection(String labelSuffix) {
+        this.sourceSwitchJump(labelSuffix);
+        this.runSection();
+    }
+
+    /**
      * Executes this script from the cursor until the given line index
      * @param endIndex the index to stop executing at
      */
@@ -738,14 +747,25 @@ public class Script {
         String[] split = lineContent.split(" ", 2);
 
         String prefix = split[0];
-        String argument;
+        String argument = "";
         String[] args;
+        String modifiers = "";
+        String[] mods;
         try {
             argument = split[1];
+            split = argument.split(" /// ");
+            argument = split[0];
             args = argument.split(" ", 2);
+
+            if (split.length == 1) {
+                mods = new String[0];
+            } else {
+                modifiers = split[1];
+                mods = modifiers.split(" ");
+            }
         } catch (IndexOutOfBoundsException e) {
-            argument = "";
             args = new String[0];
+            mods = new String[0];
         }
 
         boolean cont = true;
@@ -763,18 +783,20 @@ public class Script {
                 break;
 
             case "linebreak":
-                this.lineBreak(argument);
+                if (this.runModifierChecks(mods)) this.lineBreak(argument);
                 break;
 
             case "jumpto":
                 // add "jumpto [label] return"?
-                try {
-                    int jumpTarget = Integer.parseInt(argument);
-                    this.jumpTo(jumpTarget);
-                } catch (NumberFormatException e) {
-                    this.jumpTo(argument);
+                if (this.runModifierChecks(mods)) {
+                   try {
+                        int jumpTarget = Integer.parseInt(argument);
+                        this.jumpTo(jumpTarget);
+                    } catch (NumberFormatException e) {
+                        this.jumpTo(argument);
+                    } 
                 }
-
+                
                 break;
 
             case "firstswitch":
@@ -785,7 +807,7 @@ public class Script {
                     break;
                 }
 
-                this.firstSwitchJump(argument);
+                if (this.runModifierChecks(mods)) this.firstSwitchJump(argument);
                 break;
 
             case "bladeswitch":
@@ -796,41 +818,51 @@ public class Script {
                         break;
 
                     case 1:
-                        this.bladeSwitchJump(argument);
+                        if (this.runModifierChecks(mods)) this.bladeSwitchJump(argument);
                         break;
                     
-                    default: this.bladeSwitchJump(args[0], args[1]);
+                    default: if (this.runModifierChecks(mods)) this.bladeSwitchJump(args[0], args[1]);
                 }
 
                 break;
+
+            case "sourceswitch":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid claim command in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.sourceSwitchJump(argument);
+                break;
             
             case "switchjump":
-                this.boolSwitchJumpTo(argument);
+                if (this.runModifierChecks(mods)) this.boolSwitchJumpTo(argument);
                 break;
             
             case "numswitchjump":
-                this.numSwitchJumpTo(argument, false);
+                if (this.runModifierChecks(mods)) this.numSwitchJumpTo(argument, false);
                 break;
             case "numautojump":
-                this.numSwitchJumpTo(argument, true);
+                if (this.runModifierChecks(mods)) this.numSwitchJumpTo(argument, true);
                 break;
             
             case "stringswitchjump":
-                this.strSwitchJumpTo(argument, false);
+                if (this.runModifierChecks(mods)) this.strSwitchJumpTo(argument, false);
                 break;
             case "stringautojump":
-                this.strSwitchJumpTo(argument, true);
+                if (this.runModifierChecks(mods)) this.strSwitchJumpTo(argument, true);
                 break;
 
             case "nowplaying":
-                manager.setNowPlaying(argument);
+                if (this.runModifierChecks(mods)) manager.setNowPlaying(argument);
                 break;
 
             case "quietcreep":
-                this.quietCreep();
+                if (this.runModifierChecks(mods)) this.quietCreep();
                 break;
             case "claimfold":
-                this.claimFoldLine();
+                if (this.runModifierChecks(mods)) this.claimFoldLine();
                 break;
 
             default:
@@ -846,15 +878,117 @@ public class Script {
     }
 
     /**
+     * Runs the appropriate checks for any modifiers on a given Voice dialogue line
+     * @param modifiers the modifiers to run checks for
+     * @param speaker the Voice this line is spoken by
+     * @return true if all modifier checks pass and the line should be printed; false otherwise
+     */
+    private boolean runModifierChecks(String[] modifiers, Voice speaker) {
+        if (modifiers.length == 0) return true;
+
+        Cycle currentCycle = manager.getCurrentCycle();
+        boolean firstVessel = (currentCycle == null) ? false : currentCycle.isFirstVessel();
+        boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
+        String source = (currentCycle == null) ? "" : currentCycle.getSource();
+
+        HashMap<Voice, Boolean> voiceChecks = new HashMap<>();
+        String[] args;
+        int targetInt;
+
+        for (String m : modifiers) {
+            args = m.split("-");
+
+            if (m.startsWith("checkvoice")) {
+                if (args.length == 1) {
+                    if (speaker != null) voiceChecks.put(speaker, true);
+                } else {
+                    for (String id : args) {
+                        if (Voice.getVoice(id) != null) {
+                            voiceChecks.put(Voice.getVoice(id), true);
+                        }
+                    }
+                }
+            } else if (m.startsWith("checknovoice-")) {
+                for (String id : args) {
+                    if (Voice.getVoice(id) != null) {
+                        voiceChecks.put(Voice.getVoice(id), false);
+                    }
+                }
+            } else if (m.equals("firstvessel")) {
+                if (!firstVessel) return false;
+            } else if (m.equals("notfirstvessel")) {
+                if (firstVessel) return false;
+            } else if (m.equals("hasblade")) {
+                if (!hasBlade) return false;
+            } else if (m.equals("noblade")) {
+                if (hasBlade) return false;
+            } else if (m.startsWith("ifsource-")) {
+                if (!source.equals(args[1])) return false;
+            } else if (m.startsWith("ifsourcenot-")) {
+                if (source.equals(args[1])) return false;
+            } else if (m.equals("check")) {
+                if (!this.boolCondition) return false;
+            } else if (m.equals("checkfalse")) {
+                if (this.boolCondition) return false;
+            } else if (m.startsWith("ifnum")) {
+                if (args.length == 2) {
+                    try {
+                        targetInt = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        targetInt = 0;
+                    }
+                } else {
+                    targetInt = 0;
+                }
+
+                if (this.intCondition != targetInt) return false;
+            } else if (m.startsWith("ifnumnot")) {
+                if (args.length == 2) {
+                    try {
+                        targetInt = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        targetInt = 0;
+                    }
+                } else {
+                    targetInt = 0;
+                }
+
+                if (this.intCondition == targetInt) return false;
+            } else if (m.startsWith("ifstring-")) {
+                if (!strCondition.equals(args[1])) return false;
+            } else if (m.startsWith("ifstringnot-")) {
+                if (strCondition.equals(args[1])) return false;
+            }
+        }
+
+        if (currentCycle != null && !voiceChecks.isEmpty()) {
+            for (Voice checkVoice : voiceChecks.keySet()) {
+                if (parser.getCurrentCycle().hasVoice(checkVoice) != voiceChecks.get(checkVoice)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Runs the appropriate checks for any modifiers on a given line
+     * @param modifiers the modifiers to run checks for
+     * @return true if all modifier checks pass and the line should be run; false otherwise
+     */
+    private boolean runModifierChecks(String[] modifiers) {
+        return this.runModifierChecks(modifiers, null);
+    }
+
+    /**
      * Prints out a given number of line breaks
      * @param argument the number of line breaks to print (or an empty string, resulting in 1 line break)
      */
     private void lineBreak(String argument) {
         try {
             int nBreaks = Integer.parseInt(argument);
-            for (int i = 0; i < nBreaks; i++) {
-                System.out.println();
-            }
+            this.lineBreak(nBreaks);
         } catch (NumberFormatException e) {
             if (argument.equals("")) {
                 System.out.println();
@@ -862,6 +996,16 @@ public class Script {
                 // Invalid line; print error message and skip to next line
                 System.out.println("[DEBUG: Invalid linebreak in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
             }
+        }
+    }
+
+    /**
+     * Prints out a given number of line breaks
+     * @param n the number of line breaks to print
+     */
+    private void lineBreak(int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.println();
         }
     }
 
@@ -922,6 +1066,16 @@ public class Script {
         String labelBlade = (hasBlade) ? "Blade" : "NoBlade";
 
         this.jumpTo(labelPrefix + labelBlade + labelSuffix);
+    }
+
+    /**
+     * Jumps to one of several labels, depending on the "source" of the active chapter
+     * @param labelSuffix the suffix of the label to jump to
+     */
+    private void sourceSwitchJump(String labelSuffix) {
+        Cycle currentCycle = manager.getCurrentCycle();
+        String source = (currentCycle == null) ? "" : currentCycle.getSource();
+        this.jumpTo(source + labelSuffix);
     }
 
     /**
@@ -1031,76 +1185,51 @@ public class Script {
 
         String prefix = split[0];
         String argument = (split.length == 2) ? split[1] : "";
+        String modifiers = "";
 
-        this.printDialogueLine(prefix, argument);
+        if (!argument.isEmpty()) {
+            split = argument.split(" /// ");
+            if (split.length != 1) {
+                argument = split[0];
+                modifiers = split[1];
+            }
+        }
+
+        this.printDialogueLine(prefix, argument, modifiers);
     }
 
     /**
      * Prints out the dialogue line specified by a given character identifier and line
      * @param characterID the ID of the character speaking the line
      * @param arguments the dialogue line itself, as well as any optional modifiers
+     * @param modifiers any modifiers to apply to the line
      */
-    private void printDialogueLine(String characterID, String arguments) {
+    private void printDialogueLine(String characterID, String line, String modifiers) {
+        Voice v = Voice.getVoice(characterID);
         boolean isInterrupted = false;
-        HashMap<Voice, Boolean> voiceChecks = new HashMap<>();
 
-        String[] args = arguments.split(" /// ");
-        String line = args[0];
+        if (!modifiers.isEmpty()) {
+            String[] mods = modifiers.split(" ");
+            if (!this.runModifierChecks(mods, v)) return;
 
-        if (args.length == 2) {
-            String modifiers = args[1];
-            for (String m : modifiers.split(" ")) {
+            for (String m : mods) {
                 if (m.equals("interrupt")) {
                     isInterrupted = true;
-                } else if (m.startsWith("checkvoice")){
-                    String[] checkIDs = m.split("-");
-                    if (checkIDs.length > 1) {
-                        for (String id : checkIDs) {
-                            if (Voice.getVoice(id) != null) voiceChecks.put(Voice.getVoice(id), true);
-                        }
-                    } else {
-                        if (Voice.getVoice(characterID) != null) voiceChecks.put(Voice.getVoice(characterID).checkVoice(), true);
-                    }
-                } else if (m.startsWith("checknovoice")){
-                    String[] checkIDs = m.split("-");
-                    if (checkIDs.length > 1) {
-                        for (String id : checkIDs) {
-                            if (Voice.getVoice(id) != null) voiceChecks.put(Voice.getVoice(id), false);
-                        }
-                    }
                 }
             }
         }
 
-        boolean checkResult = true;
-        Voice v = Voice.getVoice(characterID);
         if (v == null) {
-            if (parser.getCurrentCycle() != null && !voiceChecks.isEmpty()) {
-                for (Voice checkVoice : voiceChecks.keySet()) {
-                    if (parser.getCurrentCycle().hasVoice(checkVoice) != voiceChecks.get(checkVoice)) {
-                        checkResult = false;
-                    }
-                }
-            }
-
             if (characterID.equals("t") || characterID.equals("truth")) {
-                if (checkResult) parser.printDialogueLine(line, isInterrupted);
+                parser.printDialogueLine(line, isInterrupted);
             } else if (characterID.equals("p") || characterID.equals("princess")) {
-                if (checkResult) parser.printDialogueLine(new PrincessDialogueLine(line, isInterrupted));
+                parser.printDialogueLine(new PrincessDialogueLine(line, isInterrupted));
             } else {
                 // Invalid character; print error message and skip to next line
                 System.out.println("[DEBUG: Invalid character ID in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
             }
         } else {
-            if (parser.getCurrentCycle() != null && !voiceChecks.isEmpty()) {
-                for (Voice checkVoice : voiceChecks.keySet()) {
-                    if (parser.getCurrentCycle().hasVoice(checkVoice) != voiceChecks.get(checkVoice)) {
-                        checkResult = false;
-                    }
-                }
-            }
-
-            if (checkResult) parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
+            parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
         }        
     }
 
@@ -1130,7 +1259,7 @@ public class Script {
         return currentDirectory;
     }
 
-    /*
+    
     public static void main(String[] args) {
         GameManager manager = new GameManager();
         IOHandler parser = new IOHandler(manager);
@@ -1149,7 +1278,7 @@ public class Script {
         script.runConditionalSection("strConditionTest", "normal");
         script.runConditionalSection("strConditionTest", "other");
     }
-    */
+    
 
 }
 
@@ -1159,7 +1288,12 @@ public class Script {
 // This is a comment, and will be ignored during execution. //
 Trailing spaces and indentation will also be ignored during execution.
 
-Indentation is usually used to indicate conditional dialogue, i.e. dialogue that only triggers if you have certain Voices.
+Indentation is usually used to indicate conditional lines, e.g. dialogue that only triggers if you have certain Voices.
+
+Including " /// " at the end of the line allows you to toggle additional modifiers for all lines except for comments and labels:
+    regular line /// modA modB ...
+Multiple modifiers  can be used together, separated by spaces.
+All functions share the same modifiers, except for dialogue lines, which also have several unique modifiers.
 
 Different functions a script can perform:
   - linebreak
@@ -1179,6 +1313,9 @@ Different functions a script can perform:
 
   - bladeswitch [prefix]
         Runs the section of the script at the label starting with the given prefix and ending with either "Blade" or "NoBlade", depending on whether the player currently has the blade.
+
+  - sourceswitch [suffix]
+        Runs the section of the script at the label starting with the "source" of the current chapter and ending with the given suffix.
 
   - switchjump [true label] [false label]
         Moves the cursor to the first given label if the boolean condition given in runConditionalSection() is true, or to the second given label if the condition is false (or no condition was given).
@@ -1205,17 +1342,51 @@ Different functions a script can perform:
         The first word specifies the ID of the speaking character, then anything after that is considered the actual dialogue line.
         Including " /// " at the end of the line allows you to toggle additional modifiers for this dialogue line.
 
-        Modifiers:
+        Unique modifiers:
           - checkvoice
                 Checks whether the player has the speaker's voice before printing.
-          - checkvoice-[id]
-                Checks whether the player has the voice specified by the ID before printing.
-                (Multiple voices can be specified, as long as they are separated with hyphens.)
-                (This modifier can be combined with additional checks from checknovoice.)
-          - checknovoice-[id]
-                Checks whether the player does NOT have the voice specified by the ID before printing.
-                (Multiple voices can be specified, as long as they are separated with hyphens.)
-                (This modifier can be combined with additional checks from checkvoice.)
           - interrupt
                 The line is interrupted.
+
+Generic modifiers available for all lines (except comments and labels):
+  - checkvoice-[id]
+        Checks whether the player has the voice specified by the ID before running the line.
+        (Multiple voices can be specified, as long as they are separated with hyphens.)
+  - checknovoice-[id]
+        Checks whether the player does NOT have the voice specified by the ID before running the line.
+        (Multiple voices can be specified, as long as they are separated with hyphens.)
+  
+  - firstvessel
+        Checks whether the player has not yet claimed any vessels before running the line.
+  - notfirstvessel
+        Checks whether the player has already claimed at least one vessel before running the line.
+
+  - hasblade
+        Checks whether the player currently has the blade before running the line.
+  - noblade
+        Checks whether the player currently does not have the blade before running the line.
+        
+  - ifsource-[value]
+        Checks whether the "source" of the active chapter is equal to the given value before running the line.
+  - ifsourcenot-[value]
+        Checks whether the "source" of the active chapter is not equal to the given value before running the line.
+  
+  - check
+        Checks the boolean condition given in runConditionalSection() before running the line.
+  - checkfalse
+        Checks whether the boolean condition given in runConditionalSection() is false before running the line.
+
+  - ifnum
+  - ifnum-[value]
+        Checks whether the int condition given in runConditionalSection() is equal to the given value before running the line.
+        (If no argument is given, the target value defaults to 0.)
+  - ifnumnot
+  - ifnumnot-[value]
+        Checks whether the int condition given in runConditionalSection() is not equal to the given value before running the line.
+        (If no argument is given, the target value defaults to 0.)
+
+  - ifstring-[value]
+        Checks whether the String condition given in runConditionalSection() is equal to the given value before running the line.
+  - ifstringnot-[value]
+        Checks whether the String condition given in runConditionalSection() is not equal to the given value before running the line.
 */

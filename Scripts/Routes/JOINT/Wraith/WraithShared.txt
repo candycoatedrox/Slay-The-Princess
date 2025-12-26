@@ -1,0 +1,114 @@
+n You're on a path in the woods -- /// interrupt
+
+label startPara
+para Shit -- this really doesn't end, does it? It doesn't matter if *we* kill *her,* it doesn't matter if *she* kills *us,* it just goes on, and on, and on, and on, and on.
+
+label startOppo
+oppo We've tried doing it our way, and we've tried doing it His way. I think the only way left is hers.
+hero Are you suggesting we let her out?
+oppo And why shouldn't we? It's obvious she's the one with the real power here. We might as well ingratiate ourselves to our terrifying new overlord.
+n Okay. So you've already been here. More than once, even. Great. So you probably already know all about her and all about the threat she poses to the world.
+n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
+oppo See, it's that last part I'm not so sure about. We've "ended" twice now. We even ended her once, but it didn't matter! Because it still threw us right back into these woods.
+jumpto startParaJoin
+
+label startParaCold
+cold Yes, so it does.
+hero No, there has to be a way out of here. There just has to be.
+stringautojump StartParaCold
+
+label spectreStartParaCold
+cold Does there have to be a way out? For all we know, this is just how things are.
+switchjump startPossessAsked
+hero No. No, I can't accept that. I know she just killed us, but... what if we free her? What if we help her leave? We haven't tried that yet!
+cold That does sound like it could be interesting. Or at least different.
+jumpto startParaSpectreJoin
+
+label startPossessAsked
+hero No. No, I can't accept that. What if we let her take our body? That's what she wanted last time. We can still put all of this to rest, right?
+label startParaSpectreJoin
+para I don't think we can stop her if that's what she wants to do. She ripped our heart out. Who's to say she can't go ahead and steal our body and make us do what she wants?
+jumpto startParaColdJoin
+
+label nightmareStartParaCold
+para What if... we do what she asked us to last time. What if we just let her leave?
+label startParaColdJoin
+n Okay. So you've already been here. More than once, even. Great. So you probably already know all about her and all about the threat she poses to the world.
+n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
+stringautojump StartParaColdThreat
+
+label spectreStartParaColdThreat
+cold Oh, threatening us with death, are we? And why should we be afraid of anything? We've already died twice. It doesn't mean much to us anymore.
+jumpto startParaColdThreatJoin
+
+label nightmareStartParaColdThreat
+cold Oh, threatening us with death, are we? And why should we be afraid of dying? We've already done it twice.
+label startParaColdThreatJoin
+cold All death has done is shunt us back to these woods where we're forced to listen to your empty warnings again and again.
+label startParaJoin
+para This place feels a bit different, though, doesn't it? I don't even know what I'd call it, but it's definitely not the same path in the woods anymore.
+n That's all the more reason to take this seriously. If the path isn't the same, it means that her influence is spreading, and the world has already started to end.
+hero Her "influence...?"
+n I really shouldn't have said that. It'll make your task more difficult... but now it's out, you could always take that information as a sign of good will between us and do your job, all right?
+    oppo Well then, if the world's rushing to an end, that's all the more reason for us to rush over to the cabin and make ourselves useful. It's all about making a good impression. If we're useful, there's a place for us! /// checkvoice
+
+label startCheated
+cold And here we go again. Off to slay her. Again.
+cheated The deck's stacked, isn't it? We kill her, we start again. She kills us as a goddamn ghost, we start again. I'm starting to think we're being run in circles just for the sake of it...
+hero Come on, let's not give in to all that misery just yet. There's got to be a way out of this. There's got to be a right answer.
+cheated And what if there isn't? Aren't you listening to me? What if all of this was rigged from the start?
+hero That's ridiculous, there'd be no point if all this was just some kind of... cosmic busy-work.
+cheated I think that's exactly what it is. The powers that be seeing how many ways they can screw with us. Could be it's all some kind of sick joke to them.
+n Okay. So you've already been here. Twice, even. Great. Then let me poke a few holes in your depressing little theory.
+n Nobody here is "screwing" with you, and I can't imagine any scenario where you would have "started over" after slaying the Princess.
+hero Well... we didn't *have* to start over.
+cold We killed ourself.
+n And *why,* pray tell, did you do *that?*
+cold Because you decided to foist an infinite tedium on us.
+n That doesn't sound like me. If I'd had everything my way, you would have effortlessly slain the Princess, saved the world, and been given your happy ending.
+cold The ending was the tedium. You locked us in a cabin and sent that cabin to an endless void, and then you told us we were happy.
+n Well... were you happy?
+hero Of course we weren't happy! That's why we killed ourself! It was awful!
+cold Yes, and then she killed us.
+cheated Even though she was *already dead!* This is all fake.
+n *Sigh.* Okay. Let's *try* to get back on track. You're real. The Princess is real. The world is real. The *people* in the world are real. And the *danger* she poses to all of them is also, quite unfortunately, real.
+n Whatever you did the first time, it sounds like it almost worked, so how about you give it one last try? Because killing yourself seemed to undo all the good you almost managed to accomplish.
+cold All this standing around and talking is *boring,* let's at least *do something?* Maybe we'll kill her again. Maybe we won't. Maybe we'll even free her.
+
+label helpStart
+n Tell you what! I won't do that. I promise.
+cheated Oh, yeah, sure. That changes everything.
+hero I mean, he did promise...
+cheated And you believed him? Pah.
+
+label loopStart
+    para Suspiciously quick... /// checkvoice
+n If I had to make a wager, I'd say yes and no.
+stringswitchjump LoopStart
+
+label cheatedLoopStart
+cheated That's a hedge, not a wager.
+jumpto loopStartJoin
+
+label paracoldLoopStart
+cold Is that supposed to be a riddle? If it is, it's not very good.
+jumpto loopStartJoin
+
+label oppoLoopStart
+para And what does that mean?
+label loopStartJoin
+n "I" haven't met you, but you've clearly met "me." It sounds to me like you're hopping between parallel realities, in which case the "me" you just met here is the same collection of experiences as the "me" you met at all of those other beginnings, but their continuity breaks the moment you say or do anything, in effect making them all separate.
+n So yes. I'm the same "me," but ever since the moment we started talking, I'm different.
+    cold I'm not sure how we're supposed to kill Him ourself, but He's asking for it. Maybe there's some way she can take care of him for us. /// checkvoice
+    oppo All the more reason to side with *her,* really! It takes a bullshit artist to recognize a bullshit artist, and I'm one of the best in the business. So *trust* me when I say: He's full of it. /// checkvoice
+n They've clearly all been through some harrowing experiences. Don't let their baggage influence your decisions. You have the ability to see things clearly. I suggest you use it.
+
+label letOutStart
+n You're making a dizzying amount of assumptions. Your perceived reality looping twice before does not mean it will continue to do so forever.
+n Those little voices have already drawn attention to the fact that even the path is different. The world itself is at a tipping point.
+n Know that there is always a choice -- even if you were stuck in an "infinite" loop, there's no reason to assume the mere nature of the infinite would force you to make any specific choice. You do have free will, as much as things would be easier if you didn't, and you can just keep making the correct choice forever, never deviating.
+    cheated How convenient, everything always comes back to what you want us to do! I'm sick of Him. Makes me want to end the world out of spite. /// checkvoice
+    oppo Do you see how little authority He has? He's practically just begging us at this point. She at least takes what she wants. She's inspirational, really. /// checkvoice
+    para Everyone is manipulating us. But we're starting to see the threads now. We just have to avoid getting tangled up in them... /// checkvoice
+
+label dontGoStart

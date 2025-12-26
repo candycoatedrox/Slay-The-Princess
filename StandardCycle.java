@@ -96,6 +96,15 @@ public class StandardCycle extends Cycle {
         if (v.isTrueVoice() && v != Voice.HERO) this.voicesMet.add(v);
     }
 
+    /**
+     * Returns the current "source" of the active chapter
+     * @return the current "source" of the active chapter
+     */
+    @Override
+    public String getSource() {
+        return this.source;
+    }
+
     // --- COMMANDS ---
 
     /**
@@ -1192,7 +1201,7 @@ public class StandardCycle extends Cycle {
                     }
                 case "enter":
                     this.repeatActiveMenu = false;
-                    this.cantTryAbort.set(false);
+                    cantTryAbort.set(false);
                     this.withBlade = false;
                     manager.addToPlaylist("The World Ender");
                     return (this.isHarsh) ? this.ch1BasementHarsh(askPrize) : this.ch1BasementSoft();
@@ -1230,7 +1239,7 @@ public class StandardCycle extends Cycle {
      */
     private boolean ch1AttemptStranger(AbstractCondition cantCabin) {
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter 1/StrangerAttempt");
-        this.cantTryAbort.set();
+        cantTryAbort.set();
         secondaryScript.runSection();
 
         OptionsMenu leaveMenu = new OptionsMenu();
@@ -1443,10 +1452,8 @@ public class StandardCycle extends Cycle {
 
         if (jokeKill.check()) {
             secondaryScript.runSection("jokeKillBasement");
-        } else if (lieSave) {
-            secondaryScript.runSection("lieSaveBasement");
         } else if (hereToSave) {
-            secondaryScript.runSection("hereToSaveBasement");
+            secondaryScript.runConditionalSection("hereToSaveBasement", lieSave);
         } else {
             secondaryScript.runSection("genericBasement");
         }
@@ -1549,6 +1556,7 @@ public class StandardCycle extends Cycle {
                     this.whatWouldYouDo = true;
                     secondaryScript.runSection("whatWouldYouDo");
                     secondaryScript.runSection("whatDoA");
+                    break;
 
                 case "compromiseA":
                 case "compromiseB":
@@ -1615,10 +1623,9 @@ public class StandardCycle extends Cycle {
 
                     this.repeatActiveMenu = false;
 
-                    if (jokeKill.check() && !this.knowsDestiny) {
-                        secondaryScript.runSection("retrieveA");
-                    } else if (!this.knowsDestiny) {
-                        secondaryScript.runSection("retrieveB");
+                    if (!this.knowsDestiny) {
+                        if (jokeKill.check()) secondaryScript.runSection("retrieveA");
+                        else secondaryScript.runSection("retrieveB");
                     }
 
                     return this.ch1RetrieveBlade(true);
@@ -4131,7 +4138,7 @@ public class StandardCycle extends Cycle {
                                 case 0: return false;
 
                                 case 1:
-                                    this.cantTryAbort.set();
+                                    cantTryAbort.set();
                                     activeMenu.setGreyedOut("abort", true);
                                     break;
 
@@ -4161,7 +4168,7 @@ public class StandardCycle extends Cycle {
                         case 0: return false;
 
                         case 1:
-                            this.cantTryAbort.set();
+                            cantTryAbort.set();
                             activeMenu.setGreyedOut("abort", true);
                             break;
 
@@ -4236,7 +4243,7 @@ public class StandardCycle extends Cycle {
                         case 0: return false;
 
                         case 1:
-                            this.cantTryAbort.set();
+                            cantTryAbort.set();
                             break;
 
                         case 3:
@@ -4645,7 +4652,7 @@ public class StandardCycle extends Cycle {
      * @return 0 if the player commits to aborting the vessel; 1 if the player cannot attempt to abort the vessel; 2 if the player returns to the cabin at the first menu; 3 otherwise
      */
     private int ch2AttemptAbortVessel() {
-        this.cantTryAbort.set();
+        cantTryAbort.set();
         if (manager.nClaimedVessels() >= 2) {
             parser.printDialogueLine(CANTSTRAY);
             return 1;
@@ -7209,6 +7216,7 @@ public class StandardCycle extends Cycle {
         // You gain the Voice of the Cold
 
         this.isHarsh = false;
+        ch2SpecificA.put("possessAsk", false);
 
         if (!this.chapter2Intro(false, true, true)) {
             return ChapterEnding.ABORTED;
@@ -7851,6 +7859,8 @@ public class StandardCycle extends Cycle {
      * @return 0 if the player decides to ask more questions; 1 if they agree to let the Spectre possess them; 2 otherwise
      */
     private int spectrePossessAsk(Condition noWorldEndExplore, Condition narratorUnconfirmed, boolean shareDied, boolean lateJoin) {
+        ch2SpecificA.put("possessAsk", true);
+
         if (this.isHarsh) {
             if (!lateJoin) mainScript.runSection("possessAskSoftEarlyJoin");
             mainScript.runSection("possessAskSoftJoin");
@@ -8214,6 +8224,86 @@ public class StandardCycle extends Cycle {
                 break;
             default: this.source = "nightmare";
         }
+
+        String voiceCombo;
+        if (ch3Voice == Voice.CHEATED) {
+            voiceCombo = "cheated";
+        } else if (ch3Voice == Voice.OPPORTUNIST) {
+            voiceCombo = "oppo";
+        } else {
+            voiceCombo = "paracold";
+        }
+
+        mainScript.runSection();
+        
+        if (voiceCombo.equals("cheated")) {
+            mainScript.runSection("startCheated");
+        } else {
+            mainScript.runSection("startPara");
+            if (voiceCombo.equals("paracold")) {
+                mainScript.runConditionalSection("startParaCold", ch2SpecificA.get("possessAsk"), this.source);
+            } else {
+                mainScript.runConditionalSection("startOppo", ch2SpecificA.get("possessAsk"), this.source);
+            }
+        }
+
+        boolean loopExplore = false;
+        boolean letOutExplore = false;
+        Condition dontGoExplored = new Condition();
+        InverseCondition noDontGoExplore = dontGoExplored.getInverse();
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "help", "(Explore) And why should we help you? All you're going to do is lock us away forever again.", ch3Voice == Voice.CHEATED));
+        activeMenu.add(new Option(this.manager, "loop", "(Explore) Are you the same Narrator we met on the other loops? You were quick to accept that we've been here before."));
+        activeMenu.add(new Option(this.manager, "letOut", "(Explore) We've killed her and been killed by her, and neither of those things have gone well for us. If we're going to fall through this loop forever, eventually we're going to let her out. We might as well do it now."));
+        activeMenu.add(new Option(this.manager, "dontGo", "(Explore) What happens if we don't go to the cabin? That's another option."));
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin.]"));
+        activeMenu.add(new Option(this.manager, "abortA", this.cantTryAbort, "[Turn around and leave.]", dontGoExplored));
+        activeMenu.add(new Option(this.manager, "abortB", this.cantTryAbort, "There's something else we haven't tried... [Turn around and leave.]", noDontGoExplore));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "help":
+                    mainScript.runSection("helpStart");
+                    break;
+
+                case "loop":
+                    loopExplore = true;
+                    mainScript.runConditionalSection("loopStart", voiceCombo);
+                    break;
+
+                case "letOut":
+                    letOutExplore = true;
+                    mainScript.runConditionalSection("letOutStart", loopExplore, voiceCombo);
+                    break;
+
+                case "dontGo":
+                    break;
+
+                case "cGoHill":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cGoLeave":
+                    if (cantTryAbort.check()) {
+                        parser.printDialogueLine("You have already tried that.");
+                        break;
+                    }
+                case "abortA":
+                case "abortB":
+                    if (!this.canAbort) {
+                        cantTryAbort.set();
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
+
+                    break;
+            }
+        }
+
+        // Proceed to the cabin
 
 
 
@@ -8782,6 +8872,7 @@ public class StandardCycle extends Cycle {
      * @return the Chapter ending reached by the player
      */
     private ChapterEnding nightmareSlay(boolean falling) {
+        ch2SpecificA.put("possessAsk", false);
         mainScript.runSection("slayStart");
 
         if (falling) {
@@ -9008,7 +9099,7 @@ public class StandardCycle extends Cycle {
 
                     this.activeMenu = new OptionsMenu();
                     activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin.]"));
-                    activeMenu.add(new Option(this.manager, "nothing", "[Continue to do nothing.]", 0));
+                    activeMenu.add(new Option(this.manager, "nothing", this.cantTryAbort, "[Continue to do nothing.]", 0));
 
                     while (repeatActiveMenu) {
                         this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -9020,7 +9111,7 @@ public class StandardCycle extends Cycle {
 
                             case "nothing":
                                 if (!this.canAbort) {
-                                    activeMenu.setGreyedOut("nothing", true);
+                                    cantTryAbort.set();
                                     parser.printDialogueLine(CANTSTRAY);
                                     break;
                                 }
@@ -11846,7 +11937,7 @@ public class StandardCycle extends Cycle {
 
                 case "abort":
                     if (manager.nClaimedVessels() >= 2) {
-                        this.cantTryAbort.set();
+                        cantTryAbort.set();
                         activeMenu.setGreyedOut("abort", true);
                         parser.printDialogueLine(CANTSTRAY);
                         break;
@@ -13274,7 +13365,7 @@ public class StandardCycle extends Cycle {
                     }
                 case "abort":
                     if (manager.nClaimedVessels() >= 2) {
-                        this.cantTryAbort.set();
+                        cantTryAbort.set();
                         parser.printDialogueLine(CANTSTRAY);
                         break;
                     }

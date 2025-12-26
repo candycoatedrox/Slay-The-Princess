@@ -251,8 +251,8 @@ public enum Chapter {
             // Chapter IV
             case MUTUALLYASSURED: return "dismemberment; self-dismemberment; unreality; suicide; excessive gore";
             case EMPTYCUP: return "dismemberment; self-dismemberment; unreality; suicide; excessive gore";
-        }
 
-        return "";
+            default: return "";
+        }
     }
 }

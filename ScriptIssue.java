@@ -10,9 +10,16 @@ public class ScriptIssue extends ScriptNote {
         - 1 = argument given where none needed
             - 0 = quietcreep
             - 1 = claimfold
-        - 2 = duplicate dialogue line modifier
-            - 0 = duplicate overall modifier, check extraInfo
-            - 1 = duplicate modifier argument, check extraInfo
+        - 2 = modifier(s) given for function that doesn't use them
+            - 0 = label
+            - 1 = other
+        - 3 = duplicate in modifiers
+            - 0 = duplicate modifier(s), check extraInfo
+            - 1 = duplicate modifier argument(s), check extraInfo
+        - 4 = redundant modifier(s) (with different values)
+            - 0 = ifsource and ifsourcenot
+            - 1 = ifnum and ifnumnot
+            - 2 = ifstring and ifstringnot
     */
 
     // --- CONSTRUCTORS ---
@@ -141,14 +148,40 @@ public class ScriptIssue extends ScriptNote {
                 break;
             
             case 2:
-                s += "Duplicate dialogue line modifier (";
+                s += "Unnecessary modifier(s) given for ";
                 switch (this.subtype) {
                     case 0:
-                        s += "duplicate modifier(s) " + this.extraList() + ")";
+                        s += "label";
                         break;
                         
                     case 1:
-                        s += "duplicate modifier argument(s) " + this.extraList() + ")";
+                        s += "skipped line";
+                        break;
+                }
+                break;
+            
+            case 3:
+                s += "Duplicate modifier";
+                switch (this.subtype) {
+                    case 0:
+                        s += "(s) (" + this.extraList() + ")";
+                        break;
+                        
+                    case 1:
+                        s += " argument(s) (" + this.extraList() + ")";
+                        break;
+                }
+                break;
+            
+            case 4:
+                s += "Redundant modifiers (";
+                switch (this.subtype) {
+                    case 0:
+                        s += "ifnum and ifnumnot with different values)";
+                        break;
+                        
+                    case 1:
+                        s += "ifstring and ifstringnot with different values)";
                         break;
                 }
                 break;

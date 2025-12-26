@@ -115,6 +115,14 @@ public abstract class Cycle {
         return this.hasBlade;
     }
 
+    /**
+     * Returns the current "source" of the active chapter
+     * @return the current "source" of the active chapter
+     */
+    public String getSource() {
+        return "";
+    }
+
     // --- COMMANDS ---
 
     /**

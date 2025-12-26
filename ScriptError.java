@@ -8,11 +8,16 @@ public class ScriptError extends ScriptNote {
         - 2 = invalid jumpto
             - 0 = line index too large
             - 1 = given label does not exist
-        - 3 = invalid firstswitch / bladeswitch
+        - 3 = invalid firstswitch / bladeswitch / sourceswitch
             - 0 = firstswitch (no prefix given)
-            - 1 = firstswitch (one or both labels do not exist, check extra)
-            - 2 = bladeswitch (no prefix given)
-            - 3 = bladeswitch (one or both labels do not exist, check extra)
+            - 1 = firstswitch (2+ arguments given)
+            - 2 = firstswitch (one or both labels do not exist, check extra)
+            - 3 = bladeswitch (no prefix given)
+            - 4 = bladeswitch (3+ arguments given)
+            - 5 = bladeswitch (one or both labels do not exist, check extra)
+            - 6 = sourceswitch (no suffix given)
+            - 7 = sourceswitch (2+ arguments given)
+            - 8 = sourceswitch (no labels with suffix exist)
         - 4 = invalid condition switch jump
             - 0 = switchjump (no labels given)
             - 1 = switchjump (one or both labels do not exist, check extra)
@@ -25,18 +30,35 @@ public class ScriptError extends ScriptNote {
             - 8 = numautojump (no prefix given)
             - 9 = stringautojump (no suffix given)
         - 5 = invalid nowplaying (no argument given)
-        - 6 = invalid dialogue line modifiers
+        - 6 = invalid modifier(s)
             - 0 = multiple modifier dividers (///)
             - 1 = modifier divider but no modifiers
             - 2 = completely invalid modifier
-            - 3 = invalid syntax for checkvoice
+            - 3 = invalid syntax for modifier
             - 4 = checkvoice used without argument for truth / princess
-            - 5 = one or more invalid arguments for checkvoice, check extra
-            - 6 = invalid syntax for checknovoice
-            - 7 = checknovoice used with id for speaker (impossible line)
-            - 8 = one or more invalid arguments for checknovoice, check extra
-            - 9 = same argument used for both checkvoice and checknovoice (impossible line)
-            - 10 = interrupt attempted with argument
+            - 5 = one or more invalid arguments for checkvoice or checknovoice, check extraInfo
+            - 6 = firstvessel, hasblade, check, or negative counterparts attempted with argument, check extraInfo
+            - 7 = more than 1 argument given for ifsource, ifnum, ifstring, or negative counterparts, check extraInfo
+            - 8 = invalid argument for ifnum or ifnumnot (non-integer), check extraInfo
+            - 9 = no argument given for ifsource, ifstring, or negative counterparts, check extraInfo
+            - 10 = interrupt used for non-dialogue line
+            - 11 = interrupt attempted with argument
+        - 7 = conflicting modifiers
+            - 0 = firstvessel & notfirstvessel
+            - 1 = firstvessel or notfirstvessel used for firstswitch, check extraInfo
+            - 2 = hasblade & noblade
+            - 3 = hasblade or noblade used for bladeswitch, check extraInfo
+            - 4 = ifsource & ifsourcenot with same value
+            - 5 = ifsource or ifsourcenot used for sourceswitch, check extraInfo
+            - 6 = check & checkfalse
+            - 7 = check or checkfalse used for switchjump, check extraInfo
+            - 8 = ifnum & ifnumnot with same value
+            - 9 = ifnum or ifnumnot used for numswitchjump, check extraInfoextraInfo
+            - 10 = ifstring & ifstringnot with same value
+            - 11 = ifstring or ifstringnot used for stringswitchjump, check 
+            - 12 = multiple ifsource, ifnum, ifstring, or negative counterparts checks (different targets)
+            - 13 = same argument used for both checkvoice and checknovoice, check extraInfo
+            - 14 = checknovoice used with id for speaker
     */
 
     // --- CONSTRUCTORS ---
@@ -156,17 +178,37 @@ public class ScriptError extends ScriptNote {
                     case 0:
                         s += "firstswitch (no prefix given)";
                         break;
-                        
+
                     case 1:
-                        s += "firstswitch (label(s) " + this.extraList() + " do not exist in script)";
+                        s += "firstswitch (2+ arguments given)";
                         break;
                         
                     case 2:
-                        s += "bladeswitch (no prefix given)";
+                        s += "firstswitch (label(s) " + this.extraList() + " do not exist in script)";
                         break;
                         
                     case 3:
+                        s += "bladeswitch (no prefix given)";
+                        break;
+
+                    case 4:
+                        s += "bladeswitch (3+ arguments given)";
+                        break;
+                        
+                    case 5:
                         s += "bladeswitch (label(s) " + this.extraList() + " do not exist in script)";
+                        break;
+                        
+                    case 6:
+                        s += "sourceswitch (no suffix given)";
+                        break;
+
+                    case 7:
+                        s += "sourceswitch (2+ arguments given)";
+                        break;
+                        
+                    case 8:
+                        s += "sourceswitch (no labels ending in suffix " + this.extraInfo[0] + " exist in script)";
                         break;
                 }
                 break;
@@ -221,7 +263,7 @@ public class ScriptError extends ScriptNote {
                 break;
             
             case 6:
-                s += "Invalid dialogue line modifier (";
+                s += "Invalid modifier (";
                 switch (this.subtype) {
                     case 0:
                         s += "multiple modifier dividers)";
@@ -236,7 +278,7 @@ public class ScriptError extends ScriptNote {
                         break;
 
                     case 3:
-                        s += "checkvoice with invalid syntax)";
+                        s += this.extraInfo[0] + " with invalid syntax)";
                         break;
                         
                     case 4:
@@ -244,27 +286,96 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 5:
-                        s += "invalid argument(s) " + this.extraList() + " for checkvoice)";
+                        s += "invalid argument(s) " + this.extraList() + " for checkvoice or checknovoice)";
                         break;
-
+                        
                     case 6:
-                        s += "checkvoice with invalid syntax)";
+                        s += this.extraInfo[0] + " used with argument)";
                         break;
                         
                     case 7:
-                        s += "checknovoice used with same id as speaker " + this.extraInfo[0] + " -- IMPOSSIBLE LINE)";
+                        s += "more than 1 argument given for " + this.extraInfo[0] + ")";
                         break;
                         
                     case 8:
-                        s += "invalid argument(s) " + this.extraList() + " for checknovoice)";
+                        s += "non-integer argument for " + this.extraInfo[0] + ")";
                         break;
                         
                     case 9:
-                        s += "same argument(s) " + this.extraList() + " used for both checkvoice and checknovoice -- IMPOSSIBLE LINE)";
+                        s += "no argument given for " + this.extraInfo[0] + ")";
                         break;
                         
                     case 10:
+                        s += "interrupt used for non-dialogue line)";
+                        break;
+                        
+                    case 11:
                         s += "interrupt used with argument)";
+                        break;
+                }
+                break;
+            
+            case 7:
+                s += "IMPOSSIBLE LINE -- Conflicting modifiers (";
+                switch (this.subtype) {
+                    case 0:
+                        s += "firstvessel & notfirstvessel)";
+                        break;
+
+                    case 1:
+                        s += this.extraInfo[0] + " used for firstswitch)";
+                        break;
+
+                    case 2:
+                        s += "hasblade & noblade)";
+                        break;
+
+                    case 3:
+                        s += this.extraInfo[0] + " used for bladeswitch)";
+                        break;
+                        
+                    case 4:
+                        s += "ifsource & ifsourcenot used with same value(s) " + this.extraList() + ")";
+                        break;
+                        
+                    case 5:
+                        s += this.extraInfo[0] + " used for sourceswitch)";
+                        break;
+                        
+                    case 6:
+                        s += "check & checkfalse)";
+                        break;
+                        
+                    case 7:
+                        s += this.extraInfo[0] + " used for switchjump)";
+                        break;
+                        
+                    case 8:
+                        s += "ifnum & ifnumnot used with same value(s) " + this.extraList() + ")";
+                        break;
+
+                    case 9:
+                        s += this.extraInfo[0] + " used for numswitchjump)";
+                        break;
+                        
+                    case 10:
+                        s += "ifstring & ifstringnot used with same value(s) " + this.extraList() + ")";
+                        break;
+                        
+                    case 11:
+                        s += this.extraInfo[0] + " used for stringswitchjump)";
+                        break;
+                        
+                    case 12:
+                        s += "multiple " + this.extraInfo[0] + " checks for different values)";
+                        break;
+                        
+                    case 13:
+                        s += "same argument(s) " + this.extraList() + " used for both checkvoice and checknovoice)";
+                        break;
+                        
+                    case 14:
+                        s += "checknovoice used with same id as speaker " + this.extraInfo[0] + ")";
                         break;
                 }
                 break;

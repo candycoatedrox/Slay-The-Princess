@@ -48,11 +48,10 @@ p H-hi. You were joking about coming here to kill me, right? D-do you think you 
 label hereToSaveBasement
 p Hi! I can't believe you're here, I've been waiting for something like this to happen *forever.*
 p ... I hope you brought something to deal with these chains.
+switchjump lieSaveBasement
 n Don't do it. If she gets out of those chains we're all one step closer to The End.
 
 label lieSaveBasement
-p Hi! I can't believe you're here, I've been waiting for something like this to happen *forever.*
-p ... I hope you brought something to deal with these chains.
 n You were lying when you said you were here to rescue her, but regardless of your intentions, breaking her out of those chains would be a big mistake. Don't even try it.
 
 label genericBasement
