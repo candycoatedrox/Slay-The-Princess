@@ -1,6 +1,7 @@
+import java.io.Closeable;
 import java.util.Scanner;
 
-public class IOHandler {
+public class IOHandler implements Closeable {
     
     private final GameManager manager;
     private final Scanner input;
@@ -17,8 +18,8 @@ public class IOHandler {
      * @param manager the GameManager to link this IOHandler to
      */
     public IOHandler(GameManager manager) {
-        this.input = new Scanner(System.in);
         this.manager = manager;
+        this.input = new Scanner(System.in);
     }
 
     // --- ACCESSORS ---
@@ -571,7 +572,8 @@ public class IOHandler {
     /**
      * Closes the Scanner being used for input
      */
-    public void closeInput() {
+    @Override
+    public void close() {
         this.input.close();
     }
 

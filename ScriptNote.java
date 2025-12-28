@@ -85,15 +85,24 @@ public abstract class ScriptNote {
      * Returns all included extra information formatted as a list
      * @return all included extra information, formatted as a list
      */
-    protected String extraList() {
-        if (extraInfo.length == 0) return "";
+    protected String extraList(boolean skipFirst) {
+        int startIndex = (skipFirst) ? 1 : 0;
+        if (extraInfo.length <= startIndex) return "";
 
-        String s = this.extraInfo[0];
-        for (int i = 1; i < this.extraInfo.length; i++) {
+        String s = this.extraInfo[startIndex];
+        for (int i = startIndex; i < extraInfo.length; i++) {
             s += ", ";
             s += this.extraInfo[i];
         }
         return s;
+    }
+
+    /**
+     * Returns all included extra information formatted as a list
+     * @return all included extra information, formatted as a list
+     */
+    protected String extraList() {
+        return this.extraList(false);
     }
 
     /**

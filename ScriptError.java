@@ -4,21 +4,25 @@ public class ScriptError extends ScriptNote {
     
     /* --- TYPE KEY ---
         - 0 = invalid line
-        - 1 = invalid linebreak (non-int argument)
-        - 2 = invalid jumpto
+        - 1 = invalid linebreak / pause
+            - 0 = one or more non-integer argument(s), check extraInfo
+            - 1 = one or more negative argument(s), check extraInfo
+            - 2 = no argument given for pause
+            - 3 = 3+ arguments given for pause
+        - 2 = invalid break
+            - 0 = attempted with argument
+            - 1 = no (valid) modifiers
+        - 3 = invalid jumpto
             - 0 = line index too large
             - 1 = given label does not exist
-        - 3 = invalid firstswitch / bladeswitch / sourceswitch
-            - 0 = firstswitch (no prefix given)
-            - 1 = firstswitch (2+ arguments given)
-            - 2 = firstswitch (one or both labels do not exist, check extra)
-            - 3 = bladeswitch (no prefix given)
-            - 4 = bladeswitch (3+ arguments given)
-            - 5 = bladeswitch (one or both labels do not exist, check extra)
-            - 6 = sourceswitch (no suffix given)
-            - 7 = sourceswitch (2+ arguments given)
-            - 8 = sourceswitch (no labels with suffix exist)
-        - 4 = invalid condition switch jump
+        - 4 = invalid autoswitch
+            - 0 = no prefix given
+            - 1 = 2+ arguments given (firstswitch, moodswitch, sourceswitch)
+            - 2 = 3+ arguments given (bladeswitch)
+            - 3 = one or both labels do not exist, check extraInfo
+            - 4 = sourceswitch (no suffix given)
+            - 5 = sourceswitch (no labels with suffix exist)
+        - 5 = invalid condition switch jump
             - 0 = switchjump (no labels given)
             - 1 = switchjump (one or both labels do not exist, check extra)
             - 2 = numswitchjump (no labels given)
@@ -29,36 +33,30 @@ public class ScriptError extends ScriptNote {
             - 7 = stringswitchjump (one or more labels do not exist, check extra)
             - 8 = numautojump (no prefix given)
             - 9 = stringautojump (no suffix given)
-        - 5 = invalid nowplaying (no argument given)
-        - 6 = invalid modifier(s)
+        - 6 = invalid nowplaying (no argument given)
+        - 7 = invalid modifier(s)
             - 0 = multiple modifier dividers (///)
             - 1 = modifier divider but no modifiers
             - 2 = completely invalid modifier
             - 3 = invalid syntax for modifier
             - 4 = checkvoice used without argument for truth / princess
             - 5 = one or more invalid arguments for checkvoice or checknovoice, check extraInfo
-            - 6 = firstvessel, hasblade, check, or negative counterparts attempted with argument, check extraInfo
+            - 6 = firstvessel, hasblade, sharedloop, sharedinsist, mirrorask, mirrortouch, mirror2, harsh, knowledge, check, or negative counterparts attempted with argument, check extraInfo
             - 7 = more than 1 argument given for ifsource, ifnum, ifstring, or negative counterparts, check extraInfo
             - 8 = invalid argument for ifnum or ifnumnot (non-integer), check extraInfo
             - 9 = no argument given for ifsource, ifstring, or negative counterparts, check extraInfo
             - 10 = interrupt used for non-dialogue line
             - 11 = interrupt attempted with argument
-        - 7 = conflicting modifiers
-            - 0 = firstvessel & notfirstvessel
-            - 1 = firstvessel or notfirstvessel used for firstswitch, check extraInfo
-            - 2 = hasblade & noblade
-            - 3 = hasblade or noblade used for bladeswitch, check extraInfo
-            - 4 = ifsource & ifsourcenot with same value
-            - 5 = ifsource or ifsourcenot used for sourceswitch, check extraInfo
-            - 6 = check & checkfalse
-            - 7 = check or checkfalse used for switchjump, check extraInfo
-            - 8 = ifnum & ifnumnot with same value
-            - 9 = ifnum or ifnumnot used for numswitchjump, check extraInfoextraInfo
-            - 10 = ifstring & ifstringnot with same value
-            - 11 = ifstring or ifstringnot used for stringswitchjump, check 
-            - 12 = multiple ifsource, ifnum, ifstring, or negative counterparts checks (different targets)
-            - 13 = same argument used for both checkvoice and checknovoice, check extraInfo
-            - 14 = checknovoice used with id for speaker
+        - 8 = conflicting modifiers
+            - 0 = firstvessel, hasblade, sharedloop, sharedinsist, mirrorask, mirrortouch, mirror2, harsh, knowledge, or check used with negative counterpart, check extraInfo
+            - 1 = firstvessel, hasblade, ifsource, harsh, or negative counterparts used for corresponding autoswitch, check extraInfo
+            - 2 = check, ifnum, ifstring, or negative counterparts used for corresponding switchjump, check extraInfo
+            - 3 = ifsource & ifsourcenot with same value
+            - 4 = ifnum & ifnumnot with same value
+            - 5 = ifstring & ifstringnot with same value
+            - 6 = multiple ifsource, ifnum, ifstring, or negative counterparts checks (different targets)
+            - 7 = same argument used for both checkvoice and checknovoice, check extraInfo
+            - 8 = checknovoice used with id for speaker
     */
 
     // --- CONSTRUCTORS ---
@@ -156,10 +154,42 @@ public class ScriptError extends ScriptNote {
 
         switch (this.type) {
             case 1:
-                s += "Invalid linebreak (non-integer argument in place of number of lines)";
+                s += "Invalid ";
+                switch (this.subtype) {
+                    case 0:
+                        s += this.extraInfo[0];
+                        s += " (non-integer argument(s))";
+                        break;
+
+                    case 1:
+                        s += this.extraInfo[0];
+                        s += " (negative argument(s))";
+                        break;
+                        
+                    case 2:
+                        s += "pause (no arguments given)";
+                        break;
+                        
+                    case 3:
+                        s += "pause (3 or more arguments given)";
+                        break;
+                }
+                break;
+
+            case 2:
+                s += "Invalid break (";
+                switch (this.subtype) {
+                    case 0:
+                        s += "attempted with argument)";
+                        break;
+                        
+                    case 1:
+                        s += "used without valid modifiers)";
+                        break;
+                }
                 break;
             
-            case 2:
+            case 3:
                 s += "Invalid jumpto (";
                 switch (this.subtype) {
                     case 0:
@@ -167,48 +197,9 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 1:
-                        s += "given label " + this.extraInfo[0] + " does not exist in script)";
-                        break;
-                }
-                break;
-            
-            case 3:
-                s += "Invalid ";
-                switch (this.subtype) {
-                    case 0:
-                        s += "firstswitch (no prefix given)";
-                        break;
-
-                    case 1:
-                        s += "firstswitch (2+ arguments given)";
-                        break;
-                        
-                    case 2:
-                        s += "firstswitch (label(s) " + this.extraList() + " do not exist in script)";
-                        break;
-                        
-                    case 3:
-                        s += "bladeswitch (no prefix given)";
-                        break;
-
-                    case 4:
-                        s += "bladeswitch (3+ arguments given)";
-                        break;
-                        
-                    case 5:
-                        s += "bladeswitch (label(s) " + this.extraList() + " do not exist in script)";
-                        break;
-                        
-                    case 6:
-                        s += "sourceswitch (no suffix given)";
-                        break;
-
-                    case 7:
-                        s += "sourceswitch (2+ arguments given)";
-                        break;
-                        
-                    case 8:
-                        s += "sourceswitch (no labels ending in suffix " + this.extraInfo[0] + " exist in script)";
+                        s += "given label ";
+                        s += this.extraInfo[0];
+                        s += " does not exist in script)";
                         break;
                 }
                 break;
@@ -217,11 +208,49 @@ public class ScriptError extends ScriptNote {
                 s += "Invalid ";
                 switch (this.subtype) {
                     case 0:
+                        s += this.extraInfo[0];
+                        s += " (no prefix given)";
+                        break;
+
+                    case 1:
+                        s += this.extraInfo[0];
+                        s += " (2+ arguments given)";
+                        break;
+
+                    case 2:
+                        s += "bladeswitch (3+ arguments given)";
+                        break;
+                        
+                    case 3:
+                        s += this.extraInfo[0];
+                        s += " (label(s) ";
+                        s += this.extraList(true);
+                        s += " do not exist in script)";
+                        break;
+                        
+                    case 4:
+                        s += "sourceswitch (no suffix given)";
+                        break;
+
+                    case 5:
+                        s += "sourceswitch (no labels ending in suffix ";
+                        s += this.extraInfo[0];
+                        s += " exist in script)";
+                        break;
+                }
+                break;
+            
+            case 5:
+                s += "Invalid ";
+                switch (this.subtype) {
+                    case 0:
                         s += "switchjump (no labels given)";
                         break;
                         
                     case 1:
-                        s += "switchjump (label(s) " + this.extraList() + " do not exist in script)";
+                        s += "switchjump (label(s) ";
+                        s += this.extraList();
+                        s += " do not exist in script)";
                         break;
                         
                     case 2:
@@ -229,7 +258,9 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 3:
-                        s += "numswitchjump (label(s) " + this.extraList() + " do not exist in script)";
+                        s += "numswitchjump (label(s) ";
+                        s += this.extraList();
+                        s += " do not exist in script)";
                         break;
                         
                     case 4:
@@ -245,7 +276,9 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 7:
-                        s += "stringswitchjump (label(s) " + this.extraList() + " do not exist in script)";
+                        s += "stringswitchjump (label(s) ";
+                        s += this.extraList();
+                        s += " do not exist in script)";
                         break;
 
                     case 8:
@@ -258,11 +291,11 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 5:
+            case 6:
                 s += "Invalid nowplaying (no argument given)";
                 break;
             
-            case 6:
+            case 7:
                 s += "Invalid modifier (";
                 switch (this.subtype) {
                     case 0:
@@ -278,7 +311,8 @@ public class ScriptError extends ScriptNote {
                         break;
 
                     case 3:
-                        s += this.extraInfo[0] + " with invalid syntax)";
+                        s += this.extraInfo[0];
+                        s += " with invalid syntax)";
                         break;
                         
                     case 4:
@@ -286,23 +320,32 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 5:
-                        s += "invalid argument(s) " + this.extraList() + " for checkvoice or checknovoice)";
+                        s += "invalid argument(s) ";
+                        s += this.extraList();
+                        s += " for checkvoice or checknovoice)";
                         break;
                         
                     case 6:
-                        s += this.extraInfo[0] + " used with argument)";
+                        s += this.extraInfo[0];
+                        s += " used with argument)";
                         break;
                         
                     case 7:
-                        s += "more than 1 argument given for " + this.extraInfo[0] + ")";
+                        s += "more than 1 argument given for ";
+                        s += this.extraInfo[0];
+                        s += ")";
                         break;
                         
                     case 8:
-                        s += "non-integer argument for " + this.extraInfo[0] + ")";
+                        s += "non-integer argument for ";
+                        s += this.extraInfo[0];
+                        s += ")";
                         break;
                         
                     case 9:
-                        s += "no argument given for " + this.extraInfo[0] + ")";
+                        s += "no argument given for ";
+                        s += this.extraInfo[0];
+                        s += ")";
                         break;
                         
                     case 10:
@@ -315,67 +358,62 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 7:
+            case 8:
                 s += "IMPOSSIBLE LINE -- Conflicting modifiers (";
                 switch (this.subtype) {
-                    case 0:
-                        s += "firstvessel & notfirstvessel)";
+                    case 0: // used with negative counterpart
+                        s += this.extraInfo[0];
+                        s += ")";
                         break;
 
-                    case 1:
-                        s += this.extraInfo[0] + " used for firstswitch)";
+                    case 1: // attribute switches
+                        s += this.extraInfo[0];
+                        s += " used for ";
+                        s += this.extraInfo[1];
+                        s += ")";
                         break;
 
-                    case 2:
-                        s += "hasblade & noblade)";
+                    case 2: // condition switchjumps
+                        s += this.extraInfo[0];
+                        s += " used for ";
+                        s += this.extraInfo[1];
+                        s += ")";
                         break;
-
+                        
                     case 3:
-                        s += this.extraInfo[0] + " used for bladeswitch)";
+                        s += "ifsource & ifsourcenot used with same value(s) ";
+                        s += this.extraList();
+                        s += ")";
                         break;
                         
                     case 4:
-                        s += "ifsource & ifsourcenot used with same value(s) " + this.extraList() + ")";
+                        s += "ifnum & ifnumnot used with same value(s) ";
+                        s += this.extraList();
+                        s += ")";
                         break;
                         
                     case 5:
-                        s += this.extraInfo[0] + " used for sourceswitch)";
+                        s += "ifstring & ifstringnot used with same value(s) ";
+                        s += this.extraList();
+                        s += ")";
                         break;
                         
                     case 6:
-                        s += "check & checkfalse)";
+                        s += "multiple ";
+                        s += this.extraInfo[0];
+                        s += " checks for different values)";
                         break;
                         
                     case 7:
-                        s += this.extraInfo[0] + " used for switchjump)";
+                        s += "same argument(s) ";
+                        s += this.extraList();
+                        s += " used for both checkvoice and checknovoice)";
                         break;
                         
                     case 8:
-                        s += "ifnum & ifnumnot used with same value(s) " + this.extraList() + ")";
-                        break;
-
-                    case 9:
-                        s += this.extraInfo[0] + " used for numswitchjump)";
-                        break;
-                        
-                    case 10:
-                        s += "ifstring & ifstringnot used with same value(s) " + this.extraList() + ")";
-                        break;
-                        
-                    case 11:
-                        s += this.extraInfo[0] + " used for stringswitchjump)";
-                        break;
-                        
-                    case 12:
-                        s += "multiple " + this.extraInfo[0] + " checks for different values)";
-                        break;
-                        
-                    case 13:
-                        s += "same argument(s) " + this.extraList() + " used for both checkvoice and checknovoice)";
-                        break;
-                        
-                    case 14:
-                        s += "checknovoice used with same id as speaker " + this.extraInfo[0] + ")";
+                        s += "checknovoice used with same id as speaker ";
+                        s += this.extraInfo[0];
+                        s += ")";
                         break;
                 }
                 break;

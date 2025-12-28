@@ -12,7 +12,7 @@ public enum Chapter {
     RAZOR(2, "The Razor", "Routes/Razor/Razor2"),
     BEAST(2, "The Beast", "Routes/Beast/BeastShared"),
     WITCH(2, "The Witch", "Routes/Witch/WitchShared"),
-    STRANGER(2, "The Stranger", "Routes/Stranger/StrangerIntro"),
+    STRANGER(2, "The Stranger", "Routes/Stranger/StrangerShared"),
     PRISONER(2, "The Prisoner", "Routes/Prisoner/PrisonerShared"),
     DAMSEL(2, "The Damsel", "Routes/Damsel/DamselShared"),
 
@@ -60,7 +60,7 @@ public enum Chapter {
         this.specialTitle = specialTitle;
         this.number = number;
         this.title = title;
-        this.scriptFile = Script.getFromDirectory(scriptDirectory);
+        this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
 
         this.prefix = "Chapter ";
         switch(number) {
@@ -88,7 +88,7 @@ public enum Chapter {
         this.specialTitle = false;
         this.number = number;
         this.title = title;
-        this.scriptFile = Script.getFromDirectory(scriptDirectory);
+        this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
 
         this.prefix = "Chapter ";
         switch(number) {
@@ -118,7 +118,7 @@ public enum Chapter {
         this.prefix = specialPrefix;
         this.title = title;
         this.specialTitle = false;
-        this.scriptFile = Script.getFromDirectory(scriptDirectory);
+        this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
     }
 
     /**
@@ -131,7 +131,7 @@ public enum Chapter {
         this.number = 0;
         this.prefix = "";
         this.title = title;
-        this.scriptFile = Script.getFromDirectory(scriptDirectory);
+        this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
     }
 
     // --- ACCESSORS & CHECKS ---
@@ -254,5 +254,18 @@ public enum Chapter {
 
             default: return "";
         }
+    }
+
+    /**
+     * Returns the Chapter with the given title
+     * @param title the title of the Chapter
+     * @return the Chapter with the given title
+     */
+    public static Chapter getChapter(String title) {
+        for (Chapter c : values()) {
+            if (c.title.equals(title)) return c;
+        }
+
+        return null;
     }
 }

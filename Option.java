@@ -329,6 +329,86 @@ public class Option {
      * Constructor
      * @param manager the GameManager to link this Option to
      * @param id the shorthand ID of the Option
+     * @param greyCondition a Condition that must be met for the Option to be greyed out
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     * @param conditions an array of Conditions that must be met for the Option to be available
+     */
+    public Option(GameManager manager, String id, AbstractCondition greyCondition, String display, Chapter leadsToChapter, boolean conditionMet, AbstractCondition... conditions) {
+        this(manager, id, display, 1, greyCondition, null, leadsToChapter, conditionMet, conditions);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyedOut whether the Option is initially greyed out or not
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     * @param conditions an array of Conditions that must be met for the Option to be available
+     */
+    public Option(GameManager manager, String id, boolean greyedOut, String display, Chapter leadsToChapter, boolean conditionMet, AbstractCondition... conditions) {
+        this(manager, id, display, 1, greyedOut, null, leadsToChapter, conditionMet, conditions);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyCondition a Condition that must be met for the Option to be greyed out
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     */
+    public Option(GameManager manager, String id, AbstractCondition greyCondition, String display, Chapter leadsToChapter, boolean conditionMet) {
+        this(manager, id, display, 1, greyCondition, null, leadsToChapter, conditionMet);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyedOut whether the Option is initially greyed out or not
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditionMet whether other conditions necessary for the Option to be available are met
+     */
+    public Option(GameManager manager, String id, boolean greyedOut, String display, Chapter leadsToChapter, boolean conditionMet) {
+        this(manager, id, display, 1, greyedOut, null, leadsToChapter, conditionMet);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyCondition a Condition that must be met for the Option to be greyed out
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditions an array of Conditions that must be met for the Option to be available
+     */
+    public Option(GameManager manager, String id, AbstractCondition greyCondition, String display, Chapter leadsToChapter, AbstractCondition... conditions) {
+        this(manager, id, display, 1, greyCondition, null, leadsToChapter, conditions);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
+     * @param greyedOut whether the Option is initially greyed out or not
+     * @param display the text displayed to the player for the Option
+     * @param leadsToChapter the Chapter that the Option leads to
+     * @param conditions an array of Conditions that must be met for the Option to be available
+     */
+    public Option(GameManager manager, String id, boolean greyedOut, String display, Chapter leadsToChapter,AbstractCondition... conditions) {
+        this(manager, id, display, 1, greyedOut, null, leadsToChapter, conditions);
+    }
+
+    /**
+     * Constructor
+     * @param manager the GameManager to link this Option to
+     * @param id the shorthand ID of the Option
      * @param greyedOut whether the Option is initially greyed out or not
      * @param display the text displayed to the player for the Option
      * @param leadsToChapter the Chapter that the Option leads to

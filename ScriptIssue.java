@@ -20,6 +20,7 @@ public class ScriptIssue extends ScriptNote {
             - 0 = ifsource and ifsourcenot
             - 1 = ifnum and ifnumnot
             - 2 = ifstring and ifstringnot
+        - 5 = concerningly high pause time (>5000ms)
     */
 
     // --- CONSTRUCTORS ---
@@ -184,6 +185,10 @@ public class ScriptIssue extends ScriptNote {
                         s += "ifstring and ifstringnot with different values)";
                         break;
                 }
+                break;
+
+            case 5:
+                s += "Excessive pause time (" + this.extraInfo[0] + "ms)";
                 break;
         }
 

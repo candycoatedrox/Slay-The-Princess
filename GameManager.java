@@ -4,6 +4,7 @@ import java.util.HashMap;
 public class GameManager {
     
     private final IOHandler parser;
+    private final AchievementTracker tracker;
     private Cycle currentCycle;
 
     // Settings
@@ -19,26 +20,26 @@ public class GameManager {
 
     // Global progress trackers
     private Chapter firstPrincess; // need more nuance here for harsh/soft and different variations (ex. Razor-revival)
-    private ArrayList<Vessel> claimedVessels;
-    private ArrayList<ChapterEnding> endingsFound;
-    private HashMap<Chapter, Boolean> visitedChapters;
-    private HashMap<Voice, Boolean> voicesMet;
-    private ArrayList<String> playlist;
+    private final ArrayList<Vessel> claimedVessels;
+    private final ArrayList<ChapterEnding> endingsFound;
+    private final HashMap<Chapter, Boolean> visitedChapters;
+    private final HashMap<Voice, Boolean> voicesMet;
+    private final ArrayList<String> playlist;
 
     private int nVesselsAborted = 0;
     private int mirrorCruelCount = 0;
-    private Condition goodEndingAttempted = new Condition();
-    private InverseCondition noGoodEndingAttempt = new InverseCondition(goodEndingAttempted);
+    private final Condition goodEndingAttempted = new Condition();
+    private final InverseCondition noGoodEndingAttempt = new InverseCondition(goodEndingAttempted);
 
     // Variables used in the Spaces Between
     private boolean mirrorScaredFlag = false;
     private int moundFreedom = 0;
     private int moundSatisfaction = 0;
     private boolean directToMound = false;
-    private Condition threatenedMound = new Condition();
-    private Condition canAskRiddleMound = new Condition(true);
-    private Condition askedRequestsMound = new Condition(false);
-    private Condition noRefuseExploreMound = new Condition(true);
+    private final Condition threatenedMound = new Condition();
+    private final Condition canAskRiddleMound = new Condition(true);
+    private final Condition askedRequestsMound = new Condition(false);
+    private final Condition noRefuseExploreMound = new Condition(true);
 
     // Global menus and options
     private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
@@ -54,6 +55,8 @@ public class GameManager {
      */
     public GameManager() {
         this.parser = new IOHandler(this);
+        this.tracker = new AchievementTracker(this, this.parser);
+
         this.claimedVessels = new ArrayList<>();
         this.endingsFound = new ArrayList<>();
 
@@ -69,10 +72,7 @@ public class GameManager {
 
         this.voicesMet = new HashMap<>();
         for (Voice v : Voice.TRUEVOICES) {
-            switch (v) {
-                case HERO: break;
-                default: this.voicesMet.put(v, false);
-            }
+            if (v != Voice.HERO) this.voicesMet.put(v, false);
         }
 
         this.settingsMenu = this.createSettingsMenu();
@@ -832,7 +832,7 @@ public class GameManager {
             this.showPlaylist(ending);
         }
 
-        this.parser.closeInput();
+        parser.close();
     }
 
     /**
@@ -1353,9 +1353,16 @@ public class GameManager {
         }
     }
 
+    /**
+     * Resets all achievements to locked
+     */
+    public void resetAchievements() {
+        tracker.reset();
+    }
+
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.debugRunGame();
+        manager.debugRunGame(ChapterEnding.TOSTRANGER);
         
         /*
         IOHandler parserStatic = manager.parser;

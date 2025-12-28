@@ -35,8 +35,7 @@ public class Script {
 
         this.lines = new ArrayList<>();
         this.labels = new HashMap<>();
-        try {
-            Scanner fileReader = new Scanner(source);
+        try (Scanner fileReader = new Scanner(source);) {
             String lineContent;
             String[] args;
             String label;
@@ -56,8 +55,6 @@ public class Script {
                     }
                 }
             }
-
-            fileReader.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Script not found (FileNotFound)");
         } catch (NullPointerException e) {
@@ -72,7 +69,7 @@ public class Script {
      * @param fileDirectory the file path of the file containing the text of this Script
      */
     public Script(GameManager manager, IOHandler parser, String fileDirectory) {
-        this(manager, parser, getFromDirectory(fileDirectory));
+        this(manager, parser, getScriptFromDirectory(fileDirectory));
     }
 
     // --- ACCESSORS & CHECKS ---
@@ -524,6 +521,15 @@ public class Script {
     }
 
     /**
+     * Executes one of two sections of this script, depending on whether the Princess is currently hostile or not
+     * @param labelPrefix the prefix of the label to start executing at
+     */
+    public void runMoodSection(String labelPrefix) {
+        this.moodSwitchJump(labelPrefix);
+        this.runSection();
+    }
+
+    /**
      * Executes one of two sections of this script, depending on whether the player has the blade or not
      * @param labelSuffix the suffix of the label to start executing at
      */
@@ -749,7 +755,6 @@ public class Script {
         String prefix = split[0];
         String argument = "";
         String[] args;
-        String modifiers = "";
         String[] mods;
         try {
             argument = split[1];
@@ -760,7 +765,7 @@ public class Script {
             if (split.length == 1) {
                 mods = new String[0];
             } else {
-                modifiers = split[1];
+                String modifiers = split[1];
                 mods = modifiers.split(" ");
             }
         } catch (IndexOutOfBoundsException e) {
@@ -778,12 +783,18 @@ public class Script {
                 // Skip to next line
                 break;
 
+            case "break":
+                if (!this.runModifierChecks(mods)) break;
             case "":
                 cont = false;
                 break;
 
             case "linebreak":
                 if (this.runModifierChecks(mods)) this.lineBreak(argument);
+                break;
+
+            case "pause":
+                if (this.runModifierChecks(mods)) this.pause(argument);
                 break;
 
             case "jumpto":
@@ -799,11 +810,23 @@ public class Script {
                 
                 break;
 
-            case "firstswitch":
             case "claim":
                 if (args.length == 0) {
                     // Invalid line; print error message and skip to next line
-                    System.out.println("[DEBUG: Invalid claim command in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    System.out.println("[DEBUG: Invalid firstswitch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) {
+                    this.claimFoldLine();
+                    this.firstSwitchJump(argument);
+                }
+                break;
+
+            case "firstswitch":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid firstswitch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
                     break;
                 }
 
@@ -826,10 +849,21 @@ public class Script {
 
                 break;
 
+            case "moodswitch":
+            case "harshswitch":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid harshswitch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.moodSwitchJump(argument);
+                break;
+
             case "sourceswitch":
                 if (args.length == 0) {
                     // Invalid line; print error message and skip to next line
-                    System.out.println("[DEBUG: Invalid claim command in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    System.out.println("[DEBUG: Invalid sourceswitch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
                     break;
                 }
 
@@ -889,7 +923,13 @@ public class Script {
         Cycle currentCycle = manager.getCurrentCycle();
         boolean firstVessel = (currentCycle == null) ? false : currentCycle.isFirstVessel();
         boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
-        String source = (currentCycle == null) ? "" : currentCycle.getSource();
+        String chapterSource = (currentCycle == null) ? "" : currentCycle.getSource();
+        boolean sharedLoop = (currentCycle == null) ? false : currentCycle.sharedLoop();
+        boolean sharedLoopInsist = (currentCycle == null) ? false : currentCycle.sharedLoopInsist();
+        boolean mirrorComment = (currentCycle == null) ? false : currentCycle.mirrorComment();
+        boolean touchedMirror = (currentCycle == null) ? false : currentCycle.touchedMirror();
+        boolean isHarsh = (currentCycle == null) ? false : currentCycle.isHarsh();
+        boolean knowsDestiny = (currentCycle == null) ? false : currentCycle.knowsDestiny();
 
         HashMap<Voice, Boolean> voiceChecks = new HashMap<>();
         String[] args;
@@ -923,9 +963,37 @@ public class Script {
             } else if (m.equals("noblade")) {
                 if (hasBlade) return false;
             } else if (m.startsWith("ifsource-")) {
-                if (!source.equals(args[1])) return false;
+                if (!chapterSource.equals(args[1])) return false;
             } else if (m.startsWith("ifsourcenot-")) {
-                if (source.equals(args[1])) return false;
+                if (chapterSource.equals(args[1])) return false;
+            } else if (m.equals("sharedloop")) {
+                if (!sharedLoop) return false;
+            } else if (m.equals("noshare")) {
+                if (sharedLoop) return false;
+            } else if (m.equals("sharedinsist")) {
+                if (!sharedLoopInsist) return false;
+            } else if (m.equals("noinsist")) {
+                if (sharedLoopInsist) return false;
+            } else if (m.equals("mirrorask")) {
+                if (!mirrorComment) return false;
+            } else if (m.equals("nomirrorask")) {
+                if (mirrorComment) return false;
+            } else if (m.equals("mirrortouch")) {
+                if (!touchedMirror) return false;
+            } else if (m.equals("nomirrortouch")) {
+                if (touchedMirror) return false;
+            } else if (m.equals("mirror2")) {
+                if (!mirrorComment && !touchedMirror) return false;
+            } else if (m.equals("nomirror2")) {
+                if (mirrorComment || touchedMirror) return false;
+            } else if (m.equals("harsh")) {
+                if (!isHarsh) return false;
+            } else if (m.equals("soft")) {
+                if (isHarsh) return false;
+            } else if (m.equals("knowledge")) {
+                if (!knowsDestiny) return false;
+            } else if (m.equals("noknowledge")) {
+                if (knowsDestiny) return false;
             } else if (m.equals("check")) {
                 if (!this.boolCondition) return false;
             } else if (m.equals("checkfalse")) {
@@ -1010,6 +1078,59 @@ public class Script {
     }
 
     /**
+     * Waits for a given number of milliseconds before continuing, depending on whether global slow print is enabled or not
+     * @param arguments the time to wait
+     */
+    private void pause(String arguments)  {
+        if (arguments.isEmpty()) {
+            // Invalid line; print error message and skip to next line
+            System.out.println("[DEBUG: Invalid pause (no argument) in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+        } else {
+            String[] times = arguments.split(" ");
+            int slowTime;
+            int fastTime;
+
+            try {
+                slowTime = Integer.parseInt(times[0]);
+                if (times.length == 1) {
+                    pause(slowTime);
+                } else {
+                    fastTime = Integer.parseInt(times[1]);
+                    this.pause(slowTime, fastTime);
+                }
+            } catch (NumberFormatException e) {
+                // Invalid line; print error message and skip to next line
+                System.out.println("[DEBUG: Invalid pause (non-int argument) in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+            }
+        }
+    }
+
+    /**
+     * Waits for a given number of milliseconds before continuing, depending on whether global slow print is enabled or not
+     * @param slowTime the time to wait if global slow print is enabled
+     * @param fastTime the time to wait if global slow print is disabled
+     */
+    private void pause(int slowTime, int fastTime) {
+        if (manager.globalSlowPrint()) {
+            pause(slowTime);
+        } else {
+            pause(fastTime);
+        }
+    }
+
+    /**
+     * Waits for a given number of milliseconds before continuing
+     * @param time the time to wait
+     */
+    public static void pause(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted");
+        }
+    }
+
+    /**
      * Moves the cursor of this script to a given index
      * @param lineIndex the index to move to
      */
@@ -1069,13 +1190,25 @@ public class Script {
     }
 
     /**
+     * Jumps to one of two labels, depending on whether the Princess is currently hostile or not
+     * @param labelPrefix the prefix of the label to jump to
+     */
+    private void moodSwitchJump(String labelPrefix) {
+        Cycle currentCycle = manager.getCurrentCycle();
+        boolean isHarsh = (currentCycle == null) ? false : currentCycle.isHarsh();
+        String labelSuffix = (isHarsh) ? "Harsh" : "Soft";
+
+        this.jumpTo(labelPrefix + labelSuffix);
+    }
+
+    /**
      * Jumps to one of several labels, depending on the "source" of the active chapter
      * @param labelSuffix the suffix of the label to jump to
      */
     private void sourceSwitchJump(String labelSuffix) {
         Cycle currentCycle = manager.getCurrentCycle();
-        String source = (currentCycle == null) ? "" : currentCycle.getSource();
-        this.jumpTo(source + labelSuffix);
+        String chapterSource = (currentCycle == null) ? "" : currentCycle.getSource();
+        this.jumpTo(chapterSource + labelSuffix);
     }
 
     /**
@@ -1240,7 +1373,7 @@ public class Script {
      * @param directory the file path of the file containing the text of this Script
      * @return the File found at the given directory
      */
-    public static File getFromDirectory(String directory) {
+    public static File getScriptFromDirectory(String directory) {
         String[] path = directory.split("/");
         File currentDirectory = new File("Scripts");
 
@@ -1259,7 +1392,7 @@ public class Script {
         return currentDirectory;
     }
 
-    
+    /*
     public static void main(String[] args) {
         GameManager manager = new GameManager();
         IOHandler parser = new IOHandler(manager);
@@ -1278,7 +1411,7 @@ public class Script {
         script.runConditionalSection("strConditionTest", "normal");
         script.runConditionalSection("strConditionTest", "other");
     }
-    
+    */
 
 }
 
@@ -1293,12 +1426,19 @@ Indentation is usually used to indicate conditional lines, e.g. dialogue that on
 Including " /// " at the end of the line allows you to toggle additional modifiers for all lines except for comments and labels:
     regular line /// modA modB ...
 Multiple modifiers  can be used together, separated by spaces.
-All functions share the same modifiers, except for dialogue lines, which also have several unique modifiers.
+All functions share the same modifiers: a variety of conditional checks that must pass before running the line. Dialogue lines also have several exclusive modifiers.
 
 Different functions a script can perform:
   - linebreak
   - linebreak [n]
         Prints out a line break. Can print out multiple line breaks at once if you specify a number, such as "linebreak 2".
+
+  - pause [time]
+  - pause [slow time] [fast time]
+        Waits for a given number of milliseconds before continuing. If two arguments are given, the first argument will be used if global slow print is enabled, and the second will be used if it is disabled.
+
+  - break
+        Tells the script to stop executing here for now. Should NEVER be used without modifiers.
 
   - label [id]
         Essentially acts as an anchor the script can move its cursor to at any time.
@@ -1316,6 +1456,10 @@ Different functions a script can perform:
 
   - sourceswitch [suffix]
         Runs the section of the script at the label starting with the "source" of the current chapter and ending with the given suffix.
+
+  - moodswitch [prefix]
+  - harshswitch [prefix]
+        Runs the section of the script at the label starting with the given prefix and ending with either "Harsh" or "Soft", depending on whether the Princess is currently hostile.
 
   - switchjump [true label] [false label]
         Moves the cursor to the first given label if the boolean condition given in runConditionalSection() is true, or to the second given label if the condition is false (or no condition was given).
@@ -1338,11 +1482,9 @@ Different functions a script can perform:
 
   - [character] Dialogue line goes here
   - [character] Dialogue line goes here /// [modifiers]
-        Modifiers are optional. Multiple modifiers can be used together.
         The first word specifies the ID of the speaking character, then anything after that is considered the actual dialogue line.
-        Including " /// " at the end of the line allows you to toggle additional modifiers for this dialogue line.
 
-        Unique modifiers:
+        Exclusive modifiers:
           - checkvoice
                 Checks whether the player has the speaker's voice before printing.
           - interrupt
@@ -1370,6 +1512,41 @@ Generic modifiers available for all lines (except comments and labels):
         Checks whether the "source" of the active chapter is equal to the given value before running the line.
   - ifsourcenot-[value]
         Checks whether the "source" of the active chapter is not equal to the given value before running the line.
+
+  - sharedloop
+        Checks whether the Narrator knows that the player has been here already before running the line.
+  - noshare
+        Checks whether the Narrator does not know that the player has been here already before running the line.
+
+  - sharedinsist
+        Checks whether the player insisted that they've been here before in the woods before running the line.
+  - noinsist
+        Checks whether the player did not insist that they've been here before in the woods before running the line.
+        
+  - mirrorask
+        Checks whether the player asked about the mirror in Chapter 2 before running the line.
+  - nomirrorask
+        Checks whether the player asked about the mirror in Chapter 2 before running the line.
+        
+  - mirrortouch
+        Checks whether the player approached the mirror in Chapter 2 before running the line.
+  - nomirrortouch
+        Checks whether the player approached the mirror in Chapter 2 before running the line.
+        
+  - mirror2
+        Checks whether the player interacted with the mirror in Chapter 2 before running the line.
+  - nomirror2
+        Checks whether the player interacted with the mirror in Chapter 2 before running the line.
+
+  - harsh
+        Checks whether the Princess is currently hostile before running the line.
+  - soft
+        Checks whether the Princess is currently friendly before running the line.
+
+  - knowledge
+        Checks whether the Princess knows she's (allegedly) going to end the world before running the line.
+  - noknowledge
+        Checks whether the Princess does not know she's (allegedly) going to end the world before running the line.
   
   - check
         Checks the boolean condition given in runConditionalSection() before running the line.

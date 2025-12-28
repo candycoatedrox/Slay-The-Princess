@@ -34,6 +34,15 @@ public class IndexedLinkedHashMap<K,V> extends LinkedHashMap<K,V> {
     }
 
     /**
+     * Removes all of the mappings from this map; the map will be empty after this call returns
+     */
+    @Override
+    public void clear() {
+        super.clear();
+        index.clear();
+    }
+
+    /**
      * Returns the value at the specified position in this map
      * @param i index of the value to return
      * @return the value at the specified position in this map
