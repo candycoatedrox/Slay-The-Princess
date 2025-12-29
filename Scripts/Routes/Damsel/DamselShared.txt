@@ -268,7 +268,7 @@ p I dunno. What do you want to do?
 label depersonTruth1
 truth Suddenly, the Princess starts to look... less *real.* Her eyes are just a bit too wide, too shiny, and the shadows that fall across her seem too... simple. She smiles sweetly up at you.
     quietcreep /// ifnum-1
-jumpto quietCont
+    jumpto quietCont /// ifnumnot-1
 
 label depersonComment1
 hero She can't *just* want to make us happy.
@@ -278,7 +278,7 @@ label depersonTruth2
 truth She starts to look like a poorly-drawn parody of herself, almost two-dimensional. Her eyes are unnaturally wide, her hair composed of simple shapes, her hands replaced by simple balls that only vaguely suggest fingers.
 truth It's almost as if the light barely casts a shadow on her at all.
     quietcreep /// ifnum-1
-jumpto quietCont
+    jumpto quietCont /// ifnumnot-1
 
 label depersonComment2
 hero Is she... *broken?* What's going on?
@@ -287,7 +287,7 @@ n What's going on is she's *lying* to you, only she isn't a good liar. Are you s
 label depersonTruth3
 truth She loses all color, now completely paper-white and somehow drawn even more poorly than before.
     quietcreep /// ifnum-1
-jumpto quietCont
+    jumpto quietCont /// ifnumnot-1
 
 label depersonComment3
 hero This isn't right! I don't know what's going on but this isn't right!

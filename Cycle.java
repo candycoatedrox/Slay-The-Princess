@@ -265,7 +265,26 @@ public abstract class Cycle {
         }
     }
 
-    protected abstract void showWarningsMenu();
+    /**
+     * Lets the player choose between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter
+     */
+    protected void showWarningsMenu() {
+        manager.warningsMenu().setCondition("current", false);
+        
+        manager.setTrueExclusiveMenu(true);
+        switch (parser.promptOptionsMenu(manager.warningsMenu())) {
+            case "general":
+                manager.showGeneralWarnings();
+                break;
+            case "by chapter":
+                manager.showByChapterWarnings();
+                break;
+            case "cancel":
+                break;
+        }
+
+        manager.setTrueExclusiveMenu(false);
+    }
 
     /**
      * Shows general content warnings, content warnings by chapter, or content warnings for the current chapter
@@ -803,15 +822,13 @@ public abstract class Cycle {
 
     // --- CYCLE MANAGEMENT ---
 
-    public abstract ChapterEnding runCycle();
+    public abstract ChapterEnding runChapter();
     
     /**
      * (DEBUG ONLY) Initiates and coordinates a full cycle, starting from a given Chapter ending through the player's conversation with the Shifting Mound
-     * @param startFromEnding the ChapterEnding to start from
-     * @param harsh the value to set isHarsh to
      * @return the Chapter ending reached by the player
      */
-    public ChapterEnding debugRunCycle(ChapterEnding startFromEnding, boolean harsh) {
-        return this.runCycle();
+    public ChapterEnding debugRunChapter() {
+        return this.runChapter();
     }
 }

@@ -88,9 +88,7 @@ n You ignore the trembling in your hands and tighten your grip on the blade.
 p You poor thing, your hands are shaking. Are you... scared of me? Because you should be.
 label steelJoin
 n You step forward, your grip on the blade tightening as you steel your resolve.
-    jumpto steelCont /// check
-p Oh? No talking, then? Fine. What even makes you think you can kill me?
-label steelCont
+    p Oh? No talking, then? Fine. What even makes you think you can kill me? /// checkfalse
 p I'm probably chained up in this basement for a reason, right? And if that knife is the only weapon you have, you'll have to get close enough to use it.
 p So... you should just drop it. Best not to risk finding out what I can do.
 n She's unarmed. If you hesitate now, it'll be too late. *End this.*
@@ -328,13 +326,8 @@ label awkward
 p I know. I just said that. Now why are you here to kill me?
 
 label awkwardReasons
-    jumpto awkwardReasonsSteeled /// check
-p And yet you dropped your knife the second you saw me.
-jumpto awkwardReasonsJoin
-
-label awkwardReasonsSteeled
-p And yet you hesitated the moment you saw me. And you dropped your knife. If killing me was really that important, you would have had a little more gumption, don't you think?
-label awkwardReasonsJoin
+    p And yet you hesitated the moment you saw me. And you dropped your knife. If killing me was really that important, you would have had a little more gumption, don't you think? /// check
+    p And yet you dropped your knife the second you saw me. /// checkfalse
 p So... someone put you up to this, right? And whoever it is, it's probably the same someone who shoved me into this dark pit and chained me to a wall.
 hero That's a fair question. Who chained her in this basement, and if she's so dangerous, *how* did they manage to trap her? And why have we been left to do their dirty work?
 n Don't give away the game, and don't let her distract you. That's exactly what she wants.
@@ -342,15 +335,10 @@ p I'm right, aren't I? So who put you up to this?
 
 label awkwardDeflect
 truth She laughs, her voice dripping with pity.
-    jumpto awkwardDeflectSteeled /// check
-hero That laugh...! I think I'm in love.
-n Stop it.
-jumpto awkwardDeflectJoin
-
-label awkwardDeflectSteeled
-hero She was just threatening us a second ago. Am I the only one here unnerved by that perfect little laugh?
-n I'll take that as a sign that you're finally coming around to reason.
-label awkwardDeflectJoin
+    hero She was just threatening us a second ago. Am I the only one here unnerved by that perfect little laugh? /// check
+        n I'll take that as a sign that you're finally coming around to reason. /// checkfalse
+    hero That laugh...! I think I'm in love. /// checkfalse
+        n Stop it. /// checkfalse
 p I have no idea. To be honest, I don't even know why I'm down here... or how I got here.
 p I was kind of hoping *you* might be able to shed some light on the whole situation.
 
@@ -400,15 +388,10 @@ p I see. The silent treatment. You know, if you don't share with me, I'm not goi
 
 label shareTask
 n Don't just *tell* her that!
-    jumpto shareTaskSteeled /// check
-p Is that why they threw me down here? But I don't want to hurt anyone. I like the world! I think.
-p I don't remember much about it, to be honest. I've been down here a long time.
-hero Just how long has she been down here?
-jumpto shareJoin
-
-label shareTaskSteeled
-p That's cute. Do you believe that? Do you think I'm some sort of... monster?
-label shareJoin
+    p That's cute. Do you believe that? Do you think I'm some sort of... monster? /// check
+    p Is that why they threw me down here? But I don't want to hurt anyone. I like the world! I think. /// checkfalse
+        p I don't remember much about it, to be honest. I've been down here a long time. /// checkfalse
+        hero Just how long has she been down here? /// checkfalse
 p If I'm supposed to be capable of ending the world, then how did I wind up here, chained to a wall? Have they told you why I'm allegedly so... dangerous?
 
 label shareDeflect
@@ -606,14 +589,9 @@ label rescue
 linebreak
 n You walk up to the chains binding the Princess to the wall and give them a tug.
 n They're large and heavy, far too solid for you to even imagine trying to break them apart.
-    jumpto rescueHowFree /// check
-p I'm guessing you don't have the key.
-hero Maybe it's somewhere upstairs.
-jumpto rescueJoin
-
-label rescueHowFree
-p If you don't have the key, maybe you should go looking for it. I'm sure it's somewhere upstairs.
-label rescueJoin
+    p If you don't have the key, maybe you should go looking for it. I'm sure it's somewhere upstairs. /// check
+    p I'm guessing you don't have the key. /// checkfalse
+        hero Maybe it's somewhere upstairs. /// checkfalse
 n Doubtful. Whoever locked the Princess away down here intended for her to never see the light of day. They wouldn't have just left the key to her chains somewhere in the cabin.
 
 label rescueWhatIfA

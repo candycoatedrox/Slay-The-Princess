@@ -65,14 +65,10 @@ stubborn And now it's gone, so all of us can stop arguing about it and get to fi
 
 // Stairs //
 
-label stairsNoBlade
-stubborn No blade this time? Right then, fisticuffs it is. Probably more fair to her anyway. Wouldn't want to feel like we cheated our way to a win.
-n As long as you can still get the job done... and don't forget that the blade is waiting for you upstairs if you happen to change your mind.
-linebreak
-jumpto stairsStartJoin
-
 label stairsStart
-    jumpto stairsNoBlade /// noblade
+    stubborn No blade this time? Right then, fisticuffs it is. Probably more fair to her anyway. Wouldn't want to feel like we cheated our way to a win. /// noblade
+        n As long as you can still get the job done... and don't forget that the blade is waiting for you upstairs if you happen to change your mind. /// noblade
+        linebreak /// noblade
 label stairsStartJoin
 n The door to the basement creaks open, revealing a rough stone staircase, its walls pressing at your sides and tightening as you descend. The air seeping from below is heavy and oppressive, with an almost sulfuric odor to it. If the Princess lives here, slaying her would probably be doing her a favor.
 n Her fierce voice carries up the stairs.
@@ -160,11 +156,8 @@ n I think my position on violence in this situation is already more than clear, 
 hero I agree. If we're going to fight her, we need a weapon.
 
 label chatDistantMenu
-    jumpto chatDistantMenuAgain /// check
-p Why? You didn't want to talk last time. Are you scared I'm going to kill you again?
-
-label chatDistantMenuAgain
-p Haven't we talked enough? Do you really have anything else to say, or are you just stalling because you're scared I'm going kill you again?
+    p Haven't we talked enough? Do you really have anything else to say, or are you just stalling because you're scared I'm going kill you again? /// check
+    p Why? You didn't want to talk last time. Are you scared I'm going to kill you again? /// checkfalse
 
 label scaredDistantMenu
 p Then prove it. Come a little closer.
@@ -225,14 +218,9 @@ p Don't you get it? We've been given free reign to wail on each other *forever.*
 stubborn Couldn't have said it better myself.
 
 label undecidedDistantMenu
-    jumpto undecidedDistantMenuAgain /// check
-p And why not? You decided what to do with me quickly enough last time. Are you scared I'm going to kill you again? Maybe you're worried I'll put you down for good this time...
-label undecidedDistantJoin
+    p You haven't decided? We talked more than enough last time. Do you really have anything else to say, or are you just stalling because you're scared I'm going to kill you? /// check
+    p And why not? You decided what to do with me quickly enough last time. Are you scared I'm going to kill you again? Maybe you're worried I'll put you down for good this time... /// checkfalse
 p If you want to talk, I guess I can talk, but you should come a little closer first.
-
-label undecidedDistantMenuAgain
-p You haven't decided? We talked more than enough last time. Do you really have anything else to say, or are you just stalling because you're scared I'm going to kill you?
-jumpto undecidedDistantJoin
 
 label banterDistantMenu
 p Then why are you just standing there?
@@ -284,13 +272,9 @@ p What's real are the things we do to each other when the only options left are 
 p That is the only thing I'm interested in.
 
 label noEndCloseMenu
-    jumpto noEndCloseMenuKnowsDestiny /// check
 p The world. Ha! If there's a world, I haven't seen it. There's you, and there's me, and there's the ground beneath our feet.
-p Why would I care about ending something I've never seen?
-
-label noEndCloseMenuKnowsDestiny
-p The world. Ha! If there's a world, I haven't seen it. There's you, and there's me, and there's the ground beneath our feet.
-p Besides, I thought we went over this last time. I never wanted to end the world.
+    p Besides, I thought we went over this last time. I never wanted to end the world. /// knowledge
+    p Why would I care about ending something I've never seen? /// noknowledge
 
 label freeAskACloseMenu
 p Here you go again talking about my 'freedom.'
@@ -315,11 +299,8 @@ label woundsAfterDied
 p You don't either.
 
 label youAfterDied
-    jumpto youAfterDiedAlready /// check
-p You aren't.
-
-label youAfterDiedAlready
-p I know. You already told me.
+    p I know. You already told me. /// check
+    p You aren't. /// checkfalse
 
 label basementAfterDied
 p I like it. It's so cramped. Like the only way out of here is through each other.
@@ -395,24 +376,18 @@ jumpto dodgeSecondAttack
 
 label pushDirectImmediate
 n The Princess's grin widens as the two of you push against each other, her fiery eyes and masochistic glee practically lighting up the dreary cave.
-    jumpto pushDirectImmediate /// check
-p *Yes.* You finally get it, don't you?
-
-label pushDirectImmediate
-p *Yes.* You get it, don't you?
+    p *Yes.* You get it, don't you? /// check
+    p *Yes.* You finally get it, don't you? /// checkfalse
 
 label understandingQuestion
 p Are you really going to make me explain it? Look at how evenly matched we are!
 
 label understandingKnowledge
-    jumpto understandingKnowsDestiny /// check
-p Nothing exists outside of us. It's just you and me. Dying and coming back. Clashing against each other. Forever.
-n That's not what's going on. There's an entire world at stake here!
-
-label understandingKnowsDestiny
-p Dying and coming back. Clashing against each other over the fate of everything. Forever.
-hero Did... did she just admit out loud that she's going to end the world if she gets out of here?
-n She most certainly did. I hope you've made a mental note of that, Hero. There's no more room for doubt.
+    p Dying and coming back. Clashing against each other over the fate of everything. Forever. /// check
+        hero Did... did she just admit out loud that she's going to end the world if she gets out of here? /// check
+        n She most certainly did. I hope you've made a mental note of that, Hero. There's no more room for doubt. /// check
+    p Nothing exists outside of us. It's just you and me. Dying and coming back. Clashing against each other. Forever. /// checkfalse
+        n That's not what's going on. There's an entire world at stake here! /// check
 
 label understandingAgree
 stubborn Yes! The fate of the world doesn't matter. The only thing that matters is this fight. The only thing that matters is getting *stronger.* And the only way to get stronger is to *win.* Even if it takes us forever to get there.
@@ -430,10 +405,7 @@ p Yes! You're right! We don't even need to talk about it!
 label pushCont
 n Your balance is suddenly thrown off as the Princess pulls you into her knee.
 n It collides with your ribs and you feel them splinter, cracking like wet wood from the impact.
-    jumpto pushContJoin /// check
-label pushContBreakChains
-n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose.
-label pushContJoin
+    n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// checkfalse
 stubborn We're fine.
 n But you barely have enough time to notice before the Princess follows up and smashes her forehead against yours.
 n Your grip loosens from the impact, the blade still wedged in her arm as you tumble to the cold stone floor.
@@ -574,15 +546,10 @@ p Don't you get it? You don't have to shuffle your feet. What comes next is goin
 label directEndStart
 n With an unbreakable determination, you snatch the blade from the floor and stumble back to your feet. Both you and the Princess quake with adrenaline as your eyes lock across the basement floor and share a knowing look.
 
-label directEndStartThought
-hero That's a lot of flowery description coming from someone who thinks he already knows how this is going to play out.
-n Oh indulge me, will you? Me knowing how this is going to play out is exactly why I'm being flowery. Let me have just this one thing, alright?
-hero Alright.
-jumpto directEndStartJoin
-
 label directEndStartFromOpening
-    jumpto directEndStartThought /// check
-label directEndStartJoin
+    hero That's a lot of flowery description coming from someone who thinks he already knows how this is going to play out. /// check
+        n Oh indulge me, will you? Me knowing how this is going to play out is exactly why I'm being flowery. Let me have just this one thing, alright? /// check
+        hero Alright. /// check
 stubborn Here it comes. The big finish.
 n Free from hesitation, you close the distance, both you and the Princess ready to end each other.
 n Your blade digs into her neck, grinding against her vertebrae as her fist connects with your body and -- /// interrupt
@@ -618,15 +585,8 @@ hero We're all still here. This is all going to be okay, isn't it?
 linebreak
 hero Isn't it...?
 linebreak
-firstswitch noAnswer
-
-label noAnswerFirstVessel
-truth But He doesn't answer the voice. He's gone.
-jumpto directFinalJoin
-
-label noAnswerNotFirstVessel
-truth But He doesn't answer the voice. He'll never answer. He's gone.
-label directFinalJoin
+    truth But He doesn't answer the voice. He's gone. /// firstvessel
+    truth But He doesn't answer the voice. He'll never answer. He's gone. /// notfirstvessel
 truth The nothingness continues to creep closer.
 linebreak
 p What are you waiting for, I'm right here! Do you think this is...
@@ -713,16 +673,11 @@ stubborn Great. Now pick it up and march back down there. I'm tired of us consta
 label exploreRetrieve
 stubborn Me. I say that.
 n Staying up here doesn't solve anything. All it does is kick the can down the road. If you don't deal with her now, she will find a way a out.
-    jumpto exploreRetrieveFree /// check
-hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong?
-label exploreRetrieveJoin
+    hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// check
+    hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// checkfalse
 stubborn Wouldn't it be exciting if she was?
 hero Here's another idea. What if we just leave?
 n Absolutely not. If you leave, she'll leave, and that'll be the end of everything as we know it.
-
-label exploreRetrieveFree
-hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong?
-jumpto exploreRetrieveJoin
 
 label takeBladeRetrieve
 n You take the blade from the altar. It would be difficult to slay the Princess and save the world without a weapon, as I'm sure you're all too aware by now.
@@ -736,16 +691,13 @@ stubborn I'm ready to start taking this seriously. Put me in charge.
 n Oh how I wish I could, because literally anyone else making decisions would be better than this, but unfortunately that's beyond the scope of my abilities.
 hero Is she really just going to wait down there forever? She's got to start getting impatient eventually -- /// interrupt
 n Your thoughts are interrupted by the sound of the Princess furiously stomping her way up the stairs.
-    jumpto fleeNotFree /// checkfalse
+    hero But what about her chains?! /// checkfalse
+        stubborn What *about* them? They're clearly not holding her back any longer. /// checkfalse
 
 label stayRetrieveCont
 stubborn Hahaha. Yes! Yes! We're finally going to get our rematch and there's nothing you can do to stop it.
 label leaveRetrieve
 p I'm tired of waiting. You thought you could just leave me down there, didn't you? But I can feel you trembling on the other side of this door. There's nowhere left for you to run.
-
-label fleeNotFree
-hero But what about her chains?!
-stubborn What *about* them? They're clearly not holding her back any longer.
 
 label returnFailRetrieve
 stubborn We're not going back down there without the blade.
@@ -785,15 +737,11 @@ p That knife may be sharp, but you clearly don't want to kill me.
 p It's not fun if you hesitate. It's not fun if you try and trick me and make me bleed out. It's only fun if you go straight for the heart.
 p You need to put everything you have into seeing me dead... or what's the point?
 p So don't be afraid. Don't hesitate. Kill me!
-    jumpto fightNarratorProof /// check
+    n Don't let her get into your head. Reincarnation or not, this world needs you to win. /// check
 n Don't let her get into your head. You've only got one shot at this.
 label fightProofJoin
 hero She's huge, but that probably means she's slower than us. Take it slow, think it through, and don't panic. Bleeding her out is our best course of action.
 stubborn Don't listen to them. She understands something that they don't. The only way to win, the only way out of this, is *through her.*
-
-label fightNarratorProof
-n Don't let her get into your head. Reincarnation or not, this world needs you to win.
-jumpto fightProofJoin
 
 label fightStrike
 n If that's your plan, then that's your plan. You push yourself off the ground, ignoring the pain in your ribs as you charge at the Princess once more.
@@ -896,11 +844,9 @@ jumpto unarmedDie
 
 // Grants you the Voice of the Broken //
 label unarmedDie
+    n It's over, but maybe you'll have better luck next time. /// check
     jumpto unarmedDieNarratorProof /// check
-n It's over.
-
-label unarmedDieNarratorProof
-n It's over, but maybe you'll have better luck next time.
+    n It's over. /// checkfalse
 
 // Grants you the Voice of the Contrarian //
 label unarmedPhase2
@@ -1031,15 +977,10 @@ n You can see her face flush, her knuckles going white as she clenches her fists
 stubborn I can't believe you're making me watch this.
 p Fine. If you want to die like a pathetic little worm, you can die like a pathetic little worm.
 hero I guess I'll see you all next time.
-    jumpto refuseEndStanding /// check
-n She reaches down and grabs you by the throat, lifting your limp form and slamming it forcefully against the wall. Her eyes twitch as her grip tightens around your neck.
-label refuseEndStartJoin
+    n She grabs you by the throat and slams your body against the wall. Her eye twitches as her grip tightens around your neck. /// check
+    n She reaches down and grabs you by the throat, lifting your limp form and slamming it forcefully against the wall. Her eyes twitch as her grip tightens around your neck. /// checkfalse
 hero She sure is taking her time, isn't she?
 p WHY?! Why are you letting me do this? Why are you making me do this? Why won't you fight back?!
-
-label refuseEndStanding
-n She grabs you by the throat and slams your body against the wall. Her eye twitches as her grip tightens around your neck.
-jumpto refuseEndStartJoin
 
 label noMatterRefuseEnd
 p It -- it matters! I like fighting you! I... grrrrrrrr.
@@ -1065,11 +1006,8 @@ p ... what am I supposed to do without you?
 hero I guess I'll see you all next time... I can say that now, right? We're dead?
 stubborn Great. I can't wait to be stuck in this useless body all over again.
 linebreak
-    jumpto refuseEndNarratorProof /// check
-n Everything goes dark, and you die.
-
-label refuseEndNarratorProof
-n I won't be seeing you, but I suppose something like me will. Everything goes dark, and you die.
+    n I won't be seeing you, but I suppose something like me will. Everything goes dark, and you die. /// check
+    n Everything goes dark, and you die. /// checkfalse
 
 // Attempt to free the Princess //
 
@@ -1253,10 +1191,7 @@ label upstairsDieEnd
 n She is merciless. With every blow comes a bloom of fresh pain, igniting nerves you didn't know you even had, your skin bruising and splitting and bleeding as her fists rain down relentlessly. But thankfully, you won't have to bear this agony for much longer. Your body has its limits, and she has found them.
 stubborn I hate this.
 n With your body a shapeless pulp, her fingers wrap around what's left of your neck.
-    jumpto upstairsDieBlade /// hasblade
-
-label upstairsDieBlade
-n The blade falls from your limp grip as she lifts you off the ground.
+    n The blade falls from your limp grip as she lifts you off the ground. /// hasblade
 
 label upstairsDieCont
 p You disgust me.

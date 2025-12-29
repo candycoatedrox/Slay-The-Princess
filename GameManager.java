@@ -462,8 +462,8 @@ public class GameManager {
         this.intro();
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
-            this.currentCycle = new StandardCycle(this, this.parser);
-            ending = this.currentCycle.runCycle();
+            this.currentCycle = new ChapterI(this, this.parser);
+            ending = this.currentCycle.runChapter();
 
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
@@ -506,7 +506,7 @@ public class GameManager {
 
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+            ending = currentCycle.runChapter();
 
             switch (ending) {
                 case NOENDINGS:
@@ -558,8 +558,8 @@ public class GameManager {
         ChapterEnding ending = null;
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
-            this.currentCycle = new StandardCycle(this, this.parser);
-            ending = this.currentCycle.runCycle();
+            this.currentCycle = new ChapterI(this, this.parser);
+            ending = currentCycle.runChapter();
 
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
@@ -598,7 +598,7 @@ public class GameManager {
 
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+            ending = currentCycle.runChapter();
 
             switch (ending) {
                 case NOENDINGS:
@@ -652,14 +652,32 @@ public class GameManager {
     private void debugRunGame(ChapterEnding startFromEnding, boolean harsh) {
         ChapterEnding ending = null;
         boolean firstCycle = true;
+
+        switch (startFromEnding.getNextChapter().getNumber()) {
+            case 1:
+                this.currentCycle = new ChapterI(this, this.parser);
+                break;
+            
+            case 2:
+                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, null, new Condition(), false, false, false, false, harsh, false, false, false, false);
+                break;
+
+            case 3:
+            case 4:
+            case 0:
+                this.currentCycle = new ChapterIII(ending, this, this.parser, null, null, new Condition(), false, false, false, false, harsh, false, null, false, false, false, "damsel");
+                break;
+
+            default: throw new RuntimeException("Invalid starting chapter");
+        }
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
-            this.currentCycle = new StandardCycle(this, this.parser);
+            
             if (firstCycle) {
-                ending = this.currentCycle.debugRunCycle(startFromEnding, harsh);
+                ending = currentCycle.debugRunChapter();
                 firstCycle = false;
             } else {
-                ending = this.currentCycle.runCycle();
+                ending = currentCycle.runChapter();
             }
 
             if (ending == null) {
@@ -703,7 +721,7 @@ public class GameManager {
 
         if (this.nClaimedVessels() == 5) {
             this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
-            ending = this.currentCycle.runCycle();
+            ending = currentCycle.runChapter();
 
             switch (ending) {
                 case NOENDINGS:

@@ -42,11 +42,8 @@ n My tricks? What on earth are you talking about? We've just met for the first t
 label assume
 n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
 n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
-    jumpto assumeShareDied /// check
-n If you're back here, I'm assuming you died, which probably only happened because you didn't listen to me.
-
-label assumeShareDied
-n You died last time, which probably only happened because you didn't listen to me.
+    n You died last time, which probably only happened because you didn't listen to me. /// check
+    n If you're back here, I'm assuming you died, which probably only happened because you didn't listen to me. /// checkfalse
 
 label assumePointA
 n Anyways, I believe your other question was something along the lines of "ohhh, what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
@@ -55,12 +52,8 @@ label assumePointB
 n And I believe your other question was something along the lines of "ohhh, what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
 
 label consequenceFreeMutual
-    jumpto consequenceFreeMutualRazor /// check
-hero What do you mean? Of course there weren't any consequences. We killed the Princess, the Princess killed us, and now everyone's right back where they started. That sounds pretty consequence-free to me.
-jumpto consequenceFree2Slain
-
-label consequenceFreeMutualRazor
-hero What do you mean? Of course there weren't any consequences. We stabbed the Princess, the Princess stabbed us, and now everyone's right back where they started. That sounds pretty consequence-free to me.
+    hero What do you mean? Of course there weren't any consequences. We stabbed the Princess, the Princess stabbed us, and now everyone's right back where they started. That sounds pretty consequence-free to me. /// check
+    hero What do you mean? Of course there weren't any consequences. We killed the Princess, the Princess killed us, and now everyone's right back where they started. That sounds pretty consequence-free to me. /// checkfalse
 jumpto consequenceFree2Slain
 
 label consequenceFreeDied

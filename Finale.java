@@ -43,30 +43,6 @@ public class Finale extends Cycle {
         this.mirrorWasCruel = manager.mirrorWasCruel();
     }
     
-    // --- COMMANDS ---
-
-    /**
-     * Lets the player choose between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter
-     */
-    @Override
-    protected void showWarningsMenu() {
-        manager.warningsMenu().setCondition("current", false);
-        
-        manager.setTrueExclusiveMenu(true);
-        switch (parser.promptOptionsMenu(manager.warningsMenu())) {
-            case "general":
-                manager.showGeneralWarnings();
-                break;
-            case "by chapter":
-                manager.showByChapterWarnings();
-                break;
-            case "cancel":
-                break;
-        }
-
-        manager.setTrueExclusiveMenu(false);
-    }
-    
     // --- COMMAND OVERRIDES ---
 
     /**
@@ -468,7 +444,7 @@ public class Finale extends Cycle {
      * Initiates and runs the finale of the game, from the conversation with the Narrator until the end
      */
     @Override
-    public ChapterEnding runCycle() {
+    public ChapterEnding runChapter() {
         this.finalMirror();
         
         // PLACEHOLDER

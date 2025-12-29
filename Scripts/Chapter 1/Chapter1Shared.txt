@@ -102,13 +102,9 @@ n The Princess is in the basement below, remember? You can't slay her from here.
 
 
 // Leads to Chapter II: The Nightmare //
-label nightmareStartWounded
-hero Okay. We can make this work. She has an awful wound and we have all the time in the world. Playing jailkeeper for a while might make things a little easier.
-jumpto nightmareStartJoin
-
 label nightmareStart
 n You close the basement door, locking it behind you and quickly barricading it with the heavy wooden table that once held the blade.
-    jumpto nightmareStartWounded /// check
+    hero Okay. We can make this work. She has an awful wound and we have all the time in the world. Playing jailkeeper for a while might make things a little easier. /// check
 hero Okay. We can make this work.
 label nightmareStartJoin
 n You settle in against the far wall to watch the basement door.
