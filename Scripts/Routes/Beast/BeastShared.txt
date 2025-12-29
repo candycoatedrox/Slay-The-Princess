@@ -58,11 +58,8 @@ label askMirror
 n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
 
 label askMirrorStart
-switchjump askMirrorStartSharedLoop
-hunted What a strange thing to lie about. Maybe He doesn't see it.
-
-label askMirrorStartSharedLoop
-hunted What a strange thing to lie about. Maybe He doesn't see it, much like He hasn't seen what's already happened.
+    hunted What a strange thing to lie about. Maybe He doesn't see it, much like He hasn't seen what's already happened. /// sharedloop
+    hunted What a strange thing to lie about. Maybe He doesn't see it. /// noshare
 
 label mirrorGone
 hunted And now it's gone.
@@ -70,11 +67,11 @@ hunted And now it's gone.
 // Stairs //
 
 label stairsNoBlade
-hunted No steel claw. Do you think we can talk our way out of this? I don't think she wants to talk.
-hero I guess we'll just have to trust that we made the right call. It'll still be here if we need it.
-linebreak
 
 label stairsStart
+    hunted No steel claw. Do you think we can talk our way out of this? I don't think she wants to talk. /// noblade
+        hero I guess we'll just have to trust that we made the right call. It'll still be here if we need it. /// noblade
+        linebreak /// noblade
 n The door to the basement creaks open, revealing what's left of an old, wooden staircase. It's still sturdy enough that you can make your way down in one piece, though you'll have to be mindful of holes.
 n The air seeping up from below is oddly warm and wet, as if you're descending into a jungle. If the Princess lives here, slaying her would probably be doing her a favor.
 n She growls up the stairs.
@@ -263,14 +260,10 @@ label forceSkeptic
 n You sprint for the stairs, but as soon as your take your first step -- /// interrupt
 
 // Leads to Chapter III: The Den with the Voice of the Skeptic //
-label denSkepticWounded
-n Once again, you narrowly avoid the full force of the impact. And once again, you are too slow to come away unscathed. You're starting to get tired. You're making mistakes.
-jumpto denSkepticEnd
-
-label denSkepticUnharmed
-n You manage to avoid her slavering jaws, but you aren't fast enough to evade the whole of her titanic momentum. She grazes you, the force of it enough to skin you all along your side, leaving a line of red, raw flesh.
-hero It's like being sideswiped by sandpaper, how is she that fast?!
-label denSkepticEnd
+label denSkeptic
+    n Once again, you narrowly avoid the full force of the impact. And once again, you are too slow to come away unscathed. You're starting to get tired. You're making mistakes. /// check
+    n You manage to avoid her slavering jaws, but you aren't fast enough to evade the whole of her titanic momentum. She grazes you, the force of it enough to skin you all along your side, leaving a line of red, raw flesh. /// checkfalse
+        hero It's like being sideswiped by sandpaper, how is she that fast?! /// checkfalse
 hero This isn't working. We have to do something, we have to figure out a plan.
 hunted Don't plan ahead. Act on the now. All that matters is that we stay alive.
 hero We're trying, but we can't keep this up much longer.
@@ -328,10 +321,8 @@ n Unfortunately for you, no. This isn't "it."
 linebreak
 n You are in a dark and caustic place. A thick, fibrous lining constricts around you, its slick surface impossible to grip, your hands scrabbling uselessly at your surroundings as they compress in on you. Your lungs can barely expand in such a tiny space, not that the humid, finite air grants you more than a few shallow breaths at a time.
 
-label eatenStartTalked
-p You spoke when you needed to act.
-
 label eatenStartCont
+    p You spoke when you needed to act. /// check
 n The liquid pooling beneath you starts to seep into your skin. You itch, then sting, then burn as the acid begins its slow work.
 p When I killed you I tried to leave this place, but it wouldn't let me. "You belong down there," it screamed at me. "The world is better off without you in it."
 n The flesh around you rumbles as the Princess begins to move, her thundering footfalls twisting you helplessly about. Your skin protests as the corrosive liquid sloshes around you, but there will be no respite for you in sight. The burning grows stronger and you can feel layers of you being peeled away.

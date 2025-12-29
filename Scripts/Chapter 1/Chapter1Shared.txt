@@ -103,12 +103,12 @@ n The Princess is in the basement below, remember? You can't slay her from here.
 
 // Leads to Chapter II: The Nightmare //
 label nightmareStartWounded
-n You close the basement door, locking it behind you and quickly barricading it with the heavy wooden table that once held the blade.
 hero Okay. We can make this work. She has an awful wound and we have all the time in the world. Playing jailkeeper for a while might make things a little easier.
 jumpto nightmareStartJoin
 
 label nightmareStart
 n You close the basement door, locking it behind you and quickly barricading it with the heavy wooden table that once held the blade.
+    jumpto nightmareStartWounded /// check
 hero Okay. We can make this work.
 label nightmareStartJoin
 n You settle in against the far wall to watch the basement door.
@@ -125,27 +125,28 @@ p You don't know the kind of enemy you've made tonight...
 hero It doesn't sound like she's getting any weaker...
 n No. It doesn't.
 
-label nightmareThreat
+label threatNightmare
 p These aren't threats. These are *promises.* Sooner or later you're going to have to sleep, and I'll make sure you never see the light of day again.
 jumpto nightmareJoin
 
-label nightmareNotPrincess
+label notPrincessNightmare
 p I wouldn't be so sure about outlasting me. You're so... brittle. So go ahead. Rest. Do whatever you think will help you be prepared. But know that I am coming for you, and that when I find you, I will make you hurt.
 jumpto nightmareJoin
 
-label nightmareAct
+label actNightmare
 p I can be innocent and harmless... if I want to be. Teasing me with fresh air and a chance to finally live freely doesn't inspire me to play nice.
 jumpto nightmareJoin
 
-label nightmareBleedOut
+label bleedOutNightmare
+    jumpto bleedOutLostArmNightmare /// check
 p Do you think a couple cuts is enough to do me in? I'm not as frail as you think.
 jumpto nightmareJoin
 
-label nightmareBleedOutLostArm
+label bleedOutLostArmNightmare
 p Do you think losing an arm is actually enough to do me in? I can always find another. I'm not as frail as you think.
 jumpto nightmareJoin
 
-label nightmareIgnore
+label ignoreNightmare
 p Just ignore her. Maybe the banging and wailing will stop if you just don't pay attention to it.
 jumpto nightmareJoin
 
@@ -155,7 +156,8 @@ linebreak 2
 n You jolt awake in the middle of the night to silence in the cabin. The ruckus has stopped, and the door to the basement is ajar, its lock broken and the table shoved out the way.
 hero Where is she?
 linebreak
-truth She appears in the doorway, bathed in shadows and staring at you with unnaturally wide, unblinking eyes. She seems... wrong, somehow. Almost inhuman.
+truth She appears in the doorway, bathed in shadows and staring at you with unnaturally wide, unblinking eyes.
+truth Something about her is... wrong. Almost inhuman.
 p Thanks for helping me get out of that awful basement.
 n You try and stumble to your feet, but as the Princess draws near, it's as though your body simply stops working.
 n It isn't all at once. The paralysis comes in waves. First your toes go numb, and then your feet, and then your legs. You lie prone on the floor of the cabin, unable to do anything but witness her approach.

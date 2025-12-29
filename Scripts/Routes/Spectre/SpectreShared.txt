@@ -148,10 +148,7 @@ label notDeadMenu
 p I don't feel very dead. But I guess I'm not... *not*-dead. So you must have only mostly killed me.
 p Or maybe death is only mostly-real, but it's also mostly not-real. I'm not sure. I'm just the one these things have happened to, not the one with all the answers. Or any of the answers.
 hero But *we're* not a ghost... unless we are?
-
-label notDeadMirror
-hero Maybe that's why the mirror disappeared. We're actually dead.
-
+    hero Maybe that's why the mirror disappeared. We're actually dead. /// mirror2
 label notDeadCont
 cold Death -- at least as a form of permanence -- is just a concept, and clearly it's not a very useful one anymore. Maybe we should throw it out entirely.
 
@@ -201,8 +198,7 @@ hero Are we putting this to a vote? Because personally, I'd prefer if we didn't 
 cold If that's what it comes down to, that's what it comes down to. But I don't see the point of offing ourselves just yet.
 p Aw, that's sweet of you to offer, but killing yourself wouldn't help either of us.
 n It would seem that everyone here is in agreement except for you. I shouldn't have to tell you that you shouldn't kill yourself. So please, try to keep your suicidal tendencies in check.
-
-label grovelHomeComment
+    jumpto grovelNoHomeComment /// check
 p I just want to go home.
 jumpto homeComment
 
@@ -219,8 +215,9 @@ label trickMenuConfirmed
 n Nobody "tricked you." I'm sure that other me gave you wholly accurate information that you wisely chose to act on.
 jumpto trickMenuJoin
 
-label trickMenuSwitch
-switchjump trickMenuSharedLoop
+label trickMenu
+    jumpto trickMenuConfirmed /// checkfalse
+    jumpto trickMenuSharedLoop /// sharedloop
 n Okay... I didn't want to be open to the idea, but there's no denying it now. You've clearly been here before.
 cold Oh? What tipped you off? Was it the corpse?
 n It doesn't matter. The only thing that matters is that nobody "tricked you." I've done nothing but give you wholly accurate information, and I'm sure whatever version of me you met in whatever other world you came from gave you accurate information, as well.
@@ -243,18 +240,21 @@ n The Princess grabs your wrist, a sudden shock of cold flowing all the way up y
 p And you don't feel dead, either.
 n She lets go and pulls away. Your fingertips tingle painfully as the chill subsides.
 p I'm less interested in "why" you are or "how" you are, and a lot more interested in "what" you are.
+    jumpto alsoDeadMenuAlreadyAsked /// check
+    jumpto alsoDeadMenuHome /// soft
 
 label alsoDeadMenuAlreadyAsked
 p But we've already been over that. So why don't you stop stalling, and let me in? It's so cold out here...
 
-label alsoDeadMenuPossessAsk
+label alsoDeadMenuHome
 p I've tried to leave on my own. Before you came back to me, I explored every inch of this place, even the spaces between the walls. But I never found a way out. I always wound up right back here.
 p I just want to go home... I'm so cold and alone here...
 
 label bonesAskMenu
 p Those are just bones. They aren't me. Bury them, destroy them, whatever. That dusty pile of death is just a reminder of what you've done. It's not a fix for anything.
 
-label howHurtMenuDead
+label howHurtMenu
+    jumpto howHurtMenuGhost /// check
 cold A boring question with an easy answer. Nothing. She's dead. Dead things can't hurt us.
 jumpto howHurtJoin
 
@@ -278,6 +278,9 @@ p IT SOUNDS LIKE YOU GOT EXACTLY WHAT YOU WERE OWED.
 label wallsMenu
 p I wish that's how it worked, but this place won't let me go.
 
+label thoughtsMenu
+moodswitch thoughtsMenu
+
 label thoughtsMenuSoft
 cold We could always try violence. It's worked for us so far.
 hero She's a ghost.
@@ -286,20 +289,19 @@ hero ... common sense?
 cold There's nothing common or sensible about common sense. Action and observation are the only things that matter.
 hero Fine. Then let me "observe" that the "acts" of killing her and killing ourself haven't got us much of anywhere. We're still back in this cabin, and we're still dealing with her, only now she has a good reason to hate us.
 cold I suppose you have a point. Do you have any ideas, then?
-
-label thoughtsSoftAsked
-hero I don't know... maybe we do what she wants. Maybe we let her possess us and walk out of here.
-cold We could... It would be something different. I like different.
-n Absolutely not! If you walk her out of here, she's going to end the world.
-jumpto thoughtsSoftJoin
-
-label thoughtsSoftNoAsk
+    jumpto thoughtsSoftAsked /// check
 hero We could always ask her what she wants?
 n Oh, for the love of -- Don't do that. Whatever she wants, it will end the world.
 label thoughtsSoftJoin
 cold And is that really so bad?
 n Yes. It is, by its very definition, bad.
 cold But those are the only options, aren't they? Violence, or doing what she wants. Or just leaving her down here. Though ignoring a problem is rarely a solution, isn't it?
+
+label thoughtsSoftAsked
+hero I don't know... maybe we do what she wants. Maybe we let her possess us and walk out of here.
+cold We could... It would be something different. I like different.
+n Absolutely not! If you walk her out of here, she's going to end the world.
+jumpto thoughtsSoftJoin
 
 label thoughtsMenuHarsh
 cold She might be making it hard for us to kill her body, but those bones look very, very real. Maybe breaking them breaks her.
@@ -318,8 +320,11 @@ label wrongConfirmedEndWorldSoft
 n So there really was a last time, and you really did manage to slay her. I would have liked to think I was the first, but there's no point living in denial...
 hero The... first?
 n It doesn't matter. The only thing that matters is this:
+jumpto wrongJoin
 
 label wrongEndWorldSoft
+    jumpto wrongConfirmedEndWorldSoft /// check
+label wrongJoin
 n Don't underestimate your own capabilities. If you truly managed to slay her last time, that doesn't mean she wasn't a threat. It means that you did something heroic.
 n Threats come in all shapes and sizes. A misspoken word could bring about the end of everything just as much as a blade or even the mere existence of an idea.
 n You were chosen for this job for a reason.
@@ -341,14 +346,12 @@ p The only thing I've ever wanted was to leave this place. It's still the only t
 
 label whatDo3EndWorldSoft
 n It does.
-hero We're not asking you, we've heard your whole speech already.
+hero We're not asking *you,* we've heard your whole speech already.
 p I really, really don't know! I'm not lying to you, I promise.
 p The world... doesn't matter. All I remember is that I'm supposed to be... there? Not-here? I'm just supposed to be a part of it. It's home, I think.
 p But what does it mean for anything to end? I ended, but I also didn't.
-
-label whatDo3SharedDeath
+    jumpto whatDo3Cont /// checkfalse
 p And you ended too, but here you are. And you don't even look any different.
-
 label whatDo3Cont
 p I'm not so sure endings are real.
 
@@ -372,10 +375,8 @@ p So that's where the hostility comes from. I don't know where you got that idea
 
 label end1EndWorldHarsh
 p Well, killer, what does it mean for something to end anyway? You "ended" me, but I'm still right here in front of you, aren't I?
-
-label end1HarshSharedDeath
+    jumpto end1HarshCont /// checkfalse
 p You apparently "ended" too, yet here you are. And you don't even look any different.
-
 label end1HarshCont
 p AFTER SEEING WHAT YOU'VE SEEN, HOW CAN YOU BE SURE ANYTHING ENDS?
 cold I see her point. Everything here is so... impermanent, always shifting. The end of one thing just leads to the start of another.
@@ -389,15 +390,15 @@ hero I think that's all the answer we're going to get out of her...
 
 // The Princess asks to possess you //
 
-label wantAHomeComment
-p I just want the same thing I've always wanted. To go home. But this place won't let me go. At least not alone.
-
-label wantANoHomeComment
+label wantAMenu
+    jumpto wantAHomeComment /// checkfalse
 p A way back to where I belong. This place won't let me leave. At least not alone.
 
 label wantBMenu
 p I want what you took from me. A life. A real life. I just want to go home.
 jumpto wantANoHomeComment
+label wantAHomeComment
+p I just want the same thing I've always wanted. To go home. But this place won't let me go. At least not alone.
 
 label wantHarshMenu
 p I WANT YOU TO MAKE THINGS RIGHT. I WANT YOU TO SET. ME. FREE.
@@ -407,16 +408,22 @@ hero Maybe we should have just left her here. Maybe we should still just leave h
 n "Hasn't gotten out" and "can't get out" are two very different things.
 cold That'd be dull, anyway. It's more interesting if we make a choice.
 
+label possessAskSwitch
+moodswitch possessAsk
+
 label possessAskSoftEarlyJoin
 p I've tried. Before you came back to me, I explored every inch of this place, even the spaces between the walls. But I never found a way out. I always wound up right back here.
 hero Maybe we should just leave. If she can't get out on her own, then why do we have to do anything? We could probably walk out right now and everything would be fine.
 n "Hasn't gotten out" and "can't get out" are two very different things.
 cold That'd be dull, anyway. It's more interesting if we make a choice.
+jumpto possessAskSoftJoin
 
+label possessAskSoft
+    jumpto possessAskSoftEarlyJoin /// checkfalse
 label possessAskSoftJoin
 p But you can come and go as you please, can't you? So... let me hitch a ride.
 p AFTER ALL. YOU OWE ME.
-label possessAskHarshJoin
+label possessAskHarsh
 n Absolutely not.
 hero Is she asking if she can... possess us?
 n She is, and I hope I don't need to explain why you can't let that happen. It would be catastrophic if she managed to escape this place, and if you let her in, there is very little anyone could do to stop her.
@@ -431,8 +438,7 @@ label noPossessAskHarsh
 p Try it. See what happens.
 hero I don't like how she said that. It sounds dangerous.
 cold Is anything "dangerous" if we can never really die?
-
-label noPossessAskConfirmed
+    jumpto noPossessAskNoConfirm /// check
 n Look. You and the Princess clearly have a history, and that history clearly involves death. But aside from some horrifying implications, I don't care what's already happened between the two of you.
 jumpto noPossessAskJoin
 
@@ -448,11 +454,11 @@ p I'm sure you'd like to know. It's a shame I won't tell you.
 p But... it'll be easier for both of us if you just let me in. And doesn't it sound nice?
 hero Maybe for her, but it's crowded enough in here as-is.
 p You won't have to feel guilty anymore. If you even do feel guilt.
+    jumpto coldTrapSuggest /// checkfalse
 
 label tempPossessAskSoft
 p If I'm able to. But for all we know that's not how it works. Maybe I'll wind up stuck with you for a long, long, long, long time.
-
-label tempColdSuggest
+    jumpto tempNoSuggest /// check
 hero I don't much like the sound of that. It's crowded enough in here as-is.
 jumpto coldTrapSuggest
 
@@ -467,8 +473,7 @@ cold It sounds to me like she'd be a lovely roommate.
 label controlPossessAskSoft
 p Sure. Why not?
 hero That doesn't sound very reassuring.
-
-label controlNoSuggest
+    jumpto coldTrapSuggest /// checkfalse
 n I can't believe you're even entertaining her right now. I mean, just look at her, do you think she has good intentions for her "murderer's body?" Of course she doesn't!
 
 label controlPossessAskHarsh
@@ -524,6 +529,9 @@ jumpto deathJoin
 
 // Leads to Chapter III: The Wraith with the Voice of the Cheated or Paranoid //
 
+label refuseSwitch
+moodswitch refuse
+
 label refuseSoft
 p Oh. Is that how it is? That's... sad.
 p I guess we'll have to fight, then.
@@ -554,15 +562,15 @@ p I never wanted to have to hurt anybody. It's not who I wanted to be.
 n The tears on her cheeks vanish. She lifts her head, sorrow replaced with wrath, staring into you with fiery anger.
 p But I guess you've turned me into something worse.
 
-label smashBonesNoAsk
+label smashBones
 p You push through the Princess and rush the pile of bones on the floor, swinging your fist down and smashing through what remains of her ribcage. The ancient bones splinter, then crumble, reduced to dust almost instantly.
-p Those bones aren't me. I'm me.
-p But you've made it obvious that you don't want to help.
+    jumpto smashBonesNoAsk /// check
+p Even after what I've said, you still gave it your all. Such a disappointing choice. I don't think I like the person behind those eyes.
 jumpto secondOffense
 
-label smashBonesAsk
-p You push through the Princess and rush the pile of bones on the floor, swinging your fist down and smashing through what remains of her ribcage. The ancient bones splinter, then crumble, reduced to dust almost instantly.
-p Even after what I've said, you still gave it your all. Such a disappointing choice. I don't think I like the person behind those eyes.
+label smashBonesNoAsk
+p Those bones aren't me. I'm me.
+p But you've made it obvious that you don't want to help.
 jumpto secondOffense
 
 label slayAgain
@@ -760,17 +768,13 @@ n If you have an idea for how to slay her in this state, I'm all ears, but you'l
 // "Hitchhiker" ending; claim the Spectre
 label possessForwardTookBlade
 n Blade in hand, you continue slowly to the door, your feet like lead dragging across the floorboards, growing heavier with each step.
+jumpto possessForward
 
 label possessForwardOther
 n You continue slowly to the door, your feet like lead dragging across the floorboards, growing heavier with each step.
-
-label possessForwardSoft
-p We're so close. Thank you, thank you, thank you! If we get out of here I won't even care that you murdered me anymore!
-jumpto possessForwardJoin
-
-label possessForwardHarsh
-p Finally! FINALLY!
-label possessForwardJoin
+label possessForward
+    p We're so close. Thank you, thank you, thank you! If we get out of here I won't even care that you murdered me anymore! /// soft
+    p Finally! FINALLY! /// harsh
 n You lift your shaking hand and rest it on the door handle, but you pause before you open it, exhaustion sapping what's left of your will.
 cold Was exhaustion really the best you could muster up? It's over. There's no use stalling. Let's see what happens next.
 
@@ -804,7 +808,6 @@ truth You don't get the chance to respond. Something has taken her away, and it'
 label possessEndNotFirstVessel
 truth You don't get the chance to respond, nor will you ever. It's time to leave. Memory returns.
 
-
 // Slay yourself and the Princess while possessed //
 
 // Leads to Chapter III: The Princess and the Dragon with the Voice of the Opportunist //
@@ -813,25 +816,17 @@ cold Isn't that an interesting idea.
 n I... hadn't even considered it as an option. Slaying her would slay you. Are you sure you're willing to do that?
 hero Of course we're sure. The decision has already been made.
 n All right, then. Better this than ferrying her out of here.
-
-label exorcismStartSoft
-p After all that, you're really just going to stab me again?!
+    p After all that, you're really just going to stab me again?! /// soft
+    p Wh-what do you think you're doing?! /// harsh
 cold Hear that? She's *scared.* No point in wasting more time. Do it.
 n You lift the blade, then plunge it deep into your guts. Pain spreads quickly through your torso as you attempt to turn its edge up towards your heart.
-p The Princess, her spirit bound to your prison of flesh as she had once been bound to the basement's prison of stone, cries out in agony as you slice through organ and muscle.
-p I don't want to die in you! I thought you finally understood me but instead you just wanted to hurt me again.
+n The Princess, her spirit bound to your prison of flesh as she had once been bound to the basement's prison of stone, cries out in agony as you slice through organ and muscle.
+    p I don't want to die in you! I thought you finally understood me but instead you just wanted to hurt me again. /// soft
+    p NO! /// harsh
 n Your skin roils and bucks as she violently pushes against it from the inside. Bits of her seep through, white and glowing with ethereal light, but still the walls of your prison hold.
-p If only I could drag you with me and make you understand. But that's not the way things get to go for me, is it?
-cold It would certainly be interesting. Though being dead does sound dull. And you are about to be dead. Again.
-p Get away from me, you cold little freak!
-
-label exorcismStartHarsh
-p Wh-what do you think you're doing?!
-cold Hear that? She's *scared.* No point in wasting more time. Do it.
-n You lift the blade, then plunge it deep into your guts. Pain spreads quickly through your torso as you attempt to turn its edge up towards your heart.
-p The Princess, her spirit bound to your prison of flesh as she had once been bound to the basement's prison of stone, cries out in agony as you slice through organ and muscle.
-p NO!
-n Your skin roils and bucks as she violently pushes against it from the inside. Bits of her seep through, white and glowing with ethereal light, but still the walls of your prison hold.
-p Who do you think you are, trying to take me out with you?! Well I'll show you. I can do worse than that little knife. It's not you taking me out, it's me taking you out. I'll tear this body to shreds!
-cold Wouldn't that be interesting? I'd like to see you try. But I think this is the end for all of us.
-p I said I'm leaving, you cold little freak!
+    p If only I could drag you with me and make you understand. But that's not the way things get to go for me, is it? /// soft
+        cold It would certainly be interesting. Though being dead does sound dull. And you are about to be dead. Again. /// soft
+        p Get away from me, you cold little freak! /// soft
+    p Who do you think you are, trying to take me out with you?! Well I'll show you. I can do worse than that little knife. It's not you taking me out, it's me taking you out. I'll tear this body to shreds! /// harsh
+        cold Wouldn't that be interesting? I'd like to see you try. But I think this is the end for all of us. /// harsh
+        p I said I'm leaving, you cold little freak! /// harsh

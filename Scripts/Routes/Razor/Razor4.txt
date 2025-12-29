@@ -98,13 +98,9 @@ truth All at once, it is blessedly quiet.
 truth You stand in front of the Princess in a basement identical to the one you first encountered oh so long ago.
 n ... What just happened? It's so quiet.
 
-label empty2FirstVessel
-truth The basement is gone, replaced by a textured nothingness.
-jumpto empty2Join
-
-label empty2NotFirstVessel
-truth The basement is gone, replaced by a textured nothingness. Somehow, it feels familiar.
-label empty2Join
+label empty2
+    truth The basement is gone, replaced by a textured nothingness. /// firstvessel
+    truth The basement is gone, replaced by a textured nothingness. Somehow, it feels familiar. /// notfirstvessel
 p Something feels different about you. It almost makes *me* feel different. Like I should actually take this seriously for once.
 bladeswitch end
 
@@ -141,7 +137,7 @@ truth She hurls herself at you, but as she does, her metal body bends outward, t
 truth The din of shrieking metal subsides, and something small and delicate falls into your hand. It's her heart. It beats gently, calmly, in your palm.
 linebreak
 truth Something reaches out from the darkness and gently takes her away.
-claim endNoBlade
+firstswitch endNoBlade
 
 label endNoBladeFirstVessel
 truth Not another word is spoken. She's gone, replaced with something else.

@@ -4,6 +4,7 @@ n You know I can hear you, right? It's going to be a lot harder than you think t
 oppo Did I say "I'm not sure we can trust *Him?"* Slip of the tongue. Bit of the old brain fog. I meant to say that we should probably head over to the cabin and slay that Princess. We already know we can't trust *her,* so let's get on with the show.
 
 label assume
+    jumpto assumeSlain /// check
 oppo We were just weighing our options in a morally ambiguous situation. You can't blame us for weighing our options.
 n I can if you failed to slay the Princess, which you apparently did. So, great. Congratulations. You've been given another chance to actually do this right.
 
@@ -33,11 +34,8 @@ n I appreciate the vote of confidence, but you should really stop wasting time c
 // Hill dialogue //
 
 label hillDialogue
-switchjump hillDialogueSharedLoop
-oppo Don't worry. You can trust us to get the job done.
-
-label hillDialogueSharedLoop
-oppo Don't worry. I think we've taken that lesson to heart at this point. You can trust us to get the job done.
+    oppo Don't worry. I think we've taken that lesson to heart at this point. You can trust us to get the job done. /// sharedinsist
+    oppo Don't worry. You can trust us to get the job done. /// noinsist
 
 // Abort attempt //
 
@@ -84,17 +82,15 @@ oppo Well, at least we can all agree now that there's nothing to see here. Case 
 // Stairs //
 
 label stairsNoBlade
-switchjump stairsNoBladeSharedLoop
-hero No blade. I hope you know what you're getting us into.
-label stairsNoBladeJoin
+    hero No blade? Leaving it behind didn't work out so well for us last time... /// sharedinsist
+    hero No blade. I hope you know what you're getting us into. /// noinsist
 oppo It'll always be here if we need it. Sure, that was also true last time, and we still died. But we definitely know what we're doing *this* time.
 linebreak
-
-label stairsNoBladeSharedLoop
-hero No blade? Leaving it behind didn't work out so well for us last time...
-jumpto stairsNoBladeJoin
+jumpto stairsStartJoin
 
 label stairsStart
+    jumpto stairsNoBlade /// noblade
+label stairsStartJoin
 n The door to the basement creaks open, revealing a staircase dug into the muddy earth below. The ceiling is thick with roots that hang like locks of tangled hair.
 n The weak starlight from the cabin windows behind you can barely penetrate the gloom here, only illuminating the edges of an opening below. It shines in the darkness like some kind of massive maw, waiting to swallow you up into the earth.
 n The air smells of dirt and copper. It's thick and wet, as if your lungs are being coated in mud with each intake of breath. If the Princess lives here, slaying her would probably be doing her a favor.
@@ -110,15 +106,9 @@ label stairsSilent
 p Silence, I see. Don't think I've forgotten about you. I recognized the sound of your nervous little footsteps as soon as they came into my home. I know who you are, and I remember what you've done.
 
 label stairsEnd
-numswitchjump stairsEndNoShare stairsEndNoShare stairsEndSharedLoop
-
-label stairsEndNoShare
-n She must have you confused with someone else.
-jumpto basementStart
-
-label stairsEndSharedLoop
-hero See? She knows us. Is this enough for you to believe what we've been saying?
-n Maybe, but you shouldn't let that cloud your judgment. She's just a Princess. As long as you remember that and remain focused, slaying her will be *easy.*
+    n She must have you confused with someone else. /// noinsist
+    hero See? She knows us. Is this enough for you to believe what we've been saying? /// sharedinsist
+        n Maybe, but you shouldn't let that cloud your judgment. She's just a Princess. As long as you remember that and remain focused, slaying her will be *easy.* /// sharedinsist
 jumpto basementStart
 
 // Basement //
@@ -146,40 +136,18 @@ label basementStartNoBlade
 p And there you are, once again seeming to offer a helping hand while likely hiding the other behind your back. Fine. I'll play along for now. What do you want?
 
 label basementStartShareSwitch
-numswitchjump basementNoShare basementSharedLoop basementSharedInsist
-
-label basementSharedInsist
-n She's acting like she already knows you. I guess what you said back in the woods really was true.
-jumpto basementAllShareJoin
-
-label basementSharedJoin
-hero So... you really don't remember us, do you?
-n No, I don't. But you and the Princess clearly have a shared reality, even if I'm not a part of it. I won't waste time fighting you on something that's clearly true.
-numswitchjump basementJoin basementJoin
-label basementInsistCont
-hero You fought us on it back in the woods.
-n That was when the only perspectives we had were yours and mine.
-jumpto basementJoin
-
-label basementSharedLoop
-n You made a comment back in the woods about having been here before, and now she's acting like the two of you already know each other.
-jumpto basementNoInsistJoin
-
-label basementNoShare
-n She's acting like the two of you already know each other.
-label basementNoInsistJoin
-n Oh no. You've already been here, haven't you?
-label basementAllShareJoin
+    n She's acting like she already knows you. I guess what you said back in the woods really was true. /// sharedinsist
+    n You made a comment back in the woods about having been here before, and now she's acting like the two of you already know each other. /// sharedloop noinsist
+    n She's acting like the two of you already know each other. /// noshare
+        n Oh no. You've already been here, haven't you? /// noinsist
 oppo That's pretty sharp! How'd you figure that one out?
 n Call it deductive reasoning.
 oppo Well, you seem to be great at it!
-numswitchjump basementNoShareCont
-jumpto basementSharedJoin
-
-label basementNoShareCont
-hero Do you remember us, then? Do you remember last time?
+    hero So... you really don't remember us, do you? /// sharedloop
+    hero Do you remember us, then? Do you remember last time? /// noshare
 n No, I don't. But you and the Princess clearly have a shared reality, even if I'm not a part of it. I won't waste time fighting you on something that's clearly true.
-label basementJoin
+    hero You fought us on it back in the woods. /// sharedinsist
+        n That was when the only perspectives we had were yours and mine. /// sharedinsist
 oppo I'm just glad we could put all this behind us!
 hero Is it all behind us?
 n Just focus on the task at hand. I don't care if you've been here before, and I don't care if you think you'll go somewhere else after this. My world is on the line right now. So I'd appreciate it if you would take this seriously, and slay her.
@@ -225,11 +193,9 @@ p But I must confess, this place never let me out into the world. While you were
 p It seems that you get to come and go as you please. So you may be a bigger part of the answer to this riddle than I'd like you to be. Maybe bygones can be bygones.
 p But you'll have to let me out first.
 
-label trustedRescueMenu
-p You were the one who tried to kill me when my back was turned. You were the one who started all of this! Only a poor loser twists their own failures around on the winner.
-
 label trustedMenu
-p You were the one who went to get that knife. You were the one who started all of this! Only a poor loser twists their own failures around on the winner.
+    p You were the one who tried to kill me when my back was turned. You were the one who started all of this! Only a poor loser twists their own failures around on the winner. /// check
+    p You were the one who went to get that knife. You were the one who started all of this! Only a poor loser twists their own failures around on the winner. /// checkfalse
 
 label messyMenu
 p I suppose you didn't come into my hovel of your own accord, did you...? All right. I suppose I could... "team up." I need a way out, after all, and unfortunately you're the only one I have.
@@ -247,16 +213,10 @@ jumpto chainsFall
 
 label cutMenu
 p Oh, I don't need you to cut me out.
-jumpto chainsFall
-
 label chainsFall
 p The Princess grins as the chains fall from her wrist.
 hero She could have gotten out of those the whole time! That sneaky little...
-
-label chainsHeartComment
-oppo A woman after my own heart, really. She knows how to hold her cards close to her chest.
-
-label chainsFallCont
+    oppo A woman after my own heart, really. She knows how to hold her cards close to her chest. /// checkfalse
 n This is why she can't just be abandoned here. If left to her own devices, she'll find a way out. Now *stop her!*
 
 label freeMenu
@@ -322,15 +282,8 @@ label leadStart
 p That's right! You're the one who's going first. Don't worry. I'll be right behind you, watching every single thing you do.
 oppo That's *exactly* what I'm worried about.
 n You step onto the stairs and begin your ascent from the basement. The Princess follows close on your heels, perhaps even a little closer than you'd like.
-bladeswitch leadStart
-
-label leadStartBlade
-hero You're only saying that because you want us to feel nervous! You want us to turn around and kill her.
-jumpto leadStartJoin
-
-label leadStartNoBlade
-hero You're only saying that because you want us to feel nervous!
-label leadStartJoin
+    hero You're only saying that because you want us to feel nervous! You want us to turn around and kill her. /// hasblade
+    hero You're only saying that because you want us to feel nervous! /// noblade
 n I do want those things, but I want them for a good reason. I don't need you to trust me for *my* sake, because *I* already know that I'm *right.* This is for you.
 oppo Can we walk backwards up the stairs? I think that's the smarter idea. She can't sneak in an attack if we're facing her.
 n No! The stairs are a bunch of *overgrown roots,* you'll trip and hurt yourself.
@@ -408,34 +361,35 @@ n The Princess lets out a mocking laugh.
 p I could see your scheme twitching in every muscle. I understand you too well for there to be secrets between us. We're the same creatures at our core, spite runs through our very marrow.
 p By our very natures, only one of us could make it up those stairs unscathed. Better me than you.
 
-label neverBetrayalLocked
-p Of course not. By our very natures, only one of us could make it upstairs unscathed. Someone had to make the first move. If I had the chance, I would have locked you down in this basement again.
+label neverBetrayal
+    p Of course not. By our very natures, only one of us could make it upstairs unscathed. Someone had to make the first move. If I had the chance, I would have locked you down in this basement again. /// ifsource-locked
+    p Of course not. By our very natures, only one of us could make it upstairs unscathed. Someone had to make the first move. If I had the chance, I would have locked you down in this basement. /// ifsourcenot-locked
 jumpto betrayalJokeJoin
 
-label neverBetrayalOther
-p Of course not. By our very natures, only one of us could make it upstairs unscathed. Someone had to make the first move. If I had the chance, I would have locked you down in this basement.
-jumpto betrayalJokeJoin
-
-label trustBetrayalLocked
-p You should have known I would never walk hand-in-hand with a loathsome thing like you.
-
-label trustBetrayalOther
-p Why would I ever trust you? Your hands have spilled my blood. And knowing that, you should never have trusted me, either. You should have known I would never walk hand-in-hand with a loathsome thing like you.
+label trustBetrayal
+    p You should have known I would never walk hand-in-hand with a loathsome thing like you. /// ifsource-locked
+    p Why would I ever trust you? Your hands have spilled my blood. And knowing that, you should never have trusted me, either. You should have known I would never walk hand-in-hand with a loathsome thing like you. /// ifsourcenot-locked
 
 label silentBetrayalFollow
 p By our very natures, only one of us could make it upstairs unscathed.
-
-label betrayalJokeLocked
-p Somebody had to make the first move. And if I had the chance, I would have locked you in this basement again.
-jumpto betrayalJokeJoin
-
-label betrayalJokeOther
-p Somebody had to make the first move. And if I had the chance, I would have locked you in this basement.
+label betrayalJoke
+    p Somebody had to make the first move. And if I had the chance, I would have locked you in this basement again. /// ifsource-locked
+    p Somebody had to make the first move. And if I had the chance, I would have locked you in this basement. /// ifsourcenot-locked
 label betrayalJokeJoin
 p It would have been funny. Even if it meant I couldn't leave. I really, truly detest you.
 
 label betrayalGenericLead
 p By our very natures, only one of us could make it upstairs unscathed. Someone had to make the first move. Better me than you.
+
+label betrayalCont
+    bladeswitch betrayalCont /// check
+oppo At least we can all agree that it was a good idea to make her go first.
+hero How?
+oppo Well, she was going to betray us, wasn't she? And we struck first!
+hero Our back is broken.
+oppo But we gave it our all! No regrets! Besides, she's got to have it as bad as us, right?
+n The Princess' body twitches as she tries to get up.
+oppo Oho! So she *does* have it as bad as us.
 
 label betrayalContLeadBlade
 oppo See, this is why I wanted her to go first. I had this whole little scheme planned where she'd turn her back on us, and I'd say "now stab her in the back! Do it now!"
@@ -464,15 +418,6 @@ oppo Ugh. You're right, aren't you? I thought this whole thing was ironclad, but
 label betrayalContLead2Join
 n The Princess' body twitches as she tries to get up.
 oppo Ohoho! So she's got it as bad as us.
-
-label betrayalContFollow
-oppo At least we can all agree that it was a good idea to make her go first.
-hero How?
-oppo Well, she was going to betray us, wasn't she? And we struck first!
-hero Our back is broken.
-oppo But we gave it our all! No regrets! Besides, she's got to have it as bad as us, right?
-n The Princess' body twitches as she tries to get up.
-oppo Oho! So she *does* have it as bad as us.
 
 label betrayalEndBrokenShare
 p It seems you're not the only one who's broken.
@@ -519,22 +464,20 @@ label followTopBetray
 p Bye-bye, you loathsome little nuisance!
 n And then she slams the door on you. Its lock swiftly clicks into place.
 
-label lockedNotAgain
-hero No! Not *again!*
+label lockedStart
+    hero No! Not *again!* /// ifsource-locked
+bladeswitch locked
 
 label lockedBlade
 oppo Maybe not stabbing her in the back wasn't such a great idea.
-p The Princess cackles from the other side of the door.
+jumpto lockedBladeJoin
 
 label lockedNoBlade
 oppo Locked in the basement? I thought for sure she was just going to stab us.
+label lockedBladeJoin
 p The Princess cackles from the other side of the door.
-
-label lockedReplyAgain
-p I can't believe you let me do that to you again!
-
-label lockedReplyOther
-p How does it feel to be locked away and forgotten by the world? Isn't it just awful?
+    p I can't believe you let me do that to you again! /// ifsource-locked
+    p How does it feel to be locked away and forgotten by the world? Isn't it just awful? /// ifsourcenot-locked
 
 label tryLockedMenu
 n You try the door. It's locked.
@@ -597,18 +540,10 @@ p I wouldn't have done that. Why did you?
 label offerCommitBasementNotFree
 n You hear a clanging of metal against the dirt floor, and the chains fall from the Princess' wrist.
 hero She could have gotten out of those the whole time! That sneaky little...
-
-label offerCommitBasementHeartComment
-oppo It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now.
-jumpto offerCommitBasementHeartJoin
-
-label offerCommitBasementNoHeartComment
-oppo A woman after my own heart. It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now.
-label offerCommitBasementHeartJoin
+    oppo A woman after my own heart. It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now. /// check
+    oppo It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now. /// checkfalse
 hero Luckily for us, you're not her.
 oppo Oh, we sure think alike, though. I can promise you that. Whatever you say next, you'd better make it count.
-
-label offerCommitBasementCont
 n She creeps forward, taking one cautious step at a time, until you and she are face to face.
 p What do you think happens now?
 
@@ -693,11 +628,7 @@ label fightStartNotFree
 n As you close the distance, readying your strike, the Princess' chain falls from her wrist.
 n She takes advantage of your split second of surprise, and throws a fistful of dirt into your eyes.
 hero She could have gotten out of those the whole time! That sneaky little...
-
-label fightHeartComment
-oppo A woman after my own heart, really. It's a shame we're playing opposite teams.
-
-label fightStartNotFreeCont
+    oppo A woman after my own heart, really. It's a shame we're playing opposite teams. /// checkfalse
 n This is why you couldn't just abandon her here. Left to her own devices, she would always find her way out. Now stop her!
 label fightStartJoin
 p You must have known I would be ready for you. Deep in your heart, you know the same things about me I know about you. We're both so very awful.

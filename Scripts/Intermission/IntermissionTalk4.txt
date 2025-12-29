@@ -1,15 +1,10 @@
-label startFree
-p There's a world beyond the endless walls of The Long Quiet. We're supposed to be there.
-p Do you know what we'll find out there?
+    p There's a world beyond the endless walls of The Long Quiet. We're supposed to be there. /// check
+        p Do you know what we'll find out there? /// check
+    p There's a world beyond the endless walls of The Long Quiet. I am curious to see what it means for us to know it. /// checkfalse
 
-label startKept
-p There's a world beyond the endless walls of The Long Quiet. I am curious to see what it means for us to know it.
-
-label peopleSatisfy
-p It doesn't matter if there are. People are too small for us. You and I are the only things that interest me.
-
-label peopleDeny
-p It doesn't matter if there are. People are frail and impermanent. You and I are the only things that interest me.
+label people
+    p It doesn't matter if there are. People are too small for us. You and I are the only things that interest me. /// check
+    p It doesn't matter if there are. People are frail and impermanent. You and I are the only things that interest me. /// checkfalse
 
 label rhetorical
 p Rhetorical. I am not rhetorical. I have only known these spaces, and I have known flickers of the lives you've brought me. Short and violent and full of passion. But all of those flickers end where The Long Quiet begins.
@@ -21,20 +16,16 @@ p There is a warmth and sadness in me at the thought of people. Fresh tears on a
 label real
 p We are real. 'Nothing' is an idea that dwells in the absence of 'something.' But 'nothing' cannot exist on its own. And because of that, 'nothing' can't exist.
 
-label awakenSatisfy
-p If I did, I would already be awake.
-
-label awakenDeny
-p No. The point of awakening is to find out.
+label awaken
+    p If I did, I would already be awake. /// check
+    p No. The point of awakening is to find out. /// checkfalse
 
 label narratorMet
 p I know him through the memories of my vessels. But they have nothing like him on their own. Do you think he lives in the spaces beyond?
 
-label narratorFree
-p No. Their thoughts are quiet. Do you think your Narrator lives in the spaces beyond?
-
-label narratorKept
-p No. Their minds are empty. Existent, but constantly shifting into something new. Do you think your Narrator lives in the spaces beyond?
+label narratorNotMet
+    p No. Their thoughts are quiet. Do you think your Narrator lives in the spaces beyond? /// check
+    p No. Their minds are empty. Existent, but constantly shifting into something new. Do you think your Narrator lives in the spaces beyond? /// checkfalse
 
 label factNarrator
 p I am on the cusp of my awakening. Perhaps you are on the cusp of yours.
@@ -45,11 +36,9 @@ p There's no need for you to know what you are going to do before you do it. If 
 label answersNarrator
 p Do not look to one who fears me for your truth. The only answers worth knowing are those we can find within ourselves.
 
-label killNarratorFree
-p If he drives you towards my destruction, then he is steeped in delusion, for he does not know me. Just as I hold compassion for you, and you hold compassion for me, you can hold compassion for those who have wronged you.
-
-label killNarratorKept
-p If he is anything other than us, he isn't worth the effort to destroy.
+label killNarrator
+    p If he drives you towards my destruction, then he is steeped in delusion, for he does not know me. Just as I hold compassion for you, and you hold compassion for me, you can hold compassion for those who have wronged you. /// check
+    p If he is anything other than us, he isn't worth the effort to destroy. /// checkfalse
 
 label silentNarrator
 p It's nice to be with someone whose thoughts I can never know as mine.

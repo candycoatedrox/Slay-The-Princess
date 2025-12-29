@@ -1,22 +1,9 @@
-label aborted1
-p When I found you in The Long Quiet alone, I was terrified. What if you had decided to let me wither?
-jumpto abortedJoin
-
-label aborted2
-p I am sorry I said that I hated you. I do not hate you. When I found you in The Long Quiet alone, I was terrified. When I found you in The Long Quiet again alone, I was hurt. I thought you had decided to leave me here to wither.
-jumpto abortedJoin
-
-label aborted3
-p You have come back to me, and you have finally brought another fragile vessel. I hope our voiceless encounters in The Long Quiet have not cracked the foundations of our relationship. We are each other's salvation. There is no one to save us but us.
-jumpto abortedJoin
-
-label aborted4
-p You have come back to me with another fragile vessel. I did not think you would.
-jumpto abortedJoin
-
-label aborted5
-p You are back. It is good that you listened to my warning. Choice has been stripped from you. There are very few paths left for you to walk, but there is still a tarnished thread leading to our freedom.
-label abortedJoin
+label aborted
+    p When I found you in The Long Quiet alone, I was terrified. What if you had decided to let me wither? /// ifnum-1
+    p I am sorry I said that I hated you. I do not hate you. When I found you in The Long Quiet alone, I was terrified. When I found you in The Long Quiet again alone, I was hurt. I thought you had decided to leave me here to wither. /// ifnum-2
+    p You have come back to me, and you have finally brought another fragile vessel. I hope our voiceless encounters in The Long Quiet have not cracked the foundations of our relationship. We are each other's salvation. There is no one to save us but us. /// ifnum-3
+    p You have come back to me with another fragile vessel. I did not think you would. /// ifnum-4
+    p You are back. It is good that you listened to my warning. Choice has been stripped from you. There are very few paths left for you to walk, but there is still a tarnished thread leading to our freedom. /// ifnum-5
 p But your commitment now is final. Your ability to walk the path of mutual annihilation is vanished with your return. If you still wish to obliterate me, it will have to wait until I am complete.
 
 label start
@@ -34,12 +21,8 @@ p It feels correct. This is what I need to be. This is the only path forward.
 label want
 p With every gift you bring me, I excavate the alleys of what I am meant to be, and every exploration yields new and complicated truths. What I will be is different than what I am and what I am is different from what I was.
 p I cannot tell you what desires I will hold when I have changed.
-
-label wantSatisfy
-p But in this moment, all I want is to know myself and to know you.
-
-label wantDeny
-p But in this moment, all I want is to know myself.
+    p But in this moment, all I want is to know myself and to know you. /// check
+    p But in this moment, all I want is to know myself. /// checkfalse
 
 label threat
 p There is still much to be seen. Neither of us know the depths of our being. Perhaps at the end of this, I will be the one to kill you. Or perhaps we will leave this place together, and find new horizons to discover.
@@ -53,13 +36,9 @@ p Why wouldn't I be kind to you? You are the only thing I know that isn't me.
 label preferences
 p My preference is for you to show me what you would like me to see. I cannot know the ways I wish to grow, for I have yet to feel them. It is you who guides me down the thin trail of perspective and memory.
 
-label feelingsSatisfyFree
-p The vessels are shaped by memories of you, but they are drawn to the edge of The Long Quiet. To them you are a gate to something more. But they are only thoughts and perspectives. They are not me.
-jumpto feelingsSatisfyJoin
-
-label feelingsSatisfyKept
-p The vessels are shaped by memories of you, but their impulses are drawn to the edge of The Long Quiet. To them you are a gate to something more, and any hurt you've caused them is understood as a fair price for freedom. But they are only thoughts and perspectives. They are not me.
-label feelingsSatisfyJoin
+label feelingsSatisfy
+    p The vessels are shaped by memories of you, but they are drawn to the edge of The Long Quiet. To them you are a gate to something more. But they are only thoughts and perspectives. They are not me. /// check
+    p The vessels are shaped by memories of you, but their impulses are drawn to the edge of The Long Quiet. To them you are a gate to something more, and any hurt you've caused them is understood as a fair price for freedom. But they are only thoughts and perspectives. They are not me. /// checkfalse
 p The wounds they've suffered carve texture around my heart. Without them, I would be as I was before.
 p I would be alone and without sensation. I could not feel the joy of having you by my side, for I would not know your absence.
 
@@ -72,24 +51,19 @@ label howManySatisfy
 p If I am to be an ocean, you have nurtured me into a pond. My waters are shallow and murky, and I yearn for more perspective.
 p You will have your rest in due time, and I am sorry for the burdens I place on you.
 
-label howManyFree
-p If I am to be an ocean, you have given me enough to build a pond. My waters are shallow and murky, and I yearn for more perspective.
-p I will transcend in due time, and there is no way forward but to contribute to my awakening.
-
-label howManyKept
-p If I am to be an ocean, you have given me enough to build a pond. My waters are shallow and murky, and I yearn for more perspective.
-p The task of finding my vessels is your burden to carry.
+label howManyDeny
+    p If I am to be an ocean, you have given me enough to build a pond. My waters are shallow and murky, and I yearn for more perspective. /// check
+        p I will transcend in due time, and there is no way forward but to contribute to my awakening. /// check
+    p If I am to be an ocean, you have given me enough to build a pond. My waters are shallow and murky, and I yearn for more perspective. /// checkfalse
+        p The task of finding my vessels is your burden to carry. /// checkfalse
 
 label refuse
 p Then we will remain here as we are now. Barely finished, damp, cavernous.
 
 // Ending //
 
-label endSatisfy
-p I will long for your return. But it will give me time to reflect on what I am.
-label endJoin
-
-label endDeny
-p I await your return, but it will give me time to reflect on what I am.
-label endJoin
+label end
+    p I will long for your return. But it will give me time to reflect on what I am. /// check
+    p I await your return, but it will give me time to reflect on what I am. /// checkfalse
 p We will meet again. /// interrupt
+pause 500 1000

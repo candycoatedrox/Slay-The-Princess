@@ -37,15 +37,15 @@ n I can assure you that you didn't slay her, and that she didn't kill you. Peopl
 label wise
 n My tricks? What on earth are you talking about? We've just met for the first time.
 
+// Hypothetical //
 
 label assume
 n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
 n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
+    jumpto assumeShareDied /// check
 n If you're back here, I'm assuming you died, which probably only happened because you didn't listen to me.
 
 label assumeShareDied
-n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
-n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
 n You died last time, which probably only happened because you didn't listen to me.
 
 label assumePointA
@@ -55,6 +55,7 @@ label assumePointB
 n And I believe your other question was something along the lines of "ohhh, what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
 
 label consequenceFreeMutual
+    jumpto consequenceFreeMutualRazor /// check
 hero What do you mean? Of course there weren't any consequences. We killed the Princess, the Princess killed us, and now everyone's right back where they started. That sounds pretty consequence-free to me.
 jumpto consequenceFree2Slain
 
@@ -69,7 +70,7 @@ jumpto consequenceFree2Died
 label consequenceFreeNightmare
 hero What do you mean? Of course there weren't any consequences. We were killed by the Princess, and now everyone's right back where they started. That sounds pretty consequence-free to me.
 para Speak for yourself. From my perspective there were plenty of consequences. I'm never going forget the way she just made us *stop working.*
-n And that's only scratching the surface. If what you said is true, it begs the question of *how* you got back here. Did \"time\" simply rewind itself, or have you found yourself in another world altogether? If it's the latter, what do you think happened *after* you died?
+n And that's only scratching the surface. If what you said is true, it begs the question of *how* you got back here. Did "time" simply rewind itself, or have you found yourself in another world altogether? If it's the latter, what do you think happened *after* you died?
 jumpto consequenceFree2LateJoin
 
 label consequenceFreeSlain
@@ -215,20 +216,15 @@ n I'm not lying to you, I *promise.* There isn't a mirror. Really.
 label approachMirror
 n You walk up to the wall next to the basement door. It's a wall. There isn't much to see here.
 
-label approachAsked
-hero This *really* isn't funny.
-
-label approachNoAsk
-hero What are you talking about? This isn't a wall. It's a mirror. Or at least it'll *be* a mirror once we wipe off that layer of grime.
+label approachComment
+    hero This *really* isn't funny. /// mirrorask
+    hero What are you talking about? This isn't a wall. It's a mirror. Or at least it'll *be* a mirror once we wipe off that layer of grime. /// nomirrorask
 
 label approachWipe
 n You reach forward and rub your hand against the cabin wall. I hope you know how ridiculous you look right now.
 
-label approachWipeAsked
-hero But it was there a second ago!
-
-label approachWipeNoAsk
-hero But there was a mirror a second ago.
+    hero But it was there a second ago! /// mirrorask
+    hero But there was a mirror a second ago. /// nomirrorask
 
 // Generic shared cabin lines //
 

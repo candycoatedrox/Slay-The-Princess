@@ -28,7 +28,7 @@ n Oh, believe me, the last thing I want is for you and I to be *friends.* But I'
 // Hill dialogue //
 
 label hillDialogue
-switchjump hillDialogueSharedLoop
+    jumpto hillDialogueSharedLoop /// sharedloop
 smitten If only you knew what you did to us, you villain.
 n Excuse me?
 hero Forget he said anything.
@@ -74,14 +74,9 @@ n So focus up. Stop letting yourself get distracted.
 
 label takeBlade
 n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
-switchjump takeBladeSharedLoop
 smitten I suppose if we're to play the role of dashing knight we need an equally dashing sword. That way she'll know we can defend her from her enemies.
-hero Hopefully it doesn't put her on edge.
-jumpto takeBladeJoin
-
-label takeBladeSharedLoop
-hero Hopefully it doesn't put her on edge. And hopefully it doesn't get turned on us... again.
-label takeBladeJoin
+    hero Hopefully it doesn't put her on edge. And hopefully it doesn't get turned on us... again. /// check
+    hero Hopefully it doesn't put her on edge. /// checkfalse
 n There's no use arguing over *motivations* right now. It's good that you took the blade. You'll need it to do your job.
 
 // Ask about the mirror //
@@ -103,7 +98,7 @@ n The door to the basement creaks open, revealing an intricate stairwell. Gold-t
 n But it's still a stone basement. If the Princess lives here, slaying her is probably doing her a favor.
 n A soft voice carries up the stairs.
 p Hello? Is someone there?
-switchjump stairsSharedLoop
+    jumpto stairsSharedLoop /// sharedloop
 smitten Her voice... it's somehow even more beautiful than last time. I think we're in love...
 hero Okay, I'm with you that we should be doing whatever we can to save her, but saying we're in love is a bit much, don't you think?
 hero We don't even *know* the Princess. We can still do right by her without all this... fawning.
@@ -129,28 +124,15 @@ p It's you! My dashing hero. I was so worried you wouldn't come back.
 smitten Did you hear that? She said we're dashing!
 hero And she called us a hero!
 n Flattery really goes a long way with the two of you, doesn't it?
-numswitchjump basementStartNoShare
-jumpto basementStartSharedLoop
-
-label basementStartSharedLoop
-n "Waiting for you to come back?" I didn't want to believe your ravings back in the woods, but this is next to incontrovertible evidence. You've been here before.
-jumpto basementStartJoin
-
-label basementStartNoShare
-n "Waiting for you to come back?" You've been here before, haven't you?
-label basementStartJoin
+    n "Waiting for you to come back?" I didn't want to believe your ravings back in the woods, but this is next to incontrovertible evidence. You've been here before. /// sharedloop
+    n "Waiting for you to come back?" You've been here before, haven't you? /// noshare
 smitten That's right, villain. And you killed us.
 hero Well... *she* killed us.
 smitten Only because He made us try and kill her! It was self-defense. Our beloved's hands remain unstained by cruelty!
 n And you've *died* before. So an entire world has been damned to oblivion. I'd really hoped I'd be the first, but... what's done is done. What *matters* is you have a chance to do it right this time.
-numswitchjump basementStartNoInsist basementStartNoInsist basementStartSharedInsist
-
-label basementStartSharedInsist
-hero Now hold on. If she actually *ended* a world... are you sure we want to do this? Are you sure we want to *rescue* her?
-
-label basementStartNoInsist
-hero We... damned a whole world? But everything reset.
-n Nothing "resets." You're just somewhere else, and you can't keep hopping between worlds forever. Especially not without leaving a trail of *incomprehensible* devastation behind you. *Sigh.* This is horrible.
+    hero Now hold on. If she actually *ended* a world... are you sure we want to do this? Are you sure we want to *rescue* her? /// sharedinsist
+    hero We... damned a whole world? But everything reset. /// noinsist
+        n Nothing "resets." You're just somewhere else, and you can't keep hopping between worlds forever. Especially not without leaving a trail of *incomprehensible* devastation behind you. *Sigh.* This is horrible. /// noinsist
 
 // Conversation menu //
 
@@ -228,19 +210,15 @@ hero I think I'd rather believe in facts.
 smitten Ah, so you're one of those empiricists.
 hero One of us has to be.
 smitten Then let me show you a brand new truth. Narrator! We courageously step forward and free our beloved from her bindings.
-
-label rescueStart
-n No. I can't let you do that. If you take another step towards the Princess, I'll -- /// interrupt
-hero You'll what? Take over our body and force us to try and kill her?
-bladeswitch rescueStart
-
-label rescueStartBlade
-n Yes.
 jumpto rescueStartJoin
 
-label rescueStartNoBlade
-n I would if you had a weapon.
+label rescueStart
+    jumpto rescueStartHowFree /// checkfalse
 label rescueStartJoin
+n No. I can't let you do that. If you take another step towards the Princess, I'll -- /// interrupt
+hero You'll what? Take over our body and force us to try and kill her?
+    n Yes. /// hasblade
+    n I would if you had a weapon. /// noblade
 smitten Not on my watch, villain! My passions contain *titanic* depths, and if you try *anything* that might harm our dearest I will end our life without a second thought.
 n You wouldn't.
 smitten I would!
@@ -279,11 +257,7 @@ label whatWant
 n Let me guess. "End the world?"
 smitten Spoken with the rank cynicism of someone who has never felt love in His heart.
 p I... don't actually know. Nobody's ever asked me what I wanted before.
-
-label whatWouldYouDo
-p I mean, you sort of did last time, but this is different.
-
-label whatWantCont
+    p I mean, you sort of did last time, but this is different. /// check
 hero She doesn't even know what she wants. You may have had her all wrong. What if this whole thing is just a misunderstanding? What if she doesn't *want* to end the world?
 n You're so *gullible!* Is the only thing you've ever doubted the actual truth?
 p I think I want to leave? And I think...
@@ -293,6 +267,8 @@ p I dunno. What do you want to do?
 
 label depersonTruth1
 truth Suddenly, the Princess starts to look... less *real.* Her eyes are just a bit too wide, too shiny, and the shadows that fall across her seem too... simple. She smiles sweetly up at you.
+    quietcreep /// ifnum-1
+jumpto quietCont
 
 label depersonComment1
 hero She can't *just* want to make us happy.
@@ -301,6 +277,8 @@ smitten It makes sense to me. That's all I want for her, so of course she'd want
 label depersonTruth2
 truth She starts to look like a poorly-drawn parody of herself, almost two-dimensional. Her eyes are unnaturally wide, her hair composed of simple shapes, her hands replaced by simple balls that only vaguely suggest fingers.
 truth It's almost as if the light barely casts a shadow on her at all.
+    quietcreep /// ifnum-1
+jumpto quietCont
 
 label depersonComment2
 hero Is she... *broken?* What's going on?
@@ -308,6 +286,8 @@ n What's going on is she's *lying* to you, only she isn't a good liar. Are you s
 
 label depersonTruth3
 truth She loses all color, now completely paper-white and somehow drawn even more poorly than before.
+    quietcreep /// ifnum-1
+jumpto quietCont
 
 label depersonComment3
 hero This isn't right! I don't know what's going on but this isn't right!
@@ -341,12 +321,10 @@ label saveWorldDecon
 label silentWorldDecon
 p Oh, we've been over this one. No! I do not want to end the world!
 
-label endWorldNoDeperson
-p I don't know. Was I supposed to have ended the world? Would that have made you happy?
-
-label endWorldDeperson
-p Do you want to end the world?
-hero She's just parroting our questions, isn't she?
+label endWorldDeconFirst
+    p I don't know. Was I supposed to have ended the world? Would that have made you happy? /// ifnum-0
+    p Do you want to end the world? /// ifnumnot-0
+        hero She's just parroting our questions, isn't she? /// ifnumnot-0
 
 label saveEndWorldDeconBlade
 n Good answer. Now slay her.
@@ -489,7 +467,9 @@ n Yes, I suppose you are going to do that, aren't you? You cross the room, openi
 quietcreep
 n And then you step outside.
 p We did it! What should we do now?
+jumpto quietCont
 
+label leaveCont
 hero ... Where did everything go?
 hero ... Where did He go?
 smitten Oh, is he gone? I hadn't noticed. I was too busy staring deep into our beloved's eyes.
@@ -528,16 +508,10 @@ n She's not "wooed" by you because "staying here and building a life together" i
 label stayReturn
 p Okay!
 
-label stayNonchalanceBlade
-n Yes, she is extremely nonchalant about it, isn't she? Need I remind you that the blade is still here, sitting on the basement floor? Please. Everyone is counting on you.
-jumpto nonchalanceJoin
-
-label stayNonchalanceNoBlade
-n Yes, she's extremely nonchalant about it, isn't she? Need I remind you the blade is still here? Please. Everyone is counting on you.
-label nonchalanceJoin
+label stayNonchalance
+    n Yes, she is extremely nonchalant about it, isn't she? Need I remind you that the blade is still here, sitting on the basement floor? Please. Everyone is counting on you. /// hasblade
+    n Yes, she's extremely nonchalant about it, isn't she? Need I remind you the blade is still here? Please. Everyone is counting on you. /// noblade
 hero I think it's too late for that...
-jumpto stayStartUpstairs
-
 label stayStartUpstairs
 p But I... I... we would have to be here forever.
 p I don't know you.
@@ -627,6 +601,7 @@ n Everything goes dark, and you die.
 
 label quietCont
 truth The textured nothingness creeps closer.
+    jumpto leaveCont /// check
 
 label slayAgainAttempt
 truth You have already tried that.

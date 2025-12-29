@@ -19,7 +19,7 @@ stringautojump StartParaCold
 
 label spectreStartParaCold
 cold Does there have to be a way out? For all we know, this is just how things are.
-switchjump startPossessAsked
+    jumpto startPossessAsked /// check
 hero No. No, I can't accept that. I know she just killed us, but... what if we free her? What if we help her leave? We haven't tried that yet!
 cold That does sound like it could be interesting. Or at least different.
 jumpto startParaSpectreJoin

@@ -26,20 +26,17 @@ n And you dodge.
     stubborn And we fight back. /// checkvoice
         n And you fight back. /// checkvoice-stubborn
 p Oooh. You're fast! But let's see how fast you really are.
+    jumpto coldStubborn /// checkvoice-stubborn
+n You dodge the Princess's blows for as long as you can, sustaining only nicks and cuts as you attempt to avoid her blades. But it isn't long before you're winded, your feet a little slower, your gait a little clumsier.
+n That's all the opening she needs. She skewers you.
+label coldJoin
+p Gotcha!
 
 label coldStubborn
 n You and the Princess enter a quick and vicious exchange, each of you wounding the other, but neither landing a fatal blow.
 stubborn Yes! Yes! This is exactly it!
 n But the dance couldn't last forever. All it takes is a single clumsy moment. She skewers you.
 jumpto coldJoin
-
-label coldNoStubborn
-n You dodge the Princess's blows for as long as you can, sustaining only nicks and cuts as you attempt to avoid her blades. But it isn't long before you're winded, your feet a little slower, your gait a little clumsier.
-n That's all the opening she needs. She skewers you.
-jumpto coldJoin
-
-label coldJoin
-p Gotcha!
 
 label stubbornMenu
 hero I guess we have a weapon.
@@ -100,18 +97,16 @@ hunted Dodge. Now!
 n Fails to hit you.
     stubborn Haha, yes! /// checkvoice
 p Oooh, you're a fast one! That's fun! But I think I can get even faster.
-
-label oppoStubborn
-stubborn Now hit her back!
-n You dodge and parry and strike and are struck, her nicking your flesh and you nicking her skin to reveal shining metal below. But eventually you slip up. You lose the pattern, just for a moment.
-n A blade flashes through the air, and she skewers you.
-
-label oppoNoStubborn
+jumpto oppoStubborn /// checkvoice-stubborn
     broken I'm going to be quiet for a bit now. Let me know when we die again. /// checkvoice
     para I don't like the way she said that. /// checkvoice
 n You dodge and parry and dodge and parry in an endless repeating pattern, but you can only keep it up so long before making a mistake. The pattern breaks for just long enough.
 n She skewers you.
 
+label oppoStubborn
+stubborn Now hit her back!
+n You dodge and parry and strike and are struck, her nicking your flesh and you nicking her skin to reveal shining metal below. But eventually you slip up. You lose the pattern, just for a moment.
+n A blade flashes through the air, and she skewers you.
 
 label brokenMenu
 n You throw your hands in the air and drop your blade.
@@ -142,7 +137,7 @@ hunted I'd rather not.
     para Maybe it'll work! Maybe it'll throw her off. I know I'd be thrown off if she started flirting with us. /// checkvoice
         cheated I'm fine with it. Let's see where this goes. /// checknovoice-stubborn
 
-label smittenTheLook
+label TheLookSmitten
 hero *The Look?*
 hunted The Look. We've all used it.
 cheated Yeah, do you not know about The Look?

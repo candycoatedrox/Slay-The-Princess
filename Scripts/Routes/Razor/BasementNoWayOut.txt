@@ -95,7 +95,7 @@ cheated I could go either way, honestly.
         contra Yeah, because you'd be into it. /// checkvoice-para
         para No comment. /// checkvoice
 
-label smittenTheLook
+label TheLookSmitten
 hero *The Look?*
 contra Yeah. The best flirts know how to flirt without saying anything. We just have to let her know, right?
 

@@ -1,8 +1,7 @@
 hero If He doesn't remember what happened, then maybe it's best to keep it that way.
 cheated This whole thing's a crock of shit. She's just going to pull a knife out of nowhere and stab us again.
 n Stabbed to death? Well, you won't have to worry about that. The Princess is unarmed.
-
-label shareNormal
+    jumpto shareRevival /// ifsource-revival
 cheated Yeah, that's exactly what you told us last time. When we asked you if you were sure she didn't have a weapon on her, you said you were "positive" she didn't.
 cheated But it turns out she did. Because when we charged her, she started stabbing us. To *death!*
 jumpto shareJoin
@@ -13,6 +12,7 @@ label shareJoin
 n Calm down. I assure you she has no weapons, so there's no reason to fear her. You were made for this job. You'll do just fine.
 
 label assume
+    jumpto assumeRevival /// ifsource-revival
 hero We did exactly what you said...
 n Sounds to me like you probably had some kind of elaborate nightmare, in which case I shouldn't be held accountable for what supposedly happened.
 jumpto assumeJoin
@@ -26,15 +26,14 @@ n But congratulations. You've been given a chance to actually do this right.
 label assume2
 cheated Screw this. Who cares what happened to everyone else? She's not going to play fair, so we should do what we can to save ourselves and just *get out of here.*
 n At least you know not to trust her, but you do realize that "everything and everyone" includes you, right? If you turn around and leave, you're dooming yourself as well as everyone else.
+    jumpto assume2Revival /// ifsource-revival
 hero She just caught us by surprise last time. She can't do that twice. So long as we're careful, we can win this.
-jumpto assume2Join
-
-label assume2Revival
-cheated Screw this. Who cares what happened to everyone else? She's not going to play fair, so we should do what we can to save ourselves and just *get out of here.*
-n At least you know not to trust her, but you do realize that "everything and everyone" includes you, right? If you turn around and leave, you're dooming yourself as well as everyone else.
-hero We were so close to finishing the job last time. She can't get the jump on us twice. If we're careful, we should be fine.
 label assume2Join
 n That's the spirit. Just keep that stiff upper lip and you'll save the world in no time at all.
+
+label assume2Revival
+hero We were so close to finishing the job last time. She can't get the jump on us twice. If we're careful, we should be fine.
+jumpto assume2Join
 
 label princessHowDanger
 n She just can. But she's still only a Princess. You're fully up to the task you've been given, so long as you remember that.
@@ -93,17 +92,15 @@ label stairsNoBlade
 cheated Are we really doing this without a weapon? You know she has one, right?
 n Once again, I'd like to remind you that she's unarmed. But you're right. This would be a lot easier if you had the blade. I hope you know what you're doing.
 linebreak
+jumpto stairsStartBladeJoin
 
 label stairsStart
+    jumpto stairsNoBlade /// noblade
+label stairsStartBladeJoin
 n The door to the basement creaks open, revealing what must once have been stairs. The fractured slats look as if they've been torn from their source and violently jammed into the wall.
 n The air seeping up from below has an almost metallic quality to it. Like the smell of fresh blood. And you can hear what sounds like the rhythmic scraping of metal coming from down below. If the Princess lives here, slaying her would probably be doing her a favor.
-switchjump stairsStartSharedLoop
-cheated Scraping? She's not even trying to hide her knife. It's like she wants to get in our head.
-jumpto stairsStartJoin
-
-label stairsStartSharedLoop
-cheated That's right, *scraping.* I told you she has something. I *told* you.
-label stairsStartJoin
+    cheated That's right, *scraping.* I told you she has something. I *told* you. /// sharedloop
+    cheated Scraping? She's not even trying to hide her knife. It's like she wants to get in our head. /// noshare
 n That sound could be anything. It's probably just her chains dragging across the floor. I am begging you to get out of your head.
 n Her grating voice carries up the stairs.
 p I hope you've come to rescue me. I've been stuck down here *forever.*
@@ -112,7 +109,7 @@ cheated Yeah. She thinks she's better than us. Like she doesn't even have to put
 linebreak
 n As you descend the final step, the form of the Princess comes into view, her sharp eyes following you from across the room.
 truth Her hair somehow looks sharper than last time, and the bottom of her dress is ripped. She stands with her hands behind her back.
-switchjump NOJUMP basementStartJoin
+    jumpto basementStartJoin /// checkfalse
 hero I wonder if she remembers us.
 label basementStartJoin
 p Finally, *somebody!* Quick, get me out of these chains, we're not safe here.
@@ -130,13 +127,9 @@ p What are you *waiting* for? You *are* here to rescue me, right?
 
 // Basement conversation //
 
-label loopCommentNoShare
-n "Last time?" What are you talking about?
-jumpto loopCommentJoin
-
-label loopCommentSharedLoop
-n There you go again, talking up delusions about a past-life experience that clearly didn't happen.
-label loopCommentJoin
+label loopComment
+    n There you go again, talking up delusions about a past-life experience that clearly didn't happen. /// sharedinsist
+    n "Last time?" What are you talking about? /// noinsist
 cheated Ugh. It's like the two of you are working together on this. Aren't you listening to her? She's obviously lying through her teeth.
 hero I'm terrible at spotting liars and even I can tell something's up here. We can't be the only ones who looped back to the start. Someone else has to remember, right?
 n Yes. Something is obviously "up" and we can all tell that she's lying. But the thing she's lying about is how dangerous she is, not "dimension-hopping" or "time-travel" or whatever it is you think you're doing.
@@ -184,15 +177,15 @@ label stab
 p What? *Noooo!* No, I wouldn't stab you. I am just a sweet in-no-cent Princess, trapped here for no reason!
 p And you are a brave knight who is supposed to walk up to... not-stabbing-distance to help me.
 
-label lastTime1Mutual
-p Last time? If somebody came into *my* house and tried to kill me and I cut his neck open and then he stabbed me in the heart and we both died looking in each other's eyes, well, surely I would remember that!
-jumpto lastTime1Join
-
-label lastTime1Revival
+label revivalLastTime1
 p Last time? If somebody came into *my* house and stabbed *me* to death and then I *killed him,* surely I would remember that!
 jumpto lastTime1Join
 
-label lastTime1Pathetic
+label mutualLastTime1
+p Last time? If somebody came into *my* house and tried to kill me and I cut his neck open and then he stabbed me in the heart and we both died looking in each other's eyes, well, surely I would remember that!
+jumpto lastTime1Join
+
+label patheticLastTime1
 p Last time? If somebody came into *my* house and tried to kill me and I cut his neck open, surely I would remember that!
 label lastTime1Join
 p But I *don't* remember it! So it must not have happened.
@@ -200,7 +193,7 @@ p But I *don't* remember it! So it must not have happened.
 label lastTime2
 p Would I just *lie?* Would I just lie to your face and tell you that a thing I remembered happening didn't happen just so I could *stab you again?*
 p I mean, just so I could stab you for the *first* time.
-
+    break /// checkfalse
 label lastTime2LoopComment
 cheated Aha! She slipped up there! She said again. And her taking it back doesn't count.
 n Do you hear how deranged you sound right now? Please just stop dawdling. This is only going to end with violence. Postponing the inevitable is only going to make it worse for you when it actually happens.
@@ -254,7 +247,7 @@ n This shouldn't even be a question. She absolutely has not been nice to you.
 
 label lastKill
 p But if we killed each other, then why are we here, right now, both of us normal and un-stabbed?
-
+    break /// check
 label lastKillLoopComment
 n I do have to hand it to her, that's a very good question, and it's one with a simple answer: you haven't slain her yet. So how about you get moving?
 
@@ -325,17 +318,10 @@ label initiativeEndBlade
 cheated Ah, shit. Okay. She's down an arm and we still have a weapon. I guess we'll have to use it.
 n And use it you do. But unfortunately for you, and for the entire world, you are horribly outmatched.
 n You keep pace with her for a single brief and wordless exchange before she severs your hand, and with it, your only line of defense.
-switchjump initiativeEndRevival initiativeEndOther
-
-label initiativeEndRevival
-hero She's much better at this than she was last time.
-cheated Yeah. It's unreal. Bloody cheater.
-jumpto initiativeEndJoin
-
-label initiativeEndOther
-hero She's even better at this than she was last time.
-cheated Bloody cheater.
-label initiativeEndJoin
+    hero She's much better at this than she was last time. /// check
+        cheated Yeah. It's unreal. Bloody cheater. /// check
+    hero She's even better at this than she was last time. /// checkfalse
+        cheated Bloody cheater. /// checkfalse
 p I'm going to kill you now.
 n And with a squelch, she does just that.
 linebreak
@@ -349,9 +335,7 @@ n You hear the horrible sound of metal slicing through meat.
 hero ... Whose meat? Not ours, right?!
 n Hers, at first.
 n Then yours. Your neck, specifically.
-
-label approachNonRevival
-cheated Again? Really?!
+    cheated Again? Really?! /// ifsourcenot-revival
 label approachJoin
 p Hehe!
 n You collapse to the ground, your vision swimming as you attempt to focus on her bloody blade and the limp sack of flesh that was once her arm.

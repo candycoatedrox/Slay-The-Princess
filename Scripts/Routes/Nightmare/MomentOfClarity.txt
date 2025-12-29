@@ -105,12 +105,12 @@ contra Just go around it.
 cold Just do something. It doesn't matter what.
 
 label proceedNothingAttempt
-n ... proceed? Proceed to where? I'm afraid you're going to have to be a little more specific.
 hero That's another new one. How do you keep coming up with new things? I hope this works better than nothing did.
 jumpto proceedJoin
 
-label proceedNoNothing
+label proceed
 n ... proceed? Proceed to where? I'm afraid you're going to have to be a little more specific.
+    jumpto proceedNothingAttempt /// check
 hero That's a new one. Do you think it'll work?
 label proceedJoin
 oppo Of course it'll work. He always makes the best decisions. It's why he gets to make them!
@@ -121,12 +121,12 @@ n The only object of note is a pristine blade buried in the dirt floor, a hint o
 n The blade is your implement. You'll need it if you're going to do this right.
 cold Take it. It's the only way forward.
 
-label takeBlade
 n You reach down to take the blade, but as you do, the ground beneath it shifts, the weapon sinking deep into the earth.
 n You lean over the hole and gaze into the abyss. It is so very deep.
 n Deep in the bowels of the earth, you see something staring back at you. It fills you with dread.
 hero It's her.
 para She's watching us. She never stops watching us.
+switchjump emergeRun emergeOther
 
 label emergeRun
 p There you are! My toy has finally come to finish his job.
@@ -178,9 +178,13 @@ claim end
 
 label endFirstVessel
 truth You do not have an opportunity to respond. Something has taken her away, and it's left something else in her place.
+jumpto mirrorStart
 
 label endNotFirstVessel
 truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+jumpto mirrorStart
+
+// The mirror //
 
 label mirrorStart
 broken She's gone.

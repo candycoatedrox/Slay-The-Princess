@@ -1,19 +1,20 @@
 n You're on a path in the woods -- /// interrupt
 cheated No, *fuck* that! If we're going to have to keep doing this over and over and over again, we're not starting in the *goddamn woods* every time. We're starting in the *fucking cabin!*
 n You're what?! /// interrupt
-
+pause 750 500
 n The interior of the cabin is sharp, a constricting mess of curved and battered sheet metal pushing you towards -- wait, excuse me?! What just happened? What did you just do?
 hero I feel dizzy.
 cheated Ohohoho. I guess I took us to the cabin, didn't I? Isn't *that* interesting. Who holds the cards now?
+bladeswitch start
 
-label startArmsRace
+label startBlade
 hunted The circle's getting smaller and smaller. Running isn't an option anymore. We have to fight.
     stubborn Good. It's better that way. Without a fight, no one can win, and if no one can win, then nothing has any meaning. /// checkvoice
     broken What's the point of fighting if she's just going to win every time? It hurts being sliced to pieces. We're better off just sitting up here and doing nothing. /// checkvoice
     para Yeah, but for whom? Someone or something is out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
 jumpto startJoin
 
-label startNoWayOut
+label startNoBlade
 contra Who cares about cards? You're all acting like this is about winning and losing, while this is *actually* about having fun.
     broken Is this fun for you? It's not fun for me. I don't like being sliced to pieces. /// checkvoice
     para How could you care about having fun at a time like this? There is someone or something out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
@@ -33,8 +34,9 @@ n *Sigh.* Let's just stay focused, shall we?
 n The only furniture of note is a bent metal table, a pristine blade perched -- /// interrupt
 cheated We take it.
 n Okay. Sure. You take the blade before letting me finish telling you it's there. It would be difficult to slay the Princess and save the world without a weapon.
+bladeswitch takeBlade
 
-label takeBladeArmsRace
+label takeBladeBlade
 hunted This feels right. We just have to keep our senses sharp.
 cheated That's right. We've got to be able to win eventually.
     stubborn We *will* win eventually. Hell, we might even win now. /// checkvoice
@@ -45,7 +47,7 @@ cheated That's right. We've got to be able to win eventually.
         n It isn't. I don't care whether you trust me or not, but at least trust that defeating the person who has apparently killed you twice already is a good idea. /// checkvoice-para
 jumpto takeBladeJoin
 
-label takeBladeNoWayOut
+label takeBladeNoBlade
 contra And then we throw it out the window!
 cheated What?! That blade is the only edge we have, we are not -- /// interrupt
 contra Too late! Because... we already did it, didn't we?
@@ -61,14 +63,8 @@ jumpto takeBladeJoin
 label takeBladeJoin
 cheated I'd love to get started just as much as you would, but how *are* we supposed to get down there?
 n You walk through the door. You do know what doors are, right?
-
-label mirrorCommented
-hero But there isn't a door. It's just that mirror again.
-jumpto mirrorJoin
-
-label mirrorNotCommented
-hero But there isn't a door. There's just that mirror.
-label mirrorJoin
+    hero But there isn't a door. It's just that mirror again. /// mirror2
+    hero But there isn't a door. There's just that mirror. /// nomirror2
 n There isn't a mirror. You really messed things up, didn't you? It's like you can't even see reality anymore.
     stubborn If it's in our way, let's just break it and move on. /// checkvoice
     hunted I can feel the air coming up from behind it, stinking of iron and steel. He might be right. Could be a trick. If our other senses can't feel it, then we can't trust it. /// checkvoice
@@ -112,23 +108,23 @@ label oppoWinner
 n Oh for the love of... *sigh.* The Princess stops for a moment, mulling over your deranged proposition.
 p Nah! Not interested. And don't take it the wrong way! I think you're neat. But I'm having way too much fun to stop.
 
-label oppoGoodSide
+label goodSideOppo
 p You're *already* on my good side!
 jumpto oppoStabbingJoin
 
-label oppoFacts
+label boredOppo
+p Well, *I'm* having fun! Why would I stop?
+
+label factsOppo
 p And they're good facts! Great facts! And for what it's worth, you're already on my good side!
 jumpto oppoStabbingJoin
 
-label oppoSilent
+label silentOppo
 p Well, for what it's worth, you're already on my good side!
 jumpto oppoStabbingJoin
 
 label oppoStabbingJoin
 p But that doesn't mean I'm going to not stab you. I'm having fun! Why would I stop?
-
-label oppoBored
-p Well, *I'm* having fun! Why would I stop?
 
 label oppoEnd
 linebreak
@@ -182,12 +178,12 @@ truth All of a sudden, everything comes back into focus. The Princess stands in 
 hunted I did my best.
 
 
-label smittenGorgeous
+label gorgeousSmitten
 n A rosy blush flushes in the Princess's cheeks, and a wide grin cuts across her face.
 p You're the only person I know, so that's a first! You're sweet! I like you! You're also gorgeous!
 jumpto smittenSubJoin
 
-label smittenGetYou
+label getYouSmitten
 n A rosy blush flushes in the Princess's cheeks, and a wide grin cuts across her face.
 p You're sweet! I like you too! You're probably my favorite person other than me.
 label smittenSubJoin
@@ -195,14 +191,14 @@ cheated I'll be damned. This is actually going to work, isn't it?
 p Still gonna kill you though.
 jumpto smittenJoin
 
-label smittenDinner
+label dinnerSmitten
 n A rosy blush flushes in the Princess's cheeks, and a wide grin cuts across her face.
 p Oh? Is that how it is? Yeah okay I feel that. I like you too.
 cheated I'll be damned. This is actually going to work, isn't it?
 p But why mess around with appetizers when the main course is right there?
 jumpto smittenJoin
 
-label smittenTheLook
+label TheLookSmitten
 n *Sigh.* You flash the princess *The Look.*
 n ... and a rosy blush rushes to the Princess's cheeks as she breaks into a wide grin. Unbelievable.
 p Oh? Is that how it is? Yeah okay I feel that. I like you too. Neat!
@@ -235,9 +231,8 @@ truth All of a sudden, everything comes back into focus. The Princess stands in 
 para Sorry about that. I gave into a bit of a fear response there, and I don't think it was very helpful.
 
 
-label coldMenuNoWayOut
-contra That is the worst plan I've ever heard, and I *absolutely LOVE IT.* Let's try it out! /// checkvoice
-label coldMenuJoin
+label coldMenu
+    contra That is the worst plan I've ever heard, and I *absolutely LOVE IT.* Let's try it out! /// checkvoice
 cheated Sure! Why the hell not! Let's see if we can turn off the part of us that feels things.
     broken I turned that off ages ago. /// checkvoice
         contra If you'd managed to do that, you wouldn't be such a *whiner!* /// checkvoice-broken-contra
@@ -248,10 +243,10 @@ cheated Sure! Why the hell not! Let's see if we can turn off the part of us that
         cheated Nah, I'm sick of pain. /// checkvoice-hunted
         hero Yeah, this whole thing would be a lot more tolerable if it didn't hurt so much. /// checkvoice-hunted
 
-label coldTaunt
+label tauntCold
 p Sure thing! I love a challenge. I bet I can hurt you *so much!*
 
-label coldWait
+label waitCold
 p Just standing there, huh? A bold strategy.
 
 label coldJoin
@@ -303,37 +298,25 @@ hero Oh! A new one of us.
 cheated I thought that only happens when we die. Did we die?
     contra Nah, we'd *know* if we died... right? /// checkvoice
 n You're on a -- no, you're in a -- where the hell are you?
-
-label endStartPara
-para We're dead, aren't we? We're *dead* dead. How long have we been dead? Have we been dead the whole time?
-    broken Dead, dead, dead, dead, dead. /// checkvoice
-jumpto endStartJoin
-
-label endStartBroken
-broken I think we're dead. And that's all we'll ever be. Dead, dead, dead, dead, dead.
-jumpto endStartJoin
-
-label endStartOther
-hero I don't like that we died without us knowing it. This really, really blurs some lines that I prefer not be blurred. Are we still dead? Are we alive again? How are we even supposed to know the difference?
-jumpto endStartJoin
-
-label endStartJoin
+    para We're dead, aren't we? We're *dead* dead. How long have we been dead? Have we been dead the whole time? /// checkvoice
+        broken Dead, dead, dead, dead, dead. /// checkvoice-para-broken
+    broken I think we're dead. And that's all we'll ever be. Dead, dead, dead, dead, dead. /// checkvoice checknovoice-para
+    hero I don't like that we died without us knowing it. This really, really blurs some lines that I prefer not be blurred. Are we still dead? Are we alive again? How are we even supposed to know the difference? /// checknovoice-para-broken
     cold If we didn't realize we were dead, then we made progress. Good job. /// checkvoice
 cheated Stop saying dead, all of you! We might have died a second ago, but right now we're extremely not dead.
 n This is all horribly wrong. How many times have you been here?
+bladeswitch endHowMany
 
-label endHowManyArmsRace
+label endHowManyBlade
 hunted This is four.
 jumpto endHowManyJoin
 
-label endHowManyNoWayOut
+label endHowManyNoBlade
 contra I don't actually know how to answer that question.
 hero I think he means how many times have we died.
 n Yes. That.
 contra Oh, I've lost count to be honest.
 cheated I haven't. It's four.
-jumpto endHowManyJoin
-
 label endHowManyJoin
 n No wonder everything's such a mess. This wasn't supposed to go past one.
 p I wonder what you're going to do next! You're so full of ideas and I love that.
@@ -344,14 +327,8 @@ cheated Okay. Whatever we do gets us another... us. Let's see how many we can st
     hunted As long as we keep moving. /// checkvoice
     cold Why not? It's not like dying again and again is doing us any harm. Let's see how far this little mind-hole goes, shall we? /// checkvoice
     smitten We'll win her heart eventually! /// checkvoice
-
-label endPara
-    para It's going to get so loud in here. How are we going to keep it all straight? /// checkvoice
-
-label endBroken
-    broken Oh, great. So it's going to get even more crowded. Even more deluded voices that think we might stand any kind of chance. /// checkvoice
-
-label endVoicesJoin
+    para It's going to get so loud in here. How are we going to keep it all straight? /// checkvoice ifstringnot-paranoid
+    broken Oh, great. So it's going to get even more crowded. Even more deluded voices that think we might stand any kind of chance. /// checkvoice ifstringnot-broken
     oppo Flawless idea if you ask me. Such a go-getter attitude! /// checkvoice
     contra Who cares about getting better than her. Let's do something weird. Like really, really weird. /// checkvoice
 p Come onnnnnn! Show me something new!
@@ -359,6 +336,7 @@ p Come onnnnnn! Show me something new!
 
 label endMenu
 truth It doesn't work, and she kills you again. And again, and again, and again. Your memory blurs as your consciousness leaps from life to life to life, holding only snippets of the conflict that transpires.
+stringautojump Montage
 
 // Ending montage //
 
@@ -400,45 +378,54 @@ label montageEnd
 linebreak
 n And then everything goes dark, and you die.
 
-label montageBroken
+label brokenMontage
+linebreak
 broken What's the point? It's all the same.
 n She skewers you.
 p Oh, don't give up on me just yet! You gotta keep going!
 
-label montageCold
+label coldMontage
+linebreak
 cold She's going to kill this body either way. So stop feeling what it feels.
 n She skewers you.
 p Ooooh. Not bad! Real tough!
 
-label montageContra
+label contrarianMontage
+linebreak
 n And then you skewer youself.
 p I thought we both understood that dying doesn't get you anywhere.
 contra Huh. That didn't do much of anything. We're tougher than I thought.
 
-label montageHunted
+label huntedMontage
+linebreak
 hunted Just keep dodging. Just keep dodging. Just keep dodging.
 n She skewers you.
 p What's the point of avoiding me if you're not going to fight.
 
-label montageOppo
+label opportunistMontage
+linebreak
 oppo Let's appeal to her better nature! We haven't tried that. I'm sure she'll listen to reason.
 n She skewers you.
 
-label montagePara
+label paranoidMontage
+linebreak
 para Just panic! Flee!
 n She skewers you.
 p No, you don't get to escape! That's not how this works!
 
-label montageSkeptic
+label skepticMontage
+linebreak
 skeptic None of this is working! Think. Think!
 n She skewers you.
 
-label montageSmitten
+label smittenMontage
+linebreak
 smitten Compliment her on those gleaming blades! There's nothing better than a capable woman.
 n She skewers you.
 p You're cute.
 
-label montageStubborn
+label stubbornMontage
+linebreak
 stubborn We just have to hit her harder!
 n She skewers you.
 p You'll have to be trickier than that.

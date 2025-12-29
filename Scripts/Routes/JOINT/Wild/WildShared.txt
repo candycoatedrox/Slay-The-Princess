@@ -10,6 +10,12 @@ n *Sigh.* Let's get our facts straight. What happened last time? What could you 
 pint The thing that sits beyond our edge speaks His logic into us. He tries to grasp at things that cannot be grasped.
 pint He tries to stare with wide pupils at that which can only be held from the corner of the eye or with a passing glance.
 n Shut up! The rest of you, talk. What happened? What did you *do?*
+sourceswitch StartVoiceSwitch
+
+label beastStartVoiceSwitch
+    jumpto startBeastBrokenStubborn /// checkvoice-broken
+    jumpto startBeastBrokenStubborn /// checkvoice-stubborn
+jumpto startBeastContraOppo
 
 label startBeastBrokenStubborn
     hunted We're part of her because she consumed us. Can she hear us if we talk? /// checkvoice-stubborn
@@ -34,18 +40,21 @@ label startBeastJoin
 n She *ate* you? And now you're convinced that you're stuck together? What a mess.
 jumpto startJoin
 
-label startWitchCheated
+label witchStartVoiceSwitch
+stringautojump StartWitch
+
+label cheatedStartWitch
 oppo There's no reason to keep secrets. We tried fighting her, and then she made the cabin itself come to life and squished us into paste.
 cheated All that unfairness... what if it was just pushing us in the right direction? Helping us become this? It's almost worth being squished by a cabin.
 jumpto startWitchJoin
 
-label startWitchParanoid
+label paranoidStartWitch
 para Why does he want to know? I don't mind where we are right now. It's... rather nice. I can hear what everyone is thinking.
 oppo There's no reason to keep secrets. We tried leaving her in the basement, but she made the cabin come to life, and it crushed both of us into a fine paste. And now we're here. Existing.
 oppo And for what it's worth, I'm with him. This is nice.
 jumpto startWitchJoin
 
-label startWitchStubborn
+label stubbornStartWitch
 oppo Sure. There's no reason to keep secrets. Someone decided to go in guns blazing last time, and that someone got us killed.
 stubborn And what should we have done, let you draw things out with all that... conniving? Everyone knows a straight fight is best. It's honest.
 oppo There's no need to bicker about it, I wasn't trying to start anything. I don't mind what happened to us. I kind of like it now that we aren't actively being crushed.
@@ -74,8 +83,7 @@ n She's the only one who poses a threat to the world, and she's trying to make y
 label passive
     contra No, please, anything but that! /// checkvoice
 n You can't just passively exist forever. Not with her. That isn't how it works.
-
-n I don't care if it was the cabin that killed you, because it seems to me like she was the reason the cabin could even do something like that in the first place.
+    n I don't care if it was the cabin that killed you, because it seems to me like she was the reason the cabin could even do something like that in the first place. /// ifsource-witch
 
 label abomination
 pint How could you say that? Look at us. We're almost everything. And we can be even more than this. Don't you feel our potential?
@@ -93,10 +101,9 @@ label pushMenuJoin
 n You exist as your own self, complete with your own physical body separate from hers.
 hero I'm not so sure about that. We were something like that once, but now...?
 n And if thinking about that isn't enough to startle you back to reality, consider this:
-
-n She committed a murder-suicide using a living cabin.
-hero ... Right. That was unpleasant. We weren't big fans of that. I think.
-oppo I'm sure I would have had us do the same thing if we were in her shoes. We really do make a great pair. He's probably just jealous.
+    n She committed a murder-suicide using a living cabin. /// ifsource-witch
+        hero ... Right. That was unpleasant. We weren't big fans of that. I think. /// ifsource-witch
+        oppo I'm sure I would have had us do the same thing if we were in her shoes. We really do make a great pair. He's probably just jealous. /// ifsource-witch
 
 label princessAsk
 pint We push back. It may feel like He's everywhere, but presence isn't strength. Otherwise he would have torn us apart by now. There must be a crack in the walls of this prison. There must be a way for us to be free from him.
@@ -104,10 +111,8 @@ n She's trying to use you. After everything she's done, you should be able to se
 
 // The Narrator pushes you to separate //
 
-label witchPushEarlyJoin
-n You need to remember that you and the Princess are enemies. Don't let bygones be bygones. Remember what she's done to you, and how much it hurt.
-
 label witchPush
+    n You need to remember that you and the Princess are enemies. Don't let bygones be bygones. Remember what she's done to you, and how much it hurt. /// check
 pint We can't go back to that! We can't go back to the doubting and the hatred and the schemes! Not after being something as beautiful as this.
 pint Doesn't all that conflict feel so far away right now? So petty? We've been posed against each other by something that understands the strength of our unity.
 oppo Spoken like... honestly, a real puppetmaster. Have we considered that maybe she's the one trying to trick us?
@@ -124,10 +129,8 @@ jumpto pushStubborn
 label witchGaze
 pint Please... don't make us remember how we were.
 
-label beastPushEarlyJoin
-n The Princess ate you last time. Stop passively... *vibing* with a literal predator, and remember that you're enemies. Remember what she's done to you, and how much it hurt.
-
 label beastPush
+    n The Princess ate you last time. Stop passively... *vibing* with a literal predator, and remember that you're enemies. Remember what she's done to you, and how much it hurt. /// check
 pint We can't go back to that! We can't go back to the fear and the hunger and the pain. Not after being something as beautiful as this.
 pint Doesn't all that conflict feel so far away right now? So petty? We've been posed against each other by something that understands the strength of our unity.
 hunted I can feel a thumping. A heartbeat.
@@ -297,7 +300,8 @@ hero It's... *beautiful.*
     stubborn This was all of us. Fighting as one. /// checkvoice checknovoice-oppo
 truth And then it's gone.
 pint Where did it go? Why is everything so cold?
-claim networkEnd
+linebreak
+firstswitch networkEnd
 
 label networkEndFirstVessel
 truth But you never get the chance to answer her. You turn to see her gone behind you, replaced by something else.

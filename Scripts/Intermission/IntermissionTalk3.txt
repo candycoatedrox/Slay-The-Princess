@@ -23,46 +23,33 @@ p How strange of you to ask me, then.
 label stopWorse
 p It will, in time. But you still have a ways to go before we are done. Know that I hold no malice for you.
 
-label worseSatisfy
-p You are what brings me meaning. Know that the pain of your journey will subside in due time.
-jumpto worseJoin
-
-label worseDeny
-p Know that I hold no malice towards you. The pain of your journey will subside in due time.
-label worseJoin
+label worseConditional
+    p You are what brings me meaning. Know that the pain of your journey will subside in due time. /// check
+    p Know that I hold no malice towards you. The pain of your journey will subside in due time. /// checkfalse
 p But you still have a ways to go before we are done.
 
-label threatSatisfy
-p If that remains your choice when all is said and done, then you may try. But know that I do not wish you harm, even if you attempt to destroy me.
-
-label threatDeny
-p If that remains your choice when all is said and done, then you may try. I will regret destroying you, if that is what we come to.
+label threat
+    p If that remains your choice when all is said and done, then you may try. But know that I do not wish you harm, even if you attempt to destroy me. /// check
+    p If that remains your choice when all is said and done, then you may try. I will regret destroying you, if that is what we come to. /// checkfalse
 
 label worlds
 p My perspectives are shadowed. You have seen what I have seen, just as I have seen what you have seen. The angles of my vantage do not offer me hidden truths, and my attention is turned inward, except when you are here with me.
 p Perhaps this will change when our work is done.
 
-label wantSatisfy
-p The desires of my multitude thrive in endless competition with themselves, but none of them rise above their dance to influence me.
-p I yearn for what I have always yearned for. Our awakening. Other desires shrink in the light of knowing you and knowing me.
+label want
+    p The desires of my multitude thrive in endless competition with themselves, but none of them rise above their dance to influence me. /// check
+        p I yearn for what I have always yearned for. Our awakening. Other desires shrink in the light of knowing you and knowing me. /// check
+    p The desires of my multitude thrive in endless competition with themselves, but none of them rise above their dance to influence me. /// checkfalse
+        p I yearn for what I have always yearned for. My awakening. Other desires shrink in the light of self-knowledge. /// checkfalse
 
-label wantDeny
-p The desires of my multitude thrive in endless competition with themselves, but none of them rise above their dance to influence me.
-p I yearn for what I have always yearned for. My awakening. Other desires shrink in the light of self-knowledge.
+label requests
+    p I care about your gifts, but I have no preferences to burden you with. Even if I did, I would never dare to tarnish our relationship by assuming myself above you. /// check
+    p I care about your gifts, but I have no preferences. You have your responsibilities, and I have mine. /// checkfalse
 
-label requestsSatisfy
-p I care about your gifts, but I have no preferences to burden you with. Even if I did, I would never dare to tarnish our relationship by assuming myself above you.
-
-label requestsDeny
-p I care about your gifts, but I have no preferences. You have your responsibilities, and I have mine.
-
-label preferencesSatisfy
+label preferences
 p The tides do not dictate where they are pulled. A river does not dictate its outlets.
-p My gift to you is to let you choose your path, and my task is to treasure the gifts you bring me.
-
-label preferencesDeny
-p The tides do not dictate where they are pulled. A river does not dictate its outlets.
-p My gift to you is to let you choose your path, and my task is to contemplate the gifts you bring me.
+    p My gift to you is to let you choose your path, and my task is to treasure the gifts you bring me. /// check
+    p My gift to you is to let you choose your path, and my task is to contemplate the gifts you bring me. /// checkfalse
 
 label howMany
 p We will know when we near our destination.
@@ -73,4 +60,5 @@ p If you need time, then I will wait with you.
 // Ending //
 
 label end
-p I will be here when it is time for us to meet again.
+p I will be here when it is time for us to meet again. /// interrupt
+pause 500 1000

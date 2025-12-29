@@ -1,7 +1,5 @@
-n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting fuzzy...
-
-label narratorCh3
-n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy...
+    n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting fuzzy... /// ifnum-2
+    n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy... /// ifnum-3
 
 label voices
 hero Wh-what's going on. Where are we?
@@ -16,22 +14,15 @@ para It's finally happened, hasn't it? We've finally cracked. /// checkvoice
 oppo I like it! Seems like it's got some great acoustics... /// checkvoice
 cheated That son-of-a-bitch flipped over the table, didn't he? /// checkvoice
 
-label unwoundFirst
-truth The world around you is unwound, its physical matter replaced by a textured nothingness. It is quiet.
-jumpto unwoundJoin
-
-label unwoundAgain
-truth The world around you is unwound, its physical matter replaced by a textured nothing. It is quiet. You have been here before. Memory returns.
-jumpto unwoundJoin
-
-label unwoundVesselsClaimed
-truth The world around you is unwound, its physical matter replaced by a textured nothing. You find yourself in The Long Quiet once again. Memory returns.
-label unwoundJoin
+label unwound
+    truth The world around you is unwound, its physical matter replaced by a textured nothing. You find yourself in The Long Quiet once again. Memory returns. /// notfirstvessel
+    truth The world around you is unwound, its physical matter replaced by a textured nothing. It is quiet. You have been here before. Memory returns. /// firstvessel ifnumnot-0
+    truth The world around you is unwound, its physical matter replaced by a textured nothingness. It is quiet. /// firstvessel ifnum-0
 truth There is a distant rumbling, a sound of many sounds. Undulations pulse louder as something Other comes close.
 
 // First aborted vessel //
 
-label firstAbort
+label abort0
 truth Feelers probe across the fabric of reality. Extremities find your consciousness and wrap themselves around it. You are no longer alone.
 truth Resistance. Fingers drag claws across the glass surface of your soul.
 truth Frustration. "This vessel is full of you. It is useless to us if it doesn't bring more gifts."
@@ -42,7 +33,7 @@ jumpto firstAbortJoin
 label firstAbortDream
 truth It's not.
 
-label firstAbortVesselsClaimed
+label abort0VesselClaimed
 truth You already know what dwells in the empty spaces.
 truth Feelers probe across the fabric of reality. Extremities find your consciousness and wrap themselves around it. You are no longer alone.
 truth Confusion. "Why are you here? I am unfinished."
@@ -55,37 +46,33 @@ truth A wagging finger. "There is only so much thread in this place. Do not wast
 
 // Second aborted vessel //
 
-label secondAbort
+label abort1
 truth That which dwells in the empty spaces contracts across the edges of your mind again. She is furious.
 truth Betrayal. "Every door you close on me is a door you close on yourself. Do you want to linger here, entwined with a creature you taught to hate you forever? Eternity never ends."
 truth Cold spite. "Our infinities shrink into something less. I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I hate you I --" /// interrupt
 
 // Third aborted vessel //
 
-label thirdAbort
+label abort2
 truth Desperate pleas. "I do not hate you. I am sorry I said I hate you. I do not have to hate you. We can still leave this place together."
 truth An offering. "We can be friends."
 truth Ecstasy. You are elated. You have never felt more elated than you feel now. Everything is good. You cannot remember what it is like to feel anything other than euphoric joy.
 truth A reminder. "We can be worse than enemies."
 truth Agony. You are torn into a million pieces, and you feel pain in each of them. You have never felt more miserable than you feel now. You cannot remember what it is like to feel anything other than anguish.
 truth Mercy. You are elated again. You have never felt more elated than you feel now. In contrast to the agony you've suffered, this elation is better than all of the other elation you have experienced.
-
-label thirdAbortCont
-truth Round eyes looking up at you. "I need vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation."
-
-label thirdAbortVesselsClaimed
-truth Round eyes looking up at you. "I need more vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation."
+    truth Round eyes looking up at you. "I need vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation." /// firstvessel
+    truth Round eyes looking up at you. "I need more vessels so that I can be finished. I cannot find them on my own, for they are me. You are the only one who can do this. You are our only salvation." /// notfirstvessel
 
 // Fourth aborted vessel //
 
-label fourthAbort
+label abort3
 truth Dejection. Feelers limp against your soul. "Why?"
 truth Long silence. A hollow heart.
 truth "I don't want to see you."
 
 // Fifth aborted vessel //
 
-label fifthAbort
+label abort4
 truth The feelers hold you in a gentle caress.
 truth Resignation. "I cannot stop you. But our spool is nearly taut."
 truth A warning. "If you come here again, we will be here forever."

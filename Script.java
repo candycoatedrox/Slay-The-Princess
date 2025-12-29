@@ -924,6 +924,7 @@ public class Script {
         boolean firstVessel = (currentCycle == null) ? false : currentCycle.isFirstVessel();
         boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
         String chapterSource = (currentCycle == null) ? "" : currentCycle.getSource();
+        boolean threwBlade = (currentCycle == null) ? false : currentCycle.threwBlade();
         boolean sharedLoop = (currentCycle == null) ? false : currentCycle.sharedLoop();
         boolean sharedLoopInsist = (currentCycle == null) ? false : currentCycle.sharedLoopInsist();
         boolean mirrorComment = (currentCycle == null) ? false : currentCycle.mirrorComment();
@@ -966,6 +967,10 @@ public class Script {
                 if (!chapterSource.equals(args[1])) return false;
             } else if (m.startsWith("ifsourcenot-")) {
                 if (chapterSource.equals(args[1])) return false;
+            } else if (m.equals("threwblade")) {
+                if (!threwBlade) return false;
+            } else if (m.equals("nothrow")) {
+                if (threwBlade) return false;
             } else if (m.equals("sharedloop")) {
                 if (!sharedLoop) return false;
             } else if (m.equals("noshare")) {
@@ -1512,6 +1517,11 @@ Generic modifiers available for all lines (except comments and labels):
         Checks whether the "source" of the active chapter is equal to the given value before running the line.
   - ifsourcenot-[value]
         Checks whether the "source" of the active chapter is not equal to the given value before running the line.
+
+  - threwblade
+        Checks whether the player threw the blade out the window before running the line.
+  - nothrow
+        Checks whether the player did not throw the blade out the window before running the line.
 
   - sharedloop
         Checks whether the Narrator knows that the player has been here already before running the line.

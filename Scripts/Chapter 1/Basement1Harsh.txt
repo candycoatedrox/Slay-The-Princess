@@ -88,8 +88,7 @@ n You ignore the trembling in your hands and tighten your grip on the blade.
 p You poor thing, your hands are shaking. Are you... scared of me? Because you should be.
 label steelJoin
 n You step forward, your grip on the blade tightening as you steel your resolve.
-
-label steelHesitated
+    jumpto steelCont /// check
 p Oh? No talking, then? Fine. What even makes you think you can kill me?
 label steelCont
 p I'm probably chained up in this basement for a reason, right? And if that knife is the only weapon you have, you'll have to get close enough to use it.
@@ -329,6 +328,7 @@ label awkward
 p I know. I just said that. Now why are you here to kill me?
 
 label awkwardReasons
+    jumpto awkwardReasonsSteeled /// check
 p And yet you dropped your knife the second you saw me.
 jumpto awkwardReasonsJoin
 
@@ -341,12 +341,13 @@ n Don't give away the game, and don't let her distract you. That's exactly what 
 p I'm right, aren't I? So who put you up to this?
 
 label awkwardDeflect
-p She laughs, her voice dripping with pity.
+truth She laughs, her voice dripping with pity.
+    jumpto awkwardDeflectSteeled /// check
 hero That laugh...! I think I'm in love.
 n Stop it.
+jumpto awkwardDeflectJoin
 
 label awkwardDeflectSteeled
-p She laughs, her voice dripping with pity.
 hero She was just threatening us a second ago. Am I the only one here unnerved by that perfect little laugh?
 n I'll take that as a sign that you're finally coming around to reason.
 label awkwardDeflectJoin
@@ -371,9 +372,11 @@ n She is. I'm sure of it.
 label name
 n She hesitates before answering.
 p You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really.
+numautojump vague
 
 label howLong
 p Too long.
+numautojump vague
 
 label vague1
 n Note the lack of detail. You can't trust her.
@@ -397,13 +400,13 @@ p I see. The silent treatment. You know, if you don't share with me, I'm not goi
 
 label shareTask
 n Don't just *tell* her that!
+    jumpto shareTaskSteeled /// check
 p Is that why they threw me down here? But I don't want to hurt anyone. I like the world! I think.
 p I don't remember much about it, to be honest. I've been down here a long time.
 hero Just how long has she been down here?
 jumpto shareJoin
 
 label shareTaskSteeled
-n Don't just *tell* her that!
 p That's cute. Do you believe that? Do you think I'm some sort of... monster?
 label shareJoin
 p If I'm supposed to be capable of ending the world, then how did I wind up here, chained to a wall? Have they told you why I'm allegedly so... dangerous?
@@ -504,6 +507,7 @@ linebreak
 
 label slayFromLock
 n It's never too late to do the right thing. Now hurry.
+linebreak
 
 label slayHesitate
 n Doubt, unfortunately, clouds your thoughts as you attempt to run her through.
@@ -602,14 +606,13 @@ label rescue
 linebreak
 n You walk up to the chains binding the Princess to the wall and give them a tug.
 n They're large and heavy, far too solid for you to even imagine trying to break them apart.
+    jumpto rescueHowFree /// check
+p I'm guessing you don't have the key.
+hero Maybe it's somewhere upstairs.
+jumpto rescueJoin
 
 label rescueHowFree
 p If you don't have the key, maybe you should go looking for it. I'm sure it's somewhere upstairs.
-jumpto rescueJoin
-
-label rescueStandard
-p I'm guessing you don't have the key.
-hero Maybe it's somewhere upstairs.
 label rescueJoin
 n Doubtful. Whoever locked the Princess away down here intended for her to never see the light of day. They wouldn't have just left the key to her chains somewhere in the cabin.
 

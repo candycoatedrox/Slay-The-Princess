@@ -1,34 +1,35 @@
 import java.util.Arrays;
 
 public enum Voice {
-    NARRATOR("The Narrator"),
-    NARRATORPRINCESS("The Narrator", true), // Used when the Tower possesses the Narrator
-    PRINCESS("The Princess"), // Used in Wild and Princess and the Dragon
+    NARRATOR("The Narrator", "narrator"),
+    NARRATORPRINCESS("The Narrator", "narrprincess", true), // Used when the Tower possesses the Narrator
+    PRINCESS("The Princess", "princess"), // Used in Wild and Princess and the Dragon
 
-    HERO("Voice of the Hero"),
-    BROKEN("Voice of the Broken"),
-    CHEATED("Voice of the Cheated"),
-    COLD("Voice of the Cold"),
-    CONTRARIAN("Voice of the Contrarian"),
-    HUNTED("Voice of the Hunted"),
-    OPPORTUNIST("Voice of the Opportunist"),
-    PARANOID("Voice of the Paranoid"),
-    SKEPTIC("Voice of the Skeptic"),
-    SMITTEN("Voice of the Smitten"),
-    STUBBORN("Voice of the Stubborn"),
+    HERO("Voice of the Hero", "hero"),
+    BROKEN("Voice of the Broken", "broken"),
+    CHEATED("Voice of the Cheated", "cheated"),
+    COLD("Voice of the Cold", "cold"),
+    CONTRARIAN("Voice of the Contrarian", "contrarian"),
+    HUNTED("Voice of the Hunted", "hunted"),
+    OPPORTUNIST("Voice of the Opportunist", "opportunist"),
+    PARANOID("Voice of the Paranoid", "paranoid"),
+    SKEPTIC("Voice of the Skeptic", "skeptic"),
+    SMITTEN("Voice of the Smitten", "smitten"),
+    STUBBORN("Voice of the Stubborn", "stubborn"),
 
     // Princess and the Dragon Voices
-    UNKNOWNEXT("???", true),
-    HEROEXT("Hero", true),
-    COLDEXT("Cold", true),
-    OPPOEXT("Opportunist", true),
+    UNKNOWNEXT("???", "dragon", true),
+    HEROEXT("Hero", "heroext", true),
+    COLDEXT("Cold", "coldext", true),
+    OPPOEXT("Opportunist", "oppoext", true),
 
     // Two voices speaking at once
-    NARRSTUB("The Narrator and the Voice of the Stubborn"),
-    STUBCONT("Voices of the Stubborn and Contrarian"),
-    PARASKEP("Voices of the Paranoid and Skeptic");
+    NARRSTUB("The Narrator and the Voice of the Stubborn", "narrstub"),
+    STUBCONT("Voices of the Stubborn and Contrarian", "stubcont"),
+    PARASKEP("Voices of the Paranoid and Skeptic", "paraskep");
 
     private final String dialogueTag;
+    private final String shorthand;
     private final boolean external; // Used in Tower, Princess and the Dragon
 
     public static final Voice[] TRUEVOICES = {HERO, BROKEN, CHEATED, COLD, CONTRARIAN, HUNTED, OPPORTUNIST, PARANOID, SKEPTIC, SMITTEN, STUBBORN};
@@ -38,29 +39,41 @@ public enum Voice {
     /**
      * Constructor
      * @param tag the "dialogue tag" that appears at the beginning of the Voice's dialogue lines
+     * @param shorthand the shorthand name for this Voice
      * @param external whether the Voice is external to the player's head
      */
-    private Voice(String tag, boolean external) {
+    private Voice(String tag, String shorthand, boolean external) {
         this.dialogueTag = tag;
+        this.shorthand = shorthand;
         this.external = external;
     }
 
     /**
      * Constructor
      * @param tag the "dialogue tag" that appears at the beginning of the Voice's dialogue lines
+     * @param shorthand the shorthand name for this Voice
      */
-    private Voice(String tag) {
-        this(tag, false);
+    private Voice(String tag, String shorthand) {
+        this(tag, shorthand, false);
     }
 
-    // --- ACCESSORS ---
-    
+    // --- ACCESSORS & CHECKS ---
+
     /**
      * Accessor for dialogueTag
      * @return the dialogue tag for this Voice
      */
     public String getDialogueTag() {
         return this.dialogueTag;
+    }
+
+    /**
+     * Accessor for shorthand
+     * @return the shorthand name for this Voice
+     */
+    @Override
+    public String toString() {
+        return this.shorthand;
     }
     
     /**
@@ -98,6 +111,11 @@ public enum Voice {
         }
     }
 
+    /**
+     * Returns the Voice corresponding to the given ID-String
+     * @param characterID the ID-String of the Voice
+     * @return the Voice corresponding to the given ID-String
+     */
     public static Voice getVoice(String characterID) {
         switch (characterID) {
             case "n":

@@ -19,14 +19,11 @@ label startJoin
 n So you've been here before. Of course you've been here before. What count is it this time? Two?
 cold It's our third. What gave it away?
 n Your open discussions.
+sourceswitch Start2
 
-label drownedStart2Insist
-skeptic The last time we were here you were in full-blown denial about the possibility of us restarting. What changed? Have you just been... pretending to forget?
-jumpto drownedStart2Join
-
-label drownedStart2NoInsist
-skeptic You came around on that awful fast. Have you just been pretending to forget every time?
-label drownedStart2Join
+label drownedStart2
+    skeptic The last time we were here you were in full-blown denial about the possibility of us restarting. What changed? Have you just been... pretending to forget? /// sharedinsist
+    skeptic You came around on that awful fast. Have you just been pretending to forget every time? /// noinsist
 n I'm afraid not. Whatever other versions of me you've met in those other lifetimes were just that. Other versions of me. I just wish I'd been the first.
 skeptic So you knew how all this worked. Why didn't you ever tell us? We could have used it to our advantage.
 n That's because there is no using it to your advantage. The more information you have, the harder it will be for you to succeed.
@@ -35,14 +32,8 @@ cold And now she's dead. And I doubt she'll be able to do much of anything from 
 n You already slew her? And you survived?
 cold Yes.
 n Then why, pray tell, are you here?
-
-label drownedStart2Stopped
-hero Oh, I know that one! The gruff one stopped our heart, and we died.
-jumpto drownedStart2Join2
-
-label drownedStart2Suicide
-hero Oh, I know that one! We killed ourself.
-label drownedStart2Join2
+    hero Oh, I know that one! The gruff one stopped our heart, and we died. /// check
+    hero Oh, I know that one! We killed ourself. /// checkfalse
 n Why?!
 cold Because you thought trying to stuff us away in a corner for eternity was a suitable reward.
 cold Was it not? What better reward is there than eternal bliss? You should have been happy.
@@ -155,6 +146,7 @@ skeptic It's like she isn't even there.
 cold See? We killed her.
 skeptic You're right. Maybe she doesn't reset like us. She certainly doesn't look the same as she did last time.
 n Before you can make a move, the figure is gone, vanishing behind the door on the far side of the room.
+jumpto askDoor
 
 label burnedCabin
 n The interior of the cabin feels dry and brittle. Ancient dust-covered wooden beams hold up a crumbling ceiling like mummified ribs, each elegantly carved detail of the stately building preserved in an extended stasis. Everything here has been kept safe and dry and lifeless.
@@ -163,19 +155,17 @@ hero Is that... *her?*
 smitten Our beloved. So she does live!
 cold She doesn't look very alive to me.
 n Before you can make a move, the figure is gone, vanishing behind the door on the far side of the room.
+jumpto askDoor
 
-label prevMirror
-hero The door at the end of the room? But there isn't a door. There's just that damn mirror again.
-    skeptic Ah, yes. The mirror that he "can't see." /// checkvoice
-    smitten Ah, yes. The mirror. So we can see the monster we've become. If it even lets us look before it vanishes, too. /// checkvoice
-jumpto mirrorJoin
-
-label noPrevMirror
-hero The door at the end of the room? But there isn't a door. There's a mirror, that's it.
-label mirrorJoin
+label askDoor
+    hero The door at the end of the room? But there isn't a door. There's just that damn mirror again. /// mirror2
+        skeptic Ah, yes. The mirror that he "can't see." /// mirror2 checkvoice
+        smitten Ah, yes. The mirror. So we can see the monster we've become. If it even lets us look before it vanishes, too. /// mirror2 checkvoice
+    hero The door at the end of the room? But there isn't a door. There's a mirror, that's it. /// nomirror2
 n The mirror? Is this some kind of joke? Did you all plan this out before dying? There is no mirror. There's the door to the basement, the table, and the pristine blade -- /// interrupt
 n Huh. That's strange. There's supposed to be a pristine blade. Why isn't there a pristine blade?
 cold Maybe it's gone because we've already killed her with it.
+sourceswitch CabinCont
 
 label drownedCabinCont
 hero But we had it with us when we died. And besides, everything else has reset. Why wouldn't the blade have reset, too?
@@ -187,16 +177,10 @@ smitten Perhaps it's gone because an oh-so-deserved guilt has started to worm it
 label cabinContJoin
 n I suppose it doesn't matter why the blade is gone, but you're going to have to find it if you're going to do this right. So why don't you march over to that door, and make your way down to the basement?
 
-label drownedAskMirrorTouched
-skeptic If this is anything like last time, the mirror will disappear as soon as we try and touch it. I'm sure the door is just behind it.
-jumpto askMirrorJoin
-
-label drownedAskMirrorCommented
-skeptic If this is anything like last time, the mirror will disappear when we try and go to the basement. I'm sure the door is just behind it.
-jumpto askMirrorJoin
-
-label drownedAskMirrorFirst
-skeptic Maybe the mirror isn't real. Maybe it is real, and He's lying through his teeth to stop us from looking into it. But it seems like whatever we want to do, our next step is on the other side of the room.
+label drownedAskMirror
+    skeptic If this is anything like last time, the mirror will disappear as soon as we try and touch it. I'm sure the door is just behind it. /// mirrortouch
+    skeptic If this is anything like last time, the mirror will disappear when we try and go to the basement. I'm sure the door is just behind it. /// mirrorask nomirrortouch
+    skeptic Maybe the mirror isn't real. Maybe it is real, and He's lying through his teeth to stop us from looking into it. But it seems like whatever we want to do, our next step is on the other side of the room. /// nomirror2
 jumpto askMirrorJoin
 
 label burnedAskMirror
@@ -204,15 +188,12 @@ smitten As if something as flimsy as a missing door would stop us on our sacred 
 label askMirrorJoin
 n You're clearly hallucinating. But I'd rather not get into it with you right now. The door to the basement is on the far side of the room, whether you can see it or not.
 
-label mirrorPrevTouched
-n You make your way to the door at the end of the room, stopping just in front of it. You must think you're looking at that 'mirror' you mentioned earlier. The one that doesn't exist. *Sigh.* Just reach forward and open the door.
-hero It's still so hazy. We should try and clean it off.
-cold Yes, trying to touch it does seems to be the magic spell to get it out of our way.
+label approachMirror
+n You make your way to the door at the end of the room, stopping just in front of it. You must think you're looking at that "mirror" you mentioned earlier. The one that doesn't exist. *Sigh.* Just reach forward and open the door.
+    hero It's still so hazy. We should try and clean it off. /// mirrortouch
+        cold Yes, trying to touch it does seems to be the magic spell to get it out of our way. /// mirrortouch
+    hero It's so hazy. We should try and clean it off. /// nomirrortouch
     skeptic Maybe it won't disappear this time and we'll finally get a good look at ourselves. We should explore every option. /// checkvoice
-
-label mirrorPrevNoTouch
-n You make your way to the door at the end of the room, stopping just in front of it. You must think you're looking at that 'mirror' you mentioned earlier. The one that doesn't exist. *Sigh.* Just reach forward and open the door.
-hero It's so hazy. We should try and clean it off.
 
 label wipeMirror
     smitten It's time for all of you to see what we've become. /// checkvoice
@@ -289,6 +270,7 @@ n So that's where the blade is! It's already in her heart. And yet she... isn't 
 cold She *is* dead. Have you never heard of a ghost before?
 n Oh, for the love of -- can we not waste time arguing over the semantics of what is and isn't "dead?" She is clearly *conscious,* she clearly just slammed the door on you, and she clearly has a weapon -- *your* pristine blade sticking out of her chest. This is extremely bad. Catastrophic, even.
 hero Yeah, dead or not, what are we supposed to do about her? Slaying, or, er, destroying -- if we want to be a little more *death-neutral* -- seems off the table.
+    sourceswitch BasementStart2
 
 label burnedBasementStart2
 smitten We make amends! She obviously still holds us in her heart. She's bearing a torch for us and everything!
@@ -344,7 +326,8 @@ label drownedBeg
 label drownedSorry
 p Pathetic.
 
-label drownedRush
+label drownedBlade
+label drownedDoor
 n The Princess eyes you with a disaffected gaze as you rush up the stairs, but you don't make it past the first few steps.
 n The door bursts open, a powerful wave of water crashing down towards you, and you're swept up in the flood. Your head slams into the basement wall.
 
@@ -401,6 +384,7 @@ smitten She just has a unique way of expressing things!
 
 label burnedKill
 p Dying apart kept us apart. Dying together will keep us together.
+    jumpto burnedTogetherComment /// check
 
 label burnedDie
 p It's okay. I'm going to burn, too. And then we won't hurt anymore.
@@ -408,12 +392,15 @@ cold She's right about that last part. Burning doesn't hurt forever.
 
 label burnedWrong
 p You just think you don't. Sometimes someone else makes decisions for you, and those decisions are for the best. You should know that.
+    jumpto burnedTogetherComment /// check
 
 label burnedBeg
 p You'll understand when it's over! Just like I understood after you stabbed me in the heart! Everything is okay!
+    jumpto burnedTogetherComment /// check
 
 label burnedSorry
 p I'm not mad at you. You gave me so much to think about. And it's all going to be over soon. It's all going to be better.
+    jumpto burnedTogetherComment /// check
 
 label burnedGrudgeComment
 hero She's holding a grudge.
@@ -453,21 +440,13 @@ truth But despite your best efforts, you do not die. It's time for you to leave.
 
 // Abort the vessel //
 
-label drownedAbort
-skeptic Sure. We've already seen what happens if we slay her, we might as well explore our surroundings. Get a lay of the land.
-jumpto abortJoin
-
-label burnedAbort
-smitten You can't run from your consequences forever. One way or another, you'll have to face what you've done!
-label abortJoin
+label abort
+    skeptic Sure. We've already seen what happens if we slay her, we might as well explore our surroundings. Get a lay of the land. /// checkvoice
+    smitten You can't run from your consequences forever. One way or another, you'll have to face what you've done! /// checkvoice
 quietcreep
 cold Let's see what we can find. It's bound to be more interesting than doing the same thing over again.
 n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting... fuzzy.
 hero W-what's going on? Where are we?
 cold I don't know. But it feels like... home.
-
-label drownedAbort2
-skeptic Did we do this? Is this the end of the world? Was there ever even a world to end?
-
-label burnedAbort2
-smitten Of course. Oblivion is what we deserve.
+    skeptic Did we do this? Is this the end of the world? Was there ever even a world to end? /// checkvoice
+    smitten Of course. Oblivion is what we deserve. /// checkvoice

@@ -1,0 +1,490 @@
+linebreak
+truth This time, the path is walled in on either side. The path behind you is blocked off.
+
+label notKidding
+n Last time? Last I checked there wasn't any "last time." We've just met, you and I.
+jumpto shareLoop
+
+label walls
+n What are you talking about? I'm sure those walls have always been there. It makes sense if you think about it. If there weren't any walls in the woods, someone might have gotten lost. Or, heaven forbid, someone other than you might have stumbled onto the Princess.
+    jumpto shareLoopJoin /// noshare
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+contra I don't know. I think it's more fun if He knows what we're thinking. He's like a captive audience.
+jumpto shareLoopJoin
+
+label shareLoop
+hero If He doesn't remember what happened, then maybe it's best to keep it that way.
+contra I don't know. I think it's more fun if He knows what we're thinking. He's like a captive audience.
+    contra He might have walled off everything but the path to the cabin, but I'm sure there's plenty of other ways we can ruin His day. /// check
+    contra The entire world ending wasn't enough to get rid of us. I don't think there's much He can do other than object. I wonder what else we can do to ruin His day. /// checkfalse
+label shareLoopJoin
+n If by ruining my day you mean ruining everyone's day forever, then yes, I suppose there are plenty of ways you can pull that off.
+hero The world really did end last time, didn't it? We should be careful. For all we know we just got lucky.
+n The world hasn't ended yet, and you are *never* going to slay her with that attitude. Stuff those pathetic little voices to the back of your mind and stay focused on the task ahead.
+
+label assume
+n Those are two *very* different questions, but fine. I'll indulge you if that's what it takes to get you moving.
+n Let's say for a moment that this really is the second time you've met me, or, at least, a version of me.
+n You said the world ended, right? I'm assuming that only happened because you didn't listen to me, and you should take that as more than enough evidence that I'm telling the truth about the Princess.
+contra For all we know, the world just happened to end on its own.
+hero But He's right. It did end. And what are the odds that something *else* ended it?
+n Of course she was the one who ended it. And I believe your other question was something along the lines of "what's the point of doing anything?" If you're asking that, it sounds to me like you're making the rather dangerous assumption that your actions last time around didn't have any consequences.
+hero What do you mean? Of course there weren't any consequences. Sure, the world ended, but now everyone's right back where they started. That sounds pretty consequence-free to me.
+n Yes, but, in this purely hypothetical scenario, that begs the question of *how* you got back here. Did "time" simply rewind itself, or have you found yourself in another world altogether?
+hero Are you saying that everyone from the first time around is still dead?
+n I'm saying it's possible.
+contra Who cares? If that's the case, there's got to be *millions* of worlds out there. What does one of them ending even matter?
+n Of course it matters! There were people there, and now they're gone! ... at least in this purely hypothetical scenario.
+hero I have to agree with him. On the off chance this is how things work, we should take this scenario a little more seriously.
+n Thank you.
+
+label lie
+n You know I can tell when you're lying, right? Please take this seriously. I'm begging you.
+
+label leaveWoodsAttempt
+n The wall blocks your path. It seems you have no choice but to go to the cabin.
+
+// Abort vessel //
+
+label abort
+contra Oh, that's *clever!* A little... boring, though.
+n It's *extremely* boring.
+hero Can we really do that? Can we really just do... nothing?
+n No, you can't just do nothing. You have to do *something.*
+contra All right! So it's decided. Even if it's boring, we're going to do nothing. Forever!
+linebreak
+n Congratulations, you continue to waste everyone's time and do nothing... wait, can you still hear me? Everything is getting fuzzy...
+hero What is that... weird feeling? It's like I'm barely even here anymore.
+contra Well, it's not *nothing,* that's for sure. Does that mean we messed up?
+
+// Hill dialogue //
+
+label hillDialogue
+linebreak
+truth You emerge into the clearing, now enclosed by the same walls as before. The cabin waits at the top of the hill.
+n A warning, before you go any further...
+n She will lie, she will cheat, and she will do everything in her power to stop you from slaying her. Don't believe a word she says.
+contra If we're stuck going in there, maybe we *should* believe her. Maybe she *isn't* a liar.
+n Ignore him. He's being difficult for the sake of it.
+hero Let's keep an open mind.
+
+// Cabin //
+
+label cabinIntro
+nowplaying The Stranger
+n The cabin interior is wrong, a confusing patchwork of many cabin interiors all projected across what's *almost* the same space. But it's all shifted -- an inch here, a foot there -- such that the seams are never quite visible enough for the place to make any sense.
+n The only furniture of note is a plain table, its legs all the wrong lengths, its material devoid of feature. Perched on that table is a pristine blade.
+n The blade is your implement. You'll need it if you want to do this right.
+contra If He wants us to take it, maybe we should just leave it to collect dust. Or better yet, grab it and throw it out the window! What good is a knife against a world-ending monstrosity anyways?
+hero No, we're taking the knife. H-have you seen this place? We have literally no idea what to expect, and no idea what we're dealing with.
+n I've already told you what you're dealing with. You're dealing with a *Princess.* How many times do I have to explain this incredibly simple and straightforward premise?
+hero You can't just say that! Not when everything here is so wrong.
+n Listen to me. My job is to describe facts as facts, and to guide you through your job, which is to slay the Princess, and through that action, save the entire world.
+n And if you're going to slay her, you cannot let fear creep into your heart. You cannot lose yourself before you even get to her.
+contra Ohoho! You've piqued my interest. What's going to happen if we "lose ourself?"
+n Nothing. Because you're going to pull yourself together.
+n Just ignore the stressful geometry and stay calm.
+hero How?! Even if we closed our eyes you're constantly describing it to us.
+n I'm not going to stop doing my job, so you're just going to have to get better at yours. And quickly, if you don't mind.
+contra Yes, take a deep breath. I'm all for getting under His skin, but we'll miss out on loads of fun if we shrivel up into a ball and go insane the first time we see something weird.
+contra What you're seeing here is obviously real. Just accept it and go with the flow. It really isn't hard.
+hero Okay. Okay. I'm fine.
+n Good. Now whenever you're ready, we're all waiting for you to complete a very important task.
+
+label takeBlade
+n You take the blade from the table. It would be difficult to slay the Princess and save the world without a weapon.
+contra Okay, fine. You took the knife. But you really shouldn't hold it like *that.*
+hero Then how are we supposed to hold it?
+contra The *other* way. Thumb at the bottom. We'll look much cooler and more serious if we hold it with our thumb at the bottom.
+n It really doesn't matter how you hold the blade, as long as you have it. Just make a choice.
+
+label keepGrip
+n Great. You keep your grip the way it is. Your task awaits.
+
+label reverseGrip
+n You switch your grip on the blade. Congratulations.
+contra Yes! Isn't this so much better?
+hero Okay, fine. You're right. This does look a lot better.
+n It really doesn't matter. Just get on with it and deal with the Princess already.
+
+label throwBlade
+contra Hahaha, *yes!* Do it!
+n Seriously? *Sigh.* You throw the blade at the window, glass showering the cabin as your weapon flies out into the night. I suppose you'll just have to deal with the Princess without it.
+    contra We'll be fine. Don't worry about it. What's the worst that could happen, the world ends? Been there, done that. /// sharedloop
+    contra We'll be fine. Don't worry about it. What's the worst that could happen, the world ends? Oh well. If the Princess wasn't going to do it, the heat death of the universe was going to come for it eventually. /// noshare
+hero I'm not so sure. This place is already messing with my head. It would be much better if we had a weapon.
+n What's done is done. Good luck, "hero."
+
+// Ask about the mirror //
+
+label askMirror
+contra Ooh! We should look at ourselves. Wouldn't that be fun?
+n You won't be looking at yourself because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
+
+label askMirrorStart
+contra You insisting it isn't there just makes me want to look at it even more.
+
+label mirrorGone
+contra And now it's gone. You know that taking the mirror away from us isn't going to change things, right? We'll find it again, and then we'll see whatever it is that you don't want us to see.
+
+// Stairs //
+
+label stairsStart
+n The door to the basement creaks open, revealing a web of branching staircases all built from unidentifiable materials.
+n Nothing here seems to belong, and the closer you examine your surroundings, the more confused you get, your head throbbing with the effort of making sense of this place. None of the stairs even seem to go anywhere, let alone down.
+n The air here has a sickening, almost sludge-like miasma to it, the kind of indiscernible quality that comes from the blending together of every scent there is at once. An odor that is simultaneously everything and yet the sum of it all coalescing into a thick, nauseating nothing.
+n If the Princess lives here, slaying her is probably doing her a favor.
+n Her voice, a disquieting collage of tone and personality, drags up the stairs.
+p Hello? HI. What are you doing here? Are you here to -- KILL.
+hero Mmm. No. No thank you.
+contra Oh, don't be such a baby!
+hero I don't want to do this. Let's just turn around and leave. This feels wrong, this feels like a trap, like whatever we do we're gonna die.
+bladeswitch stairsStart
+
+label stairsStartNoBlade
+hero We don't even have a weapon...
+label stairsStartBlade
+contra But we already tried turning around and leaving, didn't we? And He threw up a wall. No way to go but forward, and whatever choice we make, whatever she is, we know one thing for sure.
+hero And what's that?
+n That the fate of the world hinges on your success?
+contra There'll still be plenty of ways to ruin His day.
+
+label stairsNonSpecific
+truth You have to pick a staircase.
+
+label stairsLeaveAttempt
+contra If we try that, He'll just keep throwing up walls. Come on, just pick a staircase already!
+
+label harshStairs
+n You step to the left. The path is cruel against your feet, the impact of each step sending pulsing vibrations up your legs until there's nothing left in them to feel.
+n The air around you grows colder the further you progress, at first a barely-noticeable drop, quickly evolving into a numbing cold.
+n Your toes feel like blocks of ice, your breaths puff out in clouds of condensed vapor.
+n You shudder against it as you continue down the stairway, losing yourself in the bone-deep chill.
+jumpto stairsJoin
+
+label neutralStairs
+n You step onto the center staircase. Paths wind out around you in all directions, each step branching into its own staircases which branch into their own staircases and so on. You aren't quite sure if yours is taking you up or down, but at the very least it's taking you somewhere.
+n You concentrate on where you are, careful not to stray onto any of the many splitting branches that tempt you on all sides. You wouldn't want to have to backtrack to yours once you'd made a decision that took you someplace else.
+n And so you take one careful, focused step after another. One foot down, another foot down, another after that. You lose yourself in following the correct pattern, in following what looks to you to be the true path, the one that cuts straight down. Or up. Or maybe sideways.
+n But no matter the direction it goes, it certainly is the most true path, you know that much.
+jumpto stairsJoin
+
+label gentleStairs
+n You step to the right. The path feels soft and reassuring against your feet. The stairs almost seem to cradle you as you make your way down, like they're guiding your heels from one step directly to the next. You barely have to extend any effort to descend, the stairway doing most of the work for you, and you don't feel like there's any concern that you might slip or tumble or lose your way.
+n But the further you go, the deeper you sink in. First it's like a lovely plush carpet, your toes digging down and barely hitting any resistance at all. But soon enough you're fighting just to keep your knees from sinking out of sight.
+n The softness threatens to swallow you whole, to wrest control of your body and surround you in a false ethereal bliss, pretending to save you from the cruelties of choice and consequence.
+n It's slow-going, but you manage to fight against the overwhelming urge to fall back into the comfort and nothingness, the very struggle to continue forward consuming your every thought.
+jumpto stairsJoin
+
+label stairsJoin
+linebreak
+n You slowly lose sense of yourself the further you go.
+n Time disappears, and you can feel yourself begin to untether.
+n Physical sensations dull and then vanish, until the only things experienced are the endlessly repeating patterns and emotions of the journey. A continuous march forward to a destination long forgotten.
+linebreak
+n Consumption and betrayal. Skepticism and blind devotion. Rivalry and submission. Terror and longing. Pain and unfamiliarity. And at the heart of it all, an emotion that can only be described as -- /// interrupt
+linebreak 2
+stringautojump BasementStart
+
+label harshBasementStart
+p Are you just going to stand there?
+jumpto basementStartJoin
+
+label neutralBasementStart
+p Can I help you?
+jumpto basementStartJoin
+
+label gentleBasementStart
+p Are you okay?
+jumpto basementStartJoin
+
+label basementStartJoin
+hero What -- what the hell was that?! Wh-what happened to us?
+contra I feel so... strange. Like I'm fundamentally different, but also... still the same person I was at the top of the stairs.
+contra Oh well! That was a trip but now it's over. Time to get back to our old devilish ways.
+n The Princess, eyes bright but otherwise shrouded in darkness, watches you impatiently from the other side of the basement. Don't forget why you're here.
+contra And why are we here again? In case you weren't listening, I'm afraid I lost myself on the way down.
+n *Sigh.* You're here to -- /// interrupt
+hero He's just being an ass. We remember. Though I'm... still not sure if we should trust you. Let's talk to her for a bit. Try and get our bearings. She seems... normal.
+
+// Comment on new schism //
+
+label schism2Comment
+n As the Princess speaks again, it's almost as if she fractures, and where there was once just one of her, there is now another.
+contra We can do that?!
+hero I don't like this. It's those cabins all over again. Can... can we put her back?
+    jumpto schism2CommentSharedInsist /// sharedinsist
+    jumpto schism2CommentSharedLoop /// sharedloop
+n "Again?" Have you been here before?
+hero Should we tell Him?
+contra Nah. Let Him stew.
+hero Right. I'm telling Him. Yeah, we've "been here before." But we never went to the cabin. We just... turned around and left, until...
+n Until?
+hero It's hard to describe. Until the only thing we could see was the same cabin going on forever? And then you told us that the world ended and we died. And then we woke up, and I'm pretty sure you're familiar with all the rest of it.
+jumpto schism2CommentJoin
+
+label schism2CommentSharedInsist
+n You said "the world ended" last time you were here, didn't you?
+contra Yeah, what of it?
+jumpto schism2CommentJoin
+
+label schism2CommentSharedLoop
+n You said you'd been here before, right? What exactly happened last time?
+contra Does it matter?
+n Yes, it matters! But I'm not going to waste any more time prying out details if you're going to be so irritating about it.
+label schism2CommentJoin
+n It seems to me like you saw something you weren't supposed to have seen. If only you'd listened to whatever words of wisdom you were given in that other reality. *Sigh.* But what's done is done, isn't it?
+n Whatever you saw last time? Unsee it. Whatever thoughts weaseled their way into your head? Unthink them, if it's not already too late. You have a job to do here, and you need to do it *now.*
+contra New plan! Let's see if we can make even more of her.
+
+label schism3Comment
+hero I don't think we're going to be able to put her back.
+contra It kind of hurts to think about it, doesn't it? It's like everything we say just multiplies her.
+n It certainly looks that way. So please, for the love of everything, stop asking her questions, and stop stalling. You're obviously just making things worse.
+
+label schism4Comment
+contra Okay. This was fun for a bit, but we can't even really interact with her, can we? What's the point of asking questions if all we're going to get is a million answers?
+hero I can't even follow what's going on anymore.
+contra We need to get out of here. This whole place is making me itch.
+
+label schism5Comment
+n This is reaching its breaking point. If you don't act now, there will be nothing in here but her. Take a deep breath and focus up. You can do this.
+hero But how do we decide what to do? Can there even be a right choice when all of them are so different?
+n Stop overthinking it. Your drifting thoughts have clearly been part of the reason this situation has gotten out of hand. If you're trying to do the right thing, there's only ever been the one option, and that option is slaying her.
+contra Just do something! Do anything! Do all of it if that's what you want. This place is *HELL* and it's only getting worse!
+
+// Dialogue menu //
+
+label harshSorryOpening
+p Yeah. I know. I've been watching you stare at me for a long, long time.
+n The shadows recede, revealing the Princess's face.
+contra I don't think she likes us!
+hero Wouldn't you be skeptical of someone stumbling in here if you were her? We lost ourselves the second we stepped into this place. I don't know how long she's been here, but I can't imagine it'd be easy for her to trust anyone."
+hero Those eyes, though... they're so... sharp.
+n It's just deception. Don't buy into it. You can do this.
+
+label neutralSorryOpening
+p And yet here you are. How strange. Do you remember anything at all? Do you know why you're here? Do you know me?
+n The shadows recede, revealing the Princess's face.
+hero She's so... blank. I have no idea who she is.
+contra Isn't that fun? A new puzzle for us to take apart.
+n If she's keeping her cards close to her chest, it's because she wants to deceive you.
+
+label gentleSorryOpening
+p That's okay. Sometimes I forget where I am too.
+n The shadows recede, revealing the Princess's face.
+hero She's so warm. And friendly...
+n It's deception. Don't buy into it.
+
+label harshSorry
+p I'm tired of waiting for an answer.
+
+label neutralSorry
+p How strange. So why are you here?
+
+label gentleSorry
+p It's okay. Don't worry. Sometimes I get lost here too.
+
+
+label harshMore
+p And what's that supposed to mean? Are you trying to get under my skin?
+
+label neutralMore
+p There must be something wrong with you. I'm the same as I was a moment ago.
+
+label gentleMore
+p Do you need help? Not that there's much I can do chained up like this, but I'm the only one down here, so if you need anything I'll do my best.
+
+label emoMore
+p I don't feel like I've gotten any bigger..."
+
+label monsterMore
+p It must be fear creeping into your heart. You know you can't stop me.
+
+label moreSchism
+n She fractures again.
+hero I don't like where this is going.
+n Neither do I. Which is why you need to slay her now before things get more complicated than they already are.
+bladeswitch more
+
+label moreNoSchism
+hero Huh. And here I was expecting her to split again. Is that it? What do we do now?
+n You slay her.
+bladeswitch more
+
+label moreBlade
+n You could always start by stabbing her.
+hero ... Which her?
+n Any of them.
+contra I don't know about you but I'm sure glad we took that knife with us. I can't believe someone suggested you toss it out the window. Can you imagine?
+
+label moreNoBlade
+n You could always start by retrieving the blade...
+    hero The one that he made us throw out the window?
+    contra I wasn't the one who threw it. /// threwblade
+        hero Oh come on, you told us to! Don't try to pass the blame now that it's come back to bite us. /// threwblade
+        contra Well, if I'd known we'd be dealing with this, maybe I wouldn't have been so hasty with my suggestions. /// threwblade
+    hero Can we even leave this place? I don't like thinking about what might happen to us if we have to go back... *through* those stairs. /// nothrow
+        n Well that's where the blade is. If you want it, you'll have to go and get it. /// nothrow
+
+
+label harshName
+p You can address me as Your Royal Highness, or Her Majesty. Any honorific should do, really.
+
+label neutralName
+p Princess.
+
+label gentleName
+p You can call me Princess, if you'd like...
+
+label emoName
+p It doesn't matter. I've been down here for so long. What's the point of a name if there's no one around to use it?
+
+label monsterName
+p I don't need a name. My name is whatever hushed whispers follow in the wake of my devastation.
+
+label nameFollowUp
+contra None of them have names!
+n How astute. I told you she was untrustworthy.
+
+
+label harshFirstWeird
+p What, like you need me to hold your hand and tell you everything's okay? You're not really cut out for this, are you? Why are you even here?
+
+label gentleFirstWeird
+p I don't know what happened to you, but you look like you're in one piece now. But I understand. Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either.
+
+label harshWeird
+p You're not really cut out for this, are you? Why are you even here?
+
+label neutralFirstWeird
+label neutralWeird
+p I don't remember what it was like before I was in this place. Why would I know what happened to you?
+
+label gentleWeird
+p Sometimes I feel like I'm being pulled apart, too. It's so terrifying down here. But at least now you're not alone, and I'm not alone, either.
+
+label emoWeird
+p We're probably stuck down here forever, aren't we? There's no way out, and barely a way in...
+
+label monsterWeird
+p I thought they would send something better to deal with me. If the stairs managed to chew you up, I will devour you.
+
+
+label harshReason
+p Maybe it's because I'm dangerous.
+
+label neutralReason
+    p Is this a quiz? You're the one who came down here, and with a sharp, sharp knife, too. /// hasblade
+    p Is this a quiz? If you're here, then surely you know why I'm here. /// noblade
+
+label gentleReason
+p I don't know why I'm here, but there has to be a reason, right? You don't just lock a Princess away in a place like this without a reason. I wish I knew what it was.
+
+label emoReason
+p But you know, right? You have to know. You're the only other person I've ever seen, or at least the only one I can remember. Don't give me false hope. Please just end this already. One way or another, just do it.
+
+label monsterReason
+p Don't be coy. We both know why I'm locked away here. I'm a monster, and the second I get out of this place, I'm going to end the entire world.
+
+
+label harshThreatShare
+p And you believe that? Do you think I'm some sort of... monster?
+
+label neutralThreatShare
+p I don't have any weapons. And I'm chained to a wall. Do I look like someone that could end the world? Do I look like a monster?
+
+label gentleThreatShare
+p But I don't want to hurt anyone. I like the world! I think. You... you don't think I'm some sort of monster, do you?
+
+label emoThreatShare
+p I don't know. Maybe that's true. I probably shouldn't be given the chance anyway. If you were sent here to kill me, maybe you should just get it over with.
+
+label monsterThreatShare
+p Because I am. Everything you've heard about me is true, and I am going to lay waste to everything. Starting with you.
+
+
+label harshFirstWhatDo
+p I don't think what I'd do really matters, does it?
+
+label neutralFirstWhatDo
+p I don't think I can answer that question in a way you'd find meaningful.
+
+label gentleFirstWhatDo
+p Are you looking for the truth, or are you looking for the 'right' answer?
+
+label harshWhatDoA
+p What do you want me to say? That I'd be a good person?
+
+label harshWhatDo
+p I'm not going to dance for you.
+
+label neutralWhatDoA
+p I could tell you that I'd lead a quiet life in the woods or that I'd open an orphanage or that I'd do any other number of "good" things that I'm sure you think you want to hear.
+
+label neutralWhatDo
+p I'm a prisoner here, and whether or not you shoved me down here, you're practically my captor at this point. Anything I'd say is tainted by that.
+
+label gentleWhatDoA
+p I just want to live my life.
+
+label gentleWhatDo
+p You either trust me or you believe that I'm dangerous. What I say won't change how you already feel about me.
+
+label emoWhatDo
+p If you want to put an end to me, then put an end to me.
+
+label monsterWhatDo
+p Besides, you already know what I'm going to do.
+
+label whatDoFollowUp
+hero Not a single real answer...
+    contra At least aside from Miss Blood-and-Destruction. It's infuriating, isn't it? /// check
+    contra It's *infuriating,* isn't it? /// checkfalse
+contra Whose buttons are there for us to press...? Whose skin is there for us to get under...?!
+hero Not exactly how I'd put it, but I don't disagree. There must be something we can do. Asking questions just seems to make things worse.
+
+label genericFracture
+n She fractures again.
+
+// Ending //
+
+label endingStart
+n Wait... that's not right.
+contra Go on...
+n You take a step forward. Your foot lands. But it lands... different. You experience a firm footfall, a gentle tread, a confident stride.
+n You can feel yourself rupture. The room spins, your perception multiplying in a sickening kaleidoscope as your very self is pulled in incomprehensibly many directions.
+    n All at once you charge forward, knife gleaming to slay the Princess, just as you strike at her bindings and leave her to languish alone. /// hasblade
+    n You find the blade suddenly in your hands. All at once you use it to strike at her bindings as you remain upstairs and slay her and leave her to languish alone. /// noblade
+n Is this what the end of the world looks like? What an unbearable mess...
+contra But this... w-we can't --
+hero ... Do you not have anything *witty* to say? I could use a good bit of wit right now.
+contra No, I don't! Because this isn't fun! How are we supposed to have fun if everything is happening at the same time? It's the same as nothing happening, and nothing is *excrutiating!*
+n Luckily for all of us, nothing, and everything, doesn't go on forever. The world, and the Princess, collapse in on themselves before it all --
+linebreak
+hero ... Falls apart?
+contra I think He's gone.
+hero We were never going to salvage this, were we?
+truth The Princess in front of you is all wrong, multiple faces and bodies smashed together in ways you can't begin to make sense of. Their skin stretches and contorts, veins bulging. They have too many fingers on too few hands. The pristine blade still sticks out of one of their chests, the face above it staring blankly into the distance.
+quietcreep
+p What happened to us? What are we? There are parts of us that are dead, and the others.... they just don't fit.
+p We can feel them moving around in spaces they don't belong. It's all so uncomfortable.
+p Did you do this? Did we do this? Can... can you pull us back apart? Can you fix us?
+contra We should help her. I think... *we* did this.
+hero How... surprisingly sincere.
+contra I didn't actually think our actions had... consequences.
+hero It's a little late for regret, isn't it?
+linebreak
+p Please?
+
+label endSilentFirstVessel
+truth But you don't know if she had the chance to hear your silence. She's gone, replaced with something else.
+
+label endSilentNotFirstVessel
+truth But you'll never know if she hears your silence. She's gone. Memory returns.
+
+label endReplyFirstVessel
+truth But you don't know if she had the chance to hear your reply. She's gone, replaced with something else.
+
+label endReplyNotFirstVessel
+truth But you'll never know if she hears your reply. She's gone. Memory returns.

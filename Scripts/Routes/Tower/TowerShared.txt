@@ -4,6 +4,7 @@ broken What does it matter what He knows? There's nothing we can do to stop her.
 n She is *not* going to kill you unless you let her. But slaying the Princess and saving the world is going to be much more difficult than it has to be if you spend the whole time second guessing yourself.
 
 label assume
+    jumpto assumeUnharmed /// ifsource-unharmed
 broken Of course we died. She didn't feel pain. She didn't feel much of anything, did she? And she broke every bone in our body before she decided to let us die.
 jumpto assumeJoin
 
@@ -28,6 +29,7 @@ hero Can we tone down the pessimism just a smidge?
 broken I'm not being a pessimist. I'm just being realistic.
 hero You're being annoying.
 n Just ignore their bickering, and whatever you do, don't "pledge yourself to her." I cannot stress enough how absolutely *catastrophic* that would be for everyone. Yourself included.
+    jumpto hillDialoguePessimistJoin /// check
 
 label princessSpecial
 broken Who cares if *you* think we're special? As far as I can tell, the only thing special about us is that we get to experience painfully dying all over again.
@@ -42,6 +44,7 @@ jumpto pessimismComment
 // Hill dialogue //
 
 label hillDialogue
+    jumpto princessHowDangerPessimist /// check
 broken Lying? Cheating? Why would she even bother? She didn't need to do anything like that last time.
 hero She caught us off-guard last time. We'll be fine. Let's just keep our wits about us.
 n At least one of you still has a shred of sense. Just make sure you listen to *him* and not that... whiner.
@@ -54,7 +57,7 @@ n So please, try to ignore *both* of those knuckleheads and focus on saving the 
 // Abort attempt //
 
 label abortStart
-broken You're right. We should just leave. There's nothing we can do to stop her, so we might as well enjoy what little time we have left.
+broken You're right. We *should* just leave. There's nothing we can do to stop her, so we might as well enjoy what little time we have left.
 
 label abortReturn
 broken So much for getting out of here...
@@ -103,18 +106,20 @@ label stairsNoBlade
 hero No blade this time? Yeah. Maybe she'll be more receptive if we're unarmed.
 broken Blade. No blade. It doesn't matter.
 linebreak
+jumpto stairsStartJoin
 
 label stairsStart
+    jumpto stairsNoBlade /// noblade
+label stairsStartJoin
 n The door to the basement creaks open, revealing a spiral staircase, its steps almost as deep as you are tall. The smell of incense drifts up from below. For a moment, you almost feel at ease.
-broken Huh. This is actually kind of nice.
+broken Huh. This is actually.... kind of nice.
 n It's still a stone basement. If the Princess lives here, slaying her is probably doing her a favor.
 n Her booming voice rolls up the stairs.
 p Is that a guest I hear? Don't linger on the stairs. *Come down and witness me.*
 hero You weren't kidding when you said it was "booming." She wasn't like this last time.
-
+    jumpto stairsJoin /// hasblade
 label stairsStartNoBlade
 n You shouldn't have come down here unarmed.
-
 label stairsJoin
 broken We need to get down there. She wants us to see her. We... need to see her.
 hero Should we be worried about your sudden change in attitude? Just a few minutes ago you were going on about how pointless everything was, now you *want* to go down there?
@@ -184,31 +189,30 @@ p I could feel its fundamental truth awaken me.
 p The collapse of the old is a necessary prelude to the birth of the new, and the world as it is now is overdue for alterations.
 p It's time for me to seize my destiny, and you, little bird, will help me seize it.
 hero Well that gives away the game, doesn't it?
-switchjump startKnowsDestinySharedLoop startKnowsDestinyNoShare
+    jumpto startKnowsDestinySharedLoop /// sharedloop
+n It does. But why did she say "the last time we met?" That's not right. That can't be right.
+hero She's right. We've been here before.
+broken And we've died here before. Pitifully. We might as well do what she asks of us and help her. She's inevitable. Can't you feel it?
+hero He's being melodramatic, but he's not exactly wrong, is he? What are we supposed to do to stop her?
+n Well I'll be damned. That's not good.
+label startKnowsDestinyJoin
+n *Sigh.* Okay. First thing's first, you're going to have to stuff those pessimistic thoughts some place far far away and commit yourself to what needs to be done.
+n The stakes of the situation should be perfectly clear to everyone now. And if you're going to save the world, you have to have faith that you can pull this off. You can't win a battle that you've already lost in your mind.
 
 label startKnowsDestinySharedLoop
 n It certainly does. And beyond that, it more than lends credence to our conversation in the woods. I don't love the thought that in some other reality you failed to destroy her, but what's done is done, and I can only hope it helped you learn a valuable lesson.
 n You are the only one who can deal with her. And if you don't... well, she's let you know what will happen, hasn't she?
 broken Then you shouldn't have trusted us with her destruction. She is inevitable. Can't you feel it?
 hero He's being melodramatic, but he's not exactly wrong, is he? What are we supposed to do to stop her?
-jumpto startKnowsDestinyjoin
+jumpto startKnowsDestinyJoin
 
-label startKnowsDestinyNoShare
-n It does. But why did she say "the last time we met?" That's not right. That can't be right.
-hero She's right. We've been here before.
-broken And we've died here before. Pitifully. We might as well do what she asks of us and help her. She's inevitable. Can't you feel it?
-hero He's being melodramatic, but he's not exactly wrong, is he? What are we supposed to do to stop her?
-n Well I'll be damned. That's not good.
-label startKnowsDestinyjoin
-n *Sigh.* Okay. First thing's first, you're going to have to stuff those pessimistic thoughts some place far far away and commit yourself to what needs to be done.
-n The stakes of the situation should be perfectly clear to everyone now. And if you're going to save the world, you have to have faith that you can pull this off. You can't win a battle that you've already lost in your mind.
+label startBlade
+    jumpto startBladePathetic /// ifsource-pathetic
+p The last time we met, you couldn't even scratch me. And yet here you are again, trying to succeed where you've already catastrophically failed.
+jumpto startJoin
 
 label startBladePathetic
 p The last time we met, you tried to kill me. And here you are again, trying to succeed where you've already catastrophically failed.
-jumpto startJoin
-
-label startBlade
-p The last time we met, you couldn't even scratch me. And yet here you are again, trying to succeed where you've already catastrophically failed.
 jumpto startJoin
 
 label startNoBlade
@@ -216,9 +220,7 @@ p The last time we met, you tried to kill me. And yet here you are again, this t
 label startJoin
 p What draws you back here beyond the empty halls of death?
 p SPEAK.
-
-label startShareSwitch
-switchjump startSharedLoop
+    jumpto startSharedLoop /// sharedloop
 n "The last time we met?"
 n Nobody should have "met" her before this. You should be the first. You're the only one I trust to deal with her.
 broken Then you shouldn't have trusted us. There was nothing we could do to stop her then, and there's nothing we can do to stop her now.
@@ -431,8 +433,7 @@ n As you finish crossing the room, you fall to your knees at the Princess' feet,
 n The Princess kneels down, lifting your chin with her finger as her face lowers to yours.
 p Your devotion is misplaced. You've surrendered to delusion. But something about your defiant spirit speaks to me. You are different than you were before.
 p Perhaps, if you've learned your lesson, I can spare you from the release of death.
-
-label advance2Offer
+    jumpto advance2NoOffer /// check
 p There is a place at my side for you, if you'll have it. Not as an equal. But as something worthy to be kept. A priest, perhaps. Or a pet.
 hero Well that's demeaning, isn't it?
 jumpto advance2Join
@@ -447,6 +448,7 @@ n At least one of you is sane. She's within striking distance, and she's only ne
 
 label advancePledge
 p That's right... I can feel your heart opening to me.
+    jumpto advancePledgeShare /// checkfalse
 
 label advancePledgeShare
 p And there's what you've been chasing. The motivation that dragged you across the floor, bleeding and choking.

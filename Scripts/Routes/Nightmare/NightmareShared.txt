@@ -5,6 +5,7 @@ para Shit.
 n I think you'll find yourselves very hard pressed to keep any secrets from me. Not that it matters right now, because like I said, this is the first time we've met. Still, I'd rather not get off on the wrong foot. We've a world to save, after all.
 
 label assume
+    moodSwitch assumeFled /// ifsource-fled
 para We couldn't trust *either* of you. And as far as I'm concerned, we still can't.
 hero All we did was lock her away.
 n And how'd that work out for you?
@@ -75,27 +76,17 @@ label cabinIntro
 nowplaying The Nightmare
 n The interior of the cabin is plain, the smooth wood of the walls almost featureless. The only furniture of note is a lone table, knocked on its side in the corner of the room. A pristine blade stands between you and the open, inviting basement doorway.
 n The blade is your implement. You'll need it if you want to do this right.
-switchjump cabinIntro2SharedLoop
-para Hold on. What happened to the door?
-label cabinIntro2Join
+    para Hold on. What happened to the door? There was a door here last time. /// sharedloop
+    para Hold on. What happened to the door? /// noshare
 hero It's just an empty frame...
 para She's already gotten out, hasn't she? And she's ready for us. She's been *waiting.* Can't you feel her eyes on us?
 n I'm going to need all of you to pull yourselves together. The Princess has *not* already gotten out, but if you keep getting stuck in your head like this, you're going to struggle to get the job done.
 n So. Deep breath in, deep breath out. Your task awaits, and only you can do it.
 
-label cabinIntro2SharedLoop
-para Hold on. What happened to the door? There was a door here last time.
-jumpto cabinIntro2Join
-
 label cabinDifferent
 hero *Very* different.
-para I'm not the only one who sees her in the window, right? She knows that we're here.
-label cabinDifferentJoin
-
-label cabinDifferentAskedMirror
-hero *Very* different.
-para *He* changed it, didn't He? It's like He's trying to make us doubt our reality.
-jumpto cabinDifferentJoin
+    para *He* changed it, didn't He? It's like He's trying to make us doubt our reality. /// mirrorask
+    para I'm not the only one who sees her in the window, right? She knows that we're here. /// nomirrorask
 n Calm down. Maybe the three of you just *think* everything is different because you haven't been here before. Enough of this past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
 n So focus up. A lot's riding on this.
 
@@ -125,23 +116,24 @@ para Did *He* make it go away? Clearly there was something in there worth invest
 label stairsNoBladeSoft
 para We should have taken the knife. I don't think going down there unarmed is going to do us any favors.
 linebreak
+jumpto stairsStartJoin
 
 label stairsNoBladeHarsh
 para We should have taken the knife again. I don't think she's going to take an olive branch. We need something sharper.
 linebreak
+jumpto stairsStartJoin
 
 label stairsStart
+    moodswitch stairsNoBlade /// noblade
+label stairsStartJoin
 n You cross over the threshold, and onto a series of isolated steps suspended in darkness.
 para More eyes, too. You never mention the eyes!
 n The air seeping up from below reminds you of fresh lightning and static, as if you're descending into a place that isn't meant for a creature of flesh and blood. If the Princess lives here, slaying her would probably be doing her a favor.
 n Her cruel and playful voice prances up the stairs.
 p I didn't think you'd come back. We're going to have a lot of fun, you and I.
-switchjump stairsStartSharedLoop
-n "Come back?" She must have you confused with someone else.
-hero You really don't remember, do you? It doesn't matter. We need a game plan. We *know* we can't just go down there unprepared.
-
-label stairsStartSharedLoop
-hero Okay. We need a game plan. Last time we were here, just being close to her was enough to kill us.
+    hero Okay. We need a game plan. Last time we were here, just being close to her was enough to kill us. /// sharedloop
+    n "Come back?" She must have you confused with someone else. /// noshare
+        hero You really don't remember, do you? It doesn't matter. We need a game plan. We *know* we can't just go down there unprepared. /// noshare
 
 label stairsThrowBlade
 hero It can't be *that* hard.
@@ -194,16 +186,13 @@ linebreak
 n As you emerge, you find yourself between two loose rows of white wooden planks, suspended in nothingness. A smattering of cobblestones, visible against the inky black of the basement, mark where the floor should be, forming vague pathways. At what seems to be the end of the room, they diverge in opposite directions. Left and right.
 para She could be anywhere. And there's nowhere for us to hide. We're completely exposed.
 hero Are you really not going to comment on how *weird* this place is?
-
-label basementReason
+    jumpto basementNoReason /// check
 n No, I'm not. Somebody needs to be the voice of reason here, and it certainly isn't you.
 hero Excuse me? I'm being *incredibly* reasonable. You're the one who's just matter-of-factly describing whatever the hell we're looking at like it's an ordinary basement.
 jumpto basementStartJoin
 
 label basementNoReason
 n No. I'm not.
-jumpto basementStartJoin
-
 label basementStartJoin
 para We're going to die down here. I don't want to die again.
 n Please stop saying that. You're only going to make things worse. Just pick a direction and start moving.
@@ -235,7 +224,7 @@ hero This is it, isn't it?
 bladeswitch startJoin
 
 label startJoinBlade
-switchjump startBladeSoft startBladeHarsh
+moodswitch startBlade
 
 label startBladeSoft
 p And you brought a little knife with you. Cute.
@@ -246,7 +235,7 @@ p And you brought your little knife with you again. Cute.
 jumpto startBladeCommentJoin
 
 label startJoinNoBlade
-switchjump startNoBladeSoft startNoBladeHarsh
+moodswitch startNoBlade
 
 label startNoBladeSoft
 p It's almost like... you *want* me to get you.
@@ -297,7 +286,7 @@ n Then you should get looking, shouldn't you?
 label whyNoKillMenu
 p Because I don't want to. And even I did, I don't have to.
 p Look at the way you're struggling to stay alive. It's taking everything you have to keep your heart pumping right now. And I'm enjoying the show.
-n The Princess leans forward, bringing her masked-lips close to your ear.
+n The Princess leans forward, bringing her masked lips close to your ear.
 p If I want to see you gone, all I need to do is break your concentration.
 para HEART. LUNGS. LIVER. NERVES. H-HEART...
 n She slowly runs her velvet glove across the base of your neck. It feels like static and then -- /// interrupt
@@ -356,19 +345,19 @@ truth She twirls in the air.
 p And then I push you, and you go tumbling all the way down those millions upon millions of battered and broken pieces of you that couldn't make the cut.
 p What then? Would you have it in you to climb again? It sounds like a lot of effort for nothing. When instead, we can just leave this place together. Hand-in-hand.
 
-label lunaticTurnOffComment1
-p I am what I am. And right now, I'm in control.
-jumpto lunaticMenu
-
-label lunaticTurnOffComment2
-p Like I said, I am what I am. And right now, I'm in control.
-jumpto lunaticMenu
-
 label lunaticMenu
+    jumpto lunaticTurnOffComment /// check
+p I am what I am. And right now, I'm in control.
+label lunaticMenuJoin
 n So... you might want to be a little nicer to me.
 p She raises one long gloved finger, its tip hovering just over your skin, seeming to enjoy the lingering threat. But she withdraws, sparing you another momentary glimpse of death.
 
-label turnOffComment1
+label lunaticTurnOffComment
+p Like I said, I am what I am. And right now, I'm in control.
+jumpto lunaticMenuJoin
+
+label turnOffMenu
+    jumpto turnOffComment2 /// check
 p I am what I am. It's not my fault that you can't handle being around me.
 
 label turnOffComment2
@@ -398,11 +387,12 @@ p Or until your heart finally gives out.
 p And then, when you die, I'll find myself somewhere new, and before too long, you'll be there too. That's how this all works right? This doesn't end until you let me out.
 p And a lot can happen before then. I'm sure I can get creative.
 
-label friendsMenuWhyNeed
+label friendsMenu
+    jumpto friendsMenuNoWhyNeed /// check
 p Would you look at that! You're suggesting exactly what I want. Somebody's ahead of the curve.
 jumpto whyNeedMenu
 
-label friendsMenuOther
+label friendsMenuNoWhyNeed
 p I'm glad you're seeing things my way.
 
 // Remain with your Nightmare or try to run //
@@ -626,9 +616,10 @@ hero We did it. We actually did it!
 p Hahahaha! You actually went for it! Oh you're going to regret this! I can be so much more terrible for you than I am now!
 hero C-can she?
 para We've already seen how she can change... heart. Lungs. Liver. Nerves...
+sourceswitch Slay
 
 // Grants you the Voice of the Cold //
-label slayBasement
+label basementSlay
 p You're not getting those stairs back. I'll see you when you finally decide to die.
 linebreak
 n She falls to the ground, unmoving.
@@ -645,7 +636,7 @@ n No. It won't. That's the whole point of "forever." It doesn't end.
 jumpto slayJoin
 
 // Grants you the Voice of the Opportunist //
-label slayStairs
+label stairsSlay
 n In her final moments, the Princess lunges forward, tackling you, and you both plunge into the endless abyss of her basement labyrinth.
 n As the two of you fall, you rip your blade from her chest, tightly clutching it in your hands.
 p Have fun falling forever! I'll see you when you finally decide to die.
@@ -675,23 +666,20 @@ para *Why?*
 hero What do you mean why? I think it's perfectly reasonable to value life.
 n Exactly. I don't have to answer that.
 
-label comeBackSlainInsist
-n Ah yes, the whole "looping" thing. How unfortunate. You were only supposed to be here once.
-jumpto comeBackJoin
-
-label comeBackSlainNoInsist
-n "Again?" That's unfortunate. You were only supposed to be here once.
-label comeBackJoin
+label comeBackSlain
+    n Ah yes, the whole "looping" thing. How unfortunate. You were only supposed to be here once. /// sharedinsist
+    n "Again?" That's unfortunate. You were only supposed to be here once. /// noshare
 para I don't like the way you said that. You *knew* this was a possibility, didn't you?
 n Of course I did, though I'd rather hoped I was the first one. That explains a lot though.
 hero Oh, you bastard. How much are you not telling us?
 n Plenty. But it's all in your best interest. And the world's. And mine.
+sourceswitch ComeBack
 
-label comeBackStuck
+label basementComeBack
 hero She's dead and we're stuck in her hellvoid forever. How could telling us your secrets possibly hurt anyone?
 jumpto comeBackJoin2
 
-label comeBackFalling
+label stairsComeBack
 hero She's dead and we're falling forever. How could telling us your secrets possibly hurt anyone?
 label comeBackJoin2
 n It just can. Look, this world is saved, but if you "start over," for all you know you're just putting another world in danger. You barely managed to land the killing blow here. What if you don't manage it next time?
@@ -726,11 +714,13 @@ hero You say that now, but let's see how we all feel after a week or a month or 
 label biologySlain
 hero That's a grim thought, innit?
 n But I suppose you're right. You are a creature of biology. Something will happen to you before forever comes along.
+    jumpto biologyNoWayOut /// check
+sourceswitch Biology
 
-label biologyWayOutStuck
+label basementBiology
 para We don't *have* to starve to death. You have our way out. Use it.
 
-label biologyWayOutFalling
+label stairsBiology
 para We don't *have* to starve to death falling through an infinite void. You have our way out. Use it.
 
 label biologyNoWayOut
@@ -761,10 +751,10 @@ label bladeGoneBiology
 para You mean... other than starving?
 hero Right. I mean other than that.
 
-label waitNoBiologyStuck
+label basementWaitNoBiology
 n More time passes. You're still here.
 
-label waitNoBiologyFalling
+label stairsWaitNoBiology
 n More time passes. You continue to fall.
 
 label nowhereToGo
@@ -786,10 +776,8 @@ n What's done is done. The blade is gone.
 label suicideEndSlain
 n *Sigh.* I don't like this, but I suppose there's not much I can do to stop you, is there?
 n You raise the blade to your neck and slit your carotid artery.
-
-label suicideComeBackComment
+    jumpto suicideEndCont /// checkfalse
 n You'd better get this right next time. Do you hear me? Don't blow it.
-
 label suicideEndCont
 linebreak
 n Everything goes dark, and you die.
@@ -800,5 +788,7 @@ n The only things you know for certain are that it's long, and that it hurts. Th
 para We really shouldn't have tossed the blade...
 linebreak
 n No, you really shouldn't have. But biology and time are immutable forces, and eventually, long before forever gets the chance to come, everything goes dark, and you die.
+    jumpto waitSlainComeBackComment /// check
 
+label waitSlainComeBackComment
 n Don't muck it up next time. The Princess may be slain here, but she isn't slain There.

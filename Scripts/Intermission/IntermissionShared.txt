@@ -1,21 +1,20 @@
 linebreak 3
-
-truth You find yourself in the Long Quiet once again.
+    truth You are alone in a place that is empty. It is quiet here. /// firstvessel
+    nowplaying The Shifting Mound Movement II /// ifnum-1
+    nowplaying The Shifting Mound Movement III /// ifnum-2
+    nowplaying The Shifting Mound Movement IV /// ifnum-3
+    truth You find yourself in the Long Quiet once again. /// notfirstvessel
 
 label firstVesselIntro
 linebreak 3
-truth You are alone in a place that is empty. It is quiet here.
 
 label nowhereToGo
 truth There is nowhere else for you to go.
 
-label cabinFirst
-nowplaying The Shifting Mound Movement I
-truth You are at the cabin.
-truth A mass of hands waits at the top of the hill, holding the Princess upright.
-
 label cabin
+    nowplaying The Shifting Mound Movement I /// firstvessel
 truth You are at the cabin.
+    truth A mass of hands waits at the top of the hill, holding the Princess upright. /// firstvessel
 
 // Shared conversation dialogue //
 
@@ -28,12 +27,8 @@ p The vessels you choose to bring me carry far more meaning than anything words 
 
 label requests
 p Gifts aren't what someone tells you to bring them.
-
-label requestsSatisfy
-p My joy is in seeing what you choose. There are no wrong answers, and every perspective illuminates my shadows and shares new secrets.
-
-label requestsDeny
-p Do not worry. There are no wrong answers, and every perspective illuminates my shadows and shares new secrets.
+    p My joy is in seeing what you choose. There are no wrong answers, and every perspective illuminates my shadows and shares new secrets. /// check
+    p Do not worry. There are no wrong answers, and every perspective illuminates my shadows and shares new secrets. /// checkfalse
 
 label attackMound
 truth Your will cuts across the entity in front of you, but nothing happens.

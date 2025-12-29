@@ -96,7 +96,7 @@ skeptic And now it's gone. If He doesn't want us to know about it, it must be im
 // Stairs //
 
 label stairsNoBlade
-switchjump stairsNoBladeSharedLoop
+    jumpto stairsNoBladeSharedLoop /// sharedloop
 skeptic I'm afraid I'm going to insist we take the blade. We're in a dangerous situation, and I'm not letting us go down there without a weapon.
 hero Are you sure? What if she, I don't know... turns it against us? ... Which I'm bringing up in a purely hypothetical manner.
 skeptic Yes. I'm sure.
@@ -128,13 +128,8 @@ label stairsStart
 n The door to the basement creaks open, revealing an old stone staircase. A few sputtering torches attempt to vaguely illuminate your path, dancing across glimmering patches of slimy moss on the stone steps. If the Princess lives here, slaying her would probably be doing her a favor.
 n Her voice, harsh but controlled, carries up the stairs.
 p Is that a visitor I hear? Please, come downstairs. It's been a while since I've had company.
-numswitchjump stairsSharedLoop stairsSharedLoop
-skeptic I wonder what visitors she could be referring to. Are we not the first?
-jumpto basementStartJoin
-
-label stairsSharedLoop
-skeptic Does she remember us?
-label basementStartJoin
+    skeptic Does she remember us? /// sharedloop
+    skeptic I wonder what visitors she could be referring to. Are we not the first? /// noshare
 linebreak
 n You walk down the stairs and lock eyes with the Princess. She looks up at you, the heavy collar around her neck clanking loudly as she moves, the chains binding both her wrists to the far wall joining the metallic chorus as she adjusts her hands in her lap.
 numswitchjump basementStartSharedLoop
@@ -155,36 +150,19 @@ p What an interesting development. Why don't you have a seat? The two of us shou
 // Basement //
 
 label narratorProof
-numswitchjump narratorProofNoShare narratorProofSharedLoop narratorProofSharedInsist
-
-label narratorProofSharedInsist
-n I guess what you said back in the woods really was true.
-jumpto narratorProofJoin
-
-label narratorProofSharedLoop
-n First you make a comment about having been here before, and now this.
-jumpto narratorProofJoin
-
-label narratorProofNoShare
-n So you've already been here.
-label narratorProofJoin
+    n I guess what you said back in the woods really was true. /// sharedinsist
+    n First you make a comment about having been here before, and now this. /// sharedloop noinsist
+    n So you've already been here. /// noshare
 n *Sigh.* As much as I'd like to remain in denial, it's no use. This has complicated things.
 skeptic It's complicated things how, exactly?
 n Ideally this was supposed to be one-and-done. You go to the cabin, you heroically slay the Princess, and in the process, you save the entire world from being damned to oblivion.
 n This situation right now, where you're getting a second shot at things, is a contingency.
 skeptic A contingency for what?
 n For you failing. Obviously. And you being here means that things are going to be a lot harder than they were. I really shouldn't say anything else, I'm just going to make it worse. Just... Good luck.
-numswitchjump narratorProofContNoInsist narratorProofContNoInsist narratorProofContInsist
-
-label narratorProofContInsist
-skeptic Now hold on. If you knew this could happen, why didn't you believe us back in the woods? Why lay out all of those hypotheticals? We didn't have to talk in circles.
-n I needed you to believe this was your first time here, even if that wasn't the truth. I hoped if I pushed back hard enough I could cram this seeping mess back into the bottle.
-jumpto narratorProofContJoin
-
-label narratorProofContNoInsist
-skeptic If you knew this could happen, why didn't you tell us? All of this is incredibly valuable information. It would have changed our actions considerably.
-n I needed you to be in the dark for as long as I could keep you there. It's important. Necessary, even.
-label narratorProofContJoin
+    skeptic Now hold on. If you knew this could happen, why didn't you believe us back in the woods? Why lay out all of those hypotheticals? We didn't have to talk in circles. /// sharedinsist
+        n I needed you to believe this was your first time here, even if that wasn't the truth. I hoped if I pushed back hard enough I could cram this seeping mess back into the bottle. /// sharedinsist
+    skeptic If you knew this could happen, why didn't you tell us? All of this is incredibly valuable information. It would have changed our actions considerably. /// noinsist
+        n I needed you to be in the dark for as long as I could keep you there. It's important. Necessary, even. /// noinsist
 n And... maybe I wanted to be the first version of me that you met. I didn't want to be confronted by the alternative.
 skeptic That's *pathetic.*
 n I never said I wasn't.
@@ -226,15 +204,10 @@ skeptic Yeah, not a chance. He's single-minded about this. But don't worry, ther
 n Oh? For instance...?
 skeptic Us. Her. But mostly us. If He didn't have his limits, we wouldn't be here. Not like this.
 
-label intentionsMenuProof
+label intentionsMenu
 p Yes. Your intentions. You have a knife. What are you going to do with it? Why are you here?
-p There isn't a keyhole in these shackles, and I don't see any keys in your hands, either. So I'm afraid my only way out is another surgical removal.
-jumpto intentionsJoin
-
-label intentionsMenuNoProof
-p Yes. Your intentions. You have a knife. What are you going to do with it? Why are you here?
-p There isn't a keyhole in these shackles, so I'm afraid my only way out is surgical removal.
-label intentionsJoin
+    p There isn't a keyhole in these shackles, and I don't see any keys in your hands, either. So I'm afraid my only way out is another surgical removal. /// check
+    p There isn't a keyhole in these shackles, so I'm afraid my only way out is surgical removal. /// checkfalse
 hero Is she forgetting about the shackle on her neck?!
 skeptic Or does she think she'd survive a beheading?
 n You're right. Maybe she's delusional. All the more reason not to trust her.
@@ -244,10 +217,8 @@ p Though I suppose you could just be here to kill me. But I don't think that's i
 label memoryMenu
 p Oh? Are we acknowledging that? I thought we weren't going to give away the game. But yeah. I remember.
 
-label afterDiedMenuNoProof
-p Oh? Are we talking about that? I thought we weren't going to give away the game. But sure, I'll fill you in.
-
 label afterDiedMenu
+    p Oh? Are we talking about that? I thought we weren't going to give away the game. But sure, I'll fill you in. /// checkfalse
 p Nothing happened. You died. I went upstairs. I couldn't leave. I found myself in a new place, in chains again. More of them.
 p And now you're back.
 skeptic Is that really all she knows?
@@ -282,25 +253,16 @@ hero That doesn't sound great. What about the pros?
 n There are none.
 skeptic The pros are that we can't trust Him, possibly even more than we can't trust her, and whatever she has planned could do something to mess with what He has planned. Or maybe they're both screwing us over in their own ways.
 
-label noGiveBMenuProof
-p Sure, let's talk about what happened. Because what happened is exactly my issue.
-
-label noGiveBMenuNoProof
-p Oh? Are we talking about that? I thought we weren't going to give away the game.
-p But sure, let's talk about what happened. Because what happened is exactly my issue.
-
-label noGiveJoinProof
-p The last time we met, your body tried to kill me.
-p If you take a moment to imagine yourself in my position, I think you'll understand why letting you near me with that thing is untenable.
-p So be a good bird and hand it over.
-p And if being nice isn't enough motivation? Well, I think you're aware that I'm not afraid to resort to violence.
-jumpto noGiveJoin
-
-label noGiveJoinNoProof
-p If you take a moment to imagine yourself in my position, I think you'll understand why letting you near me with that thing is untenable.
-p So be a good bird and hand it over.
-p And if being nice isn't enough motivation? Well, I'm not afraid to resort to violence.
+label noGiveBMenu
+    p Sure, let's talk about what happened. Because what happened is exactly my issue. /// check
+    p Oh? Are we talking about that? I thought we weren't going to give away the game. /// checkfalse
+        p But sure, let's talk about what happened. Because what happened is exactly my issue. /// checkfalse
 label noGiveJoin
+    p The last time we met, your body tried to kill me. /// check
+p If you take a moment to imagine yourself in my position, I think you'll understand why letting you near me with that thing is untenable.
+p So be a good bird and hand it over.
+    p And if being nice isn't enough motivation? Well, I think you're aware that I'm not afraid to resort to violence. /// check
+    p And if being nice isn't enough motivation? Well, I'm not afraid to resort to violence. /// checkfalse
 p If you come near me with that thing I will strangle you with these chains.
 hero She doesn't beat around the bush, does she?
 n Yes, it's almost like she's a fundamentally bad person who wishes to inflict pain on others.
@@ -309,7 +271,7 @@ p No hard feelings, of course. But you should be aware of my position.
 
 label distrustMenu
 p I do. So I guess this all comes down to which of us caves first. And it's not going to be me.
-p It's probably better if we take action, anyway. No use trying to wait her out. That's playing to her strengths.
+p I'm extremely patient.
 skeptic It's probably better if we take action, anyway. No use trying to wait her out. That's playing to her strengths.
 
 label threatenMenu
@@ -318,17 +280,13 @@ p If that's unacceptable to you, then try me. See what happens.
 n She sure was quick to threaten you, wasn't she? Stop hesitating already, you know you can't trust her.
 skeptic Both of them are using the same argument. It's not making it any easier to pick a side.
 
-label negotiateMenuLocked
-p I might be the one in chains but we're both locked in here. The only thing you have to bargain with is that scrap of metal. Admittedly, it's a scrap of metal that I want, but...
+label negotiateMenu
+    p I might be the one in chains but we're both locked in here. The only thing you have to bargain with is that scrap of metal. Admittedly, it's a scrap of metal that I want, but... /// check
+    p Usually, you'd be right. But this isn't exactly a usual situation. I'm not someone you can wait out. /// checkfalse
 
-label negotiateMenuNotLocked
-p Usually, you'd be right. But this isn't exactly a usual situation. I'm not someone you can wait out.
-
-label negotiateMenuPatient
-p You'll find that I'm extremely patient.
-
-label negotiateMenuOther
-p We've already been over this. I'm more patient than you'll ever be.
+label negotiateMenuCont
+    p You'll find that I'm extremely patient. /// check
+    p We've already been over this. I'm more patient than you'll ever be. /// checkfalse
 
 // Attempt to leave the basement //
 
@@ -338,20 +296,14 @@ p I think you'll regret this.
 label leaveAttemptB
 p Oh, you bastard! You'll regret this.
 
-label doorLockSharedLoop
-skeptic The door locked behind us the last time we tried that, remember?
-jumpto doorLockJoin
-
 label doorLock
-switchjump doorLockSharedLoop
+    skeptic The door locked behind us the last time we tried that, remember? /// sharedinsist
 label doorLockJoin
 n As if by divine will, just as you finish the thought, you hear a door slam. I'm afraid you won't be leaving until the task is finished. It doesn't matter how many chains she's in, without your intervention, she'll find a way out eventually.
 hero That's not fair!
 n Unless you deal with her right here, right now, she will remain an existential threat to the entire world. What seems unfair to you is fair for everyone else.
 skeptic Huh. So it's not even safe to think. I see how it is.
-
-label doorLockCommentStart
-p How surprising. They locked you down here, too.
+    p How surprising. They locked you down here, too. /// check
 
 label doorLockCommentAbandon
 p I told you that you'd regret saying that. But I didn't think you'd regret it so fast. And with so little effort on my part.
@@ -464,13 +416,8 @@ p I am not a damsel to be helplessly murdered!
 n As you move to strike at the Princess, she stands, her chains clinking as she wraps them around her fists.
 n In an instant they're around your neck, both of you dropping to the ground as she pulls them taut, bracing her body against yours as you struggle uselessly.
 p Drop it or you die!
-
-label attackProof
-hero I thought this was going to be a safe move, but she's going to kill us again! Just listen to her! Do what she says!
-jumpto strangleJoin
-
-label attackNoProof
-hero I thought this was going to be a safe move, but she's going to kill us! Just listen to her! Do what she says!
+    hero I thought this was going to be a safe move, but she's going to kill us again! Just listen to her! Do what she says! /// check
+    hero I thought this was going to be a safe move, but she's going to kill us! Just listen to her! Do what she says! /// checkfalse
 jumpto strangleJoin
 
 label sitTooClose
@@ -485,14 +432,9 @@ n In an instant they're around your neck, both of you dropping to the ground as 
 n The metal chains constrict around your windpipe as the Princess heaves with a muscled intensity.
 p Drop the knife or you die!
 hero What is she doing?! We weren't trying to attack her!
-
-label noAttackProof
-skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if she walked up to us with a blade again, after what happened between us?
-jumpto strangleJoin
-
-label noAttackNoProof
-skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if the roles were reversed?
-hero I don't know! How about we think about the nuances of interpersonal relationships when we're not being strangled?!
+    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if she walked up to us with a blade again, after what happened between us? /// check
+    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if the roles were reversed? /// checkfalse
+        hero I don't know! How about we think about the nuances of interpersonal relationships when we're not being strangled?! /// checkfalse
 jumpto strangleJoin
 
 label strangleJoin
@@ -501,17 +443,11 @@ n How many times did I warn you -- she's not to be trusted! But while strangulat
 label strangleDropStart
 n As your weapon falls pathetically to the floor, the Princess releases you from her stranglehold, shoving you away with a swift kick.
 n Your hands test the bruised flesh of your neck as you regain your senses, watching with a dazed expression as the Princess snatches up the blade.
-
-label strangleDropAttack
-p I'm going to pretend for both our sakes that this was a round of make believe. A trick to get me what I needed to get us out of here.
-n That wasn't a trick. I'd have known if it were a trick. You just didn't have the guts to see things through and save the world.
-skeptic Or maybe we outwitted you. Who's to say.
-p But I wouldn't try anything else if I were you. Don't push your luck.
-jumpto strangleDropJoin
-
-label strangleDropNoAttack
-p That wasn't so hard, was it?
-label strangleDropJoin
+    p I'm going to pretend for both our sakes that this was a round of make believe. A trick to get me what I needed to get us out of here. /// check
+        n That wasn't a trick. I'd have known if it were a trick. You just didn't have the guts to see things through and save the world. /// check
+        skeptic Or maybe we outwitted you. Who's to say. /// check
+        p But I wouldn't try anything else if I were you. Don't push your luck. /// check
+    p That wasn't so hard, was it? /// checkfalse
 n She pulls up her hair, smiling slightly as she raises the blade to her throat.
 p You can stay right where you are for this next part.
 
@@ -540,17 +476,7 @@ n And especially when your promised reward is not, in fact, empty, and is worth 
 label giveBladeStart
 p Slide it over.
 n No. Absolutely not. I am not letting you hand your only weapon over to the *world-ending* Princess. Until you come up with any other idea -- like, say, I don't know, doing your job and slaying her -- you remain rigidly in place.
-
-label giveBladeProof
-skeptic You tried this last time. Do you want to know how it went for you?
-hero Oh, I remember! She killed us, which by your estimation, ended the world. Right?
-n *Angry grumbling.*
-skeptic Exactly. If I were you, I wouldn't be too keen on repeating your mistake. Hell, we could even force your hand and do it ourselves. I'm not afraid of dying again. Are you?
-hero A little...
-n I think you got your point across. Fine.
-jumpto giveBladeJoin
-
-label giveBladeNoProof
+    jumpto giveBladeProof /// check
 skeptic Do you think this will work? Interesting that you're only having us remain in place. It's almost like there are very real limits to your power.
 n I don't know what you're talking about.
 skeptic The world ends if we fail, right? Her killing us might not be our only failure state, if you catch my meaning.
@@ -561,6 +487,15 @@ n You wouldn't.
 skeptic I'm not afraid of dying. Are you?
 hero A little...
 n You got your point across. Fine.
+jumpto giveBladeJoin
+
+label giveBladeProof
+skeptic You tried this last time. Do you want to know how it went for you?
+hero Oh, I remember! She killed us, which by your estimation, ended the world. Right?
+n *Angry grumbling.*
+skeptic Exactly. If I were you, I wouldn't be too keen on repeating your mistake. Hell, we could even force your hand and do it ourselves. I'm not afraid of dying again. Are you?
+hero A little...
+n I think you got your point across. Fine.
 label giveBladeJoin
 n *Sigh.* You slide the blade across the floor.
 n The Princess maintains unsettling eye contact as she reaches down to pick it up.
@@ -678,12 +613,11 @@ n Eventually, you pass into a blissful state of pure existence. Though words lik
 linebreak
 linebreak
 truth --- Good Ending! =:) YOU DID IT!!! you saved EVERYONE! --- /// interrupt
-
+pause 2000
 linebreak
 skeptic No. You stop that! Stop all this nonsense.
 n You really don't want to be happy, do you?
-
-label suggestSlain2
+jumpto suggestSlain /// checkfalse
 skeptic You know what you have to do.
 
 label noWaySlain

@@ -1,10 +1,8 @@
 hero She's gone. Where did she go? Should we try and find her?
 
-label mirrorCommented
-hero And there's that mirror again. Why is it here? Why now?!
-
-label mirrorNotCommented
-hero And is that a... mirror? Why is it here? Why now?!
+label mirrorComment
+    hero And there's that mirror again. Why is it here? Why now?! /// mirror2
+    hero And is that a... mirror? Why is it here? Why now?! /// nomirror2
 
 // First mirror //
 
@@ -19,26 +17,22 @@ hero You're right. She's gone. It's just us and that... awful thing.
     cheated We just can't win. /// checkvoice
     cold Don't bother looking for her. I'm sure it's just a waste of time. /// checkvoice
     broken I feel anxious. Does anyone else feel anxious? /// checkvoice
+    contra Then what the hell are we supposed to do? /// checkvoice checkfalse
+    contra Again, what the hell are we supposed to do? /// checkvoice check
 
 label gone
 hero He is. Does that mean the world ended?
     skeptic It must have. Do any of us know what the world ending is supposed to look like? /// checkvoice
     hunted It hasn't ended. We're still here. /// checkvoice
     cold He was never going to outlast us. /// checkvoice
-
-label goneJoin
+    contra Then what the hell are we supposed to do? /// checkvoice checkfalse
+    contra Again, what the hell are we supposed to do? /// checkvoice check
     para Yeah. No voice needling us anymore. Feels good, but I also feel... itchy. Cold. /// checkvoice
     stubborn The world didn't end. We're still here. Come on, we just need to keep going! /// checkvoice
     broken Figures the world would end and leave us with all this nothing. /// checkvoice
     oppo We're at the top of the pecking order now... right, boys? /// checkvoice
     smitten A villain vanquished. /// checkvoice
     cheated Good riddance. /// checkvoice
-
-label contraAskA
-    contra Then what the hell are we supposed to do? /// checkvoice
-
-label contraAskB
-    contra Again, what the hell are we supposed to do? /// checkvoice
 
 label suggest
 hero There's something dreadful about it. I don't think you should.
@@ -64,14 +58,10 @@ label exploreJoinB
     broken I don't want to look at us. /// checkvoice
     smitten Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right? /// checkvoice
     cheated It's going to *do* something to us. I can feel it. /// checkvoice
-
-label explore2Voices
-    oppo If *he* thinks it's bad, I-I'm with him. /// checkvoice
-    cold Ignore him. You have to look. /// checkvoice
-
-label exploreMoreVoices
-    oppo If *they* think it's bad, I-I'm with them. /// checkvoice
-    cold Ignore the cowards. You have to look. /// checkvoice
+    oppo If *he* thinks it's bad, I-I'm with him. /// checkvoice ifnum-2
+    oppo If *they* think it's bad, I-I'm with them. /// checkvoice ifnumnot-2
+    cold Ignore him. You have to look. /// checkvoice ifnum-2
+    cold Ignore the cowards. You have to look. /// checkvoice ifnumnot-2
 
 label comfort
 hero Okay. If you say so, we'll trust you.
@@ -101,10 +91,8 @@ hero What is that supposed to mean? Whatever awful thing I felt before, it feels
 
 label approach
 truth You approach the mirror.
-
-label approachSilence
-hero I don't like that silence.
-truth The voices feel small, distant as you approach.
+    hero I don't like that silence. /// check
+        truth The voices feel small, distant as you approach. /// check
 
 label approachExplore
 hero This... this doesn't feel right. It feels different. Final.
@@ -137,7 +125,6 @@ label gazeFinal
 truth You are nothing at all.
 truth But that isn't right. You can't be nothing. You refocus your gaze, and then you see it: a figure, faint and veiled in shadow, just beyond the reflection.
 
-label gazeFinalCont
 n I think you know what I am.
 truth A crack slides down the center of the mirror, splitting the image in the glass in two.
 truth And then another crack forms, and another, and another, turning the mirror into jagged shards of broken glass.

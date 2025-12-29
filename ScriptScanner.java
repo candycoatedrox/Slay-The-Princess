@@ -462,6 +462,26 @@ public class ScriptScanner extends Script {
                 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noblade"));
 
+            } else if (m.equals("threwblade")) {
+                if (presentMods.contains("threwblade")) {
+                    if (!duplicateMods.contains("threwblade")) duplicateMods.add("threwblade");
+                } else {
+                    presentMods.add("threwblade");
+                    if (presentMods.contains("nothrow")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "threwblade"));
+
+            } else if (m.equals("nothrow")) {
+                if (presentMods.contains("nothrow")) {
+                    if (!duplicateMods.contains("nothrow")) duplicateMods.add("nothrow");
+                } else {
+                    presentMods.add("nothrow");
+                    if (presentMods.contains("threwblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nothrow"));
+
             } else if (m.equals("sharedloop")) {
                 if (presentMods.contains("sharedloop")) {
                     if (!duplicateMods.contains("sharedloop")) duplicateMods.add("sharedloop");

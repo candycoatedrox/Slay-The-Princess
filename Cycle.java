@@ -30,11 +30,16 @@ public abstract class Cycle {
     protected boolean canThrowBlade = false;
 
     // Variables that are used in a lot of chapters
-    protected boolean bladeReverse = false; // Used in any chapter the Contrarian is in
+    protected String source = "";
     protected boolean threwBlade = false; // Used in any chapter the Contrarian is in
+    protected boolean sharedLoop = false; // Used in all Chapter 2s
+    protected boolean sharedLoopInsist = false; // Used in all Chapter 2s
+    protected boolean mirrorComment = false; // Used in all Chapter 2s and 3s
+    protected boolean touchedMirror = false; // Used in all Chapter 2s and 3s
 
     // Variables that persist between chapters
     protected boolean isHarsh = false; // Used in Chapter 1, Spectre, Princess and the Dragon, Nightmare, and the Finale
+    protected boolean knowsDestiny = false; // Used in Chapter 1, Adversary, Tower, Fury
 
     // --- CONSTRUCTOR ---
 
@@ -108,7 +113,7 @@ public abstract class Cycle {
     }
 
     /**
-     * Returns whether the player currently has the blade
+     * Accessor for hasBlade
      * @return whether the player currently has the blade
      */
     public boolean hasBlade() {
@@ -116,11 +121,67 @@ public abstract class Cycle {
     }
 
     /**
-     * Returns the current "source" of the active chapter
+     * Accessor for source
      * @return the current "source" of the active chapter
      */
     public String getSource() {
-        return "";
+        return this.source;
+    }
+
+    /**
+     * Accessor for threwBlade
+     * @return whether or not the player threw the blade out the window
+     */
+    public boolean threwBlade() {
+        return this.threwBlade;
+    }
+
+    /**
+     * Accessor for sharedLoop
+     * @return whether or not the Narrator knows that the player has been here before
+     */
+    public boolean sharedLoop() {
+        return this.sharedLoop;
+    }
+
+    /**
+     * Accessor for sharedLoopInsist
+     * @return whether or not the player insisted that they've been here before in the woods
+     */
+    public boolean sharedLoopInsist() {
+        return this.sharedLoopInsist;
+    }
+
+    /**
+     * Accessor for mirrorComment
+     * @return whether or not the player asked about the mirror in Chapter 2
+     */
+    public boolean mirrorComment() {
+        return this.mirrorComment;
+    }
+
+    /**
+     * Accessor for touchedMirror
+     * @return whether or not the player approached the mirror in Chapter 2
+     */
+    public boolean touchedMirror() {
+        return this.touchedMirror;
+    }
+
+    /**
+     * Accessor for isHarsh
+     * @return whether the Princess is currently hostile in chapters where it varies
+     */
+    public boolean isHarsh() {
+        return this.isHarsh;
+    }
+
+    /**
+     * Accessor for knowsDestiny
+     * @return whether or not the Princess knows she's (allegedly) going to end the world
+     */
+    public boolean knowsDestiny() {
+        return this.sharedLoopInsist;
     }
 
     // --- COMMANDS ---
