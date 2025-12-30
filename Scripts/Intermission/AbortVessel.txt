@@ -1,4 +1,5 @@
-    n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting fuzzy... /// ifnum-2
+    n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting fuzzy... /// ifnum-2 ifstringnot-stranger
+    n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy... /// ifstring-stranger
     n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy... /// ifnum-3
 
 label voices

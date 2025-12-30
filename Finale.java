@@ -41,6 +41,9 @@ public class Finale extends Cycle {
         this.firstPrincess = firstPrincess;
         this.strangerHeart = this.vessels[0] == Vessel.STRANGER;
         this.mirrorWasCruel = manager.mirrorWasCruel();
+
+        this.activeChapter = Chapter.ENDOFEVERYTHING;
+        this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
     }
     
     // --- COMMAND OVERRIDES ---
@@ -194,6 +197,7 @@ public class Finale extends Cycle {
         switch (outcome) {
             case "cGoCabin":
             case "cGoFail":
+            case "cProceed":
             case "cEnterFail":
             case "cLeaveFail":
                 parser.printDialogueLine(new DialogueLine("There is nowhere for you to go."));                
@@ -263,6 +267,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cGoFail":
+            case "cProceed":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));

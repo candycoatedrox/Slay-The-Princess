@@ -14,6 +14,42 @@ public class Script {
     protected final HashMap<String, Integer> labels;
     
     private int cursor = 0; // The current line index
+
+    // The current cycle and related checks
+    private Cycle currentCycle;
+    private boolean noCycle;
+    private boolean isChapter2;
+    private boolean isChapter3;
+
+    // Player-dependent variables used during all chapters
+    private boolean firstVessel;
+    private boolean hasBlade;
+    private boolean isHarsh;
+    private boolean knowsDestiny;
+
+    // Player-dependent variables used during Chapter 2 or 3
+    private Voice ch2Voice;
+    private Voice ch3Voice;
+    private String chapterSource;
+    private boolean sharedLoop;
+    private boolean sharedLoopInsist;
+    private boolean threwBlade;
+    private boolean mirrorComment;
+    private boolean touchedMirror;
+
+    // Player-dependent variables used during Chapter 2 only
+    private boolean droppedBlade1;
+    private boolean whatWouldYouDo;
+    private boolean rescuePath;
+
+    // Player-dependent variables used during Chapter 3 only
+    private boolean abandoned2;
+    private boolean spectrePossessAsk;
+    private boolean spectreCantWontAsk;
+    private boolean spectreEndSlay;
+    private boolean prisonerHeartStopped;
+
+    // Given conditions for checks
     private boolean boolCondition = false;
     private int intCondition = 100;
     private String strCondition = "";
@@ -60,6 +96,8 @@ public class Script {
         } catch (NullPointerException e) {
             throw new RuntimeException("Script not found (NullPointer)");
         }
+
+        this.updateChapterVariables();
     }
 
     /**
@@ -175,21 +213,13 @@ public class Script {
         }
     }
 
-    /**
-     * Resets all conditional switches to their default values
-     */
-    private void resetConditions() {
-        this.boolCondition = false;
-        this.intCondition = 100;
-        this.strCondition = "";
-    }
-
     // --- RUN SCRIPT ---
 
     /**
      * Executes this script from the cursor until the next break
      */
     public void runSection() {
+        this.updateChapterVariables();
         boolean cont = true;
         while (cont && this.cursor < this.lines.size()) {
             cont = this.executeLine(this.cursor);
@@ -488,6 +518,7 @@ public class Script {
      * @param skipFirstLineBreak whether to skip the first line break of the pre-claim sequence
      */
     public void runClaimSection(String labelPrefix, boolean skipFirstLineBreak) {
+        this.updateChapterVariables();
         this.claimFoldLine(skipFirstLineBreak);
         this.firstSwitchJump(labelPrefix);
         this.runSection();
@@ -498,6 +529,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to start executing at
      */
     public void runClaimSection(String labelPrefix) {
+        this.updateChapterVariables();
         this.runClaimSection(labelPrefix, false);
     }
 
@@ -506,6 +538,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to start executing at
      */
     public void runBladeSection(String labelPrefix) {
+        this.updateChapterVariables();
         this.bladeSwitchJump(labelPrefix);
         this.runSection();
     }
@@ -516,6 +549,7 @@ public class Script {
      * @param labelSuffix the suffix of the label to start executing at
      */
     public void runBladeSection(String labelPrefix, String labelSuffix) {
+        this.updateChapterVariables();
         this.bladeSwitchJump(labelPrefix, labelSuffix);
         this.runSection();
     }
@@ -525,6 +559,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to start executing at
      */
     public void runMoodSection(String labelPrefix) {
+        this.updateChapterVariables();
         this.moodSwitchJump(labelPrefix);
         this.runSection();
     }
@@ -534,6 +569,7 @@ public class Script {
      * @param labelSuffix the suffix of the label to start executing at
      */
     public void runSourceSection(String labelSuffix) {
+        this.updateChapterVariables();
         this.sourceSwitchJump(labelSuffix);
         this.runSection();
     }
@@ -678,6 +714,7 @@ public class Script {
      * @param nLines the number of lines to run
      */
     public void runNextLines(int nLines) {
+        this.updateChapterVariables();
         for (int i = 0; i < nLines; i++) {
             if (this.cursor >= this.lines.size()) {
                 break;
@@ -739,6 +776,62 @@ public class Script {
         } catch (IllegalArgumentException e) {
             System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
         }
+    }
+
+    /**
+     * Updates all player-dependent variables based on the state of the current Cycle
+     */
+    private void updateChapterVariables() {
+        this.currentCycle = manager.getCurrentCycle();
+        this.noCycle = this.currentCycle == null;
+        this.isChapter2 = (this.noCycle) ? false : this.currentCycle instanceof ChapterII;
+        this.isChapter3 = (this.noCycle) ? false : this.currentCycle instanceof ChapterIII;
+
+        this.firstVessel = (this.noCycle) ? false : currentCycle.isFirstVessel();
+        this.hasBlade = (this.noCycle) ? false : currentCycle.hasBlade();
+        this.mirrorComment = (this.noCycle) ? false : currentCycle.mirrorComment();
+        this.touchedMirror = (this.noCycle) ? false : currentCycle.touchedMirror();
+        this.isHarsh = (this.noCycle) ? false : currentCycle.isHarsh();
+        this.knowsDestiny = (this.noCycle) ? false : currentCycle.knowsDestiny();
+
+        this.ch2Voice = null;
+        this.ch3Voice = null;
+        this.chapterSource = "";
+        this.sharedLoop = false;
+        this.sharedLoopInsist = false;
+        this.threwBlade = false;
+
+        ChapterII chapter2 = (isChapter2) ? (ChapterII)this.currentCycle : null;
+        if (this.isChapter2) this.ch2Voice = chapter2.ch2Voice();
+        if (this.isChapter2) this.chapterSource = chapter2.getSource();
+        if (this.isChapter2) this.threwBlade = chapter2.threwBlade();
+        if (this.isChapter2) this.sharedLoop = chapter2.sharedLoop();
+        if (this.isChapter2) this.sharedLoopInsist = chapter2.sharedLoopInsist();
+        this.droppedBlade1 = (this.isChapter2) ? chapter2.droppedBlade1() : false;
+        this.whatWouldYouDo = (this.isChapter2) ? chapter2.whatWouldYouDo() : false;
+        this.rescuePath = (this.isChapter2) ? chapter2.rescuePath() : false;
+        
+        ChapterIII chapter3 = (this.isChapter3) ? (ChapterIII)this.currentCycle : null;
+        if (this.isChapter3) this.ch2Voice = chapter3.ch2Voice();
+        if (this.isChapter3) this.ch3Voice = chapter3.ch3Voice();
+        if (this.isChapter3) this.chapterSource = chapter3.getSource();
+        if (this.isChapter3) this.threwBlade = chapter3.threwBlade();
+        if (this.isChapter3) this.sharedLoop = chapter3.sharedLoop();
+        if (this.isChapter3) this.sharedLoopInsist = chapter3.sharedLoopInsist();
+        this.abandoned2 = (this.isChapter3) ? chapter3.abandoned2() : false;
+        this.spectrePossessAsk = (this.isChapter3) ? chapter3.spectrePossessAsk() : false;
+        this.spectreCantWontAsk = (this.isChapter3) ? chapter3.spectreCantWontAsk() : false;
+        this.spectreEndSlay = (this.isChapter3) ? chapter3.spectreEndSlay() : false;
+        this.prisonerHeartStopped = (this.isChapter3) ? chapter3.prisonerHeartStopped() : false;
+    }
+
+    /**
+     * Resets all conditional switches to their default values
+     */
+    private void resetConditions() {
+        this.boolCondition = false;
+        this.intCondition = 100;
+        this.strCondition = "";
     }
 
     // --- PARSE & EXECUTE LINES ---
@@ -920,24 +1013,14 @@ public class Script {
     private boolean runModifierChecks(String[] modifiers, Voice speaker) {
         if (modifiers.length == 0) return true;
 
-        Cycle currentCycle = manager.getCurrentCycle();
-        boolean firstVessel = (currentCycle == null) ? false : currentCycle.isFirstVessel();
-        boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
-        String chapterSource = (currentCycle == null) ? "" : currentCycle.getSource();
-        boolean threwBlade = (currentCycle == null) ? false : currentCycle.threwBlade();
-        boolean sharedLoop = (currentCycle == null) ? false : currentCycle.sharedLoop();
-        boolean sharedLoopInsist = (currentCycle == null) ? false : currentCycle.sharedLoopInsist();
-        boolean mirrorComment = (currentCycle == null) ? false : currentCycle.mirrorComment();
-        boolean touchedMirror = (currentCycle == null) ? false : currentCycle.touchedMirror();
-        boolean isHarsh = (currentCycle == null) ? false : currentCycle.isHarsh();
-        boolean knowsDestiny = (currentCycle == null) ? false : currentCycle.knowsDestiny();
-
         HashMap<Voice, Boolean> voiceChecks = new HashMap<>();
         String[] args;
         int targetInt;
 
         for (String m : modifiers) {
             args = m.split("-");
+
+            // Voice checks
 
             if (m.startsWith("checkvoice")) {
                 if (args.length == 1) {
@@ -955,54 +1038,159 @@ public class Script {
                         voiceChecks.put(Voice.getVoice(id), false);
                     }
                 }
+
+            // Checks for any chapter
+
             } else if (m.equals("firstvessel")) {
-                if (!firstVessel) return false;
+                if (!this.firstVessel) return false;
             } else if (m.equals("notfirstvessel")) {
-                if (firstVessel) return false;
+                if (this.firstVessel) return false;
+
             } else if (m.equals("hasblade")) {
-                if (!hasBlade) return false;
+                if (!this.hasBlade) return false;
             } else if (m.equals("noblade")) {
-                if (hasBlade) return false;
-            } else if (m.startsWith("ifsource-")) {
-                if (!chapterSource.equals(args[1])) return false;
-            } else if (m.startsWith("ifsourcenot-")) {
-                if (chapterSource.equals(args[1])) return false;
-            } else if (m.equals("threwblade")) {
-                if (!threwBlade) return false;
-            } else if (m.equals("nothrow")) {
-                if (threwBlade) return false;
-            } else if (m.equals("sharedloop")) {
-                if (!sharedLoop) return false;
-            } else if (m.equals("noshare")) {
-                if (sharedLoop) return false;
-            } else if (m.equals("sharedinsist")) {
-                if (!sharedLoopInsist) return false;
-            } else if (m.equals("noinsist")) {
-                if (sharedLoopInsist) return false;
-            } else if (m.equals("mirrorask")) {
-                if (!mirrorComment) return false;
-            } else if (m.equals("nomirrorask")) {
-                if (mirrorComment) return false;
-            } else if (m.equals("mirrortouch")) {
-                if (!touchedMirror) return false;
-            } else if (m.equals("nomirrortouch")) {
-                if (touchedMirror) return false;
-            } else if (m.equals("mirror2")) {
-                if (!mirrorComment && !touchedMirror) return false;
-            } else if (m.equals("nomirror2")) {
-                if (mirrorComment || touchedMirror) return false;
+                if (this.hasBlade) return false;
+
             } else if (m.equals("harsh")) {
-                if (!isHarsh) return false;
+                if (!this.isHarsh) return false;
             } else if (m.equals("soft")) {
-                if (isHarsh) return false;
+                if (this.isHarsh) return false;
+
             } else if (m.equals("knowledge")) {
-                if (!knowsDestiny) return false;
+                if (!this.knowsDestiny) return false;
             } else if (m.equals("noknowledge")) {
-                if (knowsDestiny) return false;
+                if (this.knowsDestiny) return false;
+
+            // Chapter 2 or 3 specific checks
+
+            } else if (m.startsWith("voice2-")) {
+                if ((this.isChapter2 || this.isChapter3) && args.length == 2) {
+                    if (Voice.getVoice(args[1]) != null) {
+                        if (this.ch2Voice != Voice.getVoice(args[1])) return false;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else if (m.startsWith("voice2not-")) {
+                if ((this.isChapter2 || this.isChapter3) && args.length == 2) {
+                    if (Voice.getVoice(args[1]) != null) {
+                        if (this.ch2Voice == Voice.getVoice(args[1])) return false;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+
+            } else if (m.startsWith("ifsource-")) {
+                if (!this.chapterSource.equals(args[1])) return false;
+            } else if (m.startsWith("ifsourcenot-")) {
+                if (this.chapterSource.equals(args[1])) return false;
+
+            } else if (m.equals("sharedloop")) {
+                if (!this.sharedLoop) return false;
+            } else if (m.equals("noshare")) {
+                if (this.sharedLoop) return false;
+
+            } else if (m.equals("sharedinsist")) {
+                if (!this.sharedLoopInsist) return false;
+            } else if (m.equals("noinsist")) {
+                if (this.sharedLoopInsist) return false;
+
+            } else if (m.equals("mirrorask")) {
+                if (!this.mirrorComment) return false;
+            } else if (m.equals("nomirrorask")) {
+                if (this.mirrorComment) return false;
+
+            } else if (m.equals("mirrortouch")) {
+                if (!this.touchedMirror) return false;
+            } else if (m.equals("nomirrortouch")) {
+                if (this.touchedMirror) return false;
+
+            } else if (m.equals("mirror2")) {
+                if (!this.mirrorComment && !this.touchedMirror) return false;
+            } else if (m.equals("nomirror2")) {
+                if (this.mirrorComment || this.touchedMirror) return false;
+
+            } else if (m.equals("threwblade")) {
+                if (!this.threwBlade) return false;
+            } else if (m.equals("nothrow")) {
+                if (this.threwBlade) return false;
+
+            // Chapter 2 variable checks
+
+            } else if (m.equals("drop1")) {
+                if (!this.droppedBlade1) return false;
+            } else if (m.equals("nodrop1")) {
+                if (this.droppedBlade1) return false;
+
+            } else if (m.equals("whatdo1")) {
+                if (!this.whatWouldYouDo) return false;
+            } else if (m.equals("nowhatdo1")) {
+                if (this.whatWouldYouDo) return false;
+
+            } else if (m.equals("rescue1")) {
+                if (!this.rescuePath) return false;
+            } else if (m.equals("norescue1")) {
+                if (this.rescuePath) return false;
+
+            // Chapter 3 variable checks
+
+            } else if (m.startsWith("voice3-")) {
+                if (this.isChapter3 && args.length == 2) {
+                    if (Voice.getVoice(args[1]) != null) {
+                        if (this.ch3Voice != Voice.getVoice(args[1])) return false;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else if (m.startsWith("voice3not-")) {
+                if (this.isChapter3 && args.length == 2) {
+                    if (Voice.getVoice(args[1]) != null) {
+                        if (this.ch3Voice == Voice.getVoice(args[1])) return false;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+
+            } else if (m.equals("abandoned")) {
+                if (!this.abandoned2) return false;
+            } else if (m.equals("noabandon")) {
+                if (this.abandoned2) return false;
+
+            } else if (m.equals("possessask")) {
+                if (!this.spectrePossessAsk) return false;
+            } else if (m.equals("nopossessask")) {
+                if (this.spectrePossessAsk) return false;
+
+            } else if (m.equals("cantwontask")) {
+                if (!this.spectreCantWontAsk) return false;
+            } else if (m.equals("nocantwontask")) {
+                if (this.spectreCantWontAsk) return false;
+
+            } else if (m.equals("endslay")) {
+                if (!this.spectreEndSlay) return false;
+            } else if (m.equals("noendslay")) {
+                if (this.spectreEndSlay) return false;
+
+            } else if (m.equals("heartstop")) {
+                if (!this.prisonerHeartStopped) return false;
+            } else if (m.equals("noheartstop")) {
+                if (this.prisonerHeartStopped) return false;
+
+            // Checks on given conditions
+                
             } else if (m.equals("check")) {
                 if (!this.boolCondition) return false;
             } else if (m.equals("checkfalse")) {
                 if (this.boolCondition) return false;
+
             } else if (m.startsWith("ifnum")) {
                 if (args.length == 2) {
                     try {
@@ -1027,6 +1215,7 @@ public class Script {
                 }
 
                 if (this.intCondition == targetInt) return false;
+
             } else if (m.startsWith("ifstring-")) {
                 if (!strCondition.equals(args[1])) return false;
             } else if (m.startsWith("ifstringnot-")) {
@@ -1034,9 +1223,9 @@ public class Script {
             }
         }
 
-        if (currentCycle != null && !voiceChecks.isEmpty()) {
+        if (!this.noCycle && !voiceChecks.isEmpty()) {
             for (Voice checkVoice : voiceChecks.keySet()) {
-                if (parser.getCurrentCycle().hasVoice(checkVoice) != voiceChecks.get(checkVoice)) {
+                if (currentCycle.hasVoice(checkVoice) != voiceChecks.get(checkVoice)) {
                     return false;
                 }
             }
@@ -1162,10 +1351,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to jump to
      */
     private void firstSwitchJump(String labelPrefix) {
-        Cycle currentCycle = manager.getCurrentCycle();
-        boolean firstVessel = (currentCycle == null) ? false : currentCycle.isFirstVessel();
         String labelSuffix = (firstVessel) ? "FirstVessel" : "NotFirstVessel";
-
         this.jumpTo(labelPrefix + labelSuffix);
     }
 
@@ -1174,10 +1360,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to jump to
      */
     private void bladeSwitchJump(String labelPrefix) {
-        Cycle currentCycle = manager.getCurrentCycle();
-        boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
         String labelSuffix = (hasBlade) ? "Blade" : "NoBlade";
-
         this.jumpTo(labelPrefix + labelSuffix);
     }
 
@@ -1187,10 +1370,7 @@ public class Script {
      * @param labelSuffix the suffix of the label to jump to
      */
     private void bladeSwitchJump(String labelPrefix, String labelSuffix) {
-        Cycle currentCycle = manager.getCurrentCycle();
-        boolean hasBlade = (currentCycle == null) ? false : currentCycle.hasBlade();
         String labelBlade = (hasBlade) ? "Blade" : "NoBlade";
-
         this.jumpTo(labelPrefix + labelBlade + labelSuffix);
     }
 
@@ -1199,10 +1379,7 @@ public class Script {
      * @param labelPrefix the prefix of the label to jump to
      */
     private void moodSwitchJump(String labelPrefix) {
-        Cycle currentCycle = manager.getCurrentCycle();
-        boolean isHarsh = (currentCycle == null) ? false : currentCycle.isHarsh();
         String labelSuffix = (isHarsh) ? "Harsh" : "Soft";
-
         this.jumpTo(labelPrefix + labelSuffix);
     }
 
@@ -1211,9 +1388,7 @@ public class Script {
      * @param labelSuffix the suffix of the label to jump to
      */
     private void sourceSwitchJump(String labelSuffix) {
-        Cycle currentCycle = manager.getCurrentCycle();
-        String chapterSource = (currentCycle == null) ? "" : currentCycle.getSource();
-        this.jumpTo(chapterSource + labelSuffix);
+        this.jumpTo(this.chapterSource + labelSuffix);
     }
 
     /**
@@ -1292,8 +1467,7 @@ public class Script {
      * Prints a line about the Long Quiet beginning to creep closer, used in most endings right before a vessel is claimed
      */
     private void quietCreep() {
-        Cycle currentCycle = parser.getCurrentCycle();
-        if (currentCycle != null) currentCycle.quietCreep();
+        if (!this.noCycle) currentCycle.quietCreep();
     }
 
     /**
@@ -1496,84 +1670,141 @@ Different functions a script can perform:
                 The line is interrupted.
 
 Generic modifiers available for all lines (except comments and labels):
-  - checkvoice-[id]
-        Checks whether the player has the voice specified by the ID before running the line.
-        (Multiple voices can be specified, as long as they are separated with hyphens.)
-  - checknovoice-[id]
-        Checks whether the player does NOT have the voice specified by the ID before running the line.
-        (Multiple voices can be specified, as long as they are separated with hyphens.)
-  
-  - firstvessel
-        Checks whether the player has not yet claimed any vessels before running the line.
-  - notfirstvessel
-        Checks whether the player has already claimed at least one vessel before running the line.
 
-  - hasblade
-        Checks whether the player currently has the blade before running the line.
-  - noblade
-        Checks whether the player currently does not have the blade before running the line.
-        
-  - ifsource-[value]
-        Checks whether the "source" of the active chapter is equal to the given value before running the line.
-  - ifsourcenot-[value]
-        Checks whether the "source" of the active chapter is not equal to the given value before running the line.
+    - Voice checks -
+      - checkvoice-[id]
+            Checks whether the player has the voice specified by the ID before running the line.
+            (Multiple voices can be specified, as long as they are separated with hyphens.)
+      - checknovoice-[id]
+            Checks whether the player does NOT have the voice specified by the ID before running the line.
+            (Multiple voices can be specified, as long as they are separated with hyphens.)
+    
+    - Checks that apply during any chapter -
+      - firstvessel
+            Checks whether the player has not yet claimed any vessels before running the line.
+      - notfirstvessel
+            Checks whether the player has already claimed at least one vessel before running the line.
 
-  - threwblade
-        Checks whether the player threw the blade out the window before running the line.
-  - nothrow
-        Checks whether the player did not throw the blade out the window before running the line.
+      - hasblade
+            Checks whether the player currently has the blade before running the line.
+      - noblade
+            Checks whether the player currently does not have the blade before running the line.
 
-  - sharedloop
-        Checks whether the Narrator knows that the player has been here already before running the line.
-  - noshare
-        Checks whether the Narrator does not know that the player has been here already before running the line.
+      - harsh
+            Checks whether the Princess is currently hostile before running the line.
+      - soft
+            Checks whether the Princess is currently friendly before running the line.
 
-  - sharedinsist
-        Checks whether the player insisted that they've been here before in the woods before running the line.
-  - noinsist
-        Checks whether the player did not insist that they've been here before in the woods before running the line.
-        
-  - mirrorask
-        Checks whether the player asked about the mirror in Chapter 2 before running the line.
-  - nomirrorask
-        Checks whether the player asked about the mirror in Chapter 2 before running the line.
-        
-  - mirrortouch
-        Checks whether the player approached the mirror in Chapter 2 before running the line.
-  - nomirrortouch
-        Checks whether the player approached the mirror in Chapter 2 before running the line.
-        
-  - mirror2
-        Checks whether the player interacted with the mirror in Chapter 2 before running the line.
-  - nomirror2
-        Checks whether the player interacted with the mirror in Chapter 2 before running the line.
+      - knowledge
+            Checks whether the Princess knows she's (allegedly) going to end the world before running the line.
+      - noknowledge
+            Checks whether the Princess does not know she's (allegedly) going to end the world before running the line.
+            
+    - Checks that apply during Chapter 2 or 3 -
+      - voice2-[id]
+            Checks whether the Voice the player gained at the start of Chapter 2 is the Voice specified by the ID before running the line.
+      - voice2not-[id]
+            Checks whether the Voice the player gained at the start of Chapter 2 is not the Voice specified by the ID before running the line.
 
-  - harsh
-        Checks whether the Princess is currently hostile before running the line.
-  - soft
-        Checks whether the Princess is currently friendly before running the line.
+      - ifsource-[value]
+            Checks whether the "source" of the active chapter is equal to the given value before running the line.
+      - ifsourcenot-[value]
+            Checks whether the "source" of the active chapter is not equal to the given value before running the line.
 
-  - knowledge
-        Checks whether the Princess knows she's (allegedly) going to end the world before running the line.
-  - noknowledge
-        Checks whether the Princess does not know she's (allegedly) going to end the world before running the line.
-  
-  - check
-        Checks the boolean condition given in runConditionalSection() before running the line.
-  - checkfalse
-        Checks whether the boolean condition given in runConditionalSection() is false before running the line.
+      - sharedloop
+            Checks whether the Narrator knows that the player has been here already before running the line.
+      - noshare
+            Checks whether the Narrator does not know that the player has been here already before running the line.
 
-  - ifnum
-  - ifnum-[value]
-        Checks whether the int condition given in runConditionalSection() is equal to the given value before running the line.
-        (If no argument is given, the target value defaults to 0.)
-  - ifnumnot
-  - ifnumnot-[value]
-        Checks whether the int condition given in runConditionalSection() is not equal to the given value before running the line.
-        (If no argument is given, the target value defaults to 0.)
+      - sharedinsist
+            Checks whether the player insisted that they've been here before in the woods before running the line.
+      - noinsist
+            Checks whether the player did not insist that they've been here before in the woods before running the line.
+            
+      - mirrorask
+            Checks whether the player asked about the mirror in Chapter 2 before running the line.
+      - nomirrorask
+            Checks whether the player asked about the mirror in Chapter 2 before running the line.
+            
+      - mirrortouch
+            Checks whether the player approached the mirror in Chapter 2 before running the line.
+      - nomirrortouch
+            Checks whether the player approached the mirror in Chapter 2 before running the line.
+            
+      - mirror2
+            Checks whether the player interacted with the mirror in Chapter 2 before running the line.
+      - nomirror2
+            Checks whether the player interacted with the mirror in Chapter 2 before running the line.
 
-  - ifstring-[value]
-        Checks whether the String condition given in runConditionalSection() is equal to the given value before running the line.
-  - ifstringnot-[value]
-        Checks whether the String condition given in runConditionalSection() is not equal to the given value before running the line.
+      - threwblade
+            Checks whether the player threw the blade out the window before running the line.
+      - nothrow
+            Checks whether the player did not throw the blade out the window before running the line.
+
+    - Checks that apply during Chapter 2 only -
+      - drop1
+            Checks whether the player dropped the blade in Chapter 1 before running the line.
+      - nodrop1
+            Checks whether the player did not drop the blade in Chapter 1 before running the line.
+            
+      - whatdo1
+            Checks whether the player asked the Princess what she would do if she left the cabin in Chapter 1 before running the line.
+      - nowhatdo1
+            Checks whether the player did not ask the Princess what she would do if she left the cabin in Chapter 1 before running the line.
+            
+      - rescue1
+            Checks whether the player started to free the Princess in Chapter 1 before running the line.
+      - norescue1
+            Checks whether the player did not start to free the Princess in Chapter 1 before running the line.
+
+    - Checks that apply during Chapter 3 only -
+      - voice3-[id]
+            Checks whether the Voice the player gained at the start of Chapter 3 is the Voice specified by the ID before running the line.
+      - voice3not-[id]
+            Checks whether the Voice the player gained at the start of Chapter 3 is not the Voice specified by the ID before running the line.
+            
+      - abandoned
+            Checks whether the player tried to abandon the Spectre or the Nightmare before running the line.
+      - noabandon
+            Checks whether the player the player did not try to abandon the Spectre or the Nightmare before running the line.
+            
+      - possessask
+            Checks whether the Spectre asked to possess the player before running the line.
+      - nopossessask
+            Checks whether the Spectre did not ask to possess the player before running the line.
+            
+      - cantwontask
+            Checks whether the player asked the Spectre whether she "couldn't" or "wouldn't" possess them if they refused before running the line.
+      - nocantwontask
+            Checks whether the player did not ask the Spectre whether she "couldn't" or "wouldn't" possess them if they refused the player before running the line.
+            
+      - endslay
+            Checks whether the player tried to take the Spectre down as she killed them before running the line.
+      - noendslay
+            Checks whether the player did not try to take the Spectre down as she killed them before running the line.
+            
+      - heartstop
+            Checks whether the Voice of the Skeptic stopped the player's heart in Chapter 2 before running the line.
+      - noheartstop
+            Checks whether the Voice of the Skeptic did not stop the player's heart in Chapter 2 before running the line.
+    
+    - Checks on a given condition -
+      - check
+            Checks the boolean condition given in runConditionalSection() before running the line.
+      - checkfalse
+            Checks whether the boolean condition given in runConditionalSection() is false before running the line.
+
+      - ifnum
+      - ifnum-[value]
+            Checks whether the int condition given in runConditionalSection() is equal to the given value before running the line.
+            (If no argument is given, the target value defaults to 0.)
+      - ifnumnot
+      - ifnumnot-[value]
+            Checks whether the int condition given in runConditionalSection() is not equal to the given value before running the line.
+            (If no argument is given, the target value defaults to 0.)
+
+      - ifstring-[value]
+            Checks whether the String condition given in runConditionalSection() is equal to the given value before running the line.
+      - ifstringnot-[value]
+            Checks whether the String condition given in runConditionalSection() is not equal to the given value before running the line.
 */

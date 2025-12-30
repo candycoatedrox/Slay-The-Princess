@@ -126,36 +126,23 @@ n You lean over the hole and gaze into the abyss. It is so very deep.
 n Deep in the bowels of the earth, you see something staring back at you. It fills you with dread.
 hero It's her.
 para She's watching us. She never stops watching us.
-switchjump emergeRun emergeOther
-
-label emergeRun
-p There you are! My toy has finally come to finish his job.
+    p There you are! My toy has finally come to finish his job. /// abandoned
+    p You really are a coward! /// noabandon
 n With every word she speaks, the Princess in the pit blinks closer.
 truth Her gloved arms are disconnected from her body, her mask shattered into pieces that float just in front of her face.
 truth Behind them, you can see absolutely nothing.
-p You dragged this out for so much longer than you had to!
+    p You dragged this out for so much longer than you had to! /// abandoned
+    p I was joking when I said that way back when. You know that, right? /// noabandon
 n And closer.
-p But it was always just a matter of time.
+    p But it was always just a matter of time. /// abandoned
+    p I was having some fun! And I guess I wanted to see if I could melt you. /// noabandon
 n And closer.
-truth She has more arms now. Three, then four, then five.
-p You were gonna have to stop running eventually.
+truth You can see more arms now. Three, then four, then five.
+    p You were gonna have to stop running eventually. /// abandoned
+    p Watching over me forever? That was so brave! /// noabandon
 n And closer.
-p Everything stops running eventually.
-jumpto emergeJoin
-
-label emergeOther
-p You really are a coward!
-n With every word she speaks, the Princess in the pit blinks closer.
-truth Her gloved arms are disconnected from her body, her mask shattered into pieces that float just in front of her face.
-p I was joking when I said that way back when. You know that, right?
-n And closer.
-p I was having some fun! And I guess I wanted to see if I could melt you.
-n And closer.
-truth She has more arms now. Three, then four, then five.
-p Watching over me forever? That was so brave!
-n And closer.
-p But forever is so so long, and time erodes everything.
-label emergeJoin
+    p Everything stops running eventually. /// abandoned
+    p But forever is so so long, and time erodes everything. /// noabandon
 p Except for me!
 p I've already taken your will and you're not getting it back.
 linebreak
@@ -168,6 +155,7 @@ p Now don't pause. Don't try to resist. I've already molded you into what I need
 n Do something! Do *anything* that isn't taking her hand!
 
 n You extend your hand to hers. For all her past cruelties, the moment feels gentle, tender even. I can't believe you just made me say that. I hate you.
+truth As your hands meet, her mask finally shatters completely. The tiny shards of porcelain fade away into nothingness, revealing the endless void beneath.
 n The motion is difficult at first, as if something still resists your efforts, but then that resistance gives way, and it's over.
 p *Ahhhh.*
 quietcreep

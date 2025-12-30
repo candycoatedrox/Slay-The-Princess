@@ -1,11 +1,11 @@
 public class ChapterI extends StandardCycle {
     
-    protected boolean skipHillDialogue = false;
+    private boolean skipHillDialogue = false;
 
     // Variables that persist in Chapter 2
-    protected boolean droppedBlade1 = false; // Used in Adversary
-    protected boolean whatWouldYouDo = false; // Used in Damsel
-    protected boolean rescuePath = false; // Used in Witch
+    private boolean droppedBlade1 = false; // Used in Adversary
+    private boolean whatWouldYouDo = false; // Used in Damsel
+    private boolean rescuePath = false; // Used in Witch
 
     // --- CONSTRUCTOR ---
 
@@ -42,7 +42,7 @@ public class ChapterI extends StandardCycle {
                 break;
 
             default:
-                ChapterII chapter2 = new ChapterII(ending, manager, parser, voicesMet, cantTryAbort, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, droppedBlade1, whatWouldYouDo, rescuePath);
+                ChapterII chapter2 = new ChapterII(ending, manager, parser, voicesMet, cantTryAbort, isHarsh, knowsDestiny, droppedBlade1, whatWouldYouDo, rescuePath);
                 ending = chapter2.runChapter();
                 
                 switch (ending) {

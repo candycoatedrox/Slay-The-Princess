@@ -2,63 +2,66 @@ import java.io.File;  // Import the File class
 
 public enum Chapter {
     // Chapter I
-    CH1(1, "The Hero and the Princess", "Chapter 1/Chapter1Shared"),
+    CH1(1, "ch1", "The Hero and the Princess", "Chapter 1/Chapter1Shared"),
 
     // Chapter II
-    ADVERSARY(2, "The Adversary", "Routes/Adversary/AdversaryShared"),
-    TOWER(2, "The Tower", "Routes/Tower/TowerShared"),
-    SPECTRE(2, "The Spectre", "Routes/Spectre/SpectreShared"),
-    NIGHTMARE(2, "The Nightmare", "Routes/Nightmare/NightmareShared"),
-    RAZOR(2, "The Razor", "Routes/Razor/Razor2"),
-    BEAST(2, "The Beast", "Routes/Beast/BeastShared"),
-    WITCH(2, "The Witch", "Routes/Witch/WitchShared"),
-    STRANGER(2, "The Stranger", "Routes/Stranger/StrangerShared"),
-    PRISONER(2, "The Prisoner", "Routes/Prisoner/PrisonerShared"),
-    DAMSEL(2, "The Damsel", "Routes/Damsel/DamselShared"),
+    ADVERSARY(2, "adversary", "The Adversary", "Routes/Adversary/AdversaryShared"),
+    TOWER(2, "tower", "The Tower", "Routes/Tower/TowerShared"),
+    SPECTRE(2, "spectre", "The Spectre", "Routes/Spectre/SpectreShared"),
+    NIGHTMARE(2, "nightmare", "The Nightmare", "Routes/Nightmare/NightmareShared"),
+    RAZOR(2, "razor", "The Razor", "Routes/Razor/Razor2"),
+    BEAST(2, "beast", "The Beast", "Routes/Beast/BeastShared"),
+    WITCH(2, "witch", "The Witch", "Routes/Witch/WitchShared"),
+    STRANGER(2, "stranger", "The Stranger", "Routes/Stranger/StrangerShared"),
+    PRISONER(2, "prisoner", "The Prisoner", "Routes/Prisoner/PrisonerShared"),
+    DAMSEL(2, "damsel", "The Damsel", "Routes/Damsel/DamselShared"),
 
     // Chapter III
-    NEEDLE(3, "The Eye of the Needle", "Routes/Adversary/NeedleShared"),
-    FURY(3, "The Fury", "Routes/JOINT/Fury/FuryShared"),
-    APOTHEOSIS(3, "The Apotheosis", "Routes/Tower/ApotheosisShared"),
-    DRAGON(3, "The Princess and the Dragon", true, "Routes/Spectre/DragonShared"),
-    WRAITH(3, "The Wraith", "Routes/JOINT/Wraith/WraithShared"),
-    CLARITY(3, "The Moment of Clarity", "Routes/Nightmare/MomentOfClarity"),
-    ARMSRACE(3, "The Arms Race", "Routes/Razor/Razor3Shared"),
-    NOWAYOUT(3, "No Way Out", "Routes/Razor/Razor3Shared"),
-    DEN(3, "The Den", "Routes/Beast/DenShared"),
-    WILD(3, "The Wild", "Routes/JOINT/Wild/WildShared"),
-    THORN(3, "The Thorn", "Routes/Witch/ThornShared"),
-    CAGE(3, "The Cage", "Routes/Prisoner/PrisonerShared"),
-    GREY(3, "The Grey", "Routes/JOINT/Grey/GreyShared"),
-    HAPPY(3, "Epilogue", "Happily Ever After", "Routes/Damsel/HappyShared"),
+    NEEDLE(3, "needle", "The Eye of the Needle", "Routes/Adversary/NeedleShared"),
+    FURY(3, "fury", "The Fury", "Routes/JOINT/Fury/FuryShared"),
+    APOTHEOSIS(3, "apotheosis", "The Apotheosis", "Routes/Tower/ApotheosisShared"),
+    DRAGON(3, "dragon", "The Princess and the Dragon", true, "Routes/Spectre/DragonShared"),
+    WRAITH(3, "wraith", "The Wraith", "Routes/JOINT/Wraith/WraithShared"),
+    CLARITY(3, "clarity", "The Moment of Clarity", "Routes/Nightmare/MomentOfClarity"),
+    ARMSRACE(3, "armsrace", "The Arms Race", "Routes/Razor/Razor3Shared"),
+    NOWAYOUT(3, "nowayout", "No Way Out", "Routes/Razor/Razor3Shared"),
+    DEN(3, "den", "The Den", "Routes/Beast/DenShared"),
+    WILD(3, "wild", "The Wild", "Routes/JOINT/Wild/WildShared"),
+    THORN(3, "thorn", "The Thorn", "Routes/Witch/ThornShared"),
+    CAGE(3, "cage", "The Cage", "Routes/Prisoner/PrisonerShared"),
+    GREY(3, "grey", "The Grey", "Routes/JOINT/Grey/GreyShared"),
+    HAPPY(3, "happy", "Epilogue", "Happily Ever After", "Routes/Damsel/HappyShared"),
     
     // Chapter IV
-    MUTUALLYASSURED(4, "Mutually Assured Destruction", "Routes/Razor/Razor4"),
-    EMPTYCUP(4, "The Empty Cup", "Routes/Razor/Razor4"),
+    MUTUALLYASSURED(4, "mutuallyassured", "Mutually Assured Destruction", "Routes/Razor/Razor4"),
+    EMPTYCUP(4, "emptycup", "The Empty Cup", "Routes/Razor/Razor4"),
 
     // Special
-    SPACESBETWEEN("The Spaces Between", "Intermission/IntermissionShared"),
-    ENDOFEVERYTHING("The End of Everything", "Finale/FinaleOpening");
+    SPACESBETWEEN("intermission", "The Spaces Between", "Intermission/IntermissionShared"),
+    ENDOFEVERYTHING("finale", "The End of Everything", "Finale/FinaleOpening");
 
-    private boolean specialTitle;
-    private int number;
+    private final String shorthand;
+    private final int number;
     private String prefix;
-    private String title;
+    private final String title;
+    private final boolean specialTitle;
 
-    private File scriptFile;
+    private final File scriptFile;
 
     // --- CONSTRUCTORS ---
 
     /**
      * Constructor
      * @param number the Chapter number
+     * @param shorthand the internal shorthand for this Chapter
      * @param title the title of the Chapter
      * @param specialTitle whether this Chapter has a special title (and thus should not display a title card at the start of the Chapter)
      * @param scriptDirectory the directory of the primary script for this Chapter
      */
-    private Chapter(int number, String title, boolean specialTitle, String scriptDirectory) {
+    private Chapter(int number, String shorthand, String title, boolean specialTitle, String scriptDirectory) {
         this.specialTitle = specialTitle;
         this.number = number;
+        this.shorthand = shorthand;
         this.title = title;
         this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
 
@@ -81,12 +84,14 @@ public enum Chapter {
     /**
      * Constructor for a standard Chapter
      * @param number the Chapter number
+     * @param shorthand the internal shorthand for this Chapter
      * @param title the title of the Chapter
      * @param scriptDirectory the directory of the primary script for this Chapter
      */
-    private Chapter(int number, String title, String scriptDirectory) {
+    private Chapter(int number, String shorthand, String title, String scriptDirectory) {
         this.specialTitle = false;
         this.number = number;
+        this.shorthand = shorthand;
         this.title = title;
         this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
 
@@ -109,12 +114,14 @@ public enum Chapter {
     /**
      * Constructor for a Chapter with a special prefix
      * @param realNumber the true internal Chapter number
+     * @param shorthand the internal shorthand for this Chapter
      * @param specialPrefix the displayed prefix of the Chapter, in place of "Chapter [number]"
      * @param title the title of the Chapter
      * @param scriptDirectory the directory of the primary script for this Chapter
      */
-    private Chapter(int realNumber, String specialPrefix, String title, String scriptDirectory) {
+    private Chapter(int realNumber, String shorthand, String specialPrefix, String title, String scriptDirectory) {
         this.number = realNumber;
+        this.shorthand = shorthand;
         this.prefix = specialPrefix;
         this.title = title;
         this.specialTitle = false;
@@ -123,26 +130,20 @@ public enum Chapter {
 
     /**
      * Constructor for a special Chapter
+     * @param shorthand the internal shorthand for this Chapter
      * @param title the title of the Chapter
      * @param scriptDirectory the directory of the primary script for this Chapter
      */
-    private Chapter(String title, String scriptDirectory) {
-        this.specialTitle = true;
+    private Chapter(String shorthand, String title, String scriptDirectory) {
+        this.shorthand = shorthand;
         this.number = 0;
         this.prefix = "";
         this.title = title;
+        this.specialTitle = true;
         this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
     }
 
     // --- ACCESSORS & CHECKS ---
-
-    /**
-     * Accessor for specialTitle
-     * @return whether this Chapter has a special title (and thus should not display a title card at the start of the Chapter)
-     */
-    public boolean hasSpecialTitle() {
-        return this.specialTitle;
-    }
 
     /**
      * Accessor for number
@@ -150,6 +151,14 @@ public enum Chapter {
      */
     public int getNumber() {
         return this.number;
+    }
+
+    /**
+     * Accessor for shorthand
+     * @return the internal shorthand for this Chapter
+     */
+    public String getShorthand() {
+        return this.shorthand;
     }
 
     /**
@@ -185,6 +194,14 @@ public enum Chapter {
             case ENDOFEVERYTHING: return "The End of Everything";
             default: return this.prefix + ": " + this.title;
         }
+    }
+
+    /**
+     * Accessor for specialTitle
+     * @return whether this Chapter has a special title (and thus should not display a title card at the start of the Chapter)
+     */
+    public boolean hasSpecialTitle() {
+        return this.specialTitle;
     }
     
     public File getScriptFile() {

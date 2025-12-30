@@ -7,8 +7,12 @@ public class ChapterII extends StandardCycle {
     
     // Variables that are used in all chapters
     private final Voice ch2Voice;
-    private Condition cantUnique3;
-    private Condition cantJoint3;
+    private final Condition cantUnique3 = new Condition(manager.demoMode());
+    private final Condition cantJoint3 = new Condition(manager.demoMode());
+    private String source = "";
+    private boolean sharedLoop = false;
+    private boolean sharedLoopInsist = false;
+    private boolean threwBlade = false;
     private boolean forestSpecial = false;
     private boolean skipHillDialogue = false;
 
@@ -18,10 +22,11 @@ public class ChapterII extends StandardCycle {
     private final boolean rescuePath; // Used in Witch
 
     // Variables that persist in Chapter 3
+    private boolean abandoned2 = false;
     private boolean spectrePossessAsk = false;
+    private boolean spectreCantWontAsk = false;
     private boolean spectreEndSlayAttempt = false;
-    private boolean nightmareRunAttempt = false;
-    private String greySlayOrigin;
+    private boolean prisonerHeartStopped = false;
 
     // --- CONSTRUCTOR ---
 
@@ -33,18 +38,11 @@ public class ChapterII extends StandardCycle {
      * @param voicesMet the Voices the player has encountered so far during this cycle
      * @param cantTryAbort whether the player has already tried (and failed) to abort this route
      */
-    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, Condition cantTryAbort, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
+    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, Condition cantTryAbort, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
         super(manager, parser, voicesMet, cantTryAbort, prevEnding);
 
-        this.sharedLoop = sharedLoop;
-        this.sharedLoopInsist = sharedLoopInsist;
-        this.mirrorComment = mirrorComment;
-        this.touchedMirror = touchedMirror;
         this.isHarsh = isHarsh;
         this.knowsDestiny = knowsDestiny;
-
-        this.cantJoint3 = new Condition(manager.demoMode());
-        this.cantUnique3 = new Condition(manager.demoMode());
 
         this.droppedBlade1 = droppedBlade1;
         this.whatWouldYouDo = whatWouldYouDo;
@@ -56,6 +54,72 @@ public class ChapterII extends StandardCycle {
 
         this.ch2Voice = this.prevEnding.getNewVoice();
         this.addVoice(this.ch2Voice);
+    }
+
+    // --- ACCESSORS ---
+
+    /**
+     * Accessor for ch2Voice
+     * @return the Voice the player gained at the start of Chapter II
+     */
+    public Voice ch2Voice() {
+        return this.ch2Voice;
+    }
+
+    /**
+     * Accessor for source
+     * @return the current "source" of the active chapter
+     */
+    public String getSource() {
+        return this.source;
+    }
+
+    /**
+     * Accessor for sharedLoop
+     * @return whether or not the Narrator knows that the player has been here before
+     */
+    public boolean sharedLoop() {
+        return this.sharedLoop;
+    }
+
+    /**
+     * Accessor for sharedLoopInsist
+     * @return whether or not the player insisted that they've been here before in the woods
+     */
+    public boolean sharedLoopInsist() {
+        return this.sharedLoopInsist;
+    }
+
+    /**
+     * Accessor for threwBlade
+     * @return whether or not the player threw the blade out the window
+     */
+    public boolean threwBlade() {
+        return this.threwBlade;
+    }
+
+    /**
+     * Accessor for droppedBlade1
+     * @return whether or not the player dropped the blade in Chapter I
+     */
+    public boolean droppedBlade1() {
+        return this.droppedBlade1;
+    }
+
+    /**
+     * Accessor for whatWouldYouDo
+     * @return whether or not the player asked the Princess what she would do if she left the cabin in Chapter I
+     */
+    public boolean whatWouldYouDo() {
+        return this.whatWouldYouDo;
+    }
+
+    /**
+     * Accessor for rescuePath
+     * @return whether or not the player started to free the Princess in Chapter I
+     */
+    public boolean rescuePath() {
+        return this.rescuePath;
     }
 
     // --- COMMANDS ---
@@ -157,7 +221,7 @@ public class ChapterII extends StandardCycle {
         }
 
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, spectrePossessAsk, spectreEndSlayAttempt, nightmareRunAttempt, greySlayOrigin);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
             ending = chapter3.runChapter();
         }
 
@@ -3422,6 +3486,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
+                    this.abandoned2 = true;
                     mainScript.runSection("leaveAttempt");
                     return this.spectreKill(true);
                     
@@ -3436,6 +3501,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
+                    this.abandoned2 = true;
                     mainScript.runSection("retrieveAttempt");
                     return this.spectreKill(true);
 
@@ -3588,6 +3654,7 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "wont":
+                    this.spectreCantWontAsk = true;
                     mainScript.runConditionalSection("wontPossessAsk", trapSuggest);
                     trapSuggest = true;
                     break;
@@ -4129,7 +4196,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    this.nightmareRunAttempt = true;
+                    this.abandoned2 = true;
                     mainScript.runSection("runAttempt");
                     return ChapterEnding.MONOLITHOFFEAR;
 
@@ -7134,8 +7201,8 @@ public class ChapterII extends StandardCycle {
             }
         }
         
-        greySlayOrigin = this.activeOutcome;
         if (!selfSlain) {
+            if (activeOutcome.equals("cheated")) this.prisonerHeartStopped = true;
             return ChapterEnding.COLDLYRATIONAL;
         } else {
             switch (activeOutcome) {
@@ -7283,7 +7350,6 @@ public class ChapterII extends StandardCycle {
                     }
 
                     mainScript.runSection("conversationSlay");
-                    greySlayOrigin = "damsel";
                     this.damselSlay();
                     return ChapterEnding.LADYKILLER;
 
@@ -7485,7 +7551,6 @@ public class ChapterII extends StandardCycle {
                     }
 
                     mainScript.runSection("deconSlay");
-                    greySlayOrigin = "damsel";
                     this.damselSlay();
                     return ChapterEnding.LADYKILLER;
 
@@ -7567,7 +7632,6 @@ public class ChapterII extends StandardCycle {
                         }
 
                         this.repeatActiveMenu = false;
-                        greySlayOrigin = "damsel";
                         mainScript.runSection("cabinSlay");
                         this.damselSlay();
                         return ChapterEnding.LADYKILLER;

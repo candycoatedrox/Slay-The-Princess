@@ -659,13 +659,13 @@ public class GameManager {
                 break;
             
             case 2:
-                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, null, new Condition(), false, false, false, false, harsh, false, false, false, false);
+                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, null, new Condition(), harsh, false, false, false, false);
                 break;
 
             case 3:
             case 4:
             case 0:
-                this.currentCycle = new ChapterIII(ending, this, this.parser, null, null, new Condition(), false, false, false, false, harsh, false, null, false, false, false, "damsel");
+                this.currentCycle = new ChapterIII(ending, this, this.parser, null, null, new Condition(), false, false, false, false, harsh, false, null, false, false, false, false, false);
                 break;
 
             default: throw new RuntimeException("Invalid starting chapter");

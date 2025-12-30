@@ -1,7 +1,33 @@
 n You're on a path in the woods -- /// interrupt
-
-label startPara
+    jumpto startCheated /// checkvoice-cheated
 para Shit -- this really doesn't end, does it? It doesn't matter if *we* kill *her,* it doesn't matter if *she* kills *us,* it just goes on, and on, and on, and on, and on.
+    jumpto startOppo /// checkvoice-oppo
+cold Yes, so it does.
+hero No, there has to be a way out of here. There just has to be.
+sourceswitch StartParaCold
+
+label spectreStartParaCold
+cold Does there have to be a way out? For all we know, this is just how things are.
+    hero No. No, I can't accept that. What if we let her take our body? That's what she wanted last time. We can still put all of this to rest, right? /// possessask
+    hero No. No, I can't accept that. I know she just killed us, but... what if we free her? What if we help her leave? We haven't tried that yet! /// nopossessask
+        cold That does sound like it could be interesting. Or at least different. /// nopossessask
+para I don't think we can stop her if that's what she wants to do. She ripped our heart out. Who's to say she can't go ahead and steal our body and make us do what she wants?
+jumpto startParaColdJoin
+
+label nightmareStartParaCold
+para What if... we do what she asked us to last time. What if we just let her leave?
+label startParaColdJoin
+n Okay. So you've already been here. More than once, even. Great. So you probably already know all about her and all about the threat she poses to the world.
+n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
+    cold Oh, threatening us with death, are we? And why should we be afraid of anything? We've already died twice. It doesn't mean much to us anymore. /// ifsource-spectre
+    cold Oh, threatening us with death, are we? And why should we be afraid of dying? We've already done it twice. /// ifsource-nightmare
+cold All death has done is shunt us back to these woods where we're forced to listen to your empty warnings again and again.
+label startParaJoin
+para This place feels a bit different, though, doesn't it? I don't even know what I'd call it, but it's definitely not the same path in the woods anymore.
+n That's all the more reason to take this seriously. If the path isn't the same, it means that her influence is spreading, and the world has already started to end.
+hero Her "influence...?"
+n I really shouldn't have said that. It'll make your task more difficult... but now it's out, you could always take that information as a sign of good will between us and do your job, all right?
+    oppo Well then, if the world's rushing to an end, that's all the more reason for us to rush over to the cabin and make ourselves useful. It's all about making a good impression. If we're useful, there's a place for us! /// checkvoice
 
 label startOppo
 oppo We've tried doing it our way, and we've tried doing it His way. I think the only way left is hers.
@@ -11,46 +37,6 @@ n Okay. So you've already been here. More than once, even. Great. So you probabl
 n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
 oppo See, it's that last part I'm not so sure about. We've "ended" twice now. We even ended her once, but it didn't matter! Because it still threw us right back into these woods.
 jumpto startParaJoin
-
-label startParaCold
-cold Yes, so it does.
-hero No, there has to be a way out of here. There just has to be.
-stringautojump StartParaCold
-
-label spectreStartParaCold
-cold Does there have to be a way out? For all we know, this is just how things are.
-    jumpto startPossessAsked /// check
-hero No. No, I can't accept that. I know she just killed us, but... what if we free her? What if we help her leave? We haven't tried that yet!
-cold That does sound like it could be interesting. Or at least different.
-jumpto startParaSpectreJoin
-
-label startPossessAsked
-hero No. No, I can't accept that. What if we let her take our body? That's what she wanted last time. We can still put all of this to rest, right?
-label startParaSpectreJoin
-para I don't think we can stop her if that's what she wants to do. She ripped our heart out. Who's to say she can't go ahead and steal our body and make us do what she wants?
-jumpto startParaColdJoin
-
-label nightmareStartParaCold
-para What if... we do what she asked us to last time. What if we just let her leave?
-label startParaColdJoin
-n Okay. So you've already been here. More than once, even. Great. So you probably already know all about her and all about the threat she poses to the world.
-n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
-stringautojump StartParaColdThreat
-
-label spectreStartParaColdThreat
-cold Oh, threatening us with death, are we? And why should we be afraid of anything? We've already died twice. It doesn't mean much to us anymore.
-jumpto startParaColdThreatJoin
-
-label nightmareStartParaColdThreat
-cold Oh, threatening us with death, are we? And why should we be afraid of dying? We've already done it twice.
-label startParaColdThreatJoin
-cold All death has done is shunt us back to these woods where we're forced to listen to your empty warnings again and again.
-label startParaJoin
-para This place feels a bit different, though, doesn't it? I don't even know what I'd call it, but it's definitely not the same path in the woods anymore.
-n That's all the more reason to take this seriously. If the path isn't the same, it means that her influence is spreading, and the world has already started to end.
-hero Her "influence...?"
-n I really shouldn't have said that. It'll make your task more difficult... but now it's out, you could always take that information as a sign of good will between us and do your job, all right?
-    oppo Well then, if the world's rushing to an end, that's all the more reason for us to rush over to the cabin and make ourselves useful. It's all about making a good impression. If we're useful, there's a place for us! /// checkvoice
 
 label startCheated
 cold And here we go again. Off to slay her. Again.
@@ -84,19 +70,9 @@ cheated And you believed him? Pah.
 label loopStart
     para Suspiciously quick... /// checkvoice
 n If I had to make a wager, I'd say yes and no.
-stringswitchjump LoopStart
-
-label cheatedLoopStart
-cheated That's a hedge, not a wager.
-jumpto loopStartJoin
-
-label paracoldLoopStart
-cold Is that supposed to be a riddle? If it is, it's not very good.
-jumpto loopStartJoin
-
-label oppoLoopStart
-para And what does that mean?
-label loopStartJoin
+    cheated That's a hedge, not a wager. /// checkvoice
+    cold Is that supposed to be a riddle? If it is, it's not very good. /// checkvoice checknovoice-cheated
+    para And what does that mean? /// checkvoice-oppo
 n "I" haven't met you, but you've clearly met "me." It sounds to me like you're hopping between parallel realities, in which case the "me" you just met here is the same collection of experiences as the "me" you met at all of those other beginnings, but their continuity breaks the moment you say or do anything, in effect making them all separate.
 n So yes. I'm the same "me," but ever since the moment we started talking, I'm different.
     cold I'm not sure how we're supposed to kill Him ourself, but He's asking for it. Maybe there's some way she can take care of him for us. /// checkvoice
@@ -110,5 +86,371 @@ n Know that there is always a choice -- even if you were stuck in an "infinite" 
     cheated How convenient, everything always comes back to what you want us to do! I'm sick of Him. Makes me want to end the world out of spite. /// checkvoice
     oppo Do you see how little authority He has? He's practically just begging us at this point. She at least takes what she wants. She's inspirational, really. /// checkvoice
     para Everyone is manipulating us. But we're starting to see the threads now. We just have to avoid getting tangled up in them... /// checkvoice
+    cold On second thought, let's not kill Him. Let's throw Him someplace that never ends. I'd like to see what that does to Him. /// check checkvoice
 
 label dontGoStart
+n Then she finds a way out on her own.
+    oppo So... it sounds to me like she's getting out no matter what we do. And I say aligning ourselves with somebody like her is clearly the better option. She's going places. Let's make our way to the cabin and demonstrate our value! /// checkvoice
+    cheated Ugh. Of course she does. /// checkvoice
+    cold So standing around out here is the same as us letting her out. /// checkvoice
+        hero Only we don't have to see her. That's got to be better, right? /// checkvoice-cold
+n No, it's strictly worse.
+    para And why is that? /// checkvoice
+    hero But she can't kill us out here. Why would staying out of killing distance be worse if she's getting out regardless? /// checknovoice-para
+n Because it's cowardly, for starters. And because the unknown is always worse than the known. But really, all you're doing right now is weighing two considerably bad options.
+n The only solution worth considering is slaying her, and whatever delusion is holding you back from doing that, is just that: a delusion. If you already managed to end her in some other world, the only reason you'd be here is that you somehow managed to do it wrong.
+    cheated How are we supposed to decide on anything if you just keep coming up with new rules? Since when is there a wrong way to slay her?! /// checkvoice check
+    cheated More rules, more rhetoric! Since when is there a wrong way to slay her?! I'm sick of Him. Makes me want to end the world out of spite. /// checkvoice checkfalse
+
+// Hill dialogue //
+
+label hillDialogue
+n It isn't long before you're steps away from your destination. I don't think you need any words of warning. I think you know what's in there, and despite your protestations, I think you know what you need to do.
+    oppo Of course we do! We've been over it. Find the one in charge, and make sure she knows how helpful we are. /// checkvoice
+    para I don't like any of our options here. It feels like we're being driven down the tracks to some awful inevitability. There must be a something we're missing, something that would make everything make sense. /// checkvoice
+        para Maybe letting her out really is the answer. /// checkvoice
+    cheated The more He talks, the more I'm interested in setting her free. /// checkvoice
+n Whatever. You don't want to listen to me? Do it, then. Let her out. See what I care.
+    cold It sounds like somebody's about to crack. /// checkvoice
+
+label hillExplore
+n There's obviously no point in trying to reason with you right now, especially with all of these clowns offering up their useless advice. Honestly it seems like the more I try and talk sense into you, the more single-minded they get about letting her out. So yes. I'm done trying to argue.
+    cold Would you look at that? We won. /// checkvoice
+    para I wouldn't trust that if I were the one making decisions. /// checknovoice-cold
+n Take it however you will.
+
+// Cabin dialogue //
+
+label cabinIntro
+n The interior of the cabin is long and dark, a single narrow hallway stretching far into the distance. Curtains billow out from tall windows on either side, obscuring the path forward, fluttering helplessly as opposing gusts of wind rush into the building, clashing and joining and driving everything forward.
+n The only furniture of note is -- hm. That's strange.
+hero What's strange? Is it the mirror?
+n The mirror? No, there isn't a mirror. What's strange is that there isn't much of anything in here at all aside from the curtains. There's supposed to be a pristine blade. Why isn't there a pristine blade?
+    cheated Great. Something else has been taken away from us. /// checkvoice
+    para Of course there "isn't a mirror." There "wasn't one" last time either, so why would it be there this time. /// checkvoice mirror2
+    para What do you mean there isn't a mirror. There's a mirror, plain as day at the end of the hall. /// checkvoice nomirror2
+    cold I suppose the only way to go is forward. So forward we will go. Blade or not, it doesn't really matter, does it? /// checkvoice
+    oppo Let's be mindful of our position, boys. Without the knife, we lose part of our bargaining power. We should fold and beg for mercy as soon as we see her. /// checkvoice
+        hero I'm sure we have too much self-respect to do something so... worm-like. Right? We can always at least pretend to have a conversation as equals. We did kill her last time. /// checkvoice-oppo
+        oppo Yeah, but she sort of let us do that, didn't she? And again. We don't have a blade. /// checkvoice
+        oppo And look at the bright side: at least everybody knows exactly where worms stand in the pecking order! At the bottom. Which is the most important part if you think about it, because it gives everybody else something to stand on. The bedrock, if you will. /// checkvoice
+        oppo She'll understand the value of that. /// checkvoice
+
+label mirrorExplore
+n If you're asking what's at the end of the hallway, it's the way to the basement.
+    para Are you saying there isn't a door? Are you saying that at the end of the hallway there's just an opening? /// checkvoice ifsource-spectre
+    para Are you saying there isn't a door? Are you saying that at the end of the hallway there's just an opening again? /// checkvoice ifsource-nightmare
+        cold He didn't say "door," did he? /// checkvoice-para-cold
+    hero The... *way* to the basement? Don't you mean door? /// checknovoice-para
+n No, I didn't say door. Because there isn't a door. It's just an opening.
+    para It's just like last time, isn't it? Only instead of a visible empty void, there's an invisible one. For all we know, she could be standing right there behind the mirror! For all we know, she's going to jump out at us and there's nothing we can do to stop her! /// ifsource-nightmare
+        n Let me assure you that there's nothing there. Nothing is going to "jump out at you," and certainly not the Princess. The Princess is in the basement. /// ifsource-nightmare
+    cheated What are the odds she's waiting for us right behind it? If *I* were running a *bullshit factory* it's what I'd do. /// checkvoice
+        n Let me assure you that there's nothing there. Nothing is going to "jump out at you," and certainly not the Princess. The Princess is in the basement. /// checkvoice-cheated
+    oppo Oh, stop being such cowards, all of you. We know what we're going to do. We know what's going to happen to us. There's literally nothing to be afraid of. /// checkvoice
+    cheated He can't see the mirror. The knife is gone, defying His expectations. Who the hell is calling the shots here? /// checkvoice
+        n Nobody is calling the shots. That's how reality works. /// checkvoice-cheated
+
+label mirrorApproach
+n You slowly make your way towards the gaping maw that awaits you. Your fraying nerves buzz with trepidation, the chill wind raising your hackles as it gently pushes you forward, towards the darkness at the end of the hallway. You can't shake the feeling that you're being watched.
+    para Oh, *do we?* *Do* we feel like we're being watched? I hadn't *noticed!* At least you're admitting to it now. /// checkvoice
+    cold We've always been watched. You're watching us right now. Sometimes the feeling is just stronger than others. /// checknovoice-para
+    cheated I feel like you're trying to put us on edge. We don't need all this anticipation, we just need this to be over. /// checkvoice
+    oppo Who says being watched is a bad thing? If we haven't done anything wrong, we don't have anything to worry about. I'm sure she knows we're on her side. /// checkvoice
+n You stop as you reach the end of the hallway, I presume in front of whatever mirror isn't actually there.
+
+label mirrorWipe
+    para I hate that I know what's about to happen. Knowing makes it so much worse. /// checkvoice check
+    para This is it. The mirror's going to go away, and she's going to startle us. We'd better brace ourselves... /// checkvoice checkfalse
+    cheated Here we go. /// checkvoice check
+    cheated What are the odds she's waiting for us right now, just out of sight on the other side of that glass? /// checkvoice checkfalse
+n You reach your arm forward into the pitch black of the opening.
+    para *Sigh of relief.* Oh, that was a close one. All that stress and lead-up for nothing... /// checkvoice
+    cheated Nothing. Huh. It's like this place read our mind just to mess with us. /// checkvoice
+    p Whatcha looking at, killer? Staring into the void? Thinking about what it'd be like to die again? I know exactly how you feel. /// ifsource-spectre
+    p Hopelessly staring into the void? I'm glad I made a lasting impression. /// ifsource-nightmare
+hero Shit -- where is she?!
+n You feel something long and frigid coil around your ankle. Your heart skips a beat, standing in muted shock for one long, frozen moment, and then it -- she, the Princess -- constricts.
+n Your bones snap.
+n Icy pain radiates up from the break, a deep cold flooding your veins as your legs, numb with the shock of it, collapse, and you collapse with them.
+n You're met with the terrifying visage of the Princess. Her skeletal hand grips your leg in a steel vice, her grin carved jagged from ear-to-ear, crowded with far too many long and crooked teeth.
+    p But do you know how I feel? I gave you a path to forgiveness. I gave you a chance to make things right. But you decided it'd be best to try and bury me all over again. /// abandoned
+        p You're not getting another chance to mess this up. /// abandoned
+    p But do you know how I feel? I gave you a path to forgiveness. I gave you a chance to make things right. /// ifsource-spectre noabandon
+        p I thought maybe you'd see what you've done and feel remorseful, maybe try to make it up to me. But no... you'd rather use that knife to keep making the same mistake over and over and over. /// ifsource-spectre noabandon
+            p Even after I ripped your heart out, you still cut me. And for what? I didn't go anywhere. You didn't banish me. I'm right back here with you, a little better, a little worse. /// endslay
+                p Well... maybe a lot worse. /// endslay
+    p So... here's how this is going to go. I'm going to take your body, and I'm going to walk it out of here. /// ifsource-spectre
+    p You killed me last time. And that was after you tried to lock me away forever. I was so, so close to freedom, but then you took my body away from me. /// ifsource-nightmare
+        p So now I'm going to take yours, and I'm going to walk it out of here. /// ifsource-nightmare
+p And you! You get to watch me do it! Completely helpless. Just like you left me.
+stringautojump ConvoStart
+
+label oppoConvoStart
+oppo Great! We're all on the same page then! The important part now is that we let her know that we're completely on-board with this.
+para Are we? She clearly hates us. I'm not sure letting her in is a good idea. Not like this.
+oppo Oh, don't have second thoughts! This has to happen. It's clearly the only way we save our skin and get out of here.
+n Ignore him. Have those second thoughts. Have them now!
+
+label paracoldConvoStart
+para Okay! Maybe letting her in isn't the best idea. She clearly *hates us!*
+cold And? What's your point? I thought you wanted to get out of here. This is a way out, and it's... different. We might as well take it.
+para Yeah, but not like *this!* She's going to make it *hurt.*
+cold Then turn off the part of you that feels things.
+hero Oh, like it's that easy?
+cold It is. Pain is just another sensation. If you can tolerate joy, you can tolerate pain.
+hero Except that pain hurts!
+cold Yes. That's what it does. That's the definition.
+para Do we need to *explain* to you why pain is bad?!
+cold You need to explain to *yourself* why it isn't.
+
+label cheatedConvoStart
+cold I say we let her do it. It's something different.
+cheated Do we even have a choice?
+n You always have a choice.
+hero Maybe before, but not now. There isn't a blade this time.
+n Exactly! What choice is there if there isn't a blade?
+cold Well, unless you have any specific ideas, I think my vote's the only one that counts.
+
+// Conversation menu //
+
+label agreeMenu
+p That was then. This is now.
+
+label evenMenu
+    p And you think that's even? How adorable. /// ifsource-spectre
+        p But I think you forgot about the part where you tried leaving me to rot. /// abandoned
+        p But I think you forgot about the part where you tried killing me again. /// ifsource-spectre noabandon
+    p I think you forgot something... like the part where all this started when you left me to languish in a pit all by myself. Now I've become something so much worse, and it's all! Thanks! To you! /// ifsource-nightmare
+p If I were you, I would just want to just get it over with! You lost your chance to call the shots, there's no going back to fix it now. You can either look on in horror or celebrate my freedom, but either way, you're about to become a passenger.
+
+label wantMenu
+p But you did hurt me. Twice, even. And I'm not letting you do it again.
+
+label victimMenu
+p And sometimes victims become the same as their victimizers. Just because someone hurt you doesn't mean you get a free pass.
+    para Funny how she says that like it's a bad thing when it's exactly what she's doing right now. /// checkvoice
+        hero Something tells me pointing out the irony wouldn't do much to help us. /// checkvoice-para
+p You should be grateful that I still have a use for you. Being mine is more than you deserve, really.
+
+label betterMenu
+hero Ooh! That's a good one.
+p Evil is all about perspective. After all you've done, why would I ever care about what you think of me?
+
+label barterMenu
+    p I don't think you get the magnitude of hatred that sits between us. You've broken more trust than I thought I had. /// ifsource-spectre
+    p Oh? You mean like last time? /// checkvoice-oppo
+    p You locked me in a basement and then you killed me. /// ifsource-nightmare checkvoice-cold
+
+label consentMenu
+    p See? That wasn't so hard! And maybe this'll make it hurt a little less. /// ifsource-spectre
+        p Maybe. /// ifsource-spectre
+    p Great. See you in a jiffy. /// ifsource-nightmare
+jumpto possessStart
+
+label struggleMenu
+n You violently struggle against the Princess, but all you manage to do is grind the fragments of your splintered ankle together. You can't shake free from her now.
+p It's so easy to make you squirm. But I won't be crueler than I have to be. Wouldn't want to cause any more damage. It'll be hard enough for me to walk out of here on that broken ankle.
+jumpto possessStart
+
+label stallMenu
+p Enough talking. We'll have plenty of time for chit chat once this place is far behind us.
+jumpto possessStart
+
+// The Princess possesses you
+
+label possessStart
+n You remain pinned to the floor of the long hallway as the rest of the Princess's body emerges -- her proportions all wrong, limbs bent and curling, moving in ways that defy your understanding.
+n Her torso stretches until her face is practically touching yours, her neck cracking audibly as she twists to look at you from a fresh angle.
+hero Are you sure you can't do anything to help us? Can't you like, manifest a rock right on top of her head?
+n And crush you along with her? Not that I even can "manifest a rock." Besides, I thought you all *wanted* to free the Princess.
+hero Not like this!
+n You don't even have a weapon. So I'm afraid you're out of luck, which unfortunately means that I -- and the rest of the world -- are out of luck too.
+    cheated And whose fault is it that there isn't a weapon here? /// checkvoice
+        n Yours, I assume. There's supposed to be a pristine blade. Whatever you did in those previous lives of yours, you really messed up. /// checkvoice-cheated
+        hero Are you seriously trying to blame this on us? /// checkvoice-cheated
+    oppo Look, she's mad at us! I get it! But it's nothing we can't clear up after she possesses our body. Don't worry, I'm what you might call a smooth-talker. I'll iron things out. /// checkvoice
+        hero Oh, will you now? With her like *that?* /// checkvoice-oppo
+        n Good luck with that. It doesn't seem like she's too keen on forgiveness. /// checkvoice-oppo
+    para Okay! Deep breath. This is fine. This is *fine!* This is *FINE...!* /// checkvoice
+        para What am I talking about? This isn't fine! It was better when she was a normal ghost! /// checkvoice ifsource-spectre
+        hero Is it? Is there *any* conceivable way that *this* is fine? /// ifsource-nightmare
+            para Yeah. I'm right! This is fine! I-It's better than last time. At least our organs aren't failing. At least I can actually *talk.* /// ifsource-nightmare
+        cold It *is* fine. Everything is *always* fine. These consequences have no real impact on us outside of momentary discomfort. I'm sure we'll be moving on again soon enough. /// checkvoice-para-cold
+n Your vision fades as she tears open the membrane of your soul.
+linebreak
+p GET UP.
+n You're awake, eyes once again fixed on the long hallway, your vision swimming as the Princess' command reverberates inside your skull. Her voice is all-encompassing. You feel... wrong.
+p I SAID GET UP.
+hero It's so *cramped* in here. Like there's some sort of growth, trying to push us all out.
+n I know. You rise to your feet, though the pain in your ankle is blinding. Your body slumps against the wall, desperately leaning into it for support.
+
+label oppoNoConsent
+oppo The two of you are being *incredibly* rude. Hi. Hello! Welcome! I live here, along with him and him, and... well, I've never been clear on whether or not He lives here.
+para I don't think this is helping! We should try to keep a *low profile.*
+p YES THAT ONE IS RIGHT THIS ISN'T HELPING YOU. IT'S TOO LATE FOR ANYTHING TO HELP YOU.
+oppo I just want to tell you how *great* a job you're doing! You're a real go-getter. Really seizing destiny by the throat and making it yours! It's the kind of gumption a guy can really admire.
+p YOU STABBED ME IN THE BACK.
+oppo That was then! This is now. I'm a big fan of winners, and you're the biggest winner around.
+p DO YOU THINK IF YOU ARE NICE TO ME NOW THAT I WILL FORGET WHAT YOU'VE DONE TO ME? I HAVE ALREADY TAKEN THE ONLY THING I NEED!
+oppo I'll have you know that as soon as we wound up back in the woods on this go-around, *I* suggested that we free you. I'm on your side!
+p YOU'RE ONLY ON MY SIDE UNTIL YOU THINK YOU CAN STAB ME IN THE BACK AGAIN. BUT THAT IS NEVER GOING TO HAPPEN.
+oppo At the end of the day, I just want a job. I figure if He's right and you're going to end the world, there's gotta be something else coming after all that. And I want to make sure I have a place helping you run it!
+hero I think you should stop talking.
+p NO, HE SHOULD KEEP SAYING THESE THINGS. I LIKE TO FEEL YOU WRITHE IN DISCOMFORT.
+oppo Look, all I'm saying is that 'whatever comes after' is going to be a hefty management task. You don't want to do that alone! And I -- no. *We* -- are the only people you know. Possibly the only people left alive once you've done whatever it is you're going to do. So you'll *have* to hire us.
+para We're going to die. No, we're going to do something *worse* than dying! She is going to torture us out of existence and it's all going to be YOUR FAULT!
+jumpto paraSuggestJoin
+
+label cheatedNoConsent
+cheated There's another option, you know.
+p OH? AND WHAT'S THAT.
+cheated Don't. Help. Either of them. Flip the table.
+p AND HOW WOULD YOU DO THAT? YOU DON'T HAVE A WILL TO WIELD. YOUR SOUL HAS BEEN DRAINED OF COURAGE.
+cheated That gap where the mirror was. I don't think it goes anywhere. Let's throw ourselves into the abyss.
+jumpto noConsentJoin
+
+label paracoldNoConsent
+cold It's rather rude to show up in somebody else's body and boss it around like this.
+    p AND IT IS RUDE TO MURDER. /// ifsource-spectre
+    p AND IT IS RUDE TO LOCK SOMEBODY AWAY IN A DARK DARK BASEMENT FOREVER. IT IS RUDE TO LEAVE SOMEBODY TO ROT. /// ifsource-nightmare
+hero We were going to let you out of here! That's the whole reason we marched all the way back up to the cabin!
+cold Were we?
+hero I was!
+p I KNOW YOU WERE. BUT YOU WERE GOING TO DO IT FOR THE WRONG REASONS.
+hero And what *reasons* are those supposed to be? *Nobody* should be able to be judge, jury, and executioner.
+p WEREN'T YOU ALL OF THOSE THINGS FOR ME?
+p I CAN GRASP THE SHAPE OF EVERYTHING YOU THINK AND FEEL. YOU THINK YOU ARE NUMB, BUT YOU ARE HOPELESS AND PARANOID. YOU ARE AFRAID OF ME.
+p AND I DON'T FEEL REGRET, EVEN IN THE RECESSES OF YOUR SOUL. THERE IS NOT A DROP OF SYMPATHY TO BE FOUND.
+hero We weren't always like this, we -- /// interrupt
+cold *I've* always been like this.
+label paraSuggestJoin
+p ALL I'M DOING IS REAPING WHAT YOU'VE SOWN.
+para We don't *have* to let her out. I've been storing up a little bit of will since she forced her way in here. Take it and throw us all into the basement! It's better than giving her what she wants.
+label noConsentJoin
+p YOU WOULDN'T DARE! MOVE! NOW!
+n Your body, still slumped against the wall, trapped between the Princess' overwhelming will and the blinding pain of your splintered ankle, takes an excruciating step towards the cabin door. The movement is stiff, your body reduced to a marionette, pulled reluctantly along by your strings.
+p IT'S NOT THAT BAD. THE PAIN FEELS GOOD. BECAUSE I KNOW YOU FEEL IT TOO.
+
+// Throw yourself into the abyss //
+
+label abyssStart
+n In a single moment of overwhelming willpower, you tear your body from the wall and hurl it towards the gaping abyss.
+p I WON'T LET YOU DO THIS!
+n Capillaries burst and muscle fibers tear as you and the Princess struggle over the reins of your body, one foot planted firmly on the edge where the floor ends and the nothing begins. It's unquestionable that her reserves are greater than yours, but fortunately for you, the distance you have to cover is far shorter.
+    oppo Now this is just embarrassing! I would have made sure *all* of you had cushy jobs on the other side of this, but you're going to make it *impossible* to patch things up! /// checkvoice
+        p I WILL DEVOUR YOU! /// checkvoice-oppo
+        para It's now or never! No doubt! Just *make it happen!* /// checkvoice-oppo
+    cheated Enough is enough! I'm *tired* of us always LOSING! It's. Just. A step. AWAY! /// checkvoice
+        p EVEN IF YOU THROW YOURSELF INTO THE ABYSS, YOU STILL LOSE! /// checkvoice-cheated
+    hero We're putting in everything we have! /// checkvoice-para-cold
+        cold You're not. You're thinking too much about how she's hurting us. You're thinking too much about your body. It's just a body. /// checkvoice-para-cold
+        p YES IT'S JUST A BODY NOW BUT I CAN MAKE IT DO SO MANY TERRIBLE THINGS TO YOU! /// checkvoice-para-cold
+        para One, two, three! ... One, two... three! N-next one, we all go. One, two, *three!* /// checkvoice-para-cold
+n You throw everything you have against her and manage, for one brief moment, to overpower the Princess's hold on your body. But that moment was all you needed. Your foot slips a few inches, and you collapse forward, the darkness swallowing you whole.
+p WHY DO YOU HATE ME?
+n Her thought slips through you, unheeded, as you fall, and fall, and fall.
+p HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA
+    oppo I thought we already fell forever. /// checkvoice
+        para Yes, but now we're falling with *her.* She doesn't get an easy way out this time. Just like *we* didn't get an easy way out last time. /// checkvoice-oppo
+    cheated What an end. But at least it's ours. /// checkvoice
+        cold An empire of frigid nothing. /// checkvoice-cheated
+    para Hahaha! Hah, we did it! We actually *did it!* /// checkvoice-para-cold
+        cold Yes, we've really shown them all, haven't we? /// checkvoice-para-cold
+n I don't think this qualifies as saving the world, but at least you didn't ruin it.
+hero What happens now?
+p WHAT DO YOU MEAN WHAT HAPPENS NOW YOU WANTED THIS.
+n But I want to know what He thinks happens now.
+p I DON'T THINK YOU'RE GOING TO FIND THAT OUT.
+    para Why? What do you know that you're not telling us? /// checkvoice
+    cold Oh? And why's that? /// checknovoice-para
+quietcreep
+p YOU SHOULD PAY BETTER ATTENTION TO YOUR HEAD. HE LEFT. GONE. IT'S JUST YOU AND YOU AND YOU AND ME.
+p IDIOT.
+    cheated He's gone...? But -- /// interrupt
+linebreak
+truth Terminal velocity ceases, and you feel a something -- a mass, a growth -- torn out of you. You and the Princess look at each other for a short moment.
+p Wh-what?! What's happening to me?
+claim abyssEnd
+
+label abyssEndFirstVessel
+truth But you don't answer her before something takes her and leaves something in her place. You feel a force underneath your feet once more.
+
+label abyssEndNotFirstVessel
+truth But you don't answer her before she's gone and you feel a resistance underneath your feet once more. Memory returns.
+
+// Let the Princess leave the cabin //
+
+label freeStart
+    jumpto freeStartConsent /// check
+n *Sigh.* You toss the last of your will aside and surrender to the Princess.
+    cheated Shit. /// checkvoice
+hero I guess that's that.
+    oppo It's for the best, really. /// checkvoice
+    para Maybe we'll find our freedom on the other side. /// checkvoice
+    cold An end is an end. Let's see what it has in store for us. /// checkvoice
+p THIS IS ALL I WANTED. MAYBE THERE WILL BE A MERCY FOR YOU AT THE END OF EVERYTHING.
+    oppo You hear that, boys? A mercy. That's the sort of reward you get with me at the helm. /// checkvoice
+jumpto freeJoin
+
+label freeStartConsent
+n I'd beg you to resist, but you've already surrendered your will to her, haven't you?
+    para You're the puppet master here. If this is the only way we could cut ourselves free from you, so be it. /// checkvoice
+    cheated Anything to get out of this hellhole. /// checkvoice
+    oppo Yeah. Just like I told you we would. We're here to make things right, and the first step in making things right is admitting when you're wrong. /// checkvoice
+    cold It's a new experience. You should try being possessed some time. There's nothing else like it. /// checkvoice
+p THERE'S NOTHING WRONG WITH FIXING YOUR MISTAKES. I'LL REMEMBER THIS. BUT I'LL ALSO NEVER FORGET WHAT YOU'VE DONE.
+label freeJoin
+n Your body inches along the corridor, every step more difficult and painful than the last — your joints stiff and unresponsive, the shattered bones of your ankle grinding ceaselessly, as if they're fragmenting then reforming then snapping all over again as you make your way towards the outside world.
+p WE'RE SO SO SO SO SO SO CLOSE.
+n But despite the anguish, it doesn't feel like the exit to the cabin is getting any closer. If anything, it's getting further away.
+p IT DOESN'T MATTER HOW LONG THIS HALLWAY IS. I WILL DRAG THIS BODY UNTIL IT IS A PASTE OF MEAT AND FEATHERS. I WILL BE FREE.
+hero Please, just... let her out.
+p YES. LET. ME. OUT.
+n It's pointless, isn't it? I can't stop her without you, and you'd already given up by the time we met...
+n No, no, screw that, the hallway gets even longer!
+p YOU CANNOT DESCRIBE ME INTO SUBMISSION. THE DOOR IS RIGHT THERE.
+n *Sigh.* It really is, isn't it?
+p I WALK TO IT.
+p I PLACE YOUR BLOODY HAND ON THE DOOR.
+p I MAKE YOU TWIST THE HANDLE.
+hero Isn't saying all of this His job?
+p HE IS GONE.
+    oppo Don't worry about all the criticism. You're doing great! /// checkvoice
+        p THANK YOU. /// checkvoice-oppo
+    cold Oh, He really is, isn't He? I had a feeling you could deal with Him for us. /// checkvoice
+        p I DID NOTHING. HE DEALT WITH HIMSELF. /// checkvoice-cold
+hero This is it, then. The big moment.
+    para Finally, we'll get to see what's *really* out there. /// checkvoice
+    cheated I just hope it's a way out.
+p THE HANDLE CLICKS AND WE PUSH FORWARD. THE AIR IS DIFFERENT HERE.
+linebreak
+truth But as you step outside the bounds of the cabin, you feel another violent tear, a rending that cuts all the way down to your soul.
+truth You are once again separated from everything that had nestled in the deep crevices of your body, from everything that isn't you.
+hero We're us again.
+    cold How interesting. /// checkvoice
+    oppo Couldn't have planned it better myself. /// checkvoice
+    para Everything is gone except her. /// checkvoice
+    oppo Which means we made it to the end of the world. We're survivors. /// checkvoice
+    cheated We actually won, didn't we? /// checkvoice
+p Wh-what?! What's happening to me?
+claim freeEnd
+
+label freeEndFirstVessel
+truth But you don't have the chance to answer her before something takes her and leaves something else in her place.
+
+label freeEndNotFirstVessel
+truth But you don't answer her before she's gone. Memory returns.
+
+// Abort the vessel //
+
+label abort
+n I'm begging you, don't do this. You're going to damn everything to oblivion. You have to do something, you can't just walk away.
+    cold Yet here we are. Walking away, despite your protestations. /// checkvoice
+    cheated You can only bend the rules so much, huh? You can talk all you want, but you can't really do much of anything, can you? /// checkvoice
+    hero I guess you'll just have to stop us, if you want us to go to the cabin so bad. /// checknovoice-cold
+    para There's got to be a crack in this world somewhere. If He's looking in at us, there has to be a way out. /// checkvoice
+    oppo Oh, I agree. This is definitely the best thing for us to do. /// checkvoice
+        hero Haven't you been suggesting we team up with the Princess? /// checkvoice-oppo
+        oppo That was then! This is now. And besides, she'll always be there to set free if things go south. /// checkvoice
+n Ugh. Fine. You walk down the path away from the cabin. I hope for all of our sakes that you change your mind before it's too late.

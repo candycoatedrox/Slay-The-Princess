@@ -38,23 +38,23 @@ public class ScriptError extends ScriptNote {
             - 0 = multiple modifier dividers (///)
             - 1 = modifier divider but no modifiers
             - 2 = completely invalid modifier
-            - 3 = invalid syntax for modifier
+            - 3 = invalid syntax for a modifier
             - 4 = checkvoice used without argument for truth / princess
-            - 5 = one or more invalid arguments for checkvoice or checknovoice, check extraInfo
-            - 6 = firstvessel, hasblade, threwblade, sharedloop, sharedinsist, mirrorask, mirrortouch, mirror2, harsh, knowledge, check, or negative counterparts attempted with argument, check extraInfo
-            - 7 = more than 1 argument given for ifsource, ifnum, ifstring, or negative counterparts, check extraInfo
+            - 5 = one or more invalid arguments for voice check, check extraInfo
+            - 6 = any simple check attempted with argument, check extraInfo
+            - 7 = more than 1 argument given for voice2, voice3, ifsource, ifnum, ifstring, or negative counterparts, check extraInfo
             - 8 = invalid argument for ifnum or ifnumnot (non-integer), check extraInfo
-            - 9 = no argument given for ifsource, ifstring, or negative counterparts, check extraInfo
+            - 9 = no argument given for voice2, voice3, ifsource, ifstring, or negative counterparts, check extraInfo
             - 10 = interrupt used for non-dialogue line
             - 11 = interrupt attempted with argument
         - 8 = conflicting modifiers
-            - 0 = firstvessel, hasblade, threwblade, sharedloop, sharedinsist, mirrorask, mirrortouch, mirror2, harsh, knowledge, or check used with negative counterpart, check extraInfo
+            - 0 = any simple check used with negative counterpart, check extraInfo
             - 1 = firstvessel, hasblade, ifsource, harsh, or negative counterparts used for corresponding autoswitch, check extraInfo
-            - 2 = check, ifnum, ifstring, or negative counterparts used for corresponding switchjump, check extraInfo
+            - 2 = given condition check used for corresponding switchjump, check extraInfo
             - 3 = ifsource & ifsourcenot with same value
             - 4 = ifnum & ifnumnot with same value
             - 5 = ifstring & ifstringnot with same value
-            - 6 = multiple ifsource, ifnum, ifstring, or negative counterparts checks (different targets)
+            - 6 = multiple ifsource, ifnum, ifstring, voice2, voice3, or negative counterparts checks (different targets)
             - 7 = same argument used for both checkvoice and checknovoice, check extraInfo
             - 8 = checknovoice used with id for speaker
     */
@@ -322,7 +322,7 @@ public class ScriptError extends ScriptNote {
                     case 5:
                         s += "invalid argument(s) ";
                         s += this.extraList();
-                        s += " for checkvoice or checknovoice)";
+                        s += " for checkvoice, checknovoice, voice2, or voice3)";
                         break;
                         
                     case 6:

@@ -182,6 +182,7 @@ public abstract class StandardCycle extends Cycle {
                 break;
 
             case "cGoFail":
+            case "cProceed":
                 parser.printDialogueLine(new VoiceDialogueLine("There's nowhere to go that way."));
                 break;
 
@@ -408,9 +409,6 @@ public abstract class StandardCycle extends Cycle {
         this.secondaryScript = new Script(this.manager, this.parser, "Mirror/MirrorGeneric");
 
         this.hasBlade = false;
-
-        this.threwBlade = false;
-        this.sharedLoop = false;
 
         this.repeatActiveMenu = false;
         this.reverseDirection = false;
@@ -667,7 +665,8 @@ public abstract class StandardCycle extends Cycle {
      * Runs the encounter with the Shifting Mound after claiming each vessel, excluding the fifth and final vessel
      */
     protected void theSpacesBetween(ChapterEnding prevEnding) {
-        this.mainScript = new Script(this.manager, this.parser, Chapter.SPACESBETWEEN.getScriptFile());
+        this.activeChapter = Chapter.SPACESBETWEEN;
+        this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
 
         this.currentLocation = GameLocation.PATH;
         mainScript.runConditionalSection(manager.nClaimedVessels());
@@ -1451,7 +1450,7 @@ public abstract class StandardCycle extends Cycle {
         this.secondaryScript = new Script(this.manager, this.parser, "Intermission/AbortVessel");
 
         if (!lateJoin) {
-            secondaryScript.runConditionalSection(this.activeChapter.getNumber());
+            secondaryScript.runConditionalSection(activeChapter.getNumber(), activeChapter.getShorthand());
             secondaryScript.runSection("voices");
         }
 

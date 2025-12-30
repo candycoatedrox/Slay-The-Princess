@@ -16,10 +16,9 @@ public class ScriptIssue extends ScriptNote {
         - 3 = duplicate in modifiers
             - 0 = duplicate modifier(s), check extraInfo
             - 1 = duplicate modifier argument(s), check extraInfo
-        - 4 = redundant modifier(s) (with different values)
-            - 0 = ifsource and ifsourcenot
-            - 1 = ifnum and ifnumnot
-            - 2 = ifstring and ifstringnot
+        - 4 = redundant modifier(s)
+            - 0 = voice2 or voice3 (same value), check extraInfo
+            - 1 = ifsource, ifnum, or ifstring & its respective negative counterpart (with different values), check extraInfo
         - 5 = concerningly high pause time (>5000ms)
     */
 
@@ -178,11 +177,14 @@ public class ScriptIssue extends ScriptNote {
                 s += "Redundant modifiers (";
                 switch (this.subtype) {
                     case 0:
-                        s += "ifnum and ifnumnot with different values)";
+                        s += "duplicate ";
+                        s += this.extraInfo[0];
+                        s += " modifiers with same target)";
                         break;
-                        
+
                     case 1:
-                        s += "ifstring and ifstringnot with different values)";
+                        s += this.extraInfo[0];
+                        s += " with different values)";
                         break;
                 }
                 break;

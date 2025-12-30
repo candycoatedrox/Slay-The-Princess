@@ -44,7 +44,7 @@ public class ScriptScanner extends Script {
         String prefix = split[0];
         String argument = "";
         String[] args;
-        String modifiers = "";
+        String modifiers;
         String[] mods;
         try {
             argument = split[1];
@@ -325,6 +325,10 @@ public class ScriptScanner extends Script {
         ArrayList<Voice> posVoiceChecks = new ArrayList<>();
         ArrayList<Voice> negVoiceChecks = new ArrayList<>();
 
+        boolean redundantVoice2 = false;
+        boolean redundantVoice3 = false;
+        ArrayList<Voice> voice2Checks = new ArrayList<>();
+        ArrayList<Voice> voice3Checks = new ArrayList<>();
         ArrayList<String> posTargetSources = new ArrayList<>();
         ArrayList<String> negTargetSources = new ArrayList<>();
         ArrayList<Integer> posTargetInts = new ArrayList<>();
@@ -337,6 +341,8 @@ public class ScriptScanner extends Script {
             extraTemp.clear();
             args = m.split("-");
 
+            // Dialogue line exclusive
+
             if (m.startsWith("interrupt")) {
                 if (!m.equals("interrupt")) errorsFound.add(new ScriptError(lineIndex, 7, 11));
 
@@ -346,6 +352,8 @@ public class ScriptScanner extends Script {
                     presentMods.add("interrupt");
                     if (!isDialogue) errorsFound.add(new ScriptError(lineIndex, 7, 10));
                 }
+
+            // Voice checks
 
             } else if (m.startsWith("checkvoice")) {
                 if (presentMods.contains("checkvoice")) {
@@ -397,6 +405,8 @@ public class ScriptScanner extends Script {
                         }
                     }
                 }
+
+            // Any chapter checks
 
             } else if (m.equals("firstvessel")) {
                 if (presentMods.contains("firstvessel")) {
@@ -462,25 +472,150 @@ public class ScriptScanner extends Script {
                 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noblade"));
 
-            } else if (m.equals("threwblade")) {
-                if (presentMods.contains("threwblade")) {
-                    if (!duplicateMods.contains("threwblade")) duplicateMods.add("threwblade");
+            } else if (m.equals("harsh")) {
+                if (presentMods.contains("harsh")) {
+                    if (!duplicateMods.contains("harsh")) duplicateMods.add("harsh");
                 } else {
-                    presentMods.add("threwblade");
-                    if (presentMods.contains("nothrow")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                    presentMods.add("harsh");
+                    if (presentMods.contains("soft")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
+
+                    if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
+                        extraTemp.add("harsh");
+                        extraTemp.add("moodswitch");
+                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                    }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "threwblade"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "harsh"));
 
-            } else if (m.equals("nothrow")) {
-                if (presentMods.contains("nothrow")) {
-                    if (!duplicateMods.contains("nothrow")) duplicateMods.add("nothrow");
+            } else if (m.equals("soft")) {
+                if (presentMods.contains("soft")) {
+                    if (!duplicateMods.contains("soft")) duplicateMods.add("soft");
                 } else {
-                    presentMods.add("nothrow");
-                    if (presentMods.contains("threwblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                    presentMods.add("soft");
+                    if (presentMods.contains("harsh")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
+
+                    if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
+                        extraTemp.add("soft");
+                        extraTemp.add("moodswitch");
+                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                    }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nothrow"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "soft"));
+
+            } else if (m.equals("knowledge")) {
+                if (presentMods.contains("knowledge")) {
+                    if (!duplicateMods.contains("knowledge")) duplicateMods.add("knowledge");
+                } else {
+                    presentMods.add("knowledge");
+                    if (presentMods.contains("noknowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "knowledge"));
+
+            } else if (m.equals("noknowledge")) {
+                if (presentMods.contains("noknowledge")) {
+                    if (!duplicateMods.contains("noknowledge")) duplicateMods.add("noknowledge");
+                } else {
+                    presentMods.add("noknowledge");
+                    if (presentMods.contains("knowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noknowledge"));
+
+            // Chapter 2 or 3 checks
+
+            } else if (m.startsWith("voice2")) {
+                if (presentMods.contains("voice2")) {
+                    if (!duplicateMods.contains("voice2")) duplicateMods.add("voice2");
+                } else {
+                    presentMods.add("voice2");
+                }
+                
+                switch (args.length) {
+                    case 1:
+                        if (m.equals("voice2")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "voice2"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "voice2"));
+                        }
+                        break;
+
+                    case 2:
+                        currentVoice = Voice.getVoice(args[1]);
+                        if (currentVoice != null) {
+                            if (voice2Checks.contains(currentVoice)) {
+                                redundantVoice2 = true;
+                            } else {
+                                voice2Checks.add(currentVoice);
+                            }
+                        } 
+                        break;
+
+                    default:
+                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "voice2"));
+                }
+
+            } else if (m.startsWith("ifsource")) {
+                if (presentMods.contains("ifsource")) {
+                    if (!duplicateMods.contains("ifsource")) duplicateMods.add("ifsource");
+                } else {
+                    presentMods.add("ifsource");
+
+                    if (prefix.equals("sourceswitch")) {
+                        extraTemp.add("ifsource");
+                        extraTemp.add("sourceswitch");
+                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                    }
+                }
+                
+                switch (args.length) {
+                    case 1:
+                        if (m.equals("ifsource")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsource"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsource"));
+                        }
+                        break;
+
+                    case 2:
+                        if (!posTargetSources.contains(args[1])) posTargetSources.add(args[1]);
+                        break;
+
+                    default:
+                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+                }
+
+            } else if (m.startsWith("ifsourcenot")) {
+                if (presentMods.contains("ifsourcenot")) {
+                    if (!duplicateMods.contains("ifsourcenot")) duplicateMods.add("ifsourcenot");
+                } else {
+                    presentMods.add("ifsourcenot");
+
+                    if (prefix.equals("sourceswitch")) {
+                        extraTemp.add("ifsourcenot");
+                        extraTemp.add("sourceswitch");
+                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                    }
+                }
+                
+                switch (args.length) {
+                    case 1:
+                        if (m.equals("ifsourcenot")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsourcenot"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsourcenot"));
+                        }
+                        break;
+
+                    case 2:
+                        if (!negTargetSources.contains(args[1])) negTargetSources.add(args[1]);
+                        break;
+
+                    default:
+                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+                }
 
             } else if (m.equals("sharedloop")) {
                 if (presentMods.contains("sharedloop")) {
@@ -521,6 +656,26 @@ public class ScriptScanner extends Script {
                 }
 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noinsist"));
+
+            } else if (m.equals("threwblade")) {
+                if (presentMods.contains("threwblade")) {
+                    if (!duplicateMods.contains("threwblade")) duplicateMods.add("threwblade");
+                } else {
+                    presentMods.add("threwblade");
+                    if (presentMods.contains("nothrow")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "threwblade"));
+
+            } else if (m.equals("nothrow")) {
+                if (presentMods.contains("nothrow")) {
+                    if (!duplicateMods.contains("nothrow")) duplicateMods.add("nothrow");
+                } else {
+                    presentMods.add("nothrow");
+                    if (presentMods.contains("threwblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nothrow"));
 
             } else if (m.equals("mirrorask")) {
                 if (presentMods.contains("mirrorask")) {
@@ -582,111 +737,202 @@ public class ScriptScanner extends Script {
 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nomirror2"));
 
-            } else if (m.equals("harsh")) {
-                if (presentMods.contains("harsh")) {
-                    if (!duplicateMods.contains("harsh")) duplicateMods.add("harsh");
-                } else {
-                    presentMods.add("harsh");
-                    if (presentMods.contains("soft")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
+            // Chapter 2-only checks
 
-                    if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
-                        extraTemp.add("harsh");
-                        extraTemp.add("moodswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
-                    }
+            } else if (m.equals("drop1")) {
+                if (presentMods.contains("drop1")) {
+                    if (!duplicateMods.contains("drop1")) duplicateMods.add("drop1");
+                } else {
+                    presentMods.add("drop1");
+                    if (presentMods.contains("nodrop1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "drop1 & nodrop1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "harsh"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "drop1"));
 
-            } else if (m.equals("soft")) {
-                if (presentMods.contains("soft")) {
-                    if (!duplicateMods.contains("soft")) duplicateMods.add("soft");
+            } else if (m.equals("nodrop1")) {
+                if (presentMods.contains("nodrop1")) {
+                    if (!duplicateMods.contains("nodrop1")) duplicateMods.add("nodrop1");
                 } else {
-                    presentMods.add("soft");
-                    if (presentMods.contains("harsh")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
-
-                    if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
-                        extraTemp.add("soft");
-                        extraTemp.add("moodswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
-                    }
+                    presentMods.add("nodrop1");
+                    if (presentMods.contains("drop1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "drop1 & nodrop1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "soft"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nodrop1"));
 
-            } else if (m.equals("knowledge")) {
-                if (presentMods.contains("knowledge")) {
-                    if (!duplicateMods.contains("knowledge")) duplicateMods.add("knowledge");
+            } else if (m.equals("whatdo1")) {
+                if (presentMods.contains("whatdo1")) {
+                    if (!duplicateMods.contains("whatdo1")) duplicateMods.add("whatdo1");
                 } else {
-                    presentMods.add("knowledge");
-                    if (presentMods.contains("noknowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                    presentMods.add("whatdo1");
+                    if (presentMods.contains("nowhatdo1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "whatdo1 & nowhatdo1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "knowledge"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "whatdo1"));
 
-            } else if (m.equals("noknowledge")) {
-                if (presentMods.contains("noknowledge")) {
-                    if (!duplicateMods.contains("noknowledge")) duplicateMods.add("noknowledge");
+            } else if (m.equals("nowhatdo1")) {
+                if (presentMods.contains("nowhatdo1")) {
+                    if (!duplicateMods.contains("nowhatdo1")) duplicateMods.add("nowhatdo1");
                 } else {
-                    presentMods.add("noknowledge");
-                    if (presentMods.contains("knowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                    presentMods.add("nowhatdo1");
+                    if (presentMods.contains("whatdo1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "whatdo1 & nowhatdo1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noknowledge"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nowhatdo1"));
 
-            } else if (m.startsWith("ifsource")) {
-                if (presentMods.contains("ifsource")) {
-                    if (!duplicateMods.contains("ifsource")) duplicateMods.add("ifsource");
+            } else if (m.equals("rescue1")) {
+                if (presentMods.contains("rescue1")) {
+                    if (!duplicateMods.contains("rescue1")) duplicateMods.add("rescue1");
                 } else {
-                    presentMods.add("ifsource");
+                    presentMods.add("rescue1");
+                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "rescue1 & norescue1"));
+                }
 
-                    if (prefix.equals("sourceswitch")) {
-                        extraTemp.add("ifsource");
-                        extraTemp.add("sourceswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
-                    }
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "rescue1"));
+
+            } else if (m.equals("norescue1")) {
+                if (presentMods.contains("norescue1")) {
+                    if (!duplicateMods.contains("norescue1")) duplicateMods.add("norescue1");
+                } else {
+                    presentMods.add("norescue1");
+                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "rescue1 & norescue1"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "norescue1"));
+
+            // Chapter 3-only checks
+
+            } else if (m.startsWith("voice3")) {
+                if (presentMods.contains("voice3")) {
+                    if (!duplicateMods.contains("voice3")) duplicateMods.add("voice3");
+                } else {
+                    presentMods.add("voice3");
                 }
                 
                 switch (args.length) {
                     case 1:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsource"));
-                        if (!m.equals("ifsource")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsource"));
+                        if (m.equals("voice3")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "voice3"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "voice3"));
+                        }
                         break;
 
                     case 2:
-                        if (!posTargetSources.contains(m)) posTargetSources.add(args[1]);
+                        currentVoice = Voice.getVoice(args[1]);
+                        if (currentVoice != null) {
+                            if (voice3Checks.contains(currentVoice)) {
+                                redundantVoice3 = true;
+                            } else {
+                                voice3Checks.add(currentVoice);
+                            }
+                        } 
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "voice3"));
                 }
 
-            } else if (m.startsWith("ifsourcenot")) {
-                if (presentMods.contains("ifsourcenot")) {
-                    if (!duplicateMods.contains("ifsourcenot")) duplicateMods.add("ifsourcenot");
+            } else if (m.equals("abandoned")) {
+                if (presentMods.contains("abandoned")) {
+                    if (!duplicateMods.contains("abandoned")) duplicateMods.add("abandoned");
                 } else {
-                    presentMods.add("ifsourcenot");
-
-                    if (prefix.equals("sourceswitch")) {
-                        extraTemp.add("ifsourcenot");
-                        extraTemp.add("sourceswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
-                    }
+                    presentMods.add("abandoned");
+                    if (presentMods.contains("noabandon")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "abandoned & noabandon"));
                 }
-                
-                switch (args.length) {
-                    case 1:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsourcenot"));
-                        if (!m.equals("ifsourcenot")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsourcenot"));
-                        break;
 
-                    case 2:
-                        if (!negTargetSources.contains(m)) negTargetSources.add(args[1]);
-                        break;
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "abandoned"));
 
-                    default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+            } else if (m.equals("noabandon")) {
+                if (presentMods.contains("noabandon")) {
+                    if (!duplicateMods.contains("noabandon")) duplicateMods.add("noabandon");
+                } else {
+                    presentMods.add("noabandon");
+                    if (presentMods.contains("abandoned")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "abandoned & noabandon"));
                 }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noabandon"));
+
+            } else if (m.equals("possessask")) {
+                if (presentMods.contains("possessask")) {
+                    if (!duplicateMods.contains("possessask")) duplicateMods.add("possessask");
+                } else {
+                    presentMods.add("possessask");
+                    if (presentMods.contains("nopossessask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "possessask & nopossessask"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "possessask"));
+
+            } else if (m.equals("nopossessask")) {
+                if (presentMods.contains("nopossessask")) {
+                    if (!duplicateMods.contains("nopossessask")) duplicateMods.add("nopossessask");
+                } else {
+                    presentMods.add("nopossessask");
+                    if (presentMods.contains("possessask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "possessask & nopossessask"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nopossessask"));
+
+            } else if (m.equals("cantwontask")) {
+                if (presentMods.contains("cantwontask")) {
+                    if (!duplicateMods.contains("cantwontask")) duplicateMods.add("cantwontask");
+                } else {
+                    presentMods.add("cantwontask");
+                    if (presentMods.contains("nocantwontask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "cantwontask & nocantwontask"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "cantwontask"));
+
+            } else if (m.equals("nocantwontask")) {
+                if (presentMods.contains("nocantwontask")) {
+                    if (!duplicateMods.contains("nocantwontask")) duplicateMods.add("nocantwontask");
+                } else {
+                    presentMods.add("nocantwontask");
+                    if (presentMods.contains("cantwontask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "cantwontask & nocantwontask"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nocantwontask"));
+
+            } else if (m.equals("endslay")) {
+                if (presentMods.contains("endslay")) {
+                    if (!duplicateMods.contains("endslay")) duplicateMods.add("endslay");
+                } else {
+                    presentMods.add("endslay");
+                    if (presentMods.contains("noendslay")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "endslay & nomirror2"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "endslay"));
+
+            } else if (m.equals("noendslay")) {
+                if (presentMods.contains("noendslay")) {
+                    if (!duplicateMods.contains("noendslay")) duplicateMods.add("noendslay");
+                } else {
+                    presentMods.add("noendslay");
+                    if (presentMods.contains("endslay")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "endslay & noendslay"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noendslay"));
+
+            } else if (m.equals("heartstop")) {
+                if (presentMods.contains("heartstop")) {
+                    if (!duplicateMods.contains("heartstop")) duplicateMods.add("heartstop");
+                } else {
+                    presentMods.add("heartstop");
+                    if (presentMods.contains("noheartstop")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "heartstop & noheartstop"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "heartstop"));
+
+            } else if (m.equals("noheartstop")) {
+                if (presentMods.contains("noheartstop")) {
+                    if (!duplicateMods.contains("noheartstop")) duplicateMods.add("noheartstop");
+                } else {
+                    presentMods.add("noheartstop");
+                    if (presentMods.contains("heartstop")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "heartstop & noheartstop"));
+                }
+
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noheartstop"));
+
+            // Given condition checks
 
             } else if (m.equals("check")) {
                 if (presentMods.contains("check")) {
@@ -790,12 +1036,15 @@ public class ScriptScanner extends Script {
             
                 switch (args.length) {
                     case 1:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstring"));
-                        if (!m.equals("ifstring")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstring"));
+                        if (m.equals("ifstring")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstring"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstring"));
+                        }
                         break;
 
                     case 2:
-                        if (!posTargetStrings.contains(m)) posTargetStrings.add(args[1]);
+                        if (!posTargetStrings.contains(args[1])) posTargetStrings.add(args[1]);
                         break;
 
                     default:
@@ -817,12 +1066,15 @@ public class ScriptScanner extends Script {
                 
                 switch (args.length) {
                     case 1:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstringnot"));
-                        if (!m.equals("ifstringnot")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstringnot"));
+                        if (m.equals("ifstringnot")) {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstringnot"));
+                        } else {
+                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstringnot"));
+                        }
                         break;
 
                     case 2:
-                        if (!negTargetStrings.contains(m)) negTargetStrings.add(args[1]);
+                        if (!negTargetStrings.contains(args[1])) negTargetStrings.add(args[1]);
                         break;
 
                     default:
@@ -837,6 +1089,8 @@ public class ScriptScanner extends Script {
         if (!duplicateMods.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 3, 0, duplicateMods));
         if (!invalidMods.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 2, invalidMods));
         if (!invalidVoiceArgs.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 5, invalidVoiceArgs));
+        if (voice2Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "voice2"));
+        if (voice3Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "voice3"));
         if (posTargetSources.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifsource"));
         if (posTargetInts.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifnum"));
         if (posTargetStrings.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifstring"));
@@ -871,10 +1125,10 @@ public class ScriptScanner extends Script {
         }
 
         if (!posTargetSources.isEmpty() && !negTargetSources.isEmpty()) {
-            for (String s : posTargetSources) {
-                if (negTargetSources.contains(s)) {
-                    impossibleSourceChecks.add(s);
-                } else {
+            for (int i = 0; i < posTargetSources.size(); i++) {
+                if (negTargetSources.contains(posTargetSources.get(i))) {
+                    impossibleSourceChecks.add(posTargetSources.get(i));
+                } else if (i != 0) {
                     redundantSource = true;
                 }
             }
@@ -890,10 +1144,10 @@ public class ScriptScanner extends Script {
         }
 
         if (!posTargetInts.isEmpty() && !negTargetInts.isEmpty()) {
-            for (Integer i : posTargetInts) {
-                if (negTargetInts.contains(i)) {
-                    impossibleNumChecks.add(i.toString());
-                } else {
+            for (int i = 0; i < posTargetSources.size(); i++) {
+                if (negTargetInts.contains(posTargetInts.get(i))) {
+                    impossibleNumChecks.add(posTargetInts.get(i).toString());
+                } else if (i != 0) {
                     redundantNum = true;
                 }
             }
@@ -909,10 +1163,10 @@ public class ScriptScanner extends Script {
         }
 
         if (!posTargetStrings.isEmpty() && !negTargetStrings.isEmpty()) {
-            for (String s : posTargetStrings) {
-                if (negTargetStrings.contains(s)) {
-                    impossibleStringChecks.add(s);
-                } else {
+            for (int i = 0; i < posTargetSources.size(); i++) {
+                if (negTargetStrings.contains(posTargetStrings.get(i))) {
+                    impossibleStringChecks.add(posTargetStrings.get(i));
+                } else if (i != 0) {
                     redundantString = true;
                 }
             }
@@ -938,9 +1192,11 @@ public class ScriptScanner extends Script {
         if (!impossibleSourceChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 3, impossibleSourceChecks));
         if (!impossibleNumChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 4, impossibleNumChecks));
         if (!impossibleStringChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 5, impossibleStringChecks));
-        if (redundantSource) issuesFound.add(new ScriptIssue(lineIndex, 4, 0));
-        if (redundantNum) issuesFound.add(new ScriptIssue(lineIndex, 4, 1));
-        if (redundantString) issuesFound.add(new ScriptIssue(lineIndex, 4, 2));
+        if (redundantVoice2) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice2"));
+        if (redundantVoice2) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice3"));
+        if (redundantSource) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifsource & ifsourcenot"));
+        if (redundantNum) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifnum & ifnumnot"));
+        if (redundantString) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifstring & ifstringnot"));
     }
 
     /**
