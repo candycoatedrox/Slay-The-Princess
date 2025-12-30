@@ -1,0 +1,433 @@
+n You're on a path in the woods -- /// interrupt
+voice3switch Start
+
+label cheatedStart
+cheated She stabbed us! She actually stabbed us!
+oppo Of course she stabbed us. We gave her the blade. Which, might I add, I voted against.
+cheated But the whole point was that she wasn't supposed to do that. The whole point of giving her the blade was to break the cycle of violence. And she just... she just killed us anyway!
+hero I guess it really doesn't matter that she killed us though, right? We're back here, which means that everything's fine. Or fine-adjacent.
+hero Maybe she won't be as keen to betray us *this* time. We've already proven to her that we can change. Maybe that's all it'll take to show her there's another way to do things.
+jumpto startJoin
+
+label smittenStart
+hero I can't believe she actually stabbed us!
+oppo I told you not to give her the blade. I told you it would come around to bite us. I voted against it.
+hero Yeah, we know. You already got your "I-told-you-sos" in while we were bleeding out.
+oppo I just wanted to make sure that everyone here knows that I was and am on the right side of that argument.
+smitten Oh, you're far from being on the right side of anything. You're fixated on the past, whereas what you should be is fixated on *the future!*
+oppo Oho! A *visionary.* I like it, tell me more.
+smitten Gladly, my dear fellow. By cruelly turning on the Princess in her moment of vulnerability, we made ourselves an enemy. But, by mastering our fear and insecurity and handing over our power, we've begun a journey to something *so* much deeper.
+oppo I like journeys. Traveling is a bit of a passion of mine. It makes me so *relatable.* Now where are we off to?
+smitten Well, if we're lucky, it's a journey... to *love.*
+hero She hates us.
+smitten Does she? She hesitated before stabbing us to death.
+hero Maybe she won't be as keen to betray us *this* time. We've already proven to her that we can change. So maybe she'll realize that things don't have to end in violence.
+label startJoin
+oppo You know, maybe you're right! In which case, I suppose the only thing to do is to get back to the cabin and give it another try.
+n Give what another try, exactly? You are aware that I've been listening to you, right?
+    smitten It makes no difference if we conspire in the shadows or bare our intentions with open hearts. We are breaking your cruel cycle and whisking her away to freedom! /// checkvoice
+        n Oh, are you now? /// checkvoice-smitten
+    cheated Like that changes anything. We all know the game is rigged. It doesn't even matter if she's nice this time, I'm sure He'll find a way to turn us against each other. /// checkvoice
+n Great. So you've obviously been here before. Since you've apparently died at least once -- /// interrupt
+hero Twice, actually.
+n Sure. Twice. *Sigh.* Then I'll spare you the little introduction I had planned. You already know about the Princess, and clearly, you already know that she's dangerous. So don't muck this up. It's bad enough that this isn't your first time through.
+
+label differentWoods
+n Wonderful. If the woods themselves are changing, then that's all the more reason for you to take this seriously. It would mean your grip on things is slipping, which in turn, likely means her influence is spreading.
+oppo Someone's in the know.
+    cheated I've had enough of these annoying little secrets. If you want us to do this, you have to let us in on your game already! All of your game. /// checkvoice
+n *Sigh.* I've already said too much. The more information you have, the more difficult your task will be. Don't listen to her, definitely don't free her, and if you can, don't even think about her.
+    smitten You don't have to worry about me, my head's always empty. *Romantic sigh.* Except... for thoughts of *her.*
+
+label intentFreeWoods
+n *Sigh.* Please don't.
+    smitten You can't stop all of us, you villain! /// checkvoice
+    cheated I'm with him. If our previous encounters have taught us anything, it's that freeing her is a bad idea. /// checkvoice
+oppo Let's just see how the wind blows. I'm not opposed to saving her, but let's not rule anything out just yet. Let's see what she has to say.
+jumpto intentWaffleJoin
+
+label intentNeutralWoods
+oppo Yes, good. Playing both sides. That's what smart people do, and you're the smartest in the room.
+hero I'm not sure it counts as "playing both sides" if people can hear you doing it.
+oppo Buddy, you're thinking in far too few dimensions. There's layers to doing this right, and I'm pretty sure the one making the choices gets that. Trust in the plan!
+hero Trust in what plan?
+oppo The decider's plan! Sure, we don't know what the plan is yet, but that's part of the whole "trusting" thing, isn't it? A good leader knows how and when to keep things secret. And sometimes a good leader even knows to keeps things secret from himself.
+    smitten There isn't a plan and that's the whole point! We're supposed to be guided by emotion. We're supposed to passionately live in the moment. And I'm sure that when the time comes, those passions will tell us to set our darling Princess free. /// checkvoice
+    cheated Sure. We'll see what she has to say for herself. But don't forget that whatever she says is likely just as much lies as what He's been telling us. We should keep our cards close to our chest. /// checkvoice
+n If I were you, I'd remember what she's done. You know how dangerous she is, and you should know that someone like her shouldn't be let loose upon the world.
+
+label intentHarshWoods
+n That's the spirit. Don't forget what she's done to you. She's practically asking for you to slay her.
+    smitten Even though we were stabbed in the heart, it doesn't mean that we don't still have one. She'll come around, just like we did. /// checkvoice
+    cheated You're damned right! You need two to break a cycle of violence, and if she's not playing the same game as us, we've got to go back to treating her like an enemy. /// checkvoice
+oppo Let's just see how the wind blows. I'm not opposed to violence here, but let's not rule anything out just yet. Maybe we won her over last time, who knows!
+label intentWaffleJoin
+hero Stop sitting on the fence and pick a side already, we don't need you waffling when things get hairy.
+oppo I've already picked a side! Our side. I'm here to make sure that whatever happens, we wind up on top.
+hero Because that's worked out great so far.
+oppo Well, we're not out of the game yet, are we? And again, I'll have you know I wouldn't have gotten us killed last time. I wanted to stab her in the back, not hand over our precious back-stabbing implement!
+
+label leaveWoods
+n She gets out, is what happens. Maybe not right away, but eventually. And a world that's doomed tomorrow is just as bad as a world that's doomed today.
+    smitten He's a bummer, isn't he? All doom this and doom that. There's more to the world than how and when it will end. Love is what makes everything worth doing. /// checkvoice
+        n Whatever you do, don't listen to this one. He's ridiculous. Whatever he wants you to do, do the opposite. /// checkvoice-smitten
+    cheated I'm not sure I buy that. Everything has to end eventually. If it takes years to get out of there and supposedly end the world, then we've bought everyone that time and all without having to murder anybody in the process. /// checkvoice
+        cheated Not that she's innocent, but... murder is unpleasant. And risky. It could be a better solution for everyone. /// checkvoice
+        n You're here to permanently end the threat she poses. You're not here to temporarily postpone it. /// checkvoice-cheated
+
+label loopingWoods
+n *Sigh.* What do you want me to say? It's bad that you've been here before. It's bad for you, it's bad for me, and it's especially bad for the world. The more times you run through this, the more likely it is that you'll fail. And you've already failed twice.
+hero So you knew this could happen?
+n Theoretically, sure. I knew this *could* happen. But I was supposed to be the first. I'd really rather not get into it.
+    smitten I don't care about where we came from and I don't care to discuss the theory of anything. I yearn only to bring her freedom. I'm here to feel, not to think! /// checkvoice
+    cheated Great. Not even He really seems to get what's going on. If the guy who goes around acting like he knows all the rules doesn't even know how this works, what's the point in listening? /// checkvoice
+n Then we can all move on! And forget what I said about failure.
+n It's important that you believe in yourself, and the fact that you're here probably means that you still have a chance to pull this off and save the world. My world, at least. It sounds like you've probably doomed a couple of others already.
+n I need to stop talking. Think... happy thoughts.
+
+// Proceed to the cabin //
+
+label hillDialogue
+n It isn't long before you find yourself at the base of the cabin. I think it's clear where everyone stands at this point.
+hero I don't know if I'd say "everyone."
+oppo Are you talking about me? I have a position. It's a good one, too.
+    n Ignore him, he's just talking for talking's sake. My position is the only one that matters. You know what you have to do. /// check
+    n Ignore him, he's just talking for talking's sake. My position is the only one that matters. The Princess is a threat to you. She's a threat to me. And most importantly, she's a threat to the world. You know what you have to do. /// checkfalse
+
+// Enter the cabin //
+
+label cabinIntro
+n The interior of the cabin is hardly an interior at all anymore. The burned-out ruins merely suggest the shape of the structure that once stood here, charred wood still reeking of ash, but beneath it lies the fresh smell of spring growth after rain, the promise of new life in the wreckage of the old.
+n The only furniture of note is the crisped shell of what was once a table, a pristine -- wait, this isn't right. There's supposed to be a pristine blade. Why isn't there a pristine blade?
+hero We... we gave it to her last time. She can't still have it, can she?
+oppo Well, it's not here. And if she has it...
+hero Let me guess, you want to get all chummy with her.
+oppo Look, as far as I see it, if it's between Him and her, I say we side with the one who has the weapon. It's just the smart thing to do!
+n I wouldn't be so hasty. I'm sure the blade will turn up somewhere. She can't have it, that's not how this is supposed to work.
+    cheated Of course we don't get to make a choice about the blade. Every single time we come back here, something has to be different. /// checkvoice
+    smitten If she does have it, that's all the more reason to put our faith in her. We've already shown her our heart. Now she has to show us hers. /// checkvoice
+        oppo Unless her heart tells her to stab us. Which doesn't seem *un*likely. So yes, I agree. Let's make sure we get on her good side! /// checkvoice-smitten
+
+label mirrorExplore
+    hero You're right, the mirror is back. There isn't anywhere for us to go. /// mirror2
+        n But there isn't a mirror. /// mirror2
+        oppo I still don't get His angle here. /// mirror2
+            cheated Seems like whatever we do, he's always going to say it isn't there. /// mirror2 checkvoice
+    hero Yeah. Why didn't you mention the mirror? /// nomirror2
+        n I didn't mention a mirror because there isn't a mirror. /// nomirror2
+        oppo But He says there isn't one. That's got to count for something, right? /// nomirror2
+            cheated Yeah, it counts for *something.* /// nomirror2 checkvoice
+    cheated He's either a liar or he doesn't hold all the cards. But I think we already knew it had to be one of those. /// checkvoice
+    smitten Either way, I say we take a look. It feels like it's been forever since we've actually seen ourselves. For all we know, our feathers are all out of place, and that's why we haven't yet won her heart. We must put our best face forward! /// checkvoice
+        oppo Yeah, we can't go around looking disheveled! A real go-getter takes care of his appearance. /// checkvoice-smitten
+hero So is the door to the basement behind the mirror?
+n *Sigh.* I promise you there isn't a mirror. And there isn't a door to the basement. The entrance is more of a burned out frame than anything else, and it's right there, on the far side of the room. Do you really not see it?
+
+label approachMirror
+n You step forward and approach the scorched entryway leading to the basement, hesitating before you begin the descent.
+    smitten You know what you have to do. Wipe away the grit from the mirror, and behold our handsome features. /// checkvoice
+    cheated It went away when we touched it last time. Not that this place always follows the same rules. /// mirror2 checkvoice
+    hero It went away when we touched it last time... /// mirror2 checkvoice-smitten
+    cheated Might as well take a look while we can. There's nothing else to do here now that the knife has been taken from us. /// checkvoice nomirror2
+
+label wipeMirror
+    n You reach forward and wave your hand through the hollow entrance leading to the basement. You really thought there was a mirror there, didn't you? That... can't be good. As if things weren't unpredictable enough. /// check
+    n You reach forward and wave your hand through the hollow entrance leading to the basement. What are you doing? /// checkfalse
+    smitten Alas, our fine features remain unseen. We'll just have to trust that she'll find us beautiful as we are. /// checkvoice
+    cheated Figures. /// checkvoice
+hero Well, it seems like the only way to go is forward, isn't it?
+oppo Yes, that's where everything tends to be. Let's just put on a good face and have our wits about us.
+
+// Stairs //
+
+label stairsStart
+n The stairs to the basement are covered in a fine layer of gritty ash. The air still feels warm, as if the fires that ruined this place had only recently been extinguished, yet fresh shoots of thorny branches are already weaving themselves through the soot-covered earth of the walls around you.
+n Their spines point courteously down towards the basement, so you're able to brush past their jagged points with ease. At least on the way down. But you don't need to think about the way back up just yet. That's a matter for after the world's been saved.
+    smitten These thorns are an expression of her pain, I know it. She's calling out for help! /// checkvoice
+    cheated I'd say this feels like a trap, but you practically said as much. Yet you still want us to keep going. /// checkvoice
+        n They're only thorns, I'd say getting a few scratches in exchange for the lives of everyone in existence is a fair trade. I'm sure you'll manage. /// checkvoice-cheated
+n Her voice, worn down by pain and suspicion, hobbles up the stairs.
+    p I can't get away from you, can I? I lock you away, and you come back. You let me kill you, and you come back. /// ifsource-locked
+    p I can't get away from you, can I? We kill each other, and you come back. You let me kill you, and you come back. /// ifsource-mutual
+    p I can't get away from you, can I? You betray me, I kill you, and you come back. You let me kill you, and you come back. /// ifsource-betrayal
+    p I can't get away from you, can I? You betray me, I kill you, and you come back. You let me kill you, and you come back. /// ifsource-normal
+p I don't know why you let me do that. I don't know what you want from me.
+
+label stairsExplore
+p I think you know how this goes. I'm down here, and I can't leave. So come down and talk. It's not like I can stop you.
+
+// Basement //
+
+label basementStart
+n You continue down the basement stairs, brushing past the smooth edges of thorns that grow more and more plentiful as you make your way forward.
+n You step out into what was once a vast, open cavern, now overrun by briars and prickles and thistles, the space thick with hostile vegetation.
+n At the heart of it all, encased in a tight weave of vines, is the Princess, her bloody, trembling hands clutching a pristine blade.
+p Did you know this was going to happen to me? Are you here to watch me suffer? Are you here to laugh?
+
+label laugh
+p Careful now, I'm the one with the knife.
+p Of course I thought there might be bad blood. I didn't think I could trust you then, and it looks like I was right, because I definitely can't trust you now.
+p I guess this is what I deserve. What we both deserve.
+    smitten Look at the regret in those beautiful eyes. She is our shining star, and you have brought her to tears! How could you say such cruelties? /// checkvoice
+        oppo Tears are easy to fake, don't let her get to you. She's resorting to desperate tactics, which means we're winning! /// checkvoice-smitten
+    cheated I'm out. Whatever you do, don't let her out of there. It's not going to end well for anyone. /// checkvoice
+        oppo Hey! Welcome to the winning team. /// checkvoice-cheated
+        cheated Oh, can it, will you? I'm not happy to be here, this is just the only move that was still worth making. /// checkvoice
+
+label intro
+p I... I want to trust you.
+n Her grip tightens on the blade.
+p But you're hiding something, aren't you? Why would you help me if you weren't helping yourself?
+
+label follow
+p The Princess clutches the blade closer to her chest.
+p That sounds... nice. I'm so tired of the bad blood between us. But it's hard to let it go. You've hurt me.
+p Her eyes dart away from yours for a brief moment.
+p And I've also hurt you.
+
+label offer
+    p And I'm supposed to believe it's safe in your hands? That you aren't just saying what you need to say in order to fool me and save yourself? /// check
+    p I'm not falling for it! /// checkfalse
+
+label change
+    jumpto changeHostile /// checkfalse
+p I... I don't know! What can either of us really say at this point? How can we trust something as hollow as words?
+oppo She's right, there's nothing left to say. So let's get a move on and do something, before she comes up with a scheme to get out of there on her own.
+    smitten We don't need words to send a message. It is through action that we can show her our adoration, our devotion, our kindness. /// checkvoice
+    cheated Careful with that one, he's not the smooth negotiator he thinks he is. But it does feel like we're stuck until we do something. If there's even anything to do besides make things worse. /// checkvoice
+        hero We're not making things worse. I think she wants to trust us. /// checkvoice-cheated
+
+label changeHostile
+p No. We're past that. You and I both know words are hollow.
+oppo Figures. I wouldn't trust her, so why would she trust us?
+hero You're the one who got us here, if you weren't doing so much scheming maybe we could have formed a genuine connection. Maybe we could have fixed things!
+oppo I think there are a lot of other people worth pointing fingers at before you go blaming me, I'm just looking out for our best interests. Did you forget that she stabbed us last time?!
+    smitten I remember, and I'd do it all again. I'd gladly take a thousand knives to save her just once. /// checkvoice
+    cheated The game's over. We shouldn't have pushed her so hard. Give it up and leave her here. It's not like she can go anywhere on her own. /// checkvoice
+
+label bladeAsk
+n Her eyes briefly meet yours, then dart back to the floor. She hangs her head in resignation.
+p Okay.
+
+label noBladeSlay
+n You'll need to convince her to give up the blade first.
+
+label cantBladeAttempt
+hero I... think that ship has already sailed.
+
+// Attempt to take the blade //
+
+label bladeFail1
+n You reach into the thorns, towards her bloodied hands and the blade clutched tight in her grasp.
+n But she snatches it away, ignoring the thorns that carve fresh wounds as she moves within her prison of vines.
+p I knew this is the only reason you'd come back down here! I'm not falling for it! It's mine now, and I'll let these thorns tear me to shreds before I hand it over.
+
+label bladeFail2
+n You reach into the nest of thorns once again, and again she yanks the blade away, despite the obvious pain it causes.
+p Play your games all you want, but I've decided how I feel! I can do this forever if that's what it takes to keep it out of your hands.
+
+label takeBlade
+    n You reach into the thorns once more and lay your hand on the Princess's bloody fingers, wrapped tightly around the blade. Her hand trembles in yours. /// check
+    n You reach towards her bloodied hands, laying your palm on her trembling fingers. /// checkfalse
+n For a moment, she clutches it even tighter, her knuckles going white with the effort.
+n But then the tension fades. Her grip finally loosens, and she allows you to take the weapon.
+n You carefully pull it free from the thorns, though they scrape at your skin, leaving red trickles of fresh blood all along your arms.
+voice3switch TakeBlade
+
+label smittenTakeBlade
+smitten She trusts us. She trusts us! Doesn't that set your heart aflutter?
+hero ... Yeah, a little. It could just be nerves, being this close to her does bring back unpleasant memories. But I don't know. It doesn't feel bad. It feels good. Like we're special to her.
+smitten We are special, to have gained an ounce of trust from a maiden so guarded. Now all that remains is to free her from her bindings.
+hero Yeah, let's do it! Let's show her how much both of us have changed.
+jumpto takeBladeJoin
+
+label cheatedTakeBlade
+cheated I'll be damned. She really gave it to us.
+oppo It feels like it's been so long since we've held real power in our hands. I wonder what we should do with it.
+hero We free her, obviously. It's the right thing to do.
+cheated I think you're right. She's as much a victim in all of this as we've been. And besides, it would really stick it to Him to free her.
+label takeBladeJoin
+oppo Or... hear me out. We slay her, right here, right now. She's never been so helpless, and if we don't take advantage of that, we may never get another chance!
+n That sounds like a splendid idea. You should listen to *him.*
+    smitten I see that the lines have been drawn. /// checkvoice
+    cheated We've all said our piece. Now it's time to make our move. /// checkvoice
+hero It's two against one.
+n It's two against two.
+hero You don't count.
+oppo And why shouldn't He count?
+hero Because He's clearly not one of us?
+oppo That doesn't matter. He's been with us the whole time, he should get a say.
+linebreak
+p So. Did you mean it? Or was I a fool to hand my life to you?
+
+// Slay her //
+
+label slayStart
+    smitten Oh, you scoundrel! /// checkvoice
+hero Why?! We finally gained her trust. That took a lot of work!
+oppo Sorry, boys. It looks like we've got our tie-breaker.
+quietcreep
+n Blade safely in hand, you turn it on the Princess, and drive it towards her heart.
+n But her thistled prison proves to be an impossible obstacle, its thorns digging deeper and deeper into your flesh the closer you come to striking the fatal blow.
+    smitten Ha! We're not going to make it. This is what we deserve. Better we trap ourselves in this eternal moment than have her blood on our hands. We still managed to get our romantic end, in a way. /// checkvoice
+    cheated Those damned vines are going to stop us, just like they stopped her. Of course! Like we should have expected it to turn out any other way. It's funny, really. I'm laughing. /// checkvoice
+n The tip of your blade only manages to touch her sternum before it stops moving entirely. A single drop of blood trickles down her chest as the two of you stare into each others' eyes.
+n Come on. Just push it a little further. *Sigh.* But you can't, can you?
+p I knew this was coming. I can't believe I ever let myself hope for better. This was always going to be us, wasn't it?
+claim genericEnd
+
+label genericEndFirstVessel
+truth You do not have an opportunity to respond. Something has taken her away, and it's left something else in her place.
+
+label genericEndNotFirstVessel
+truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+// Cut her free //
+
+label freeStart
+oppo Yes! What a good idea. Let's cut her free.
+hero Oh, so you're suddenly team "free her?" You can't just switch sides as soon as we make a decision.
+oppo I can do whatever I want. And I believe with my whole heart that this is the right course of action. Let's free this Princess!
+    smitten Everyone deserves a chance at redemption. Let him join us, and be merry! We are all united by our passion! /// checkvoice
+        oppo That's right, what he said. /// checkvoice-smitten
+        hero We've already *given* him a chance at redemption! /// checkvoice-smitten
+        oppo And who says I don't deserve another? I really mean it this time, I'm big enough to admit when I'm wrong. So I want to help you all free her! /// checkvoice-smitten
+        smitten And I have no problem with that! Welcome to the team. You're one of us now. One of the good guys. /// checkvoice
+    cheated Even if he'll stick a knife in our back as soon as he has the opportunity, it's still better to have him nominally on our side. At least that gets him to shut up for a while. /// checkvoice
+        oppo See, we're all friends here! United in our actions and intentions. /// checkvoice-cheated
+        hero Yeah, united. But the other one has a point, if it keeps you quiet, sure, we're all friends. /// checkvoice-cheated
+linebreak
+n You take the blade to the thorny vines imprisoning the Princess, and she flinches, relaxing only slightly as the blade slices into the thick vegetation rather than her arm.
+n And she flinches again as the last of the vines is cut away, as if, after all of that, she's still expecting you to turn on her and stab her in the heart. But you're not going to do that, are you? Still, all it would take is a single slip of the blade.
+    smitten Such a pathetic attempt at distraction and subterfuge! Our blade is a dashing sword, and every dashing sword is an extension of its hero. It won't slip. /// checkvoice
+        oppo You're right. He can't even make it slip, can He? He's a bit of a nobody. Good thing I've been on your side of all this since the beginning. /// checkvoice-smitten
+    cheated Is that really all you've got? Threatening us with an accidental misstep? I expected more from you. /// checkvoice
+        oppo Our blade didn't even waver when he said that. Yeah, you're right! He's a bit of a nobody, isn't He? Good thing I've been on your side of all this since the beginning. /// checkvoice-cheated
+n The Princess falls into your arms, tears streaking down her cheeks. I can't believe you're making me describe this. I hate you.
+p You actually meant it. You... rescued me.
+    smitten Do you see the way she's looking at us? Kiss her! Kiss her now before the moment ends! /// checkvoice
+
+label freeHate
+p Me, too.
+
+label freeSmileLeave
+n She smiles, her hand slipping into yours, and the two of you rush to the basement stairs.
+    smitten You should have kissed her, you fool! It was the perfect moment! /// checkvoice
+jumpto freeLeaveJoin
+
+label freeKiss
+hero Can we actually do that?
+n No! You can't! Absolutely not!
+smitten You know as well as I do that we can.
+oppo And we wouldn't want to throw away a chance for a special moment, now would we?
+n If I were only capable of throwing myself off a bridge.
+smitten Well, are you going to describe our steamy, romantic kiss?
+n *SIGH.* You lean in, and you *kiss her.*
+hero ... And?
+n And she reciprocates. Enthusiastically. You kiss. It's done. Are you happy now?
+smitten Come on now, this is the big moment! You can do better than that!
+n URGH! FINE. You and the Princess lock eyes and stare deep into each other's souls with all of the roaring emotion that comes from letting what once was hatred turn into pure, unbridled passion.
+hero Are you making fun of us?!
+n And then each of you close your eyes and kiss. Words can describe neither the nuclear fire nor the oceanic depth of your connection.
+oppo Please, I think He actually likes romance.
+n If history itself were not about to end, historians would document this moment for the rest of time. Musicians would write era defining ballads, and great artists would expend entire lifetimes trying to merely capture the spark you hold right now.
+hero He's making fun of us!
+smitten It doesn't matter either way. Because this is good stuff.
+n I'm aware of my skills.
+n But unfortunately for you, the moment doesn't last forever. You open your eyes. The Princess smiles gently up at you. Time for you to damn the whole world to oblivion, I suppose.
+p That was nice.
+
+label freeLeave
+n Her hand slips into yours, and the two of you rush to the basement stairs.
+label freeLeaveJoin
+n Shameful, really, that the same thorns that so graciously allowed you downstairs are now blocking your only way out.
+    smitten Please. After all the trials we've been through, do you really think a few measly thorns can stop us? Love is an even more powerful weapon than our blade. /// checkvoice
+    cheated You're getting desperate, aren't you? Even more proof that you can't actually do anything to stop us. /// checkvoice
+hero We cut through those other vines just fine. They're only thorns, I'm not afraid of getting a few scrapes.
+oppo I'm not even sure we need to do any cutting. We can just move them out of the way. What a pathetic showing, really.
+p A few pointy sticks can't keep us down here. We're both meant for so much more than this.
+
+label cutFree
+n As you swing your blade into the thorns covering the basement stairs, they... yield.
+jumpto freeJoin
+
+label stepFree
+n As you step into the thorns covering the basement stairs, they... yield.
+label freeJoin
+n Both you and the Princess ascend the stairs without obstacle. This is unacceptable! The second you step out of this cabin with her, the world *ends,* do you hear me? What did the world ever do to you to deserve this?
+        smitten Your nightmare is our dream. Whatever world would condemn star-crossed lovers like us to a cycle of violence and despair isn't a world worth saving. /// check
+        smitten Your nightmare is our dream. Whatever world would condemn an innocent like her to a cycle of violence and despair isn't a world worth saving. /// checkvoice checkfalse
+    smitten We'll weave something new together. Something better. /// checkvoice
+    cheated It feels so good to hear you say that. That you're admitting you've lost, and we've bested you at your own game at last. I don't care what happens now. That's all I've wanted. /// checkvoice
+n You and the Princess hesitate at the cabin door. This is your last chance.
+hero We've already made our decision.
+p We're finally leaving here together, aren't we? And all we had to do was trust each other. It wasn't easy, but... I'm glad we finally could.
+
+n Hands clasped, the two of you open the door, and step out into a new day. You irredeemable murderers.
+quietcreep
+p What do we do now?
+p Wh -- where's everything going?
+p Why is it so cold?
+claim genericEnd
+
+// Attempt to leave //
+
+label leaveStart
+    quietcreep /// hasblade
+p Do you really think you can just wash your hands of all this? Do you really think you can just leave me here?!
+oppo This is even better than stabbing her. The same reward without any of that nasty effort.
+n It's not "even better." Putting off a choice is always worse than making a committed decision, especially when you already know the right answer.
+    smitten It's even more cruel if you ask me. Leaving an incredible soul like hers to languish forever, in pain and alone. How can we bear to live with the guilt? /// checkvoice
+        oppo We'll live with it just fine. Besides, she'll get over it. /// checkvoice-smitten
+        n That's what I'm afraid of. /// checkvoice-smitten
+    cheated Almost feels like we're as bad as the powers that be. Is that all it really took to twist us into yet another tyrant? A single ounce of control? /// checkvoice
+        hero It sure feels like it. She looks so... sad, bleeding and alone. And we're just turning our back on her. /// checkvoice-cheated
+        opppo Oh, stop trying to bring morality into this. There are winners in life, and there are losers, and what matters is that right now, we've decided to be a winner. /// checkvoice-cheated
+    claim leaveBlade /// hasblade
+n But as you approach the basement stairs, you make a grim realization. The thorns won't let you leave.
+hero And we don't have any way to cut through them.
+oppo Okay! New plan. We re-befriend the Princess, get the blade, and all of us leave here together as friends.
+p You can't leave without me, can you? Isn't that funny. Isn't that so funny! This is perfect, actually. Just you and me, rotting down here forever. Together.
+    smitten It's what we deserve after everything we've done. It's... romantic, even. We got our beautiful ending after all, tragic as it may be. /// checkvoice
+p You know, just to make sure things are little more permanent, I think I'm going to take this particular needle out of the picture.
+oppo She wouldn't.
+    cheated It's only fair. We were going to leave her with no way out. She's returning the kindness. /// checkvoice
+n Thorns slice into the Princess' hands, lacerating what little skin remains, as she raises the blade to her mouth.
+oppo Take it! Take it now before she swallows it out of spite!
+
+label leaveRush
+quietcreep
+n You rush towards the Princess, arm outsretched and grasping for the blade.
+n But as you tear through her thistled prison, the thorny vines dig deep into your arms, seemingly growing thicker and sturdier the closer you get to your goal. It feels like it should be within reach, yet you cannot reach it quickly enough.
+hero It's no use. Even if we grab it, we won't be able to pull it back out of there.
+oppo It's better than letting her eat it and losing it forever!
+n You just manage to reach her hand, grasping it firmly in yours, before the thorns finally trap you in place. Blood trickles down your arm, mingling with hers. The two of you lock eyes.
+p We're stuck like this, aren't we? I knew this was always going to be how it ended.
+claim genericEnd
+
+label leaveNothing
+n You stand in place among the thorns, inert, merely watching as the Princess swallows your only way out of this place.
+oppo She actually did it.
+    smitten Good for her. Such a decisive woman. /// checkvoice
+        oppo But extremely not good for us! /// checkvoice-smitten
+    cheated She's better at this game than we are. /// checkvoice
+        oppo But we're all losers now. Nobody wins! Nobody. /// checkvoice-cheated
+        cheated She wins if she gets what she wants. And it looks like what she wanted... was this. /// checkvoice
+n Blood trickles down the corner of her mouth. Then flows from between her lips.
+n She smiles.
+p There. Isn't this just perfect?
+claim genericEnd
+
+label leaveBladeFirstVessel
+truth But in your commitment to leaving things unresolved, you have no chance at resolution. Something has taken her away, and it's left something else in her place.
+
+label leaveBladeNotFirstVessel
+truth But in your commitment to leaving things unresolved, you have no chance at resolution, nor will you ever. It's time to leave. Memory returns.
+
+// Abort the vessel //
+
+label abort
+oppo If that's what you think is best!
+    cheated /// checkvoice
+n Are you serious?! Fine. You walk away from the the cabin. We'll see how that goes for you.
+    smitten B-but she's the other way! Don't abandon our destiny! /// checkvoice

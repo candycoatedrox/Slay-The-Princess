@@ -13,11 +13,10 @@ n Shut up! The rest of you, talk. What happened? What did you *do?*
 sourceswitch StartVoiceSwitch
 
 label beastStartVoiceSwitch
-    jumpto startBeastBrokenStubborn /// checkvoice-broken
-    jumpto startBeastBrokenStubborn /// checkvoice-stubborn
-jumpto startBeastContraOppo
+voice3switch StartBeast
 
-label startBeastBrokenStubborn
+label brokenStartBeast
+label stubbornStartBeast
     hunted We're part of her because she consumed us. Can she hear us if we talk? /// checkvoice-stubborn
     hunted Can she hear us if we talk? /// checknovoice-stubborn
 pint I can hear everything, little one, but you don't have to be afraid of me. There's no place where you end and I begin. Nothing can hurt you here. Not anymore.
@@ -27,7 +26,8 @@ hunted We're still here, though. And if we're safe, isn't that better?
     stubborn I guess this is... fine. Doesn't feel half bad. Miles better than being dissolved, anyway. /// checkvoice
 jumpto startBeastJoin
 
-label startBeastContraOppo
+label contrarianStartBeast
+label opportunistStartBeast
 hunted Can she hear us if we talk?
 pint I can hear everything, little one, but you don't have to be afraid of me. There's no place where you end and I begin. Nothing can hurt you here. Not anymore.
 hunted O-oh. I like that. I don't feel so small anymore when you put it like that.
@@ -41,7 +41,7 @@ n She *ate* you? And now you're convinced that you're stuck together? What a mes
 jumpto startJoin
 
 label witchStartVoiceSwitch
-stringautojump StartWitch
+voice3switch StartWitch
 
 label cheatedStartWitch
 oppo There's no reason to keep secrets. We tried fighting her, and then she made the cabin itself come to life and squished us into paste.

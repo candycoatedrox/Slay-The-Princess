@@ -177,7 +177,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Initiates the active Chapter 2
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     @Override
     public ChapterEnding runChapter() {
@@ -221,7 +221,7 @@ public class ChapterII extends StandardCycle {
         }
 
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
             ending = chapter3.runChapter();
         }
 
@@ -1087,7 +1087,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Adversary
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversary() {
         // You gain the Voice of the Stubborn
@@ -1530,7 +1530,7 @@ public class ChapterII extends StandardCycle {
      * @param adversaryFree whether the Princess has already broken out of her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
      * @param noFreeOffer whether the player has already offered to free the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFightDirect(boolean immediate, Condition adversaryFree, Condition narratorProof, AbstractCondition noFreeOffer) {
         mainScript.runSection("directStart");
@@ -1925,7 +1925,7 @@ public class ChapterII extends StandardCycle {
      * @param adversaryFree whether the Princess has already broken out of her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
      * @param noFreeOffer whether the player has already offered to free the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryRetrieveBlade(boolean wounded, Condition adversaryFree, Condition narratorProof, AbstractCondition noFreeOffer) {
         this.currentLocation = GameLocation.CABIN;
@@ -2032,7 +2032,7 @@ public class ChapterII extends StandardCycle {
      * @param adversaryFree whether the Princess has already broken out of her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
      * @param noFreeOffer whether the player has already offered to free the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFight(boolean wounded, Condition adversaryFree, Condition narratorProof, AbstractCondition noFreeOffer) {
         if (wounded) {
@@ -2099,7 +2099,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The player attempts to fight the Adversary unarmed, leading to Chapter III: The Fury
      * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFightUnarmed(Condition narratorProof) {
         mainScript.runSection("unarmedStart");
@@ -2165,7 +2165,7 @@ public class ChapterII extends StandardCycle {
      * @param adversaryFree whether the Princess has already freed herself from her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
      * @param noFreeOffer whether the player has already offered to free the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryPacifism(boolean tookBladeStart, boolean fromFight, Condition adversaryFree, Condition narratorProof, AbstractCondition noFreeOffer) {
         if (!adversaryFree.check()) {
@@ -2315,7 +2315,7 @@ public class ChapterII extends StandardCycle {
      * @param wounded whether the player is already wounded
      * @param adversaryFree whether the Princess has already broken out of her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFree(Condition adversaryFree, Condition narratorProof) {
         mainScript.runSection("freeStart");
@@ -2381,7 +2381,7 @@ public class ChapterII extends StandardCycle {
      * @param adversaryFree whether the Princess has already freed herself from her chains
      * @param narratorProof whether the Narrator has accepted that you've been here before
      * @param noFreeOffer whether the player has already offered to free the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFlee(boolean wounded, Condition adversaryFree, Condition narratorProof, AbstractCondition noFreeOffer) {
         boolean brokeFree = !adversaryFree.check();
@@ -2475,7 +2475,7 @@ public class ChapterII extends StandardCycle {
      * @param wounded whether the player is already wounded
      * @param retrieve whether the player originally went upstairs to retrieve the blade
      * @param lateJoin whether to skip the first portion of dialogue
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding adversaryFleeUpstairs(boolean wounded, boolean retrieve) {
         this.currentLocation = GameLocation.CABIN;
@@ -2545,7 +2545,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Tower
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding tower() {
         // You gain the Voice of the Broken
@@ -2878,7 +2878,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player attempts to resist the Tower after bringing down the blade, leading to Chapter III: The Apotheosis / The Fury
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding towerResistBlade(GlobalInt resistCount, GlobalInt submitCount, boolean priestOffer) {
         mainScript.runSection("resistBlade");
@@ -3031,7 +3031,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The Tower forces the player to kill themself, leading to Chapter III: The Apotheosis
      * @param tookBlade whether the player took the blade in the cabin
-     * @return the Chapter ending reached by the player (indicating which Voice to gain in The Apotheosis)
+     * @return the ending reached by the player (indicating which Voice to gain in The Apotheosis)
      */
     private ChapterEnding towerSlaySelf(boolean tookBlade, boolean lateJoin) {
 
@@ -3054,7 +3054,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Spectre
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding spectre() {
         // You gain the Voice of the Cold
@@ -3704,7 +3704,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player either offends the Spectre for a second time, refuses to let her possess them, or attempts to leave the basement; the Spectre kills them, leading to Chapter III: The Wraith
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding spectreKill(boolean leaveAttempt) {
         mainScript.runSection("killStart");
@@ -3765,7 +3765,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player allows the Spectre to possess them
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding spectrePossess() {
         String moodSuffix = (this.isHarsh) ? "Harsh" : "Soft";
@@ -3894,7 +3894,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Nightmare
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding nightmare() {
         // You gain the Voice of the Paranoid
@@ -4227,7 +4227,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player decides to leave the basement with the Nightmare
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding nightmareLeave() {
         mainScript.runSection("leaveStart");
@@ -4401,7 +4401,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The player slays the Nightmare, leading to Chapter III: The Wraith
      * @param falling whether the player slew the Princess on the stairs and ended up falling forever
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding nightmareSlay(boolean falling) {
         this.source = (falling) ? "stairs" : "basement";
@@ -4540,7 +4540,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Razor
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding razor() {
         // You gain the Voice of the Cheated
@@ -4759,7 +4759,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Beast
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding beast() {
         // You gain the Voice of the Hunted
@@ -5013,7 +5013,7 @@ public class ChapterII extends StandardCycle {
     /**
      * Runs one phase of the Beast's attack, allowing the player to choose a response
      * @param phase the current phase of the fight
-     * @return the Chapter ending reached by the player if they trigger one, or null if the fight continues
+     * @return the ending reached by the player if they trigger one, or null if the fight continues
      */
     private ChapterEnding beastAttack(int phase) {
         mainScript.runSection("attack" + phase);
@@ -5102,7 +5102,7 @@ public class ChapterII extends StandardCycle {
      * The player manages to avoid being eaten by the Beast, leading to Chapter III: The Den
      * @param skepticPath whether the player continued dodging the Beast's attacks (granting them the Voice of the Skeptic) or fought back (granting them the Voice of the Stubborn)
      * @param wounded whether the player has already been wounded by the Beast
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding beastToDen(boolean skepticPath, boolean wounded) {
         if (skepticPath) {
@@ -5123,7 +5123,7 @@ public class ChapterII extends StandardCycle {
      * The Beast pounces and swallows the player whole
      * @param talked whether the player talked in the initial encounter menu
      * @param playedDead whether the player played dead (guaranteeing them the Voice of the Contrarian in Chapter III: The Wild)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding beastEaten(boolean talked, boolean playedDead) {
         mainScript.runConditionalSection("eatenStartCont", talked);
@@ -5337,7 +5337,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Witch
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding witch() {
         // You gain the Voice of the Opportunist
@@ -5603,7 +5603,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player offers to leave with the Witch
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding witchStairs() {
         mainScript.runSection("leaveStart");
@@ -5835,7 +5835,7 @@ public class ChapterII extends StandardCycle {
      * @param fromStairs whether the player offered to leave with the Witch and is at the stairs
      * @param witchFree whether the Witch has freed herself from her chains
      * @param heartComment whether the Voice of the Opportunist has made a comment about the Witch being "a woman after [his] own heart"
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding witchGiveBlade(boolean fromStairs, boolean witchFree, boolean heartComment) {
         if (fromStairs) {
@@ -5881,7 +5881,7 @@ public class ChapterII extends StandardCycle {
      * @param fight whether the player chose to fight the Witch
      * @param witchFree whether the Witch has freed herself from her chains
      * @param heartComment whether the Voice of the Opportunist has made a comment about the Witch being "a woman after [his] own heart"
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding witchToWild(boolean fight, boolean witchFree, boolean heartComment) {
         String jumpSuffix = (fight) ? "Fight" : "Flee";
@@ -5984,7 +5984,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Stranger
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding stranger() {
         // You gain the Voice of the Contrarian
@@ -6559,7 +6559,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Prisoner
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding prisoner() {
         // You gain the Voice of the Skeptic
@@ -6982,7 +6982,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The player violates the Prisoner's agency and she attempts to strangle them
      * @param attack whether the player attempted to slay the Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding prisonerStrangled(boolean attack) {
         this.canSlayPrincess = true;
@@ -7033,7 +7033,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The Prisoner cuts off her own head after the player gives her the knife (willingly or not)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding prisonerDecapitate() {
         mainScript.runSection("headStart");
@@ -7097,7 +7097,7 @@ public class ChapterII extends StandardCycle {
     /**
      * With the Prisoner dead, the player leaves the basement
      * @param selfSlain whether the Princess decapitated herself (indicating which Chapter this leads to)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding prisonerSlain(boolean selfSlain) {
         this.currentLocation = GameLocation.CABIN;
@@ -7218,7 +7218,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Runs Chapter II: The Damsel
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding damsel() {
         // You gain the Voice of the Smitten
@@ -7364,7 +7364,7 @@ public class ChapterII extends StandardCycle {
      * The player decides to rescue the Damsel
      * @param howFree whether the player asked how they could free her
      * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding damselRescue(boolean howFree, String endWorldResponse) {
         mainScript.runConditionalSection("rescueStart", howFree);
@@ -7406,7 +7406,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The player asks the Damsel what she wants, triggering the sequence that might lead to claiming the Deconstructed Damsel
      * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding damselDeconSequence(String endWorldResponse) {
         mainScript.runConditionalSection("whatWant", this.whatWouldYouDo);
@@ -7566,7 +7566,7 @@ public class ChapterII extends StandardCycle {
     /**
      * The player leaves the basement with the Damsel
      * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding damselLeave(String endWorldResponse) {
         boolean tookBlade = this.hasBlade;

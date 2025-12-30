@@ -334,6 +334,7 @@ p IT'S NOT THAT BAD. THE PAIN FEELS GOOD. BECAUSE I KNOW YOU FEEL IT TOO.
 
 // Throw yourself into the abyss //
 
+// "The Exorcist III" ending; claim the Wraith //
 label abyssStart
 n In a single moment of overwhelming willpower, you tear your body from the wall and hurl it towards the gaping abyss.
 p I WON'T LET YOU DO THIS!
@@ -381,6 +382,7 @@ truth But you don't answer her before she's gone and you feel a resistance under
 
 // Let the Princess leave the cabin //
 
+// "The Passenger" ending; claim the Wraith //
 label freeStart
     jumpto freeStartConsent /// check
 n *Sigh.* You toss the last of your will aside and surrender to the Princess.

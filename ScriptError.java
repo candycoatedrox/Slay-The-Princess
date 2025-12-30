@@ -17,11 +17,11 @@ public class ScriptError extends ScriptNote {
             - 1 = given label does not exist
         - 4 = invalid autoswitch
             - 0 = no prefix given
-            - 1 = 2+ arguments given (firstswitch, moodswitch, sourceswitch)
+            - 1 = 2+ arguments given (firstswitch, moodswitch, voice2switch, voice3switch, sourceswitch)
             - 2 = 3+ arguments given (bladeswitch)
             - 3 = one or both labels do not exist, check extraInfo
-            - 4 = sourceswitch (no suffix given)
-            - 5 = sourceswitch (no labels with suffix exist)
+            - 4 = voice2switch, voice3switch, or sourceswitch (no suffix given)
+            - 5 = voice2switch, voice3switch, or sourceswitch (no labels with suffix exist)
         - 5 = invalid condition switch jump
             - 0 = switchjump (no labels given)
             - 1 = switchjump (one or both labels do not exist, check extra)
@@ -229,12 +229,14 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 4:
-                        s += "sourceswitch (no suffix given)";
+                        s += this.extraInfo[0];
+                        s += " (no suffix given)";
                         break;
 
                     case 5:
-                        s += "sourceswitch (no labels ending in suffix ";
                         s += this.extraInfo[0];
+                        s += " (no labels ending in suffix ";
+                        s += this.extraInfo[1];
                         s += " exist in script)";
                         break;
                 }

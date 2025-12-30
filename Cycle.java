@@ -91,6 +91,14 @@ public abstract class Cycle {
     }
 
     /**
+     * Removed a given Voice from the list of active Voices
+     * @param v the Voice to remove
+     */
+    protected void removeVoice(Voice v) {
+        this.currentVoices.put(v, false);
+    }
+
+    /**
      * Removes all Voices from the list of active Voices
      */
     protected void clearVoices() {
@@ -791,7 +799,7 @@ public abstract class Cycle {
     
     /**
      * (DEBUG ONLY) Initiates and coordinates a full cycle, starting from a given Chapter ending through the player's conversation with the Shifting Mound
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     public ChapterEnding debugRunChapter() {
         return this.runChapter();

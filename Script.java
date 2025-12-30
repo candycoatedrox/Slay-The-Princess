@@ -565,6 +565,26 @@ public class Script {
     }
 
     /**
+     * Executes one of two sections of this script, depending on the Voice gained at the start of Chapter 2
+     * @param labelSuffix the suffix of the label to start executing at
+     */
+    public void runVoice2Section(String labelSuffix) {
+        this.updateChapterVariables();
+        this.voice2SwitchJump(labelSuffix);
+        this.runSection();
+    }
+
+    /**
+     * Executes one of two sections of this script, depending on the Voice gained at the start of Chapter 3
+     * @param labelSuffix the suffix of the label to start executing at
+     */
+    public void runVoice3Section(String labelSuffix) {
+        this.updateChapterVariables();
+        this.voice3SwitchJump(labelSuffix);
+        this.runSection();
+    }
+
+    /**
      * Executes one of two sections of this script, depending on whether the player has the blade or not
      * @param labelSuffix the suffix of the label to start executing at
      */
@@ -804,9 +824,9 @@ public class Script {
         ChapterII chapter2 = (isChapter2) ? (ChapterII)this.currentCycle : null;
         if (this.isChapter2) this.ch2Voice = chapter2.ch2Voice();
         if (this.isChapter2) this.chapterSource = chapter2.getSource();
-        if (this.isChapter2) this.threwBlade = chapter2.threwBlade();
         if (this.isChapter2) this.sharedLoop = chapter2.sharedLoop();
         if (this.isChapter2) this.sharedLoopInsist = chapter2.sharedLoopInsist();
+        if (this.isChapter2) this.threwBlade = chapter2.threwBlade();
         this.droppedBlade1 = (this.isChapter2) ? chapter2.droppedBlade1() : false;
         this.whatWouldYouDo = (this.isChapter2) ? chapter2.whatWouldYouDo() : false;
         this.rescuePath = (this.isChapter2) ? chapter2.rescuePath() : false;
@@ -815,9 +835,9 @@ public class Script {
         if (this.isChapter3) this.ch2Voice = chapter3.ch2Voice();
         if (this.isChapter3) this.ch3Voice = chapter3.ch3Voice();
         if (this.isChapter3) this.chapterSource = chapter3.getSource();
-        if (this.isChapter3) this.threwBlade = chapter3.threwBlade();
         if (this.isChapter3) this.sharedLoop = chapter3.sharedLoop();
         if (this.isChapter3) this.sharedLoopInsist = chapter3.sharedLoopInsist();
+        if (this.isChapter3) this.threwBlade = chapter3.threwBlade();
         this.abandoned2 = (this.isChapter3) ? chapter3.abandoned2() : false;
         this.spectrePossessAsk = (this.isChapter3) ? chapter3.spectrePossessAsk() : false;
         this.spectreCantWontAsk = (this.isChapter3) ? chapter3.spectreCantWontAsk() : false;
@@ -951,6 +971,26 @@ public class Script {
                 }
 
                 if (this.runModifierChecks(mods)) this.moodSwitchJump(argument);
+                break;
+
+            case "voice2switch":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid voice2switch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.voice2SwitchJump(argument);
+                break;
+
+            case "voice3switch":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid voice3switch in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.voice3SwitchJump(argument);
                 break;
 
             case "sourceswitch":
@@ -1384,6 +1424,22 @@ public class Script {
     }
 
     /**
+     * Jumps to one of several labels, depending on the Voice gained at the start of Chapter 2
+     * @param labelSuffix the suffix of the label to jump to
+     */
+    private void voice2SwitchJump(String labelSuffix) {
+        if (this.ch2Voice != null) this.jumpTo(this.ch2Voice + labelSuffix);
+    }
+
+    /**
+     * Jumps to one of several labels, depending on the Voice gained at the start of Chapter 3
+     * @param labelSuffix the suffix of the label to jump to
+     */
+    private void voice3SwitchJump(String labelSuffix) {
+        if (this.ch3Voice != null) this.jumpTo(this.ch3Voice + labelSuffix);
+    }
+
+    /**
      * Jumps to one of several labels, depending on the "source" of the active chapter
      * @param labelSuffix the suffix of the label to jump to
      */
@@ -1633,6 +1689,12 @@ Different functions a script can perform:
   - bladeswitch [prefix]
         Runs the section of the script at the label starting with the given prefix and ending with either "Blade" or "NoBlade", depending on whether the player currently has the blade.
 
+  - voice2switch
+        Runs the section of the script at the label starting with the ID of the Voice gained at the start of Chapter 2 and ending with the given suffix.
+
+  - voice3switch
+        Runs the section of the script at the label starting with the ID of the Voice gained at the start of Chapter 2 and ending with the given suffix.
+
   - sourceswitch [suffix]
         Runs the section of the script at the label starting with the "source" of the current chapter and ending with the given suffix.
 
@@ -1766,7 +1828,7 @@ Generic modifiers available for all lines (except comments and labels):
       - abandoned
             Checks whether the player tried to abandon the Spectre or the Nightmare before running the line.
       - noabandon
-            Checks whether the player the player did not try to abandon the Spectre or the Nightmare before running the line.
+            Checks whether the player did not try to abandon the Spectre or the Nightmare before running the line.
             
       - possessask
             Checks whether the Spectre asked to possess the player before running the line.

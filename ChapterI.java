@@ -23,7 +23,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * Initiates Chapter 1
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     @Override
     public ChapterEnding runChapter() {
@@ -69,7 +69,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * Runs the opening sequence of Chapter I, from the opening conversation to entering the basement
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding heroAndPrincess() {
         // You always start with the Voice of the Hero
@@ -443,7 +443,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * Runs the beginning of the basement sequence with the soft princess (did not take the blade)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1BasementSoft() {
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter 1/Basement1Soft");
@@ -859,7 +859,7 @@ public class ChapterI extends StandardCycle {
      * @param dontRegret whether the player said "don't make me regret it"
      * @param canFree whether the player can free the Princess or the route is blocked
      * @param canNotFree whether the player can not free the Princess or the routes are blocked
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1RescueSoft(boolean lateJoin, boolean hereToSaveTruth, boolean dontRegret, boolean canFree, boolean canNotFree) {
         if (lateJoin) {
@@ -1086,7 +1086,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * The player decides to slay the soft Princess when the blade falls into the basement after initially deciding to free her (leads to Chapter II: The Beast / The Witch)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1RescueSlaySoft() {
         secondaryScript.runSection("rescueSlay");
@@ -1167,7 +1167,7 @@ public class ChapterI extends StandardCycle {
     /**
      * The player decides to retrieve the blade and slay the soft Princess (leads to Chapter II: the Witch / The Beast)
      * @param worthRisk whether the player said setting the Princess free wasn't "worth the risk"
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1RetrieveBlade(boolean worthRisk) {
         boolean canWitch = true;
@@ -1396,7 +1396,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * Runs the beginning of the basement sequence with the harsh princess (took the blade)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1BasementHarsh(Condition askPrize) {
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter 1/Basement1Harsh");
@@ -1524,7 +1524,7 @@ public class ChapterI extends StandardCycle {
      * @param mustSpectre whether the player is blocked from all other routes and must slay the Princess without hesitation
      * @param hesitated whether the player already hesitated
      * @param askPrize whether the player asked the Narrator about their prize
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SteelNervesHarsh(boolean canHesitateSlay, boolean mustSpectre, boolean hesitated, Condition askPrize) {
         boolean canTower = !manager.hasVisited(Chapter.TOWER);
@@ -1695,7 +1695,7 @@ public class ChapterI extends StandardCycle {
      * @param steeled whether the player previously steeled their nerves or dropped the blade immediately
      * @param afraid whether the player wondered if the Princess was bluffing
      * @param isArmed whether the player wondered if the Princess is armed
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1DropBladeHarsh(Condition cantSlay, boolean steeled, boolean afraid, boolean isArmed) {
         boolean canTower = !manager.hasVisited(Chapter.TOWER);
@@ -2130,7 +2130,7 @@ public class ChapterI extends StandardCycle {
      * @param afraid whether the player is afraid of the Princess
      * @param isArmed whether the player wondered if the Princess is armed
      * @param askPrize whether the player asked the Narrator about their prize
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SlayHarsh(boolean hesitated, boolean afraid, boolean isArmed, Condition askPrize) {
         // !hesitated = Spectre / Razor
@@ -2157,7 +2157,7 @@ public class ChapterI extends StandardCycle {
      * @param hesitated whether the player initially hesitated or not
      * @param afraid whether the player is afraid of the Princess
      * @param isArmed whether the player wondered if the Princess is armed
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SlayHarsh(boolean hesitated, boolean afraid, boolean isArmed) {
         return this.ch1SlayHarsh(hesitated, afraid, isArmed, new Condition());
@@ -2166,7 +2166,7 @@ public class ChapterI extends StandardCycle {
     /**
      * The player slays the harsh Princess without hesitation (leads to Chapter II: The Spectre / The Razor)
      * @param askPrize whether the player asked the Narrator about their prize
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SlayHarshSteeled(Condition askPrize) {
         secondaryScript.runSection("steelSlay");
@@ -2250,7 +2250,7 @@ public class ChapterI extends StandardCycle {
     /**
      * The player successfully slays the Princess without hesitation (leads to Chapter II: The Spectre / the Good Ending)
      * @param askPrize whether the player asked the Narrator about their prize
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SlaySuccess(Condition askPrize) {
         this.currentLocation = GameLocation.CABIN;
@@ -2449,7 +2449,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * The player slays the harsh Princess after hesitating (leads to Chapter II: The Adversary / The Tower / The Nightmare)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1SlayHarshHesitated() {
         secondaryScript.runSection("slayHesitate");
@@ -2530,7 +2530,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * The player attempts to free the harsh Princess
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1RescueHarsh(boolean howFree) {
         boolean canPrisoner = !manager.hasVisited(Chapter.PRISONER);
@@ -2800,7 +2800,7 @@ public class ChapterI extends StandardCycle {
 
     /**
      * The player decides to slay the harsh Princess after initially deciding to free her (leads to Chapter II: The Adversary / The Tower / The Nightmare)
-     * @return the Chapter ending reached by the player
+     * @return the ending reached by the player
      */
     private ChapterEnding ch1RescueSlayHarsh() {
         secondaryScript.runSection("rescueSlay");

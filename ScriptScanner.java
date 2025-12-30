@@ -90,9 +90,9 @@ public class ScriptScanner extends Script {
             case "linebreak":
                 try {
                     intArg = Integer.parseInt(argument);
-                    if (intArg < 0) errorsFound.add(new ScriptError(lineIndex, 1, 1, "linebreak"));
+                    if (intArg < 0) errorsFound.add(new ScriptError(lineIndex, 1, 1, prefix));
                 } catch (NumberFormatException e) {
-                    if (!argument.equals("")) errorsFound.add(new ScriptError(lineIndex, 1, 0, "linebreak"));
+                    if (!argument.equals("")) errorsFound.add(new ScriptError(lineIndex, 1, 0, prefix));
                 }
 
                 break;
@@ -116,10 +116,10 @@ public class ScriptScanner extends Script {
                         }
                     }
                 } catch (NumberFormatException e) {
-                    errorsFound.add(new ScriptError(lineIndex, 1, 0, "pause"));
+                    errorsFound.add(new ScriptError(lineIndex, 1, 0, prefix));
                 }
 
-                if (negativeArgs) errorsFound.add(new ScriptError(lineIndex, 1, 1, "pause"));
+                if (negativeArgs) errorsFound.add(new ScriptError(lineIndex, 1, 1, prefix));
                 break;
 
             case "jumpto":
@@ -127,7 +127,9 @@ public class ScriptScanner extends Script {
                     int jumpTarget = Integer.parseInt(argument);
                     if (jumpTarget >= this.nLines()) errorsFound.add(new ScriptError(lineIndex, 3, 0));
                 } catch (NumberFormatException e) {
-                    if (!argument.equals("NOJUMP") && !this.hasLabel(argument)) errorsFound.add(new ScriptError(lineIndex, 3, 1, argument));
+                    if (!argument.equals("NOJUMP")) {
+                        if (!this.hasLabel(argument)) errorsFound.add(new ScriptError(lineIndex, 3, 1, argument));
+                    } 
                 }
 
                 break;
@@ -152,7 +154,7 @@ public class ScriptScanner extends Script {
             case "bladeswitch":
                 switch (args.length) {
                     case 0:
-                        errorsFound.add(new ScriptError(lineIndex, 4, 0, "bladeswitch"));
+                        errorsFound.add(new ScriptError(lineIndex, 4, 0, prefix));
                         break;
 
                     case 1:
@@ -171,7 +173,7 @@ public class ScriptScanner extends Script {
                 }
 
                 if (!extraInfo.isEmpty()) {
-                    extraInfo.add(0, "bladeswitch");
+                    extraInfo.add(0, prefix);
                     errorsFound.add(new ScriptError(lineIndex, 4, 3, extraInfo));
                 }
                 break;
@@ -179,25 +181,27 @@ public class ScriptScanner extends Script {
             case "moodswitch":
             case "harshswitch":
                 if (args.length == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 4, 0, "moodswitch"));
+                    errorsFound.add(new ScriptError(lineIndex, 4, 0, prefix));
                 } else {
                     if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, "moodswitch"));
                     if (!this.hasLabel(argument + "Harsh")) extraInfo.add(argument + "Harsh");
                     if (!this.hasLabel(argument + "Soft")) extraInfo.add(argument + "Soft");
 
                     if (!extraInfo.isEmpty()) {
-                        extraInfo.add(0, "moodswitch");
+                        extraInfo.add(0, prefix);
                         errorsFound.add(new ScriptError(lineIndex, 4, 3, extraInfo));
                     }
                 }
 
                 break;
 
+            case "voice2switch":
+            case "voice3switch":
             case "sourceswitch":
                 if (args.length == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 4, 4));
+                    errorsFound.add(new ScriptError(lineIndex, 4, 4, prefix));
                 } else {
-                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, "sourceswitch"));
+                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, prefix));
 
                     boolean labelFound = false;
                     for (String label : labels.keySet()) {
@@ -207,7 +211,11 @@ public class ScriptScanner extends Script {
                         }
                     }
 
-                    if (!labelFound) errorsFound.add(new ScriptError(lineIndex, 4, 5, args[0]));
+                    if (!labelFound) {
+                        extraInfo.add(prefix);
+                        extraInfo.add(args[0]);
+                        errorsFound.add(new ScriptError(lineIndex, 4, 5, extraInfo));
+                    } 
                 }
 
                 break;
@@ -1193,7 +1201,7 @@ public class ScriptScanner extends Script {
         if (!impossibleNumChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 4, impossibleNumChecks));
         if (!impossibleStringChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 5, impossibleStringChecks));
         if (redundantVoice2) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice2"));
-        if (redundantVoice2) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice3"));
+        if (redundantVoice3) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice3"));
         if (redundantSource) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifsource & ifsourcenot"));
         if (redundantNum) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifnum & ifnumnot"));
         if (redundantString) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifstring & ifstringnot"));

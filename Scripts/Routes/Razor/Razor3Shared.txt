@@ -327,8 +327,8 @@ cheated Okay. Whatever we do gets us another... us. Let's see how many we can st
     hunted As long as we keep moving. /// checkvoice
     cold Why not? It's not like dying again and again is doing us any harm. Let's see how far this little mind-hole goes, shall we? /// checkvoice
     smitten We'll win her heart eventually! /// checkvoice
-    para It's going to get so loud in here. How are we going to keep it all straight? /// checkvoice ifstringnot-paranoid
-    broken Oh, great. So it's going to get even more crowded. Even more deluded voices that think we might stand any kind of chance. /// checkvoice ifstringnot-broken
+    para It's going to get so loud in here. How are we going to keep it all straight? /// checkvoice voice3not-paranoid
+    broken Oh, great. So it's going to get even more crowded. Even more deluded voices that think we might stand any kind of chance. /// checkvoice voice3not-broken
     oppo Flawless idea if you ask me. Such a go-getter attitude! /// checkvoice
     contra Who cares about getting better than her. Let's do something weird. Like really, really weird. /// checkvoice
 p Come onnnnnn! Show me something new!

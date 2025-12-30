@@ -139,9 +139,10 @@ public enum ChapterEnding {
 
     // The Thorn
     TRUSTISSUES(Vessel.THORN, -1, -1, false),
+    TRUSTISSUESSLAY(Vessel.THORN, -1, -1, false),
     ABANDONMENT(Vessel.THORN, -1, -1, false),
-    NEWLEAFSMITTEN(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
-    NEWLEAFCHEATED(Vessel.THORN, "The Thorn", 1, 1, false),
+    NEWLEAFKISS(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
+    NEWLEAF(Vessel.THORN, "The Thorn", 1, 1, false),
     
     // The Stranger
     ILLUSIONOFCHOICE(Vessel.STRANGER, 0, 0, true),
