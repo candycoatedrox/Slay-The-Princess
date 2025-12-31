@@ -376,13 +376,9 @@ public class OptionsMenu {
      */
     public ArrayList<Option> shownOptions() {
         ArrayList<Option> shown = new ArrayList<>();
-
         for (int i = 0; i < this.options.size(); i++) {
-            if (this.get(i).isShown()) {
-                shown.add(this.get(i));
-            }
+            if (this.get(i).isShown()) shown.add(this.get(i));
         }
-
         return shown;
     }
 
@@ -392,13 +388,9 @@ public class OptionsMenu {
      */
     public ArrayList<Option> availableOptions() {
         ArrayList<Option> available = new ArrayList<>();
-
         for (int i = 0; i < this.options.size(); i++) {
-            if (this.get(i).isAvailable()) {
-                available.add(this.get(i));
-            }
+            if (this.get(i).isAvailable()) available.add(this.get(i));
         }
-
         return available;
     }
 

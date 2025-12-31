@@ -29,7 +29,7 @@ public class GameManager {
     private int nVesselsAborted = 0;
     private int mirrorCruelCount = 0;
     private final Condition goodEndingAttempted = new Condition();
-    private final InverseCondition noGoodEndingAttempt = new InverseCondition(goodEndingAttempted);
+    private final InverseCondition noGoodEndingAttempt = goodEndingAttempted.getInverse();
 
     // Variables used in the Spaces Between
     private boolean mirrorScaredFlag = false;
@@ -111,6 +111,14 @@ public class GameManager {
     }
 
     // --- ACCESSORS & MANIPULATORS ---
+
+    /**
+     * Accessor for tracker
+     * @return the AchievementTracker linked to this GameManager
+     */
+    public AchievementTracker getTracker() {
+        return this.tracker;
+    }
 
     /**
      * Accessor for currentCycle

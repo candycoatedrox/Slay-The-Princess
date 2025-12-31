@@ -88,4 +88,22 @@ public class IndexedLinkedHashMap<K,V> extends LinkedHashMap<K,V> {
         return -1;
     }
 
+    /**
+     * Returns an ArrayList of all keys in this map, in order
+     * @return an ArrayList of all keys in this map, in order
+     */
+    public ArrayList<K> keyList() {
+        return this.index;
+    }
+
+    /**
+     * Returns an ArrayList of all values in this map, in order
+     * @return an ArrayList of all values in this map, in order
+     */
+    public ArrayList<V> valueList() {
+        ArrayList<V> values = new ArrayList<>();
+        for (K key : this.index) values.add(this.get(key));
+        return values;
+    }
+
 }

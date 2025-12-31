@@ -1082,6 +1082,14 @@ public class Option {
     }
 
     /**
+     * Manipulator for conditions
+     * @param conditions an array of Conditions that must be met for the Option to be available
+     */
+    public void setConditions(AbstractCondition... conditions) {
+        this.conditions = conditions;
+    }
+
+    /**
      * Manipulator for greyedOut
      * @param condition whether miscellaneous conditions necessary for this Option to become greyed out are met
      */
