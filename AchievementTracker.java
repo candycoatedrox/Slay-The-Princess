@@ -349,7 +349,7 @@ public class AchievementTracker {
     // --- GALLERY ---
 
     /**
-     * Lets the player view the Achievements Gallery
+     * Shows the player the Achievements Gallery
      */
     public void showGallery() {
         boolean repeat = true;

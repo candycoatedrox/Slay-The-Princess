@@ -795,11 +795,18 @@ public abstract class Cycle {
 
     // --- CYCLE MANAGEMENT ---
 
+    /**
+     * Unlocks the active Chapter's achievement gallery
+     */
+    public void unlockChapter() {
+        manager.getTracker().unlock(this.activeChapter);
+    }
+
     public abstract ChapterEnding runChapter();
     
     /**
      * (DEBUG ONLY) Initiates and coordinates a full cycle, starting from a given Chapter ending through the player's conversation with the Shifting Mound
-     * @return the ending reached by the player
+     * @return the Chapter ending reached by the player
      */
     public ChapterEnding debugRunChapter() {
         return this.runChapter();

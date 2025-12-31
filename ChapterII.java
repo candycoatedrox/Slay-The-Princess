@@ -181,6 +181,7 @@ public class ChapterII extends StandardCycle {
      */
     @Override
     public ChapterEnding runChapter() {
+        this.unlockChapter();
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
         
         this.displayTitleCard();

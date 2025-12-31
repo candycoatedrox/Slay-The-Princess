@@ -447,6 +447,44 @@ public abstract class StandardCycle extends Cycle {
                 mainScript.runSection();
                 break;
 
+            case SOMETHINGTOREMEMBER:
+                this.activeMenu = new OptionsMenu();
+                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                this.repeatActiveMenu = true;
+                while (repeatActiveMenu) {
+                    switch (parser.promptOptionsMenu(activeMenu)) {
+                        case "cApproachMirror":
+                        case "approach":
+                            this.repeatActiveMenu = false;
+                            break;
+
+                        default: this.giveDefaultFailResponse();
+                    }
+                }
+
+                mainScript.runSection("contraFightMirror");
+                break;
+
+            case GODDESSUNRAVELED:
+                this.activeMenu = new OptionsMenu();
+                activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+                this.repeatActiveMenu = true;
+                while (repeatActiveMenu) {
+                    switch (parser.promptOptionsMenu(activeMenu)) {
+                        case "cApproachMirror":
+                        case "approach":
+                            this.repeatActiveMenu = false;
+                            break;
+
+                        default: this.giveDefaultFailResponse();
+                    }
+                }
+
+                mainScript.runSection("unravelMirror");
+                break;
+
             case MOMENTOFCLARITY:
                 this.activeMenu = new OptionsMenu();
                 activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
@@ -1450,7 +1488,7 @@ public abstract class StandardCycle extends Cycle {
         this.secondaryScript = new Script(this.manager, this.parser, "Intermission/AbortVessel");
 
         if (!lateJoin) {
-            secondaryScript.runConditionalSection(activeChapter.getNumber(), activeChapter.getShorthand());
+            secondaryScript.runConditionalSection(activeChapter.getNumber(), activeChapter.getID());
             secondaryScript.runSection("voices");
         }
 

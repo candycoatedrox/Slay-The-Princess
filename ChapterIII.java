@@ -256,6 +256,7 @@ public class ChapterIII extends StandardCycle {
      */
     @Override
     public ChapterEnding runChapter() {
+        this.unlockChapter();
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
         
         if (!activeChapter.hasSpecialTitle()) this.displayTitleCard();
@@ -306,6 +307,7 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             // Should only be used in case of debugRunChapter()
+
             case MUTUALLYASSURED:
             case EMPTYCUP:
                 ending = this.razor4();
@@ -766,23 +768,325 @@ public class ChapterIII extends StandardCycle {
             - Broken + Contrarian
          */
 
+        mainScript.runSection();
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) Okay, now hold on. I have SO many questions."));
+        activeMenu.add(new Option(this.manager, "answers", "(Explore) I'm not going to the cabin until I have answers! What am I?"));
+        activeMenu.add(new Option(this.manager, "cabin", "[Head to the cabin.]"));
+        activeMenu.add(new Option(this.manager, "run", "[Run away.]"));
+        activeMenu.add(new Option(this.manager, "stay", "[Stay where you are.]"));
 
+        boolean runAttempt = false;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "explore":
+                    mainScript.runSection("exploreWoods");
+                    break;
 
+                case "answers":
+                case "stay":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection(activeOutcome + "Woods");
+                    break;
 
+                case "cGoLeave":
+                case "run":
+                    runAttempt = true;
+                case "cGoHill":
+                case "cabin":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("genericWoods");
+                    break;
 
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+                default: super.giveDefaultFailResponse();
+            }
+        }
 
-        // PLACEHOLDER
-        return null;
+        this.currentLocation = GameLocation.HILL;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "cabin", "[Proceed into the cabin.]"));
+        
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cGoCabin":
+                case "cabin":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Start to proceed into the cabin
+        this.withBlade = true;
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) Hey, funny one, didn't you say something about a third option earlier? One that would make everyone unhappy?", this.hasVoice(Voice.CONTRARIAN)));
+        activeMenu.add(new Option(this.manager, "fight", "[Take the blade.]"));
+        activeMenu.add(new Option(this.manager, "submit", "[Embrace your new goddess.]"));
+        activeMenu.add(new Option(this.manager, "flee", "[Flee.]", activeMenu.get("explore")));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "explore":
+                    mainScript.runConditionalSection("contraExplore", runAttempt);
+                    break;
+
+                case "cTake":
+                case "cSlayPrincessNoBladeFail":
+                case "fight":
+                    this.hasBlade = true;
+                    this.withBlade = false;
+                    switch (this.ch3Voice) {
+                        case CONTRARIAN: return this.apotheosisFightContrarian();
+                        default: return this.apotheosisFightParanoid();
+                    }
+                
+                case "submit":
+                    return this.apotheosisSubmit(false);
+
+                case "flee":
+                    mainScript.runSection("contraFlee");
+
+                    this.activeMenu = new OptionsMenu();
+                    activeMenu.add(new Option(this.manager, "submit", "[Embrace your new goddess.]"));
+
+                    this.repeatActiveMenu = true;
+                    while (repeatActiveMenu) {
+                        switch (parser.promptOptionsMenu(activeMenu)) {
+                            case "submit":
+                                this.repeatActiveMenu = false;
+                                break;
+
+                            default: super.giveDefaultFailResponse();
+                        }
+                    }
+
+                    mainScript.runSection("contraLateSubmit");
+                    return this.apotheosisSubmit(true);
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player attempts to fight the Apotheosis with the Voice of the Contrarian
+     * @return the ending reached by the player
+     */
+    private ChapterEnding apotheosisFightContrarian() {
+        mainScript.runSection("contraFightStart");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", "[Charge into oblivion.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", "[Carve into her divine heart.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        this.canThrowBlade = true;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "throw", "[Hurl the blade at her eye.]"));
+        activeMenu.add(new Option(this.manager, "submit", "[Embrace your new goddess.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "cThrowBlade":
+                case "throw":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "submit":
+                    mainScript.runSection("contraLateSubmit");
+                    return this.apotheosisSubmit(true);
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        mainScript.runSection();
+        return ChapterEnding.SOMETHINGTOREMEMBER;
+    }
+
+    /**
+     * The player attempts to fight the Apotheosis with the Voice of the Paranoid
+     * @return the ending reached by the player
+     */
+    private ChapterEnding apotheosisFightParanoid() {
+        mainScript.runSection("paraFightStart");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", "[Embrace your destiny.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", "[Assail the unassailable.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "still", "[Still your doubts.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "still":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+        
+        mainScript.runSection();
+
+        boolean push = false;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "dream", "(Explore) Then what do we do? I thought you said that all of this was like a dream. That we could choose how it goes. So why can't we choose to win?"));
+        activeMenu.add(new Option(this.manager, "push", "No! We just have to push harder! We wouldn't be here if there wasn't a way for us to win."));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "dream":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("paraFightDream");
+                    break;
+                
+                case "cSlayPrincess":
+                case "push":
+                    this.repeatActiveMenu = false;
+                    push = true;
+                    mainScript.runSection("paraFightPush");
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        this.hasBlade = false;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "fight", "[Fight back.]"));
+        activeMenu.add(new Option(this.manager, "submit", "[Submit.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincess":
+                case "fight":
+                    this.repeatActiveMenu = false;
+                    break;
+                
+                case "submit":
+                    mainScript.runSection("paraLateSubmit");
+                    return ChapterEnding.GRACE;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+        
+        mainScript.runConditionalSection(push);
+
+        if (push) {
+            return ChapterEnding.GODDESSUNRAVELED;
+        } else {
+            return ChapterEnding.WINDOWTOUNKNOWN;
+        }
+    }
+
+    /**
+     * The player submits to the Apotheosis
+     * @param lateJoin whether the player first attempted to fight the Princess
+     * @return the ending reached by the player
+     */
+    private ChapterEnding apotheosisSubmit(boolean lateJoin) {
+        if (!lateJoin) mainScript.runSection("submitStart");
+
+        this.removeVoice(Voice.NARRATOR);
+        activeMenu.add(new Option(this.manager, "scream", "[Scream in unintelligible agony.]"));
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "stop", "\"YOU HAVE TO STOP THIS, I CAN'T TAKE IT!\""));
+        activeMenu.add(new Option(this.manager, "hurting", "\"YOU'RE HURTING ME!\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Suffer in silence.]"));
+        parser.promptOptionsMenu(activeMenu);
+
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "tendrils", "[Make her suffer with you.]"));
+        activeMenu.add(new Option(this.manager, "alone", "[Suffer in the darkness alone.]"));
+
+        switch (parser.promptOptionsMenu(activeMenu)) {
+            case "tendrils":
+                mainScript.runSection();
+                return ChapterEnding.WINDOWTOUNKNOWN;
+
+            case "alone":
+                mainScript.runSection("aloneEnd");
+                return ChapterEnding.GRACE;
+        }
+
+        throw new RuntimeException("No ending reached");
     }
 
 
