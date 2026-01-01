@@ -58,8 +58,8 @@ public class ScriptScanner extends Script {
                 modifiers = split[1];
                 mods = modifiers.split(" ");
 
-                if (split.length > 2) errorsFound.add(new ScriptError(lineIndex, 7, 0));
-                if (mods.length == 0) errorsFound.add(new ScriptError(lineIndex, 7, 1));
+                if (split.length > 2) errorsFound.add(new ScriptError(lineIndex, 8, 0));
+                if (mods.length == 0) errorsFound.add(new ScriptError(lineIndex, 8, 1));
             }
         } catch (IndexOutOfBoundsException e) {
             args = new String[0];
@@ -122,13 +122,42 @@ public class ScriptScanner extends Script {
                 if (negativeArgs) errorsFound.add(new ScriptError(lineIndex, 1, 1, prefix));
                 break;
 
+            case "unlock":
+                switch (args.length) {
+                    case 0:
+                        errorsFound.add(new ScriptError(lineIndex, 3, 0));
+                        break;
+
+                    case 1:
+                        if (!manager.getTracker().achievementExists(argument)) errorsFound.add(new ScriptError(lineIndex, 3, 2, argument));
+                        break;
+                    
+                    case 2:
+                        errorsFound.add(new ScriptError(lineIndex, 3, 1));
+                        break;
+                }
+
+                break;
+
+            case "nowplaying":
+                if (argument.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 4));
+                break;
+
+            case "quietcreep":
+                if (!argument.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 1, 0));
+                break;
+                
+            case "claimfold":
+                if (!argument.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 1, 1));
+                break;
+
             case "jumpto":
                 try {
                     int jumpTarget = Integer.parseInt(argument);
-                    if (jumpTarget >= this.nLines()) errorsFound.add(new ScriptError(lineIndex, 3, 0));
+                    if (jumpTarget >= this.nLines()) errorsFound.add(new ScriptError(lineIndex, 5, 0));
                 } catch (NumberFormatException e) {
                     if (!argument.equals("NOJUMP")) {
-                        if (!this.hasLabel(argument)) errorsFound.add(new ScriptError(lineIndex, 3, 1, argument));
+                        if (!this.hasLabel(argument)) errorsFound.add(new ScriptError(lineIndex, 5, 1, argument));
                     } 
                 }
 
@@ -137,15 +166,15 @@ public class ScriptScanner extends Script {
             case "firstswitch":
             case "claim":
                 if (args.length == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 4, 0, "firstswitch"));
+                    errorsFound.add(new ScriptError(lineIndex, 6, 0, "firstswitch"));
                 } else {
-                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, "firstswitch"));
+                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 6, 1, "firstswitch"));
                     if (!this.hasLabel(argument + "FirstVessel")) extraInfo.add(argument + "FirstVessel");
                     if (!this.hasLabel(argument + "NotFirstVessel")) extraInfo.add(argument + "NotFirstVessel");
 
                     if (!extraInfo.isEmpty()) {
                         extraInfo.add(0, "firstswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 4, 3, extraInfo));
+                        errorsFound.add(new ScriptError(lineIndex, 6, 3, extraInfo));
                     }
                 }
 
@@ -154,7 +183,7 @@ public class ScriptScanner extends Script {
             case "bladeswitch":
                 switch (args.length) {
                     case 0:
-                        errorsFound.add(new ScriptError(lineIndex, 4, 0, prefix));
+                        errorsFound.add(new ScriptError(lineIndex, 6, 0, prefix));
                         break;
 
                     case 1:
@@ -169,27 +198,27 @@ public class ScriptScanner extends Script {
                     default:
                         if (!this.hasLabel(args[0] + "Blade" + args[1])) extraInfo.add(args[0] + "Blade" + args[1]);
                         if (!this.hasLabel(args[0] + "NoBlade" + args[1])) extraInfo.add(args[0] + "NoBlade" + args[1]);
-                        errorsFound.add(new ScriptError(lineIndex, 4, 2));
+                        errorsFound.add(new ScriptError(lineIndex, 6, 2));
                 }
 
                 if (!extraInfo.isEmpty()) {
                     extraInfo.add(0, prefix);
-                    errorsFound.add(new ScriptError(lineIndex, 4, 3, extraInfo));
+                    errorsFound.add(new ScriptError(lineIndex, 6, 3, extraInfo));
                 }
                 break;
 
             case "moodswitch":
             case "harshswitch":
                 if (args.length == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 4, 0, prefix));
+                    errorsFound.add(new ScriptError(lineIndex, 6, 0, prefix));
                 } else {
-                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, "moodswitch"));
+                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 6, 1, "moodswitch"));
                     if (!this.hasLabel(argument + "Harsh")) extraInfo.add(argument + "Harsh");
                     if (!this.hasLabel(argument + "Soft")) extraInfo.add(argument + "Soft");
 
                     if (!extraInfo.isEmpty()) {
                         extraInfo.add(0, prefix);
-                        errorsFound.add(new ScriptError(lineIndex, 4, 3, extraInfo));
+                        errorsFound.add(new ScriptError(lineIndex, 6, 3, extraInfo));
                     }
                 }
 
@@ -199,9 +228,9 @@ public class ScriptScanner extends Script {
             case "voice3switch":
             case "sourceswitch":
                 if (args.length == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 4, 4, prefix));
+                    errorsFound.add(new ScriptError(lineIndex, 6, 4, prefix));
                 } else {
-                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 4, 1, prefix));
+                    if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 6, 1, prefix));
 
                     boolean labelFound = false;
                     for (String label : labels.keySet()) {
@@ -214,7 +243,7 @@ public class ScriptScanner extends Script {
                     if (!labelFound) {
                         extraInfo.add(prefix);
                         extraInfo.add(args[0]);
-                        errorsFound.add(new ScriptError(lineIndex, 4, 5, extraInfo));
+                        errorsFound.add(new ScriptError(lineIndex, 6, 5, extraInfo));
                     } 
                 }
 
@@ -222,7 +251,7 @@ public class ScriptScanner extends Script {
             
             case "switchjump":
                 if (nArgs == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 0));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 0));
                     break;
                 } else if (nArgs == 1) {
                     issuesFound.add(new ScriptIssue(lineIndex, 0, 0));
@@ -233,42 +262,42 @@ public class ScriptScanner extends Script {
                     if (!this.hasLabel(args[1])) extraInfo.add(args[1]);
                 }
 
-                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 5, 1, extraInfo));
+                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 1, extraInfo));
                 break;
             
             case "numswitchjump":
                 if (argument.isEmpty()) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 2));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 2));
                 } else {
                     for (String label : args) {
                         if (!this.hasLabel(label)) extraInfo.add(label);
                     }
                 }
 
-                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 5, 3, extraInfo));
+                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 3, extraInfo));
                 break;
             
             case "stringswitchjump":
                 if (nArgs == 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 4));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 4));
                     break;
                 } else if (nArgs == 1) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 5));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 5));
                     break;
                 } else if (nArgs % 2 != 0) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 6));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 6));
                 }
 
                 for (int i = 1; i < nArgs; i += 2) {
                     if (!this.hasLabel(args[i])) extraInfo.add(args[i]);
                 }
 
-                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 5, 7, extraInfo));
+                if (!extraInfo.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 7, extraInfo));
                 break;
 
             case "numautojump":
                 if (argument.isEmpty()) {
-                    errorsFound.add(new ScriptError(lineIndex, 5, 8));
+                    errorsFound.add(new ScriptError(lineIndex, 7, 8));
                 } else {
                     boolean labelExists = false;
                     for (int i = 0; i < 10; i++) {
@@ -283,18 +312,7 @@ public class ScriptScanner extends Script {
                 break;
 
             case "stringautojump":
-                if (argument.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 5, 9));
-                break;
-
-            case "nowplaying":
-                if (argument.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 5));
-                break;
-
-            case "quietcreep":
-                if (!argument.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 1, 0));
-                break;
-            case "claimfold":
-                if (!argument.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 1, 1));
+                if (argument.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 9));
                 break;
 
             default:
@@ -352,13 +370,13 @@ public class ScriptScanner extends Script {
             // Dialogue line exclusive
 
             if (m.startsWith("interrupt")) {
-                if (!m.equals("interrupt")) errorsFound.add(new ScriptError(lineIndex, 7, 11));
+                if (!m.equals("interrupt")) errorsFound.add(new ScriptError(lineIndex, 8, 11));
 
                 if (presentMods.contains("interrupt")) {
                     if (!duplicateMods.contains("interrupt")) duplicateMods.add("interrupt");
                 } else {
                     presentMods.add("interrupt");
-                    if (!isDialogue) errorsFound.add(new ScriptError(lineIndex, 7, 10));
+                    if (!isDialogue) errorsFound.add(new ScriptError(lineIndex, 8, 10));
                 }
 
             // Voice checks
@@ -373,14 +391,14 @@ public class ScriptScanner extends Script {
                 if (args.length == 1) {
                     if (m.equals("checkvoice")) {
                         if (!isDialogue) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "checkvoice"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "checkvoice"));
                         } else if (speaker == null) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 4));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 4));
                         } else {
                             posVoiceChecks.add(speaker);
                         }
                     } else {
-                        errorsFound.add(new ScriptError(lineIndex, 7, 3, "checkvoice"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 3, "checkvoice"));
                     }
                 } else {
                     for (int i = 1; i < args.length; i++) {
@@ -401,14 +419,14 @@ public class ScriptScanner extends Script {
                 }
 
                 if (args.length == 1) {
-                    errorsFound.add(new ScriptError(lineIndex, 7, 3, "checknovoice"));
+                    errorsFound.add(new ScriptError(lineIndex, 8, 3, "checknovoice"));
                 } else {
                    for (int i = 1; i < args.length; i++) {
                         currentVoice = Voice.getVoice(args[i]);
                         if (currentVoice == null) {
                             invalidVoiceArgs.add(args[i]);
                         } else {
-                            if (currentVoice == speaker) errorsFound.add(new ScriptError(lineIndex, 8, 8, speaker.toString()));
+                            if (currentVoice == speaker) errorsFound.add(new ScriptError(lineIndex, 9, 8, speaker.toString()));
                             negVoiceChecks.add(currentVoice);
                         }
                     }
@@ -421,116 +439,116 @@ public class ScriptScanner extends Script {
                     if (!duplicateMods.contains("firstvessel")) duplicateMods.add("firstvessel");
                 } else {
                     presentMods.add("firstvessel");
-                    if (presentMods.contains("firstvessel")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "firstvessel & notfirstvessel"));
+                    if (presentMods.contains("firstvessel")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "firstvessel & notfirstvessel"));
 
                     if (prefix.equals("firstswitch") || prefix.equals("claim")) {
                         extraTemp.add("firstvessel");
                         extraTemp.add("firstswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "firstvessel"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "firstvessel"));
 
             } else if (m.equals("notfirstvessel")) {
                 if (presentMods.contains("notfirstvessel")) {
                     if (!duplicateMods.contains("notfirstvessel")) duplicateMods.add("notfirstvessel");
                 } else {
                     presentMods.add("notfirstvessel");
-                    if (presentMods.contains("firstvessel")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "firstvessel & notfirstvessel"));
+                    if (presentMods.contains("firstvessel")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "firstvessel & notfirstvessel"));
 
                     if (prefix.equals("firstswitch") || prefix.equals("claim")) {
                         extraTemp.add("notfirstvessel");
                         extraTemp.add("firstswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "notfirstvessel"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "notfirstvessel"));
 
             } else if (m.equals("hasblade")) {
                 if (presentMods.contains("hasblade")) {
                     if (!duplicateMods.contains("hasblade")) duplicateMods.add("hasblade");
                 } else {
                     presentMods.add("hasblade");
-                    if (presentMods.contains("noblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "hasblade & noblade"));
+                    if (presentMods.contains("noblade")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "hasblade & noblade"));
 
                     if (prefix.equals("bladeswitch")) {
                         extraTemp.add("hasblade");
                         extraTemp.add("bladeswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
                 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "hasblade"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "hasblade"));
 
             } else if (m.equals("noblade")) {
                 if (presentMods.contains("noblade")) {
                     if (!duplicateMods.contains("noblade")) duplicateMods.add("noblade");
                 } else {
                     presentMods.add("noblade");
-                    if (presentMods.contains("hasblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "hasblade & noblade"));
+                    if (presentMods.contains("hasblade")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "hasblade & noblade"));
 
                     if (prefix.equals("bladeswitch")) {
                         extraTemp.add("noblade");
                         extraTemp.add("bladeswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
                 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noblade"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noblade"));
 
             } else if (m.equals("harsh")) {
                 if (presentMods.contains("harsh")) {
                     if (!duplicateMods.contains("harsh")) duplicateMods.add("harsh");
                 } else {
                     presentMods.add("harsh");
-                    if (presentMods.contains("soft")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
+                    if (presentMods.contains("soft")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "harsh & soft"));
 
                     if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
                         extraTemp.add("harsh");
                         extraTemp.add("moodswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "harsh"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "harsh"));
 
             } else if (m.equals("soft")) {
                 if (presentMods.contains("soft")) {
                     if (!duplicateMods.contains("soft")) duplicateMods.add("soft");
                 } else {
                     presentMods.add("soft");
-                    if (presentMods.contains("harsh")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "harsh & soft"));
+                    if (presentMods.contains("harsh")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "harsh & soft"));
 
                     if (prefix.equals("moodswitch") || prefix.equals("harshswitch")) {
                         extraTemp.add("soft");
                         extraTemp.add("moodswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "soft"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "soft"));
 
             } else if (m.equals("knowledge")) {
                 if (presentMods.contains("knowledge")) {
                     if (!duplicateMods.contains("knowledge")) duplicateMods.add("knowledge");
                 } else {
                     presentMods.add("knowledge");
-                    if (presentMods.contains("noknowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                    if (presentMods.contains("noknowledge")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "knowledge & noknowledge"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "knowledge"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "knowledge"));
 
             } else if (m.equals("noknowledge")) {
                 if (presentMods.contains("noknowledge")) {
                     if (!duplicateMods.contains("noknowledge")) duplicateMods.add("noknowledge");
                 } else {
                     presentMods.add("noknowledge");
-                    if (presentMods.contains("knowledge")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "knowledge & noknowledge"));
+                    if (presentMods.contains("knowledge")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "knowledge & noknowledge"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noknowledge"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noknowledge"));
 
             // Chapter 2 or 3 checks
 
@@ -544,9 +562,9 @@ public class ScriptScanner extends Script {
                 switch (args.length) {
                     case 1:
                         if (m.equals("voice2")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "voice2"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "voice2"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "voice2"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "voice2"));
                         }
                         break;
 
@@ -562,7 +580,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "voice2"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "voice2"));
                 }
 
             } else if (m.startsWith("ifsource")) {
@@ -574,16 +592,16 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("sourceswitch")) {
                         extraTemp.add("ifsource");
                         extraTemp.add("sourceswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
                 
                 switch (args.length) {
                     case 1:
                         if (m.equals("ifsource")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsource"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "ifsource"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsource"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifsource"));
                         }
                         break;
 
@@ -592,7 +610,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifsourcenot"));
                 }
 
             } else if (m.startsWith("ifsourcenot")) {
@@ -604,16 +622,16 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("sourceswitch")) {
                         extraTemp.add("ifsourcenot");
                         extraTemp.add("sourceswitch");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 1, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 1, extraTemp));
                     }
                 }
                 
                 switch (args.length) {
                     case 1:
                         if (m.equals("ifsourcenot")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifsourcenot"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "ifsourcenot"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifsourcenot"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifsourcenot"));
                         }
                         break;
 
@@ -622,7 +640,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifsourcenot"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifsourcenot"));
                 }
 
             } else if (m.equals("sharedloop")) {
@@ -630,120 +648,120 @@ public class ScriptScanner extends Script {
                     if (!duplicateMods.contains("sharedloop")) duplicateMods.add("sharedloop");
                 } else {
                     presentMods.add("sharedloop");
-                    if (presentMods.contains("noshare")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "sharedloop & noshare"));
+                    if (presentMods.contains("noshare")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "sharedloop & noshare"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "sharedloop"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "sharedloop"));
 
             } else if (m.equals("noshare")) {
                 if (presentMods.contains("noshare")) {
                     if (!duplicateMods.contains("noshare")) duplicateMods.add("noshare");
                 } else {
                     presentMods.add("noshare");
-                    if (presentMods.contains("sharedloop")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "sharedloop & noshare"));
+                    if (presentMods.contains("sharedloop")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "sharedloop & noshare"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noshare"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noshare"));
 
             } else if (m.equals("sharedinsist")) {
                 if (presentMods.contains("sharedinsist")) {
                     if (!duplicateMods.contains("sharedinsist")) duplicateMods.add("sharedinsist");
                 } else {
                     presentMods.add("sharedinsist");
-                    if (presentMods.contains("noinsist")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "sharedinsist & noinsist"));
+                    if (presentMods.contains("noinsist")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "sharedinsist & noinsist"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "sharedinsist"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "sharedinsist"));
 
             } else if (m.equals("noinsist")) {
                 if (presentMods.contains("noinsist")) {
                     if (!duplicateMods.contains("noinsist")) duplicateMods.add("noinsist");
                 } else {
                     presentMods.add("noinsist");
-                    if (presentMods.contains("sharedinsist")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "sharedinsist & noinsist"));
+                    if (presentMods.contains("sharedinsist")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "sharedinsist & noinsist"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noinsist"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noinsist"));
 
             } else if (m.equals("threwblade")) {
                 if (presentMods.contains("threwblade")) {
                     if (!duplicateMods.contains("threwblade")) duplicateMods.add("threwblade");
                 } else {
                     presentMods.add("threwblade");
-                    if (presentMods.contains("nothrow")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                    if (presentMods.contains("nothrow")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "threwblade & nothrow"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "threwblade"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "threwblade"));
 
             } else if (m.equals("nothrow")) {
                 if (presentMods.contains("nothrow")) {
                     if (!duplicateMods.contains("nothrow")) duplicateMods.add("nothrow");
                 } else {
                     presentMods.add("nothrow");
-                    if (presentMods.contains("threwblade")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "threwblade & nothrow"));
+                    if (presentMods.contains("threwblade")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "threwblade & nothrow"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nothrow"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nothrow"));
 
             } else if (m.equals("mirrorask")) {
                 if (presentMods.contains("mirrorask")) {
                     if (!duplicateMods.contains("mirrorask")) duplicateMods.add("mirrorask");
                 } else {
                     presentMods.add("mirrorask");
-                    if (presentMods.contains("nomirrorask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirrorask & nomirrorask"));
+                    if (presentMods.contains("nomirrorask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirrorask & nomirrorask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "mirrorask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "mirrorask"));
 
             } else if (m.equals("nomirrorask")) {
                 if (presentMods.contains("nomirrorask")) {
                     if (!duplicateMods.contains("nomirrorask")) duplicateMods.add("nomirrorask");
                 } else {
                     presentMods.add("nomirrorask");
-                    if (presentMods.contains("mirrorask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirrorask & nomirrorask"));
+                    if (presentMods.contains("mirrorask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirrorask & nomirrorask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nomirrorask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nomirrorask"));
 
             } else if (m.equals("mirrortouch")) {
                 if (presentMods.contains("mirrortouch")) {
                     if (!duplicateMods.contains("mirrortouch")) duplicateMods.add("mirrortouch");
                 } else {
                     presentMods.add("mirrortouch");
-                    if (presentMods.contains("nomirrortouch")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirrortouch & nomirrortouch"));
+                    if (presentMods.contains("nomirrortouch")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirrortouch & nomirrortouch"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "mirrortouch"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "mirrortouch"));
 
             } else if (m.equals("nomirrortouch")) {
                 if (presentMods.contains("nomirrortouch")) {
                     if (!duplicateMods.contains("nomirrortouch")) duplicateMods.add("nomirrortouch");
                 } else {
                     presentMods.add("nomirrortouch");
-                    if (presentMods.contains("mirrortouch")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirrortouch & nomirrortouch"));
+                    if (presentMods.contains("mirrortouch")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirrortouch & nomirrortouch"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nomirrortouch"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nomirrortouch"));
 
             } else if (m.equals("mirror2")) {
                 if (presentMods.contains("mirror2")) {
                     if (!duplicateMods.contains("mirror2")) duplicateMods.add("mirror2");
                 } else {
                     presentMods.add("mirror2");
-                    if (presentMods.contains("nomirror2")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirror2 & nomirror2"));
+                    if (presentMods.contains("nomirror2")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirror2 & nomirror2"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "mirror2"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "mirror2"));
 
             } else if (m.equals("nomirror2")) {
                 if (presentMods.contains("nomirror2")) {
                     if (!duplicateMods.contains("nomirror2")) duplicateMods.add("nomirror2");
                 } else {
                     presentMods.add("nomirror2");
-                    if (presentMods.contains("mirror2")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "mirror2 & nomirror2"));
+                    if (presentMods.contains("mirror2")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "mirror2 & nomirror2"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nomirror2"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nomirror2"));
 
             // Chapter 2-only checks
 
@@ -752,60 +770,60 @@ public class ScriptScanner extends Script {
                     if (!duplicateMods.contains("drop1")) duplicateMods.add("drop1");
                 } else {
                     presentMods.add("drop1");
-                    if (presentMods.contains("nodrop1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "drop1 & nodrop1"));
+                    if (presentMods.contains("nodrop1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "drop1 & nodrop1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "drop1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "drop1"));
 
             } else if (m.equals("nodrop1")) {
                 if (presentMods.contains("nodrop1")) {
                     if (!duplicateMods.contains("nodrop1")) duplicateMods.add("nodrop1");
                 } else {
                     presentMods.add("nodrop1");
-                    if (presentMods.contains("drop1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "drop1 & nodrop1"));
+                    if (presentMods.contains("drop1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "drop1 & nodrop1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nodrop1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nodrop1"));
 
             } else if (m.equals("whatdo1")) {
                 if (presentMods.contains("whatdo1")) {
                     if (!duplicateMods.contains("whatdo1")) duplicateMods.add("whatdo1");
                 } else {
                     presentMods.add("whatdo1");
-                    if (presentMods.contains("nowhatdo1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "whatdo1 & nowhatdo1"));
+                    if (presentMods.contains("nowhatdo1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "whatdo1 & nowhatdo1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "whatdo1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "whatdo1"));
 
             } else if (m.equals("nowhatdo1")) {
                 if (presentMods.contains("nowhatdo1")) {
                     if (!duplicateMods.contains("nowhatdo1")) duplicateMods.add("nowhatdo1");
                 } else {
                     presentMods.add("nowhatdo1");
-                    if (presentMods.contains("whatdo1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "whatdo1 & nowhatdo1"));
+                    if (presentMods.contains("whatdo1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "whatdo1 & nowhatdo1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nowhatdo1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nowhatdo1"));
 
             } else if (m.equals("rescue1")) {
                 if (presentMods.contains("rescue1")) {
                     if (!duplicateMods.contains("rescue1")) duplicateMods.add("rescue1");
                 } else {
                     presentMods.add("rescue1");
-                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "rescue1 & norescue1"));
+                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "rescue1 & norescue1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "rescue1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "rescue1"));
 
             } else if (m.equals("norescue1")) {
                 if (presentMods.contains("norescue1")) {
                     if (!duplicateMods.contains("norescue1")) duplicateMods.add("norescue1");
                 } else {
                     presentMods.add("norescue1");
-                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "rescue1 & norescue1"));
+                    if (presentMods.contains("rescue1")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "rescue1 & norescue1"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "norescue1"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "norescue1"));
 
             // Chapter 3-only checks
 
@@ -819,9 +837,9 @@ public class ScriptScanner extends Script {
                 switch (args.length) {
                     case 1:
                         if (m.equals("voice3")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "voice3"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "voice3"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "voice3"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "voice3"));
                         }
                         break;
 
@@ -837,7 +855,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "voice3"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "voice3"));
                 }
 
             } else if (m.equals("abandoned")) {
@@ -845,100 +863,100 @@ public class ScriptScanner extends Script {
                     if (!duplicateMods.contains("abandoned")) duplicateMods.add("abandoned");
                 } else {
                     presentMods.add("abandoned");
-                    if (presentMods.contains("noabandon")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "abandoned & noabandon"));
+                    if (presentMods.contains("noabandon")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "abandoned & noabandon"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "abandoned"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "abandoned"));
 
             } else if (m.equals("noabandon")) {
                 if (presentMods.contains("noabandon")) {
                     if (!duplicateMods.contains("noabandon")) duplicateMods.add("noabandon");
                 } else {
                     presentMods.add("noabandon");
-                    if (presentMods.contains("abandoned")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "abandoned & noabandon"));
+                    if (presentMods.contains("abandoned")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "abandoned & noabandon"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noabandon"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noabandon"));
 
             } else if (m.equals("possessask")) {
                 if (presentMods.contains("possessask")) {
                     if (!duplicateMods.contains("possessask")) duplicateMods.add("possessask");
                 } else {
                     presentMods.add("possessask");
-                    if (presentMods.contains("nopossessask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "possessask & nopossessask"));
+                    if (presentMods.contains("nopossessask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "possessask & nopossessask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "possessask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "possessask"));
 
             } else if (m.equals("nopossessask")) {
                 if (presentMods.contains("nopossessask")) {
                     if (!duplicateMods.contains("nopossessask")) duplicateMods.add("nopossessask");
                 } else {
                     presentMods.add("nopossessask");
-                    if (presentMods.contains("possessask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "possessask & nopossessask"));
+                    if (presentMods.contains("possessask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "possessask & nopossessask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nopossessask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nopossessask"));
 
             } else if (m.equals("cantwontask")) {
                 if (presentMods.contains("cantwontask")) {
                     if (!duplicateMods.contains("cantwontask")) duplicateMods.add("cantwontask");
                 } else {
                     presentMods.add("cantwontask");
-                    if (presentMods.contains("nocantwontask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "cantwontask & nocantwontask"));
+                    if (presentMods.contains("nocantwontask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "cantwontask & nocantwontask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "cantwontask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "cantwontask"));
 
             } else if (m.equals("nocantwontask")) {
                 if (presentMods.contains("nocantwontask")) {
                     if (!duplicateMods.contains("nocantwontask")) duplicateMods.add("nocantwontask");
                 } else {
                     presentMods.add("nocantwontask");
-                    if (presentMods.contains("cantwontask")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "cantwontask & nocantwontask"));
+                    if (presentMods.contains("cantwontask")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "cantwontask & nocantwontask"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "nocantwontask"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "nocantwontask"));
 
             } else if (m.equals("endslay")) {
                 if (presentMods.contains("endslay")) {
                     if (!duplicateMods.contains("endslay")) duplicateMods.add("endslay");
                 } else {
                     presentMods.add("endslay");
-                    if (presentMods.contains("noendslay")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "endslay & nomirror2"));
+                    if (presentMods.contains("noendslay")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "endslay & nomirror2"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "endslay"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "endslay"));
 
             } else if (m.equals("noendslay")) {
                 if (presentMods.contains("noendslay")) {
                     if (!duplicateMods.contains("noendslay")) duplicateMods.add("noendslay");
                 } else {
                     presentMods.add("noendslay");
-                    if (presentMods.contains("endslay")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "endslay & noendslay"));
+                    if (presentMods.contains("endslay")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "endslay & noendslay"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noendslay"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noendslay"));
 
             } else if (m.equals("heartstop")) {
                 if (presentMods.contains("heartstop")) {
                     if (!duplicateMods.contains("heartstop")) duplicateMods.add("heartstop");
                 } else {
                     presentMods.add("heartstop");
-                    if (presentMods.contains("noheartstop")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "heartstop & noheartstop"));
+                    if (presentMods.contains("noheartstop")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "heartstop & noheartstop"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "heartstop"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "heartstop"));
 
             } else if (m.equals("noheartstop")) {
                 if (presentMods.contains("noheartstop")) {
                     if (!duplicateMods.contains("noheartstop")) duplicateMods.add("noheartstop");
                 } else {
                     presentMods.add("noheartstop");
-                    if (presentMods.contains("heartstop")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "heartstop & noheartstop"));
+                    if (presentMods.contains("heartstop")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "heartstop & noheartstop"));
                 }
 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "noheartstop"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "noheartstop"));
 
             // Given condition checks
 
@@ -947,32 +965,32 @@ public class ScriptScanner extends Script {
                     if (!duplicateMods.contains("check")) duplicateMods.add("check");
                 } else {
                     presentMods.add("check");
-                    if (presentMods.contains("checkfalse")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "check & checkfalse"));
+                    if (presentMods.contains("checkfalse")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "check & checkfalse"));
 
                     if (prefix.equals("switchjump")) {
                         extraTemp.add("check");
                         extraTemp.add("switchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
                 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "check"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "check"));
 
             } else if (m.equals("checkfalse")) {
                 if (presentMods.contains("checkfalse")) {
                     if (!duplicateMods.contains("checkfalse")) duplicateMods.add("checkfalse");
                 } else {
                     presentMods.add("checkfalse");
-                    if (presentMods.contains("check")) errorsFound.add(new ScriptError(lineIndex, 8, 0, "check & checkfalse"));
+                    if (presentMods.contains("check")) errorsFound.add(new ScriptError(lineIndex, 9, 0, "check & checkfalse"));
 
                     if (prefix.equals("switchjump")) {
                         extraTemp.add("checkfalse");
                         extraTemp.add("switchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
                 
-                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 7, 6, "checkfalse"));
+                if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "checkfalse"));
 
             } else if (m.startsWith("ifnum")) {
                 if (presentMods.contains("ifnum")) {
@@ -983,7 +1001,7 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("numswitchjump")) {
                         extraTemp.add("ifnum");
                         extraTemp.add("numswitchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
                 
@@ -992,12 +1010,12 @@ public class ScriptScanner extends Script {
                         targetInt = Integer.parseInt(args[1]);
                         if (!posTargetInts.contains(targetInt)) posTargetInts.add(targetInt);
                     } catch (NumberFormatException e) {
-                        errorsFound.add(new ScriptError(lineIndex, 7, 8, "ifnum"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 8, "ifnum"));
                     }
                 } else if (args.length > 2) {
-                    errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifnum"));
+                    errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifnum"));
                 } else {
-                    if (!m.equals("ifnum")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifnum"));
+                    if (!m.equals("ifnum")) errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifnum"));
                     if (!posTargetInts.contains(0)) posTargetInts.add(0);
                 }
 
@@ -1011,7 +1029,7 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("numswitchjump")) {
                         extraTemp.add("ifnumnot");
                         extraTemp.add("numswitchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
                 
@@ -1020,12 +1038,12 @@ public class ScriptScanner extends Script {
                         targetInt = Integer.parseInt(args[1]);
                         if (!negTargetInts.contains(targetInt)) negTargetInts.add(targetInt);
                     } catch (NumberFormatException e) {
-                        errorsFound.add(new ScriptError(lineIndex, 7, 8, "ifnumnot"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 8, "ifnumnot"));
                     }
                 } else if (args.length > 2) {
-                    errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifnumnot"));
+                    errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifnumnot"));
                 } else {
-                    if (!m.equals("ifnumnot")) errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifnumnot"));
+                    if (!m.equals("ifnumnot")) errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifnumnot"));
                     if (!negTargetInts.contains(0)) negTargetInts.add(0);
                 }
 
@@ -1038,16 +1056,16 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("stringswitchjump")) {
                         extraTemp.add("ifstring");
                         extraTemp.add("stringswitchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
             
                 switch (args.length) {
                     case 1:
                         if (m.equals("ifstring")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstring"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "ifstring"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstring"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifstring"));
                         }
                         break;
 
@@ -1056,7 +1074,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifstring"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifstring"));
                 }
 
             } else if (m.startsWith("ifstringnot")) {
@@ -1068,16 +1086,16 @@ public class ScriptScanner extends Script {
                     if (prefix.equals("stringswitchjump")) {
                         extraTemp.add("ifstringnot");
                         extraTemp.add("stringswitchjump");
-                        errorsFound.add(new ScriptError(lineIndex, 8, 2, extraTemp));
+                        errorsFound.add(new ScriptError(lineIndex, 9, 2, extraTemp));
                     }
                 }
                 
                 switch (args.length) {
                     case 1:
                         if (m.equals("ifstringnot")) {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 9, "ifstringnot"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 9, "ifstringnot"));
                         } else {
-                            errorsFound.add(new ScriptError(lineIndex, 7, 3, "ifstringnot"));
+                            errorsFound.add(new ScriptError(lineIndex, 8, 3, "ifstringnot"));
                         }
                         break;
 
@@ -1086,7 +1104,7 @@ public class ScriptScanner extends Script {
                         break;
 
                     default:
-                        errorsFound.add(new ScriptError(lineIndex, 7, 7, "ifstringnot"));
+                        errorsFound.add(new ScriptError(lineIndex, 8, 7, "ifstringnot"));
                 }
 
             } else {
@@ -1095,13 +1113,13 @@ public class ScriptScanner extends Script {
         }
 
         if (!duplicateMods.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 3, 0, duplicateMods));
-        if (!invalidMods.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 2, invalidMods));
-        if (!invalidVoiceArgs.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 7, 5, invalidVoiceArgs));
-        if (voice2Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "voice2"));
-        if (voice3Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "voice3"));
-        if (posTargetSources.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifsource"));
-        if (posTargetInts.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifnum"));
-        if (posTargetStrings.size() > 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, "ifstring"));
+        if (!invalidMods.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 2, invalidMods));
+        if (!invalidVoiceArgs.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 5, invalidVoiceArgs));
+        if (voice2Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 9, 6, "voice2"));
+        if (voice3Checks.size() > 1) errorsFound.add(new ScriptError(lineIndex, 9, 6, "voice3"));
+        if (posTargetSources.size() > 1) errorsFound.add(new ScriptError(lineIndex, 9, 6, "ifsource"));
+        if (posTargetInts.size() > 1) errorsFound.add(new ScriptError(lineIndex, 9, 6, "ifnum"));
+        if (posTargetStrings.size() > 1) errorsFound.add(new ScriptError(lineIndex, 9, 6, "ifstring"));
 
         boolean redundantSource = false;
         boolean redundantNum = false;
@@ -1196,10 +1214,10 @@ public class ScriptScanner extends Script {
 
         if (!duplicatePosVoices.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 3, 1, duplicatePosVoices));
         if (!duplicateNegVoices.isEmpty()) issuesFound.add(new ScriptIssue(lineIndex, 3, 1, duplicateNegVoices));
-        if (!impossibleVoiceChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 7, impossibleVoiceChecks));
-        if (!impossibleSourceChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 3, impossibleSourceChecks));
-        if (!impossibleNumChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 4, impossibleNumChecks));
-        if (!impossibleStringChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 8, 5, impossibleStringChecks));
+        if (!impossibleVoiceChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 9, 7, impossibleVoiceChecks));
+        if (!impossibleSourceChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 9, 3, impossibleSourceChecks));
+        if (!impossibleNumChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 9, 4, impossibleNumChecks));
+        if (!impossibleStringChecks.isEmpty()) errorsFound.add(new ScriptError(lineIndex, 9, 5, impossibleStringChecks));
         if (redundantVoice2) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice2"));
         if (redundantVoice3) issuesFound.add(new ScriptIssue(lineIndex, 4, 0, "voice3"));
         if (redundantSource) issuesFound.add(new ScriptIssue(lineIndex, 4, 1, "ifsource & ifsourcenot"));

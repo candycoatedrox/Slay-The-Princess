@@ -12,17 +12,22 @@ public class ScriptError extends ScriptNote {
         - 2 = invalid break
             - 0 = attempted with argument
             - 1 = no (valid) modifiers
-        - 3 = invalid jumpto
+        - 3 = invalid unlock
+            - 0 = no argument given
+            - 1 = 2+ arguments given
+            - 2 = achievement does not exist, check extraInfo
+        - 4 = invalid nowplaying (no argument given)
+        - 5 = invalid jumpto
             - 0 = line index too large
             - 1 = given label does not exist
-        - 4 = invalid autoswitch
+        - 6 = invalid autoswitch
             - 0 = no prefix given
             - 1 = 2+ arguments given (firstswitch, moodswitch, voice2switch, voice3switch, sourceswitch)
             - 2 = 3+ arguments given (bladeswitch)
             - 3 = one or both labels do not exist, check extraInfo
             - 4 = voice2switch, voice3switch, or sourceswitch (no suffix given)
             - 5 = voice2switch, voice3switch, or sourceswitch (no labels with suffix exist)
-        - 5 = invalid condition switch jump
+        - 7 = invalid condition switch jump
             - 0 = switchjump (no labels given)
             - 1 = switchjump (one or both labels do not exist, check extra)
             - 2 = numswitchjump (no labels given)
@@ -33,8 +38,7 @@ public class ScriptError extends ScriptNote {
             - 7 = stringswitchjump (one or more labels do not exist, check extra)
             - 8 = numautojump (no prefix given)
             - 9 = stringautojump (no suffix given)
-        - 6 = invalid nowplaying (no argument given)
-        - 7 = invalid modifier(s)
+        - 8 = invalid modifier(s)
             - 0 = multiple modifier dividers (///)
             - 1 = modifier divider but no modifiers
             - 2 = completely invalid modifier
@@ -47,7 +51,7 @@ public class ScriptError extends ScriptNote {
             - 9 = no argument given for voice2, voice3, ifsource, ifstring, or negative counterparts, check extraInfo
             - 10 = interrupt used for non-dialogue line
             - 11 = interrupt attempted with argument
-        - 8 = conflicting modifiers
+        - 9 = conflicting modifiers
             - 0 = any simple check used with negative counterpart, check extraInfo
             - 1 = firstvessel, hasblade, ifsource, harsh, or negative counterparts used for corresponding autoswitch, check extraInfo
             - 2 = given condition check used for corresponding switchjump, check extraInfo
@@ -188,8 +192,32 @@ public class ScriptError extends ScriptNote {
                         break;
                 }
                 break;
-            
+
             case 3:
+                s += "Invalid unlock (";
+                switch (this.subtype) {
+                    case 0:
+                        s += "no argument given)";
+                        break;
+                        
+                    case 1:
+                        s += "2+ arguments given)";
+                        break;
+                        
+                    case 2:
+                        s += "achievement ";
+                        s += this.extraInfo[0];
+                        s += " does not exist)";
+                        break;
+                }
+                break;
+
+            
+            case 4:
+                s += "Invalid nowplaying (no argument given)";
+                break;
+            
+            case 5:
                 s += "Invalid jumpto (";
                 switch (this.subtype) {
                     case 0:
@@ -204,7 +232,7 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 4:
+            case 6:
                 s += "Invalid ";
                 switch (this.subtype) {
                     case 0:
@@ -242,7 +270,7 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 5:
+            case 7:
                 s += "Invalid ";
                 switch (this.subtype) {
                     case 0:
@@ -293,11 +321,7 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 6:
-                s += "Invalid nowplaying (no argument given)";
-                break;
-            
-            case 7:
+            case 8:
                 s += "Invalid modifier (";
                 switch (this.subtype) {
                     case 0:
@@ -360,7 +384,7 @@ public class ScriptError extends ScriptNote {
                 }
                 break;
             
-            case 8:
+            case 9:
                 s += "IMPOSSIBLE LINE -- Conflicting modifiers (";
                 switch (this.subtype) {
                     case 0: // used with negative counterpart

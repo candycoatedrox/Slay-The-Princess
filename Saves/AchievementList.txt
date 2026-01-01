@@ -1,0 +1,181 @@
+gameEnd / Our Song / Finish the game. (The Good Ending doesn't count.)
+galleryComplete / A Song to Remember / Finish the Gallery.
+
+--- The Hero and the Princess
+goodEnding / The Good Ending / You did it! You saved everyone!
+goodEndingFail / Past the Point of No Return / There's no going back now.
+
+--- The Spaces Between
+firstRoute / The Real Slay the Princess Starts Here / You'll know it when you see it.
+mirror1 / The Body / It's you. / hidden
+mirror2 / The Bloat / You've grown. / hidden
+mirror3 / The Decay / You've withered. / hidden
+mirror4 / The Remains / You've unraveled. / hidden
+mirror5 / The Long Quiet / All of this is you. / hidden
+wait / I Never Left Your Side / Attempt to out-wait your destiny.
+narryEnd / Death of the Author / Run out of questions.
+narrySmash / I Don't Need Answers / Break the mirror without asking any questions.
+abort1 / Denial / Return to your destined path, or face the consequences.
+abort2 / Anger / Why have you come back?!
+abort3 / Bargaining / What can I do to make you stop?
+abort4 / Depression / You don't know what you're doing.
+abort5 / Acceptance / This is it.
+oblivion / Just as you once were nothing... / So you have become nothing once again.
+
+--- The End of Everything
+ascendEarly / There are no endings / Only new beginnings.
+ascendLate / Through conflict / We carve meaning.
+resetEnd / You're on a path in the woods... / And at the end of that path is a cabin.
+slayEnd / A new and unending dawn / Slay the Princess.
+slayOopsEnd / A new and unending dawn, and everyone hates you / Slay the Princess, and make some enemies along the way.
+leaveEnd / And? What happens next? / Whatever it is, you'll face it together.
+strangerHeart / Strange Beginnings / Beget strange endings.
+yourNewWorld / Your New World / There are worse things than to be alone.
+
+--- The Adversary
+advyClaim / A Bold Heart / Bring the Adversary to Her. / hidden
+advyEnding / That Which Cannot Die Cannot Die... / A bloody dance to last forever.
+advyPacifism / Strike me down... / Unleash the power of pacifism on your foe.
+advyUnarmed / I Didn't Hear No Bell / Fight your foe unarmed and go the distance.
+advyBait / That shouldn't have worked / Take the bait from your foe.
+
+--- The Tower
+towerClaim / An Overwhelming Heart / Bring the Tower to Her. / hidden
+towerPledge / Your Obedient Servant / Pledge your loyalty to your better.
+towerKill / Godkiller / Slay your better.
+
+--- The Spectre
+spectreClaim / A Yearning Heart / Bring the Spectre to Her. / hidden
+spectreFree / Hitchhiker / Pick up a passenger and take her to her destination.
+spectreSlay / The Exorcist / Take on a spirit and destroy it the only way you can.
+spectreDie / Heart-ripper / There are worse fates to suffer than a broken heart.
+
+--- The Nightmare
+nightClaim / A Tender Heart / Bring the Nightmare to Her. / hidden
+nightFree / A World of Terror / Let your terrors loose upon the world.
+nightStuck / House of... No... Leave / Stuck in a dream without a stair to be seen.
+nightFall / Terminal Velocity / Fall for the rest of your life.
+nightStay / A Monolith of Fear / See what hides behind her mask.
+
+--- The Razor
+razorClaim / A Piercing Heart in a Cage of Iron / Bring the Razor (Full) to Her. / hidden
+heartClaim / A Piercing Heart, Beating Free / Bring the Razor's heart to Her. / hidden
+razorBlade / Water and Steel / Master yourself and vanquish a sharp foe.
+razorEmpty / Be formless, shapeless / Allow a sharp foe to vanquish herself.
+
+--- The Beast
+beastClaim / A Cunning Heart / Bring the Beast to Her. / hidden
+beastFree / Dissolving Will / Free a creature while under extreme duress.
+beastSlay / Ahab / Strike the heart from the belly of the beast.
+beastPlayDead / Opossum / Fool a predator by faking your own death.
+beastFreeze / Freeze / Freeze in front of a creature on your first meeting.
+
+--- The Witch
+witchClaim / A Righteous Heart / Bring the Witch to Her. / hidden
+witchBetray / The Scorpion / It was in your nature.
+witchLocked / The Frog / It was in her nature.
+witchLeave / Playing it safe / Leave a suspicious character in the basement.
+witchFight / Knives Out and Masks Off / Directly attack a suspicious character.
+witchGive / Past Life Gambit / Hand your power to a suspicious character.
+
+--- The Stranger
+strangerClaim / A Rich and Vibrant Heart / Bring the Stranger to Her. / hidden
+strangerEnd / The Illusion of Choice / When everything is possible, nothing is.
+
+--- The Prisoner
+headClaim / A Clever Heart / Bring the Prisoner's head to Her. / hidden
+prisonerClaim / A Patient Heart / Bring the Prisoner to Her. / hidden
+prisonerHead / Talking Heads / Free a prisoner.
+prisonerChain / Prison of the Mind / Become your own jailor.
+prisonerSlay / Coldly Rational / Execute a prisoner.
+prisonerGood / Restless Thoughts / Have a voice interrupt your happy ending.
+
+--- The Damsel
+damselClaim / A Gentle Heart / Bring the Damsel to Her. / hidden
+deconClaim / A Pliable Heart / Bring the Deconstructed Damsel to Her. / hidden
+damselFree / Romantic Haze / Your love will set you free.
+damselDecon / And they lived happily ever after / It's all she wanted.
+damselSlay / Ladykiller / Slay an innocent.
+
+--- The Eye of the Needle
+needleClaim / A Burning Heart / Bring the Eye of the Needle to Her. / hidden
+needleFight / A Wide Open Field / Lure an enemy to advantageous terrain and win.
+needleFree / The Blind Leading the Blind / Free someone who doesn't want to be freed.
+
+--- The Fury
+furyClaim / A Weathered Heart / Bring the Fury to Her. / hidden
+rewoundClaim / A Weathered Heart, Held in Ribbons / Bring the Rewound Fury to Her. / hidden
+furyTower / Quantum Beak / Find the means to triumph over an angel scorned.
+furySlay / A hint of feeling / Slay an unraveled adversary.
+furyTogether / A new leaf in a weathered book / Find a new beginning with a scorned adversary.
+furyContra / Going the distance / Triumph over a scorned adversary.
+
+--- The Apotheosis
+apoClaim / A Terrifying and Divine Heart / Bring the Apotheosis to Her. / hidden
+apoAscend / The End of Something / Witness your better's ascension.
+apoAlone / Grace / Recieve grace from a divine being.
+apoTendrils / A Window to the Unknown / Become shackled with a divine being.
+apoFightContra / Something to remember you by / Leave a divine being with a blinding scar.
+apoFightPara / Courage and Madness / Walk the razor's edge in a battle with a divine foe.
+apoFightParaEnd / A Goddess Unraveled / Share your darkest pain and paranoia with a divine being.
+
+--- The Princess and the Dragon
+dragonClaim / An Empathetic Heart / Share in a Princess's beating heart before bringing it to Her. / hidden
+stencilClaim / An Empathetic Heart, Held in Stencil / Share in a Stenciled Heart before bringing it to Her. / hidden
+dragonFuse / The Princess and the Dragon / and the Princess and the Dragon and the Princess and the Dragon and the Princess and the Dragon and
+dragonFree / What Once Was One, Then Was Two / Share a quiet moment after really getting to know each other.
+dragonLeave / An Opportunist at Heart / Leave a shared heart to languish.
+dragonHarsh / Wait wait wait wait wait! / Fail to disarm a harsh companion.
+dragonRepeat / You don't have to keep picking the same option / You know that, right?
+
+--- The Wraith
+wraithClaim / A Driven Heart / Bring the Wraith to Her. / hidden
+wraithAbyss / The Exorcist III / When taken against your will, deal with your enemy the only way you can.
+wraithFree / The Passenger / When taken against your will, witness your enemy's freedom.
+
+--- The Moment of Clarity
+clarityClaim / A Wise Heart / Bring the Moment of Clarity to Her. / hidden
+
+--- The Den
+denClaim / A Ravenous Heart / Bring the Den to Her. / hidden
+denFight / Fight / Successfully take the fight to a creature in its den.
+denFlight / Flight / Successfully flee from a creature in its den.
+denInstinct / She eats he eats she eats he eats... / Embrace instinct in a dark den.
+denStrike / Heroic Strike / Retain your humanity in the face of instinct in a dark den.
+denFree / The Lion and the Mouse / Form an unlikely alliance in a dark den.
+denCoup / Coup de grâce / Strike an immobilized creature in a dark den.
+denStarve / Hunger pangs / Wait with her in a dark den.
+
+--- The Wild
+nWildClaim / A Curious and Beautiful Heart / Bring the Networked Wild to Her. / hidden
+wWildClaim / A Scarred and Beautiful Heart / Bring the Wounded Wild to Her. / hidden
+wildNetwork / A Glimpse of Something Bigger / Embrace your transformation.
+wildWound / The Wound / Some tears can never be mended.
+
+--- The Thorn
+thornClaim / A Cautious Heart / Bring the Thorn to Her. / hidden
+thornKiss / True Love's Kiss / Kiss her.
+thornLeave / Abandonment / Abandon her in a thorny prison.
+thornFree / Turning Over a New Leaf / Work through some issues and learn to trust again.
+thornTrust / Trust Issues / Share a thorny prison.
+
+--- The Cage
+cageClaim / An Open Heart, or a Watchful One / Bring the Cage to Her. / hidden
+cageCycle / No Exit / Remain stuck between the walls of a pattern in a steely cage.
+cageSlay / The Riddle of Steel / Twist a pattern in a steely cage.
+cageFree / Allegory of the Cage / The walls of your cage were always your own creation. 
+cageDrop / Free Will / Exert your will at the edge of a steely cage. Even if it hurts you.
+
+--- The Grey
+bGreyClaim / A Bright Heart / Bring the Burned Grey to Her. / hidden
+dGreyClaim / A Deep Heart / Bring the Drowned Grey to Her. / hidden
+greyBurned / Burning Down the House / Burn at the hands of a faded spirit.
+greyDrowned / And All This Longing... / Drown at the hands of a faded spirit.
+
+--- Happily Ever After
+happyClaim / An Honest Heart / Share your happy ending with Her. / hidden
+happyGame / Game Night / Win a game with the help of a manipulative voice.
+happyShadow / Shadows on the Wall / Deduce the identity of a shadowy figure with the help of a questioning voice.
+happyStay / We Don't Have to Let It Go Out. / Keep the last torch burning.
+happySlay / It's Finally Over / Kill your happy ending.
+happyDance / I Meant It / Share a dance with your happy ending.

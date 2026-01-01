@@ -118,10 +118,9 @@ public enum ChapterEnding {
     HEROICSTRIKE(Vessel.DEN, "The Rhythm of the Flesh", 0, 0, true),
     COUPDEGRACE(Vessel.DEN, "The Rhythm of the Flesh", 0, 1, true),
     INSTINCT(Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
-    HUNGERPANGS(Vessel.DEN, 0, -1, false),
+    HUNGERPANGS(Vessel.DEN, -1, -1, false),
     LIONANDMOUSE(Vessel.DEN, "Hand-in-Claw", 1, 1, false),
     UNANSWEREDQUESTIONS(Vessel.DEN, -1, 1, false),
-    UNANSWEREDSTARVE(Vessel.DEN, -1, -1, false),
 
     // The Wild
     WOUNDSLAY(Vessel.WOUNDEDWILD, -1, -1, true),
@@ -195,9 +194,9 @@ public enum ChapterEnding {
     STRANGEBEGINNINGS,
     YOURNEWWORLD;
 
-    private boolean isFinal;
+    private final boolean isFinal;
 
-    private Chapter nextChapter;
+    private final Chapter nextChapter;
     private Voice newVoice;
 
     private Vessel vessel;
@@ -224,7 +223,7 @@ public enum ChapterEnding {
      * @param nextChapter the Chapter this ending leads to
      */
     private ChapterEnding(Chapter nextChapter) {
-        this(nextChapter, null);
+        this(nextChapter, (Voice)null);
     }
 
     /**
@@ -237,29 +236,11 @@ public enum ChapterEnding {
 
     /**
      * Constructor for endings where a Vessel has been claimed
-     * @param v the Vessel claimed in this ending
-     * @param freedom the amount this ending alters the Shifting Mound's freedom value
-     * @param satisfaction the amount this ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
-     */
-    private ChapterEnding(Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
-        this.isFinal = true;
-        this.nextChapter = Chapter.SPACESBETWEEN;
-
-        this.vessel = v;
-        this.playlistSong = v.getPlaylistSong();
-        this.freedom = freedom;
-        this.satisfaction = satisfaction;
-        this.yourNewWorld = yourNewWorld;
-    }
-
-    /**
-     * Constructor for endings where a Vessel has been claimed
-     * @param v the Vessel claimed in this ending
-     * @param playlistSong the song this ending adds to the current playlist
-     * @param freedom the amount this ending alters the Shifting Mound's freedom value
-     * @param satisfaction the amount this ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
+     * @param v the Vessel claimed in the ending
+     * @param playlistSong the song the ending adds to the current playlist
+     * @param freedom the amount the ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
+     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
      */
     private ChapterEnding(Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
         this.isFinal = true;
@@ -270,6 +251,17 @@ public enum ChapterEnding {
         this.freedom = freedom;
         this.satisfaction = satisfaction;
         this.yourNewWorld = yourNewWorld;
+    }
+
+    /**
+     * Constructor for endings where a Vessel has been claimed
+     * @param v the Vessel claimed in the ending
+     * @param freedom the amount the ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
+     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     */
+    private ChapterEnding(Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
+        this(v, "", freedom, satisfaction, yourNewWorld);
     }
 
     // --- ACCESSORS ---
@@ -284,7 +276,7 @@ public enum ChapterEnding {
 
     /**
      * Accessor for nextChapter
-     * @return returns the Chapter that this ending leads to
+     * @return the Chapter that this ending leads to
      */
     public Chapter getNextChapter() {
         return this.nextChapter;
@@ -300,7 +292,7 @@ public enum ChapterEnding {
 
     /**
      * Accessor for vessel
-     * @return the Vessel claimed in this ending
+     * @return the Vessel claimed in the ending
      */
     public Vessel getVessel() {
         return this.vessel;

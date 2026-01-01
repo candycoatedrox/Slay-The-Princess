@@ -1,42 +1,43 @@
 public enum Vessel {
     // Chapter II
-    ADVERSARY(Chapter.ADVERSARY, "The Song We Write in Our Blood"),
-    TOWER(Chapter.TOWER, "Supplication"),
-    SPECTRE(Chapter.SPECTRE, "Hitching a Ride"),
-    NIGHTMARE(Chapter.NIGHTMARE, "I Want to Watch It Happen"),
-    BEAST(Chapter.BEAST, "I Am So Much More Than You"),
-    WITCH(Chapter.WITCH, "It's in Our Nature"),
-    STRANGER(Chapter.STRANGER, "To Be Everything"),
-    PRISONERHEAD("The Prisoner's Head", Chapter.PRISONER, "Eyes On Me"),
-    PRISONER(Chapter.PRISONER, "I Don't Like Small Talk"),
-    DAMSEL(Chapter.DAMSEL, "It Was Always That Easy"),
-    DECONDAMSEL("The Deconstructed Damsel", Chapter.DAMSEL, "I Just Want to Make You Happy"),
+    ADVERSARY(Chapter.ADVERSARY, "The Song We Write in Our Blood", "advyClaim"),
+    TOWER(Chapter.TOWER, "Supplication", "towerClaim"),
+    SPECTRE(Chapter.SPECTRE, "Hitching a Ride", "spectreClaim"),
+    NIGHTMARE(Chapter.NIGHTMARE, "I Want to Watch It Happen", "nightClaim"),
+    BEAST(Chapter.BEAST, "I Am So Much More Than You", "beastClaim"),
+    WITCH(Chapter.WITCH, "It's in Our Nature", "witchClaim"),
+    STRANGER(Chapter.STRANGER, "To Be Everything", "strangerClaim"),
+    PRISONERHEAD("The Prisoner's Head", Chapter.PRISONER, "Eyes On Me", "headClaim"),
+    PRISONER(Chapter.PRISONER, "I Don't Like Small Talk", "prisonerClaim"),
+    DAMSEL(Chapter.DAMSEL, "It Was Always That Easy", "damselClaim"),
+    DECONDAMSEL("The Deconstructed Damsel", Chapter.DAMSEL, "I Just Want to Make You Happy", "deconClaim"),
 
     // Chapter III
-    NEEDLE(Chapter.NEEDLE),
-    FURY(Chapter.FURY, "There's Nothing I Can Do To Bring You Back"),
-    REWOUNDFURY("The Rewound Fury", Chapter.FURY, "Thirty-Trillion Cells"),
-    APOTHEOSIS(Chapter.APOTHEOSIS, "The Apotheosis"),
-    PATD("The Princess", Chapter.DRAGON, "What Once Was One"),
-    STENCILPATD("The Stenciled Princess", Chapter.DRAGON),
-    WRAITH(Chapter.WRAITH, "I'm Taking What I'm Owed"),
-    CLARITY(Chapter.CLARITY),
-    RAZORFULL("The Razor (Full)", Chapter.RAZOR, "Mutually Assured Destruction"),
-    RAZORHEART("The Razor's Heart", Chapter.RAZOR),
-    DEN(Chapter.DEN),
-    NETWORKWILD("The Networked Wild", Chapter.WILD),
-    WOUNDEDWILD("The Wounded Wild", Chapter.WILD),
-    THORN(Chapter.THORN, "A Moment Trapped for All Time"),
-    WATCHFULCAGE(Chapter.CAGE, "A Prison of Flesh"),
-    OPENCAGE(Chapter.CAGE, "An Open Door"),
-    DROWNEDGREY("The Drowned Grey", Chapter.GREY, "The Grey (Water)"),
-    BURNEDGREY("The Burned Grey", Chapter.GREY, "The Grey (Fire)"),
-    HAPPY(Chapter.HAPPY, "What Remains After the Fire"),
-    HAPPYDRY(Chapter.HAPPY, "What Remains After the Fire");
+    NEEDLE(Chapter.NEEDLE, "needleClaim"),
+    FURY(Chapter.FURY, "There's Nothing I Can Do To Bring You Back", "furyClaim"),
+    REWOUNDFURY("The Rewound Fury", Chapter.FURY, "Thirty-Trillion Cells", "rewoundClaim"),
+    APOTHEOSIS(Chapter.APOTHEOSIS, "The Apotheosis", "apoClaim"),
+    PATD("The Princess", Chapter.DRAGON, "What Once Was One", "dragonClaim"),
+    STENCILPATD("The Stenciled Princess", Chapter.DRAGON, "stencilClaim"),
+    WRAITH(Chapter.WRAITH, "I'm Taking What I'm Owed", "wraithClaim"),
+    CLARITY(Chapter.CLARITY, "clarityClaim"),
+    RAZORFULL("The Razor (Full)", Chapter.RAZOR, "Mutually Assured Destruction", "razorClaim"),
+    RAZORHEART("The Razor's Heart", Chapter.RAZOR, "heartClaim"),
+    DEN(Chapter.DEN, "denClaim"),
+    NETWORKWILD("The Networked Wild", Chapter.WILD, "nWildClaim"),
+    WOUNDEDWILD("The Wounded Wild", Chapter.WILD, "wWildClaim"),
+    THORN(Chapter.THORN, "A Moment Trapped for All Time", "thornClaim"),
+    WATCHFULCAGE(Chapter.CAGE, "A Prison of Flesh", "cageClaim"),
+    OPENCAGE(Chapter.CAGE, "An Open Door", "cageClaim"),
+    DROWNEDGREY("The Drowned Grey", Chapter.GREY, "The Grey (Water)", "dGreyClaim"),
+    BURNEDGREY("The Burned Grey", Chapter.GREY, "The Grey (Fire)", "bGreyClaim"),
+    HAPPY(Chapter.HAPPY, "What Remains After the Fire", "happyClaim"),
+    HAPPYDRY(Chapter.HAPPY, "What Remains After the Fire", "happyClaim");
 
-    private String name;
-    private Chapter fromChapter;
-    private String playlistSong;
+    private final String name;
+    private final Chapter fromChapter;
+    private final String playlistSong;
+    private final String achievementID;
 
     // --- CONSTRUCTORS ---
 
@@ -45,37 +46,42 @@ public enum Vessel {
      * @param name the name of the Vessel
      * @param c the Chapter the Vessel comes from
      * @param playlistSong the song the Vessel adds to the current playlist by default
+     * @param achievementID the ID of the achievement tied to the Vessel
      */
-    private Vessel(String name, Chapter c, String playlistSong) {
+    private Vessel(String name, Chapter c, String playlistSong, String achievementID) {
         this.fromChapter = c;
         this.name = name;
         this.playlistSong = playlistSong;
+        this.achievementID = achievementID;
     }
 
     /**
      * Constructor for a Vessel whose playlist song is the title of their origin Chapter
      * @param name the name of the Vessel
      * @param c the Chapter the Vessel comes from
+     * @param achievementID the ID of the achievement tied to the Vessel
      */
-    private Vessel(String name, Chapter c) {
-        this(name, c, c.getTitle());
+    private Vessel(String name, Chapter c, String achievementID) {
+        this(name, c, c.getTitle(), achievementID);
     }
 
     /**
      * Constructor for a Vessel who shares a name with their origin Chapter
      * @param c the Chapter the Vessel comes from
      * @param playlistSong the song the Vessel adds to the current playlist by default
+     * @param achievementID the ID of the achievement tied to the Vessel
      */
-    private Vessel(Chapter c, String playlistSong) {
-        this(c.getTitle(), c, playlistSong);
+    private Vessel(Chapter c, String playlistSong, String achievementID) {
+        this(c.getTitle(), c, playlistSong, achievementID);
     }
 
     /**
      * Constructor for a Vessel whose name and playlist song are the title of their origin Chapter
      * @param c the Chapter the Vessel comes from
+     * @param achievementID the ID of the achievement tied to the Vessel
      */
-    private Vessel(Chapter c) {
-        this(c.getTitle(), c, c.getTitle());
+    private Vessel(Chapter c, String achievementID) {
+        this(c.getTitle(), c, c.getTitle(), achievementID);
     }
 
     // --- ACCESSORS ---
@@ -103,5 +109,13 @@ public enum Vessel {
      */
     public String getPlaylistSong() {
         return this.playlistSong;
+    }
+
+    /**
+     * Accessor for achievementID
+     * @return the ID of the achievement tied to this Vessel
+     */
+    public String getAchievementID() {
+        return this.achievementID;
     }
 }

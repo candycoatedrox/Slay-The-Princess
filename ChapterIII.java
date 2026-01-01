@@ -566,8 +566,7 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             // The Den
-            case UNANSWEREDQUESTIONS:
-            case UNANSWEREDSTARVE: // assume Stubborn
+            case UNANSWEREDQUESTIONS: // assume Stubborn
             case HEROICSTRIKE:
             case INSTINCT:
                 this.route.add(Chapter.BEAST);
@@ -2577,7 +2576,7 @@ public class ChapterIII extends StandardCycle {
 
         // You die
         mainScript.runSection("starveEnd");
-        return ChapterEnding.UNANSWEREDSTARVE;
+        return ChapterEnding.HUNGERPANGS;
     }
 
 

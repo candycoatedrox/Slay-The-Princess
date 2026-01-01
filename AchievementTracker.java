@@ -1,11 +1,11 @@
-import java.io.File;  // Import the File class
-import java.util.Scanner; // Import the Scanner class to read text files
-import java.io.FileWriter;
-import java.io.BufferedWriter; // Import this class to write to a file
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.io.IOException;
+import java.io.BufferedWriter;  // Import the File class
+import java.io.File; // Import the Scanner class to read text files
+import java.io.FileNotFoundException;
+import java.io.FileWriter; // Import this class to write to a file
+import java.io.IOException;  // Import this class to handle errors
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class AchievementTracker {
     
@@ -40,6 +40,8 @@ public class AchievementTracker {
 
     /**
      * Constructor
+     * @param manager the GameManager to link the AchievementTracker to
+     * @param parser the IOHandler to link the AchievementTracker to
      */
     public AchievementTracker(GameManager manager, IOHandler parser) {
         this.manager = manager;
@@ -109,7 +111,7 @@ public class AchievementTracker {
                         split = content.split(" / ");
                         id = split[0];
 
-                        if (achievements.containsKey(id)) {
+                        if (this.achievementExists(id)) {
                             System.out.println("[DEBUG: Duplicate achievement " + id + "]");
                         } else {
                             hidden = false;
@@ -151,6 +153,28 @@ public class AchievementTracker {
     // --- ACCESSORS & MANIPULATORS ---
 
     /**
+     * Checks whether an achievement with the given ID exists
+     * @param id the ID to check
+     * @return true if an achievement with the given ID exists; false otherwise
+     */
+    public boolean achievementExists(String id) {
+        return achievements.containsKey(id);
+    }
+
+    /**
+     * Checks whether a given achievement has been unlocked
+     * @param achievement the name of the achievement
+     * @return whether the given achievement has been unlocked
+     */
+    public boolean check(String achievement) {
+        if (this.achievementExists(achievement)) {
+            return achievements.get(achievement).isUnlocked();
+        } else {
+            throw new IllegalArgumentException("Achievement " + achievement + "does not exist");
+        }
+    }
+
+    /**
      * Checks whether a given Chapter's achievement list has been unlocked
      * @param c the Chapter to check
      * @return whether the given Chapter's achievement list has been unlocked
@@ -162,19 +186,6 @@ public class AchievementTracker {
             case MUTUALLYASSURED:
             case EMPTYCUP: return unlockedChapters.get(Chapter.RAZOR).check();
             default: return unlockedChapters.get(c).check();
-        }
-    }
-
-    /**
-     * Checks whether a given achievement has been unlocked
-     * @param achievement the name of the achievement
-     * @return whether the given achievement has been unlocked
-     */
-    public boolean check(String achievement) {
-        if (achievements.containsKey(achievement)) {
-            return achievements.get(achievement).isUnlocked();
-        } else {
-            throw new IllegalArgumentException("Achievement " + achievement + "does not exist");
         }
     }
 
@@ -199,7 +210,7 @@ public class AchievementTracker {
         ArrayList<Achievement> unlocked = new ArrayList<>();
         Achievement a;
         for (String id : ids) {
-            if (achievements.containsKey(id)) {
+            if (this.achievementExists(id)) {
                 a = achievements.get(id);
                 if (a.isUnlocked()) unlocked.add(a);
             }
@@ -224,7 +235,7 @@ public class AchievementTracker {
      * @param id the ID of the achievement to unlock
      */
     public void unlock(String id) {
-        if (achievements.containsKey(id)) {
+        if (this.achievementExists(id)) {
             Achievement achievement = achievements.get(id);
             if (!achievement.isUnlocked()) {
                 this.nUnlockedAchievements += 1;

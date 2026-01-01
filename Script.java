@@ -910,6 +910,22 @@ public class Script {
                 if (this.runModifierChecks(mods)) this.pause(argument);
                 break;
 
+            case "unlock":
+                if (this.runModifierChecks(mods)) this.unlockAchievement(argument);
+                break;
+
+            case "nowplaying":
+                if (this.runModifierChecks(mods)) manager.setNowPlaying(argument);
+                break;
+
+            case "quietcreep":
+                if (this.runModifierChecks(mods)) this.quietCreep();
+                break;
+                
+            case "claimfold":
+                if (this.runModifierChecks(mods)) this.claimFoldLine();
+                break;
+
             case "jumpto":
                 // add "jumpto [label] return"?
                 if (this.runModifierChecks(mods)) {
@@ -1019,17 +1035,6 @@ public class Script {
                 break;
             case "stringautojump":
                 if (this.runModifierChecks(mods)) this.strSwitchJumpTo(argument, true);
-                break;
-
-            case "nowplaying":
-                if (this.runModifierChecks(mods)) manager.setNowPlaying(argument);
-                break;
-
-            case "quietcreep":
-                if (this.runModifierChecks(mods)) this.quietCreep();
-                break;
-            case "claimfold":
-                if (this.runModifierChecks(mods)) this.claimFoldLine();
                 break;
 
             default:
@@ -1365,6 +1370,43 @@ public class Script {
     }
 
     /**
+     * Unlocks the achievement with the given ID
+     * @param argument the ID of the achievement to unlock
+     */
+    private void unlockAchievement(String argument) {
+        if (argument.isEmpty() || argument.contains(" ")) {
+            // Invalid line; print error message and skip to next line
+            System.out.println("[DEBUG: Invalid unlock in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+        } else {
+            manager.getTracker().unlock(argument);
+        }
+    }
+
+    /**
+     * Prints a line about the Long Quiet beginning to creep closer, used in most endings right before a vessel is claimed
+     */
+    private void quietCreep() {
+        if (!this.noCycle) currentCycle.quietCreep();
+    }
+
+    /**
+     * Prints out the short sequence of the Shifting Mound taking the current vessel away
+     * @param skipFirstLineBreak whether to skip the first line break of the sequence
+     */
+    public void claimFoldLine(boolean skipFirstLineBreak) {
+        if (!skipFirstLineBreak) System.out.println();
+        parser.printDialogueLine(CLAIMFOLD);
+        System.out.println();
+    }
+
+    /**
+     * Prints out the short sequence of the Shifting Mound taking the current vessel away
+     */
+    public void claimFoldLine() {
+        this.claimFoldLine(false);
+    }
+
+    /**
      * Moves the cursor of this script to a given index
      * @param lineIndex the index to move to
      */
@@ -1520,30 +1562,6 @@ public class Script {
     }
 
     /**
-     * Prints a line about the Long Quiet beginning to creep closer, used in most endings right before a vessel is claimed
-     */
-    private void quietCreep() {
-        if (!this.noCycle) currentCycle.quietCreep();
-    }
-
-    /**
-     * Prints out the short sequence of the Shifting Mound taking the current vessel away
-     * @param skipFirstLineBreak whether to skip the first line break of the sequence
-     */
-    public void claimFoldLine(boolean skipFirstLineBreak) {
-        if (!skipFirstLineBreak) System.out.println();
-        parser.printDialogueLine(CLAIMFOLD);
-        System.out.println();
-    }
-
-    /**
-     * Prints out the short sequence of the Shifting Mound taking the current vessel away
-     */
-    public void claimFoldLine() {
-        this.claimFoldLine(false);
-    }
-
-    /**
      * Prints out the dialogue line specified by a given line
      * @param lineIndex the index of the dialogue line to print
      */
@@ -1675,6 +1693,15 @@ Different functions a script can perform:
   - break
         Tells the script to stop executing here for now. Should NEVER be used without modifiers.
 
+  - unlock [id]
+        Unlocks the achievement with the given ID.
+
+  - nowplaying [song]
+        Sets the song currently playing.
+
+  - quietcreep
+        Triggers StandardCycle.quietCreep(). Used in most endings right before a vessel is claimed.
+
   - label [id]
         Essentially acts as an anchor the script can move its cursor to at any time.
 
@@ -1714,12 +1741,6 @@ Different functions a script can perform:
         If the String condition given in runConditionalSection() matches one of the given Strings, jumps to the corresponding label; if the value of the String condition is not present or no String condition was given, continues without jumping.
   - stringautojump [suffix]
         Moves the cursor to the label "conditionSuffix", where condition is the String condition given in runConditionalSection(); if there is no such label or no String condition was given, continues without jumping.
-
-  - nowplaying [song]
-        Sets the song currently playing.
-
-  - quietcreep
-        Triggers StandardCycle.quietCreep(). Used in most endings right before a vessel is claimed.
 
   - [character] Dialogue line goes here
   - [character] Dialogue line goes here /// [modifiers]
