@@ -120,7 +120,8 @@ public enum ChapterEnding {
     INSTINCT(Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
     HUNGERPANGS(Vessel.DEN, 0, -1, false),
     LIONANDMOUSE(Vessel.DEN, "Hand-in-Claw", 1, 1, false),
-    UNANSWEREDQUESTIONS(Vessel.DEN, 0, 1, false),
+    UNANSWEREDQUESTIONS(Vessel.DEN, -1, 1, false),
+    UNANSWEREDSTARVE(Vessel.DEN, -1, -1, false),
 
     // The Wild
     WOUNDSLAY(Vessel.WOUNDEDWILD, -1, -1, true),

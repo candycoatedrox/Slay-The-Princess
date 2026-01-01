@@ -226,8 +226,8 @@ public abstract class StandardCycle extends Cycle {
                 break;
 
             case "cSlayPrincessFail":
-                // The Narrator doesn't have a line here because there is no universe in which he would ever say no to you trying to slay the Princess if you have the opportunity.
-                // Unfortunately for him, sometimes I can't let you slay her in the middle of certain menus. Too bad, Narrator.
+                // The Narrator doesn't have a line here because there is no universe in which He would ever say no to you trying to slay the Princess if you have the opportunity.
+                // Unfortunately for Him, sometimes I can't let you slay her in the middle of certain menus. Too bad, Narrator.
                 super.giveDefaultFailResponse(outcome);
                 break;
 
@@ -244,7 +244,7 @@ public abstract class StandardCycle extends Cycle {
 
             case "cSlaySelfFail":
                 parser.printDialogueLine(new VoiceDialogueLine("Are you insane?! Absolutely not."));
-                if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's right. We don't need to make such a rash decision."));
+                if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's right. We don't need to make such a... rash decision."));
                 break;
                 
 
@@ -263,6 +263,7 @@ public abstract class StandardCycle extends Cycle {
 
             case "cTake":
                 super.giveDefaultFailResponse(outcome);
+                break;
 
             case "cDropNoBladeFail":
                 if (this.knowsBlade) {
@@ -291,8 +292,7 @@ public abstract class StandardCycle extends Cycle {
                 if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Why would we even do that? That seems... silly."));
                 break;
 
-            default:
-                parser.printDialogueLine(new VoiceDialogueLine("You have to make a decision."));
+            default: parser.printDialogueLine(new VoiceDialogueLine("You have to make a decision."));
         }
     }
 
@@ -680,6 +680,7 @@ public abstract class StandardCycle extends Cycle {
         System.out.println();
         switch (manager.nClaimedVessels()) {
             case 0:
+                manager.getTracker().unlock(Chapter.SPACESBETWEEN);
             case 1:
             case 2:
             case 3:

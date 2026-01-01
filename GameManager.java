@@ -1434,7 +1434,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.debugRunGame(ChapterEnding.TOSTRANGER);
+        manager.debugRunGame();
         
         /*
         IOHandler parserStatic = manager.parser;

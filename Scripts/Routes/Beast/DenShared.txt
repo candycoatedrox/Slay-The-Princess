@@ -1,0 +1,552 @@
+n You're on a path in the woods -- /// interrupt
+voice3switch Start
+
+label stubbornStart
+stubborn Yeah. We are. And this time we're not going to run until we die. We're taking her head-on, and we're *winning.*
+hunted You *felt* her. She didn't have a soft underbelly. She didn't have blindspots. What could we have done that would have saved us from her hunger?
+stubborn When someone tries to make you dead, you have to hit them back. You have to show them your authority. There's nothing worse than a bully that thinks they own you.
+jumpto startJoin
+
+label stubbornStart2
+stubborn Oh, shut up! It bodes fine. You're the reason we're stuck in this shit situation, and now *I* have to do the hard work of dragging us out.
+n And how do you intend to do that?
+stubborn We're going to fight her, and we're going to win. There's a reason she slinks around in the shadows.
+n Well, no complaints here.
+hero Now hold on, we're not just going to let the fact that He knows things about this whole looping situation go, are we?
+stubborn He's not important. He can have his secrets for all I care. She's killed us twice now, that's enough of a reason for us to want her dead.
+
+label skepticStart
+skeptic That didn't work. We're going in with a plan this time. We're not getting stuck in another loop, just acting on instinct. We're stuck in a big enough loop as it is.
+hunted Instinct was keeping us alive.
+skeptic Until it wasn't.
+hero So what are we supposed to do?
+label startJoin
+n Great. So you've been here before. That doesn't bode well. You're not supposed to have been here before, this is supposed to be one-and-done.
+voice3switch Start2
+
+label skepticStart2
+skeptic So you know more than you're letting on.
+hero Yeah, what he said!
+n Of course I do, but believe me, it's in your best interests. The more you know about the Princess, the more difficult your task will be.
+skeptic And why is that?
+n Having me explain why would defeat the whole purpose. There are simply some things I'm not allowed to tell you, it's a hard rule.
+skeptic And whose rule is it? Who's telling you to boss us around? We've died twice already, and if you want us to stay alive this time, it's in your best interests to give us an edge.
+n It's my rule, and this conversation is over.
+
+label stubbornPlanWoods
+stubborn Like I said, we're going to fight her.
+hunted But we're so small.
+stubborn We don't actually know how big she is. We just know she wants us to *think* she's big. And if she is going to treat us like prey again, then she is sorely underestimating us. One good wallop. That's all we need to put her on the defensive.
+
+label skepticPlanWoods
+skeptic She spent as much time as she could in the shadows. So we're going to draw her out.
+hunted But she's fast. And she's clever.
+skeptic We're clever, too. So this time we're not going to let her cut off our escape. We're gonna lead her to the stairs ourselves.
+skeptic It'll be a lot easier to deal with her once we can actually see what she is.
+n But you already know what she is. She's a Princess.
+hero Yeah, *right.*
+skeptic A Princess we couldn't see, and one that had big sharp teeth, too. How about you stick to describing things and we'll stick to doing our job.
+n Sharp... teeth...?
+
+label differentWoods
+    skeptic You're right. This is different, isn't it? /// checkvoice
+        hero I'm starting to lose track of things myself. /// checkvoice-skeptic
+hunted Ground is ground. It doesn't matter what shape it takes. We'll adapt.
+n If it looks different that's because the situation has started to spiral out of everyone's control. So please, disavow yourself of the notion that you can just come back here and fix this place if you manage to make a mess, before that line of thinking leaves you yet another world in ruin.
+n Though as evidenced by you dying -- twice -- it's safe to assume the fates of the worlds you've left behind don't concern you very much.
+n Consider this your last opportunity to make things right. For you, and for the rest of existence. But especially for you.
+    stubborn We don't need your pep-talk. I'll make sure we pull this off. /// checkvoice
+    skeptic Clearly we're not getting anything out of *Him.* /// checkvoice
+
+label answersWoods
+    n I've told you as much as I can without putting you at a disadvantage. /// checkvoice-stubborn
+        n If anything, I've told you too much. Like that grumbling voice said just a moment ago: you've already died by her hands twice. You shouldn't need much else in the way of motivation. /// checkvoice-stubborn
+    n Like I said, I've told you as much as I can without putting you at a disadvantage. /// checkvoice-skeptic
+        n If anything, I've told you too much. You've already died by her hands twice. You shouldn't need much in the way of motivation. /// checkvoice-skeptic
+
+label leaveWoods
+    hero Yeah, she was still there last time. I'm not so sure she can free herself without our help. /// checkvoice-stubborn
+    skeptic It doesn't seem like she can escape on her own. /// checkvoice-skeptic
+n Maybe not quickly, but it's inevitable. That cabin won't last forever.
+    skeptic And she will? /// checkvoice
+        n Forget I said anything. Just treat this with the urgency it deserves. /// checkvoice-skeptic
+
+// Hill dialogue //
+
+label hillDialogue
+n You make your way down to the cabin. Your fated confrontation awaits. You know what to do.
+    voice3switch Plan2 /// check
+hero So... we need a plan.
+    jumpto stubbornPlan2 /// checkvoice-stubborn
+skeptic We've been over the plan. Goad her out of the shadows. Make her show herself.
+label skepticPlan2Join
+hunted And what if she doesn't want to be seen?
+skeptic We'll figure out a way to make it happen.
+hero And if that doesn't make her any easier to fight?
+skeptic It will. It's always easier to fight what you can see. No matter how big or toothy she might be.
+    jumpto skepticPlanWoods /// checkfalse
+
+label stubbornPlan2
+stubborn We've already been over the plan.
+hero I'm not sure that "use violence" counts as a plan.
+stubborn It's a better plan than you had last time.
+hunted I don't like this. But I'll try to keep us breathing.
+
+label skepticPlan2
+skeptic All right. We've been over the plan. Goad her out of the shadows. Make her show herself.
+jumpto skepticPlan2Join
+
+// Cabin //
+
+label cabinIntro
+n The interior is dark and overgrown. Vines and brush obscure so much of the place that, had you not seen the exterior, you might not have noticed this was a cabin at all.
+n The only "furniture" of note, if you could call it that, is a knotted stump, a pristine blade embedded in its exposed rings.
+n The blade is your implement. You'll need it if you're going to do this right.
+    stubborn Take it. We're not fighting a monster without a blade. Even if it's not a very big one. /// checkvoice
+    hero Great. That mirror's back! ... And it's where the door is supposed to be. /// checkvoice-stubborn mirror2
+    hero Is no one going to mention the mirror? /// checkvoice-stubborn nomirror2
+    skeptic Of course that damn mirror's back, and of course He's not saying anything about it. Why is it following us? /// checkvoice mirror2
+    skeptic If there's a way forward, that mirror is blocking it off. /// checkvoice nomirror2
+n What are you talking about? There is no mirror. There's just the stump and a narrow tunnel that leads to the basement.
+hunted He isn't tricking us. Can you feel the wind? It's telling us there's a hole in that wall. Our eyes deceive us.
+    stubborn If that mirror's blocking our way, just smash it and be done with it. /// checkvoice
+    skeptic Then either way, we need to investigate. Might as well get started. /// checkvoice
+
+label takeBlade
+n You pull the blade from the stump, gripping it tight. It would be difficult to slay the Princess and save the world without a weapon.
+    stubborn Good. One step closer to ending this. /// checkvoice
+    skeptic Odds are we'll need it. Thanks for not putting us in a bad spot. /// checkvoice
+
+label approachMirror
+        stubborn I don't know what you're planning, but you're making my job a hell of a lot harder right now. /// noblade checkvoice
+        skeptic You really think being unarmed is best? I hope you know what you're doing. But let's not forget that it's up here if things go south. /// noblade checkvoice
+    hunted The steel claw makes us sloppy. Too confident. We'll be faster without it. /// noblade
+n You step forward, approaching the small hole that leads to the basement, hesitating before you enter the Princess's lair.
+    stubborn You heard Him. Stop hesitating and smash that antique. /// checkvoice
+    skeptic Haven't you been paying attention? We're not hesitating, this supposed hole is blocked by that old mirror. /// checkvoice
+hunted That mirror isn't part of this place. It's seeped through from... somewhere else.
+n "It," if there even is an "it," is a hallucination. Like you said, you've been here twice before. Your mind was bound to start playing tricks on you eventually.
+    hero It went away after we reached out to it last time. Might as well try wiping it clean again, what's the harm? /// mirrortouch
+    hero It's so grimy. Maybe we can wipe it clean and finally get a look at ourselves. /// nomirrortouch
+
+label wipeMirror
+n You reach forward and wave your hand over the open hole leading to the basement.
+hunted See? Nothing! Tricks of the eye. No one sense can be trusted on its own.
+n You step forward into the darkness.
+jumpto stairsStart
+
+label smashMirror
+n You bring your fist crashing down into the open hole leading to the basement, throwing yourself off-balance and tumbling headlong into the pitch black.
+hunted See? Nothing! Tricks of the eye. No one sense can be trusted on its own.
+jumpto stairsStart
+
+// Stairs //
+
+label stairsStart
+n If there were once stairs leading into the basement, there is nothing left to attest to their existence now. There is only a long tunnel of packed earth, growing more narrow as you descend.
+n It smells of mold and decay. The damp walls leave streaks of dirt along your body as you're forced to hunch, then finally squat down on all fours in order to continue. If the Princess lives here, slaying her is probably doing her a favor.
+n As you crawl forward on hands and knees, you're met only with the sounds of ambient earth. No voice slinks confidently up the stairs. No entity threatens violence or pleads for safety.
+hunted Stay quiet. Don't give her a sound.
+
+label stairsComment
+n The Princess leaves your remark unanswered.
+hunted See? She knows. We have to be like her. Focused. Present. Patient.
+    stubborn We're past the point of words, anyway. This is a conversation that can only be had with hard steel and sharp teeth. /// checkvoice
+    skeptic I suppose it'll take a little more than words to coax her out. Let's keep going. /// checkvoice
+n You put the voices to the back of your mind and proceed down the "stairs."
+jumpto basementStart
+
+label stairsSilent
+n You say nothing, maintaining the silence as you carefully make your way down into the basement.
+jumpto basementStart
+
+// Basement //
+
+label basementStart
+n The basement is dark and cavernous. A gaping maw, threatening to swallow you whole. There is no light here, save for what little starlight has managed to filter down the tunnel, and though you can't see the vastness of the space, you can feel it. You're exposed.
+    stubborn It doesn't matter if we can't see down here. We know where she is. /// checkvoice hasblade
+    stubborn It doesn't matter if we can't see down here. We know where she is. It would be better with a blade, but we'll make do. /// checkvoice noblade
+    skeptic Stay on your toes. We take a step into the shadows, and as soon as she moves, we jump back, make her follow. From there we trap her in the tunnel, draw her out of the cabin, whatever it takes to get her out of her element. Then we're safe. /// checkvoice
+
+// Fight her //
+
+label fightStart
+n You step into the shadows and are enveloped in total darkness. Your heart pounds in your chest, ears pricked, eyes wide despite the inky blackness, waiting for any sign of movement.
+hunted There! She's about to strike.
+    jumpto fightSuccessStart /// checkvoice-stubborn hasblade
+// "Unanswered Questions" ending; claim the Den //
+hero We're *screwed.*
+    stubborn We can do this. Even without a weapon. I'm no stranger to bloody fists. /// checkvoice
+    skeptic I know. This wasn't part of the plan, we were supposed to come down here *prepared* and... oh, what's the use. /// checkvoice hasblade
+    skeptic I know. This wasn't part of the plan, we were supposed to come down here *prepared,* with a weapon and... oh, what's the use. /// checkvoice noblade
+quietcreep
+n You just barely make out the shape of teeth and eyes as the Princess emerges, enormous maw gaping, ready to swallow you whole --
+hero And...?
+linebreak
+truth But He doesn't respond. Eyes glance at you from the untextured threads of a world unraveled. "Am I free?" they ask.
+claim fightFail
+
+label fightFailFirstVessel
+truth But you do not have an opportunity to respond. Something has taken her away, and it's left something else in her place.
+
+label fightFailNotFirstVessel
+truth But you do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+label fightSuccessStart
+n With the near-silence of a determined predator, the Princess erupts from the shadows.
+n You're quick to react, swinging your blade, its tip intercepting her before she can draw first blood. She recoils, stunned for a brief moment.
+stubborn See? I told you. We needed to assert our might. We needed to prove to her that she can bleed, too. She'll doubt her every move now.
+n Her gleaming eyes watch you from the shadows, unblinking. There's fear in them now. But it is a fear wreathed in fury. And beneath it all lurks something far more primal.
+hunted Hunger.
+n Yes. She knows your strength now, and she wishes to devour it. How unseemly.
+stubborn I'd like to see her try.
+linebreak
+n The Princess lunges with even more ferocity than before. Both voices were right. Within that ferocity there is the clumsiness of doubt; a chaotic dance between impulse and restraint.
+n Not a word is spoken between you and the Princess as you exchange blows in the dark. The glint of bloody claws and fangs. The flash of wet steel. In the pit, all of your senses are heightened, each injury stinging like a chorus of insects, each small shift in your favor a major victory that swells your confidence.
+n And yet, for all the wounds you've managed to inflict upon her, you remain at a stalemate. And then you start to lose ground. While your body slows, hers quickens, her wounds mending as she licks the blood of her prey from her dripping maw.
+hero ... So she really *can* "devour our strength." Can... *we* do something like that? All these wounds are starting to add up.
+stubborn Nah, screw that. We're not stooping to her level. We'll just have to give this our all, end it in one final hit.
+hunted We die if we do that. We have to make ourselves like her. We *have* to embrace instinct.
+n She shifts towards you, her bloody grin shining in the dark. And then you see it: your opening.
+stubborn Take it! Put her down like the mindless beast she is!
+
+// "Heroic Strike" ending; claim the Den //
+label strikeEnd
+n You hurl yourself towards the Princess, your movement too quick, too bold for her to intercept. You bury your blade deep in her chest.
+stubborn Yes, *YES!* We're going out in a BLAZE OF GLORY.
+hunted Nature doesn't have glory. This is just death.
+n She howls in pain, retaliating with claws and teeth, desperately tearing, trying to devour you to make herself whole once again. Chunks of your flesh are torn away, feathers and blood and bits of gore splattering to the ground, but your work is already done.
+n No sating of her ravenous hunger will be enough to mend her now. Though her flesh begins to seal itself around you, she cannot remove your blade from her heart.
+n You and the Princess collapse to the floor together, your bodies fused, entwined in a bloody mass of limbs and teeth.
+stubborn I wouldn't have it any other way.
+n As the two of you fade, a new emotion creeps into the Princess's eyes. Something akin to shame. "What have we done?" they ask.
+hero I guess that's it. At least we saved the world... right?
+hero ... Right?
+hunted He's gone. Everything is gone. Except her, and us.
+stubborn It doesn't matter. WE WON.
+truth The Princess's eyes speak again. "I'm cold. I don't want to be cold."
+claim pristineEnd
+
+// "She eats he eats she eats he eats..." ending; claim the Den //
+label instinctEnd
+n You hurl yourself towards the Princess's body, carving into her not with steel, but instead with tooth and claw. You are a blur of bloodied things that tear and rend.
+hunted Yes... *yes!* We are not prey. We are MORE.
+n The Princess howls in fear and outrage as you peel away a chunk of her flesh. But, as the bloody meat slides down your throat, you feel... invigorated. Your wounds burn less. You feel faster, more responsive.
+hunted Again. The more we take of her, the less she will be able to take of us.
+n There is no time to rest if you're to do this right. She tries to bat you away with her massive paw, but as it smashes into your ribs, you clamp your teeth around the limb. You give her no time to react before snapping it from its joint.
+n The Princess pulls back in pained shock as you crunch through bone, devouring the arm that was part of her. It's part of you now. Your wounds heal.
+hero That's *disgusting!* I don't want to do that!
+stubborn You were the one who asked if we could do this, and if it means we win... well. We have to win. Victory demands we do *whatever it takes to claim it.*
+hero I didn't think it would be so... *dehumanizing.*
+hunted But we feel *bigger* than her now, don't we?
+n The feeling doesn't linger. As you choke down the last of her severed arm, she lunges, taking advantage of the distraction. In a frenzied flash of blood and feathers, she rips into your side, swallowing another piece of you.
+n Weakness returns. Her arm starts to mend itself, fresh claws sprouting from developing flesh.
+hunted We can't be small again! We have to take more. We have to take it now!
+n You descend upon her again, jaws gnashing, desperate to regain your power. You both lose yourself in the rhythm of the feast. You devouring her and she devouring you, mending and bleeding and consuming in an endless cycle, on and on and on.
+stubborn Come on, just one more bite, then we'll have her right where we want her!
+hero Am I... really the only one who's not on board with this? I'm gonna be *sick.*
+n The more you consume, the more the lines that differentiate you and her begin to blur, the flesh of your bodies twisting into warped reflections of what you swallow. You have to snap out of this. You can't destroy her if you lose sight of yourself.
+hunted We are the predator now. There is nothing to do but embrace our true nature.
+quietcreep
+n *Sigh.* But words fade into hollow vibrations as you and she continue to tear at each other in the darkness. There are no beginnings, there are no endings, there are no moments of calm. There is only savage violence.
+hero Did you say... no endings?
+truth But He doesn't respond. He's gone.
+stubborn But... how are we supposed to know i-if we won?
+hunted We *have* won. We'll never die so long as we keep eating. We can be *forever.*
+truth But you and she are separated -- your flesh ripped from where it joins together -- before forever can come to pass. You lock eyes. You see a new emotion there. Shame. "What have we done?" they ask.
+claim pristineEnd
+
+// Lure her out //
+
+label lureStart
+n You step into the shadows and are enveloped in total darkness. Your heart pounds in your chest, ears pricked, eyes wide despite the inky blackness, waiting for any sign of movement.
+    stubborn And what? You're going to turn around the second she runs for us? You'll get us killed, you pathetic fool! /// checkvoice
+    skeptic That's right. Keep steady. Don't let your nerves get the better of you. /// checkvoice
+hunted There! She's about to strike.
+n With the near-silence of a determined predator, the Princess erupts from the shadows. But you've already started your swift escape.
+voice3switch LureStart
+
+// "Unanswered Questions" ending; claim the Den //
+label stubbornLureStart
+quietcreep
+stubborn Stop it! FIGHT HER!
+n The conflict in your heart, though usually of little consequence, slows you down just enough. You don't make it into the tunnel before you feel her hot breath at your back, rushing up your spine and closing in on your neck as her teeth press into your skin and --
+hunted Death. Again.
+claim lureFail
+
+label lureFailNotFirstVessel
+truth But death doesn't come. You turn to see that something has taken her away, and it's left something else in her place.
+
+label lureFailNotFirstVessel
+truth But death doesn't come. It's time to leave. Memory returns.
+
+label skepticLureStart
+skeptic That's stage one. Now stay focused.
+n You dive into the tunnel and begin scrambling up towards the cabin. You hear her behind you, claws raking at the dirt, chains rattling, then snapping, breaths hot and heavy with the effort of the ascent.
+n But the sounds are coming slower now, the breaths pained and stuttering. You no longer sense frantic motion behind you in the tunnel. You risk a glance.
+n She is a broad and sickly creature, her withered and emaciated flesh clinging to bones too large to fit into the narrow space. She managed to squirm her way into the tunnel in pursuit, but now she's stuck, incapable of either moving towards you, or returning to the open darkness of the basement below.
+hero So that's what she's become. She wasn't like this when we started... was she?
+skeptic No. She wasn't.
+hunted Looking at her makes me feel... sad.
+skeptic Yeah. Now that we can see her, she doesn't feel like much of a threat at all.
+n She paws futilely at the air between you, but her shoulders are pinned in the narrow confines of the opening. She has no hope of reaching you.
+n And she realizes this. Her arm goes limp, flopping to the dirt floor of the tunnel, and her eyes fall from yours. Defeated.
+n Her eyes look up at yours. Wide. Pleading. "Come back," you can imagine them saying. "Don't leave me here!" But you shouldn't listen to the sad eyes of a vanquished enemy. She wants nothing more than to change places with you.
+hero If you want us to ignore her then why would you tell us any of that "wide, pleading eyes begging for mercy" business to begin with? All it does is make us feel conflicted.
+n I'm merely describing things as they are. It's not my fault that her eyes had something to say, even if that something was a ploy. Which, if I might stress, I pointed out to you.
+hero What should we do about her, anyway? Can she still end the world like... this?
+hunted She hurts. We should help.
+skeptic Now let's think for a second. Let's reevaluate. Should we help her?
+hero Well... I do feel bad looking at her.
+skeptic There's no way to get close without being in reach of those claws. We've come this far, but can we trust a creature that, until a few short moments ago, fully intended to eat us?
+n What an excellent question with an equally excellent answer: NO! You should not help her! She's *clearly* just waiting for you to drop your guard, and beyond that, you'd do well to remember that she poses a threat to *reality itself.*
+    n *Sigh.* You already have a weapon, and she's as vulnerable as she's ever going to be. How about you use it? /// hasblade
+    n She is stuck, and you abandoned a perfectly usable weapon right behind you. How about you turn around, get the blade, and end this once and for all? /// noblade
+
+label slayAttemptNoBlade
+n You'll need to turn around and retrieve the blade first.
+
+// Approach the trapped Princess //
+
+label dropBlade
+n The Princess's eyes go wide as the blade... tumbles from your hand. You're going to get yourself *killed.*
+
+label approachStart
+    skeptic What are you *doing?* We could all just turn around and be *done.* What's your game? /// noblade
+        n *Sigh.* You and I both know there's no game. He's made a bad choice. /// noblade
+n As you draw near, she readies her claws, raising them to strike.
+hunted Don't. Flinch. Show her our resolve.
+    n If you're going to attack, might I suggest you do so *quickly?* /// hasblade
+
+label slayAttemptApproach
+hero I think the ship's already sailed on that one, mate.
+
+// "Coup de grâce" ending; claim the Den //
+label coupEnd
+hunted Violence is still a mercy here. It's still help.
+hero Yeah. Maybe... this is what's best for everyone.
+skeptic I still think leaving would have been best, but... we haven't seen what happens after she dies. It could give us some answers.
+linebreak
+n You rush forward, your confidence carrying you with enough speed to avoid her desperate strike. Your blade sinks deep into her chest.
+hero So we actually did it. Why does it feel so... bad?
+hunted Killing the weak always does.
+skeptic I don't think she's dead just yet.
+n No. She isn't. As you dig towards her heart, she howls with an earth shattering shriek, and then... *Sigh.*
+hero We're at least taking her with us, right?
+n Yes. But not without paying a grave price. She lashes out, tearing you open.
+quietcreep
+skeptic Another death, and we've still learned nothing. I knew leaving was the right answer. You should have listened to me.
+n It doesn't matter now. In her final moments, she made sure that there would be no way out for either of you. It's over.
+claim coupEnd
+
+label coupEndFirstVessel
+truth But this is no true end, and you do not get the chance to see her die. Something has taken her away, and it's left something else in her place.
+
+label coupEndNotFirstVessel
+truth But this is no true end, and you do not get the chance to see her die. Nor will you ever. It's time to leave. Memory returns.
+
+// "The Lion and the Mouse" ending; claim the Den //
+label lionStart
+n You reach forward, offering the Princess your hand. How ridiculous. She was about to kill you, do you *really* think getting stuck in a tunnel for less than a minute has fundamentally changed her?
+hunted Yes. She's a victim of her own nature. Just like we are.
+hero If all she wanted was to kill us, she'd have kept trying. But she's hestitating, isn't she?
+n *Sigh...* Yes. She is. Her eyes shift from faux ferocity, to confusion... to a gentle sadness. She lowers her claw... and places it in your hand. Eugh.
+hero Do you think we can... pull her out of there?
+hunted We have to try. It's a bad death, being stuck in place.
+skeptic And what if it doesn't work? What if we can't trust her?
+hero We have to trust *someone else* eventually. It's either Him or her, and I know you don't trust Him.
+skeptic I don't even trust the rest of you. But that doesn't mean we have to go around pulling bloodthirsty monsters out of perfectly good traps.
+hero But we haven't seen what happens if we help her. Doesn't that mean it's worth exploring?
+skeptic ... I can't argue with that. All right... let's see what happens. Maybe we'll finally get some answers.
+
+n You tug, but the Princess remains stuck. What a shame that the bones of her *massive* form are too large to fit through the narrow tunnel.
+hero Keep pulling. All He has are empty words. He can't undermine us if we don't listen!
+n You are all *infuriating* to work with. But fine, you continue to pull on the Princess's arm, and she... starts to budge. She pushes with her back legs, clawing at the earth, a burst of strength aiding your efforts. The dirt and stone start to crumble around her.
+hero That's the spirit, keep going!
+skeptic Yes, quickly, before the whole tunnel comes down on top of us!
+n Yes. Wouldn't that be an interesting development! What if, the very nature of this tunnel was such that you were incapable of leaving safely with the Princess? How... devious.
+hero Does it... collapse?
+linebreak
+n Yes! It *does.* As you pull the Princess free, the tunnel around you does *exactly* what you thought it might do. It falls apart.
+hunted Trapped... *no,* we have to get out, we *have to get out!*
+n It's too late to scramble for freedom now, little voice. You didn't think "just pulling her out of there" would be consequence-free, did you? Well, the ceiling collapses, heavy stones tumbling down on top of you and the Princess and --
+n I don't believe it.
+hero Let me guess. Everything goes dark, and we die.
+n No. Not yet. You open your eyes to see the *Princess,* her body stretched over yours, her face wincing as she shields you from the heavy rocks and debris. There is space enough for you to move, at least for now.
+skeptic I'll be damned. So there's more to her, after all.
+hunted The pack is *always* stronger than the lone hunter. We save her, she saves us. She understands.
+n Well, you can't keep saving each other forever! Her arms are already starting to give out, and there's a whole *mountain* of earth on top of her just waiting to bury you both.
+hunted We can always dig. Both of us.
+skeptic It beats suffocating to death down here in the dark.
+hero Then let's do it.
+
+n You and the Princess dig through the loose earth of the collapsed tunnel... together. How *sweet.* But it seems the harder you try to claw your way forward, the denser the path becomes. All of this effort, and for what? A chance to *end the world?* I hope you fail.
+hunted His words are nothing. Pay attention to what you feel and see.
+n It doesn't matter if you ignore me, because I'm just telling you what's happening, and what's happening is that you and the Princess are getting tired, and your mouths are full of dirt, and it's getting harder to breathe.
+skeptic Harder to breathe is still breathing.
+n Well, either way, the two of you are miserable.
+hero I don't know. I feel like we're forming a bond with her. It can't be all *that* bad if we're bonding.
+n She's not capable of "bonding." Need I remind you that as soon as she saw you, she tried to *eat* you? You are not *friends,* and as soon as you're out, you'll see just how seriously she values your life!
+skeptic If you were so sure we were going to fail, you wouldn't sound so desperate. You're just... hot air. There's nothing of substance to you at all, is there?
+n I... have plenty of substance! I have feelings, and... desires! Like my desire to save everyone in the world, I feel *that* very strongly!
+hunted Do you smell it? Fresh air.
+
+n With one final massive heave of her body, the Princess pushes her way out of the tunnel, leaving you behind in the quickly collapsing space you once shared.
+n Yours was an alliance of convenience, just as I predicted. She has left you to *die,* buried and alone.
+hero You are *unbelievably* petty.
+n Oh, my pettiness is nothing compared to *yours.* You were delighting in my suffering and the damnation of the entire world just moments ago -- !
+hunted She hasn't left. She's coming back, don't you hear her?
+n No she isn't, she's --
+truth Her face appears in the gap in the earth above you.
+skeptic How many times do you have to be wrong before you stop talking?
+n *Sigh.* The Princess stares down at you from the opening. Before the tunnel can finish sealing itself, she cranes her elongated neck and... gently plucks you from the earth.
+n She carries you across the half-collapsed ruin that was a cabin, carefully setting you down by the door.
+n If there were to be a record, let it show that I tried. I really, really tried. But there won't *be* a record, will there?
+
+n You open the door, the two of you stepping out into the fresh air, and collapsing together onto the dewey grass of the outside world.
+quietcreep
+skeptic Hah. We're outside, and there's ground beneath our feet. I don't see any oblivion. Admit it, there never was an end of the world coming, was there?
+truth He does not reply.
+hero Yeah, we got Him there, didn't we? I don't think I've ever *seen* Him stunned into silence before.
+hunted Can't you feel the hole where He was? He's gone.
+hero Fancy that.
+hunted I'm not sure gone is good.
+truth The Princess rests her head close to you. Her eyes stare into yours amid the untextured threads of a world unraveled. "Are we free?" They ask. "I'm cold. I don't want to be cold."
+claim pristineEnd
+
+// "Unanswered Questions" ending; claim the Den //
+
+label offerBlade
+n You reach forward, offering the Princess your hand. But she doesn't take it.
+hunted She remembers the glint of our steel claw.
+n She certainly does. In a surprising burst of speed, she swipes at you, her claws meeting your throat.
+n It's too late. You had your chance, and she had hers.
+jumpto flinchEnd
+
+label flinchStart
+hunted Bad! This is a bad thing to do!
+n Against the wise protestations of the little voice in your head, you flinch, and the Princess's claws rake across your body, tearing you open.
+    n The blade tumbles hopelessly from your faltering grip as your blood spills onto the dirt below. /// hasblade
+jumpto flinchEnd
+
+label flinchEnd
+n You fall forward, and she hooks you with her paw, dragging you towards her. You start to grow cold. She prods you in an almost... sorrowful confusion, hoping for some reaction. But there is no reaction for her to find. Your body is irreparably broken.
+hero I don't think she wanted to hurt us.
+skeptic And yet she did. Intent matters less than facts.
+n Her sorrow doesn't last. And when it's gone, she begins to feast.
+hunted Prey again. It's all just a circle. And it never ends.
+claim flinchEnd
+
+label flinchEndFirstVessel
+truth But the circle doesn't close, nor will it ever. Something has taken her away, and it's left something else in her place.
+
+label flinchEndFirstVessel
+truth But the circle doesn't close, nor will it ever. It's time to leave. Memory returns.
+
+// Leave the trapped Princess behind //
+
+label collapseStart
+n You turn back towards the exit, leaving her behind. But the tense silence of the tunnel is suddenly interrupted by the panicked, gutteral wails of a creature in distress. She has redoubled her struggle against the confines of the earth around her, the very walls shaking as she desperately thrashes against them.
+hero She... is stuck here, right?
+skeptic Of course! It's too small for her to get up here.
+hero But *is* "up here" stable?
+skeptic I... don't know, I didn't think about that when I started to plan all of this.
+hunted It isn't. It's only dirt and stone, and she is very, *very* big. Hurry!
+n You do your best to scramble up towards the exit, but you barely manage to get halfway before the ground beneath you begins to crumble. And she is getting closer, her breath hot on the back of your neck.
+skeptic Damn it all! This whole thing is just an exercise in futility, isn't it?
+hunted No words, only action! Keep running!
+linebreak
+n But the tunnel collapses before either you or the Princess manages to reach the exit.
+hero *Sigh.* Everything goes dark and we die?
+n Oh, no. You're perfectly fine. You're just buried under literal tons of earth. As is the Princess.
+skeptic Why for the love of everything did I not think about the stability of the tunnels?! I'm supposed to be *smarter* than this! I'm supposed to have a plan for everything.
+hero This is all my fault. *I* was the one who started worrying about this place falling apart.
+skeptic And what, you think worrying made the tunnel collapse?
+hero I don't know! Maybe.
+skeptic It was *physics.* You can't change things just by thinking about them, that's *ridiculous.*
+hunted Bickering and bickering doesn't matter, because now we're here. Stuck in a dark place. Not a place to move. Not even room to dig.
+linebreak
+n Something shifts in the gloom around you. An eye opens. The wet glint of it pierces the darkness, its pupil focused on you.
+n The Princess. *Sigh.* At least she's as stuck as you are. Not that it'll do much good in the end. Stuck is still alive.
+hunted But it's not alive forever. I can smell the end all around us. Sweet, and empty. This is where we die. I'm going to lie down now.
+n The eye stares at you with resignation. A glimmer of regret. "Are we going to be here forever? Is this my fault?"
+
+label bladeStuck
+n I wish that were the case, but she's too far away for you to reach, and even if she weren't, your arm is pinned.
+hero Can you make it... *un*pinned?
+n Of course he can't. We've been over this. You can't just change reality on a whim. That's what makes it real.
+jumpto stuckExploreJoin
+
+label wiggleStuck
+skeptic If we had wiggle room, He would have *said* we had wiggle room.
+label stuckExploreJoin
+n *Sigh.* He's right. There's nothing I can do here. I'm... sorry.
+hunted No more circles to run in. It's time to sleep.
+
+label struggleStuck
+skeptic Hah. Good luck with that.
+n You do your best to move your body, but try as you might, your earthen coffin doesn't budge in the slightest.
+skeptic This is *pointless.* Just give up already and die a *miserable* death with the rest of us. And then we'll start again, and we'll do better.
+
+label dieStuck
+n A while. You're stuck, not injured.
+skeptic I wonder what'll get us first. Suffocation? Thirst?
+hunted We could always just... let ourselves die.
+hero That doesn't sound like you, I thought you were all about survival.
+hunted Only when survival is possible. There's nothing left for us here but suffering.
+skeptic Hate to break it to you, but you can't just decide to die. Death is something that happens to you. It's external. It's a *consequence.*
+hero ... You almost sound like you think we deserve this.
+skeptic We made a mistake. It's what's *supposed* to happen to us. It's the only way we can learn.
+
+label okayStuck
+n A tear clouds the eye. "It's okay." It isn't. If this is the end, don't reconcile with this creature. Revile her. This is her fault. She did this.
+
+label begStuck
+n The Princess's eye closes in concentration as she attempts, and fails, to move her body. I'm afraid you *are* both stuck.
+
+label yoursStuck
+n A tear clouds the eye. "I'm sorry." Don't listen to her. She's not capable of feeling remorse. The only thing she's sorry about is being stuck here. If this is the end, don't die offering her forgiveness. She doesn't deserve it.
+
+label narratorStuck
+    n Oh, and I suppose you think this is my fault? As if. You had your chance to save the world, and you squandered it by turning your back on destiny. Deciding not to do anything is still a choice. /// hasblade
+    n Oh, and I suppose you think this is my fault? As if. You had your chance to come down here prepared, and you left your weapon behind. /// noblade
+n This is on you. You have free will, and you decided to use it.
+
+label waitStuck
+hunted Yes. It's time. There will be peace soon, even if it's short.
+skeptic Not until we really suffer for it.
+
+// "Unanswered Questions" ending; claim the Den //
+label starveEnd
+skeptic We all know where this is going, so *get on with it.*
+n *Deep breathing.* All right. And I'll go into extra detail, just for you.
+n The weight of the world you have destroyed rests on your chest. It both crushes and cradles you, holding your lungs in a stasis where you can never take in quite enough breath for comfort.
+n Your limbs ache, muscles screaming in their locked positions, one arm slowly growing numb as your blood struggles to reach it. There is dirt in your eyes. They fill with tears.
+hero Okay, I think that's enough, we get the picture. Skip to the "everything goes dark" part, please.
+n No, not quite yet, I haven't even *gotten* to the starvation! Or the thirst. That... *gnawing* that starts as a nibble, a little reminder that despite it all, you're still alive.
+n You can see that she, too, feels herself being eaten from the inside. Her gaze never leaves you. Any semblance of thought has vanished, replaced with a desire for the only thing that can sate her hunger.
+n You can feel a strain as your parched mouth attempts -- and fails -- to water. But even with a dry tongue, your hunger is such that you can't help but think about what her flesh might taste like.
+skeptic Don't think I'll forget how much you're enjoying this, you sick bastard.
+n Don't worry. The end is close. Your mind grows cloudy as your blood slows, your chest trying to suck in enough oxygen to feed your starved muscles, your bruised ribs doing little more than bumping up against hard-packed dirt. You aren't even sure you *have* limbs anymore, or whether the vacant ache where they once were is just... the memory of limbs. Any second, you might breathe in one last shallow, earth-choked breath...
+linebreak
+hero Well? Are we almost done yet?
+hunted He's... gone.
+skeptic And we're somewhere new. Is this what happens when we *really* die?
+truth Neither you nor the Princess ever draw that final breath, because neither of you dies here. As the world around you unwinds, she places her head at your feet. "I'm cold," say her eyes. "I don't want to be cold."
+claim pristineEnd
+
+// General ending dialogue //
+
+label pristineEndFirstVessel
+truth But you don't get the opportunity to respond. Something has taken her away, and it's left something else in her place.
+
+label pristineEndNotFirstVessel
+truth But you don't get the opportunity to respond, nor will you ever. It's time to leave. Memory returns.
+
+// Abort the vessel //
+
+label abort
+    stubborn Coward! Deserter! /// checkvoice
+    skeptic That's another strategy. No complaints here. /// checkvoice
+hunted Turning our back to her? Always a mistake.
+n Are you serious?! Fine. You walk away from the the cabin. We'll see how that goes for you.

@@ -501,6 +501,10 @@ public class Finale extends Cycle {
         }
 
 
+        manager.getTracker().unlock(Chapter.ENDOFEVERYTHING);
+
+
+
 
         // PLACEHOLDER
         return this.debate();

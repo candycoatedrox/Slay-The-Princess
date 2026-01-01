@@ -414,8 +414,7 @@ public class ChapterII extends StandardCycle {
 
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
         
@@ -1138,8 +1137,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -2611,8 +2609,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -3105,8 +3102,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -3944,8 +3940,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
         
@@ -4605,8 +4600,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -4810,8 +4804,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -5408,8 +5401,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -6075,8 +6067,7 @@ public class ChapterII extends StandardCycle {
                     this.abortVessel(true);
                     return ChapterEnding.ABORTED;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
         
@@ -6171,8 +6162,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -6608,8 +6598,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
@@ -7267,8 +7256,7 @@ public class ChapterII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
 
-                default:
-                    this.giveDefaultFailResponse(activeOutcome);
+                default: this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
