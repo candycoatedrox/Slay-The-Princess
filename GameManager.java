@@ -203,7 +203,7 @@ public class GameManager {
      * @return true if the player has been to c; false otherwise
      */
     public boolean hasVisited(Chapter c) {
-        return this.visitedChapters.get(c);
+        return visitedChapters.get(c);
     }
 
     /**
@@ -213,7 +213,7 @@ public class GameManager {
      */
     public boolean hasVisitedAll(Chapter... chapters) {
         for (Chapter c : chapters) {
-            if (!this.visitedChapters.get(c)) return false;
+            if (!visitedChapters.get(c)) return false;
         }
 
         return true;
@@ -225,7 +225,7 @@ public class GameManager {
      */
     public void updateVisitedChapters(ArrayList<Chapter> route) {
         for (int i = 1; i < route.size(); i++) {
-            this.visitedChapters.put(route.get(i), true);
+            visitedChapters.put(route.get(i), true);
         }
     }
 
@@ -235,7 +235,7 @@ public class GameManager {
      * @return true if the player has encountered v; false otherwise
      */
     public boolean hasMet(Voice v) {
-        return this.voicesMet.get(v);
+        return voicesMet.get(v);
     }
 
     /**
@@ -244,7 +244,7 @@ public class GameManager {
      */
     public void updateVoicesMet(ArrayList<Voice> voices) {
         for (Voice v : voices) {
-            this.voicesMet.put(v, true);
+            voicesMet.put(v, true);
         }
     }
 
@@ -268,7 +268,7 @@ public class GameManager {
             return null; // No vessel with this index *yet*
         }
 
-        return this.claimedVessels.get(n);
+        return claimedVessels.get(n);
     }
 
     /**
@@ -277,7 +277,7 @@ public class GameManager {
      * @return true if the player has claimed v; false otherwise
      */
     public boolean hasClaimedVessel(Vessel v) {
-        return this.claimedVessels.contains(v);
+        return claimedVessels.contains(v);
     }
 
     /**
@@ -287,7 +287,7 @@ public class GameManager {
      */
     public boolean hasClaimedAnyVessel(Vessel... vessels) {
         for (Vessel v : vessels) {
-            if (this.claimedVessels.contains(v)) return true;
+            if (this.hasClaimedVessel(v)) return true;
         }
         
         return false;
@@ -298,7 +298,7 @@ public class GameManager {
      * @return the number of Vessels the player has claimed
      */
     public int nClaimedVessels() {
-        return this.claimedVessels.size();
+        return claimedVessels.size();
     }
 
     /**
@@ -307,7 +307,7 @@ public class GameManager {
      */
     public void addToPlaylist(String song) {
         if (!song.isEmpty() && !this.playlist.contains(song)) {
-            this.playlist.add(song);
+            playlist.add(song);
         }
     }
 
@@ -503,6 +503,7 @@ public class GameManager {
             } else {
                 endingsFound.add(ending);
                 claimedVessels.add(ending.getVessel());
+                if (this.nClaimedVessels() < 5) tracker.unlock(ending.getVessel().getAchievementID());
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
@@ -561,7 +562,6 @@ public class GameManager {
                     this.addToPlaylist("The Long Quiet");
                     break;
                 case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
                     this.addToPlaylist("The Long Quiet");
                     this.addToPlaylist("The Shifting Mound Movement V");
                     this.addToPlaylist("Transformation");
@@ -597,8 +597,9 @@ public class GameManager {
             } else if (ending == ChapterEnding.GOODENDING) {
                 break;
             } else {
-                this.endingsFound.add(ending);
-                this.claimedVessels.add(ending.getVessel());
+                endingsFound.add(ending);
+                claimedVessels.add(ending.getVessel());
+                if (this.nClaimedVessels() < 5) tracker.unlock(ending.getVessel().getAchievementID());
                 
                 this.addToPlaylist(ending.getPlaylistSong());
                 switch (this.nClaimedVessels()) {
@@ -653,7 +654,6 @@ public class GameManager {
                     this.addToPlaylist("The Long Quiet");
                     break;
                 case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
                     this.addToPlaylist("The Long Quiet");
                     this.addToPlaylist("The Shifting Mound Movement V");
                     this.addToPlaylist("Transformation");
@@ -670,7 +670,6 @@ public class GameManager {
 
         this.endGame(ending);
     }
-
     
     /**
      * (DEBUG ONLY) Initiates and coordinates a full playthrough of the game, starting from a given ChapterEnding
@@ -716,8 +715,9 @@ public class GameManager {
             } else if (ending == ChapterEnding.GOODENDING) {
                 break;
             } else {
-                this.endingsFound.add(ending);
-                this.claimedVessels.add(ending.getVessel());
+                endingsFound.add(ending);
+                claimedVessels.add(ending.getVessel());
+                if (this.nClaimedVessels() < 5) tracker.unlock(ending.getVessel().getAchievementID());
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
@@ -776,7 +776,6 @@ public class GameManager {
                     this.addToPlaylist("The Long Quiet");
                     break;
                 case WHATHAPPENSNEXT:
-                case STRANGEBEGINNINGS:
                     this.addToPlaylist("The Long Quiet");
                     this.addToPlaylist("The Shifting Mound Movement V");
                     this.addToPlaylist("Transformation");
@@ -868,7 +867,11 @@ public class GameManager {
      * @param ending the ending achieved by the player
      */
     private void endGame(ChapterEnding ending) {
-        // credits, show playlist, etc
+        if (!ending.getAchievementID().isEmpty()) {
+            tracker.unlock(ending.getAchievementID());
+            if (ending != ChapterEnding.GOODENDING) tracker.unlock("gameEnd");
+        }
+        
 
         if (ending == ChapterEnding.DEMOENDING) {
             parser.printDialogueLine("You have reached the end of the demo.");
@@ -912,7 +915,7 @@ public class GameManager {
             default:
                 playlistText = "----- OUR SONG -----";
                 for (int i = 0; i < this.playlist.size(); i++) {
-                    playlistText += "\n  " + i + ".) " + this.playlist.get(i);
+                    playlistText += "\n  " + i + ".) " + playlist.get(i);
                 }
         }
 
@@ -921,6 +924,22 @@ public class GameManager {
     }
 
     // --- UTILITY ---
+
+    /**
+     * Unlock a given achievement
+     * @param id the ID of the achievement to unlock
+     */
+    public void unlock(String id) {
+        tracker.unlock(id);
+    }
+
+    /**
+     * Unlock the achievement list for a given Chapter when it is visited for the first time
+     * @param c the Chapter to unlock
+     */
+    public void unlock(Chapter c) {
+        tracker.unlock(c);
+    }
 
     /**
      * Warns the player of potential content warnings from committing to a choice, and allows them to change their mind
@@ -980,9 +999,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, ChapterEnding ending) {
-        if (!this.dynamicWarnings) {
-            return true;
-        }
+        if (!this.dynamicWarnings) return true;
 
         parser.printDialogueLine("[If you make this choice, you will encounter: " + c.getContentWarnings(ending) + ".]", true);
         boolean confirm = this.parser.promptYesNo("[Are you sure you wish to proceed?]");
@@ -998,9 +1015,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, boolean guaranteed) {
-        if (!this.dynamicWarnings) {
-            return true;
-        }
+        if (!this.dynamicWarnings) return true;
 
         if (guaranteed) {
             parser.printDialogueLine("[If you make this choice, you will encounter: " + c.getContentWarnings() + ".]", true);
@@ -1021,9 +1036,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, String extraWarnings) {
-        if (!this.dynamicWarnings) {
-            return true;
-        }
+        if (!this.dynamicWarnings) return true;
 
         parser.printDialogueLine("[If you make this choice, you will encounter: " + extraWarnings + ".]", true);
         parser.printDialogueLine("[You might also encounter: " + c.getContentWarnings() + ".]", true);
@@ -1042,9 +1055,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, ChapterEnding ending, String extraWarnings) {
-        if (!this.dynamicWarnings) {
-            return true;
-        }
+        if (!this.dynamicWarnings) return true;
 
         parser.printDialogueLine("[If you make this choice, you will encounter: " + extraWarnings + "; " + c.getContentWarnings(ending) + ".]", true);
         boolean confirm = this.parser.promptYesNo("[Are you sure you wish to proceed?]");
@@ -1061,9 +1072,7 @@ public class GameManager {
      * @return true if dynamic content warnings are disabled or the player chooses to continue; false otherwise
      */
     public boolean confirmContentWarnings(Chapter c, String extraWarnings, boolean guaranteed) {
-        if (!this.dynamicWarnings) {
-            return true;
-        }
+        if (!this.dynamicWarnings) return true;
 
         if (guaranteed) {
             parser.printDialogueLine("[If you make this choice, you will encounter: " + extraWarnings + ".]", true);
@@ -1193,9 +1202,7 @@ public class GameManager {
 
             if (breakLoop) break;
 
-            if (c.hasContentWarnings()) {
-                s += ": " + c.getContentWarnings();
-            }
+            if (c.hasContentWarnings())  s += ": " + c.getContentWarnings();
         }
 
         IOHandler.wrapPrintln(s);

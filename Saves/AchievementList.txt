@@ -1,3 +1,4 @@
+firstRoute / The Real Slay the Princess Starts Here / You'll know it when you see it.
 gameEnd / Our Song / Finish the game. (The Good Ending doesn't count.)
 galleryComplete / A Song to Remember / Finish the Gallery.
 
@@ -6,20 +7,19 @@ goodEnding / The Good Ending / You did it! You saved everyone!
 goodEndingFail / Past the Point of No Return / There's no going back now.
 
 --- The Spaces Between
-firstRoute / The Real Slay the Princess Starts Here / You'll know it when you see it.
-mirror1 / The Body / It's you. / hidden
-mirror2 / The Bloat / You've grown. / hidden
-mirror3 / The Decay / You've withered. / hidden
-mirror4 / The Remains / You've unraveled. / hidden
-mirror5 / The Long Quiet / All of this is you. / hidden
+mirror0 / The Body / It's you. / hidden
+mirror1 / The Bloat / You've grown. / hidden
+mirror2 / The Decay / You've withered. / hidden
+mirror3 / The Remains / You've unraveled. / hidden
+mirror4 / The Long Quiet / All of this is you. / hidden
 wait / I Never Left Your Side / Attempt to out-wait your destiny.
 narryEnd / Death of the Author / Run out of questions.
 narrySmash / I Don't Need Answers / Break the mirror without asking any questions.
-abort1 / Denial / Return to your destined path, or face the consequences.
-abort2 / Anger / Why have you come back?!
-abort3 / Bargaining / What can I do to make you stop?
-abort4 / Depression / You don't know what you're doing.
-abort5 / Acceptance / This is it.
+abort0 / Denial / Return to your destined path, or face the consequences.
+abort1 / Anger / Why have you come back?!
+abort2 / Bargaining / What can I do to make you stop?
+abort3 / Depression / You don't know what you're doing.
+abort4 / Acceptance / This is it.
 oblivion / Just as you once were nothing... / So you have become nothing once again.
 
 --- The End of Everything
@@ -34,7 +34,7 @@ yourNewWorld / Your New World / There are worse things than to be alone.
 
 --- The Adversary
 advyClaim / A Bold Heart / Bring the Adversary to Her. / hidden
-advyEnding / That Which Cannot Die Cannot Die... / A bloody dance to last forever.
+advyFight / That Which Cannot Die Cannot Die... / A bloody dance to last forever.
 advyPacifism / Strike me down... / Unleash the power of pacifism on your foe.
 advyUnarmed / I Didn't Hear No Bell / Fight your foe unarmed and go the distance.
 advyBait / That shouldn't have worked / Take the bait from your foe.
@@ -155,8 +155,8 @@ wildWound / The Wound / Some tears can never be mended.
 --- The Thorn
 thornClaim / A Cautious Heart / Bring the Thorn to Her. / hidden
 thornKiss / True Love's Kiss / Kiss her.
-thornLeave / Abandonment / Abandon her in a thorny prison.
 thornFree / Turning Over a New Leaf / Work through some issues and learn to trust again.
+thornLeave / Abandonment / Abandon her in a thorny prison.
 thornTrust / Trust Issues / Share a thorny prison.
 
 --- The Cage

@@ -80,6 +80,8 @@ public class ChapterI extends StandardCycle {
         Condition cantCabin = new Condition(!canSoft && !canHarsh);
 
         boolean canStranger = !manager.hasVisited(Chapter.STRANGER);
+
+        if (!this.isFirstVessel || manager.nVesselsAborted() > 0) manager.unlock("firstRoute");
         
         mainScript.runSection();
 
@@ -2350,6 +2352,7 @@ public class ChapterI extends StandardCycle {
 
                         System.out.println();
                         parser.printDialogueLine(CANTSTRAY);
+                        manager.unlock("goodEndingFail");
                         break;
                     }
                 
@@ -2366,6 +2369,7 @@ public class ChapterI extends StandardCycle {
 
                         System.out.println();
                         parser.printDialogueLine(CANTSTRAY);
+                        manager.unlock("goodEndingFail");
                         break;
                     }
 
@@ -2381,6 +2385,7 @@ public class ChapterI extends StandardCycle {
 
                         System.out.println();
                         parser.printDialogueLine(CANTSTRAY);
+                        manager.unlock("goodEndingFail");
                         break;
                     }
             }

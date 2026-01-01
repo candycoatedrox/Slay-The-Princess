@@ -834,7 +834,7 @@ public abstract class Cycle {
      * Unlocks the active Chapter's achievement gallery
      */
     public void unlockChapter() {
-        manager.getTracker().unlock(this.activeChapter);
+        manager.unlock(this.activeChapter);
     }
 
     public abstract ChapterEnding runChapter();

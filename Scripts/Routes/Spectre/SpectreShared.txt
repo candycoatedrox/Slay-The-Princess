@@ -622,6 +622,7 @@ cold She's real now. If she's making us dead, we should return the favor.
 label killBladeSlay
 n You swing your blade towards her briefly corporeal throat. It connects. A gash widens across her neck, glowing ectoplasm leaking from the wound.
 n But it's too little, too late. In her hand, you realize she clutches your still-beating heart. It thumps unsettlingly.
+unlock spectreDie
 hero Did... we get her?
 cold Even if we didn't, we've given her something to remember.
 p See you soon, killer.
@@ -637,6 +638,7 @@ label killNoBlade
 cold She's real now. Pity we don't have a weapon.
 n Your last moments are spent a helpless witness as she rips her hand from your chest, holding your still-beating heart in her clenched fist.
 label killNoSlayEnd
+unlock spectreDie
 hero But that's ours!
 p See you soon, killer.
 linebreak
@@ -786,18 +788,12 @@ cold So we did slay him after all. He had it coming, I suppose.
 hero But what about *us?* Are we just stuck here in... nowhere forever? Did taking her out of the cabin really end the world?
 cold We're still here.
 hero Yeah, but, that thing you said earlier... are we not part of the world anymore? Are we in some world that exists after the world ends, or on top of the other world but not in it, or...? Have we *never* been part of the world?
-
-label possessEndSoft
-p Okay, I've heard enough from these two. Let's see if I can pop out.
+    p Okay, I've heard enough from these two. Let's see if I can pop out. /// soft
+    p All right. Let's see if I'm stuck with you forever. /// harsh
 truth You feel a lightness in your chest as a pair of sunken eyes emerge from your body and stare up at you.
-p I'm out! You actually freed me, didn't you? I'm... outside. Thanks for giving me a second chance, killer.
-jumpto possessEndJoin
-
-label possessEndHarsh
-p All right. Let's see if I'm stuck with you forever.
-truth You feel a lightness in your chest as a pair of sunken eyes emerge from your body and stare up at you.
-p Guess I'm not! All's well that ends well, right? You lived up to your end of the bargain, so I'll live up to mine. Thanks.
-label possessEndJoin
+unlock spectreFree
+    p I'm out! You actually freed me, didn't you? I'm... outside. Thanks for giving me a second chance, killer. /// soft
+    p Guess I'm not! All's well that ends well, right? You lived up to your end of the bargain, so I'll live up to mine. Thanks. /// harsh
 hero Don't mention it.
 p I think... this is where I'm meant to be...
 claim possessEnd

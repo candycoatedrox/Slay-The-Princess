@@ -296,6 +296,7 @@ oppo I think we know why.
 linebreak
 n You feel something dig into your shoulder, sharp and piercing, the Princess clawing at you and pulling you down with her full weight.
 n Together, you tumble back down the uneven stairs, your body and hers crashing against the unyielding wooden roots until finally, you both separate with a bone-shaking thud against the basement floor. You feel something pop.
+unlock witchLocked
 n The Princess lands against the far wall, gasping as she struggles to recover from the impact.
 n You're still in shock, trying to get ahold of yourself. She grins as you continue to remain exactly where you are, cackling derisively as she watches you realize that you won't be getting up.
 hero Wait. Why won't we be getting up?
@@ -333,6 +334,7 @@ jumpto backStabJoin
 label backStabUgh
 oppo Oh, you're no fun. But at least you get how important it is that we leave this basement at the top of the pecking order.
 label backStabJoin
+unlock witchBetray
 n You plunge the blade deep into the Princess' back, driving her to her knees amid the roots.
 oppo Would you look at that! No need to thank me, but... y'know... please, do thank me.
 p Of course you'd betray me the moment I turned my back on you.
@@ -465,6 +467,7 @@ p Bye-bye, you loathsome little nuisance!
 n And then she slams the door on you. Its lock swiftly clicks into place.
 
 label lockedStart
+unlock witchLocked
     hero No! Not *again!* /// ifsource-locked
 bladeswitch locked
 
@@ -593,6 +596,7 @@ n You turn to leave. But as you do, there's a deep, guttural groan, seemingly ut
 n The cabin starts to get smaller.
 hero What the hell is going on?
 oppo We're getting out of here and saving our skins. That's what's going on.
+unlock witchLeave
 n As the roots that make up the walls of the cramped basement attempt to close in around you, instinct kicks in, and you bolt upstairs.
 n The steps are uneven and lively, creaking as they expand out of the dirt floor, the stairway growing smaller and smaller as you dart up towards the light. You manage to squeeze through the door just as the entrance seals itself shut behind you.
 n The cabin is smaller than it was before. And it's getting even smaller, and smaller.
@@ -621,10 +625,12 @@ oppo So much for finding an easy way out! I can't believe you're making us work 
 p Better a violent fool than a plotting coward. Better for me, at least.
 
 label fightStartFree
+unlock witchFight
 p As you close the distance, readying your strike, she throws a fistful of dirt into your eyes.
 jumpto fightStartJoin
 
 label fightStartNotFree
+unlock witchFight
 n As you close the distance, readying your strike, the Princess' chain falls from her wrist.
 n She takes advantage of your split second of surprise, and throws a fistful of dirt into your eyes.
 hero She could have gotten out of those the whole time! That sneaky little...

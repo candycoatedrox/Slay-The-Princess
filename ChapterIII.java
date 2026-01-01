@@ -321,6 +321,10 @@ public class ChapterIII extends StandardCycle {
             default: throw new RuntimeException("Cannot run an invalid chapter");
         }
 
+        if (!ending.getAchievementID().isEmpty()) {
+            manager.unlock(ending.getAchievementID());
+        }
+
         return ending;
     }
 
@@ -548,7 +552,7 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             // Mutually Assured Destruction / The Empty Cup
-            case MUTUALLYASSURED:
+            case WATERSTEEL:
                 this.route.add(Chapter.RAZOR);
                 this.route.add(Chapter.ARMSRACE);
                 this.route.add(Chapter.MUTUALLYASSURED);
@@ -556,7 +560,7 @@ public class ChapterIII extends StandardCycle {
                     if (v != Voice.HERO) this.voicesMet.add(v);
                 }
                 break;
-            case EMPTYCUP:
+            case FORMLESS:
                 this.route.add(Chapter.RAZOR);
                 this.route.add(Chapter.NOWAYOUT);
                 this.route.add(Chapter.EMPTYCUP);
@@ -2138,9 +2142,9 @@ public class ChapterIII extends StandardCycle {
         mainScript.runSection("empty2");
 
         if (this.hasBlade) {
-            return ChapterEnding.MUTUALLYASSURED;
+            return ChapterEnding.WATERSTEEL;
         } else {
-            return ChapterEnding.EMPTYCUP;
+            return ChapterEnding.FORMLESS;
         }
     }
 

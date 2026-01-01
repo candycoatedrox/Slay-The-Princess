@@ -189,6 +189,7 @@ n You remember that you are a distinct being with a finite form and a mortal bod
 label beastFallApartCont
 pint No! I devoured you! I won! I put things back the way they were supposed to be!
 label fallApartContJoin
+unlock wildWound
 n Some divisions, when sown, can never truly be mended. A cavernous gash rips across whatever it was you thought you were.
 n A cabin comes into being among the trees. It approaches, and it swallows your body whole.
 linebreak
@@ -252,6 +253,7 @@ truth But you never see her die. It's time to leave. Memory returns.
 
 // "A Glimpse of Something Bigger" ending; claim the Networked Wild //
 label networkStart
+unlock wildNetwork
 n You fall inward, into a network of connections too vast for your mind to occupy. Are you a path in the woods? Are you a body? Can you even grasp the fuzziest edges of the shapes that confine you?
 pint We can change to fill them together.
     hunted We don't need to be everywhere. We just need to test the boundaries. /// checkvoice

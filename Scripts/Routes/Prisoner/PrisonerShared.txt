@@ -327,6 +327,7 @@ hero Um... e-excuse me?
 n Yes?
 hero Are we... stuck here now?
 n Yes.
+unlock prisonerChain
 p Huh. So it does fit. And I guess it doesn't like your knife. We're stuck here together, aren't we? That's funny.
 hero What are we supposed to do now?
 skeptic Can't even cut ourselves out. Guess we'll... starve.
@@ -461,7 +462,7 @@ n But a single focused blow was all it took. Your blade pierces up through her r
 n The chains loosen. The darkness creeping in at the edges of your vision subsides.
 p None of this was ever very fair, was it? But I did kill you last time. I should have expected you might want some petty revenge.
 p Unfortunately for you, that means you've dug your own grave. You can forget about me ever helping you again. Even if it damns us both.
-linebreak
+unlock prisonerSlay
 n And just like that, the Princess is slain, and the world is saved. Whenever you're ready, you can proceed to your reward.
 skeptic I don't like this. It was too easy.
 hero It was not "too easy!" We almost died!
@@ -554,6 +555,7 @@ n Are you listening to yourself? Do I need to explain to you why decapitation is
 n You open the cabin door, ready to return to a world saved from certain doom.
 n Only, a world saved from certain doom isn't what you find. Instead, what you find is -- wait, no, that's not right.
 truth The Princess slowly opens her eyes.
+unlock prisonerHead
 p Well played.
 quietcreep
 n This is -- this -- this is the end of the world, isn't it? I always thought I'd at least have time to explain myself before I had to watch it happen, but it's already --
@@ -616,6 +618,7 @@ truth --- Good Ending! =:) YOU DID IT!!! you saved EVERYONE! --- /// interrupt
 pause 2000
 linebreak
 skeptic No. You stop that! Stop all this nonsense.
+unlock prisonerGood
 n You really don't want to be happy, do you?
 jumpto suggestSlain /// checkfalse
 skeptic You know what you have to do.

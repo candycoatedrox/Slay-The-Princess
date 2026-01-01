@@ -524,6 +524,7 @@ jumpto cantDieJoin
 label cantDieAltThought
 n But you did think it, didn't you? *Sigh.* I tried, you know. I tried very hard to make this work.
 label cantDieJoin
+unlock advyFight
 hero I. I don't like that resignation. Are you sure we can't just unthink it?
 n Yes. Like I said, I'm afraid some thoughts can't be unthought. I'll be back in a moment. I'm going to pour myself a stiff drink. If I'm going to see the end of everything, I'd rather not be sober.
 stubborn So I was right! Why are all of you so glum? This is perfect, isn't it? We get to experience greatness and battle and triumph forever.
@@ -615,7 +616,7 @@ n The Princess remains unflinching as you run her down, her stoic expression onc
 hero Did she really just... let us do that?
 n Apparently, yes.
 p See you soon.
-linebreak
+unlock advyBait
 n And then she stumbles back into the wall, the blade still lodged firmly in her chest. She collapses to the ground.
 n She's dead. It's over. It's finally over.
 stubborn But... but it can't be over! She said she'd be back!

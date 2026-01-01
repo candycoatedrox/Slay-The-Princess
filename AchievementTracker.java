@@ -245,11 +245,14 @@ public class AchievementTracker {
 
                 if (achievement.showsUnlockMessage()) {
                     System.out.println();
-                    parser.printDialogueLine("[ ACHIEVEMENT UNLOCKED: " + achievement.getName() + " ]");
+                    parser.printDialogueLine("[ ACHIEVEMENT UNLOCKED: " + achievement.getName() + " ]", true);
                     if (manager.globalSlowPrint()) Script.pause(1000);
                     parser.printDialogueLine("[ " + achievement.getDescription() + " ]");
                     System.out.println();
+                    if (manager.globalSlowPrint()) Script.pause(1000);
                 }
+
+                if (this.nUnlockedAchievements == this.nAchievements - 1) this.unlock("galleryComplete");
             }
         } else {
             throw new IllegalArgumentException("Achievement " + id + "does not exist");

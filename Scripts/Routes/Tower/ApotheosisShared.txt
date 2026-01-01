@@ -61,6 +61,7 @@ n You already know everything you need to know.
 
 n As you step forward, the cabin explodes.
 n You're flung backwards, violently slamming into a tree as debris rains down around you.
+unlock apoAscend
 n You watch in paralyzed awe and terror as the Princess emerges, her body unfurling from some vast space as she stands upright to face you.
 n The world bows to her. The ruined landscape shifts, trees and stone and the ground itself succumbing to her gravity, orbiting her like a great black hole.
 p Finally, the little bird has set me free. This is always how it was going to end, and this is always how it was going to begin.
@@ -222,6 +223,7 @@ n The Princess's face remains serene as your blade plummets towards her heart.
 p A victory, but one that remains rooted in the material. And I am beyond that now. Come. Let us leave this world of illusions.
 linebreak
 truth Before your blade can pierce her heart, it is vanished from your hand. The world around you unravels into a textured nothing.
+unlock apoFightPara
 p You have no weapon. Our battle is at an end.
 label paraFightJoin
 broken Is she going to hurt us now?

@@ -343,6 +343,7 @@ hero I get it! We shouldn't have killed her! Just get it away from us, please!
 cold The past is the past. There's no changing it. There's nothing to fix.
 skeptic And there's not a lot we can do about the present, either. Not unless we think. Like we should have been doing all along!
 n But there is no thinking as you drown. You desperately try to pull yourself back to the surface again, and again, and again, your icy limbs flailing desperately against the grip of her rotting corpse. And all the while her ghastly figure stares down at you, expressionless, as unfeeling as the weight around your ankle.
+unlock greyDrowned
 quietcreep
 p Your lungs fill with water the same way mine filled with blood. In the end, we're not so different.
 claim drownedEnd
@@ -429,6 +430,7 @@ smitten There are still the feelings of the heart. Those never go away.
 cold Oh, they always do in the end. You just haven't experienced enough. Eventually you'll want them to stop, too. You'll make them stop. Trust me.
 quietcreep
 n The Princess' smile never fades. Her skin peels away, and then her muscle, until all you can see is her charring skull, locked in an eternal grin.
+unlock greyBurned
 smitten It's very romantic, really. We got our happy ending after all. We can die happy.
 claim burnedEnd
 

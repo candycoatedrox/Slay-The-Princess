@@ -293,6 +293,7 @@ n But you don't have time to protest her premature observation of your death, be
 label eatenStartPlayDead
 hero We're playing dead?
 hunted It's unexpected. It could work.
+unlock beastPlayDead
 n As the Princess lunges from the shadows once more, you collapse to the ground, feigning death. She lands directly on top of you with her full weight, nearly crushing you into the dirt, but then... silence. Only broken by the sound of your beating heart.
 hero It actually worked, didn't it? Only... what do we do to make her leave? Do we just keep playing dead?
 n She sniffs at you, shifting her weight uncomfortably as her face finds yours. Her breaths are hot and oppressive against your skin.
@@ -407,6 +408,7 @@ label eatenSurrender
 p Oh, can I?
 n The click of what you presume to be a door ripples through the layers of suffocating flesh.
 label eatenSurrenderJoin
+unlock beastFree
 p That wasn't so hard.
 n You feel her take another massive step, and then another, and then --
 hero And then?
@@ -432,6 +434,7 @@ label dissolvedSlay
 n Though your body is dissolving, eroding into unrecognizeable shapes, your will drives it forward. You have a target, and you will strike it.
 hunted We're too late, aren't we? This isn't survival, this is spite.
 n No. It's something better. It's fulfilling a noble destiny. Your lone functioning arm lashes out, stabbing up towards the Princess's heart.
+unlock beastSlay
 p So you found a way to kill me. Then we'll die together, and I will see you again soon.
 linebreak
 n With those prophetic words, you do not draw another breath, your body tangled and melting in the cooling folds of the Princess's flesh. Everything goes dark, and you die.

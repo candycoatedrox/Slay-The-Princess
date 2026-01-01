@@ -115,6 +115,7 @@ truth There is only the dance. The ebb and flow, the shifting of the tides back 
 truth The deeper you fall into your play, the faster your hearts pound, and the faster the momentum volleys between you.
 truth An endlessly building crescendo and then... an opening.
 truth Your blade strikes free of volition, and hers strikes, too.
+unlock razorBlade
 truth Both strikes are lethal. Neither of you will survive, but neither of you fear what's to come. This is a good ending.
 claim endBlade
 
@@ -134,6 +135,7 @@ p Did you do that? It's funny if you did. You're nothing! You've done nothing to
 p That's who we are. But it's like you're nothing now. You can't be nothing! If you're nothing, then what am I? Am I nothing, too?
 p No! I'm the one who hurts you!
 truth She hurls herself at you, but as she does, her metal body bends outward, the very contact with what you are repelling her to the point of destruction.
+unlock razorEmpty
 truth The din of shrieking metal subsides, and something small and delicate falls into your hand. It's her heart. It beats gently, calmly, in your palm.
 linebreak
 truth Something reaches out from the darkness and gently takes her away.

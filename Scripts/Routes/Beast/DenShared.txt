@@ -195,6 +195,7 @@ truth But you do not get the chance to respond, nor will you ever. It's time to 
 label fightSuccessStart
 n With the near-silence of a determined predator, the Princess erupts from the shadows.
 n You're quick to react, swinging your blade, its tip intercepting her before she can draw first blood. She recoils, stunned for a brief moment.
+unlock denFight
 stubborn See? I told you. We needed to assert our might. We needed to prove to her that she can bleed, too. She'll doubt her every move now.
 n Her gleaming eyes watch you from the shadows, unblinking. There's fear in them now. But it is a fear wreathed in fury. And beneath it all lurks something far more primal.
 hunted Hunger.
@@ -283,6 +284,7 @@ truth But death doesn't come. It's time to leave. Memory returns.
 label skepticLureStart
 skeptic That's stage one. Now stay focused.
 n You dive into the tunnel and begin scrambling up towards the cabin. You hear her behind you, claws raking at the dirt, chains rattling, then snapping, breaths hot and heavy with the effort of the ascent.
+unlock denFlight
 n But the sounds are coming slower now, the breaths pained and stuttering. You no longer sense frantic motion behind you in the tunnel. You risk a glance.
 n She is a broad and sickly creature, her withered and emaciated flesh clinging to bones too large to fit into the narrow space. She managed to squirm her way into the tunnel in pursuit, but now she's stuck, incapable of either moving towards you, or returning to the open darkness of the basement below.
 hero So that's what she's become. She wasn't like this when we started... was she?

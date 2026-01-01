@@ -481,6 +481,7 @@ broken You're monsters and conspirators. I can't *bear* to watch this.
 n The Princess has been nothing but cruel to you. You should feel liberated by her fall.
 broken But I don't feel liberated. I feel empty.
 hero Aside from the pain, *I* feel fine.
+unlock towerSlay
 n She collapses to the floor. Her glassy eyes watch, unblinking, yet somehow still full of anguish and fear, as the two of you perish together.
 hero I suppose we were never going to get a happy ending here, were we?
 n Don't let those be your final thoughts. You saved the world. That's worth something.

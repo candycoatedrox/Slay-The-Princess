@@ -349,6 +349,7 @@ n Capillaries burst and muscle fibers tear as you and the Princess struggle over
         p YES IT'S JUST A BODY NOW BUT I CAN MAKE IT DO SO MANY TERRIBLE THINGS TO YOU! /// checkvoice-para-cold
         para One, two, three! ... One, two... three! N-next one, we all go. One, two, *three!* /// checkvoice-para-cold
 n You throw everything you have against her and manage, for one brief moment, to overpower the Princess's hold on your body. But that moment was all you needed. Your foot slips a few inches, and you collapse forward, the darkness swallowing you whole.
+unlock wraithAbyss
 p WHY DO YOU HATE ME?
 n Her thought slips through you, unheeded, as you fall, and fall, and fall.
 p HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA
@@ -426,7 +427,7 @@ hero This is it, then. The big moment.
     para Finally, we'll get to see what's *really* out there. /// checkvoice
     cheated I just hope it's a way out.
 p THE HANDLE CLICKS AND WE PUSH FORWARD. THE AIR IS DIFFERENT HERE.
-linebreak
+unlock wraithFree
 truth But as you step outside the bounds of the cabin, you feel another violent tear, a rending that cuts all the way down to your soul.
 truth You are once again separated from everything that had nestled in the deep crevices of your body, from everything that isn't you.
 hero We're us again.

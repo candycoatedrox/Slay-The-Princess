@@ -221,6 +221,10 @@ public class ChapterII extends StandardCycle {
             default: throw new RuntimeException("Cannot run an invalid chapter");
         }
 
+        if (!ending.getAchievementID().isEmpty()) {
+            manager.unlock(ending.getAchievementID());
+        }
+
         if (!ending.isFinal()) {
             ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
             ending = chapter3.runChapter();
@@ -4869,6 +4873,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
+                    manager.unlock("beastFreeze");
                     mainScript.runSection("eatenStartOther");
                     return this.beastEaten(false, false);
 

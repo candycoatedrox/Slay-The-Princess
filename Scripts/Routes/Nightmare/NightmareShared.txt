@@ -592,6 +592,7 @@ para We are NOT going back down there. Heart. Lungs...
 
 // "A World of Terror" ending; claim the Nightmare //
 label leaveCabinEnd
+unlock nightFree
 n The doorknob twists in your hand, revealing the forested path beyond the cabin. You *bastard.* You've actually done it. You've actually doomed everyone.
 quietcreep
 p It's so beautiful. I can't wait to ruin it.
@@ -621,9 +622,8 @@ sourceswitch Slay
 // Grants you the Voice of the Cold //
 label basementSlay
 p You're not getting those stairs back. I'll see you when you finally decide to die.
-linebreak
 n She falls to the ground, unmoving.
-linebreak
+unlock nightStuck
 para Oh. I-I can stop now, can't I?
 para I can! *Sigh.* Finally.
 hero And now that she's gone, you can let us out of here, right?
@@ -641,6 +641,7 @@ n In her final moments, the Princess lunges forward, tackling you, and you both 
 n As the two of you fall, you rip your blade from her chest, tightly clutching it in your hands.
 p Have fun falling forever! I'll see you when you finally decide to die.
 n She tears herself away from you and tumbles away into the darkness.
+unlock nightFall
 n You are alone. And you are falling. Forever. But you saved the world. You should be proud of yourself for seeing this through.
 para Oh. I-I can stop now, can't I?
 para I can! *Sigh.* Finally.

@@ -463,6 +463,14 @@ public class Finale extends Cycle {
      */
     private void finalMirror() {
         // starts right after mirror shatters
+
+
+
+
+
+
+
+        manager.unlock(this.vessels[4].getAchievementID());
     }
 
     /**
@@ -501,7 +509,7 @@ public class Finale extends Cycle {
         }
 
 
-        manager.getTracker().unlock(Chapter.ENDOFEVERYTHING);
+        manager.unlock(Chapter.ENDOFEVERYTHING);
 
 
 

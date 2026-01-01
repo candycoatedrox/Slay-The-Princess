@@ -1378,7 +1378,7 @@ public class Script {
             // Invalid line; print error message and skip to next line
             System.out.println("[DEBUG: Invalid unlock in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
         } else {
-            manager.getTracker().unlock(argument);
+            manager.unlock(argument);
         }
     }
 

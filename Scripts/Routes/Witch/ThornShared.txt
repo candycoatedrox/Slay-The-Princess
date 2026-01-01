@@ -271,6 +271,7 @@ n Blade safely in hand, you turn it on the Princess, and drive it towards her he
 n But her thistled prison proves to be an impossible obstacle, its thorns digging deeper and deeper into your flesh the closer you come to striking the fatal blow.
     smitten Ha! We're not going to make it. This is what we deserve. Better we trap ourselves in this eternal moment than have her blood on our hands. We still managed to get our romantic end, in a way. /// checkvoice
     cheated Those damned vines are going to stop us, just like they stopped her. Of course! Like we should have expected it to turn out any other way. It's funny, really. I'm laughing. /// checkvoice
+unlock thornTrust
 n The tip of your blade only manages to touch her sternum before it stops moving entirely. A single drop of blood trickles down her chest as the two of you stare into each others' eyes.
 n Come on. Just push it a little further. *Sigh.* But you can't, can you?
 p I knew this was coming. I can't believe I ever let myself hope for better. This was always going to be us, wasn't it?
@@ -334,6 +335,7 @@ n If history itself were not about to end, historians would document this moment
 hero He's making fun of us!
 smitten It doesn't matter either way. Because this is good stuff.
 n I'm aware of my skills.
+unlock thornKiss
 n But unfortunately for you, the moment doesn't last forever. You open your eyes. The Princess smiles gently up at you. Time for you to damn the whole world to oblivion, I suppose.
 p That was nice.
 
@@ -363,6 +365,7 @@ n You and the Princess hesitate at the cabin door. This is your last chance.
 hero We've already made our decision.
 p We're finally leaving here together, aren't we? And all we had to do was trust each other. It wasn't easy, but... I'm glad we finally could.
 
+unlock thornFree
 n Hands clasped, the two of you open the door, and step out into a new day. You irredeemable murderers.
 quietcreep
 p What do we do now?
@@ -373,6 +376,7 @@ claim genericEnd
 // Attempt to leave //
 
 label leaveStart
+unlock thornLeave
     quietcreep /// hasblade
 p Do you really think you can just wash your hands of all this? Do you really think you can just leave me here?!
 oppo This is even better than stabbing her. The same reward without any of that nasty effort.
@@ -401,6 +405,7 @@ n You rush towards the Princess, arm outsretched and grasping for the blade.
 n But as you tear through her thistled prison, the thorny vines dig deep into your arms, seemingly growing thicker and sturdier the closer you get to your goal. It feels like it should be within reach, yet you cannot reach it quickly enough.
 hero It's no use. Even if we grab it, we won't be able to pull it back out of there.
 oppo It's better than letting her eat it and losing it forever!
+unlock thornTrust
 n You just manage to reach her hand, grasping it firmly in yours, before the thorns finally trap you in place. Blood trickles down your arm, mingling with hers. The two of you lock eyes.
 p We're stuck like this, aren't we? I knew this was always going to be how it ended.
 claim genericEnd

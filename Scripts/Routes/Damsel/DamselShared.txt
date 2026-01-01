@@ -364,6 +364,7 @@ smitten Or she's innocent. How could a beauty like her be capable of ending the 
 // "And They Lived Happily Ever After" ending; claim the Deconstructed Damsel //
 label deconEnding
 truth She degrades even further, her outline becoming sketchy and smudged from being erased over and over. She looks like a child's first attempt at following an art tutorial.
+unlock damselDecon
 hero Is it just me or... does it feel like we're alone right now? Like we're the only ones here.
 claim deconEnd
 
@@ -466,6 +467,7 @@ label leaveEnding
 n Yes, I suppose you are going to do that, aren't you? You cross the room, opening the door to the cabin.
 quietcreep
 n And then you step outside.
+unlock damselFree
 p We did it! What should we do now?
 jumpto quietCont
 
@@ -565,7 +567,7 @@ n Your blade pierces her heart, and she collapses pathetically to the ground.
 p I'm sorry... did I do something wrong?
 smitten No, my love! You did nothing wrong! I'm sorry! I'M SORRY, NOT YOU!
 p I'm going to die now. I think that's what you want.
-linebreak
+unlock damselSlay
 n And just like that, she's dead. And the world is saved. Thank you for seeing this through. I know it must have been difficult.
 hero I feel sick.
 smitten Sick?! You took part in the murder of the fairest creature that's ever lived, and you merely feel *sick?!* I for one am absolutely distraught! Grief-stricken. *Inconsolable!*

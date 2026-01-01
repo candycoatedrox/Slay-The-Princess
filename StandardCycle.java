@@ -504,8 +504,8 @@ public abstract class StandardCycle extends Cycle {
                 mainScript.runClaimSection("mirror");
                 break;
 
-            case MUTUALLYASSURED:
-            case EMPTYCUP:
+            case WATERSTEEL:
+            case FORMLESS:
                 this.activeMenu = new OptionsMenu();
                 activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
 
@@ -669,7 +669,7 @@ public abstract class StandardCycle extends Cycle {
         this.mirrorPresent = false;
         this.clearVoices();
 
-        if (prevEnding == ChapterEnding.MUTUALLYASSURED || prevEnding == ChapterEnding.EMPTYCUP) {
+        if (prevEnding == ChapterEnding.WATERSTEEL || prevEnding == ChapterEnding.FORMLESS) {
             mainScript.runSection("mirrorGaze");
         } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && manager.hasClaimedAnyVessel(Vessel.RAZORFULL, Vessel.RAZORHEART))) {
             secondaryScript.runSection("gazeFirst");
@@ -680,10 +680,11 @@ public abstract class StandardCycle extends Cycle {
         System.out.println();
         switch (manager.nClaimedVessels()) {
             case 0:
-                manager.getTracker().unlock(Chapter.SPACESBETWEEN);
+                manager.unlock(Chapter.SPACESBETWEEN);
             case 1:
             case 2:
             case 3:
+                manager.unlock("abort" + manager.nClaimedVessels());
                 secondaryScript.runSection("gaze" + manager.nClaimedVessels());
                 this.theSpacesBetween(prevEnding);
                 break;
@@ -1557,7 +1558,10 @@ public abstract class StandardCycle extends Cycle {
                 break;
         }
 
-        if (manager.nVesselsAborted() != 5) secondaryScript.runSection("endLoop");
+        if (manager.nVesselsAborted() != 5) {
+            secondaryScript.runSection("endLoop");
+            manager.unlock("abort" + manager.nVesselsAborted());
+        }
     }
 
 }

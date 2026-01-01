@@ -11,7 +11,7 @@ public enum ChapterEnding {
     TOTOWER(Chapter.TOWER, Voice.BROKEN),
     TOTOWERUNHARMED(Chapter.TOWER, Voice.BROKEN),
     TOTOWERPATHETIC(Chapter.TOWER, Voice.BROKEN),
-    GOODENDING,
+    GOODENDING("goodEnding"),
     TOSPECTRE(Chapter.SPECTRE, Voice.COLD),
     TONIGHTMARE(Chapter.NIGHTMARE, Voice.PARANOID),
     TONIGHTMAREFLED(Chapter.NIGHTMARE, Voice.PARANOID),
@@ -28,9 +28,9 @@ public enum ChapterEnding {
     TODAMSEL(Chapter.DAMSEL, Voice.SMITTEN),
     
     // The Adversary
-    THATWHICHCANNOTDIE(Vessel.ADVERSARY, -1, 1, false),
-    STRIKEMEDOWN(Chapter.FURY, Voice.COLD),
-    HEARNOBELL(Chapter.FURY, Voice.CONTRARIAN),
+    THATWHICHCANNOTDIE("advyFight", Vessel.ADVERSARY, -1, 1, false),
+    STRIKEMEDOWN("advyPacifism", Chapter.FURY, Voice.COLD),
+    HEARNOBELL("advyUnarmed", Chapter.FURY, Voice.CONTRARIAN),
     DEADISDEAD(Chapter.FURY, Voice.BROKEN),
     THREADINGTHROUGH(Chapter.NEEDLE, Voice.HUNTED),
     FREEINGSOMEONE(Chapter.NEEDLE, Voice.SKEPTIC),
@@ -38,49 +38,49 @@ public enum ChapterEnding {
     // The Eye of the Needle
     FAILEDFIGHT(Vessel.NEEDLE, -1, 0, false),
     FAILEDFLEE(Vessel.NEEDLE, -1, -1, false),
-    WIDEOPENFIELD(Vessel.NEEDLE, 1, 1, true),
-    BLINDLEADINGBLIND(Vessel.NEEDLE, 1, -1, false),
+    WIDEOPENFIELD("needleFight", Vessel.NEEDLE, 1, 1, true),
+    BLINDLEADINGBLIND("needleFree", Vessel.NEEDLE, 1, -1, false),
 
     // The Fury
-    QUANTUMBEAK(Vessel.FURY, "An Empty Void that Dared to Dream it Was Alive", -1, 1, true),
-    HINTOFFEELING(Vessel.FURY, 0, -2, true),
+    QUANTUMBEAK("furyTower", Vessel.FURY, "An Empty Void that Dared to Dream it Was Alive", -1, 1, true),
+    HINTOFFEELING("furySlay", Vessel.FURY, 0, -2, true),
     LEAVEHERBEHIND(Vessel.FURY, 0, -1, true),
-    NEWLEAFWEATHEREDBOOK(Vessel.FURY, 1, 1, false),
-    GOINGTHEDISTANCE(Vessel.FURY, "The Bell", -1, 1, true),
+    NEWLEAFWEATHEREDBOOK("furyTogether", Vessel.FURY, 1, 1, false),
+    GOINGTHEDISTANCE("furyContra", Vessel.FURY, "The Bell", -1, 1, true),
     IFYOUCOULDUNDERSTAND(Vessel.REWOUNDFURY, 0, 1, false),
 
     // The Tower
-    OBEDIENTSERVANT(Vessel.TOWER, 1, 1, false),
+    OBEDIENTSERVANT("towerPledge", Vessel.TOWER, 1, 1, false),
     GODKILLER(Chapter.FURY, Voice.STUBBORN),
     APOBLADE(Chapter.APOTHEOSIS, Voice.CONTRARIAN),
     APOUNARMED(Chapter.APOTHEOSIS, Voice.PARANOID),
 
     // The Apotheosis
-    SOMETHINGTOREMEMBER(Vessel.APOTHEOSIS, 0, -1, true),
-    WINDOWTOUNKNOWN(Vessel.APOTHEOSIS, 0, -1, true),
-    GODDESSUNRAVELED(Vessel.APOTHEOSIS, "A Tapestry Undone", 0, -1, true),
-    GRACE(Vessel.APOTHEOSIS, 1, 1, false),
+    GRACE("apoAlone", Vessel.APOTHEOSIS, 1, 1, false),
+    WINDOWTOUNKNOWN("apoTendrils", Vessel.APOTHEOSIS, 0, -1, true),
+    SOMETHINGTOREMEMBER("apoFightContra", Vessel.APOTHEOSIS, 0, -1, true),
+    GODDESSUNRAVELED("apoFightParaEnd", Vessel.APOTHEOSIS, "A Tapestry Undone", 0, -1, true),
 
     // The Spectre
-    HITCHHIKER(Vessel.SPECTRE, 1, 1, false),
+    HITCHHIKER("spectreFree", Vessel.SPECTRE, 1, 1, false),
     HEARTRIPPERLEAVE(Chapter.WRAITH, Voice.PARANOID),
+    EXORCIST("spectreSlay", Chapter.DRAGON, Voice.OPPORTUNIST),
     HEARTRIPPER(Chapter.WRAITH, Voice.CHEATED),
-    EXORCIST(Chapter.DRAGON, Voice.OPPORTUNIST),
 
     // The Princess and the Dragon
-    WHATONCEWASONE(Vessel.PATD, 1, 1, false),
-    PRINCESSANDDRAGON(Vessel.PATD, 0, 1, false),
-    OPPORTUNISTATHEART(Vessel.PATD, "The Life-Taker", 0, -1, true),
+    PRINCESSANDDRAGON("dragonFuse", Vessel.PATD, 0, 1, false),
+    WHATONCEWASONE("dragonFree", Vessel.PATD, 1, 1, false),
+    OPPORTUNISTATHEART("dragonLeave", Vessel.PATD, "The Life-Taker", 0, -1, true),
     
     // The Wraith
-    PASSENGER(Vessel.WRAITH, 1, -1, false),
     EXORCISTIII(Vessel.WRAITH, -1, -2, true),
+    PASSENGER(Vessel.WRAITH, 1, -1, false),
     
     // The Nightmare
     WORLDOFTERROR(Vessel.NIGHTMARE, 1, 1, false),
     HOUSEOFNOLEAVE(Chapter.WRAITH, Voice.COLD),
     TERMINALVELOCITY(Chapter.WRAITH, Voice.OPPORTUNIST),
-    MONOLITHOFFEAR(Chapter.CLARITY),
+    MONOLITHOFFEAR("nightStay", Chapter.CLARITY),
 
     // The Moment of Clarity
     MOMENTOFCLARITY(Vessel.CLARITY, 1, 0, false),
@@ -96,16 +96,16 @@ public enum ChapterEnding {
     TOMUTUALLYASSURED(Chapter.MUTUALLYASSURED),
 
     // Mutually Assured Destruction
-    MUTUALLYASSURED(Vessel.RAZORFULL, -1, 1, true),
+    WATERSTEEL(Vessel.RAZORFULL, -1, 1, true),
 
     // No Way Out
     TOEMPTYCUP(Chapter.EMPTYCUP),
 
     // The Empty Cup
-    EMPTYCUP(Vessel.RAZORHEART, -1, 1, true),
+    FORMLESS(Vessel.RAZORHEART, -1, 1, true),
 
     // The Beast
-    DISSOLVINGWILL(Vessel.BEAST, 1, 1, false),
+    DISSOLVINGWILL("beastFree", Vessel.BEAST, 1, 1, false),
     DISSOLVINGWILLACCIDENT(Vessel.BEAST, 1, 1, false),
     FIGHT(Chapter.DEN, Voice.STUBBORN),
     FLIGHT(Chapter.DEN, Voice.SKEPTIC),
@@ -115,11 +115,11 @@ public enum ChapterEnding {
     DISSOLVED(Chapter.WILD, Voice.BROKEN),
 
     // The Den
-    HEROICSTRIKE(Vessel.DEN, "The Rhythm of the Flesh", 0, 0, true),
-    COUPDEGRACE(Vessel.DEN, "The Rhythm of the Flesh", 0, 1, true),
-    INSTINCT(Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
-    HUNGERPANGS(Vessel.DEN, -1, -1, false),
-    LIONANDMOUSE(Vessel.DEN, "Hand-in-Claw", 1, 1, false),
+    INSTINCT("denInstinct", Vessel.DEN, "The Rhythm of the Flesh", 0, -1, false),
+    HEROICSTRIKE("denStrike", Vessel.DEN, "The Rhythm of the Flesh", 0, 0, true),
+    COUPDEGRACE("denCoup", Vessel.DEN, "The Rhythm of the Flesh", 0, 1, true),
+    LIONANDMOUSE("denFree", Vessel.DEN, "Hand-in-Claw", 1, 1, false),
+    HUNGERPANGS("denStarve", Vessel.DEN, -1, -1, false),
     UNANSWEREDQUESTIONS(Vessel.DEN, -1, 1, false),
 
     // The Wild
@@ -134,49 +134,49 @@ public enum ChapterEnding {
     KNIVESOUTMASKSOFF(Chapter.WILD, Voice.STUBBORN),
     KNIVESOUTMASKSOFFGIVEUP(Chapter.WILD, Voice.CHEATED),
     PLAYINGITSAFE(Chapter.WILD, Voice.PARANOID),
-    PASTLIFEGAMBITSPECIAL(Chapter.THORN, Voice.SMITTEN),
-    PASTLIFEGAMBIT(Chapter.THORN, Voice.CHEATED),
+    PASTLIFEGAMBITSPECIAL("witchGive", Chapter.THORN, Voice.SMITTEN),
+    PASTLIFEGAMBIT("witchGive", Chapter.THORN, Voice.CHEATED),
 
     // The Thorn
+    NEWLEAF(Vessel.THORN, "The Thorn", 1, 1, false),
+    NEWLEAFKISS(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
+    ABANDONMENT(Vessel.THORN, -1, -1, false),
     TRUSTISSUES(Vessel.THORN, -1, -1, false),
     TRUSTISSUESSLAY(Vessel.THORN, -1, -1, false),
-    ABANDONMENT(Vessel.THORN, -1, -1, false),
-    NEWLEAFKISS(Vessel.THORN, "A Kiss From a Thorn", 1, 2, false),
-    NEWLEAF(Vessel.THORN, "The Thorn", 1, 1, false),
     
     // The Stranger
-    ILLUSIONOFCHOICE(Vessel.STRANGER, 0, 0, true),
+    ILLUSIONOFCHOICE("strangerEnd", Vessel.STRANGER, 0, 0, true),
 
     // The Prisoner
-    TALKINGHEADS(Vessel.PRISONERHEAD, 1, 1, false),
-    PRISONEROFMIND(Vessel.PRISONER, 1, 0, false),
+    TALKINGHEADS("prisonerHead", Vessel.PRISONERHEAD, 1, 1, false),
+    PRISONEROFMIND("prisonerChain", Vessel.PRISONER, 1, 0, false),
     COLDLYRATIONAL(Chapter.GREY, Voice.COLD),
     RESTLESSFORCED(Chapter.CAGE, Voice.CHEATED),
     RESTLESSSELF(Chapter.CAGE, Voice.PARANOID),
     RESTLESSGIVEIN(Chapter.CAGE, Voice.BROKEN),
 
     // The Cage
-    NOEXIT(Vessel.WATCHFULCAGE, -1, 1, false),
-    RIDDLEOFSTEEL(Vessel.WATCHFULCAGE, -1, 1, true),
-    ALLEGORYOFCAGE(Vessel.OPENCAGE, 1, 1, false),
-    FREEWILL(Vessel.WATCHFULCAGE, 0, -1, true),
+    NOEXIT("cageCycle", Vessel.WATCHFULCAGE, -1, 1, false),
+    RIDDLEOFSTEEL("cageSlay", Vessel.WATCHFULCAGE, -1, 1, true),
+    ALLEGORYOFCAGE("cageFree", Vessel.OPENCAGE, 1, 1, false),
+    FREEWILL("cageDrop", Vessel.WATCHFULCAGE, 0, -1, true),
 
     // The Grey
     BURNINGDOWNTHEHOUSE(Vessel.BURNEDGREY, -1, 1, true),
     ANDALLTHISLONGING(Vessel.DROWNEDGREY, -1, -1, true),
 
     // The Damsel
-    ROMANTICHAZE(Vessel.DAMSEL, 1, 1, false),
-    ANDTHEYLIVEDHAPPILY(Vessel.DECONDAMSEL, -1, 2, true),
+    ROMANTICHAZE("damselFree", Vessel.DAMSEL, 1, 1, false),
+    ANDTHEYLIVEDHAPPILY("damselDecon", Vessel.DECONDAMSEL, -1, 2, true),
     LADYKILLER(Chapter.GREY, Voice.COLD),
     CONTENTSOFOURHEARTDECON(Chapter.HAPPY, Voice.SKEPTIC),
     CONTENTSOFOURHEARTUPSTAIRS(Chapter.HAPPY, Voice.OPPORTUNIST),
 
     // Happily Ever After
-    IMEANTIT(Vessel.HAPPY, "I Meant It", 1, 2, false),
+    IMEANTIT("happyDance", Vessel.HAPPY, "I Meant It", 1, 2, false),
     LEFTCABIN(Vessel.HAPPY, 1, 1, false),
-    FINALLYOVER(Vessel.HAPPYDRY, 0, 1, true),
-    DONTLETITGOOUT(Vessel.HAPPY, 0, -1, false),
+    FINALLYOVER("happySlay", Vessel.HAPPYDRY, 0, 1, true),
+    DONTLETITGOOUT("happyStay", Vessel.HAPPY, 0, -1, false),
 
     // Misc.
     NEWCYCLE(Chapter.CH1),
@@ -184,17 +184,17 @@ public enum ChapterEnding {
     DEMOENDING,
 
     // The End of Everything (full game endings)
-    OBLIVION,
-    NOENDINGS,
-    THROUGHCONFLICT,
-    PATHINTHEWOODS,
-    NEWANDUNENDINGDAWN,
-    ANDEVERYONEHATESYOU,
-    WHATHAPPENSNEXT,
-    STRANGEBEGINNINGS,
+    OBLIVION("oblivion"),
+    NOENDINGS("ascendEarly"),
+    THROUGHCONFLICT("ascendLate"),
+    PATHINTHEWOODS("resetEnd"),
+    NEWANDUNENDINGDAWN("slayEnd"),
+    ANDEVERYONEHATESYOU("slayOopsEnd"),
+    WHATHAPPENSNEXT("leaveEnd"),
     YOURNEWWORLD;
 
     private final boolean isFinal;
+    private String achievementID;
 
     private final Chapter nextChapter;
     private Voice newVoice;
@@ -208,14 +208,34 @@ public enum ChapterEnding {
     // --- CONSTRUCTORS ---
 
     /**
+     * Standard constructor with an achievement
+     * @param achievementID the ID of the achievement tied to the ending
+     * @param nextChapter the Chapter this ending leads to
+     * @param newVoice the Voice gained at the start of the next Chapter
+     */
+    private ChapterEnding(String achievementID, Chapter nextChapter, Voice newVoice) {
+        this.isFinal = false;
+        this.achievementID = achievementID;
+        this.nextChapter = nextChapter;
+        this.newVoice = newVoice;
+    }
+
+    /**
      * Standard constructor
      * @param nextChapter the Chapter this ending leads to
      * @param newVoice the Voice gained at the start of the next Chapter
      */
     private ChapterEnding(Chapter nextChapter, Voice newVoice) {
-        this.isFinal = false;
-        this.nextChapter = nextChapter;
-        this.newVoice = newVoice;
+        this("", nextChapter, newVoice);
+    }
+
+    /**
+     * Constructor for gaining all Voices at the start of the next Chapter or the beginning of a Cycle with an achievement
+     * @param achievementID the ID of the achievement tied to the ending
+     * @param nextChapter the Chapter this ending leads to
+     */
+    private ChapterEnding(String achievementID, Chapter nextChapter) {
+        this(achievementID, nextChapter, (Voice)null);
     }
 
     /**
@@ -223,15 +243,45 @@ public enum ChapterEnding {
      * @param nextChapter the Chapter this ending leads to
      */
     private ChapterEnding(Chapter nextChapter) {
-        this(nextChapter, (Voice)null);
+        this("", nextChapter, (Voice)null);
+    }
+
+    /**
+     * Constructor for special Chapters (aborting a Chapter or game endings) with an achievement
+     * @param achievementID the ID of the achievement tied to the ending
+     */
+    private ChapterEnding(String achievementID) {
+        this.isFinal = true;
+        this.achievementID = achievementID;
+        this.nextChapter = Chapter.CH1;
     }
 
     /**
      * Constructor for special Chapters (aborting a Chapter or game endings)
      */
     private ChapterEnding() {
+        this("");
+    }
+
+    /**
+     * Constructor for endings where a Vessel has been claimed with an achievement
+     * @param achievementID the ID of the achievement tied to the ending
+     * @param v the Vessel claimed in the ending
+     * @param playlistSong the song the ending adds to the current playlist
+     * @param freedom the amount the ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
+     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     */
+    private ChapterEnding(String achievementID, Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
         this.isFinal = true;
-        this.nextChapter = Chapter.CH1;
+        this.achievementID = achievementID;
+        this.nextChapter = Chapter.SPACESBETWEEN;
+
+        this.vessel = v;
+        this.playlistSong = playlistSong;
+        this.freedom = freedom;
+        this.satisfaction = satisfaction;
+        this.yourNewWorld = yourNewWorld;
     }
 
     /**
@@ -254,6 +304,18 @@ public enum ChapterEnding {
     }
 
     /**
+     * Constructor for endings where a Vessel has been claimed with an achievement
+     * @param achievementID the ID of the achievement tied to the ending
+     * @param v the Vessel claimed in the ending
+     * @param freedom the amount the ending alters the Shifting Mound's freedom value
+     * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
+     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     */
+    private ChapterEnding(String achievementID, Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
+        this(achievementID, v, "", freedom, satisfaction, yourNewWorld);
+    }
+
+    /**
      * Constructor for endings where a Vessel has been claimed
      * @param v the Vessel claimed in the ending
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
@@ -272,6 +334,14 @@ public enum ChapterEnding {
      */
     public boolean isFinal() {
         return this.isFinal;
+    }
+
+    /**
+     * Accessor for achievementID
+     * @return the ID of the achievement tied to this ending
+     */
+    public String getAchievementID() {
+        return this.achievementID;
     }
 
     /**
