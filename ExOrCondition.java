@@ -33,11 +33,11 @@ public class ExOrCondition extends AbstractCondition {
     public boolean check() {
         int conditionsMet = 0;
         if (this.bool) conditionsMet += 1;
-
-        for (AbstractCondition c : conditions) {
-            if (c.check()) conditionsMet += 1;
+        if (conditions.length != 0) {
+            for (AbstractCondition c : conditions) {
+                if (c.check()) conditionsMet += 1;
+            }
         }
-
         return conditionsMet == 1;
     }
 

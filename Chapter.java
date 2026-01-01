@@ -258,8 +258,8 @@ public enum Chapter {
     }
 
     /**
-     * Checks whether or not this Chapter has a dedicated section in the Achievements Gallery
-     * @return whether or not this Chapter has a dedicated section in the Achievements Gallery
+     * Checks whether or not this Chapter has a dedicated section in the Achievement Gallery
+     * @return whether or not this Chapter has a dedicated section in the Achievement Gallery
      */
     public boolean hasGallery() {
         return Arrays.asList(GALLERYCHAPTERS).contains(this);

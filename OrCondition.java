@@ -31,12 +31,10 @@ public class OrCondition extends AbstractCondition {
      */
     @Override
     public boolean check() {
-        if (this.bool) return true;
-
+        if (this.bool || conditions.length == 0) return true;
         for (AbstractCondition c : conditions) {
             if (c.check()) return true;
         }
-
         return false;
     }
 

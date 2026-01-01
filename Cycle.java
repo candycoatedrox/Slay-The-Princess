@@ -166,6 +166,8 @@ public abstract class Cycle {
         /*
         This one is highly complex because it technically has 3 arguments instead of 1, and ALL of them are optional.
 
+        (If the player is attempting to view the Achievement Gallery or inputs an empty argument, this special syntax is bypassed entirely.)
+
         Syntax essentially boils down to:
             show [warnings/...] [general/by chapter/current/...] [warnings/...]"
             (where "..." indicates other valid arguments that are parsed the same way)
@@ -187,6 +189,20 @@ public abstract class Cycle {
         */
 
         String args = arguments;
+
+        // Handle achievements or empty argument
+        switch (arguments) {
+            case "achievements":
+            case "gallery":
+            case "achievement gallery":
+            case "achievements gallery":
+                manager.getTracker().showGallery();
+                return;
+
+            case "":
+                this.showEmptyArgumentMenu();
+                return;
+        }
 
         // Trim off leading "warnings" argument
         if (arguments.startsWith("warnings") || arguments.startsWith("content warnings") || arguments.startsWith("trigger warnings")) {
@@ -238,7 +254,26 @@ public abstract class Cycle {
     }
 
     /**
-     * Lets the player choose between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter
+     * Lets the player choose between viewing content warnings or the Achievement Gallery
+     */
+    protected void showEmptyArgumentMenu() {
+        manager.setTrueExclusiveMenu(true);
+        switch (parser.promptOptionsMenu(manager.showMenu())) {
+            case "warnings":
+                this.showWarningsMenu();
+                break;
+            case "achievements":
+                manager.getTracker().showGallery();
+                break;
+            case "cancel":
+                break;
+        }
+
+        manager.setTrueExclusiveMenu(false);
+    }
+
+    /**
+     * Lets the player choose between viewing general content warnings or content warnings by chapter
      */
     protected void showWarningsMenu() {
         manager.warningsMenu().setCondition("current", false);

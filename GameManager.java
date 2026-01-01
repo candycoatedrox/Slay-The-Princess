@@ -44,6 +44,7 @@ public class GameManager {
     // Global menus and options
     private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
     private final OptionsMenu settingsMenu;
+    private final OptionsMenu showMenu;
     private final OptionsMenu warningsMenu;
     private final Option intermissionAttackMound;
     private final Option intermissionAttackSelf;
@@ -71,11 +72,10 @@ public class GameManager {
         }
 
         this.voicesMet = new HashMap<>();
-        for (Voice v : Voice.TRUEVOICES) {
-            if (v != Voice.HERO) this.voicesMet.put(v, false);
-        }
+        for (Voice v : Voice.TRUEVOICES) if (v != Voice.HERO) this.voicesMet.put(v, false);
 
         this.settingsMenu = this.createSettingsMenu();
+        this.showMenu = this.createShowMenu();
         this.warningsMenu = this.createWarningsMenu();
         this.intermissionAttackMound = new Option(this, "attackMound", "[Attack the entity.]");
         this.intermissionAttackSelf = new Option(this, "attackSelf", "[Destroy your body.]");
@@ -88,17 +88,29 @@ public class GameManager {
     private OptionsMenu createSettingsMenu() {
         OptionsMenu menu = new OptionsMenu(true);
         menu.add(new Option(this, "warnings", "[Turn dynamic content warnings OFF.]", 0));
-        menu.add(new Option(this, "now playing", "[Turn soundtrack notifications OFF.]", 0));
-        menu.add(new Option(this, "slow print", "[Set print speed to INSTANT.]", 0));
-        menu.add(new Option(this, "auto advance", "[Turn auto-advancing dialogue ON.]", 0));
+        menu.add(new Option(this, "nowPlaying", "[Turn soundtrack notifications OFF.]", 0));
+        menu.add(new Option(this, "slowPrint", "[Set print speed to INSTANT.]", 0));
+        menu.add(new Option(this, "autoAdvance", "[Turn auto-advancing dialogue ON.]", 0));
+        menu.add(new Option(this, "resetAchievements", "[Reset achievements.]", 0));
         menu.add(new Option(this, "cancel", "[Return to game.]", 0));
-
+        return menu;
+    }
+    
+    /**
+     * Initializes the menu displayed when SHOW is used without argument
+     * @return the menu displayed when SHOW is used without argument
+     */
+    private OptionsMenu createShowMenu() {
+        OptionsMenu menu = new OptionsMenu(true);
+        menu.add(new Option(this, "warnings", "[Show content warnings.]", 0));
+        menu.add(new Option(this, "achievements", "[Show the Achievement Gallery.]", 0));
+        menu.add(new Option(this, "cancel", "[Return to game.]", 0));
         return menu;
     }
 
     /**
-     * Initializes the content warnings menu for this manager
-     * @return the content warnings menu for this manager
+     * Initializes the content warnings menu
+     * @return the content warnings menu
      */
     private OptionsMenu createWarningsMenu() {
         OptionsMenu menu = new OptionsMenu(true);
@@ -452,6 +464,14 @@ public class GameManager {
     }
     
     /**
+     * Returns the menu displayed when SHOW is used without argument (allowing the player to choose between viewing content warnings and the Achievement Gallery)
+     * @return the menu displayed when SHOW is used without argument
+     */
+    public OptionsMenu showMenu() {
+        return this.showMenu;
+    }
+    
+    /**
      * Returns the content warnings menu (allowing the player to choose which set of content warnings they wish to view)
      * @return the content warnings menu
      */
@@ -471,7 +491,7 @@ public class GameManager {
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
             this.currentCycle = new ChapterI(this, this.parser);
-            ending = this.currentCycle.runChapter();
+            ending = currentCycle.runChapter();
 
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
@@ -481,8 +501,8 @@ public class GameManager {
             } else if (ending == ChapterEnding.GOODENDING) {
                 break;
             } else {
-                this.endingsFound.add(ending);
-                this.claimedVessels.add(ending.getVessel());
+                endingsFound.add(ending);
+                claimedVessels.add(ending.getVessel());
 
                 this.moundFreedom += ending.getFreedom();
                 this.moundSatisfaction += ending.getSatisfaction();
@@ -793,10 +813,10 @@ public class GameManager {
         System.out.println("-----------------------------------");
 
         System.out.println();
-        System.out.println("CONTENT WARNING:");
+        IOHandler.wrapPrintln("CONTENT WARNING:");
         IOHandler.wrapPrintln("This is a horror game, and it is not intended for all audiences.");
         System.out.println();
-        if (this.parser.promptYesNo("Would you like to view the list of content warnings now?", false)) {
+        if (parser.promptYesNo("Would you like to view the list of content warnings now?", false)) {
             this.showGeneralWarnings();
             System.out.print("\n");
         }
@@ -807,7 +827,7 @@ public class GameManager {
         System.out.println();
         IOHandler.wrapPrintln("By default, some choices will ask you to confirm whether you are all right with potential content warnings beyond that point.");
         IOHandler.wrapPrintln("Would you like to turn dynamic content warnings off?");
-        if (this.parser.promptYesNo("You can change this at any time with > TOGGLE WARNINGS.", false)) {
+        if (parser.promptYesNo("You can change this at any time with > TOGGLE WARNINGS.", false)) {
             this.toggleAutoWarnings();
         }
 
@@ -815,7 +835,7 @@ public class GameManager {
         IOHandler.wrapPrintln("By default, the game will display the song currently playing from the official Slay the Princess soundtrack whenever it changes.");
         IOHandler.wrapPrintln("The soundtrack can be found on Spotify at https://spotify.link/PdG0uXZecEb.");
         IOHandler.wrapPrintln("Would you like to turn soundtrack notifications off?");
-        if (this.parser.promptYesNo("You can change this at any time with > TOGGLE NOW PLAYING.", false)) {
+        if (parser.promptYesNo("You can change this at any time with > TOGGLE NOW PLAYING.", false)) {
             this.toggleNowPlaying();
         }
 
@@ -824,7 +844,7 @@ public class GameManager {
         IOHandler.wrapPrintln("You can also view a list of available commands at any time with > HELP.");
         IOHandler.wrapPrintln("Press enter to advance dialogue.");
         IOHandler.wrapPrintln("(You cannot skip through dialogue that is currently printing with enter. This feature may be added in the future.)");
-        this.parser.waitForInput();
+        parser.waitForInput();
 
         System.out.println();
         System.out.println();
@@ -1245,19 +1265,22 @@ public class GameManager {
                 case "warnings":
                     this.toggleAutoWarnings();
                     break;
-                case "now playing":
+                case "nowPlaying":
                     this.toggleNowPlaying();
                     break;
-                case "slow print":
+                case "slowPrint":
                     this.toggleSlowPrint();
                     break;
-                case "auto advance":
+                case "autoAdvance":
                     this.toggleAutoAdvance();
+                    break;
+                case "resetAchievements":
+                    this.resetAchievements();
                     break;
                 case "cancel":
                     repeat = false;
                     break;
-                default: IOHandler.wrapPrintln("You have no other options.");
+                default: IOHandler.wrapPrintln("[Please input a valid option.]");
             }
 
             if (!repeat) break; // I know it *should* do this automatically, but it doesn't for some reason...?
@@ -1324,11 +1347,11 @@ public class GameManager {
     public void toggleAutoWarnings() {
         if (this.dynamicWarnings) {
             this.dynamicWarnings = false;
-            this.settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings ON.]");
+            settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings ON.]");
             IOHandler.wrapPrintln("[Automatic content warnings have been disabled.]");
         } else {
             this.dynamicWarnings = true;
-            this.settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings OFF.]");
+            settingsMenu.setDisplay("warnings", "[Turn dynamic content warnings OFF.]");
             IOHandler.wrapPrintln("[Automatic content warnings have been enabled.]");
         }
     }
@@ -1339,11 +1362,11 @@ public class GameManager {
     public void toggleNowPlaying() {
         if (this.showNowPlaying) {
             this.showNowPlaying = false;
-            this.settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications ON.]");
+            settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications ON.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been disabled.]");
         } else {
             this.showNowPlaying = true;
-            this.settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications OFF.]");
+            settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications OFF.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been enabled.]");
         }
     }
@@ -1354,11 +1377,11 @@ public class GameManager {
     public void toggleSlowPrint() {
         if (this.globalSlowPrint) {
             this.globalSlowPrint = false;
-            this.settingsMenu.setDisplay("slow print", "[Set print speed to SLOW.]");
+            settingsMenu.setDisplay("slow print", "[Set print speed to SLOW.]");
             IOHandler.wrapPrintln("[Slow printing has been disabled.]");
         } else {
             this.globalSlowPrint = true;
-            this.settingsMenu.setDisplay("slow print", "[Set print speed to INSTANT.]");
+            settingsMenu.setDisplay("slow print", "[Set print speed to INSTANT.]");
             IOHandler.wrapPrintln("[Slow printing has been enabled.]");
         }
     }
@@ -1369,21 +1392,44 @@ public class GameManager {
     public void toggleAutoAdvance() {
         if (this.autoAdvance) {
             this.autoAdvance = false;
-            this.settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue ON.]");
+            settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue ON.]");
             IOHandler.wrapPrintln("[Dialogue will now automatically advance.]");
         } else {
             this.autoAdvance = true;
-            this.settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue OFF.]");
+            settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue OFF.]");
             IOHandler.wrapPrintln("[Dialogue will no longer automatically advance.]");
             IOHandler.wrapPrintln("[Press enter to advance dialogue.]");
         }
     }
 
     /**
-     * Resets all achievements to locked
+     * Asks for confirmation, then resets the achievement gallery, locking all Chapters and achievements
+     * @param argument the argument entered by the player
+     */
+    public void reset(String argument) {
+        switch (argument) {
+            case "":
+            case "achievements":
+            case "gallery":
+            case "achievement gallery":
+            case "achievements gallery":
+                this.resetAchievements();
+                break;
+
+            default: this.showCommandHelp(Command.RESET);
+        }
+    }
+
+    /**
+     * Asks for confirmation, then resets the achievement gallery, locking all Chapters and achievements
      */
     public void resetAchievements() {
-        tracker.reset();
+        IOHandler.wrapPrintln("[Are you sure you wish to reset all achievements?]");
+        if (parser.promptYesNo("[All chapters and achievements will be locked. This decision cannot be undone.]")) {
+            tracker.reset();
+            System.out.println();
+            IOHandler.wrapPrintln("[Achievements have been reset.]");
+        }
     }
 
     public static void main(String[] args) {

@@ -354,8 +354,13 @@ public class IOHandler implements Closeable {
             case SETTINGS:
                 manager.settings();
                 commandOutcome += "Meta";
+                break;
             case TOGGLE:
                 manager.toggle(argument);
+                commandOutcome += "Meta";
+                break;
+            case RESET:
+                manager.reset(argument);
                 commandOutcome += "Meta";
                 break;
             case GO:

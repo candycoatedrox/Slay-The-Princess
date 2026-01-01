@@ -12,7 +12,8 @@ public class AchievementTracker {
     private final GameManager manager;
     private final IOHandler parser;
 
-    private final HashMap<Chapter, Boolean> unlockedChapters;
+    private final Condition galleryUnlocked;
+    private final HashMap<Chapter, Condition> unlockedChapters; // UNLOCKEDCHAPTERS SEEMS TO BE WORKING INCORRECTLY -- LOOK INTO THAT!!!
     private final IndexedLinkedHashMap<String, Achievement> achievements;
     private final HashMap<Chapter, ArrayList<String>> chapterAchievements;
     private final ArrayList<String> generalAchievements;
@@ -43,6 +44,7 @@ public class AchievementTracker {
     public AchievementTracker(GameManager manager, IOHandler parser) {
         this.manager = manager;
         this.parser = parser;
+        this.galleryUnlocked = new Condition();
         this.achievements = new IndexedLinkedHashMap<>();
         this.chapterAchievements = new HashMap<>();
         this.generalAchievements = new ArrayList<>();
@@ -57,9 +59,9 @@ public class AchievementTracker {
         achievementsMenu.add(new Option(this.manager, "locked", "[View locked achievements.]", 0, this.lockedRemaining));
         achievementsMenu.add(new Option(this.manager, "general", "General.", 0));
         for (Chapter c : Chapter.GALLERYCHAPTERS) {
-            unlockedChapters.put(c, false);
+            unlockedChapters.put(c, new Condition());
             chapterAchievements.put(c, new ArrayList<>());
-            achievementsMenu.add(new Option(this.manager, c.getID(), true, c.galleryHintLocked(), 0));
+            achievementsMenu.add(new Option(this.manager, c.getID(), unlockedChapters.get(c).getInverse(), c.galleryHintLocked(), 0, new OrCondition(unlockedChapters.get(c), this.galleryUnlocked)));
         }
 
         this.currentPage = new GlobalInt();
@@ -158,8 +160,8 @@ public class AchievementTracker {
             case ARMSRACE:
             case NOWAYOUT:
             case MUTUALLYASSURED:
-            case EMPTYCUP: return unlockedChapters.get(Chapter.RAZOR);
-            default: return unlockedChapters.get(c);
+            case EMPTYCUP: return unlockedChapters.get(Chapter.RAZOR).check();
+            default: return unlockedChapters.get(c).check();
         }
     }
 
@@ -255,8 +257,7 @@ public class AchievementTracker {
             case EMPTYCUP: c = Chapter.RAZOR;
         }
 
-        unlockedChapters.put(c, true);
-        achievementsMenu.setGreyedOut(c.getID(), false);
+        unlockedChapters.get(c).set();
         achievementsMenu.setDisplay(c.getID(), c.getTitle() + " - " + c.galleryHintUnlocked());
     }
 
@@ -272,8 +273,7 @@ public class AchievementTracker {
             case EMPTYCUP: c = Chapter.RAZOR;
         }
 
-        unlockedChapters.put(c, false);
-        achievementsMenu.setGreyedOut(c.getID(), true);
+        unlockedChapters.get(c).set(false);
         achievementsMenu.setDisplay(c.getID(), c.galleryHintLocked());
     }
 
@@ -303,7 +303,9 @@ public class AchievementTracker {
             while (tracker.hasNextLine()) {
                 lineContent = tracker.nextLine();
                 if (!lineContent.isEmpty()) {
-                    if (lineContent.startsWith("CHAPTER ")) {
+                    if (lineContent.equals("GALLERYUNLOCKED")) {
+                        galleryUnlocked.set();
+                    } else if (lineContent.startsWith("CHAPTER ")) {
                         currentChapter = Chapter.getChapter(lineContent.substring(8));
                         if (currentChapter == null) {
                             IOHandler.wrapPrintln("[DEBUG: Invalid chapter " + lineContent.substring(8) + " listed in UnlockAchievements.txt]");
@@ -317,7 +319,7 @@ public class AchievementTracker {
             }
         } catch (FileNotFoundException e) {
             if (!fromInitialize) {
-                for (Chapter c : Chapter.values()) unlockedChapters.put(c, false);
+                for (Chapter c : Chapter.values()) unlockedChapters.get(c).set(false);
                 for (Achievement a : achievements.values()) a.lock();
             }
         }
@@ -328,8 +330,13 @@ public class AchievementTracker {
      */
     public void updateTracker() {
         try (BufferedWriter tracker = new BufferedWriter(new FileWriter(TRACKER));) {
+            if (galleryUnlocked.check()) {
+                tracker.write("GALLERYUNLOCKED");
+                tracker.newLine();
+            }
+
             for (Chapter c : Chapter.GALLERYCHAPTERS) {
-                if (unlockedChapters.get(c)) {
+                if (unlockedChapters.get(c).check()) {
                     tracker.write("CHAPTER " + c.getID());
                     tracker.newLine();
                 }
@@ -349,7 +356,7 @@ public class AchievementTracker {
     // --- GALLERY ---
 
     /**
-     * Shows the player the Achievements Gallery
+     * Shows the player the Achievement Gallery
      */
     public void showGallery() {
         boolean repeat = true;
@@ -429,7 +436,11 @@ public class AchievementTracker {
                     }
 
                     System.out.println();
-                    IOHandler.wrapPrintln("Showing achievements " + firstShown + "-" + lastShown + " of " + nVisibleAchievements + ". " + this.nLockedHiddenAchievements + " hidden achievements not shown.");
+                    if (this.nLockedHiddenAchievements == 0) {
+                        IOHandler.wrapPrintln("Showing achievements " + firstShown + "-" + lastShown + " of " + nVisibleAchievements + ".");
+                    } else {
+                        IOHandler.wrapPrintln("Showing achievements " + firstShown + "-" + lastShown + " of " + nVisibleAchievements + ". " + this.nLockedHiddenAchievements + " hidden achievements not shown.");
+                    }
 
                     choice = parser.promptOptionsMenu(pageMenu);
                     switch (choice) {

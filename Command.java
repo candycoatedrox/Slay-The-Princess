@@ -2,9 +2,10 @@ import java.util.Arrays;
 
 public enum Command {
     HELP("help", "Display all available commands or information on a given command.", "", "help", "show", "toggle", "go", "walk", "enter", "leave", "turn", "slay", "take", "drop", "throw"),
-    SHOW("show", "Display content warnings (general, by chapter, or for the current chapter).", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route"),
+    SHOW("show", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     SETTINGS("settings", "View and change settings.", ""),
     TOGGLE("toggle", "Toggle a given setting.", "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow", "slow print", "slow dialogue", "instant print", "instant dialogue", "auto", "auto advance", "auto-advance", "advance", "auto dialogue"),
+    RESET("reset", "Reset achievements.", "", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     WALK("walk", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
@@ -87,20 +88,21 @@ public enum Command {
                 break;
                 
             case SHOW:
-                s += "SHOW [warnings] [set] [warnings]\n\n";
+                s += "SHOW [warnings] [target] [warnings]\n\n";
 
                 s += "- Arguments -\n";
-                s += "  - [warnings]: Both optional. The command functions the same, no matter if [warnings] is present or not. Can be any one of [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS].\n";
-                s += "  - [set]: Optional. The set of warnings you wish to view.\n\n";
+                s += "  - [warnings]: Both optional. When viewing content warnings, the command functions the same, no matter if [warnings] is present or not. Can be any one of [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS].\n";
+                s += "  - [target]: Optional. Either the set of warnings you wish to view or the Achievement Gallery.\n\n";
 
                 s += "- Variations -\n";
-                s += "  - SHOW: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
-                s += "  - SHOW [warnings]: Same as > SHOW. Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
+                s += "  - SHOW: Offers a choice between showing content warnings or the Achievement Gallery.\n";
+                s += "  - SHOW [warnings]: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
                 s += "  - SHOW [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]: Shows general content warnings.\n";
                 s += "  - SHOW [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]: Shows content warnings by chapter.\n";
                 s += "  - SHOW [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]: Shows content warnings for the current chapter, if applicable.\n";
                 s += "  - SHOW [warnings] [set]: Same as > SHOW [set].\n";
                 s += "  - SHOW [set] [warnings]: Same as > SHOW [set].\n";
+                s += "  - SHOW [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]: Show the Achievement Gallery.\n";
                 break;
 
             case SETTINGS:
@@ -124,6 +126,17 @@ public enum Command {
                 s += "  - TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]: Toggles soundtrack notifications on or off.\n";
                 s += "  - TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]: Toggles printing speed between slow and instant.\n";
                 s += "  - TOGGLE [AUTO / AUTO ADVANCE / AUTO-ADVANCE / ADVANCE / AUTO DIALOGUE]: Toggles automatic dialogue advancement.\n";
+                break;
+
+            case RESET:
+                s += "RESET [achievements]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [achievements]: Optional. Does not affect the way the command functions.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - RESET: Asks for confirmation, then resets all achievements.\n";
+                s += "  - RESET [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]: Same as > RESET. Asks for confirmation, then resets all achievements.\n";
                 break;
 
             case GO:
@@ -180,14 +193,14 @@ public enum Command {
                 break;
 
             case TURN:
-                s += "TURN [around]\n\n";
+                s += "TURN [back]\n\n";
 
                 s += "- Arguments -\n";
-                s += "  - [around]: Optional. Does not affect the way the command functions.\n\n";
+                s += "  - [back]: Optional. Does not affect the way the command functions.\n\n";
 
                 s += "- Variations -\n";
                 s += "  - TURN: Turn around and leave.\n";
-                s += "  - TURN [AROUND / BACK]: Same as > TURN. Turn around and leave.\n";
+                s += "  - TURN [BACK / AROUND]: Same as > TURN. Turn around and leave.\n";
                 break;
 
             case APPROACH:
@@ -284,6 +297,7 @@ public enum Command {
             case "show": return SHOW;
             case "settings": return SETTINGS;
             case "toggle": return TOGGLE;
+            case "reset": return RESET;
             case "go": return GO;
             case "walk": return WALK;
             case "proceed": return PROCEED;

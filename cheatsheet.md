@@ -10,9 +10,10 @@ This information can be viewed at any time in game using the `HELP` command.
 
 - [HELP:](#help) Display all available commands or information on a given command.
 - [SHOW:](#show) Display content warnings (general, by chapter, or for the current
-chapter).
+chapter) or the Achievement Gallery.
 - [SETTINGS:](#settings) View and change settings.
 - [TOGGLE:](#toggle) Toggle a given setting.
+- [RESET:](#reset) Reset achievements.
 - [GO:](#go) Move in a given direction.
 - [ENTER:](#enter) Enter a given location or the nearest appropriate location.
 - [LEAVE:](#leave) Leave the current location.
@@ -37,22 +38,23 @@ Syntax: `HELP [command]`
   - `HELP [command]`: Displays information on a given command.
 
 ## SHOW
-`SHOW`: Display content warnings (general, by chapter, or for the current chapter).
+`SHOW`: Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery..
 
-Syntax: `SHOW [warnings] [set] [warnings]`
+Syntax: `SHOW [warnings] [target] [warnings]`
 
 **Arguments:**
   - `[warnings]`: Both optional. The command functions the same, no matter if `[warnings]` is present or not. Can be any one of `[WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]`.
-  - `[set]`: Optional. The set of warnings you wish to view.
+  - `[target]`: Optional. Either the set of warnings you wish to view or the Achievement Gallery.
 
 **Variations:**
-  - `SHOW`: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).
-  - `SHOW [warnings]`: Same as `SHOW`. Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).
+  - `SHOW`: Offers a choice between showing content warnings or the Achievement Gallery.
+  - `SHOW [warnings]`: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).
   - `SHOW [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]`: Shows general content warnings.
   - `SHOW [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]`: Shows content warnings by chapter.
   - `SHOW [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]`: Shows content warnings for the current chapter, if applicable.
   - `SHOW [warnings] [set]`: Same as `SHOW [set]`.
   - `SHOW [set] [warnings]`: Same as `SHOW [set]`.
+  - `SHOW [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]`: Show the Achievement Gallery.
 
 ## SETTINGS
 `SETTINGS`: View and change settings.
@@ -78,6 +80,18 @@ Syntax: `TOGGLE [setting]`
   - `TOGGLE [NOW PLAYING / NP / MUSIC / SOUNDTRACK]`: Toggles soundtrack notifications on or off.
   - `TOGGLE [PRINT SPEED / PRINTING SPEED / DIALOGUE SPEED / SPEED / SLOW / SLOW PRINT / SLOW DIALOGUE / INSTANT PRINT / INSTANT DIALOGUE]`: Toggles printing speed between slow and instant.
   - `TOGGLE [AUTO / AUTO ADVANCE / AUTO-ADVANCE / ADVANCE / AUTO DIALOGUE]`: Toggles automatic dialogue advancement.
+
+## RESET
+`RESET`: Reset achievements.
+
+Syntax: `RESET [achievements]`
+
+**Arguments:**
+  - `[achievements]`: Optional. Does not affect the way the command functions.
+
+**Variations:**
+  - `RESET`: Asks for confirmation, then resets all achievements.
+  - `RESET [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]`: Same as `RESET`. Asks for confirmation, then resets all achievements.
 
 ## GO
 `GO`: Move in a given direction.
@@ -138,14 +152,14 @@ None.
 ## TURN
 `TURN`: Turn back.
 
-Syntax: `TURN [around]`
+Syntax: `TURN [back]`
 
 **Arguments:**
-  - `[around]`: Optional. Does not affect the way the command functions.
+  - `[back]`: Optional. Does not affect the way the command functions.
 
 **Variations:**
   - `TURN`: Turn around and leave.
-  - `TURN [AROUND / BACK]`: Same as `TURN`. Turn around and leave.
+  - `TURN [BACK / AROUND]`: Same as `TURN`. Turn around and leave.
 
 ## APPROACH
 `APPROACH`: Approach the mirror. Or approach her.

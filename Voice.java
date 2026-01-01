@@ -29,7 +29,7 @@ public enum Voice {
     PARASKEP("Voices of the Paranoid and Skeptic", "paraskep");
 
     private final String dialogueTag;
-    private final String shorthand;
+    private final String id;
     private final boolean external; // Used in Tower, Princess and the Dragon
 
     public static final Voice[] TRUEVOICES = {HERO, BROKEN, CHEATED, COLD, CONTRARIAN, HUNTED, OPPORTUNIST, PARANOID, SKEPTIC, SMITTEN, STUBBORN};
@@ -39,22 +39,22 @@ public enum Voice {
     /**
      * Constructor
      * @param tag the "dialogue tag" that appears at the beginning of the Voice's dialogue lines
-     * @param shorthand the shorthand name for this Voice
+     * @param id the internal ID of the Voice
      * @param external whether the Voice is external to the player's head
      */
-    private Voice(String tag, String shorthand, boolean external) {
+    private Voice(String tag, String id, boolean external) {
         this.dialogueTag = tag;
-        this.shorthand = shorthand;
+        this.id = id;
         this.external = external;
     }
 
     /**
      * Constructor
      * @param tag the "dialogue tag" that appears at the beginning of the Voice's dialogue lines
-     * @param shorthand the shorthand name for this Voice
+     * @param id the internal ID of the Voice
      */
-    private Voice(String tag, String shorthand) {
-        this(tag, shorthand, false);
+    private Voice(String tag, String id) {
+        this(tag, id, false);
     }
 
     // --- ACCESSORS & CHECKS ---
@@ -68,12 +68,12 @@ public enum Voice {
     }
 
     /**
-     * Accessor for shorthand
-     * @return the shorthand name for this Voice
+     * Accessor for id
+     * @return the internal ID for this Voice
      */
     @Override
     public String toString() {
-        return this.shorthand;
+        return this.id;
     }
     
     /**
@@ -175,7 +175,8 @@ public enum Voice {
             case "oppoext":
             case "opportunistext": return OPPOEXT;
 
-            case "nstub": return NARRSTUB;
+            case "nstub":
+            case "narrstub": return NARRSTUB;
             case "stubcont": return STUBCONT;
             case "paraskep": return PARASKEP;
 
