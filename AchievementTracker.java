@@ -12,13 +12,14 @@ public class AchievementTracker {
     private final GameManager manager;
     private final IOHandler parser;
 
-    private final Condition galleryUnlocked;
-    private final HashMap<Chapter, Condition> unlockedChapters; // UNLOCKEDCHAPTERS SEEMS TO BE WORKING INCORRECTLY -- LOOK INTO THAT!!!
-    private final IndexedLinkedHashMap<String, Achievement> achievements;
-    private final HashMap<Chapter, ArrayList<String>> chapterAchievements;
+    private Condition galleryUnlocked;
+    private HashMap<Chapter, Condition> unlockedChapters; // UNLOCKEDCHAPTERS SEEMS TO BE WORKING INCORRECTLY -- LOOK INTO THAT!!!
+    private IndexedLinkedHashMap<String, Achievement> achievements;
     private final ArrayList<String> generalAchievements;
+    private final HashMap<Chapter, ArrayList<String>> chapterAchievements;
 
     private final int nAchievements;
+    private final int nGeneralAchievements;
     private int nUnlockedAchievements = 0;
     private final GlobalInt nLockedAchievements;
     private final InverseCondition lockedRemaining;
@@ -28,13 +29,13 @@ public class AchievementTracker {
     private final OptionsMenu achievementsMenu;
     private final OptionsMenu returnMenu;
 
-    private static final int PAGELENGTH = 10;
+    public static final int PAGELENGTH = 15;
     private final GlobalInt currentPage;
     private final InverseCondition notFirstPage;
     private final OptionsMenu pageMenu;
 
     private static final File ACHIEVEMENTLIST = new File("Saves", "AchievementList.txt"); // Static file; contains a simple list of all valid achievements
-    private static final File TRACKER = new File("Saves", "UnlockedAchievements.txt"); // Dynamic file; tracks the current state of achievements
+    private static final File TRACKER = new File("Saves", "UnlockedAchievements.txt"); // Dynamic file; stores the current state of achievements
 
     // --- CONSTRUCTOR ---
 
@@ -47,9 +48,10 @@ public class AchievementTracker {
         this.manager = manager;
         this.parser = parser;
         this.galleryUnlocked = new Condition();
+        //System.out.println("Gallery unlocked: " + this.galleryUnlocked);
         this.achievements = new IndexedLinkedHashMap<>();
-        this.chapterAchievements = new HashMap<>();
         this.generalAchievements = new ArrayList<>();
+        this.chapterAchievements = new HashMap<>();
         this.nLockedAchievements = new GlobalInt();
         this.lockedRemaining = new InverseCondition(new NumCondition(this.nLockedAchievements, 0));
 
@@ -59,12 +61,14 @@ public class AchievementTracker {
         this.returnMenu = new OptionsMenu(true);
         
         achievementsMenu.add(new Option(this.manager, "locked", "[View locked achievements.]", 0, this.lockedRemaining));
-        achievementsMenu.add(new Option(this.manager, "general", "General.", 0));
+        achievementsMenu.add(new Option(this.manager, "general", "General", 0));
         for (Chapter c : Chapter.GALLERYCHAPTERS) {
             unlockedChapters.put(c, new Condition());
+            //System.out.println(c + " unlocked: " + unlockedChapters.get(c) + "; shown in menu: " + new OrCondition(unlockedChapters.get(c), this.galleryUnlocked));
             chapterAchievements.put(c, new ArrayList<>());
             achievementsMenu.add(new Option(this.manager, c.getID(), unlockedChapters.get(c).getInverse(), c.galleryHintLocked(), 0, new OrCondition(unlockedChapters.get(c), this.galleryUnlocked)));
         }
+        achievementsMenu.add(new Option(this.manager, "reset", "[Reset gallery.]", 0));
 
         this.currentPage = new GlobalInt();
         this.notFirstPage = new InverseCondition(new NumCondition(this.currentPage, 0));
@@ -82,6 +86,7 @@ public class AchievementTracker {
         this.readTracker(true);
 
         this.nAchievements = achievements.size();
+        this.nGeneralAchievements = generalAchievements.size();
     }
 
     /**
@@ -94,6 +99,8 @@ public class AchievementTracker {
         String[] split;
         String content;
         String id = "";
+        String[] hintSplit;
+        String hint;
         boolean hidden;
         boolean message;
 
@@ -114,22 +121,32 @@ public class AchievementTracker {
                         if (this.achievementExists(id)) {
                             System.out.println("[DEBUG: Duplicate achievement " + id + "]");
                         } else {
+                            hint = "";
                             hidden = false;
                             message = true;
                             for (int i = 3; i < split.length; i++) {
-                                switch (split[i]) {
-                                    case "hidden":
-                                        this.nHiddenAchievements += 1;
-                                        hidden = true;
-                                        break;
+                                if (split[i].startsWith("hint ")) {
+                                    hintSplit = split[i].split(" ", 2);
+                                    hint = hintSplit[1];
+                                } else {
+                                    switch (split[i]) {
+                                        case "samehint":
+                                            hint = split[2];
+                                            break;
 
-                                    case "silent":
-                                        message = false;
-                                        break;
+                                        case "hidden":
+                                            this.nHiddenAchievements += 1;
+                                            hidden = true;
+                                            break;
+
+                                        case "silent":
+                                            message = false;
+                                            break;
+                                    }
                                 }
                             }
 
-                            achievements.put(id, new Achievement(id, currentChapter, hidden, message, split[1], split[2]));
+                            achievements.put(id, new Achievement(id, currentChapter, hidden, message, split[1], split[2], hint));
 
                             if (currentChapter == null) {
                                 generalAchievements.add(id);
@@ -151,6 +168,21 @@ public class AchievementTracker {
     }
 
     // --- ACCESSORS & MANIPULATORS ---
+
+    /**
+     * Accessor for galleryUnlocked
+     * @return whether or not the Achievement Gallery is fully unlocked
+     */
+    public boolean galleryUnlocked() {
+        return galleryUnlocked.check();
+    }
+
+    /**
+     * Permanently unlocks the gallery
+     */
+    public void unlockGallery() {
+        galleryUnlocked.set();
+    }
 
     /**
      * Checks whether an achievement with the given ID exists
@@ -175,62 +207,6 @@ public class AchievementTracker {
     }
 
     /**
-     * Checks whether a given Chapter's achievement list has been unlocked
-     * @param c the Chapter to check
-     * @return whether the given Chapter's achievement list has been unlocked
-     */
-    public boolean check(Chapter c) {
-        switch (c) {
-            case ARMSRACE:
-            case NOWAYOUT:
-            case MUTUALLYASSURED:
-            case EMPTYCUP: return unlockedChapters.get(Chapter.RAZOR).check();
-            default: return unlockedChapters.get(c).check();
-        }
-    }
-
-    /**
-     * Returns a list of all currently unlocked achievements
-     * @return all currently unlocked achievements
-     */
-    private ArrayList<Achievement> unlockedAchievements() {
-        ArrayList<Achievement> unlocked = new ArrayList<>();
-        for (Achievement a : achievements.valueList()) {
-            if (a.isUnlocked()) unlocked.add(a);
-        }
-        return unlocked;
-    }
-
-    /**
-     * Returns a list of all currently unlocked achievements in a given list of achievement IDs
-     * @param ids the list of achievement IDs to check
-     * @return all currently unlocked achievements referenced in ids
-     */
-    private ArrayList<Achievement> unlockedAchievements(ArrayList<String> ids) {
-        ArrayList<Achievement> unlocked = new ArrayList<>();
-        Achievement a;
-        for (String id : ids) {
-            if (this.achievementExists(id)) {
-                a = achievements.get(id);
-                if (a.isUnlocked()) unlocked.add(a);
-            }
-        }
-        return unlocked;
-    }
-
-    /**
-     * Returns a list of all currently locked (non-hidden) achievements
-     * @return all currently locked (non-hidden) achievements
-     */
-    private ArrayList<Achievement> lockedAchievements() {
-        ArrayList<Achievement> locked = new ArrayList<>();
-        for (Achievement a : achievements.valueList()) {
-            if (!a.isUnlocked() && !a.isHidden()) locked.add(a);
-        }
-        return locked;
-    }
-
-    /**
      * Unlock a given achievement
      * @param id the ID of the achievement to unlock
      */
@@ -246,17 +222,28 @@ public class AchievementTracker {
                 if (achievement.showsUnlockMessage()) {
                     System.out.println();
                     parser.printDialogueLine("[ ACHIEVEMENT UNLOCKED: " + achievement.getName() + " ]", true);
-                    if (manager.globalSlowPrint()) Script.pause(1000);
-                    parser.printDialogueLine("[ " + achievement.getDescription() + " ]");
+                    if (manager.globalSlowPrint() && !manager.autoAdvance()) GameManager.pause(1000);
+                    parser.printDialogueLine("[ " + achievement.getDescription() + " ]", true);
+                    if (manager.autoAdvance()) GameManager.pause(1000);
+                    parser.waitForInput();
                     System.out.println();
-                    if (manager.globalSlowPrint()) Script.pause(1000);
                 }
 
                 if (this.nUnlockedAchievements == this.nAchievements - 1) this.unlock("galleryComplete");
             }
         } else {
-            throw new IllegalArgumentException("Achievement " + id + "does not exist");
+            throw new IllegalArgumentException("Achievement \"" + id + "\" does not exist");
         }
+    }
+
+    /**
+     * Checks whether a given Chapter's achievement list has been unlocked
+     * @param c the Chapter to check
+     * @return whether the given Chapter's achievement list has been unlocked
+     */
+    public boolean check(Chapter c) {
+        c = getGalleryChapter(c);
+        return unlockedChapters.get(c).check();
     }
 
     /**
@@ -264,15 +251,14 @@ public class AchievementTracker {
      * @param c the Chapter to unlock
      */
     public void unlock(Chapter c) {
-        switch (c) {
-            case ARMSRACE:
-            case NOWAYOUT:
-            case MUTUALLYASSURED:
-            case EMPTYCUP: c = Chapter.RAZOR;
-        }
-
+        c = getGalleryChapter(c);
         unlockedChapters.get(c).set();
-        achievementsMenu.setDisplay(c.getID(), c.getTitle() + " - " + c.galleryHintUnlocked());
+        
+        if (c.galleryHintUnlocked().isEmpty()) {
+            achievementsMenu.setDisplay(c.getID(), c.toString());
+        } else {
+            achievementsMenu.setDisplay(c.getID(), c.toString() + " - " + c.galleryHintUnlocked());
+        }
     }
 
     /**
@@ -280,15 +266,167 @@ public class AchievementTracker {
      * @param c the Chapter to lock
      */
     public void lock(Chapter c) {
-        switch (c) {
-            case ARMSRACE:
-            case NOWAYOUT:
-            case MUTUALLYASSURED:
-            case EMPTYCUP: c = Chapter.RAZOR;
-        }
+        c = getGalleryChapter(c);
 
         unlockedChapters.get(c).set(false);
         achievementsMenu.setDisplay(c.getID(), c.galleryHintLocked());
+    }
+
+    /**
+     * Accessor for nAchievements
+     * @return the number of total achievements in the game
+     */
+    public int nAchievements() {
+        return this.nAchievements;
+    }
+
+    /**
+     * Accessor for nGeneralAchievements
+     * @return the total number of non-chapter-specific achievements
+     */
+    public int nGeneralAchievements() {
+        return this.nGeneralAchievements;
+    }
+
+    /**
+     * Returns the total number of achievements associated with a given Chapter
+     * @param c the Chapter to check
+     * @return the total number of achievements associated with the given Chapter
+     */
+    public int nChapterAchievements(Chapter c) {
+        c = getGalleryChapter(c);
+        return this.chapterAchievements.get(c).size();
+    }
+
+    /**
+     * Accessor for nHiddenAchievements
+     * @return the number of hidden achievements in the game
+     */
+    public int nHiddenAchievements() {
+        return this.nHiddenAchievements;
+    }
+
+    /**
+     * Accessor for nLockedAchievements
+     * @return the GlobalInt representing the number of currently locked achievements
+     */
+    public GlobalInt nLockedAchievements() {
+        return this.nLockedAchievements;
+    }
+
+    /**
+     * Accessor for lockedRemaining
+     * @return a condition tracking whether there are remaining locked achievements
+     */
+    public InverseCondition getLockedRemaining() {
+        return this.lockedRemaining;
+    }
+
+    /**
+     * Accessor for nLockedHiddenAchievements
+     * @return the number of currently locked hidden achievements
+     */
+    public int nLockedHiddenAchievements() {
+        return this.nLockedHiddenAchievements;
+    }
+
+    /**
+     * Accessor for nUnlockedAchievements
+     * @return the number of currently unlocked achievements
+     */
+    public int nUnlockedAchievements() {
+        return this.nUnlockedAchievements;
+    }
+
+    /**
+     * Accessor for achievementsMenu
+     * @return the Achievement Gallery menu
+     */
+    public OptionsMenu achievementsMenu() {
+        return this.achievementsMenu;
+    }
+
+    /**
+     * Accessor for returnMenu
+     * @return a menu with a single option to "return"
+     */
+    public OptionsMenu returnMenu() {
+        return this.returnMenu;
+    }
+
+    /**
+     * Accessor for currentPage
+     * @return the GlobalInt representing the current page number
+     */
+    public GlobalInt getCurrentPage() {
+        return this.currentPage;
+    }
+
+    /**
+     * Accessor for pageMenu
+     * @return a menu for navigating between pages of a list
+     */
+    public OptionsMenu pageMenu() {
+        return this.pageMenu;
+    }
+
+    /**
+     * Returns a list of all currently unlocked achievements in a given list of achievement IDs
+     * @param ids the list of achievement IDs to check
+     * @return all currently unlocked achievements referenced in ids
+     */
+    private ArrayList<Achievement> getUnlockedAchievements(ArrayList<String> ids) {
+        ArrayList<Achievement> unlocked = new ArrayList<>();
+        Achievement a;
+        for (String id : ids) {
+            if (this.achievementExists(id)) {
+                a = achievements.get(id);
+                if (a.isUnlocked()) unlocked.add(a);
+            }
+        }
+        return unlocked;
+    }
+
+    /**
+     * Returns an ArrayList of all unlocked non-chapter-specific achievements
+     * @return all unlocked non-chapter-specific achievements
+     */
+    public ArrayList<Achievement> getUnlockedGeneralAchievements() {
+        return this.getUnlockedAchievements(this.generalAchievements);
+    }
+
+    /**
+     * Returns an ArrayList of all unlocked achievements from a given Chapter
+     * @param c the Chapter to retrieve achievements from
+     * @return all unlocked achievements from c
+     */
+    public ArrayList<Achievement> getUnlockedChapterAchievements(Chapter c) {
+        c = getGalleryChapter(c);
+        return this.getUnlockedAchievements(this.chapterAchievements.get(c));
+    }
+
+    /**
+     * Returns a list of all currently unlocked achievements
+     * @return all currently unlocked achievements
+     */
+    private ArrayList<Achievement> getUnlockedAchievements() {
+        ArrayList<Achievement> unlocked = new ArrayList<>();
+        for (Achievement a : achievements.valueList()) {
+            if (a.isUnlocked()) unlocked.add(a);
+        }
+        return unlocked;
+    }
+
+    /**
+     * Returns a list of all currently locked (non-hidden) achievements
+     * @return all currently locked (non-hidden) achievements
+     */
+    public ArrayList<Achievement> getLockedAchievements() {
+        ArrayList<Achievement> locked = new ArrayList<>();
+        for (Achievement a : achievements.valueList()) {
+            if (!a.isUnlocked() && !a.isHidden()) locked.add(a);
+        }
+        return locked;
     }
 
     // --- TRACKER MANAGEMENT ---
@@ -358,7 +496,7 @@ public class AchievementTracker {
 
             for (Achievement a : achievements.valueList()) {
                 if (a.isUnlocked()) {
-                    tracker.write(a.getName());
+                    tracker.write(a.getID());
                     tracker.newLine();
                 }
             }
@@ -376,8 +514,14 @@ public class AchievementTracker {
         boolean repeat = true;
         String choice;
 
+        // MENU IS BROKEN?
+        System.out.println("[DEBUG: metaMenuActive is " + manager.metaMenuActive() + "]");
+
         while (repeat) {
+            System.out.println();
+            IOHandler.wrapPrintln("--- THE ACHIEVEMENT GALLERY ---");
             IOHandler.wrapPrintln("You have unlocked " + this.nUnlockedAchievements + "/" + this.nAchievements + " achievements.");
+
             choice = parser.promptOptionsMenu(achievementsMenu);
             switch (choice) {
                 case "locked":
@@ -386,16 +530,21 @@ public class AchievementTracker {
 
                 case "general":
                     this.printGeneralAchievementsList();
+                    parser.promptOptionsMenu(returnMenu);
+                    break;
+
+                case "reset":
+                    manager.resetAchievements();
                     break;
 
                 case "return":
                     repeat = false;
                     break;
 
-                default: this.printChapterAchievementsList(Chapter.getChapterFromTitle(choice));
+                default:
+                    this.printChapterAchievementsList(Chapter.getChapter(choice));
+                    parser.promptOptionsMenu(returnMenu);
             }
-
-            parser.promptOptionsMenu(this.returnMenu);
         }
     }
 
@@ -403,12 +552,14 @@ public class AchievementTracker {
      * Shows a list of all locked (non-hidden) achievements, split into pages
      */
     private void showLockedAchievements() {
-        ArrayList<Achievement> lockedAchievements = this.lockedAchievements();
+        ArrayList<Achievement> lockedAchievements = this.getLockedAchievements();
         int nVisibleAchievements = lockedAchievements.size();
 
         if (nVisibleAchievements == 0) {
+            System.out.println();
             IOHandler.wrapPrintln("--- Locked Achievements ---");
             System.out.println();
+
             if (!lockedRemaining.check()) {
                 IOHandler.wrapPrintln("No locked achievements to show!");
             } else {
@@ -420,6 +571,10 @@ public class AchievementTracker {
             int nPages = nVisibleAchievements / PAGELENGTH;
 
             if (nPages == 0) {
+                System.out.println();
+                IOHandler.wrapPrintln("--- Locked Achievements ---");
+                System.out.println();
+
                 for (int i = 0; i < nVisibleAchievements; i++) {
                     IOHandler.wrapPrintln("  (" + (i+1) + ".) " + lockedAchievements.get(i));
                 }
@@ -440,12 +595,13 @@ public class AchievementTracker {
                 String choice;
                 while (repeat) {
                     firstShown = (currentPage.check() * PAGELENGTH) + 1;
-                    lastShown = (notLastPage.check()) ? firstShown + PAGELENGTH - 1 : nVisibleAchievements;
+                    lastShown = (notLastPage.check()) ? firstShown + PAGELENGTH - 1 : nVisibleAchievements - 1;
 
+                    System.out.println();
                     IOHandler.wrapPrintln("--- Locked Achievements ---");
                     System.out.println();
 
-                    for (int i = firstShown - 1; i < lastShown - 1; i++) {
+                    for (int i = firstShown - 1; i < lastShown; i++) {
                         IOHandler.wrapPrintln("  (" + (i+1) + ".) " + lockedAchievements.get(i));
                     }
 
@@ -486,11 +642,12 @@ public class AchievementTracker {
     /**
      * Prints all unlocked general achievements
      */
-    private void printGeneralAchievementsList() {
+    public void printGeneralAchievementsList() {
+        System.out.println();
         IOHandler.wrapPrintln("--- General ---");
         System.out.println();
 
-        ArrayList<Achievement> unlockedAchievements = this.unlockedAchievements(this.generalAchievements);
+        ArrayList<Achievement> unlockedAchievements = this.getUnlockedGeneralAchievements();
         if (unlockedAchievements.isEmpty()) {
             IOHandler.wrapPrintln("No unlocked achievements to show.");
         } else {
@@ -499,26 +656,23 @@ public class AchievementTracker {
             }
         }
 
-        parser.promptOptionsMenu(returnMenu);
+        System.out.println();
+        IOHandler.wrapPrintln("You have unlocked " + unlockedAchievements.size() + "/" + this.nGeneralAchievements + " general achievements.");
     }
 
     /**
      * Prints all unlocked achievements from a given Chapter
      * @param c the Chapter to print achievements from
      */
-    private void printChapterAchievementsList(Chapter c) {
-        switch (c) {
-            case ARMSRACE:
-            case NOWAYOUT:
-            case MUTUALLYASSURED:
-            case EMPTYCUP: c = Chapter.RAZOR;
-        }
+    public void printChapterAchievementsList(Chapter c) {
+        c = getGalleryChapter(c);
 
-        IOHandler.wrapPrintln("--- " + c.getTitle() + " ---");
+        System.out.println();
+        IOHandler.wrapPrintln("--- " + c.toString() + " ---");
         IOHandler.wrapPrintln(c.galleryHintUnlocked());
         System.out.println();
 
-        ArrayList<Achievement> unlockedAchievements = this.unlockedAchievements(chapterAchievements.get(c));
+        ArrayList<Achievement> unlockedAchievements = this.getUnlockedChapterAchievements(c);
         if (unlockedAchievements.isEmpty()) {
             IOHandler.wrapPrintln("No unlocked achievements to show.");
         } else {
@@ -527,7 +681,25 @@ public class AchievementTracker {
             }
         }
 
-        parser.promptOptionsMenu(returnMenu);
+        System.out.println();
+        IOHandler.wrapPrintln("You have unlocked " + unlockedAchievements.size() + "/" + this.nChapterAchievements(c) + " achievements from this Chapter.");
+    }
+
+    // --- UTILITY ---
+
+    /**
+     * Checks if the given Chapter has its own gallery, and returns its corresponding Gallery chapter if not
+     * @param c the Chapter to check
+     * @return Chapter.RAZOR if the given Chapter is one of Razor's Chapter IIIs or IVs; c otherwise
+     */
+    public static Chapter getGalleryChapter(Chapter c) {
+        switch (c) {
+            case ARMSRACE:
+            case NOWAYOUT:
+            case MUTUALLYASSURED:
+            case EMPTYCUP: return Chapter.RAZOR;
+            default: return c;
+        }
     }
 
 }

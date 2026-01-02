@@ -40,21 +40,21 @@ Syntax: `HELP [command]`
 ## SHOW
 `SHOW`: Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery..
 
-Syntax: `SHOW [warnings] [target] [warnings]`
+Syntax: `[SHOW / VIEW] [warnings] [target] [warnings]`
 
 **Arguments:**
   - `[warnings]`: Both optional. The command functions the same, no matter if `[warnings]` is present or not. Can be any one of `[WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS]`.
   - `[target]`: Optional. Either the set of warnings you wish to view or the Achievement Gallery.
 
 **Variations:**
-  - `SHOW`: Offers a choice between showing content warnings or the Achievement Gallery.
-  - `SHOW [warnings]`: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).
-  - `SHOW [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]`: Shows general content warnings.
-  - `SHOW [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]`: Shows content warnings by chapter.
-  - `SHOW [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]`: Shows content warnings for the current chapter, if applicable.
-  - `SHOW [warnings] [set]`: Same as `SHOW [set]`.
-  - `SHOW [set] [warnings]`: Same as `SHOW [set]`.
-  - `SHOW [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]`: Show the Achievement Gallery.
+  - `[SHOW / VIEW]`: Offers a choice between viewing content warnings or the Achievement Gallery.
+  - `[SHOW / VIEW] [warnings]`: Offers a choice between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).
+  - `[SHOW / VIEW] [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]`: Shows general content warnings.
+  - `[SHOW / VIEW] [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]`: Shows content warnings by chapter.
+  - `[SHOW / VIEW] [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]`: Shows content warnings for the current chapter, if applicable.
+  - `[SHOW / VIEW] [warnings] [set]`: Same as `SHOW [set]`.
+  - `[SHOW / VIEW] [set] [warnings]`: Same as `SHOW [set]`.
+  - `[SHOW / VIEW] [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]`: View the Achievement Gallery.
 
 ## SETTINGS
 `SETTINGS`: View and change settings.

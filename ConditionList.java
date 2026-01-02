@@ -32,11 +32,7 @@ public class ConditionList extends AbstractCondition {
     @Override
     public boolean check() {
         if (!this.bool) return false;
-        if (conditions.length == 0) return true;
-        for (AbstractCondition c : conditions) {
-            if (!c.check()) return false;
-        }
-        return true;
+        return AbstractCondition.check(this.conditions);
     }
 
 }

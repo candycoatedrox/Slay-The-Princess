@@ -1,8 +1,10 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Cycle {
     protected final GameManager manager;
     protected final IOHandler parser;
+    protected final AchievementTracker tracker;
 
     protected Chapter activeChapter;
     protected Script mainScript;
@@ -47,6 +49,7 @@ public abstract class Cycle {
     public Cycle(GameManager manager, IOHandler parser) {
         this.manager = manager;
         this.parser = parser;
+        this.tracker = manager.getTracker();
     }
 
     // --- ACCESSORS & MANIPULATORS ---
@@ -159,8 +162,8 @@ public abstract class Cycle {
     // --- COMMANDS ---
 
     /**
-     * Shows content warnings 
-     * @param arguments
+     * Shows content warnings
+     * @param arguments the arguments entered by the player
      */
     public void show(String arguments) {
         /*
@@ -188,21 +191,21 @@ public abstract class Cycle {
         A side effect of this method is that an input such as "show warnings all warnings" or "show warnings warnings" would be parsed as perfectly valid. I could technically code in an exception so they would be parsed as invalid, but it's not really a problem in any way. I just think it's a silly little side effect :)
         */
 
-        String args = arguments;
-
         // Handle achievements or empty argument
         switch (arguments) {
             case "achievements":
             case "gallery":
             case "achievement gallery":
             case "achievements gallery":
-                manager.getTracker().showGallery();
+                manager.showGallery();
                 return;
 
             case "":
                 this.showEmptyArgumentMenu();
                 return;
         }
+
+        String args = arguments;
 
         // Trim off leading "warnings" argument
         if (arguments.startsWith("warnings") || arguments.startsWith("content warnings") || arguments.startsWith("trigger warnings")) {
@@ -257,19 +260,19 @@ public abstract class Cycle {
      * Lets the player choose between viewing content warnings or the Achievement Gallery
      */
     protected void showEmptyArgumentMenu() {
-        manager.setTrueExclusiveMenu(true);
+        manager.setMetaMenuActive(true);
         switch (parser.promptOptionsMenu(manager.showMenu())) {
             case "warnings":
                 this.showWarningsMenu();
                 break;
             case "achievements":
-                manager.getTracker().showGallery();
+                manager.showGallery();
                 break;
             case "cancel":
                 break;
         }
 
-        manager.setTrueExclusiveMenu(false);
+        manager.setMetaMenuActive(false);
     }
 
     /**
@@ -278,7 +281,7 @@ public abstract class Cycle {
     protected void showWarningsMenu() {
         manager.warningsMenu().setCondition("current", false);
         
-        manager.setTrueExclusiveMenu(true);
+        manager.setMetaMenuActive(true);
         switch (parser.promptOptionsMenu(manager.warningsMenu())) {
             case "general":
                 manager.showGeneralWarnings();
@@ -290,7 +293,7 @@ public abstract class Cycle {
                 break;
         }
 
-        manager.setTrueExclusiveMenu(false);
+        manager.setMetaMenuActive(false);
     }
 
     /**
@@ -331,6 +334,47 @@ public abstract class Cycle {
 
             default: this.showWarningsMenu();
         }
+    }
+
+    // DUPLICATE METHOD FROM GameManager BECAUSE RUNNING MENUS IN SEPARATE CLASSES BREAKS EVERYTHING FOR SOME REASON
+    /**
+     * Displays the current settings and allows the player to change them
+     */
+    public void settings() {
+        boolean repeat = true;
+        manager.setMetaMenuActive(true);
+        
+        while (repeat) {
+            System.out.println();
+            IOHandler.wrapPrintln("--- Settings ---");
+            System.out.println();
+
+            switch (parser.promptOptionsMenu(manager.settingsMenu())) {
+                case "warnings":
+                    manager.toggleAutoWarnings();
+                    break;
+                case "nowPlaying":
+                    manager.toggleNowPlaying();
+                    break;
+                case "slowPrint":
+                    manager.toggleSlowPrint();
+                    break;
+                case "autoAdvance":
+                    manager.toggleAutoAdvance();
+                    break;
+                case "resetAchievements":
+                    manager.resetAchievements();
+                    break;
+                case "cancel":
+                    repeat = false;
+                    break;
+                default: IOHandler.wrapPrintln("[Please input a valid option.]");
+            }
+
+            if (!repeat) break; // I know it *should* do this automatically, but it doesn't for some reason...?
+        }
+
+        manager.setMetaMenuActive(false);
     }
 
     /**
@@ -845,5 +889,150 @@ public abstract class Cycle {
      */
     public ChapterEnding debugRunChapter() {
         return this.runChapter();
+    }
+
+    // --- GALLERY ---
+
+    // DUPLICATE METHODS FROM AchievementTracker BECAUSE RUNNING MENUS IN SEPARATE CLASSES BREAKS EVERYTHING FOR SOME REASON
+
+    /**
+     * Shows the player the Achievement Gallery
+     */
+    public void showGallery() {
+        OptionsMenu returnMenu = tracker.returnMenu();
+        boolean repeat = true;
+        String choice;
+
+        manager.setMetaMenuActive(true);
+
+        while (repeat) {
+            System.out.println();
+            IOHandler.wrapPrintln("--- THE ACHIEVEMENT GALLERY ---");
+            IOHandler.wrapPrintln("You have unlocked " + tracker.nUnlockedAchievements() + "/" + tracker.nAchievements() + " achievements.");
+
+            choice = parser.promptOptionsMenu(tracker.achievementsMenu());
+            switch (choice) {
+                case "locked":
+                    this.showLockedAchievements();
+                    break;
+
+                case "general":
+                    tracker.printGeneralAchievementsList();
+                    parser.promptOptionsMenu(returnMenu);
+                    break;
+
+                case "reset":
+                    manager.resetAchievements();
+                    break;
+
+                case "return":
+                    repeat = false;
+                    break;
+
+                default:
+                    tracker.printChapterAchievementsList(Chapter.getChapter(choice));
+                    parser.promptOptionsMenu(returnMenu);
+            }
+        }
+        
+        manager.setMetaMenuActive(false);
+    }
+
+    /**
+     * Shows a list of all locked (non-hidden) achievements, split into pages
+     */
+    private void showLockedAchievements() {
+        ArrayList<Achievement> lockedAchievements = tracker.getLockedAchievements();
+        int nVisibleAchievements = lockedAchievements.size();
+        int nLockedHiddenAchievements = tracker.nLockedHiddenAchievements();
+
+        if (nVisibleAchievements == 0) {
+            System.out.println();
+            IOHandler.wrapPrintln("--- Locked Achievements ---");
+            System.out.println();
+
+            if (!tracker.getLockedRemaining().check()) {
+                IOHandler.wrapPrintln("No locked achievements to show!");
+            } else {
+                IOHandler.wrapPrintln("No locked achievements to show. " + nLockedHiddenAchievements + " hidden achievements not shown.");
+            }
+
+            parser.promptOptionsMenu(tracker.returnMenu());
+        } else {
+            GlobalInt currentPage = tracker.getCurrentPage();
+            int nPages = nVisibleAchievements / AchievementTracker.PAGELENGTH;
+
+            if (nPages == 0) {
+                System.out.println();
+                IOHandler.wrapPrintln("--- Locked Achievements ---");
+                System.out.println();
+
+                for (int i = 0; i < nVisibleAchievements; i++) {
+                    IOHandler.wrapPrintln("  (" + (i+1) + ".) " + lockedAchievements.get(i));
+                }
+
+                System.out.println();
+                if (nLockedHiddenAchievements == 0) {
+                    IOHandler.wrapPrintln("Showing achievements 1-" + nVisibleAchievements + " of " + nVisibleAchievements + ".");
+                } else {
+                    IOHandler.wrapPrintln("Showing achievements 1-" + nVisibleAchievements + " of " + nVisibleAchievements + ". " + nLockedHiddenAchievements + " hidden achievements not shown.");
+                }
+            } else {
+                if (nVisibleAchievements % AchievementTracker.PAGELENGTH != 0) nPages += 1;
+                OptionsMenu pageMenu = tracker.pageMenu();
+                NumCondition notLastPage = new NumCondition(currentPage, -1, nPages - 1);
+
+                int firstShown;
+                int lastShown;
+                currentPage.set(0);
+                pageMenu.get("next").setConditions(notLastPage);
+                pageMenu.get("last").setConditions(notLastPage);
+
+                boolean repeat = true;
+                String choice;
+                while (repeat) {
+                    firstShown = (currentPage.check() * AchievementTracker.PAGELENGTH) + 1;
+                    lastShown = (notLastPage.check()) ? firstShown + AchievementTracker.PAGELENGTH - 1 : nVisibleAchievements - 1;
+
+                    System.out.println();
+                    IOHandler.wrapPrintln("--- Locked Achievements ---");
+                    System.out.println();
+
+                    for (int i = firstShown - 1; i < lastShown; i++) {
+                        IOHandler.wrapPrintln("  (" + (i+1) + ".) " + lockedAchievements.get(i));
+                    }
+
+                    System.out.println();
+                    if (nLockedHiddenAchievements == 0) {
+                        IOHandler.wrapPrintln("Showing achievements " + firstShown + "-" + lastShown + " of " + nVisibleAchievements + ".");
+                    } else {
+                        IOHandler.wrapPrintln("Showing achievements " + firstShown + "-" + lastShown + " of " + nVisibleAchievements + ". " + nLockedHiddenAchievements + " hidden achievements not shown.");
+                    }
+
+                    choice = parser.promptOptionsMenu(tracker.pageMenu());
+                    switch (choice) {
+                        case "first":
+                            currentPage.set(0);
+                            break;
+
+                        case "prev":
+                            currentPage.decrement();
+                            break;
+
+                        case "next":
+                            currentPage.increment();
+                            break;
+
+                        case "last":
+                            currentPage.set(nPages - 1);
+                            break;
+
+                        case "return":
+                            repeat = false;
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@ public class ChapterI extends StandardCycle {
     @Override
     public ChapterEnding runChapter() {
         this.unlockChapter();
+        manager.updateTracker();
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
         
         this.displayTitleCard();
@@ -35,29 +36,23 @@ public class ChapterI extends StandardCycle {
         ChapterEnding ending = this.heroAndPrincess();
         if (ending == null) return ChapterEnding.DEMOENDING;
         switch (ending) {
-            case ABORTED: break;
-
-            case DEMOENDING:
+            case ABORTED:
             case GOODENDING:
-                manager.updateVoicesMet(this.voicesMet);
-                break;
+            case DEMOENDING: break;
 
             default:
-                ChapterII chapter2 = new ChapterII(ending, manager, parser, voicesMet, cantTryAbort, isHarsh, knowsDestiny, droppedBlade1, whatWouldYouDo, rescuePath);
+                ChapterII chapter2 = new ChapterII(ending, manager, parser, route, cantTryAbort, isHarsh, knowsDestiny, droppedBlade1, whatWouldYouDo, rescuePath);
                 ending = chapter2.runChapter();
                 
+                if (ending == null) return ChapterEnding.DEMOENDING;
                 switch (ending) {
-                    case ABORTED: break;
-
-                    case DEMOENDING:
+                    case ABORTED:
                     case GOODENDING:
-                        manager.updateVoicesMet(this.voicesMet);
-                        break;
+                    case DEMOENDING: break;
 
                     default:
                         manager.updateMoundValues(ending.getFreedom(), ending.getSatisfaction());
                         this.mirrorSequence(ending);
-                        manager.updateVoicesMet(this.voicesMet);
                 }
         }
 
@@ -535,6 +530,7 @@ public class ChapterI extends StandardCycle {
                 case "talk":
                     this.repeatActiveMenu = false;
                     break;
+
                 case "free":
                     if (!manager.confirmContentWarnings("self-mutilation", true)) break;
 
@@ -548,6 +544,8 @@ public class ChapterI extends StandardCycle {
                     this.giveDefaultFailResponse(this.activeOutcome);
             }
         }
+
+        mainScript.runSection("princessTalk");
 
         Condition sharedTask = new Condition();
         InverseCondition noShare = sharedTask.getInverse();

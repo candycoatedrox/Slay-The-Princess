@@ -7,7 +7,6 @@ public abstract class StandardCycle extends Cycle {
 
     protected final boolean isFirstVessel;
     protected final boolean canAbort;
-    protected final ArrayList<Voice> voicesMet;
     protected final ArrayList<Chapter> route;
     
     // Utility variables for checking command availability & default responses
@@ -30,7 +29,6 @@ public abstract class StandardCycle extends Cycle {
 
         this.isFirstVessel = manager.nClaimedVessels() == 0;
         this.canAbort = manager.nClaimedVessels() < 2;
-        this.voicesMet = new ArrayList<>();
         this.route = new ArrayList<>();
 
         this.currentVoices = new HashMap<>();
@@ -45,37 +43,31 @@ public abstract class StandardCycle extends Cycle {
     }
 
     /**
-     * Constructor for a Chapter 2
+     * Constructor for a Chapter 2 or 3
      * @param manager the GameManager to link this StandardCycle to
      * @param parser the IOHandler to link this StandardCycle to
      */
-    protected StandardCycle(GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, Condition cantTryAbort, ChapterEnding prevEnding) {
+    protected StandardCycle(GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, ChapterEnding prevEnding) {
         super(manager, parser);
 
         this.isFirstVessel = manager.nClaimedVessels() == 0;
         this.canAbort = manager.nClaimedVessels() < 2;
-        
-        this.voicesMet = voicesMet;
-        this.cantTryAbort = cantTryAbort;
-        
-        this.route = new ArrayList<>();
-    }
 
-    /**
-     * Constructor for a Chapter 3
-     * @param manager the GameManager to link this StandardCycle to
-     * @param parser the IOHandler to link this StandardCycle to
-     */
-    protected StandardCycle(GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, ArrayList<Chapter> route, Condition cantTryAbort, ChapterEnding prevEnding) {
-        super(manager, parser);
-
-        this.isFirstVessel = manager.nClaimedVessels() == 0;
-        this.canAbort = manager.nClaimedVessels() < 2;
-        
-        this.voicesMet = voicesMet;
         this.cantTryAbort = cantTryAbort;
-        
+
+        this.activeChapter = prevEnding.getNextChapter();
         this.route = route;
+        route.add(this.activeChapter);
+
+        this.currentVoices = new HashMap<>();
+        for (Voice v : Voice.values()) {
+            switch (v) {
+                case NARRATOR:
+                case HERO: this.currentVoices.put(v, true);
+
+                default: this.currentVoices.put(v, false);
+            }
+        }
     }
 
     // --- ACCESSORS & MANIPULATORS ---
@@ -87,17 +79,6 @@ public abstract class StandardCycle extends Cycle {
     @Override
     public boolean isFirstVessel() {
         return this.isFirstVessel;
-    }
-
-    /**
-     * Adds a given Voice to the list of active Voices
-     * @param v the Voice to add
-     */
-    @Override
-    protected void addVoice(Voice v) {
-        super.addVoice(v);
-
-        if (v.isTrueVoice() && v != Voice.HERO) this.voicesMet.add(v);
     }
 
     // --- COMMANDS ---
@@ -391,7 +372,7 @@ public abstract class StandardCycle extends Cycle {
         } else {
             parser.printDivider();
             parser.printDialogueLine(this.activeChapter.getPrefix(), true);
-            parser.printDialogueLine(this.activeChapter.getTitle(), true);
+            parser.printDialogueLine(this.activeChapter.toString(), true);
             parser.printDivider(false);
             
             System.out.println();
@@ -420,8 +401,12 @@ public abstract class StandardCycle extends Cycle {
         this.activeChapter = Chapter.SPACESBETWEEN;
         this.currentLocation = GameLocation.BEFOREMIRROR;
         this.mirrorPresent = true;
+        this.removeVoice(Voice.NARRATOR);
 
-        this.currentVoices.put(Voice.NARRATOR, false);
+        // Ensure all chapters from this route are unlocked
+        for (Chapter c : this.route) {
+            manager.unlock(c);
+        }
 
         switch (prevEnding) {
             case HINTOFFEELING:
@@ -667,6 +652,13 @@ public abstract class StandardCycle extends Cycle {
 
         this.currentLocation = GameLocation.MIRROR;
         this.mirrorPresent = false;
+
+        ArrayList<Voice> voicesMet = new ArrayList<>();
+        for (Voice v : Voice.TRUEVOICES) {
+            if (v != Voice.HERO && this.hasVoice(v)) voicesMet.add(v);
+        }
+
+        manager.updateVoicesMet(voicesMet);
         this.clearVoices();
 
         if (prevEnding == ChapterEnding.WATERSTEEL || prevEnding == ChapterEnding.FORMLESS) {
@@ -684,7 +676,7 @@ public abstract class StandardCycle extends Cycle {
             case 1:
             case 2:
             case 3:
-                manager.unlock("abort" + manager.nClaimedVessels());
+                manager.unlock("mirror" + manager.nClaimedVessels());
                 secondaryScript.runSection("gaze" + manager.nClaimedVessels());
                 this.theSpacesBetween(prevEnding);
                 break;
@@ -736,7 +728,7 @@ public abstract class StandardCycle extends Cycle {
         }
 
         this.currentLocation = GameLocation.HILL;
-        secondaryScript.runSection("cabin");
+        mainScript.runSection("cabin");
 
         this.canApproachHer = true;
         this.activeMenu = new OptionsMenu();

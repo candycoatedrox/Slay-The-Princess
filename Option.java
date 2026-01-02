@@ -1026,7 +1026,7 @@ public class Option {
      * @return true if this Option is visible
      */
     public boolean isShown() {
-        if ((this.maxTimesPicked != 0 && this.timesPicked >= this.maxTimesPicked) || !check(this.conditions) || !this.conditionMet) {
+        if ((this.maxTimesPicked != 0 && this.timesPicked >= this.maxTimesPicked) || !AbstractCondition.check(this.conditions) || !this.conditionMet) {
             return false;
         } else if (this.prerequisiteOption != null) {
             if (!this.prerequisiteOption.hasBeenPicked()) return false;
@@ -1048,7 +1048,7 @@ public class Option {
      * @return true if this option is greyed out; false otherwise
      */
     public boolean greyedOut() {
-        if (this.greyedOut || this.greyCondition.check()) {
+        if (this.greyedOut || greyCondition.check()) {
             return true;
         } else if (this.leadsToChapter != null) {
             return this.manager.hasVisited(this.leadsToChapter);
@@ -1134,19 +1134,6 @@ public class Option {
     @Override
     public Option clone() {
         return new Option(this.manager, this.id, this.display, this.maxTimesPicked, this.greyedOut, this.prerequisiteOption, this.leadsToChapter, this.conditionMet);
-    }
-
-    /**
-     * Checks if all conditions in a given list are met
-     * @param conditions the list of conditions to check
-     * @return true if all conditions are met; false otherwise
-     */
-    private static boolean check(AbstractCondition[] conditions) {
-        for (AbstractCondition c : conditions) {
-            if (!c.check()) return false;
-        }
-
-        return true;
     }
 
 }

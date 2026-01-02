@@ -4,23 +4,34 @@ public class OptionsMenu {
 
     private IndexedLinkedHashMap<String, Option> options; // Map String ID --> Option
     private boolean isExclusive; // Can the player input commands during this options menu?
+    private boolean isMeta;
 
     // --- CONSTRUCTORS ---
+
+    /**
+     * Private constructor
+     * @param isExclusive whether the player can input commands during the menu
+     * @param isMeta whether the menu is used for meta commands (e.g. the settings or content warnings menus)
+     */
+    public OptionsMenu(boolean isExclusive, boolean isMeta) {
+        this.options = new IndexedLinkedHashMap<>();
+        this.isExclusive = isExclusive;
+        this.isMeta = isMeta;
+    }
 
     /**
      * Constructor
      * @param isExclusive whether the player can input commands during the menu
      */
     public OptionsMenu(boolean isExclusive) {
-        this.options = new IndexedLinkedHashMap<>();
-        this.isExclusive = isExclusive;
+        this(isExclusive, false);
     }
 
     /**
      * Constructor
      */
     public OptionsMenu() {
-        this(false);
+        this(false, false);
     }
 
     // --- ACCESSORS & MANIPULATORS ---
@@ -31,6 +42,14 @@ public class OptionsMenu {
      */
     public boolean isExclusive() {
         return this.isExclusive;
+    }
+
+    /**
+     * Accessor for isMeta
+     * @return whether the menu is used for meta commands (e.g. the settings or content warnings menus)
+     */
+    public boolean isMeta() {
+        return this.isMeta;
     }
 
     /**

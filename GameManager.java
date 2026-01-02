@@ -8,7 +8,7 @@ public class GameManager {
     private Cycle currentCycle;
 
     // Settings
-    private final boolean demoMode = true;
+    private final boolean demoMode = false;
     private final boolean trueDemoMode = false;
     private boolean dynamicWarnings = true;
     private boolean showNowPlaying = true;
@@ -42,7 +42,7 @@ public class GameManager {
     private final Condition noRefuseExploreMound = new Condition(true);
 
     // Global menus and options
-    private boolean trueExclusiveMenu = false; // Only used during show() and settings() menus
+    private boolean metaMenuActive = false;
     private final OptionsMenu settingsMenu;
     private final OptionsMenu showMenu;
     private final OptionsMenu warningsMenu;
@@ -82,8 +82,8 @@ public class GameManager {
     }
 
     /**
-     * Initializes the settings menu for this manager
-     * @return the settings menu for this manager
+     * Initializes the settings menu
+     * @return the settings menu
      */
     private OptionsMenu createSettingsMenu() {
         OptionsMenu menu = new OptionsMenu(true);
@@ -448,32 +448,41 @@ public class GameManager {
     }
 
     /**
-     * Accessor for trueExclusiveMenu
-     * @return whether the active menu is truly exclusive (i.e. not even meta commands are available until an option is selected)
+     * Accessor for metaMenuActive
+     * @return whether the game is currently in a meta menu (i.e. Settings, Content Warnings, or the Achievement Gallery)
      */
-    public boolean trueExclusiveMenu() {
-        return this.trueExclusiveMenu;
+    public boolean metaMenuActive() {
+        return this.metaMenuActive;
     }
 
     /**
-     * Manipulator for trueExclusiveMenu
-     * @param newValue whether the active menu is truly exclusive (i.e. not even meta commands are available until an option is selected)
+     * Manipulator for metaMenuActive
+     * @param newValue whether the game is currently in a meta menu (i.e. Settings, Content Warnings, or the Achievement Gallery)
      */
-    public void setTrueExclusiveMenu(boolean newValue) {
-        this.trueExclusiveMenu = newValue;
+    public void setMetaMenuActive(boolean newValue) {
+        this.metaMenuActive = newValue;
+        if (!newValue) parser.toggleReprintMenu();
     }
     
     /**
-     * Returns the menu displayed when SHOW is used without argument (allowing the player to choose between viewing content warnings and the Achievement Gallery)
-     * @return the menu displayed when SHOW is used without argument
+     * Accessor for settingsMenu
+     * @return the settings menu
+     */
+    public OptionsMenu settingsMenu() {
+        return this.settingsMenu;
+    }
+    
+    /**
+     * Accessor for showMenu
+     * @return the menu displayed when SHOW is used without argument (which allows the player to choose between viewing content warnings and the Achievement Gallery)
      */
     public OptionsMenu showMenu() {
         return this.showMenu;
     }
     
     /**
-     * Returns the content warnings menu (allowing the player to choose which set of content warnings they wish to view)
-     * @return the content warnings menu
+     * Accessor for warningsMenu
+     * @return the content warnings menu (which allows the player to choose which set of content warnings they wish to view)
      */
     public OptionsMenu warningsMenu() {
         return this.warningsMenu;
@@ -496,11 +505,13 @@ public class GameManager {
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
                 break;
-            } else if (ending == ChapterEnding.ABORTED) {
-                this.nVesselsAborted += 1;
-            } else if (ending == ChapterEnding.GOODENDING) {
+            } else if (ending == ChapterEnding.GOODENDING || ending == ChapterEnding.DEMOENDING) {
                 break;
+            } else if (ending == ChapterEnding.ABORTED) {
+                tracker.updateTracker();
+                this.nVesselsAborted += 1;
             } else {
+                tracker.updateTracker();
                 endingsFound.add(ending);
                 claimedVessels.add(ending.getVessel());
                 if (this.nClaimedVessels() < 5) tracker.unlock(ending.getVessel().getAchievementID());
@@ -592,10 +603,10 @@ public class GameManager {
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
                 break;
+            } else if (ending == ChapterEnding.GOODENDING || ending == ChapterEnding.DEMOENDING) {
+                break;
             } else if (ending == ChapterEnding.ABORTED) {
                 this.nVesselsAborted += 1;
-            } else if (ending == ChapterEnding.GOODENDING) {
-                break;
             } else {
                 endingsFound.add(ending);
                 claimedVessels.add(ending.getVessel());
@@ -686,34 +697,39 @@ public class GameManager {
                 break;
             
             case 2:
-                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, null, new Condition(), harsh, false, false, false, false);
+                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, new ArrayList<>(), new Condition(), harsh, false, false, false, false);
                 break;
 
             case 3:
             case 4:
             case 0:
-                this.currentCycle = new ChapterIII(ending, this, this.parser, null, null, new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false);
+                this.currentCycle = new ChapterIII(startFromEnding, this, this.parser,  new ArrayList<>(), new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false);
                 break;
 
             default: throw new RuntimeException("Invalid starting chapter");
         }
         
         while (this.nClaimedVessels() < 5 && this.nVesselsAborted < 6) {
+            //System.out.println("While loop started");
             
             if (firstCycle) {
+                //System.out.println("Running first cycle");
                 ending = currentCycle.debugRunChapter();
                 firstCycle = false;
             } else {
+                //System.out.println("Running second+ cycle");
                 ending = currentCycle.runChapter();
             }
+
+            //System.out.println("Cycle run");
 
             if (ending == null) {
                 ending = ChapterEnding.DEMOENDING;
                 break;
+            } else if (ending == ChapterEnding.GOODENDING || ending == ChapterEnding.DEMOENDING) {
+                break;
             } else if (ending == ChapterEnding.ABORTED) {
                 this.nVesselsAborted += 1;
-            } else if (ending == ChapterEnding.GOODENDING) {
-                break;
             } else {
                 endingsFound.add(ending);
                 claimedVessels.add(ending.getVessel());
@@ -867,17 +883,15 @@ public class GameManager {
      * @param ending the ending achieved by the player
      */
     private void endGame(ChapterEnding ending) {
-        if (!ending.getAchievementID().isEmpty()) {
+        if (ending.hasAchievement()) {
             tracker.unlock(ending.getAchievementID());
-            if (ending != ChapterEnding.GOODENDING) tracker.unlock("gameEnd");
         }
-        
 
         if (ending == ChapterEnding.DEMOENDING) {
             parser.printDialogueLine("You have reached the end of the demo.");
             parser.printDialogueLine("Thank you for playing!");
         } else {
-            this.showCredits();
+            this.showCredits(ending);
             this.showPlaylist(ending);
         }
 
@@ -886,8 +900,10 @@ public class GameManager {
 
     /**
      * Shows the credits of the game
+     * @param ending the ending achieved by the player
      */
-    private void showCredits() {
+    private void showCredits(ChapterEnding ending) {
+
         System.out.println();
         parser.printDialogueLine("This game is based off of Slay the Princess, a game created by Tony Howard-Arias and Abby Howard, also known as Black Tabby Games.");
         parser.printDialogueLine("The original game was written and designed by Tony Howard-Arias, with art, editing, and additional writing by Abby Howard.");
@@ -898,6 +914,9 @@ public class GameManager {
      * Shows the playlist generated from the current playthrough
      */
     private void showPlaylist(ChapterEnding ending) {
+        if (ending != ChapterEnding.GOODENDING) {
+            tracker.unlock("gameEnd");
+        }
         System.out.println();
         parser.printDialogueLine("Thank you so much for playing. As an expression of our gratitude, here's the track order for a special playlist just for you.");
         parser.printDialogueLine("As a reminder, the soundtrack for the game can be found on Spotify at https://spotify.link/PdG0uXZecEb.");
@@ -921,9 +940,42 @@ public class GameManager {
 
         System.out.println();
         IOHandler.wrapPrintln(playlistText);
+
+        if (!tracker.galleryUnlocked() && ending != ChapterEnding.GOODENDING && ending != ChapterEnding.OBLIVION) {
+            tracker.unlockGallery();
+            System.out.println();
+            IOHandler.wrapPrintln("And now that you've finished the full story for the first time, you've also fully unlocked the Achievement Gallery! You can access it at any time with > SHOW ACHIEVEMENTS, and it's full of clues that will help you find undiscovered vessels and interactions. Happy hunting!");
+        }
+
+        tracker.updateTracker();
     }
 
     // --- UTILITY ---
+
+    /**
+     * Waits for a given number of milliseconds before continuing, depending on whether global slow print is enabled or not
+     * @param slowTime the time to wait if global slow print is enabled
+     * @param fastTime the time to wait if global slow print is disabled
+     */
+    public void pause(int slowTime, int fastTime) {
+        if (this.globalSlowPrint) {
+            pause(slowTime);
+        } else {
+            pause(fastTime);
+        }
+    }
+
+    /**
+     * Waits for a given number of milliseconds before continuing
+     * @param time the time to wait
+     */
+    public static void pause(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted");
+        }
+    }
 
     /**
      * Unlock a given achievement
@@ -939,6 +991,13 @@ public class GameManager {
      */
     public void unlock(Chapter c) {
         tracker.unlock(c);
+    }
+
+    /**
+     * Updates UnlockedAchievements.txt
+     */
+    public void updateTracker() {
+        tracker.updateTracker();
     }
 
     /**
@@ -1157,6 +1216,35 @@ public class GameManager {
     }
 
     /**
+     * Shows content warnings or the Achievement Gallery
+     * @param argument the argument entered by the player
+     */
+    public String show(String argument) {
+        if (this.currentCycle == null) {
+            switch (argument) {
+                case "achievements":
+                case "gallery":
+                case "achievement gallery":
+                case "achievements gallery":
+                    this.showGallery();
+                    return "Meta";
+
+                case "":
+                    IOHandler.wrapPrintln("[Content warnings are unavailable outside of Chapters. Sorry!]");
+                    return "Fail";
+
+                default:
+                    IOHandler.wrapPrintln("[Content warnings are unavailable outside of Chapters. Sorry!]");
+                    this.showCommandHelp(Command.SHOW);
+                    return "Fail";
+            }
+        } else {
+            currentCycle.show(argument);
+            return "Meta";
+        }
+    }
+
+    /**
      * Displays general content warnings for the game
      */
     public void showGeneralWarnings() {
@@ -1183,21 +1271,21 @@ public class GameManager {
 
                 case ADVERSARY:
                     s += "----- Possible content warnings for Chapter II -----";
-                    s += "\n  - " + c.getTitle();
+                    s += "\n  - " + c.toString();
                     break;
                 case NEEDLE:
                     s += "\n\n----- Possible content warnings for Chapter III -----";
-                    s += "\n  - " + c.getTitle();
+                    s += "\n  - " + c.toString();
                     break;
 
                 case ARMSRACE:
-                    s += "\n  - " + c.getTitle() + " & Mutually Assured Destruction";
+                    s += "\n  - " + c.toString() + " & Mutually Assured Destruction";
                     break;
                 case NOWAYOUT:
-                    s += "\n  - " + c.getTitle() + " & " + Chapter.EMPTYCUP.getFullTitle();
+                    s += "\n  - " + c.toString() + " & " + Chapter.EMPTYCUP.getFullTitle();
                     break;
 
-                default: s += "\n  - " + c.getTitle();
+                default: s += "\n  - " + c.toString();
             }
 
             if (breakLoop) break;
@@ -1260,14 +1348,26 @@ public class GameManager {
     }
 
     /**
+     * Shows the player the Achievement Gallery
+     */
+    public void showGallery() {
+        this.setMetaMenuActive(true);
+        tracker.showGallery();
+        this.setMetaMenuActive(false);
+    }
+
+    /**
      * Displays the current settings and allows the player to change them
      */
     public void settings() {
-        // something is up with nested menus like this i think but idk what????
         boolean repeat = true;
-        this.trueExclusiveMenu = true;
+        this.setMetaMenuActive(true);
         
         while (repeat) {
+            System.out.println();
+            IOHandler.wrapPrintln("--- Settings ---");
+            System.out.println();
+
             switch (parser.promptOptionsMenu(this.settingsMenu)) {
                 case "warnings":
                     this.toggleAutoWarnings();
@@ -1293,7 +1393,7 @@ public class GameManager {
             if (!repeat) break; // I know it *should* do this automatically, but it doesn't for some reason...?
         }
 
-        this.trueExclusiveMenu = false;
+        this.setMetaMenuActive(false);
     }
 
     /**
@@ -1339,7 +1439,12 @@ public class GameManager {
                 break;
 
             case "":
-                this.settings();
+                if (this.currentCycle == null) {
+                    this.settings();
+                } else {
+                    currentCycle.settings();
+                }
+
                 break;
 
             default:
@@ -1432,7 +1537,7 @@ public class GameManager {
      */
     public void resetAchievements() {
         IOHandler.wrapPrintln("[Are you sure you wish to reset all achievements?]");
-        if (parser.promptYesNo("[All chapters and achievements will be locked. This decision cannot be undone.]")) {
+        if (parser.promptYesNo("[All chapters and achievements will be locked. This action cannot be undone.]")) {
             tracker.reset();
             System.out.println();
             IOHandler.wrapPrintln("[Achievements have been reset.]");
@@ -1441,7 +1546,8 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager manager = new GameManager();
-        manager.debugRunGame();
+        manager.globalSlowPrint = false;
+        manager.debugRunGame(ChapterEnding.ILLUSIONOFCHOICE);
         
         /*
         IOHandler parserStatic = manager.parser;

@@ -6,10 +6,15 @@ public class IOHandler implements Closeable {
     private final GameManager manager;
     private final Scanner input;
 
+    private boolean reprintMenu = false;
+
     public static final int WRAPCOLUMNS = 80; // default = 80
     private static final DialogueLine DIVIDER = new DialogueLine("-----------------------------------");
-    private static final VoiceDialogueLine NINVALIDOPTIONLINE = new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true);
-    private static final VoiceDialogueLine NEXCLUSIVELINE = new VoiceDialogueLine(Voice.NARRATOR, "You have to make a decision.", true);
+    private static final DialogueLine INVALIDCOMMAND = new DialogueLine("[That is not a valid command.]", true);
+    private static final DialogueLine INVALIDOPTION = new DialogueLine("[That is not a choice available to you.]", true);
+    private static final VoiceDialogueLine NINVALIDOPTIONLINE = new VoiceDialogueLine("What are you even trying to do? You're not accomplishing anything.", true);
+    private static final DialogueLine EXCLUSIVELINE = new DialogueLine("[You have no other choice.]", true);
+    private static final VoiceDialogueLine NEXCLUSIVELINE = new VoiceDialogueLine("You have to make a choice.", true);
 
     // --- CONSTRUCTORS ---
 
@@ -22,7 +27,7 @@ public class IOHandler implements Closeable {
         this.input = new Scanner(System.in);
     }
 
-    // --- ACCESSORS ---
+    // --- ACCESSORS & MANIPULATORS ---
 
     /**
      * Returns the current active Cycle of this IOHandler's manager
@@ -30,6 +35,13 @@ public class IOHandler implements Closeable {
      */
     public Cycle getCurrentCycle() {
         return manager.getCurrentCycle();
+    }
+
+    /**
+     * Sets reprintMenu to true: the next time parseOptionChoice runs, it will reprint the current menu
+     */
+    public void toggleReprintMenu() {
+        this.reprintMenu = true;
     }
 
     // --- BASIC INPUT ---
@@ -199,7 +211,13 @@ public class IOHandler implements Closeable {
         int choiceN = -1;
         String outcome;
 
-        System.out.print("\n");
+        if (this.reprintMenu) {
+            this.reprintMenu = false;
+            System.out.println();
+            wrapPrintln(options);
+        }
+
+        System.out.println();
         String in = this.getInput();
 
         try {
@@ -208,14 +226,19 @@ public class IOHandler implements Closeable {
             isOption = false;
         }
 
+        //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): player input = \"" + in + "\"; choiceN = " + choiceN + "; isOption = " + isOption + "]");
+
         if (isOption) {
+            //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): Running section for isOption]");
+
             try {
                 return options.playerChoose(choiceN);
             } catch (IllegalArgumentException e) {
+                //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): invalid option number]");
                 if (cycle == null) {
-                    this.printDialogueLine("[That is not a choice available to you.]", true);
+                    this.printDialogueLine(INVALIDOPTION);
                 } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                    this.printDialogueLine("[That is not a choice available to you.]", true);
+                    this.printDialogueLine(INVALIDOPTION);
                 } else {
                     this.printDialogueLine(NINVALIDOPTIONLINE);
                 }
@@ -223,27 +246,35 @@ public class IOHandler implements Closeable {
                 return this.parseOptionChoice(cycle, options, exclusiveOverride, proceedOverride);
             }
         } else {
-            boolean isTrueExclusive = manager.trueExclusiveMenu();
+            boolean metaMenuActive = manager.metaMenuActive();
+            //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): Running section for !isOption]");
+            //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): IOHandler isTrueExclusive = " + isTrueExclusive + "]");
 
-            if (options.isExclusive() || isTrueExclusive) {
-                if (isTrueExclusive) {
+            if (options.isExclusive() || metaMenuActive) {
+                if (metaMenuActive) {
+                    //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): True exclusive]");
+                    outcome = "";
+                } else {
+                    //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): Regular exclusive]");
                     try {
                         outcome = this.parseCommand(cycle, in, false);
                     } catch (Exception e) {
+                        //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): parse command failed]");
                         outcome = "cFail";
                     }
-                } else {
-                    outcome = "";
                 }
 
                 if (outcome.equals("cFail")) {
-                    this.printDialogueLine("[That is not a valid command.]", true);
+                    //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): command outcome cFail while exclusive]");
+                    this.printDialogueLine(INVALIDCOMMAND);
                 } else if (!outcome.equals("cMeta")) {
                     if (exclusiveOverride.isEmpty()) {
-                        if (cycle == null) {
-                            this.printDialogueLine("[You have no other choice.]", true);
+                        if (metaMenuActive) {
+                            IOHandler.wrapPrintln("[Please choose a valid option.]");
+                        } else if (cycle == null) {
+                            this.printDialogueLine(EXCLUSIVELINE);
                         } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                            this.printDialogueLine("[You have no other choice.]", true);
+                            this.printDialogueLine(EXCLUSIVELINE);
                         } else {
                             this.printDialogueLine(NEXCLUSIVELINE);
                         }
@@ -259,14 +290,17 @@ public class IOHandler implements Closeable {
                     return (outcome.equals("cMeta")) ? this.parseOptionChoice(cycle, options, exclusiveOverride, proceedOverride) : outcome;
                 } catch (Exception e) {
                     if (cycle == null) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
+                        //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): null cycle (parseOptionChoice)]");
+                        this.printDialogueLine(INVALIDCOMMAND);
                     } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
+                        //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): no Narrator (parseOptionChoice)]");
+                        this.printDialogueLine(INVALIDCOMMAND);
                     } else {
-                        this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
+                        this.printDialogueLine(NINVALIDOPTIONLINE);
                     }
 
                     // Invalid command; re-input, do not show options again
+                    //System.out.println("[DEBUG (first Option = " + options.get(0).getID() + "): Running re-input]");
                     return this.parseOptionChoice(cycle, options, exclusiveOverride, proceedOverride);
                 }
             }
@@ -292,11 +326,13 @@ public class IOHandler implements Closeable {
             } catch (Exception e) {
                 if (e.getLocalizedMessage().equals("Invalid command")) {
                     if (cycle == null) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
+                        //System.out.println("[DEBUG: null cycle (promptCommand)]");
+                        this.printDialogueLine(INVALIDCOMMAND);
                     } else if (!cycle.hasVoice(Voice.NARRATOR)) {
-                        this.printDialogueLine("[That is not a valid command.]", true);
+                        //System.out.println("[DEBUG: no Narrator (promptCommand)]");
+                        this.printDialogueLine(INVALIDCOMMAND);
                     } else {
-                        this.printDialogueLine(new VoiceDialogueLine(Voice.NARRATOR, "What are you even trying to do? You're not accomplishing anything.", true));
+                        this.printDialogueLine(NINVALIDOPTIONLINE);
                     }
                 }
 
@@ -337,22 +373,34 @@ public class IOHandler implements Closeable {
         }
 
         Command c = Command.getCommand(prefix);
-        if (c == null) {
-            throw new Exception("Invalid command");
-        }
+        if (c == null) throw new Exception("Invalid command");
 
         String commandOutcome = "c";
+        if (!c.isMeta() && cycle == null) return "cFail";
+
         switch (c) {
             case HELP:
                 manager.help(argument);
                 commandOutcome += "Meta";
                 break;
             case SHOW:
-                cycle.show(argument);
+            case VIEW:
+                commandOutcome += manager.show(argument);
+                break;
+            case DIRECTGALLERY:
+                if (cycle == null) {
+                    manager.showGallery();
+                } else {
+                    cycle.showGallery();
+                }
                 commandOutcome += "Meta";
                 break;
             case SETTINGS:
-                manager.settings();
+                if (cycle == null) {
+                    manager.settings();
+                } else {
+                    cycle.settings();
+                }
                 commandOutcome += "Meta";
                 break;
             case TOGGLE:
@@ -364,13 +412,11 @@ public class IOHandler implements Closeable {
                 commandOutcome += "Meta";
                 break;
             case GO:
+            case WALK:
                 commandOutcome += cycle.go(argument);
                 break;
             case DIRECTGO:
                 commandOutcome += cycle.go(prefix);
-                break;
-            case WALK:
-                commandOutcome += cycle.go(argument);
                 break;
             case ENTER:
                 commandOutcome += cycle.enter(argument);

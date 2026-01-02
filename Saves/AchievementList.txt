@@ -13,7 +13,7 @@ mirror2 / The Decay / You've withered. / hidden
 mirror3 / The Remains / You've unraveled. / hidden
 mirror4 / The Long Quiet / All of this is you. / hidden
 wait / I Never Left Your Side / Attempt to out-wait your destiny.
-narryEnd / Death of the Author / Run out of questions.
+narryEnd / Death of the Author / Run out of questions. / hidden
 narrySmash / I Don't Need Answers / Break the mirror without asking any questions.
 abort0 / Denial / Return to your destined path, or face the consequences.
 abort1 / Anger / Why have you come back?!
@@ -85,7 +85,7 @@ strangerEnd / The Illusion of Choice / When everything is possible, nothing is.
 --- The Prisoner
 headClaim / A Clever Heart / Bring the Prisoner's head to Her. / hidden
 prisonerClaim / A Patient Heart / Bring the Prisoner to Her. / hidden
-prisonerHead / Talking Heads / Free a prisoner.
+prisonerHead / Talking Heads / Free a prisoner. / hidden
 prisonerChain / Prison of the Mind / Become your own jailor.
 prisonerSlay / Coldly Rational / Execute a prisoner.
 prisonerGood / Restless Thoughts / Have a voice interrupt your happy ending.
@@ -105,24 +105,24 @@ needleFree / The Blind Leading the Blind / Free someone who doesn't want to be f
 --- The Fury
 furyClaim / A Weathered Heart / Bring the Fury to Her. / hidden
 rewoundClaim / A Weathered Heart, Held in Ribbons / Bring the Rewound Fury to Her. / hidden
-furyTower / Quantum Beak / Find the means to triumph over an angel scorned.
-furySlay / A hint of feeling / Slay an unraveled adversary.
-furyTogether / A new leaf in a weathered book / Find a new beginning with a scorned adversary.
+furyTower / Quantum Beak / Find the means to triumph over an angel scorned. / hidden
+furySlay / A hint of feeling / Slay an unraveled adversary. / hidden
+furyTogether / A new leaf in a weathered book / Find a new beginning with a scorned adversary. / hidden
 furyContra / Going the distance / Triumph over a scorned adversary.
 
 --- The Apotheosis
 apoClaim / A Terrifying and Divine Heart / Bring the Apotheosis to Her. / hidden
 apoAscend / The End of Something / Witness your better's ascension.
 apoAlone / Grace / Recieve grace from a divine being.
-apoTendrils / A Window to the Unknown / Become shackled with a divine being.
-apoFightContra / Something to remember you by / Leave a divine being with a blinding scar.
-apoFightPara / Courage and Madness / Walk the razor's edge in a battle with a divine foe.
-apoFightParaEnd / A Goddess Unraveled / Share your darkest pain and paranoia with a divine being.
+apoTendrils / A Window to the Unknown / Become shackled with a divine being. / hidden
+apoFightContra / Something to remember you by / Leave a divine being with a blinding scar. / hidden
+apoFightPara / Courage and Madness / Walk the razor's edge in a battle with a divine foe. / hidden
+apoFightParaEnd / A Goddess Unraveled / Share your darkest pain and paranoia with a divine being. / hidden
 
 --- The Princess and the Dragon
 dragonClaim / An Empathetic Heart / Share in a Princess's beating heart before bringing it to Her. / hidden
 stencilClaim / An Empathetic Heart, Held in Stencil / Share in a Stenciled Heart before bringing it to Her. / hidden
-dragonFuse / The Princess and the Dragon / and the Princess and the Dragon and the Princess and the Dragon and the Princess and the Dragon and
+dragonFuse / The Princess and the Dragon / and the Princess and the Dragon and the Princess and the Dragon and the Princess and the Dragon and / hidden
 dragonFree / What Once Was One, Then Was Two / Share a quiet moment after really getting to know each other.
 dragonLeave / An Opportunist at Heart / Leave a shared heart to languish.
 dragonHarsh / Wait wait wait wait wait! / Fail to disarm a harsh companion.
@@ -140,10 +140,10 @@ clarityClaim / A Wise Heart / Bring the Moment of Clarity to Her. / hidden
 denClaim / A Ravenous Heart / Bring the Den to Her. / hidden
 denFight / Fight / Successfully take the fight to a creature in its den.
 denFlight / Flight / Successfully flee from a creature in its den.
-denInstinct / She eats he eats she eats he eats... / Embrace instinct in a dark den.
-denStrike / Heroic Strike / Retain your humanity in the face of instinct in a dark den.
-denFree / The Lion and the Mouse / Form an unlikely alliance in a dark den.
-denCoup / Coup de grâce / Strike an immobilized creature in a dark den.
+denInstinct / She eats he eats she eats he eats... / Embrace instinct in a dark den. / hidden
+denStrike / Heroic Strike / Retain your humanity in the face of instinct in a dark den. / hidden
+denFree / The Lion and the Mouse / Form an unlikely alliance in a dark den. / hidden
+denCoup / Coup de grâce / Strike an immobilized creature in a dark den. / hidden
 denStarve / Hunger pangs / Wait with her in a dark den.
 
 --- The Wild
@@ -175,7 +175,7 @@ greyDrowned / And All This Longing... / Drown at the hands of a faded spirit.
 --- Happily Ever After
 happyClaim / An Honest Heart / Share your happy ending with Her. / hidden
 happyGame / Game Night / Win a game with the help of a manipulative voice.
-happyShadow / Shadows on the Wall / Deduce the identity of a shadowy figure with the help of a questioning voice.
-happyStay / We Don't Have to Let It Go Out. / Keep the last torch burning.
-happySlay / It's Finally Over / Kill your happy ending.
-happyDance / I Meant It / Share a dance with your happy ending.
+happyShadow / Shadows on the Walls / Deduce the identity of a shadowy figure with the help of a questioning voice. / hidden
+happyStay / We Don't Have to Let It Go Out. / Keep the last torch burning. / hidden
+happySlay / It's Finally Over / Kill your happy ending. / hidden
+happyDance / I Meant It / Share a dance with your happy ending. / hidden

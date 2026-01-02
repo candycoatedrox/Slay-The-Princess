@@ -38,8 +38,8 @@ public class ChapterII extends StandardCycle {
      * @param voicesMet the Voices the player has encountered so far during this cycle
      * @param cantTryAbort whether the player has already tried (and failed) to abort this route
      */
-    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, Condition cantTryAbort, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
-        super(manager, parser, voicesMet, cantTryAbort, prevEnding);
+    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
+        super(manager, parser, route, cantTryAbort, prevEnding);
 
         this.isHarsh = isHarsh;
         this.knowsDestiny = knowsDestiny;
@@ -49,8 +49,6 @@ public class ChapterII extends StandardCycle {
         this.rescuePath = rescuePath;
 
         this.prevEnding = prevEnding;
-        this.activeChapter = prevEnding.getNextChapter();
-        this.route.add(this.activeChapter);
 
         this.ch2Voice = this.prevEnding.getNewVoice();
         this.addVoice(this.ch2Voice);
@@ -132,7 +130,7 @@ public class ChapterII extends StandardCycle {
         OptionsMenu warningsMenu = manager.warningsMenu();
         warningsMenu.setCondition("current", this.activeChapter.hasContentWarnings());
 
-        manager.setTrueExclusiveMenu(true);
+        manager.setMetaMenuActive(true);
         switch (parser.promptOptionsMenu(warningsMenu)) {
             case "general":
                 manager.showGeneralWarnings();
@@ -148,7 +146,7 @@ public class ChapterII extends StandardCycle {
             default: super.giveDefaultFailResponse();
         }
 
-        manager.setTrueExclusiveMenu(false);
+        manager.setMetaMenuActive(false);
     }
 
     /**
@@ -182,6 +180,7 @@ public class ChapterII extends StandardCycle {
     @Override
     public ChapterEnding runChapter() {
         this.unlockChapter();
+        manager.updateTracker();
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
         
         this.displayTitleCard();
@@ -221,13 +220,38 @@ public class ChapterII extends StandardCycle {
             default: throw new RuntimeException("Cannot run an invalid chapter");
         }
 
-        if (!ending.getAchievementID().isEmpty()) {
+        if (ending == null) return ChapterEnding.DEMOENDING;
+
+        if (ending.hasAchievement()) {
             manager.unlock(ending.getAchievementID());
         }
 
+        manager.updateTracker();
+
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, voicesMet, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerHeartStopped);
             ending = chapter3.runChapter();
+        }
+
+        return ending;
+    }
+
+    /**
+     * (DEBUG ONLY) Initiates and coordinates a partial cycle, starting from a given Chapter I ending through the player's conversation with the Shifting Mound
+     * @return the ending reached by the player
+     */
+    @Override
+    public ChapterEnding debugRunChapter() {
+        ChapterEnding ending = this.runChapter();
+
+        switch (ending) {
+            case ABORTED:
+            case GOODENDING:
+            case DEMOENDING: break;
+
+            default:
+                manager.updateMoundValues(ending.getFreedom(), ending.getSatisfaction());
+                this.mirrorSequence(ending);
         }
 
         return ending;
@@ -1895,7 +1919,7 @@ public class ChapterII extends StandardCycle {
         }
 
         mainScript.runSection("directFinalStart");
-        this.currentVoices.put(Voice.NARRATOR, false);
+        this.removeVoice(Voice.NARRATOR);
 
         if (this.isFirstVessel) {
             this.activeMenu = new OptionsMenu(true);
@@ -2540,7 +2564,12 @@ public class ChapterII extends StandardCycle {
         }
 
         mainScript.runSection("upstairsDieCont");
-        return ChapterEnding.DEADISDEAD;
+
+        if (tookBladeStart) {
+            return ChapterEnding.DEADISDEAD;
+        } else {
+            return ChapterEnding.DEADISDEADUPSTAIRS;
+        }
     }
 
 
@@ -6460,7 +6489,7 @@ public class ChapterII extends StandardCycle {
         }
 
         // Chapter ends here
-        this.currentVoices.put(Voice.NARRATOR, false);
+        this.removeVoice(Voice.NARRATOR);
         mainScript.runSection("endingStart");
 
         this.activeMenu = new OptionsMenu(true);

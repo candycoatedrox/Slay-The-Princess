@@ -28,8 +28,8 @@ public class ChapterIII extends StandardCycle {
      * @param route the Chapters the player has visited so far during this route
      * @param cantTryAbort whether the player has already tried (and failed) to abort this route
      */
-    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Voice> voicesMet, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerHeartStopped) {
-        super(manager, parser, voicesMet, route, cantTryAbort, prevEnding);
+    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerHeartStopped) {
+        super(manager, parser, route, cantTryAbort, prevEnding);
 
         this.source = source2;
         this.sharedLoop = sharedLoop;
@@ -48,7 +48,7 @@ public class ChapterIII extends StandardCycle {
         this.spectreEndSlay = spectreEndSlay;
         this.prisonerHeartStopped = prisonerHeartStopped;
 
-        Voice newVoice = this.prevEnding.getNewVoice();
+        Voice newVoice = prevEnding.getNewVoice();
         this.ch3Voice = newVoice;
 
         if (this.activeChapter == Chapter.CLARITY) {
@@ -207,7 +207,7 @@ public class ChapterIII extends StandardCycle {
         OptionsMenu warningsMenu = manager.warningsMenu();
         warningsMenu.setCondition("current", this.activeChapter.hasContentWarnings());
 
-        manager.setTrueExclusiveMenu(true);
+        manager.setMetaMenuActive(true);
         switch (parser.promptOptionsMenu(warningsMenu)) {
             case "general":
                 manager.showGeneralWarnings();
@@ -223,7 +223,7 @@ public class ChapterIII extends StandardCycle {
             default: super.giveDefaultFailResponse();
         }
 
-        manager.setTrueExclusiveMenu(false);
+        manager.setMetaMenuActive(false);
     }
 
     /**
@@ -256,12 +256,16 @@ public class ChapterIII extends StandardCycle {
      */
     @Override
     public ChapterEnding runChapter() {
+        //System.out.println("Running runChapter with prevEnding " + this.prevEnding);
+        //System.out.println("Active chapter is " + this.activeChapter);
+
         this.unlockChapter();
+        manager.updateTracker();
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
         
         if (!activeChapter.hasSpecialTitle()) this.displayTitleCard();
         
-        if (manager.demoMode()) return ChapterEnding.DEMOENDING;
+        if (manager.demoMode() && this.activeChapter != Chapter.SPACESBETWEEN) return ChapterEnding.DEMOENDING;
 
         ChapterEnding ending;
         switch (this.activeChapter) {
@@ -314,17 +318,21 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             case SPACESBETWEEN:
+                //System.out.println("Running Spaces Between");
                 ending = this.prevEnding;
-                this.mirrorSequence(ending);
                 break;
 
             default: throw new RuntimeException("Cannot run an invalid chapter");
         }
 
-        if (!ending.getAchievementID().isEmpty()) {
+        //System.out.println("Ending: " + ending);
+        if (ending == null) return ChapterEnding.DEMOENDING;
+
+        if (ending.hasAchievement()) {
             manager.unlock(ending.getAchievementID());
         }
 
+        manager.updateTracker();
         return ending;
     }
 
@@ -334,6 +342,8 @@ public class ChapterIII extends StandardCycle {
      */
     @Override
     public ChapterEnding debugRunChapter() {
+        //System.out.println("Running debugRunChapter");
+
         // Add the appropriate Chapter 2/3 voice(s)
         switch (this.prevEnding) {
 
@@ -343,9 +353,10 @@ public class ChapterIII extends StandardCycle {
             case STRIKEMEDOWN:
             case HEARNOBELL:
             case DEADISDEAD:
+            case DEADISDEADUPSTAIRS:
             case THREADINGTHROUGH:
             case FREEINGSOMEONE:
-                this.route.add(Chapter.ADVERSARY);
+                route.add(Chapter.ADVERSARY);
                 this.addVoice(Voice.STUBBORN);
                 this.ch2Voice = Voice.STUBBORN;
                 break;
@@ -354,7 +365,7 @@ public class ChapterIII extends StandardCycle {
             case GODKILLER:
             case APOBLADE:
             case APOUNARMED:
-                this.route.add(Chapter.TOWER);
+                route.add(Chapter.TOWER);
                 this.addVoice(Voice.BROKEN);
                 this.ch2Voice = Voice.BROKEN;
                 break;
@@ -363,7 +374,7 @@ public class ChapterIII extends StandardCycle {
             case HEARTRIPPERLEAVE:
             case HEARTRIPPER:
             case EXORCIST:
-                this.route.add(Chapter.SPECTRE);
+                route.add(Chapter.SPECTRE);
                 this.addVoice(Voice.COLD);
                 this.ch2Voice = Voice.COLD;
                 break;
@@ -372,7 +383,7 @@ public class ChapterIII extends StandardCycle {
             case HOUSEOFNOLEAVE:
             case TERMINALVELOCITY:
             case MONOLITHOFFEAR:
-                this.route.add(Chapter.NIGHTMARE);
+                route.add(Chapter.NIGHTMARE);
                 this.addVoice(Voice.PARANOID);
                 this.ch2Voice = Voice.PARANOID;
                 break;
@@ -382,20 +393,20 @@ public class ChapterIII extends StandardCycle {
             case TOARMSRACELEFT:
             case TONOWAYOUTBORED:
             case TONOWAYOUTLEFT:
-                this.route.add(Chapter.RAZOR);
+                route.add(Chapter.RAZOR);
                 this.addVoice(Voice.CHEATED);
                 this.ch2Voice = Voice.CHEATED;
                 break;
 
             case TOMUTUALLYASSURED:
-                this.route.add(Chapter.RAZOR);
-                this.route.add(Chapter.ARMSRACE);
+                route.add(Chapter.RAZOR);
+                route.add(Chapter.ARMSRACE);
                 this.ch2Voice = Voice.CHEATED;
                 break;
 
             case TOEMPTYCUP:
-                this.route.add(Chapter.RAZOR);
-                this.route.add(Chapter.NOWAYOUT);
+                route.add(Chapter.RAZOR);
+                route.add(Chapter.NOWAYOUT);
                 this.ch2Voice = Voice.CHEATED;
                 break;
 
@@ -406,7 +417,7 @@ public class ChapterIII extends StandardCycle {
             case AHAB:
             case SLAYYOURSELF:
             case DISSOLVED:
-                this.route.add(Chapter.BEAST);
+                route.add(Chapter.BEAST);
                 this.addVoice(Voice.HUNTED);
                 this.ch2Voice = Voice.HUNTED;
                 break;
@@ -419,13 +430,13 @@ public class ChapterIII extends StandardCycle {
             case PLAYINGITSAFE:
             case PASTLIFEGAMBITSPECIAL:
             case PASTLIFEGAMBIT:
-                this.route.add(Chapter.WITCH);
+                route.add(Chapter.WITCH);
                 this.addVoice(Voice.OPPORTUNIST);
                 this.ch2Voice = Voice.OPPORTUNIST;
                 break;
 
             case ILLUSIONOFCHOICE:
-                this.route.add(Chapter.STRANGER);
+                route.add(Chapter.STRANGER);
                 this.addVoice(Voice.CONTRARIAN);
                 this.ch2Voice = Voice.CONTRARIAN;
                 break;
@@ -436,7 +447,7 @@ public class ChapterIII extends StandardCycle {
             case RESTLESSFORCED:
             case RESTLESSSELF:
             case RESTLESSGIVEIN:
-                this.route.add(Chapter.PRISONER);
+                route.add(Chapter.PRISONER);
                 this.addVoice(Voice.SKEPTIC);
                 this.ch2Voice = Voice.SKEPTIC;
                 break;
@@ -447,7 +458,7 @@ public class ChapterIII extends StandardCycle {
                 this.addVoice(Voice.SMITTEN);
             case CONTENTSOFOURHEARTDECON:
             case CONTENTSOFOURHEARTUPSTAIRS:
-                this.route.add(Chapter.DAMSEL);
+                route.add(Chapter.DAMSEL);
                 this.ch2Voice = Voice.SMITTEN;
                 break;
 
@@ -456,64 +467,64 @@ public class ChapterIII extends StandardCycle {
             // The Eye of the Needle
             case FAILEDFIGHT: // assume Skeptic
             case BLINDLEADINGBLIND: // assume Skeptic
-                this.route.add(Chapter.ADVERSARY);
-                this.route.add(Chapter.NEEDLE);
+                route.add(Chapter.ADVERSARY);
+                route.add(Chapter.NEEDLE);
                 this.addVoice(Voice.STUBBORN);
                 this.addVoice(Voice.SKEPTIC);
                 break;
             case FAILEDFLEE: // assume Hunted
             case WIDEOPENFIELD:
-                this.route.add(Chapter.ADVERSARY);
-                this.route.add(Chapter.NEEDLE);
+                route.add(Chapter.ADVERSARY);
+                route.add(Chapter.NEEDLE);
                 this.addVoice(Voice.STUBBORN);
                 this.addVoice(Voice.HUNTED);
                 break;
 
             // The Fury
             case QUANTUMBEAK: // Broken has been replaced with Cold by now
-                this.route.add(Chapter.TOWER);
-                this.route.add(Chapter.FURY);
+                route.add(Chapter.TOWER);
+                route.add(Chapter.FURY);
                 this.addVoice(Voice.COLD);
                 this.addVoice(Voice.STUBBORN);
                 break;
             case HINTOFFEELING:
             case LEAVEHERBEHIND: // assume Cold
-                this.route.add(Chapter.ADVERSARY);
-                this.route.add(Chapter.FURY);
+                route.add(Chapter.ADVERSARY);
+                route.add(Chapter.FURY);
                 this.addVoice(Voice.STUBBORN);
                 this.addVoice(Voice.COLD);
-                this.currentVoices.put(Voice.HERO, false);
+                this.removeVoice(Voice.HERO);
                 break;
             case NEWLEAFWEATHEREDBOOK: // assume Broken
-                this.route.add(Chapter.ADVERSARY);
-                this.route.add(Chapter.FURY);
+                route.add(Chapter.ADVERSARY);
+                route.add(Chapter.FURY);
                 this.addVoice(Voice.STUBBORN);
                 this.addVoice(Voice.BROKEN);
-                this.currentVoices.put(Voice.HERO, false);
+                this.removeVoice(Voice.HERO);
                 break;
             case GOINGTHEDISTANCE:
-                this.route.add(Chapter.ADVERSARY);
-                this.route.add(Chapter.FURY);
+                route.add(Chapter.ADVERSARY);
+                route.add(Chapter.FURY);
                 this.addVoice(Voice.STUBBORN);
                 this.addVoice(Voice.CONTRARIAN);
                 break;
             case IFYOUCOULDUNDERSTAND: // assume from Tower; all Voices gone by now
-                this.route.add(Chapter.TOWER);
-                this.route.add(Chapter.FURY);
+                route.add(Chapter.TOWER);
+                route.add(Chapter.FURY);
                 this.clearVoices();
 
             // The Apotheosis
             case WINDOWTOUNKNOWN:
             case GRACE: // assume Contrarian
             case SOMETHINGTOREMEMBER:
-                this.route.add(Chapter.TOWER);
-                this.route.add(Chapter.APOTHEOSIS);
+                route.add(Chapter.TOWER);
+                route.add(Chapter.APOTHEOSIS);
                 this.addVoice(Voice.BROKEN);
                 this.addVoice(Voice.CONTRARIAN);
                 break;
             case GODDESSUNRAVELED:
-                this.route.add(Chapter.TOWER);
-                this.route.add(Chapter.APOTHEOSIS);
+                route.add(Chapter.TOWER);
+                route.add(Chapter.APOTHEOSIS);
                 this.addVoice(Voice.BROKEN);
                 this.addVoice(Voice.PARANOID);
                 break;
@@ -522,30 +533,30 @@ public class ChapterIII extends StandardCycle {
             case WHATONCEWASONE:
             case PRINCESSANDDRAGON:
             case OPPORTUNISTATHEART:
-                this.route.add(Chapter.SPECTRE);
-                this.route.add(Chapter.DRAGON);
+                route.add(Chapter.SPECTRE);
+                route.add(Chapter.DRAGON);
                 this.addVoice(Voice.COLD);
                 this.addVoice(Voice.OPPORTUNIST);
                 break;
 
             // The Wraith
             case PASSENGER: // assume Opportunist
-                this.route.add(Chapter.NIGHTMARE);
-                this.route.add(Chapter.WRAITH);
+                route.add(Chapter.NIGHTMARE);
+                route.add(Chapter.WRAITH);
                 this.addVoice(Voice.PARANOID);
                 this.addVoice(Voice.OPPORTUNIST);
                 break;
             case EXORCISTIII: // assume Spectre-Paranoid
-                this.route.add(Chapter.SPECTRE);
-                this.route.add(Chapter.WRAITH);
+                route.add(Chapter.SPECTRE);
+                route.add(Chapter.WRAITH);
                 this.addVoice(Voice.COLD);
                 this.addVoice(Voice.PARANOID);
                 break;
 
             // The Moment of Clarity
             case MOMENTOFCLARITY:
-                this.route.add(Chapter.NIGHTMARE);
-                this.route.add(Chapter.CLARITY);
+                route.add(Chapter.NIGHTMARE);
+                route.add(Chapter.CLARITY);
                 for (Voice v : Voice.TRUEVOICES) {
                     this.addVoice(v);
                 }
@@ -553,19 +564,19 @@ public class ChapterIII extends StandardCycle {
 
             // Mutually Assured Destruction / The Empty Cup
             case WATERSTEEL:
-                this.route.add(Chapter.RAZOR);
-                this.route.add(Chapter.ARMSRACE);
-                this.route.add(Chapter.MUTUALLYASSURED);
+                route.add(Chapter.RAZOR);
+                route.add(Chapter.ARMSRACE);
+                route.add(Chapter.MUTUALLYASSURED);
                 for (Voice v : Voice.TRUEVOICES) {
-                    if (v != Voice.HERO) this.voicesMet.add(v);
+                    this.addVoice(v);
                 }
                 break;
             case FORMLESS:
-                this.route.add(Chapter.RAZOR);
-                this.route.add(Chapter.NOWAYOUT);
-                this.route.add(Chapter.EMPTYCUP);
+                route.add(Chapter.RAZOR);
+                route.add(Chapter.NOWAYOUT);
+                route.add(Chapter.EMPTYCUP);
                 for (Voice v : Voice.TRUEVOICES) {
-                    if (v != Voice.HERO) this.voicesMet.add(v);
+                    this.addVoice(v);
                 }
                 break;
 
@@ -573,31 +584,31 @@ public class ChapterIII extends StandardCycle {
             case UNANSWEREDQUESTIONS: // assume Stubborn
             case HEROICSTRIKE:
             case INSTINCT:
-                this.route.add(Chapter.BEAST);
-                this.route.add(Chapter.DEN);
+                route.add(Chapter.BEAST);
+                route.add(Chapter.DEN);
                 this.addVoice(Voice.HUNTED);
                 this.addVoice(Voice.STUBBORN);
                 break;
             case HUNGERPANGS: // assume Skeptic
             case COUPDEGRACE:
             case LIONANDMOUSE:
-                this.route.add(Chapter.BEAST);
-                this.route.add(Chapter.DEN);
+                route.add(Chapter.BEAST);
+                route.add(Chapter.DEN);
                 this.addVoice(Voice.HUNTED);
                 this.addVoice(Voice.SKEPTIC);
                 break;
 
             // The Wild
             case GLIMPSEOFSOMETHING: // assume Beast-Broken
-                this.route.add(Chapter.BEAST);
-                this.route.add(Chapter.WILD);
+                route.add(Chapter.BEAST);
+                route.add(Chapter.WILD);
                 this.addVoice(Voice.HUNTED);
                 this.addVoice(Voice.BROKEN);
                 break;
             case WOUNDSAVE:
             case WOUNDSLAY: // assume Witch-Cheated
-                this.route.add(Chapter.WITCH);
-                this.route.add(Chapter.WILD);
+                route.add(Chapter.WITCH);
+                route.add(Chapter.WILD);
                 this.addVoice(Voice.OPPORTUNIST);
                 this.addVoice(Voice.CHEATED);
                 break;
@@ -607,14 +618,14 @@ public class ChapterIII extends StandardCycle {
             case TRUSTISSUESSLAY:
             case ABANDONMENT:
             case NEWLEAF: // assume Cheated
-                this.route.add(Chapter.WITCH);
-                this.route.add(Chapter.THORN);
+                route.add(Chapter.WITCH);
+                route.add(Chapter.THORN);
                 this.addVoice(Voice.OPPORTUNIST);
                 this.addVoice(Voice.CHEATED);
                 break;
             case NEWLEAFKISS:
-                this.route.add(Chapter.WITCH);
-                this.route.add(Chapter.THORN);
+                route.add(Chapter.WITCH);
+                route.add(Chapter.THORN);
                 this.addVoice(Voice.OPPORTUNIST);
                 this.addVoice(Voice.SMITTEN);
                 break;
@@ -622,34 +633,34 @@ public class ChapterIII extends StandardCycle {
             // The Cage
             case NOEXIT:
             case FREEWILL: // assume Cheated
-                this.route.add(Chapter.PRISONER);
-                this.route.add(Chapter.CAGE);
+                route.add(Chapter.PRISONER);
+                route.add(Chapter.CAGE);
                 this.addVoice(Voice.SKEPTIC);
                 this.addVoice(Voice.CHEATED);
                 break;
             case RIDDLEOFSTEEL:
-                this.route.add(Chapter.PRISONER);
-                this.route.add(Chapter.CAGE);
+                route.add(Chapter.PRISONER);
+                route.add(Chapter.CAGE);
                 this.addVoice(Voice.SKEPTIC);
                 this.addVoice(Voice.PARANOID);
                 break;
             case ALLEGORYOFCAGE: // assume Broken
-                this.route.add(Chapter.PRISONER);
-                this.route.add(Chapter.CAGE);
+                route.add(Chapter.PRISONER);
+                route.add(Chapter.CAGE);
                 this.addVoice(Voice.SKEPTIC);
                 this.addVoice(Voice.BROKEN);
                 break;
 
             // The Grey
             case BURNINGDOWNTHEHOUSE:
-                this.route.add(Chapter.DAMSEL);
-                this.route.add(Chapter.GREY);
+                route.add(Chapter.DAMSEL);
+                route.add(Chapter.GREY);
                 this.addVoice(Voice.SMITTEN);
                 this.addVoice(Voice.COLD);
                 break;
             case ANDALLTHISLONGING:
-                this.route.add(Chapter.PRISONER);
-                this.route.add(Chapter.GREY);
+                route.add(Chapter.PRISONER);
+                route.add(Chapter.GREY);
                 this.addVoice(Voice.SKEPTIC);
                 this.addVoice(Voice.COLD);
                 break;
@@ -657,19 +668,32 @@ public class ChapterIII extends StandardCycle {
             // Happily Ever After
             case IMEANTIT:
             case LEFTCABIN: // assume Skeptic
-                this.route.add(Chapter.DAMSEL);
-                this.route.add(Chapter.HAPPY);
+                route.add(Chapter.DAMSEL);
+                route.add(Chapter.HAPPY);
                 this.addVoice(Voice.SKEPTIC);
                 break;
             case FINALLYOVER:
             case DONTLETITGOOUT: // assume Opportunist
-                this.route.add(Chapter.DAMSEL);
-                this.route.add(Chapter.HAPPY);
+                route.add(Chapter.DAMSEL);
+                route.add(Chapter.HAPPY);
                 this.addVoice(Voice.OPPORTUNIST);
                 break;
         }
 
-        return this.runChapter();
+        ChapterEnding ending = this.runChapter();
+        //System.out.println("Debug ending: " + ending);
+
+        switch (ending) {
+            case ABORTED:
+            case GOODENDING:
+            case DEMOENDING: break;
+
+            default:
+                manager.updateMoundValues(ending.getFreedom(), ending.getSatisfaction());
+                this.mirrorSequence(ending);
+        }
+
+        return ending;
     }
 
     // --- CHAPTERS & SCENES ---
@@ -733,6 +757,10 @@ public class ChapterIII extends StandardCycle {
             case DEADISDEAD:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
                 this.source = "pathetic";
+
+            case DEADISDEADUPSTAIRS:
+                this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
+                this.source = "upstairs";
 
             default:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryTower");
@@ -943,6 +971,7 @@ public class ChapterIII extends StandardCycle {
         }
 
         mainScript.runSection();
+        this.clearVoices();
         return ChapterEnding.SOMETHINGTOREMEMBER;
     }
 
@@ -1028,6 +1057,7 @@ public class ChapterIII extends StandardCycle {
             }
         }
 
+        this.removeVoice(Voice.NARRATOR);
         this.hasBlade = false;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "fight", "[Fight back.]"));
@@ -1052,6 +1082,7 @@ public class ChapterIII extends StandardCycle {
         mainScript.runConditionalSection(push);
 
         if (push) {
+            this.clearVoices();
             return ChapterEnding.GODDESSUNRAVELED;
         } else {
             return ChapterEnding.WINDOWTOUNKNOWN;

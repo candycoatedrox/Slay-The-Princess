@@ -62,7 +62,7 @@ public enum Vessel {
      * @param achievementID the ID of the achievement tied to the Vessel
      */
     private Vessel(String name, Chapter c, String achievementID) {
-        this(name, c, c.getTitle(), achievementID);
+        this(name, c, c.toString(), achievementID);
     }
 
     /**
@@ -72,7 +72,7 @@ public enum Vessel {
      * @param achievementID the ID of the achievement tied to the Vessel
      */
     private Vessel(Chapter c, String playlistSong, String achievementID) {
-        this(c.getTitle(), c, playlistSong, achievementID);
+        this(c.toString(), c, playlistSong, achievementID);
     }
 
     /**
@@ -81,7 +81,7 @@ public enum Vessel {
      * @param achievementID the ID of the achievement tied to the Vessel
      */
     private Vessel(Chapter c, String achievementID) {
-        this(c.getTitle(), c, c.getTitle(), achievementID);
+        this(c.toString(), c, c.toString(), achievementID);
     }
 
     // --- ACCESSORS ---

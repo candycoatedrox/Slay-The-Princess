@@ -1,5 +1,5 @@
-import java.io.File;  // Import the File class
-import java.util.Arrays;
+import java.io.File;
+import java.util.Arrays;  // Import the File class
 
 public enum Chapter {
     // Chapter I
@@ -190,7 +190,7 @@ public enum Chapter {
         this.number = 0;
         this.prefix = "";
         this.title = title;
-        this.galleryHintUnlocked = title;
+        this.galleryHintUnlocked = "";
         this.galleryHintLocked = galleryHintLocked;
         this.specialTitle = true;
         this.scriptFile = Script.getScriptFromDirectory(scriptDirectory);
@@ -226,7 +226,8 @@ public enum Chapter {
      * Accessor for title
      * @return the title of this Chapter
      */
-    public String getTitle() {
+    @Override
+    public String toString() {
         /* if (this != CLARITY) {
             return this.prefix + ": " + this.title;
         } else {
@@ -360,11 +361,43 @@ public enum Chapter {
      * @return the Chapter with the given title
      */
     public static Chapter getChapter(String id) {
-        for (Chapter c : values()) {
-            if (c.getID().equals(id)) return c;
-        }
+        switch (id) {
+            case "ch1": return CH1;
 
-        return null;
+            case "intermission": return SPACESBETWEEN;
+            case "finale": return ENDOFEVERYTHING;
+
+            case "adversary": return ADVERSARY;
+            case "tower": return TOWER;
+            case "spectre": return SPECTRE;
+            case "nightmare": return NIGHTMARE;
+            case "razor": return RAZOR;
+            case "beast": return BEAST;
+            case "witch": return WITCH;
+            case "stranger": return STRANGER;
+            case "prisoner": return PRISONER;
+            case "damsel": return DAMSEL;
+
+            case "needle": return NEEDLE;
+            case "fury": return FURY;
+            case "apotheosis": return APOTHEOSIS;
+            case "dragon": return DRAGON;
+            case "wraith": return WRAITH;
+            case "clarity": return CLARITY;
+            case "armsrace": return ARMSRACE;
+            case "nowayout": return NOWAYOUT;
+            case "den": return DEN;
+            case "wild": return WILD;
+            case "thorn": return THORN;
+            case "cage": return CAGE;
+            case "grey": return GREY;
+            case "happy": return HAPPY;
+
+            case "mutuallyassured": return MUTUALLYASSURED;
+            case "emptycup": return EMPTYCUP;
+
+            default: return null;
+        }
     }
 
     /**
@@ -373,10 +406,42 @@ public enum Chapter {
      * @return the Chapter with the given title
      */
     public static Chapter getChapterFromTitle(String title) {
-        for (Chapter c : values()) {
-            if (c.title.equals(title)) return c;
-        }
+        switch (title) {
+            case "The Hero and the Princess": return CH1;
 
-        return null;
+            case "The Spaces Between": return SPACESBETWEEN;
+            case "The End of Everything": return ENDOFEVERYTHING;
+
+            case "The Adversary": return ADVERSARY;
+            case "The Tower": return TOWER;
+            case "The Spectre": return SPECTRE;
+            case "The Nightmare": return NIGHTMARE;
+            case "The Razor": return RAZOR;
+            case "The Beast": return BEAST;
+            case "The Witch": return WITCH;
+            case "The Stranger": return STRANGER;
+            case "The Prisoner": return PRISONER;
+            case "The Damsel": return DAMSEL;
+
+            case "The Eye of the Needle": return NEEDLE;
+            case "The Fury": return FURY;
+            case "The Apotheosis": return APOTHEOSIS;
+            case "The Princess and the Dragon": return DRAGON;
+            case "The Wraith": return WRAITH;
+            case "The Moment of Clarity": return CLARITY;
+            case "The Arms Race": return ARMSRACE;
+            case "No Way Out": return NOWAYOUT;
+            case "The Den": return DEN;
+            case "The Wild": return WILD;
+            case "The Thorn": return THORN;
+            case "The Cage": return CAGE;
+            case "The Grey": return GREY;
+            case "Happily Ever After": return HAPPY;
+
+            case "Mutually Assured Destruction": return MUTUALLYASSURED;
+            case "The Empty Cup": return EMPTYCUP;
+
+            default: return null;
+        }
     }
 }

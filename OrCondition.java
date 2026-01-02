@@ -20,7 +20,7 @@ public class OrCondition extends AbstractCondition {
      * @param conditions the conditions that make up the or statement
      */
     public OrCondition(AbstractCondition... conditions) {
-        this(true, conditions);
+        this(false, conditions);
     }
 
     // --- CHECKS ---
@@ -32,10 +32,7 @@ public class OrCondition extends AbstractCondition {
     @Override
     public boolean check() {
         if (this.bool || conditions.length == 0) return true;
-        for (AbstractCondition c : conditions) {
-            if (c.check()) return true;
-        }
-        return false;
+        return AbstractCondition.checkAny(this.conditions);
     }
 
 }

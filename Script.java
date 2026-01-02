@@ -1039,7 +1039,7 @@ public class Script {
 
             default:
                 if (isValidCharacter(prefix)) {
-                    this.printDialogueLine(lineIndex);
+                    this.printDialogueLine(prefix, argument, mods);
                 } else {
                     // Invalid line; print error message and skip to next line
                     System.out.println("[DEBUG: Invalid line in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
@@ -1332,40 +1332,15 @@ public class Script {
             try {
                 slowTime = Integer.parseInt(times[0]);
                 if (times.length == 1) {
-                    pause(slowTime);
+                    GameManager.pause(slowTime);
                 } else {
                     fastTime = Integer.parseInt(times[1]);
-                    this.pause(slowTime, fastTime);
+                    manager.pause(slowTime, fastTime);
                 }
             } catch (NumberFormatException e) {
                 // Invalid line; print error message and skip to next line
                 System.out.println("[DEBUG: Invalid pause (non-int argument) in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
             }
-        }
-    }
-
-    /**
-     * Waits for a given number of milliseconds before continuing, depending on whether global slow print is enabled or not
-     * @param slowTime the time to wait if global slow print is enabled
-     * @param fastTime the time to wait if global slow print is disabled
-     */
-    private void pause(int slowTime, int fastTime) {
-        if (manager.globalSlowPrint()) {
-            pause(slowTime);
-        } else {
-            pause(fastTime);
-        }
-    }
-
-    /**
-     * Waits for a given number of milliseconds before continuing
-     * @param time the time to wait
-     */
-    public static void pause(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Thread interrupted");
         }
     }
 
@@ -1571,17 +1546,18 @@ public class Script {
 
         String prefix = split[0];
         String argument = (split.length == 2) ? split[1] : "";
-        String modifiers = "";
+        String[] mods = new String[0];
 
         if (!argument.isEmpty()) {
             split = argument.split(" /// ");
             if (split.length != 1) {
                 argument = split[0];
-                modifiers = split[1];
+                String modifiers = split[1];
+                mods = modifiers.split(" ");
             }
         }
 
-        this.printDialogueLine(prefix, argument, modifiers);
+        this.printDialogueLine(prefix, argument, mods);
     }
 
     /**
@@ -1590,19 +1566,14 @@ public class Script {
      * @param arguments the dialogue line itself, as well as any optional modifiers
      * @param modifiers any modifiers to apply to the line
      */
-    private void printDialogueLine(String characterID, String line, String modifiers) {
+    private void printDialogueLine(String characterID, String line, String[] modifiers) {
         Voice v = Voice.getVoice(characterID);
         boolean isInterrupted = false;
+        
+        if (!this.runModifierChecks(modifiers, v)) return;
 
-        if (!modifiers.isEmpty()) {
-            String[] mods = modifiers.split(" ");
-            if (!this.runModifierChecks(mods, v)) return;
-
-            for (String m : mods) {
-                if (m.equals("interrupt")) {
-                    isInterrupted = true;
-                }
-            }
+        for (String m : modifiers) {
+            if (m.equals("interrupt")) isInterrupted = true;
         }
 
         if (v == null) {

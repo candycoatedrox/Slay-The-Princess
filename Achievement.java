@@ -10,7 +10,7 @@ public class Achievement {
     // Display information
     private final String name;
     private final String description;
-
+    private final String galleryHint;
 
     // --- CONSTRUCTOR ---
 
@@ -23,13 +23,14 @@ public class Achievement {
      * @param name the name of this achievement
      * @param description the description of this achievement
      */
-    public Achievement(String id, Chapter origin, boolean isHidden, boolean showsUnlockMessage, String name, String description) {
+    public Achievement(String id, Chapter origin, boolean isHidden, boolean showsUnlockMessage, String name, String description, String galleryHint) {
         this.id = id;
         this.origin = origin;
         this.isHidden = isHidden;
         this.showsUnlockMessage = showsUnlockMessage;
         this.name = name;
         this.description = description;
+        this.galleryHint = galleryHint;
     }
 
     // --- ACCESSORS & MANIPULATORS ---
@@ -88,6 +89,14 @@ public class Achievement {
      */
     public String getDescription() {
         return this.description;
+    }
+
+    /**
+     * Accessor for galleryHint
+     * @return the hint shown in the Gallery for this achievement
+     */
+    public String getGalleryHint() {
+        return this.galleryHint;
     }
 
     /**

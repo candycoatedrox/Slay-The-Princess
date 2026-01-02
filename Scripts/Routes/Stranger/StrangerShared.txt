@@ -44,19 +44,6 @@ n You know I can tell when you're lying, right? Please take this seriously. I'm 
 label leaveWoodsAttempt
 n The wall blocks your path. It seems you have no choice but to go to the cabin.
 
-// Abort vessel //
-
-label abort
-contra Oh, that's *clever!* A little... boring, though.
-n It's *extremely* boring.
-hero Can we really do that? Can we really just do... nothing?
-n No, you can't just do nothing. You have to do *something.*
-contra All right! So it's decided. Even if it's boring, we're going to do nothing. Forever!
-linebreak
-n Congratulations, you continue to waste everyone's time and do nothing... wait, can you still hear me? Everything is getting fuzzy...
-hero What is that... weird feeling? It's like I'm barely even here anymore.
-contra Well, it's not *nothing,* that's for sure. Does that mean we messed up?
-
 // Hill dialogue //
 
 label hillDialogue
@@ -81,7 +68,7 @@ n I've already told you what you're dealing with. You're dealing with a *Princes
 hero You can't just say that! Not when everything here is so wrong.
 n Listen to me. My job is to describe facts as facts, and to guide you through your job, which is to slay the Princess, and through that action, save the entire world.
 n And if you're going to slay her, you cannot let fear creep into your heart. You cannot lose yourself before you even get to her.
-contra Ohoho! You've piqued my interest. What's going to happen if we "lose ourself?"
+contra Ohoho! You've piqued my interest! What's going to happen if we "lose ourself?"
 n Nothing. Because you're going to pull yourself together.
 n Just ignore the stressful geometry and stay calm.
 hero How?! Even if we closed our eyes you're constantly describing it to us.
@@ -139,18 +126,14 @@ p Hello? HI. What are you doing here? Are you here to -- KILL.
 hero Mmm. No. No thank you.
 contra Oh, don't be such a baby!
 hero I don't want to do this. Let's just turn around and leave. This feels wrong, this feels like a trap, like whatever we do we're gonna die.
-bladeswitch stairsStart
-
-label stairsStartNoBlade
-hero We don't even have a weapon...
-label stairsStartBlade
+    hero We don't even have a weapon... /// noblade
 contra But we already tried turning around and leaving, didn't we? And He threw up a wall. No way to go but forward, and whatever choice we make, whatever she is, we know one thing for sure.
 hero And what's that?
 n That the fate of the world hinges on your success?
-contra There'll still be plenty of ways to ruin His day.
+contra There'll still be *plenty* of ways to ruin His day.
 
 label stairsNonSpecific
-truth You have to pick a staircase.
+hero ... Which way?
 
 label stairsLeaveAttempt
 contra If we try that, He'll just keep throwing up walls. Come on, just pick a staircase already!
@@ -251,7 +234,7 @@ label schism5Comment
 n This is reaching its breaking point. If you don't act now, there will be nothing in here but her. Take a deep breath and focus up. You can do this.
 hero But how do we decide what to do? Can there even be a right choice when all of them are so different?
 n Stop overthinking it. Your drifting thoughts have clearly been part of the reason this situation has gotten out of hand. If you're trying to do the right thing, there's only ever been the one option, and that option is slaying her.
-contra Just do something! Do anything! Do all of it if that's what you want. This place is *HELL* and it's only getting worse!
+contra Just -- just *do* something! Do... anything! Do all of it, if that's what you want! This place is *HELL* and it's only getting worse!
 
 // Dialogue menu //
 
@@ -442,7 +425,7 @@ hero Not a single real answer...
     contra At least aside from Miss Blood-and-Destruction. It's infuriating, isn't it? /// check
     contra It's *infuriating,* isn't it? /// checkfalse
 contra Whose buttons are there for us to press...? Whose skin is there for us to get under...?!
-hero Not exactly how I'd put it, but I don't disagree. There must be something we can do. Asking questions just seems to make things worse.
+hero Not exactly how I'd put it, but I don't disagree. There must be *something* we can do. Asking questions just seems to make things worse.
 
 label genericFracture
 n She fractures again.
@@ -488,3 +471,16 @@ truth But you don't know if she had the chance to hear your reply. She's gone, r
 
 label endReplyNotFirstVessel
 truth But you'll never know if she hears your reply. She's gone. Memory returns.
+
+// Abort the vessel //
+
+label abort
+contra Oh, that's *clever!* A little... boring, though.
+n It's *extremely* boring.
+hero Can we really do that? Can we really just do... nothing?
+n No, you can't just do nothing. You have to do *something.*
+contra All right! So it's decided. Even if it's boring, we're going to do... nothing. Forever!
+linebreak
+n Congratulations, you continue to waste everyone's time and do nothing... wait, can you still hear me? Everything is getting fuzzy...
+hero What is that... weird feeling? It's like I'm barely even here anymore.
+contra Well, it's not *nothing,* that's for sure. Does that mean we messed up?

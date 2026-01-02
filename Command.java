@@ -1,14 +1,16 @@
 import java.util.Arrays;
 
 public enum Command {
-    HELP("help", "Display all available commands or information on a given command.", "", "help", "show", "toggle", "go", "walk", "enter", "leave", "turn", "slay", "take", "drop", "throw"),
-    SHOW("show", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
-    SETTINGS("settings", "View and change settings.", ""),
-    TOGGLE("toggle", "Toggle a given setting.", "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow", "slow print", "slow dialogue", "instant print", "instant dialogue", "auto", "auto advance", "auto-advance", "advance", "auto dialogue"),
-    RESET("reset", "Reset achievements.", "", "achievements", "gallery", "achievement gallery", "achievements gallery"),
+    HELP("help", "Display all available commands or information on a given command.", true, "", "help", "show", "toggle", "go", "walk", "enter", "leave", "turn", "slay", "take", "drop", "throw"),
+    SHOW("show", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", true, "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
+    VIEW("view", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", true, "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
+    DIRECTGALLERY("", "View the Achievement Gallery.", "achievements", "gallery", "achievement gallery", "achievements gallery"),
+    SETTINGS("settings", "View and change settings.", true, ""),
+    TOGGLE("toggle", "Toggle a given setting.", true, "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow", "slow print", "slow dialogue", "instant print", "instant dialogue", "auto", "auto advance", "auto-advance", "advance", "auto dialogue"),
+    RESET("reset", "Reset achievements.", true, "", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
-    DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     WALK("walk", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
+    DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     ENTER("enter", "Enter a given location or the nearest appropriate location.", "", "cabin", "basement"),
     LEAVE("leave", "Leave the current location.", "", "cabin", "basement", "woods", "path"),
     PROCEED("proceed", "Press onwards.", ""),
@@ -21,20 +23,33 @@ public enum Command {
 
     private final String prefix;
     private final String description;
+    private final boolean isMeta;
     private final String[] validArguments;
 
     // --- CONSTRUCTOR ---
 
     /**
      * Constructor
-     * @param prefix the first word the player enters to trigger this Command
-     * @param description a brief description of this Command, shown when using the HELP command
+     * @param prefix the first word the player enters to trigger the command
+     * @param description a brief description of the command, shown when using the HELP command
+     * @param isMeta whether or not the command is a Meta command (a non-gameplay command that can be used at any time)
+     * @param validArguments all arguments the player can enter after the prefix that will result in a valid outcome
+     */
+    private Command(String prefix, String description, boolean isMeta, String... validArguments) {
+        this.prefix = prefix;
+        this.description = description;
+        this.isMeta = isMeta;
+        this.validArguments = validArguments;
+    }
+
+    /**
+     * Constructor for a non-meta command
+     * @param prefix the first word the player enters to trigger the command
+     * @param description a brief description of the command, shown when using the HELP command
      * @param validArguments all arguments the player can enter after the prefix that will result in a valid outcome
      */
     private Command(String prefix, String description, String... validArguments) {
-        this.prefix = prefix;
-        this.description = description;
-        this.validArguments = validArguments;
+        this(prefix, description, false, validArguments);
     }
 
     // --- ACCESSORS & CHECKS ---
@@ -56,6 +71,14 @@ public enum Command {
     }
 
     /**
+     * Accessor for isMeta
+     * @return whether or not this command is a Meta command (a non-gameplay command that can be used at any time)
+     */
+    public boolean isMeta() {
+        return this.isMeta;
+    }
+
+    /**
      * Returns a detailed description of this Command, including information on its argument(s) and different variations
      * @return a detailed description of this Command, including information on its argument(s) and different variations
      */
@@ -69,6 +92,14 @@ public enum Command {
             case WALK:
                 displayPrefix = "[GO / WALK]";
                 break;
+
+            case SHOW:
+            case VIEW:
+                displayPrefix = "[SHOW / VIEW]";
+                break;
+
+            case DIRECTGALLERY:
+                displayPrefix = "GALLERY";
 
             default:
                 displayPrefix = this.getPrefix().toUpperCase();
@@ -88,21 +119,32 @@ public enum Command {
                 break;
                 
             case SHOW:
-                s += "SHOW [warnings] [target] [warnings]\n\n";
+            case VIEW:
+                s += "[SHOW / VIEW] [warnings] [target] [warnings]\n\n";
 
                 s += "- Arguments -\n";
                 s += "  - [warnings]: Both optional. When viewing content warnings, the command functions the same, no matter if [warnings] is present or not. Can be any one of [WARNINGS / CONTENT WARNINGS / CWS / TRIGGER WARNINGS / TWS].\n";
                 s += "  - [target]: Optional. Either the set of warnings you wish to view or the Achievement Gallery.\n\n";
 
                 s += "- Variations -\n";
-                s += "  - SHOW: Offers a choice between showing content warnings or the Achievement Gallery.\n";
-                s += "  - SHOW [warnings]: Offers a choice between showing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
-                s += "  - SHOW [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]: Shows general content warnings.\n";
-                s += "  - SHOW [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]: Shows content warnings by chapter.\n";
-                s += "  - SHOW [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]: Shows content warnings for the current chapter, if applicable.\n";
-                s += "  - SHOW [warnings] [set]: Same as > SHOW [set].\n";
-                s += "  - SHOW [set] [warnings]: Same as > SHOW [set].\n";
-                s += "  - SHOW [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]: Show the Achievement Gallery.\n";
+                s += "  - [SHOW / VIEW]: Offers a choice between viewing content warnings or the Achievement Gallery.\n";
+                s += "  - [SHOW / VIEW] [warnings]: Offers a choice between viewing general content warnings, content warnings by chapter, or content warnings for the current chapter (if applicable).\n";
+                s += "  - [SHOW / VIEW] [GENERAL / GENERIC / ALL / FULL / GAME / FULL GAME / FULL-GAME]: Shows general content warnings.\n";
+                s += "  - [SHOW / VIEW] [BY CHAPTER / BY-CHAPTER / CHAPTER BY CHAPTER / CHAPTER-BY-CHAPTER / CHAPTERS / ALL CHAPTERS]: Shows content warnings by chapter.\n";
+                s += "  - [SHOW / VIEW] [CURRENT / ACTIVE / CHAPTER / CURRENT CHAPTER / ACTIVE CHAPTER / ROUTE / CURRENT ROUTE / ACTIVE ROUTE]: Shows content warnings for the current chapter, if applicable.\n";
+                s += "  - [SHOW / VIEW] [warnings] [set]: Same as > SHOW [set].\n";
+                s += "  - [SHOW / VIEW] [set] [warnings]: Same as > SHOW [set].\n";
+                s += "  - [SHOW / VIEW] [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]: View the Achievement Gallery.\n";
+                break;
+
+            case DIRECTGALLERY:
+                s += "[achievements]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [achievements]: The Achievement Gallery.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - [ACHIEVEMENTS / GALLERY / ACHIEVEMENT GALLERY / ACHIEVEMENTS GALLERY]: View the Achievement Gallery.\n";
                 break;
 
             case SETTINGS:
@@ -292,9 +334,11 @@ public enum Command {
         String command = prefix.toLowerCase();
 
         if (GO.argumentIsValid(command)) return DIRECTGO;
+        if (DIRECTGALLERY.argumentIsValid(command)) return DIRECTGALLERY;
         switch (command) {
             case "help": return HELP;
             case "show": return SHOW;
+            case "view": return VIEW;
             case "settings": return SETTINGS;
             case "toggle": return TOGGLE;
             case "reset": return RESET;
