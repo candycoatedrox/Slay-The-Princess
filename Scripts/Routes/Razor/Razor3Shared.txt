@@ -11,13 +11,13 @@ label startBlade
 hunted The circle's getting smaller and smaller. Running isn't an option anymore. We have to fight.
     stubborn Good. It's better that way. Without a fight, no one can win, and if no one can win, then nothing has any meaning. /// checkvoice
     broken What's the point of fighting if she's just going to win every time? It hurts being sliced to pieces. We're better off just sitting up here and doing nothing. /// checkvoice
-    para Yeah, but for whom? Someone or something is out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
+    para Yeah. But for *whom?* Someone or something is out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
 jumpto startJoin
 
 label startNoBlade
 contra Who cares about cards? You're all acting like this is about winning and losing, while this is *actually* about having fun.
     broken Is this fun for you? It's not fun for me. I don't like being sliced to pieces. /// checkvoice
-    para How could you care about having fun at a time like this? There is someone or something out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
+    para How could you care about having fun at a time like *this?!* There is someone or something out there pulling the strings, and we're all just puppets until we can figure out how to see them. /// checkvoice
 jumpto startJoin
 
 label startJoin
@@ -272,7 +272,7 @@ n And then you skewer yourself.
 linebreak
 truth Everything goes dark.
 hero Ow.
-cheated Are we still here? Can we not actually off ourselves? Boo.
+cheated Are we still here? Can we not actually off ourselves? Boo!
 linebreak
 truth All of a sudden, everything comes back into focus. The Princess stands in front of you with a manic grin on her face.
 contra Huh. That didn't do much of anything. We're tougher than I thought.

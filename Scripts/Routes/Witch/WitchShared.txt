@@ -336,7 +336,7 @@ oppo Oh, you're no fun. But at least you get how important it is that we leave t
 label backStabJoin
 unlock witchBetray
 n You plunge the blade deep into the Princess' back, driving her to her knees amid the roots.
-oppo Would you look at that! No need to thank me, but... y'know... please, do thank me.
+oppo Would you look at that! No need to thank me. But... y'know... please, do thank me.
 p Of course you'd betray me the moment I turned my back on you.
 p Don't think you're leaving here alive, wretch!
 n She shoves you in return, sharp teeth clamping around your ankle as the two of you tumble down the uneven stairs in a hastening flurry of violence and loathing.

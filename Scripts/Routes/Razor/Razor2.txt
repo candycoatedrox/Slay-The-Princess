@@ -309,6 +309,7 @@ n She doesn't even hesitate before darting towards you with a terrifying speed y
 bladeswitch initiativeEnd
 
 label initiativeEndNoBlade
+cheated That won't stop us from trying. Run run run run run!
 n You sprint for the stairs, but I wasn't exaggerating when I said she was running at you with a terrifying speed you couldn't hope to outpace.
 hero We don't make it, do we?
 n No. You feel her blade in your back before you make it to the first stair.
@@ -355,6 +356,7 @@ p Hehe!
 cheated How?! What did she even hit us with?
 n You stare down at your chest, and at the long, thin blade she impaled you with.
 n And then at the red, angry slit along the flesh of her thigh, where the blade had been nestled just a moment ago. It's still lodged in her leg, emerging from her knee, hinging up and out of her body like some extra metallic limb.
+cheated Bull. Shit. Absolute bullshit.
 p You're going to die now.
 linebreak
 n With a twist of her knee and a painful squelch, she does just that. Everything goes dark, and you die.

@@ -14,9 +14,12 @@ public class ChapterIII extends StandardCycle {
 
     // Variables that persist from Chapter 2
     private final boolean abandoned2;
+    private final boolean adversaryTookBlade;
+    private final boolean adversaryChainsBroken;
     private final boolean spectrePossessAsk;
     private final boolean spectreCantWontAsk;
     private final boolean spectreEndSlay;
+    private final boolean prisonerForcedBlade;
     private final boolean prisonerHeartStopped;
 
     /**
@@ -28,7 +31,7 @@ public class ChapterIII extends StandardCycle {
      * @param route the Chapters the player has visited so far during this route
      * @param cantTryAbort whether the player has already tried (and failed) to abort this route
      */
-    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerHeartStopped) {
+    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean adversaryTookBlade, boolean adversaryChainsBroken, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerForcedBlade, boolean prisonerHeartStopped) {
         super(manager, parser, route, cantTryAbort, prevEnding);
 
         this.source = source2;
@@ -43,9 +46,13 @@ public class ChapterIII extends StandardCycle {
         this.ch2Voice = ch2Voice;
         
         this.abandoned2 = abandoned2;
+        // UPDATE SCRIPT FOR NEW VARIABLES
+        this.adversaryTookBlade = adversaryTookBlade;
+        this.adversaryChainsBroken = adversaryChainsBroken;
         this.spectrePossessAsk = spectrePossessAsk;
         this.spectreCantWontAsk = spectreCantWontAsk;
         this.spectreEndSlay = spectreEndSlay;
+        this.prisonerForcedBlade = prisonerForcedBlade;
         this.prisonerHeartStopped = prisonerHeartStopped;
 
         Voice newVoice = prevEnding.getNewVoice();
@@ -166,6 +173,22 @@ public class ChapterIII extends StandardCycle {
     }
 
     /**
+     * Accessor for adversaryTookBlade
+     * @return whether or not the player took the blade before entering the basement in Chapter II: The Adversary
+     */
+    public boolean adversaryTookBlade() {
+        return this.adversaryTookBlade;
+    }
+
+    /**
+     * Accessor for adversaryChainsBroken
+     * @return whether or not the Adversary broke her chains in Chapter II
+     */
+    public boolean adversaryChainsBroken() {
+        return this.adversaryChainsBroken;
+    }
+
+    /**
      * Accessor for spectrePossessAsk
      * @return whether or not the Spectre asked to possess the player in Chapter II
      */
@@ -187,6 +210,14 @@ public class ChapterIII extends StandardCycle {
      */
     public boolean spectreEndSlay() {
         return this.spectreEndSlay;
+    }
+
+    /**
+     * Accessor for prisonerForcedBlade
+     * @return whether or not the Voice of the Skeptic forced the player to take the blade in Chapter II
+     */
+    public boolean prisonerForcedBlade() {
+        return this.prisonerForcedBlade;
     }
 
     /**

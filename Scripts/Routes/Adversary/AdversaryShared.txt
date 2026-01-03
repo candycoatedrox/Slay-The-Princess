@@ -405,7 +405,7 @@ p Yes! You're right! We don't even need to talk about it!
 label pushCont
 n Your balance is suddenly thrown off as the Princess pulls you into her knee.
 n It collides with your ribs and you feel them splinter, cracking like wet wood from the impact.
-    n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// checkfalse
+    n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// notbroken
 stubborn We're fine.
 n But you barely have enough time to notice before the Princess follows up and smashes her forehead against yours.
 n Your grip loosens from the impact, the blade still wedged in her arm as you tumble to the cold stone floor.
@@ -674,8 +674,8 @@ stubborn Great. Now pick it up and march back down there. I'm tired of us consta
 label exploreRetrieve
 stubborn Me. I say that.
 n Staying up here doesn't solve anything. All it does is kick the can down the road. If you don't deal with her now, she will find a way a out.
-    hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// check
-    hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// checkfalse
+    hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// brokechains
+    hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// notbroken
 stubborn Wouldn't it be exciting if she was?
 hero Here's another idea. What if we just leave?
 n Absolutely not. If you leave, she'll leave, and that'll be the end of everything as we know it.
@@ -692,10 +692,8 @@ stubborn I'm ready to start taking this seriously. Put me in charge.
 n Oh how I wish I could, because literally anyone else making decisions would be better than this, but unfortunately that's beyond the scope of my abilities.
 hero Is she really just going to wait down there forever? She's got to start getting impatient eventually -- /// interrupt
 n Your thoughts are interrupted by the sound of the Princess furiously stomping her way up the stairs.
-    hero But what about her chains?! /// checkfalse
-        stubborn What *about* them? They're clearly not holding her back any longer. /// checkfalse
-
-label stayRetrieveCont
+    hero But what about her chains?! /// notbroken
+        stubborn What *about* them? They're clearly not holding her back any longer. /// notbroken
 stubborn Hahaha. Yes! Yes! We're finally going to get our rematch and there's nothing you can do to stop it.
 label leaveRetrieve
 p I'm tired of waiting. You thought you could just leave me down there, didn't you? But I can feel you trembling on the other side of this door. There's nowhere left for you to run.
@@ -727,10 +725,7 @@ hero Here we go. Let's make this count.
 stubborn Oh, we'll make it count, alright.
 n As you bridge the gap, your blade slashes across the Princess's chest, splitting skin and drawing a jagged line of bright red blood.
 n But she's unfazed by your onslaught. Her expression barely changes as her fist collides with your ribs, cracking them like twigs and driving you right back down to the basement floor.
-
-label fightBreakChains
-n You can hear her chains snap as you struggle to recover from the impact.
-
+    n You can hear her chains snap as you struggle to recover from the impact. /// notbroken
 label fightCont
 stubborn She almost looks... disappointed in us. W-why is she disappointed in us?!
 p Oh. You don't actually get it, do you?
@@ -1154,18 +1149,9 @@ n But before you can act, another impact shakes the cabin, a massive gash splitt
 label upstairsStartJoin
 stubborn Here she comes.
 n The doors explode outwards, shards of stone clattering against the walls as the Princess emerges from the basement.
-
-label upstairsCommentNoBlade
-p After everything we've been through, I can't believe this is going to end with you cowering in a corner. You're pathetic.
-jumpto upstairsCommentJoin
-
-label upstairsCommentTookBlade
-p At least you finally have a weapon. Good.
-jumpto upstairsCommentJoin
-
-label upstairsCommentBlade
-p Stop. Running.
-label upstairsCommentJoin
+    p After everything we've been through, I can't believe this is going to end with you cowering in a corner. You're pathetic. /// noblade
+    p At least you finally have a weapon. Good. /// hasblade leftblade
+    p Stop. Running. /// tookblade
 hero We're doomed.
 n In a fit of violence, the Princess explodes across the room and closes the gap between you.
 

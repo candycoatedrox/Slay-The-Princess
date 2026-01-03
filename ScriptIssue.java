@@ -31,7 +31,7 @@ public class ScriptIssue extends ScriptNote {
      * @param subtype the subtype of this potential issue
      * @param extraInfo any extra information to print in the scan report
      */
-    public ScriptIssue(int lineIndex, int type, int subtype, String[] extraInfo) {
+    public ScriptIssue(int lineIndex, int type, int subtype, String... extraInfo) {
         super(lineIndex, type, subtype, extraInfo);
     }
 
@@ -44,17 +44,6 @@ public class ScriptIssue extends ScriptNote {
      */
     public ScriptIssue(int lineIndex, int type, int subtype, ArrayList<String> extraInfo) {
         super(lineIndex, type, subtype, extraInfo.toArray(new String[0]));
-    }
-
-    /**
-     * Constructor
-     * @param lineIndex the index of the line with the potential issue
-     * @param type the type of this potential issue
-     * @param subtype the subtype of this potential issue
-     * @param extraInfo any extra information to print in the scan report
-     */
-    public ScriptIssue(int lineIndex, int type, int subtype, String extraInfo) {
-        super(lineIndex, type, subtype, extraInfo);
     }
 
     /**

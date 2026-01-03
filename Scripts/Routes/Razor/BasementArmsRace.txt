@@ -57,13 +57,13 @@ hunted Yes. If we pay attention, we won't die.
 n You and the Princess exchange a flurry of blows, and you manage to narrowly avoid death several times.
 n Until you finally see it. An opening.
 hunted It's a trick. Don't take it.
-cheated No, screw that. Ours! Ours! I called it, it's ours and we're taking it!
+cheated No, screw that. *Ours!* Ours! I called it, it's *ours* and we're taking it!
 n And you do take it. But as you close in, yet another blade erupts from the Princess. You have no time to react before you feel it sliding through your ribs.
 hunted A trick. I knew it. I told you to be careful of tricks.
 cheated What?! From where?
 n From her knee, apparently.
 p Hehehehe. Too slow!
-cheated Oh that's bullshit! Bloody unfair!
+cheated Oh that's *bullshit!* Bloody unfair!
 n Unfortunately for the sake of the world, fair doesn't factor into this. Another of her blades comes slicing up to finish the job. She skewers you.
 linebreak
 truth Everything goes dark.
@@ -131,7 +131,7 @@ n Now I've tolerated quite a bit from you, but this is a bridge too far. Please 
 hero Yeah... do we have to flirt with the murderous monster?
 hunted I'd rather not.
     stubborn I'm into it. /// checkvoice
-        cheated I can't say I mind, either. If it weren't for all the cheating, I'd say she's pretty cute. /// checkvoice-stubborn
+        cheated I can't say I mind, either. If it weren't for all the *cheating...* I'd say she's pretty cute. /// checkvoice-stubborn
         stubborn Can we flirt by fighting her, though? /// checkvoice
     broken It's not like she wants us, anyway. /// checkvoice
     para Maybe it'll work! Maybe it'll throw her off. I know I'd be thrown off if she started flirting with us. /// checkvoice

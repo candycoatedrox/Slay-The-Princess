@@ -360,7 +360,7 @@ n Both you and the Princess ascend the stairs without obstacle. This is unaccept
         smitten Your nightmare is our dream. Whatever world would condemn star-crossed lovers like us to a cycle of violence and despair isn't a world worth saving. /// check
         smitten Your nightmare is our dream. Whatever world would condemn an innocent like her to a cycle of violence and despair isn't a world worth saving. /// checkvoice checkfalse
     smitten We'll weave something new together. Something better. /// checkvoice
-    cheated It feels so good to hear you say that. That you're admitting you've lost, and we've bested you at your own game at last. I don't care what happens now. That's all I've wanted. /// checkvoice
+    cheated It feels *so good* to hear you say that. That you're admitting you've lost, and we've bested you at your own game at last. I don't care what happens now. That's all I've wanted. /// checkvoice
 n You and the Princess hesitate at the cabin door. This is your last chance.
 hero We've already made our decision.
 p We're finally leaving here together, aren't we? And all we had to do was trust each other. It wasn't easy, but... I'm glad we finally could.

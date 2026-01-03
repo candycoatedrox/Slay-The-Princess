@@ -33,9 +33,11 @@ public class Script {
     private String chapterSource;
     private boolean sharedLoop;
     private boolean sharedLoopInsist;
-    private boolean threwBlade;
     private boolean mirrorComment;
     private boolean touchedMirror;
+    private boolean threwBlade;
+    private boolean adversaryTookBlade;
+    private boolean adversaryChainsBroken;
 
     // Player-dependent variables used during Chapter 2 only
     private boolean droppedBlade1;
@@ -47,6 +49,7 @@ public class Script {
     private boolean spectrePossessAsk;
     private boolean spectreCantWontAsk;
     private boolean spectreEndSlay;
+    private boolean prisonerForcedBlade;
     private boolean prisonerHeartStopped;
 
     // Given conditions for checks
@@ -827,6 +830,8 @@ public class Script {
         if (this.isChapter2) this.sharedLoop = chapter2.sharedLoop();
         if (this.isChapter2) this.sharedLoopInsist = chapter2.sharedLoopInsist();
         if (this.isChapter2) this.threwBlade = chapter2.threwBlade();
+        if (this.isChapter2) this.adversaryTookBlade = chapter2.adversaryTookBlade();
+        if (this.isChapter2) this.adversaryChainsBroken = chapter2.adversaryChainsBroken();
         this.droppedBlade1 = (this.isChapter2) ? chapter2.droppedBlade1() : false;
         this.whatWouldYouDo = (this.isChapter2) ? chapter2.whatWouldYouDo() : false;
         this.rescuePath = (this.isChapter2) ? chapter2.rescuePath() : false;
@@ -838,10 +843,13 @@ public class Script {
         if (this.isChapter3) this.sharedLoop = chapter3.sharedLoop();
         if (this.isChapter3) this.sharedLoopInsist = chapter3.sharedLoopInsist();
         if (this.isChapter3) this.threwBlade = chapter3.threwBlade();
+        if (this.isChapter3) this.adversaryTookBlade = chapter3.adversaryTookBlade();
+        if (this.isChapter3) this.adversaryChainsBroken = chapter3.adversaryChainsBroken();
         this.abandoned2 = (this.isChapter3) ? chapter3.abandoned2() : false;
         this.spectrePossessAsk = (this.isChapter3) ? chapter3.spectrePossessAsk() : false;
         this.spectreCantWontAsk = (this.isChapter3) ? chapter3.spectreCantWontAsk() : false;
         this.spectreEndSlay = (this.isChapter3) ? chapter3.spectreEndSlay() : false;
+        this.prisonerForcedBlade = (this.isChapter3) ? chapter3.prisonerForcedBlade() : false;
         this.prisonerHeartStopped = (this.isChapter3) ? chapter3.prisonerHeartStopped() : false;
     }
 
@@ -1164,6 +1172,16 @@ public class Script {
             } else if (m.equals("nothrow")) {
                 if (this.threwBlade) return false;
 
+            } else if (m.equals("tookblade")) {
+                if (!this.adversaryTookBlade) return false;
+            } else if (m.equals("leftblade")) {
+                if (this.adversaryTookBlade) return false;
+
+            } else if (m.equals("brokechains")) {
+                if (!this.adversaryChainsBroken) return false;
+            } else if (m.equals("notbroken")) {
+                if (this.adversaryChainsBroken) return false;
+
             // Chapter 2 variable checks
 
             } else if (m.equals("drop1")) {
@@ -1223,6 +1241,11 @@ public class Script {
                 if (!this.spectreEndSlay) return false;
             } else if (m.equals("noendslay")) {
                 if (this.spectreEndSlay) return false;
+
+            } else if (m.equals("forcedblade")) {
+                if (!this.prisonerForcedBlade) return false;
+            } else if (m.equals("noforce")) {
+                if (this.prisonerForcedBlade) return false;
 
             } else if (m.equals("heartstop")) {
                 if (!this.prisonerHeartStopped) return false;
@@ -1795,6 +1818,16 @@ Generic modifiers available for all lines (except comments and labels):
       - nothrow
             Checks whether the player did not throw the blade out the window before running the line.
 
+      - tookblade
+            Checks whether the player took the blade before entering the basement in Chapter 2: The Adversary before running the line.
+      - leftblade
+            Checks whether the player did not take the blade before entering the basement in Chapter 2: The Adversary before running the line.
+
+      - brokechains
+            Checks whether the Adversary broke her chains in Chapter 2 before running the line.
+      - notbroken
+            Checks whether the Adversary did not break her chains in Chapter 2 before running the line.
+
     - Checks that apply during Chapter 2 only -
       - drop1
             Checks whether the player dropped the blade in Chapter 1 before running the line.
@@ -1836,6 +1869,11 @@ Generic modifiers available for all lines (except comments and labels):
             Checks whether the player tried to take the Spectre down as she killed them before running the line.
       - noendslay
             Checks whether the player did not try to take the Spectre down as she killed them before running the line.
+            
+      - forcedblade
+            Checks whether the Voice of the Skeptic forced the player to take the blade in Chapter 2 before running the line.
+      - noforce
+            Checks whether the Voice of the Skeptic did not force the player to take the blade in Chapter 2 before running the line.
             
       - heartstop
             Checks whether the Voice of the Skeptic stopped the player's heart in Chapter 2 before running the line.

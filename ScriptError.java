@@ -53,7 +53,7 @@ public class ScriptError extends ScriptNote {
             - 11 = interrupt attempted with argument
         - 9 = conflicting modifiers
             - 0 = any simple check used with negative counterpart, check extraInfo
-            - 1 = firstvessel, hasblade, ifsource, harsh, or negative counterparts used for corresponding autoswitch, check extraInfo
+            - 1 = cycle condition check used for corresponding autoswitch, check extraInfo
             - 2 = given condition check used for corresponding switchjump, check extraInfo
             - 3 = ifsource & ifsourcenot with same value
             - 4 = ifnum & ifnumnot with same value
@@ -72,7 +72,7 @@ public class ScriptError extends ScriptNote {
      * @param subtype the subtype of this error
      * @param extraInfo any extra information to print in the scan report
      */
-    public ScriptError(int lineIndex, int type, int subtype, String[] extraInfo) {
+    public ScriptError(int lineIndex, int type, int subtype, String... extraInfo) {
         super(lineIndex, type, subtype, extraInfo);
     }
 
@@ -85,17 +85,6 @@ public class ScriptError extends ScriptNote {
      */
     public ScriptError(int lineIndex, int type, int subtype, ArrayList<String> extraInfo) {
         super(lineIndex, type, subtype, extraInfo.toArray(new String[0]));
-    }
-
-    /**
-     * Constructor
-     * @param lineIndex the index of the line with the error
-     * @param type the type of this error
-     * @param subtype the subtype of this error
-     * @param extraInfo any extra information to print in the scan report
-     */
-    public ScriptError(int lineIndex, int type, int subtype, String extraInfo) {
-        super(lineIndex, type, subtype, extraInfo);
     }
 
     /**
