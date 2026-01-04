@@ -288,7 +288,7 @@ public class ChapterII extends StandardCycle {
      */
     private boolean chapter2Intro(boolean youDied, boolean princessDied, boolean liedTo) {
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter2Shared");
-        if (this.isFirstVessel) manager.setFirstPrincess(this.activeChapter);
+        if (this.isFirstVessel) manager.setFirstPrincess(this.isHarsh, this.activeChapter, this.source);
 
         secondaryScript.runSection();
 
@@ -6016,7 +6016,7 @@ public class ChapterII extends StandardCycle {
         // You gain the Voice of the Contrarian
 
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter2Shared");
-        if (this.isFirstVessel) manager.setFirstPrincess(Chapter.STRANGER);
+        if (this.isFirstVessel) manager.setFirstPrincess(this.isHarsh, Chapter.STRANGER, this.source);
 
         secondaryScript.runSection();
         mainScript.runSection();

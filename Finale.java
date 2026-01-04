@@ -7,8 +7,11 @@ public class Finale extends Cycle {
     private final Vessel[] vessels;
     private final ChapterEnding[] endings;
 
-    private final Chapter firstPrincess;
+    private final boolean firstHarsh;
     private final boolean strangerHeart;
+    private final Chapter firstPrincess2;
+    private final String firstSource;
+
     private final boolean mirrorWasCruel;
 
     private int ynwArguments = 0; // Number of times the player has selected arguments tied to the "Your New World" ending during the debate
@@ -27,7 +30,7 @@ public class Finale extends Cycle {
      * @param firstPrincess the first Chapter 2 encountered by the player (not counting aborted routes)
      * @param parser the IOHandler to link this instance of Finale to
      */
-    public Finale(GameManager manager, ArrayList<Vessel> vessels, ArrayList<ChapterEnding> endings, Chapter firstPrincess, IOHandler parser) {
+    public Finale(GameManager manager, IOHandler parser, ArrayList<Vessel> vessels, ArrayList<ChapterEnding> endings, boolean firstHarsh, Chapter firstPrincess2, String firstSource) {
         super(manager, parser);
         this.clearVoices();
 
@@ -38,8 +41,11 @@ public class Finale extends Cycle {
         this.vessels = vessels.toArray(new Vessel[5]);
         this.endings = endings.toArray(new ChapterEnding[5]);
 
-        this.firstPrincess = firstPrincess;
-        this.strangerHeart = this.vessels[0] == Vessel.STRANGER;
+        this.firstHarsh = firstHarsh;
+        this.firstPrincess2 = firstPrincess2;
+        this.firstSource = firstSource;
+        this.strangerHeart = firstPrincess2 == Chapter.STRANGER;
+
         this.mirrorWasCruel = manager.mirrorWasCruel();
 
         this.activeChapter = Chapter.ENDOFEVERYTHING;
@@ -663,7 +669,11 @@ public class Finale extends Cycle {
 
 
         // PLACEHOLDER
-        return this.heartCabin();
+        if (this.strangerHeart) {
+            return this.heartCabinStranger();
+        } else {
+            return this.heartCabin();
+        }
     }
 
     /**
@@ -676,7 +686,7 @@ public class Finale extends Cycle {
             // 2) Rename Your New World + vessel-specific arguments
             // 3) Set vessel-specific Options true/false
 
-            // NOTE: Tower/Apotheosis use a lot of the same code in the original for some reason? Don't do that here
+            // NOTE: Tower/Apotheosis share a lot of code in the original for some reason? Don't do that here
 
             // ...
         }
@@ -708,6 +718,9 @@ public class Finale extends Cycle {
      * @return the ending the player reaches
      */
     private ChapterEnding heartCabinStranger() {
+        manager.unlock("strangerHeart");
+
+
         // PLACEHOLDER
         return ChapterEnding.PATHINTHEWOODS;
     }

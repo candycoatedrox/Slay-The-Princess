@@ -18,8 +18,12 @@ public class GameManager {
     // The song currently "playing"
     private String nowPlaying;
 
+    // Information about your first Princess
+    private boolean firstHarsh;
+    private Chapter firstPrincess2;
+    private String firstSource = "";
+
     // Global progress trackers
-    private Chapter firstPrincess; // need more nuance here for harsh/soft and different variations (ex. Razor-revival)
     private final ArrayList<Vessel> claimedVessels;
     private final ArrayList<ChapterEnding> endingsFound;
     private final HashMap<Chapter, Boolean> visitedChapters;
@@ -249,11 +253,15 @@ public class GameManager {
     }
 
     /**
-     * Manipulator for firstPrincess
-     * @param c the Chapter to set firstPrincess to
+     * Stores information about the first Princess the player encounters, to be used in the Finale
+     * @param harsh whether the player took the blade in Chapter 1
+     * @param chapter2 the Chapter 2 the player reached
+     * @param source the Chapter 2's source
      */
-    public void setFirstPrincess(Chapter c) {
-        this.firstPrincess = c;
+    public void setFirstPrincess(boolean harsh, Chapter chapter2, String source) {
+        this.firstHarsh = harsh;
+        this.firstPrincess2 = chapter2;
+        this.firstSource = source;
     }
 
     /**
@@ -545,7 +553,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
             ending = currentCycle.runChapter();
 
             switch (ending) {
@@ -637,7 +645,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
             ending = currentCycle.runChapter();
 
             switch (ending) {
@@ -764,7 +772,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.claimedVessels, this.endingsFound, this.firstPrincess, this.parser);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
             ending = currentCycle.runChapter();
 
             switch (ending) {
