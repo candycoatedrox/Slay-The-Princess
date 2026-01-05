@@ -1,19 +1,19 @@
 hero If He doesn't remember what happened, then maybe it's best to keep it that way.
-cold That's fine. It wasn't very hard to kill her last time. We'll just do it again.
+cold That's fine`. It wasn't very hard to kill her last time`. We'll just do it again.
 n Well, if for whatever reason you're going to insist that this has happened before, at least your heart's in the right place.
 
 label assume
-cold Oh, we listened to you plenty. We slew the Princess, just like you asked us to. And then you locked us away in an empty void for eternity. So we slew ourselves, too.
+cold Oh, we listened to you plenty`. We slew the Princess, just like you asked us to. And then you locked us away in an empty void for eternity`. So we slew ourselves, too.
 n Well, if you killed yourself then you *weren't* listening to me. Because I would never want you to do that. Believe it or not, I care about you.
 
 label assume2
-cold It doesn't matter, because we didn't fail to slay her, and if she's really back, which I doubt, it'll be just as easy to do it again. But after that nasty trick you pulled on us, maybe she's not the only one around here in need of slaying.
+cold It doesn't matter, because we didn't fail to slay her`, and if she's really back, which I doubt`, it'll be just as easy to do it again`. But after that nasty trick you pulled on us`, maybe she's not the only one around here in need of slaying.
 n Just stay focused, will you?
 
 label princessTeleport
 hero That's a good point. How do we know we didn't have things backwards? Maybe slaying the Princess was what ended the world, not the other way around.
-cold Yes, maybe this whole thing was a trick to get us to end the world. And now we get to go through the whole charade again wholly aware of what's waiting for us at the end.
-cold But that's assuming she's alive in that cabin. We did kill her, after all.
+cold Yes`, maybe this whole thing was a trick to get us to end the world`. And now we get to go through the whole charade again, wholly aware of what's waiting for us at the end.
+cold But that's assuming she's alive in that cabin`. We did kill her, after all.
 n You're going to find her in the cabin. If the Princess had actually been slain, you wouldn't be here.
 n And let me assure you, killing her will not end the world. I don't know what you think happened to you "last time," but it's a load of nonsense. You'll get your happy ending, I promise.
 hero That's exactly what we're afraid of.
@@ -25,7 +25,7 @@ hero Oh. I didn't know we were *special.*
 cold Of course we're special.
 
 label princessCagey
-cold This is boring. He's clearly not interested in talking, so let's just do as He says and maybe He'll stop bothering us.
+cold This is boring`. He's clearly not interested in talking`, so let's just do as He says and maybe He'll stop bothering us.
 
 // Hill dialogue //
 
@@ -35,10 +35,10 @@ cold She won't be a problem.
 // Abort attempt //
 
 label abortStart
-cold Oh? Do you think there's something else out there? All right, let's see what we can find. It's bound to be more interesting than doing the same thing over again.
+cold Oh`? Do you think there's something else out there`? All right`, let's see what we can find. It's bound to be more interesting than doing the same thing over again.
 
 label abortReturn
-cold Oh well, cabin it is.
+cold Oh well`, cabin it is.
 
 // Cabin //
 
@@ -47,7 +47,7 @@ nowplaying The Spectre
 n The interior of the cabin is cold, a soft odor of dirt permeating the air. Cobwebs flutter in the corners. You can hear wind whistling outside, banging the shutters against the windows. The only furniture of note is an elegant antique table with a pristine blade perched on the edge.
 n The blade is your implement. You'll need it if you want to do this right.
 hero It feels like no one's been here for a long, long time.
-cold Like I've been saying. She's dead. We killed her already.
+cold Like I've been saying`. She's dead`. We killed her already.
 
 label cabinDifferent
 hero *Very* different.
@@ -63,17 +63,17 @@ label askMirror
 n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
 
 label askMirrorStart
-cold Who cares if there's a mirror? Let's just go into the basement and find her body so we can be done with this.
+cold Who cares if there's a mirror`? Let's just go into the basement and find her body so we can be done with this.
 
 label mirrorGone
-cold And now it's gone. Let's not spend much longer worrying over it. Clearly it's not even important enough to be acknowledged.
+cold And now it's gone`. Let's not spend much longer worrying over it`. Clearly it's not even important enough to be acknowledged.
 
 // Stairs //
 
 label stairsStart
 n The door to the basement groans open, revealing an old banister and a creaky, wooden stairwell. Everything is coated in a thick layer of dust, and you can feel it settle into your lungs as you breathe in the stale air. The very building itself feels dead. If the Princess lives here, slaying her would probably be doing her a favor.
 n The room below is silent.
-cold Nobody's here. Naturally.
+cold Nobody's here`. Naturally.
 n As much as I appreciate the optimism, you shouldn't be so sure.
 hero I guess we'll just have to go down there and see.
 linebreak
@@ -84,7 +84,7 @@ n Before you have a chance to finish your thought, the top of a head appears fro
 n Two deep-set eyes stare up at you, followed by a mischievous skeletal grin.
 n And finally, the rest of the body floats up to join the head. Wait... this isn't right. What's going on here?
 hero A g-g-g-ghost!
-cold Oh. Wow. How absolutely terrifying. What's a ghost supposed to do to us?
+cold Oh`. Wow`. How absolutely terrifying`. What's a ghost supposed to do to us?
 p Oh. It's you. Hiya, killer. I was hoping to see you again. I have some issues with how our last meeting went.
 truth She speaks in a whisper, her voice soft and playful.
 
@@ -93,10 +93,10 @@ n Her touch is cold and ethereal, formless yet real enough that her icy fingerti
 bladeswitch bodyComment
 
 label bodyCommentBlade
-cold So she has a body. And she's right there. That means we could kill her again, if we wanted to.
+cold So she has a body`. And she's right there`. That means we could kill her again`, if we wanted to.
 
 label bodyCommentNoBlade
-cold So she has a body. And she's right there. We could probably grab her and kill her again, if we wanted to. We don't even need a blade. She looks fragile enough to me.
+cold So she has a body`. And she's right there`. We could probably grab her and kill her again`, if we wanted to`. We don't even need a blade`. She looks fragile enough to me.
 
 // Basement //
 
@@ -140,9 +140,9 @@ cold And then what?
 n And then you'll have saved the world.
 hero I think he's asking about what happens after we save the world. If that's even still an option.
 n What do you mean, "after?"
-cold You already know what we mean, don't you? So why don't you go ahead and tell us? Are you going to try and lock us away in a timeless void again? Because I didn't much care for that.
+cold You already know what we mean, don't you? So why don't you go ahead and tell us`? Are you going to try and lock us away in a timeless void again`? Because I didn't much care for that.
 n *I'm* not going to lock you anywhere.
-cold What an interesting choice of emphasis.
+cold What an *interesting* choice of emphasis.
 
 label notDeadMenu
 p I don't feel very dead. But I guess I'm not... *not*-dead. So you must have only mostly killed me.
@@ -150,12 +150,12 @@ p Or maybe death is only mostly-real, but it's also mostly not-real. I'm not sur
 hero But *we're* not a ghost... unless we are?
     hero Maybe that's why the mirror disappeared. We're actually dead. /// mirror2
 label notDeadCont
-cold Death -- at least as a form of permanence -- is just a concept, and clearly it's not a very useful one anymore. Maybe we should throw it out entirely.
+cold Death, at least as a form of permanence, is just a concept`, and clearly it's not a very useful one anymore`. Maybe we should throw it out entirely.
 
 label bodyMenu
 n The Princess glances back at the bones lying on the floor.
 p It's just a body. Do you believe these bones, or do you believe me? Because those bones aren't talking to you.
-cold She's seeing things pragmatically. We should do the same. Reality is what's in front of us, not our preconceptions of what it should be. There doesn't need to be a static "truth." There doesn't need to be objectivity.
+cold She's seeing things pragmatically. We should do the same`. Reality is what's in front of us`, not our preconceptions of what it should be`. There doesn't need to be a static "truth.`" There doesn't need to be objectivity`.
 
 label whyBackMenu
 p How should I know? Why does anyone come back? Maybe I have unfinished business with you. Or maybe you have unfinished business with me.
@@ -187,7 +187,7 @@ p It could have. But it wasn't. You can't blame me for threatening a would-be-kn
 
 label sorryAMenu
 p Too little, too late. But... you can still make things right.
-cold She's not in a position to bargain with us. You don't have to do anything you don't want to.
+cold She's not in a position to bargain with us`. You don't have to do anything you don't want to.
 hero We don't have to do anything, but maybe we should. We did kill her. Wouldn't it be the moral thing to help her now that we have another chance?
 n When a hero slays a monster, does he apologize to it?
 hero ... No.
@@ -195,7 +195,7 @@ n So don't try to 'make things right.' She was going to end the world. You didn'
 
 label grovelMenu
 hero Are we putting this to a vote? Because personally, I'd prefer if we didn't die again...
-cold If that's what it comes down to, that's what it comes down to. But I don't see the point of offing ourselves just yet.
+cold If that's what it comes down to`, that's what it comes down to`. But I don't see the point of offing ourselves just yet.
 p Aw, that's sweet of you to offer, but killing yourself wouldn't help either of us.
 n It would seem that everyone here is in agreement except for you. I shouldn't have to tell you that you shouldn't kill yourself. So please, try to keep your suicidal tendencies in check.
     jumpto grovelNoHomeComment /// check
@@ -211,16 +211,16 @@ p You already know what I want. Let me in.
 label sorryBMenuPossessAsk
 p Of course there is! You can give me the only thing I've ever wanted -- a way out of this basement. The place won't let me leave.
 
-label trickMenuConfirmed
-n Nobody "tricked you." I'm sure that other me gave you wholly accurate information that you wisely chose to act on.
-jumpto trickMenuJoin
-
 label trickMenu
     jumpto trickMenuConfirmed /// checkfalse
     jumpto trickMenuSharedLoop /// sharedloop
 n Okay... I didn't want to be open to the idea, but there's no denying it now. You've clearly been here before.
-cold Oh? What tipped you off? Was it the corpse?
+cold Oh`? What tipped you off`? Was it the corpse?
 n It doesn't matter. The only thing that matters is that nobody "tricked you." I've done nothing but give you wholly accurate information, and I'm sure whatever version of me you met in whatever other world you came from gave you accurate information, as well.
+jumpto trickMenuJoin
+
+label trickMenuConfirmed
+n Nobody "tricked you." I'm sure that other me gave you wholly accurate information that you wisely chose to act on.
 jumpto trickMenuJoin
 
 label trickMenuSharedLoop
@@ -255,11 +255,11 @@ p Those are just bones. They aren't me. Bury them, destroy them, whatever. That 
 
 label howHurtMenu
     jumpto howHurtMenuGhost /// check
-cold A boring question with an easy answer. Nothing. She's dead. Dead things can't hurt us.
+cold A boring question with an easy answer. Nothing`. She's dead`. Dead things can't hurt us.
 jumpto howHurtJoin
 
 label howHurtMenuGhost
-cold A boring question with an easy answer. Nothing. She's a ghost. Ghosts can't hurt us.
+cold A boring question with an easy answer. Nothing`. She's a ghost`. Ghosts can't hurt us.
 label howHurtJoin
 p That's for me to know, and for you to wonder about. Maybe I can't do anything to you.
 cold See?
@@ -282,29 +282,29 @@ label thoughtsMenu
 moodswitch thoughtsMenu
 
 label thoughtsMenuSoft
-cold We could always try violence. It's worked for us so far.
+cold We could always try... violence`. It's worked for us so far.
 hero She's a ghost.
 cold Who says ghosts are immune to violence?
 hero ... common sense?
-cold There's nothing common or sensible about common sense. Action and observation are the only things that matter.
+cold There's nothing common or sensible about common sense`. Action and observation are the only things that matter.
 hero Fine. Then let me "observe" that the "acts" of killing her and killing ourself haven't got us much of anywhere. We're still back in this cabin, and we're still dealing with her, only now she has a good reason to hate us.
-cold I suppose you have a point. Do you have any ideas, then?
-    jumpto thoughtsSoftAsked /// check
+cold I suppose you have a point`. Do you have any ideas, then?
+    jumpto thoughtsSoftAsked /// possessask
 hero We could always ask her what she wants?
 n Oh, for the love of -- Don't do that. Whatever she wants, it will end the world.
 label thoughtsSoftJoin
 cold And is that really so bad?
 n Yes. It is, by its very definition, bad.
-cold But those are the only options, aren't they? Violence, or doing what she wants. Or just leaving her down here. Though ignoring a problem is rarely a solution, isn't it?
+cold But those are the only options, aren't they? Violence, or doing what she wants`. Or just leaving her down here`. Though ignoring a problem is rarely a solution`, is it?
 
 label thoughtsSoftAsked
 hero I don't know... maybe we do what she wants. Maybe we let her possess us and walk out of here.
-cold We could... It would be something different. I like different.
+cold We could... It would be something different`. I like different.
 n Absolutely not! If you walk her out of here, she's going to end the world.
 jumpto thoughtsSoftJoin
 
 label thoughtsMenuHarsh
-cold She might be making it hard for us to kill her body, but those bones look very, very real. Maybe breaking them breaks her.
+cold She might be making it hard for us to kill her body`, but those bones look very`, very real`. Maybe breaking them breaks her.
 hero Or maybe burying them would put her to rest.
 n Don't take any piece of her outside of this cabin. *Sigh.* Maybe you should stop looking for loopholes and try harder to actually slay her.
 hero But we *are* trying!
@@ -314,7 +314,7 @@ hero But we *are* trying!
 label worldEndSoftMenu
 p And, what? You just believed that? You killed me without giving it any thought? That's cold.
 hero That's rich coming from her. Every time she touches us, it's like we freeze over.
-cold She's right, though. But that's neither here nor there. What's done is done. What we do from this point forward is all that matters. Let's try not to let emotion get the better of us.
+cold She's right, though. But that's neither here nor there. What's done is done`. What we do from this point forward is all that matters`. Let's try not to let emotion get the better of us.
 
 label wrongConfirmedEndWorldSoft
 n So there really was a last time, and you really did manage to slay her. I would have liked to think I was the first, but there's no point living in denial...
@@ -356,18 +356,12 @@ label whatDo3Cont
 p I'm not so sure endings are real.
 
 label grovel1EndWorldSoft
-cold Oh, cut it out. You don't need to be so pathetic.
-bladeswitch grovel1EndWorldSoft
-
-label grovel1EndWorldSoftBlade
-p Eugh. Sure. Did that make you feel better?
-
-label grovel1EndWorldSoftNoBlade
-cold Oh, cut it out. You don't need to be so pathetic.
-p Nevermind. I don't think I want to see you beg. That's just sad. I shouldn't feel sad about my murderer.
+cold Oh, cut it out. You don't need to be so *pathetic.*
+    p Eugh. Sure. Did that make you feel better? /// hasblade
+    p Nevermind. I don't think I want to see you beg. That's just sad. I shouldn't feel sad about my murderer. /// noblade
 
 label grovel2EndWorldSoft
-cold No. You're not doing that.
+cold No`, you're not doing that.
 n That's right, don't you dare grovel. Mine is the only opinion that matters and I'll never be disappointed in you. So long as you do as I say.
 
 label worldEndHarshMenu
@@ -379,7 +373,7 @@ p Well, killer, what does it mean for something to end anyway? You "ended" me, b
 p You apparently "ended" too, yet here you are. And you don't even look any different.
 label end1HarshCont
 p AFTER SEEING WHAT YOU'VE SEEN, HOW CAN YOU BE SURE ANYTHING ENDS?
-cold I see her point. Everything here is so... impermanent, always shifting. The end of one thing just leads to the start of another.
+cold I see her point`. Everything here is so... impermanent`, always shifting`. The end of one thing just leads to the start of another.
 
 label end2EndWorldHarsh
 p Oh, come on. I'm floating right in front of you, still here despite your best efforts. You can't pretend that doesn't mess with the whole concept of "ending."
@@ -406,7 +400,7 @@ p This place won't let me leave, but you seem to come and go as you please. So h
 p REMEMBER. YOU OWE ME.
 hero Maybe we should have just left her here. Maybe we should still just leave her here. If she can't get out on her own, then why do we have to do anything?
 n "Hasn't gotten out" and "can't get out" are two very different things.
-cold That'd be dull, anyway. It's more interesting if we make a choice.
+cold That'd be dull, anyway`. It's more interesting if we make a choice.
 
 label possessAskSwitch
 moodswitch possessAsk
@@ -415,7 +409,7 @@ label possessAskSoftEarlyJoin
 p I've tried. Before you came back to me, I explored every inch of this place, even the spaces between the walls. But I never found a way out. I always wound up right back here.
 hero Maybe we should just leave. If she can't get out on her own, then why do we have to do anything? We could probably walk out right now and everything would be fine.
 n "Hasn't gotten out" and "can't get out" are two very different things.
-cold That'd be dull, anyway. It's more interesting if we make a choice.
+cold That'd be dull, anyway`. It's more interesting if we make a choice.
 jumpto possessAskSoftJoin
 
 label possessAskSoft
@@ -428,7 +422,7 @@ n Absolutely not.
 hero Is she asking if she can... possess us?
 n She is, and I hope I don't need to explain why you can't let that happen. It would be catastrophic if she managed to escape this place, and if you let her in, there is very little anyone could do to stop her.
 hero Would she be able to see... *us* if we went along with it?
-cold Now isn't that an interesting thought. We could finally bring her face-to-face with Him. I wonder what she would have to say to the one who wants her dead so, so badly...
+cold Now isn't that an interesting thought`. We could finally bring her face-to-face with Him`. I wonder what she would have to say to the one who wants her dead so`, so badly...
 n *Sigh.* You won't like how things play out if you go down this path.
 
 label noPossessAskSoft
@@ -437,7 +431,7 @@ p Then I won't hitch a ride.
 label noPossessAskHarsh
 p Try it. See what happens.
 hero I don't like how she said that. It sounds dangerous.
-cold Is anything "dangerous" if we can never really die?
+cold Is anything "dangerous,`" if we can never really die?
     jumpto noPossessAskNoConfirm /// check
 n Look. You and the Princess clearly have a history, and that history clearly involves death. But aside from some horrifying implications, I don't care what's already happened between the two of you.
 jumpto noPossessAskJoin
@@ -446,7 +440,7 @@ label noPossessAskNoConfirm
 n Aside from some horrifying implications, I don't really care what's already happened between you and the Princess.
 label noPossessAskJoin
 n And you don't know that you can never really die. Maybe you could only come back once! And even then, there are fates that come close to death in their terror.
-cold What a strange thing to say. Isn't the turn of phrase, "fates *worse* than death?"
+cold What a strange thing to say`. Isn't the turn of phrase`, "fates *worse* than death?"
 n There are no fates worse than the finality of death. Anyone who says otherwise is a fool.
 
 label wontPossessAsk
@@ -479,13 +473,13 @@ n I can't believe you're even entertaining her right now. I mean, just look at h
 label controlPossessAskHarsh
 p THERE'S ONLY ONE WAY TO FIND OUT.
 hero That doesn't sound very reassuring.
-cold What's another voice rattling around in here? We'll be fine.
+cold What's another voice rattling around in here`? We'll be fine.
 hero It's pretty crowded already, wouldn't you say? And she's not exactly friendly.
 cold Neither is He.
 n I'm being perfectly respectful considering the stakes of the situation! Don't push my good will.
 
 label coldTrapSuggest
-cold It could be the best way to trap her for good. Doesn't seem like it would be very easy to end the world from inside someone else's body.
+cold It could be the best way to trap her for good`. Doesn't seem like it would be very easy to end the world from inside someone else's body.
 n That is a very dangerous train of thought.
 
 label returnPossessAskSoft
@@ -521,7 +515,7 @@ p But then you either kill me and I get even fuzzier or you don't and... and the
 p Th-there's nothing I can do, it's just going to go on and on and on and on, lonely and sad and hurting and empty.
 label leaveJoin
 p No... NNNNO. NOT THAT.
-cold She's about to try something. Get ready.
+cold She's about to try something`. Get ready.
 jumpto deathJoin
 
 // Defy the Princess //
@@ -556,7 +550,7 @@ n The Princess passes through you, a chill rippling along your skin, a disappoin
 n You turn and face her as she hovers between you and the stairs.
 n Spectral tears streak down her cheeks as she places a translucent hand on your chest. It feels cold, but otherwise like nothing at all.
 hero Are we doing the right thing? Why do I feel so sad?
-cold Don't let her get to you. It doesn't matter. Somehow, soon, this too will be over, and we'll move on to something new. I feel like you all keep forgetting that.
+cold Don't let her get to you. It doesn't matter`. Somehow, soon, this too will be over`, and we'll move on to something new`. I feel like you all keep forgetting that.
 n Her dark-rimmed eyes fall to the floor as she speaks.
 p I never wanted to have to hurt anybody. It's not who I wanted to be.
 n The tears on her cheeks vanish. She lifts her head, sorrow replaced with wrath, staring into you with fiery anger.
@@ -596,10 +590,10 @@ p But I guess violence is the only language you speak.
 
 label killStart
 n She forces her hand into your chest and then...
-hero Yes?
+cold Yes?
 n Nothing happens.
 hero Are you sure about that? S-something should have happened...
-cold And yet it didn't. We're fine.
+cold And yet it didn't`. We're fine.
 
 label missKill
 p No.
@@ -617,7 +611,7 @@ n A horrific splintering, the squelching of organs, the rending of tissue. An ic
 p I'm done asking. The next time I see you, I'm taking everything I'm owed. Starting with your body. If you won't choose to give me my freedom, I'll just have to make you give it to me.
 
 label killBladeStart
-cold She's real now. If she's making us dead, we should return the favor.
+cold She's real now`. If she's making us dead, we should return the favor.
 
 label killBladeSlay
 n You swing your blade towards her briefly corporeal throat. It connects. A gash widens across her neck, glowing ectoplasm leaking from the wound.
@@ -635,7 +629,7 @@ n In her clenched fist is your still-beating heart.
 jumpto killNoSlayEnd
 
 label killNoBlade
-cold She's real now. Pity we don't have a weapon.
+cold She's real now`. Pity we don't have a weapon.
 n Your last moments are spent a helpless witness as she rips her hand from your chest, holding your still-beating heart in her clenched fist.
 label killNoSlayEnd
 unlock spectreDie
@@ -674,14 +668,14 @@ linebreak
 n Your eyes flick back open as you get your bearings, your vision swimming as -- /// interrupt
 p So this is what it's like to be you, huh? Disembodied voice narrating your every move?
 hero So... it doesn't work like that for you?
-cold Clearly it doesn't, or she wouldn't have commented on it.
+cold Clearly it doesn't`, or she wouldn't have commented on it.
 p All these shards of broken glass on the floor... are they also supposed to be you?
 hero Hey! I'm not a shard of broken glass, I'm...
 
 label possessVoiceCommentSoft
 p It's okay. You can finish your thought.
 hero I'm... a voice? I'm me, is what I am.
-cold Who cares what we are? We exist. That's all that matters.
+cold Who cares what we are`? We exist`. That's all that matters.
 p You don't have to fight. We'll all be out of here soon.
 hero No, it matters! What we are matters! If I'm a "shard of broken glass" then that raises some questions about certain other "voices" in here, too.
 cold I'm clearly the same thing you are.
@@ -720,12 +714,12 @@ n *Sigh.* This is infuriating. Just... whatever you do, you can't leave this pla
 label possessExploreSoft
 p It's okay, we're almost out of here. Just take it one step at a time, and everything will be fine.
 n Everything won't be fine if you listen to *her.*
-cold One way or another, this is all going to end. Wouldn't it be nice if He ends with it?
+cold One way or another, this is all going to end`. Wouldn't it be nice if He ends with it?
 p Wouldn't that be nice? There's only one way to find out.
 
 label possessExploreHarsh
 p Then don't think. Just. Move.
-cold One way or another, this is all going to end. Wouldn't it be nice if He ends with it?
+cold One way or another, this is all going to end`. Wouldn't it be nice if He ends with it?
 p I guess we'll just have to see what happens when we leave. But if I'm stuck in here, I'll be making some renovations. It's too crowded.
 
 label possessUpstairs
@@ -735,9 +729,9 @@ n But that's exactly what you leaving this place is going to be.
 p You don't know that!
 n I do.
 hero Wait. If she has a home to go back to, doesn't that mean that her leaving won't end the world?
-cold It doesn't mean that at all. It could mean that wherever her home is, it's outside of the world.
+cold It doesn't mean that at all`. It could mean that, wherever her home is`, it's outside of the world.
 hero Yeah, but it has to be somewhere, doesn't it? And if it's somewhere, then it's part of the world.
-cold I suppose it's all a matter of perspective -- where does the world end and something else begin? Does the destruction of one open a door to another, or is it the same world, reborn?
+cold I suppose it's all a matter of perspective`.`.`. where does the world end and something else begin`? Does the destruction of one open a door to another`, or is it the same world, reborn?
 linebreak
 n Against the backdrop of the inane conjecture of meaningless little voices, your body continues its ascent up the stairs, staggering through the open door.
 cold For how much you hate her, you aren't doing a whole lot to stop us from leaving this place.
@@ -778,13 +772,13 @@ label possessForward
     p We're so close. Thank you, thank you, thank you! If we get out of here I won't even care that you murdered me anymore! /// soft
     p Finally! FINALLY! /// harsh
 n You lift your shaking hand and rest it on the door handle, but you pause before you open it, exhaustion sapping what's left of your will.
-cold Was exhaustion really the best you could muster up? It's over. There's no use stalling. Let's see what happens next.
+cold Was exhaustion really the best you could muster up`? It's over`. There's no use stalling`. Let's see what happens next.
 
 n Shit. But exhaustion wasn't enough, was it? The handle clicks as you twist it, and then the door groans open.
 n You collapse to the ground, you and the Princess... free from the confines of the cabin. As you exhale from the effort, you look up and see...
 hero Er... yes?
 p Nothing. He's gone. And so is everything else.
-cold So we did slay him after all. He had it coming, I suppose.
+cold So we did slay him after all`. He had it coming`, I suppose.
 hero But what about *us?* Are we just stuck here in... nowhere forever? Did taking her out of the cabin really end the world?
 cold We're still here.
 hero Yeah, but, that thing you said earlier... are we not part of the world anymore? Are we in some world that exists after the world ends, or on top of the other world but not in it, or...? Have we *never* been part of the world?
@@ -814,15 +808,15 @@ hero Of course we're sure. The decision has already been made.
 n All right, then. Better this than ferrying her out of here.
     p After all that, you're really just going to stab me again?! /// soft
     p Wh-what do you think you're doing?! /// harsh
-cold Hear that? She's *scared.* No point in wasting more time. Do it.
+cold Hear that`? She's *scared.`* No point wasting more time`. *Do it.*
 n You lift the blade, then plunge it deep into your guts. Pain spreads quickly through your torso as you attempt to turn its edge up towards your heart.
 n The Princess, her spirit bound to your prison of flesh as she had once been bound to the basement's prison of stone, cries out in agony as you slice through organ and muscle.
     p I don't want to die in you! I thought you finally understood me but instead you just wanted to hurt me again. /// soft
     p NO! /// harsh
 n Your skin roils and bucks as she violently pushes against it from the inside. Bits of her seep through, white and glowing with ethereal light, but still the walls of your prison hold.
     p If only I could drag you with me and make you understand. But that's not the way things get to go for me, is it? /// soft
-        cold It would certainly be interesting. Though being dead does sound dull. And you are about to be dead. Again. /// soft
+        cold It would certainly be interesting`. Though being dead does sound dull`. And you are about to be dead`. Again. /// soft
         p Get away from me, you cold little freak! /// soft
     p Who do you think you are, trying to take me out with you?! Well I'll show you. I can do worse than that little knife. It's not you taking me out, it's me taking you out. I'll tear this body to shreds! /// harsh
-        cold Wouldn't that be interesting? I'd like to see you try. But I think this is the end for all of us. /// harsh
+        cold Wouldn't that be interesting`? I'd like to see you try`. But I think this is the end for all of us. /// harsh
         p I said I'm leaving, you cold little freak! /// harsh

@@ -2,18 +2,18 @@ n You're on a path in the woods -- /// interrupt
 voice3switch Start
 
 label stubbornStart
-stubborn Yeah. We are. And this time we're not going to run until we die. We're taking her head-on, and we're *winning.*
+stubborn YEAH. WE ARE. And this time we're not going to run until we DIE. We're taking her head-on and we're WINNING.
 hunted You *felt* her. She didn't have a soft underbelly. She didn't have blindspots. What could we have done that would have saved us from her hunger?
-stubborn When someone tries to make you dead, you have to hit them back. You have to show them your authority. There's nothing worse than a bully that thinks they own you.
+stubborn When someone tries to make you dead, you have to HIT THEM BACK. You have to show them your AUTHORITY. There's nothing worse than a BULLY that thinks they own you.
 jumpto startJoin
 
 label stubbornStart2
-stubborn Oh, shut up! It bodes fine. You're the reason we're stuck in this shit situation, and now *I* have to do the hard work of dragging us out.
+stubborn Oh, SHUT UP! It bodes FINE. You're the reason we're stuck in this SHIT SITUATION, and now *I* have to do the hard work of dragging us out!
 n And how do you intend to do that?
-stubborn We're going to fight her, and we're going to win. There's a reason she slinks around in the shadows.
+stubborn We're going to fight her, and we're going to WIN! There's a REASON she slinks around in the shadows.
 n Well, no complaints here.
 hero Now hold on, we're not just going to let the fact that He knows things about this whole looping situation go, are we?
-stubborn He's not important. He can have his secrets for all I care. She's killed us twice now, that's enough of a reason for us to want her dead.
+stubborn He's not important. He can have his secrets for all I care. She's killed us TWICE now, that's enough of a reason for us to want her DEAD.
 
 label skepticStart
 skeptic That didn't work. We're going in with a plan this time. We're not getting stuck in another loop, just acting on instinct. We're stuck in a big enough loop as it is.
@@ -34,9 +34,9 @@ skeptic And whose rule is it? Who's telling you to boss us around? We've died tw
 n It's my rule, and this conversation is over.
 
 label stubbornPlanWoods
-stubborn Like I said, we're going to fight her.
+stubborn Like I said, we're going to FIGHT HER.
 hunted But we're so small.
-stubborn We don't actually know how big she is. We just know she wants us to *think* she's big. And if she is going to treat us like prey again, then she is sorely underestimating us. One good wallop. That's all we need to put her on the defensive.
+stubborn We don't actually KNOW how big she is. We just know she wants us to THINK she's big. And if she's going to treat us like prey again, then she is SORELY UNDERESTIMATING US. ONE GOOD WALLOP. That's all we need to put her on the defensive.
 
 label skepticPlanWoods
 skeptic She spent as much time as she could in the shadows. So we're going to draw her out.
@@ -55,7 +55,7 @@ hunted Ground is ground. It doesn't matter what shape it takes. We'll adapt.
 n If it looks different that's because the situation has started to spiral out of everyone's control. So please, disavow yourself of the notion that you can just come back here and fix this place if you manage to make a mess, before that line of thinking leaves you yet another world in ruin.
 n Though as evidenced by you dying -- twice -- it's safe to assume the fates of the worlds you've left behind don't concern you very much.
 n Consider this your last opportunity to make things right. For you, and for the rest of existence. But especially for you.
-    stubborn We don't need your pep-talk. I'll make sure we pull this off. /// checkvoice
+    stubborn We don't need your PEP-TALK. I'll make sure we pull this off. /// checkvoice
     skeptic Clearly we're not getting anything out of *Him.* /// checkvoice
 
 label answersWoods
@@ -87,9 +87,9 @@ skeptic It will. It's always easier to fight what you can see. No matter how big
     jumpto skepticPlanWoods /// checkfalse
 
 label stubbornPlan2
-stubborn We've already been over the plan.
+stubborn We've already BEEN over the plan.
 hero I'm not sure that "use violence" counts as a plan.
-stubborn It's a better plan than you had last time.
+stubborn It's a better plan than YOU had last time.
 hunted I don't like this. But I'll try to keep us breathing.
 
 label skepticPlan2
@@ -102,14 +102,14 @@ label cabinIntro
 n The interior is dark and overgrown. Vines and brush obscure so much of the place that, had you not seen the exterior, you might not have noticed this was a cabin at all.
 n The only "furniture" of note, if you could call it that, is a knotted stump, a pristine blade embedded in its exposed rings.
 n The blade is your implement. You'll need it if you're going to do this right.
-    stubborn Take it. We're not fighting a monster without a blade. Even if it's not a very big one. /// checkvoice
-    hero Great. That mirror's back! ... And it's where the door is supposed to be. /// checkvoice-stubborn mirror2
-    hero Is no one going to mention the mirror? /// checkvoice-stubborn nomirror2
+    stubborn Take it. We're not fighting a monster without a blade. Even if it's... not a very big one. /// checkvoice
+        hero Great. That mirror's back! ... And it's where the door is supposed to be. /// checkvoice-stubborn mirror2
+        hero Is no one going to mention the mirror? /// checkvoice-stubborn nomirror2
     skeptic Of course that damn mirror's back, and of course He's not saying anything about it. Why is it following us? /// checkvoice mirror2
     skeptic If there's a way forward, that mirror is blocking it off. /// checkvoice nomirror2
 n What are you talking about? There is no mirror. There's just the stump and a narrow tunnel that leads to the basement.
 hunted He isn't tricking us. Can you feel the wind? It's telling us there's a hole in that wall. Our eyes deceive us.
-    stubborn If that mirror's blocking our way, just smash it and be done with it. /// checkvoice
+    stubborn If that mirror's blocking our way, just smash it and be done with it! /// checkvoice
     skeptic Then either way, we need to investigate. Might as well get started. /// checkvoice
 
 label takeBlade
@@ -118,11 +118,11 @@ n You pull the blade from the stump, gripping it tight. It would be difficult to
     skeptic Odds are we'll need it. Thanks for not putting us in a bad spot. /// checkvoice
 
 label approachMirror
-        stubborn I don't know what you're planning, but you're making my job a hell of a lot harder right now. /// noblade checkvoice
+        stubborn I don't know what you're planning, but you're making my job a HELL OF A LOT HARDER right now. /// noblade checkvoice
         skeptic You really think being unarmed is best? I hope you know what you're doing. But let's not forget that it's up here if things go south. /// noblade checkvoice
     hunted The steel claw makes us sloppy. Too confident. We'll be faster without it. /// noblade
 n You step forward, approaching the small hole that leads to the basement, hesitating before you enter the Princess's lair.
-    stubborn You heard Him. Stop hesitating and smash that antique. /// checkvoice
+    stubborn You heard Him. Stop hesitating and SMASH that antique! /// checkvoice
     skeptic Haven't you been paying attention? We're not hesitating, this supposed hole is blocked by that old mirror. /// checkvoice
 hunted That mirror isn't part of this place. It's seeped through from... somewhere else.
 n "It," if there even is an "it," is a hallucination. Like you said, you've been here twice before. Your mind was bound to start playing tricks on you eventually.
@@ -151,7 +151,7 @@ hunted Stay quiet. Don't give her a sound.
 label stairsComment
 n The Princess leaves your remark unanswered.
 hunted See? She knows. We have to be like her. Focused. Present. Patient.
-    stubborn We're past the point of words, anyway. This is a conversation that can only be had with hard steel and sharp teeth. /// checkvoice
+    stubborn We're past the point of words, anyway. This is a conversation that can only be had with HARD STEEL AND SHARP TEETH. /// checkvoice
     skeptic I suppose it'll take a little more than words to coax her out. Let's keep going. /// checkvoice
 n You put the voices to the back of your mind and proceed down the "stairs."
 jumpto basementStart
@@ -176,7 +176,7 @@ hunted There! She's about to strike.
     jumpto fightSuccessStart /// checkvoice-stubborn hasblade
 // "Unanswered Questions" ending; claim the Den //
 hero We're *screwed.*
-    stubborn We can do this. Even without a weapon. I'm no stranger to bloody fists. /// checkvoice
+    stubborn We can DO this. Even without a weapon. I'm no stranger to bloody fists. /// checkvoice
     skeptic I know. This wasn't part of the plan, we were supposed to come down here *prepared* and... oh, what's the use. /// checkvoice hasblade
     skeptic I know. This wasn't part of the plan, we were supposed to come down here *prepared,* with a weapon and... oh, what's the use. /// checkvoice noblade
 quietcreep
@@ -196,25 +196,25 @@ label fightSuccessStart
 n With the near-silence of a determined predator, the Princess erupts from the shadows.
 n You're quick to react, swinging your blade, its tip intercepting her before she can draw first blood. She recoils, stunned for a brief moment.
 unlock denFight
-stubborn See? I told you. We needed to assert our might. We needed to prove to her that she can bleed, too. She'll doubt her every move now.
+stubborn See? I TOLD you. We needed to assert our might. We needed to PROVE to her that she can bleed, too. She'll doubt her every move, now.
 n Her gleaming eyes watch you from the shadows, unblinking. There's fear in them now. But it is a fear wreathed in fury. And beneath it all lurks something far more primal.
 hunted Hunger.
 n Yes. She knows your strength now, and she wishes to devour it. How unseemly.
-stubborn I'd like to see her try.
+stubborn I'D LIKE TO SEE HER TRY.
 linebreak
 n The Princess lunges with even more ferocity than before. Both voices were right. Within that ferocity there is the clumsiness of doubt; a chaotic dance between impulse and restraint.
 n Not a word is spoken between you and the Princess as you exchange blows in the dark. The glint of bloody claws and fangs. The flash of wet steel. In the pit, all of your senses are heightened, each injury stinging like a chorus of insects, each small shift in your favor a major victory that swells your confidence.
 n And yet, for all the wounds you've managed to inflict upon her, you remain at a stalemate. And then you start to lose ground. While your body slows, hers quickens, her wounds mending as she licks the blood of her prey from her dripping maw.
 hero ... So she really *can* "devour our strength." Can... *we* do something like that? All these wounds are starting to add up.
-stubborn Nah, screw that. We're not stooping to her level. We'll just have to give this our all, end it in one final hit.
+stubborn Nah, screw that. We're not stooping to her level. We'll just have to give this our all, end it in ONE FINAL HIT.
 hunted We die if we do that. We have to make ourselves like her. We *have* to embrace instinct.
 n She shifts towards you, her bloody grin shining in the dark. And then you see it: your opening.
-stubborn Take it! Put her down like the mindless beast she is!
+stubborn TAKE IT! PUT HER DOWN LIKE THE MINDLESS BEAST SHE IS!
 
 // "Heroic Strike" ending; claim the Den //
 label strikeEnd
 n You hurl yourself towards the Princess, your movement too quick, too bold for her to intercept. You bury your blade deep in her chest.
-stubborn Yes, *YES!* We're going out in a BLAZE OF GLORY.
+stubborn YES, *YES!* We're going out in a BLAZE OF GLORY.
 hunted Nature doesn't have glory. This is just death.
 n She howls in pain, retaliating with claws and teeth, desperately tearing, trying to devour you to make herself whole once again. Chunks of your flesh are torn away, feathers and blood and bits of gore splattering to the ground, but your work is already done.
 n No sating of her ravenous hunger will be enough to mend her now. Though her flesh begins to seal itself around you, she cannot remove your blade from her heart.
@@ -237,14 +237,14 @@ hunted Again. The more we take of her, the less she will be able to take of us.
 n There is no time to rest if you're to do this right. She tries to bat you away with her massive paw, but as it smashes into your ribs, you clamp your teeth around the limb. You give her no time to react before snapping it from its joint.
 n The Princess pulls back in pained shock as you crunch through bone, devouring the arm that was part of her. It's part of you now. Your wounds heal.
 hero That's *disgusting!* I don't want to do that!
-stubborn You were the one who asked if we could do this, and if it means we win... well. We have to win. Victory demands we do *whatever it takes to claim it.*
+stubborn You were the one who asked if we could do this, and if it means we win... well. We HAVE TO WIN. Victory demands we do WHATEVER IT TAKES TO CLAIM IT.
 hero I didn't think it would be so... *dehumanizing.*
 hunted But we feel *bigger* than her now, don't we?
 n The feeling doesn't linger. As you choke down the last of her severed arm, she lunges, taking advantage of the distraction. In a frenzied flash of blood and feathers, she rips into your side, swallowing another piece of you.
 n Weakness returns. Her arm starts to mend itself, fresh claws sprouting from developing flesh.
 hunted We can't be small again! We have to take more. We have to take it now!
 n You descend upon her again, jaws gnashing, desperate to regain your power. You both lose yourself in the rhythm of the feast. You devouring her and she devouring you, mending and bleeding and consuming in an endless cycle, on and on and on.
-stubborn Come on, just one more bite, then we'll have her right where we want her!
+stubborn COME ON, just ONE MORE BITE, then we'll have her RIGHT WHERE WE WANT HER!
 hero Am I... really the only one who's not on board with this? I'm gonna be *sick.*
 n The more you consume, the more the lines that differentiate you and her begin to blur, the flesh of your bodies twisting into warped reflections of what you swallow. You have to snap out of this. You can't destroy her if you lose sight of yourself.
 hunted We are the predator now. There is nothing to do but embrace our true nature.
@@ -252,7 +252,7 @@ quietcreep
 n *Sigh.* But words fade into hollow vibrations as you and she continue to tear at each other in the darkness. There are no beginnings, there are no endings, there are no moments of calm. There is only savage violence.
 hero Did you say... no endings?
 truth But He doesn't respond. He's gone.
-stubborn But... how are we supposed to know i-if we won?
+stubborn But... how are we supposed to know i-if we WON?
 hunted We *have* won. We'll never die so long as we keep eating. We can be *forever.*
 truth But you and she are separated -- your flesh ripped from where it joins together -- before forever can come to pass. You lock eyes. You see a new emotion there. Shame. "What have we done?" they ask.
 claim pristineEnd
@@ -261,7 +261,7 @@ claim pristineEnd
 
 label lureStart
 n You step into the shadows and are enveloped in total darkness. Your heart pounds in your chest, ears pricked, eyes wide despite the inky blackness, waiting for any sign of movement.
-    stubborn And what? You're going to turn around the second she runs for us? You'll get us killed, you pathetic fool! /// checkvoice
+    stubborn And what? You're going to turn around the second she runs for us? You'll get us KILLED, you pathetic fool! /// checkvoice
     skeptic That's right. Keep steady. Don't let your nerves get the better of you. /// checkvoice
 hunted There! She's about to strike.
 n With the near-silence of a determined predator, the Princess erupts from the shadows. But you've already started your swift escape.
@@ -270,7 +270,7 @@ voice3switch LureStart
 // "Unanswered Questions" ending; claim the Den //
 label stubbornLureStart
 quietcreep
-stubborn Stop it! FIGHT HER!
+stubborn STOP IT! *FIGHT HER!*
 n The conflict in your heart, though usually of little consequence, slows you down just enough. You don't make it into the tunnel before you feel her hot breath at your back, rushing up your spine and closing in on your neck as her teeth press into your skin and --
 hunted Death. Again.
 claim lureFail
@@ -548,7 +548,7 @@ truth But you don't get the opportunity to respond, nor will you ever. It's time
 // Abort the vessel //
 
 label abort
-    stubborn Coward! Deserter! /// checkvoice
+    stubborn Coward. DESERTER. /// checkvoice
     skeptic That's another strategy. No complaints here. /// checkvoice
 hunted Turning our back to her? Always a mistake.
 n Are you serious?! Fine. You walk away from the the cabin. We'll see how that goes for you.

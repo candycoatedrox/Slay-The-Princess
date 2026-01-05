@@ -2,15 +2,15 @@ n You're on a path in the woods -- /// interrupt
     jumpto startCheated /// checkvoice-cheated
 para Shit -- this really doesn't end, does it? It doesn't matter if *we* kill *her,* it doesn't matter if *she* kills *us,* it just goes on, and on, and on, and on, and on.
     jumpto startOppo /// checkvoice-oppo
-cold Yes, so it does.
+cold Yes`, so it does.
 hero No, there has to be a way out of here. There just has to be.
 sourceswitch StartParaCold
 
 label spectreStartParaCold
-cold Does there have to be a way out? For all we know, this is just how things are.
+cold Does there have to be a way out`? For all we know, this is just how things are.
     hero No. No, I can't accept that. What if we let her take our body? That's what she wanted last time. We can still put all of this to rest, right? /// possessask
     hero No. No, I can't accept that. I know she just killed us, but... what if we free her? What if we help her leave? We haven't tried that yet! /// nopossessask
-        cold That does sound like it could be interesting. Or at least different. /// nopossessask
+        cold That does sound like it could be interesting`. Or at least... different. /// nopossessask
 para I don't think we can stop her if that's what she wants to do. She ripped our heart out. Who's to say she can't go ahead and steal our body and make us do what she wants?
 jumpto startParaColdJoin
 
@@ -19,8 +19,8 @@ para What if... we do what she asked us to last time. What if we just let her le
 label startParaColdJoin
 n Okay. So you've already been here. More than once, even. Great. So you probably already know all about her and all about the threat she poses to the world.
 n Then let me remind you how catastrophic it would be if you helped her leave in any way. If she gets out, the world ends, and everyone ends with it. Yourself included.
-    cold Oh, threatening us with death, are we? And why should we be afraid of anything? We've already died twice. It doesn't mean much to us anymore. /// ifsource-spectre
-    cold Oh, threatening us with death, are we? And why should we be afraid of dying? We've already done it twice. /// ifsource-nightmare
+    cold Oh, threatening us with death, are we`? And why should we be afraid of anything`? We've already died twice`. It doesn't mean much to us anymore. /// ifsource-spectre
+    cold Oh, threatening us with death, are we`? And why should we be afraid of dying? We've already done it twice. /// ifsource-nightmare
 cold All death has done is shunt us back to these woods where we're forced to listen to your empty warnings again and again.
 label startParaJoin
 para This place feels a bit different, though, doesn't it? I don't even know what I'd call it, but it's definitely not the same path in the woods anymore.
@@ -39,7 +39,7 @@ oppo See, it's that last part I'm not so sure about. We've "ended" twice now. We
 jumpto startParaJoin
 
 label startCheated
-cold And here we go again. Off to slay her. Again.
+cold And here we go again`. Off to slay her`. Again.
 cheated The deck's stacked, isn't it? We kill her, we start again. She kills us as a goddamn ghost, we start again. I'm starting to think we're being run in circles just for the sake of it...
 hero Come on, let's not give in to all that misery just yet. There's got to be a way out of this. There's got to be a right answer.
 cheated And what if there isn't? Aren't you listening to me? What if all of this was rigged from the start?
@@ -52,14 +52,14 @@ cold We killed ourself.
 n And *why,* pray tell, did you do *that?*
 cold Because you decided to foist an infinite tedium on us.
 n That doesn't sound like me. If I'd had everything my way, you would have effortlessly slain the Princess, saved the world, and been given your happy ending.
-cold The ending was the tedium. You locked us in a cabin and sent that cabin to an endless void, and then you told us we were happy.
+cold The ending *was* the tedium`. You locked us in a cabin and sent that cabin to an endless void, and then you told us we were happy.
 n Well... were you happy?
 hero Of course we weren't happy! That's why we killed ourself! It was awful!
-cold Yes, and then she killed us.
+cold Yes`, and then she killed us.
 cheated Even though she was *already dead!* This is all fake.
 n *Sigh.* Okay. Let's *try* to get back on track. You're real. The Princess is real. The world is real. The *people* in the world are real. And the *danger* she poses to all of them is also, quite unfortunately, real.
 n Whatever you did the first time, it sounds like it almost worked, so how about you give it one last try? Because killing yourself seemed to undo all the good you almost managed to accomplish.
-cold All this standing around and talking is *boring,* let's at least *do something?* Maybe we'll kill her again. Maybe we won't. Maybe we'll even free her.
+cold All this standing around and talking is *boring,* let's at least *do something?`* Maybe we'll kill her again. Maybe we won't`. Maybe we'll even free her.
 
 label helpStart
 n Tell you what! I won't do that. I promise.
@@ -71,11 +71,11 @@ label loopStart
     para Suspiciously quick... /// checkvoice
 n If I had to make a wager, I'd say yes and no.
     cheated That's a hedge, not a wager. /// checkvoice
-    cold Is that supposed to be a riddle? If it is, it's not very good. /// checkvoice checknovoice-cheated
+    cold Is that supposed to be a riddle`? If it is`, it's not very good. /// checkvoice checknovoice-cheated
     para And what does that mean? /// checkvoice-oppo
 n "I" haven't met you, but you've clearly met "me." It sounds to me like you're hopping between parallel realities, in which case the "me" you just met here is the same collection of experiences as the "me" you met at all of those other beginnings, but their continuity breaks the moment you say or do anything, in effect making them all separate.
 n So yes. I'm the same "me," but ever since the moment we started talking, I'm different.
-    cold I'm not sure how we're supposed to kill Him ourself, but He's asking for it. Maybe there's some way she can take care of him for us. /// checkvoice
+    cold I'm not sure *how* we're supposed to kill Him ourself`, but He's asking for it`.`.`.`! Maybe there's some way *she* can take care of him for us. /// checkvoice
     oppo All the more reason to side with *her,* really! It takes a bullshit artist to recognize a bullshit artist, and I'm one of the best in the business. So *trust* me when I say: He's full of it. /// checkvoice
 n They've clearly all been through some harrowing experiences. Don't let their baggage influence your decisions. You have the ability to see things clearly. I suggest you use it.
 
@@ -86,13 +86,13 @@ n Know that there is always a choice -- even if you were stuck in an "infinite" 
     cheated How convenient, everything always comes back to what you want us to do! I'm sick of Him. Makes me want to end the world out of spite. /// checkvoice
     oppo Do you see how little authority He has? He's practically just begging us at this point. She at least takes what she wants. She's inspirational, really. /// checkvoice
     para Everyone is manipulating us. But we're starting to see the threads now. We just have to avoid getting tangled up in them... /// checkvoice
-    cold On second thought, let's not kill Him. Let's throw Him someplace that never ends. I'd like to see what that does to Him. /// check checkvoice
+    cold On second thought, let's not kill Him`. Let's throw *Him* someplace that never ends`. I'd like to see what that does to Him. /// check checkvoice
 
 label dontGoStart
 n Then she finds a way out on her own.
     oppo So... it sounds to me like she's getting out no matter what we do. And I say aligning ourselves with somebody like her is clearly the better option. She's going places. Let's make our way to the cabin and demonstrate our value! /// checkvoice
     cheated Ugh. Of course she does. /// checkvoice
-    cold So standing around out here is the same as us letting her out. /// checkvoice
+    cold So`, standing around out here is the same as us letting her out. /// checkvoice
         hero Only we don't have to see her. That's got to be better, right? /// checkvoice-cold
 n No, it's strictly worse.
     para And why is that? /// checkvoice
@@ -115,7 +115,7 @@ n Whatever. You don't want to listen to me? Do it, then. Let her out. See what I
 
 label hillExplore
 n There's obviously no point in trying to reason with you right now, especially with all of these clowns offering up their useless advice. Honestly it seems like the more I try and talk sense into you, the more single-minded they get about letting her out. So yes. I'm done trying to argue.
-    cold Would you look at that? We won. /// checkvoice
+    cold Would you look at that`? We won. /// checkvoice
     para I wouldn't trust that if I were the one making decisions. /// checknovoice-cold
 n Take it however you will.
 
@@ -129,7 +129,7 @@ n The mirror? No, there isn't a mirror. What's strange is that there isn't much 
     cheated Great. Something else has been taken away from us. /// checkvoice
     para Of course there "isn't a mirror." There "wasn't one" last time either, so why would it be there this time. /// checkvoice mirror2
     para What do you mean there isn't a mirror. There's a mirror, plain as day at the end of the hall. /// checkvoice nomirror2
-    cold I suppose the only way to go is forward. So forward we will go. Blade or not, it doesn't really matter, does it? /// checkvoice
+    cold I suppose the only way to go is forward`. So forward we will go`. Blade or not, it doesn't really matter, does it? /// checkvoice
     oppo Let's be mindful of our position, boys. Without the knife, we lose part of our bargaining power. We should fold and beg for mercy as soon as we see her. /// checkvoice
         hero I'm sure we have too much self-respect to do something so... worm-like. Right? We can always at least pretend to have a conversation as equals. We did kill her last time. /// checkvoice-oppo
         oppo Yeah, but she sort of let us do that, didn't she? And again. We don't have a blade. /// checkvoice
@@ -140,7 +140,7 @@ label mirrorExplore
 n If you're asking what's at the end of the hallway, it's the way to the basement.
     para Are you saying there isn't a door? Are you saying that at the end of the hallway there's just an opening? /// checkvoice ifsource-spectre
     para Are you saying there isn't a door? Are you saying that at the end of the hallway there's just an opening again? /// checkvoice ifsource-nightmare
-        cold He didn't say "door," did he? /// checkvoice-para-cold
+        cold He didn't say "door,`" did he? /// checkvoice-para-cold
     hero The... *way* to the basement? Don't you mean door? /// checknovoice-para
 n No, I didn't say door. Because there isn't a door. It's just an opening.
     para It's just like last time, isn't it? Only instead of a visible empty void, there's an invisible one. For all we know, she could be standing right there behind the mirror! For all we know, she's going to jump out at us and there's nothing we can do to stop her! /// ifsource-nightmare
@@ -154,7 +154,7 @@ n No, I didn't say door. Because there isn't a door. It's just an opening.
 label mirrorApproach
 n You slowly make your way towards the gaping maw that awaits you. Your fraying nerves buzz with trepidation, the chill wind raising your hackles as it gently pushes you forward, towards the darkness at the end of the hallway. You can't shake the feeling that you're being watched.
     para Oh, *do we?* *Do* we feel like we're being watched? I hadn't *noticed!* At least you're admitting to it now. /// checkvoice
-    cold We've always been watched. You're watching us right now. Sometimes the feeling is just stronger than others. /// checknovoice-para
+    cold We've always been watched`. You're watching us right now`. Sometimes the feeling is just... stronger than others. /// checknovoice-para
     cheated I feel like you're trying to put us on edge. We don't need all this anticipation, we just need this to be over. /// checkvoice
     oppo Who says being watched is a bad thing? If we haven't done anything wrong, we don't have anything to worry about. I'm sure she knows we're on her side. /// checkvoice
 n You stop as you reach the end of the hallway, I presume in front of whatever mirror isn't actually there.
@@ -194,23 +194,23 @@ n Ignore him. Have those second thoughts. Have them now!
 
 label paracoldConvoStart
 para Okay! Maybe letting her in isn't the best idea. She clearly *hates us!*
-cold And? What's your point? I thought you wanted to get out of here. This is a way out, and it's... different. We might as well take it.
+cold And`? What's your point? *I* thought you wanted to get out of here`. This is a way out, and it's... different`. We might as well take it.
 para Yeah, but not like *this!* She's going to make it *hurt.*
 cold Then turn off the part of you that feels things.
 hero Oh, like it's that easy?
-cold It is. Pain is just another sensation. If you can tolerate joy, you can tolerate pain.
+cold It is`. Pain is just another sensation`. If you can tolerate joy`, you can tolerate pain.
 hero Except that pain hurts!
-cold Yes. That's what it does. That's the definition.
+cold Yes`. That's what it does`. That's the definition.
 para Do we need to *explain* to you why pain is bad?!
-cold You need to explain to *yourself* why it isn't.
+cold You need to explain to yourself why it isn't.
 
 label cheatedConvoStart
-cold I say we let her do it. It's something different.
+cold I say we let her do it`. It's something different.
 cheated Do we even have a choice?
 n You always have a choice.
 hero Maybe before, but not now. There isn't a blade this time.
 n Exactly! What choice is there if there isn't a blade?
-cold Well, unless you have any specific ideas, I think my vote's the only one that counts.
+cold Well, unless you have any specific ideas`, I think my vote's the only one that counts.
 
 // Conversation menu //
 
@@ -276,7 +276,7 @@ n You don't even have a weapon. So I'm afraid you're out of luck, which unfortun
         para What am I talking about? This isn't fine! It was better when she was a normal ghost! /// checkvoice ifsource-spectre
         hero Is it? Is there *any* conceivable way that *this* is fine? /// ifsource-nightmare
             para Yeah. I'm right! This is fine! I-It's better than last time. At least our organs aren't failing. At least I can actually *talk.* /// ifsource-nightmare
-        cold It *is* fine. Everything is *always* fine. These consequences have no real impact on us outside of momentary discomfort. I'm sure we'll be moving on again soon enough. /// checkvoice-para-cold
+        cold It *is* fine`. Everything is *always* fine`. These consequences have no real impact on us outside of momentary discomfort`. I'm sure we'll be moving on again soon enough. /// checkvoice-para-cold
 n Your vision fades as she tears open the membrane of your soul.
 linebreak
 p GET UP.
@@ -345,7 +345,7 @@ n Capillaries burst and muscle fibers tear as you and the Princess struggle over
     cheated Enough is enough! I'm *tired* of us always LOSING! It's. Just. A step. AWAY! /// checkvoice
         p EVEN IF YOU THROW YOURSELF INTO THE ABYSS, YOU STILL LOSE! /// checkvoice-cheated
     hero We're putting in everything we have! /// checkvoice-para-cold
-        cold You're not. You're thinking too much about how she's hurting us. You're thinking too much about your body. It's just a body. /// checkvoice-para-cold
+        cold You're not. You're thinking too much about how she's hurting us`. You're thinking too much about your body`. It's just a body. /// checkvoice-para-cold
         p YES IT'S JUST A BODY NOW BUT I CAN MAKE IT DO SO MANY TERRIBLE THINGS TO YOU! /// checkvoice-para-cold
         para One, two, three! ... One, two... three! N-next one, we all go. One, two, *three!* /// checkvoice-para-cold
 n You throw everything you have against her and manage, for one brief moment, to overpower the Princess's hold on your body. But that moment was all you needed. Your foot slips a few inches, and you collapse forward, the darkness swallowing you whole.
@@ -391,7 +391,7 @@ n *Sigh.* You toss the last of your will aside and surrender to the Princess.
 hero I guess that's that.
     oppo It's for the best, really. /// checkvoice
     para Maybe we'll find our freedom on the other side. /// checkvoice
-    cold An end is an end. Let's see what it has in store for us. /// checkvoice
+    cold An end is an end`. Let's see what it has in store for us. /// checkvoice
 p THIS IS ALL I WANTED. MAYBE THERE WILL BE A MERCY FOR YOU AT THE END OF EVERYTHING.
     oppo You hear that, boys? A mercy. That's the sort of reward you get with me at the helm. /// checkvoice
 jumpto freeJoin
@@ -401,7 +401,7 @@ n I'd beg you to resist, but you've already surrendered your will to her, haven'
     para You're the puppet master here. If this is the only way we could cut ourselves free from you, so be it. /// checkvoice
     cheated Anything to get out of this hellhole. /// checkvoice
     oppo Yeah. Just like I told you we would. We're here to make things right, and the first step in making things right is admitting when you're wrong. /// checkvoice
-    cold It's a new experience. You should try being possessed some time. There's nothing else like it. /// checkvoice
+    cold It's a new experience`. You should try being possessed sometime`. There's nothing else like it. /// checkvoice
 p THERE'S NOTHING WRONG WITH FIXING YOUR MISTAKES. I'LL REMEMBER THIS. BUT I'LL ALSO NEVER FORGET WHAT YOU'VE DONE.
 label freeJoin
 n Your body inches along the corridor, every step more difficult and painful than the last — your joints stiff and unresponsive, the shattered bones of your ankle grinding ceaselessly, as if they're fragmenting then reforming then snapping all over again as you make your way towards the outside world.
@@ -421,7 +421,7 @@ hero Isn't saying all of this His job?
 p HE IS GONE.
     oppo Don't worry about all the criticism. You're doing great! /// checkvoice
         p THANK YOU. /// checkvoice-oppo
-    cold Oh, He really is, isn't He? I had a feeling you could deal with Him for us. /// checkvoice
+    cold Oh, He really is, isn't He`? I had a feeling you could deal with Him for us. /// checkvoice
         p I DID NOTHING. HE DEALT WITH HIMSELF. /// checkvoice-cold
 hero This is it, then. The big moment.
     para Finally, we'll get to see what's *really* out there. /// checkvoice
@@ -449,7 +449,7 @@ truth But you don't answer her before she's gone. Memory returns.
 
 label abort
 n I'm begging you, don't do this. You're going to damn everything to oblivion. You have to do something, you can't just walk away.
-    cold Yet here we are. Walking away, despite your protestations. /// checkvoice
+    cold Yet here we are`. Walking away despite your protestations. /// checkvoice
     cheated You can only bend the rules so much, huh? You can talk all you want, but you can't really do much of anything, can you? /// checkvoice
     hero I guess you'll just have to stop us, if you want us to go to the cabin so bad. /// checknovoice-cold
     para There's got to be a crack in this world somewhere. If He's looking in at us, there has to be a way out. /// checkvoice

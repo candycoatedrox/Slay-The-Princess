@@ -1,13 +1,13 @@
 hero If He doesn't remember what happened, then maybe it's best to keep it that way.
-cheated This whole thing's a crock of shit. She's just going to pull a knife out of nowhere and stab us again.
+cheated This whole thing's a crock of shit. She's just going to pull a knife out of nowhere and stab us again!
 n Stabbed to death? Well, you won't have to worry about that. The Princess is unarmed.
     jumpto shareRevival /// ifsource-revival
-cheated Yeah, that's exactly what you told us last time. When we asked you if you were sure she didn't have a weapon on her, you said you were "positive" she didn't.
-cheated But it turns out she did. Because when we charged her, she started stabbing us. To *death!*
+cheated Yeah, that's exactly what you told us last time! When we asked you if you were sure she didn't have a weapon on her, you said you were "positive" she didn't.
+cheated But it turns out she did. Because when we charged her, she started *stabbing* us. TO DEATH!
 jumpto shareJoin
 
 label shareRevival
-cheated Yeah, that's exactly what you told us last time. You said this whole thing would be easy, but after we sank our blade into her heart she just got up and started stabbing us.
+cheated Yeah, that's *exactly* what you told us last time! *You* said this whole thing would be *easy,* but after we sank our blade into her heart she just got up and started STABBING us!
 label shareJoin
 n Calm down. I assure you she has no weapons, so there's no reason to fear her. You were made for this job. You'll do just fine.
 
@@ -24,7 +24,7 @@ label assumeJoin
 n But congratulations. You've been given a chance to actually do this right.
 
 label assume2
-cheated Screw this. Who cares what happened to everyone else? She's not going to play fair, so we should do what we can to save ourselves and just *get out of here.*
+cheated Screw this. Who *cares* what happened to everyone else? She's not going to play fair, so we should do what we can to save ourselves and just GET OUT OF HERE.
 n At least you know not to trust her, but you do realize that "everything and everyone" includes you, right? If you turn around and leave, you're dooming yourself as well as everyone else.
     jumpto assume2Revival /// ifsource-revival
 hero She just caught us by surprise last time. She can't do that twice. So long as we're careful, we can win this.
@@ -35,14 +35,17 @@ label assume2Revival
 hero We were so close to finishing the job last time. She can't get the jump on us twice. If we're careful, we should be fine.
 jumpto assume2Join
 
+label princessTips
+cheated Oh, and don't get stabbed while you're at it.
+
 label princessHowDanger
 n She just can. But she's still only a Princess. You're fully up to the task you've been given, so long as you remember that.
 
 label princessSpecial
-cheated If anyone's "special" here, it's her. That was a nasty trick she pulled on us.
+cheated If anyone's "special" here, it's her. That was a *nasty* trick she pulled on us.
 
 label princessSpecialRevival
-cheated If anyone's "special" here, it's her. Last I checked we can't get up from a knife in the chest.
+cheated If anyone's "special" here, it's her. Last *I* checked we can't get up from a knife in the chest!
 
 label princessCagey
 cheated You didn't tell us about her knife last time though.
@@ -51,14 +54,14 @@ n That's because she's unarmed, and more than that, it's because there *wasn't* 
 // Hill dialogue //
 
 label hillDialogue
-cheated He couldn't be more on the money. But we're really doing this, aren't we? I'd say your loss, but I'm stuck here with you.
+cheated He couldn't be more on the money! But we're really doing this, aren't we? I'd say your loss, but I'm stuck here with you!
 hero We know what to look out for this time. We know to be careful.
 n Just stay focused and you'll be fine.
 
 // Abort attempt //
 
 label abortStart
-cheated Heh. And away we go. Good call.
+cheated Heh! And away we go! Good call.
 
 label abortReturn
 // I think the original game devs forgot to include a line for Voice of the Cheated here...? //
@@ -81,31 +84,26 @@ label askMirror
 n That's because there isn't a mirror. There's the table, the blade sitting on the table, and the door to the basement. There's nothing else in here.
 
 label askMirrorStart
-cheated Can you two stop arguing? It's stressful enough in here without all of this extra noise.
+cheated Can you two stop arguing? It's stressful enough in here without all of this *extra noise!*
 
 label mirrorGone
-cheated And now it's gone. Yet another thing in here playing tricks on us. I hate this place.
+cheated And now it's gone. Yet *another* thing in here playing tricks on us. I *HATE* this place.
 
 // Stairs //
 
-label stairsNoBlade
-cheated Are we really doing this without a weapon? You know she has one, right?
-n Once again, I'd like to remind you that she's unarmed. But you're right. This would be a lot easier if you had the blade. I hope you know what you're doing.
-linebreak
-jumpto stairsStartBladeJoin
-
 label stairsStart
-    jumpto stairsNoBlade /// noblade
-label stairsStartBladeJoin
+    cheated Are we *really* doing this without a weapon? You know *she* has one, right? /// noblade
+        n Once again, I'd like to remind you that she's unarmed. But you're right. This would be a lot easier if you had the blade. I hope you know what you're doing. /// noblade
+        linebreak /// noblade
 n The door to the basement creaks open, revealing what must once have been stairs. The fractured slats look as if they've been torn from their source and violently jammed into the wall.
 n The air seeping up from below has an almost metallic quality to it. Like the smell of fresh blood. And you can hear what sounds like the rhythmic scraping of metal coming from down below. If the Princess lives here, slaying her would probably be doing her a favor.
-    cheated That's right, *scraping.* I told you she has something. I *told* you. /// sharedloop
-    cheated Scraping? She's not even trying to hide her knife. It's like she wants to get in our head. /// noshare
+    cheated That's right, *scraping.* I *told* you she has something. I *told* you. /// sharedloop
+    cheated *Scraping?* She's not even *trying* to hide her knife! It's like she wants to get in our head. /// noshare
 n That sound could be anything. It's probably just her chains dragging across the floor. I am begging you to get out of your head.
 n Her grating voice carries up the stairs.
 p I hope you've come to rescue me. I've been stuck down here *forever.*
 hero There's something so wrong with that voice.
-cheated Yeah. She thinks she's better than us. Like she doesn't even have to put on an act this time.
+cheated Yeah. She thinks she's *better* than us! Like she doesn't even have to put on an act this time.
 linebreak
 n As you descend the final step, the form of the Princess comes into view, her sharp eyes following you from across the room.
 truth Her hair somehow looks sharper than last time, and the bottom of her dress is ripped. She stands with her hands behind her back.
@@ -113,7 +111,7 @@ truth Her hair somehow looks sharper than last time, and the bottom of her dress
 hero I wonder if she remembers us.
 label basementStartJoin
 p Finally, *somebody!* Quick, get me out of these chains, we're not safe here.
-cheated Come on, now. We're not falling for that, are we? She's trying to trick us, but she can't hide that threatening edge to her voice. She just wants us to get close, to let our guard down.
+cheated Come on, now. We're not falling for *that,* are we? She's trying to trick us, but she can't hide that threatening edge to her voice. She just wants us to get close, to let our guard down.
 bladeswitch basementStart
 
 label basementStartBlade
@@ -130,14 +128,14 @@ p What are you *waiting* for? You *are* here to rescue me, right?
 label loopComment
     n There you go again, talking up delusions about a past-life experience that clearly didn't happen. /// sharedinsist
     n "Last time?" What are you talking about? /// noinsist
-cheated Ugh. It's like the two of you are working together on this. Aren't you listening to her? She's obviously lying through her teeth.
+cheated Ugh, it's like the two of you are working together on this. Aren't you *listening* to her? She's *obviously* lying through her teeth.
 hero I'm terrible at spotting liars and even I can tell something's up here. We can't be the only ones who looped back to the start. Someone else has to remember, right?
 n Yes. Something is obviously "up" and we can all tell that she's lying. But the thing she's lying about is how dangerous she is, not "dimension-hopping" or "time-travel" or whatever it is you think you're doing.
 
 // Non-option-specific dialogue //
 
 label followUp1
-cheated I have absolutely zero doubts that she is going to stab us if we get close to her.
+cheated I have absolutely *zero doubts* that she is going to *stab* us if we get close to her!
 hero She certainly feels threatening.
 n Just because she's acting like she's going to stab you doesn't mean she has the means to actually do it.
 bladeswitch followUp1
@@ -154,13 +152,13 @@ n All the more reason to jump into the deep end and deal with her right now, bef
 
 label followUp2
 n How many more times does she have to vaguely threaten you before you to finally decide you're ready to deal with her?
-cheated We're clearly still figuring out our angle. We don't have the luxury of watching this from a distance.
+cheated We're *clearly* still figuring out our angle. *We* don't have the luxury of watching this from a distance.
 n Oh, I'm sorry, do you think I'm in a position of *luxury* right now?
 hero You're acting like you are.
 n My entire world is at risk.
-cheated Then maybe you should behave with a little more humility. A bit of self-deprecation would go a long way.
+cheated Then *maybe* you should behave with a little more humility. A bit of self-deprecation would go a long way.
 n No. I have my dignity.
-cheated Fine. Then we'll continue to treat you exactly how you deserve to be treated.
+cheated Fine. Then we'll continue to treat you EXACTLY how you deserve to be treated.
 
 label followUp3
 n I think I've said my piece at this point.
@@ -195,13 +193,13 @@ p Would I just *lie?* Would I just lie to your face and tell you that a thing I 
 p I mean, just so I could stab you for the *first* time.
     break /// checkfalse
 label lastTime2LoopComment
-cheated Aha! She slipped up there! She said again. And her taking it back doesn't count.
+cheated AHA! She slipped up there! She said "again." And her taking it back doesn't count.
 n Do you hear how deranged you sound right now? Please just stop dawdling. This is only going to end with violence. Postponing the inevitable is only going to make it worse for you when it actually happens.
 
 label knife1
 p A *knife?* What are you *talking about?* I don't have a knife, where would I keep a knife?
 p And *why* would I stab you to death? I don't know you. You haven't given me a *reason* to stab you to death. It would be *so silly* of me to cut you open and look at your insides.
-cheated Okay, I could've sworn we didn't mention stabbing anyone to death.
+cheated Okay, I could've *sworn* we didn't mention stabbing *anyone* to death.
 n It sounds like she's really out for blood. Fortunately for you, she isn't armed.
 
 label knife2
@@ -217,7 +215,7 @@ p Wait, that sounds like I'm lying, but I'm actually not. My secret zones are fo
 n Her smile drops for a moment, her expression sharp and flat.
 p I assure you, there's nothing hidden there.
 hero I'm inclined to believe her on that one. She seems serious.
-cheated Of course, but that doesn't mean that she doesn't have something hidden *somewhere.* We know for a fact she's armed.
+cheated Of course, but that doesn't mean that she doesn't have something hidden *somewhere.* We know for a *fact* she's ARMED.
 
 label suspicious
 p That's... so *rude* of you, passing judgments on strangers you've never met just because they're different from you! How would you like it if *I* did that, *huh?*
@@ -242,7 +240,7 @@ p I have an idea! You should come over here and stare directly at the chains! Yo
 label goodWill
 p *Yes!* Yes, of *course!* Haven't you seen that I've only been nice to you since you got here?
 hero Has she?
-cheated Her words have been fine but her general attitude's been weird and extremely suspicious, and I think that's what really counts.
+cheated Her *words* have been fine but her general attitude's been weird and *extremely* suspicious, and I think *that's* what really counts.
 n This shouldn't even be a question. She absolutely has not been nice to you.
 
 label lastKill
@@ -266,14 +264,14 @@ p Of *course not!* At least not *now.* Because *you're* here to save me. But you
 label letOut
 p All *sorts* of things, which is why I think that's a great idea! I would *love* to not be chained up down here. Being chained up is so *boring* and I crave fresh and new activities to broaden my horizons!
 n Please don't let her out of here.
-cheated Believe it or not, I think I'm actually with Him on this.
+cheated Believe it or not, I think I'm actually with... Him on this.
 hero Okay, but what if all of this is just a misunderstanding? There has to be room for this to be a misunderstanding.
 
 label activities
 p *Yes!* I mean, maybe! I've never done *any* of those things, but there is something alluring about the sound of it.
 p I think it would also be fun to do *other* activities like... look at a bird, or touch a tree.
 hero Okay, now listen.
-cheated You're not actually buying this, are you?
+cheated You're not actually *buying* this, are you?
 hero Listen.
 n ... Yes?
 hero I would like to look at a bird.
@@ -299,7 +297,7 @@ label initiativeEnd
 hero She's bored...?
 n That's absurd. She doesn't get to be bored. Not in a way that matters. She's a *prisoner.* She's -- /// interrupt
 n Shit. In a sudden burst of movement, the Princess leaps towards you, a blade erupting from her free arm, her wrist limp and empty from the violent expulsion. Huh. So I guess she did have a knife of her own after all.
-cheated How conciliatory of you. We appreciate it, really. Now what are we going to do?
+cheated How conciliatory of you. We appreciate it, really. Now WHAT ARE WE GOING TO DO?
 hero At least we're safe here. She's still in chains.
 n And those chains stop her from continuing her advance, at least for a moment.
 n She looks down at them with something between annoyance and confusion.
@@ -309,18 +307,18 @@ n She doesn't even hesitate before darting towards you with a terrifying speed y
 bladeswitch initiativeEnd
 
 label initiativeEndNoBlade
-cheated That won't stop us from trying. Run run run run run!
+cheated That won't stop us from trying! Run run run run run!
 n You sprint for the stairs, but I wasn't exaggerating when I said she was running at you with a terrifying speed you couldn't hope to outpace.
 hero We don't make it, do we?
 n No. You feel her blade in your back before you make it to the first stair.
 jumpto initiativeEndJoin
 
 label initiativeEndBlade
-cheated Ah, shit. Okay. She's down an arm and we still have a weapon. I guess we'll have to use it.
+cheated Ah, shit. Okay, she's down an arm and we still have a weapon. I guess we'll have to use it.
 n And use it you do. But unfortunately for you, and for the entire world, you are horribly outmatched.
 n You keep pace with her for a single brief and wordless exchange before she severs your hand, and with it, your only line of defense.
     hero She's much better at this than she was last time. /// check
-        cheated Yeah. It's unreal. Bloody cheater. /// check
+        cheated Yeah, it's unreal! Bloody cheater... /// check
     hero She's even better at this than she was last time. /// checkfalse
         cheated Bloody cheater. /// checkfalse
 p I'm going to kill you now.
@@ -347,16 +345,16 @@ n And with a quick jerk of her elbow, she does just that. Everything goes dark, 
 // Leads to Chapter III: The Arms Race with Voice of the Stubborn //
 label slayEnd
 n The Princess falls silent, her smile unwavering as you charge across the room.
-cheated Okay. She hasn't pulled out a knife yet. And her hands are still behind her back. I think we can do this. I think we can win. We just have to strike now, but make sure you keep your eyes on those hands, I don't trust her for a second.
+cheated Okay. She hasn't pulled out a knife yet. And her hands are still behind her back`. I think we can do this. I think we can *win.* We just have to strike *now,* but make sure you keep your eyes on those hands, I don't trust her for a SECOND.
 n But your focus is broken by the horrible sound of metal slicing through meat.
 hero ... Whose meat? Not ours, right?!
 n Hers, at first.
 n Then yours.
 p Hehe!
-cheated How?! What did she even hit us with?
+cheated HOW?! Wh -- what did she even hit us with?
 n You stare down at your chest, and at the long, thin blade she impaled you with.
 n And then at the red, angry slit along the flesh of her thigh, where the blade had been nestled just a moment ago. It's still lodged in her leg, emerging from her knee, hinging up and out of her body like some extra metallic limb.
-cheated Bull. Shit. Absolute bullshit.
+cheated Bull. Shit. *Absolute* bullshit.
 p You're going to die now.
 linebreak
 n With a twist of her knee and a painful squelch, she does just that. Everything goes dark, and you die.

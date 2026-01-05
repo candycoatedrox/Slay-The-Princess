@@ -2,17 +2,17 @@ n You're on a path in the woods -- /// interrupt
 voice3switch Start
 
 label huntedStart
-stubborn If you weren't so damned afraid of what she'd do to you, we wouldn't have died back there.
+stubborn If you weren't so damned AFRAID of what she'd do to you, we wouldn't have died back there!
 hunted Fear is good. Fear keeps us alive. We died because you didn't have enough of it.
-stubborn So what? You'd have us cower in a corner?
+stubborn So what? You'd have us *cower in a corner?*
 hunted No, but that place suits her better than it suits us. She's big, we can't hope to find holes and openings down there. We need more room if we're going to survive.
 n Are you suggesting luring her into the woods? Do you have any idea how dangerous that would be? If you lose sight of her, if she manages to slip away, that's it. Game over. For everyone. Yourself included.
 jumpto startJoin
 
 label skepticStart
-stubborn If you weren't so damned focused on freeing her, we wouldn't have died back there.
+stubborn If you weren't so damned focused on FREEING her, we wouldn't have died back there.
 skeptic You're strong, but you're bullheaded. This isn't a fight. It's a puzzle. She's stronger than us, but we can use that to our advantage.
-stubborn I hate puzzles.
+stubborn I HATE puzzles.
 hero I've never done a puzzle myself, but anything that doesn't get us beaten to death is good in my book. What do you have in mind?
 skeptic Same thing as last time, only we'll be smarter about it. We're getting her out of there. After that, we're seeing what happens.
 n Are you insane? Do you have any idea how dangerous that would be? If she gets out of here, that's it. Game over. For everyone. Yourself included.
@@ -31,7 +31,7 @@ skeptic Enlighten me, then.
 n I have no memory of meeting you, but you've clearly seen things you weren't supposed to have seen. You'd only be saying the things you've been saying if you'd already been here.
 skeptic Mhm. So where does that leave us?
 n It leaves us exactly where we started, and where I'm sure you've already been before. The Princess, left unhindered, will bring about the end of world. You have to put a stop to her, and the only way to do that is to slay her.
-stubborn Screw it! I'm sick of this smug asshole telling us what to do. If you need help busting her out of there, I'm your man.
+stubborn Screw it! I'm sick of this SMUG ASSHOLE telling us what to do. If you need help busting her out of there, I'm your man.
 skeptic Welcome aboard. And if things go bad once we get her out of the cabin, well, at least you'll be able to get that fight you wanted.
 n The rest of you had better keep those two in check. They're far along the edge of a dangerous path. Don't let them go any further.
 
@@ -81,7 +81,7 @@ n A mirror? But there isn't a mirror here. There's the iron altar, the blade sit
 hero Does He really not see it?
 skeptic Or maybe what we see as a mirror, he sees as a door.
 n It is a door. And before you ask, no, it's not a mirror-shaped door. The object at the end of this room is both door-shaped and a door. There shouldn't be any room for misinterpretation.
-stubborn Who cares what it is. It's in our way, we should smash it.
+stubborn Who *cares* what it is. It's in our way, we should smash it.
 jumpto cabinIntroJoin
 
 label mirrorAsk
@@ -91,37 +91,37 @@ label mirrorAsk
 hero But there isn't a door.
 n There is.
     hunted Circles, circles, all of it circles! There's something for us at the end of the room. The what and the why don't matter until we know them. /// checkvoice
-        stubborn I agree with the freak, let's get a move on already. And worse comes to worst we can smash it. /// checkvoice-hunted
+        stubborn I agree with the freak. Let's get a move on already. And worse comes to worst, we can smash it! /// checkvoice-hunted
 
 label huntedMirrorTouched
 hunted Maybe it'll go away again.
 n For something to go away, it would have to be there to begin with. And let me assure you, there's no mirror here. The only thing at the end of the room is the door to the basement.
 hunted No use arguing. Mirror or not, we need to be there. The why we pick doesn't matter.
-stubborn I agree with the freak, let's get a move on already. And worse comes to worst we can smash it.
+stubborn I agree with the freak. Let's get a move on already. And worse comes to worst, we can smash it!
 
 label skepticMirrorTouched
 skeptic It looks that way, sure, but it vanished the last time we interacted with it. Until proven otherwise, we shouldn't assume that it's real.
 n A fair assumption, especially since I can assure you that there is no mirror. The only thing at the end of this room is the door to the basement.
-stubborn If there's a door on the other side of that thing, let's just smash it.
+stubborn If there's a DOOR on the other side of that thing, let's just smash it.
 skeptic Let's see if it stays there before we make any rash decisions. But if is it real, we should take a good look at it before we do any smashing.
 
 label takeBlade
 n You take the blade from the altar. It would be difficult to slay the Princess and save the world without a weapon.
     hunted Good. There's no overcoming her without it. We need every part of us to survive, and that steel claw is as much as part of us as any. /// checkvoice
-    stubborn Good. Wouldn't want to be pushed around without a way to push back. And she likes when we can push back, doesn't she? /// checkvoice-skeptic
+    stubborn Good. Wouldn't want to be pushed around without a way to push back. And she *likes* when we can push back, doesn't she? /// checkvoice-skeptic
 
 label approachMirror
     hunted We can try to survive without our steel claw. But you've marked us as easy prey. /// checkvoice noblade
     n You step forward and approach the door to the basement, hesitating before you open it. As if you don't see it. You're rather committed to the bit, aren't you? The door's right there. It's right in front of you. /// check
     n You step forward and approach the door to the basement, hesitating before you open it. As if you don't see it. You do see it, right? /// checkfalse
-        stubborn All we see is a damned mirror. /// checkfalse
+        stubborn All we see is a damned MIRROR! /// checkfalse
     hero This really is just like last time... /// mirrortouch
         hunted It smells of nothing. Yet it's still there. /// mirrortouch checkvoice
         skeptic Can you really not see the mirror, or is pretending it doesn't exist another one of your "rules?" /// mirrortouch checkvoice
             n There isn't a mirror. /// mirrortouch checkvoice-skeptic
             hero Is it a rule to say there isn't a mirror when there's clearly one right there? Because if it is, it's not a very good one. /// mirrortouch checkvoice-skeptic
             skeptic I'm inclined to agree. But we don't know how things work here, do we? /// mirrortouch checkvoice
-            stubborn Just smash it already. /// mirrortouch checkvoice-skeptic
+            stubborn Just smash it already! /// mirrortouch checkvoice-skeptic
     hero It's a bit grimy. Why don't we wipe it clean? /// nomirrortouch
 
 label wipeMirror
@@ -132,7 +132,7 @@ label smashMirror
 n You bring your fist crashing down against the door leading to the basement. It swings open, scraping against the floor as it reveals the dim path ahead.
 label mirrorJoin
     hero Why am I not surprised... /// mirrortouch
-    stubborn It was in our way and now it's not. That's all that matters. /// mirrortouch
+    stubborn It was in our way, and now it's not. That's all that matters. /// mirrortouch
 jumpto stairsStart
 
 // "Stairs" //
@@ -164,7 +164,7 @@ label sureStairs
 p Dead certain. Everything inside of me screams for it.
 label stairsCommentJoin
     hunted We need to get closer. She needs to see us to give chase. /// checkvoice
-    stubborn This is getting us nowhere. /// checkvoice-skeptic
+    stubborn This is getting us *nowhere.* /// checkvoice-skeptic
         skeptic Agreed. We'll have to go down there. /// checkvoice
 
 // Basement //
@@ -188,16 +188,16 @@ hunted She's bubbling hot with rage. We can't get close if we want to live. But 
 n I know I said this earlier, but I really have to stress how thin of a razor's edge you're on right now.
 hero We know.
 hunted The only way out is through the eye of the needle.
-stubborn And we're going to win.
+stubborn And we're going to WIN.
 hunted We'll need the steel claw. Grab it as we leave.
 
 label skepticBasementNoBlade
 skeptic Good. You don't even have to goad her. She's doing it all herself. Let her break those chains, and then run. Lead her out of here. She'll chase us without a second thought.
 label skepticBasementIntervene
 n You know what? I should have tried to intervene earlier, because I can't let you do that, I won't -- /// interrupt
-stubborn Tough shit. We're the ones in control here.
+stubborn TOUGH SHIT. We're the ones in control here.
 n That's not -- th -- *Grumbling noises.*
-stubborn Yeah, doesn't feel nice to be yanked around against your will, does it?
+stubborn Yeah, doesn't feel NICE to be yanked around against your will, DOES it?
     jumpto basementStartBladeJoin /// hasblade
 
 label basementStartBlade
@@ -261,7 +261,7 @@ jumpto escapeHunted
 
 label chaseNoBlade
     hunted Steel claw. Now. /// noblade checkvoice
-    stubborn You sure we don't want a weapon? /// noblade checkvoice-skeptic
+    stubborn You SURE we don't want a weapon? /// noblade checkvoice-skeptic
         skeptic We don't have time! We just have to get her outside, that's what matters. /// noblade checkvoice
         n You're making a mistake. /// noblade checkvoice-skeptic
 
@@ -278,9 +278,9 @@ n Your body pulls taut as her hand wraps around your arm.
 n Before you can even try to pull away, she slams you into the wall, your head bouncing dangerously off the hard stone.
 hero Shit.
 skeptic We had a plan. We should have stuck to it.
-    stubborn It's fine! We can still take her. /// hasblade
+    stubborn It's fine! We can STILL take her. /// hasblade
         hero How?! /// hasblade
-        stubborn One cut at a time. /// hasblade
+        stubborn One. Cut. At a time. /// hasblade
 p Why does this feel so empty? Why does it feel so wrong?
 quietcreep
 p This isn't how things are supposed to go. This is so cold... and disappointing...
@@ -297,16 +297,16 @@ truth But the impact doesn't come. Nor will it ever. It's time for you to leave.
 label huntedChaseLeave
 n You continue towards the door, vulnerable and unarmed.
 n No. I can't let this happen! I *can't* let her leave with you!
-stubborn And what are you going to do to stop that?
+stubborn And what are *you* going to do to stop that?
 n I -- I... don't know! *Er...* Y-You try the door and, oh! What a *relief,* haha! It -- it's stuck.
-stubborn Bash it open!
+stubborn BASH IT OPEN!
 n Please. You *can't!*
 p I think you forgot something...
 n You feel the burning pain of something long and sharp driving through your back. It slices its way into your organs, until finally it exits out the other side, sticking into the wood of the door with an echoing thunk.
 quietcreep
 hero She killed us with our own weapon. Great.
 hunted We needed to take it...
-stubborn We're not dead yet. It's not over 'til we can't get up again!
+stubborn We're not dead yet. It's not over 'til we CAN'T GET UP AGAIN!
 p Coward. All of this is so wrong! This isn't how things are supposed to be. This is so cold and disappointing...
 n Your body pinned to the door, you crane your neck to see her final approach. She is enveloped in complete lethality, and there's nothing you can do to stop her.
 hero See you all next time.
@@ -324,12 +324,12 @@ p So you do want to fight me. Good.
 label escapeHunted
 hero We're almost there.
 hunted Don't think about almost. We're there when we're there.
-stubborn And we'll take the fight with us.
+stubborn AND WE'LL TAKE THE FIGHT WITH US.
 
 label skepticChaseLeave
 n You continue to the door. It'd be a real shame if it were stuck.
 skeptic Don't listen to him.
-stubborn Locks are nothing, just barrel through.
+stubborn Locks are nothing, just BARREL THROUGH.
 n *No!*
 
 label choiceDie
@@ -342,7 +342,7 @@ label combatStart
 n Your skin hums tight with adrenaline as you burst through the cabin door and roll onto the grass.
 n You glance back at the cabin as the Princess, singular in her desire to destroy you, explodes through the doorway. You are walking a dangerous path. If you waver once, it's all over, so get it right.
 p There's nothing left to slow me down. Do you think this is better for you? Do you think this space gives you an edge? Then show me! Show me that you've been worth all the room you've taken up in my head!
-stubborn Do it!
+stubborn DO IT!
 hunted Be swift. Strike true. Be where she's not. Let your body move you.
 
 label freeCombat
@@ -379,8 +379,9 @@ n You just might. But don't let it get to your head. Not until it's over.
 p Yes, finally! This is the hole I've felt in my heart! This is what I've needed! This is what I've been missing! This is how it always needed to end! Both of us, giving it our all. Beating and bleeding each other to death.
 n The two of you engage in a devastating flurry of blows, each of you wounding the other again and again.
 n She's stronger, but you're faster, and the deeper the both of you fall into your lethal dance, the more your edge shines over hers. She's slowing down. Blood pouring from wounds, splattering at her feet, leaving her weak and unsteady.
-stubborn More! Keep going, we can't stop now.
+stubborn MORE! Keep going, we CAN'T STOP NOW!
 n You spy an opening. But this time she's waiting for you. She lets you sink the blade deep, trapping you in place long enough to wrap you in her impenetrable arms. You're slammed to the ground.
+stubborn NOTHING! These blows are NOTHING TO US!
 quietcreep
 n But her gambit wasn't enough to close the gap. It wasn't enough to kill you. She stares you down, coughing up a splash of blood as she gasps for breath.
 p Hah. You've outplayed me, haven't you?
@@ -428,7 +429,7 @@ truth You do not get the chance to respond, nor will you ever. It's time to leav
 
 // "Failed fight" ending; claim the Eye of the Needle //
 label basementSlay
-stubborn Change of plans, boys!
+stubborn CHANGE OF PLANS, BOYS!
     hunted Impatient! This is her home, not ours. You're going to let her kill us. /// checkvoice-hunted
     skeptic I thought we were on the same page! I can't believe you'd give up the game so easy. /// checkvoice
 n You charge headlong into the Princess, blade flashing in the dim light of the basement.
@@ -451,7 +452,7 @@ truth But the other side doesn't come. Nor will it ever. It's time for you to le
 // Abort the vessel //
 
 label abort
-stubborn Coward! Deserter!
+stubborn *Coward!* Deserter!
     hunted Turning our back to her? Could be a mistake... /// checkvoice
     skeptic I suppose that's another variable that's worth testing... /// checkvoice
 n Are you serious?! Fine. You walk away from the the cabin. We'll see how that goes for you.

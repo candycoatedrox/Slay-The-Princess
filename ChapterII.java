@@ -13,13 +13,17 @@ public class ChapterII extends StandardCycle {
     private boolean sharedLoop = false;
     private boolean sharedLoopInsist = false;
     private boolean threwBlade = false;
-    private boolean forestSpecial = false;
     private boolean skipHillDialogue = false;
 
     // Variables that persist from Chapter 1
     private final boolean droppedBlade1; // Used in Adversary
     private final boolean whatWouldYouDo; // Used in Damsel
     private final boolean rescuePath; // Used in Witch
+
+    // Variables used in specific chapters
+    private boolean forestSpecial = false;
+    private int forestAskCount; // Used in Adversary
+    private int princessAskCount; // Used in Adversary
 
     // Variables that persist in Chapter 3
     private boolean abandoned2 = false;
@@ -323,6 +327,7 @@ public class ChapterII extends StandardCycle {
             switch (activeOutcome) {
                 case "dejaVu":
                     this.sharedLoop = true;
+                    this.forestAskCount += 1;
                     shared.set();
                     canAssume.set(false);
                     if (this.ch2Voice == Voice.BROKEN) shareDied = true;
@@ -331,12 +336,14 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "dejaVu2":
+                    this.forestAskCount += 1;
                     canAssume.set();
                     secondaryScript.runSection("dejaVu2");
                     break;
 
                 case "happened":
                     this.sharedLoop = true;
+                    this.forestAskCount += 1;
                     shared.set();
                     if (this.ch2Voice == Voice.BROKEN) shareDied = true;
                     secondaryScript.runSection("happened");
@@ -345,6 +352,7 @@ public class ChapterII extends StandardCycle {
 
                 case "no":
                     this.sharedLoop = true;
+                    this.forestAskCount += 1;
                     shared.set();
                     if (this.ch2Voice == Voice.BROKEN) shareDied = true;
                     secondaryScript.runSection("no");
@@ -353,6 +361,7 @@ public class ChapterII extends StandardCycle {
 
                 case "died":
                     this.sharedLoop = true;
+                    this.forestAskCount += 1;
                     shared.set();
                     shareDied = true;
                     secondaryScript.runSection("died");
@@ -392,6 +401,7 @@ public class ChapterII extends StandardCycle {
 
                 case "slewHer":
                     this.sharedLoop = true;
+                    this.forestAskCount += 1;
                     shared.set();
                     secondaryScript.runSection("slewHer");
                     mainScript.runSection();
@@ -523,6 +533,7 @@ public class ChapterII extends StandardCycle {
      */
     private void ch2IntroAssumeTruth(boolean youDied, boolean princessDied, boolean shareDied) {
         this.sharedLoopInsist = true;
+        this.forestAskCount += 1;
         secondaryScript.runConditionalSection("assume", shareDied);
 
         switch (this.activeChapter) {
@@ -563,6 +574,7 @@ public class ChapterII extends StandardCycle {
      * @return 0 if the player returns to the dialogue menu normally; 1 if the player proceeds to the cabin via a command; 2 if the player attempts to leave via a command
      */
     private int ch2IntroAskPrincess(Condition pessimismComment) {
+        this.forestAskCount += 1;
         secondaryScript.runSection("askPrincess");
 
         String tipsText = "";
@@ -630,7 +642,6 @@ public class ChapterII extends StandardCycle {
                 break;
         }
 
-        int askCount = 0;
         boolean pleadLeave = false; // Used in Nightmare
         OptionsMenu askMenu = new OptionsMenu();
         askMenu.add(new Option(this.manager, "teleport", "(Explore) If anything, the world ended *after* I slew her. When I tried to leave, everything was gone.", this.activeChapter == Chapter.SPECTRE));
@@ -652,17 +663,19 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "tips":
-                    askCount += 1;
+                    this.princessAskCount += 1;
                     secondaryScript.runSection("princessTips");
 
-                    if (this.activeChapter == Chapter.ADVERSARY && askCount == 2) {
+                    if (this.activeChapter == Chapter.RAZOR) {
+                        mainScript.runSection("princessTips");
+                    } else if (this.activeChapter == Chapter.ADVERSARY && this.princessAskCount == 2) {
                         mainScript.runSection("princessImpatient");
                     }
 
                     break;
 
                 case "howDanger":
-                    askCount += 1;
+                    this.princessAskCount += 1;
                     askMenu.setCondition("quote", false);
 
                     if (this.activeChapter == Chapter.RAZOR) {
@@ -673,9 +686,7 @@ public class ChapterII extends StandardCycle {
                         secondaryScript.runSection("princessHowDanger");
                     }
 
-                    if (this.activeChapter == Chapter.ADVERSARY && askCount == 2) {
-                        mainScript.runSection("princessImpatient");
-                    } else if (this.activeChapter == Chapter.DAMSEL) {
+                    if (this.activeChapter == Chapter.DAMSEL) {
                         mainScript.runSection("princessHowDanger");
                     } else if (this.activeChapter == Chapter.TOWER && !pessimismComment.check()) {
                         pessimismComment.set();
@@ -696,17 +707,19 @@ public class ChapterII extends StandardCycle {
                                 mainScript.runSection("princessIgnorePockets");
                                 break;
                         }
+                    } else if (this.activeChapter == Chapter.ADVERSARY && this.princessAskCount == 2) {
+                        mainScript.runSection("princessImpatient");
                     }
 
                     break;
 
                 case "quote":
-                    askCount += 1;
+                    this.princessAskCount += 1;
                     askMenu.setCondition("howDanger", false);
                     
                     secondaryScript.runSection("princessQuote");
 
-                    if (this.activeChapter == Chapter.ADVERSARY && askCount == 2) {
+                    if (this.activeChapter == Chapter.ADVERSARY && this.princessAskCount == 2) {
                         mainScript.runSection("princessImpatient");
                     } else if (this.activeChapter == Chapter.TOWER && !pessimismComment.check()) {
                         pessimismComment.set();
@@ -716,10 +729,10 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "basement":
-                    askCount += 1;
+                    this.princessAskCount += 1;
                     secondaryScript.runSection("princessBasement");
 
-                    if (this.activeChapter == Chapter.ADVERSARY && askCount == 2) {
+                    if (this.activeChapter == Chapter.ADVERSARY && this.princessAskCount == 2) {
                         mainScript.runSection("princessImpatient");
                     }
 
@@ -727,9 +740,9 @@ public class ChapterII extends StandardCycle {
 
                 case "whyMe":
                     this.forestSpecial = true;
-                    askCount += 1;
+                    this.princessAskCount += 1;
 
-                    if (this.activeChapter == Chapter.ADVERSARY && askCount == 2) {
+                    if (this.activeChapter == Chapter.ADVERSARY && this.princessAskCount == 2) {
                         mainScript.runSection("princessImpatient");
                     }
                     
@@ -831,9 +844,9 @@ public class ChapterII extends StandardCycle {
                     this.giveDefaultFailResponse(outcome);
             }
 
-            if (askCount == 1) {
+            if (this.princessAskCount == 1) {
                 askMenu.setDisplay("return", "That's all.");
-            } else if (askCount == 2) {
+            } else if (this.princessAskCount == 2) {
                 askMenu.setCondition("cagey", true);
             }
         }
@@ -991,7 +1004,7 @@ public class ChapterII extends StandardCycle {
                 break;
         }
         
-        mainScript.runSection("askMirrorStart");
+        mainScript.runConditionalSection("askMirrorStart", this.forestAskCount >= 2 || this.princessAskCount >= 2); // Condition only matters in Adversary
 
         OptionsMenu mirrorMenu = new OptionsMenu();
         mirrorMenu.add(new Option(this.manager, "careLie", "I care about whether I'm being lied to.", defaultCareLie));
@@ -1144,7 +1157,7 @@ public class ChapterII extends StandardCycle {
             return ChapterEnding.ABORTED;   
         }
 
-        mainScript.runSection("cabinIntro");
+        mainScript.runConditionalSection("cabinIntro", this.forestAskCount >= 2 || this.princessAskCount >= 2);
 
         Condition canAskMirror = new Condition(true);
         Condition canApproach = new Condition(true);
@@ -1906,6 +1919,7 @@ public class ChapterII extends StandardCycle {
             }
         }
 
+        mainScript.runSection("directEndStart");
         if (fromOpening) {
             mainScript.runConditionalSection("directEndStartFromOpening", cantDieThought);
 
@@ -3395,7 +3409,7 @@ public class ChapterII extends StandardCycle {
                     
                 case "thoughts":
                     if (this.isHarsh) thoughtsHarsh.set();
-                    mainScript.runConditionalSection("thoughtsMenu", possessionAsk);
+                    mainScript.runSection("thoughtsMenu");
                     break;
                     
                 case "worldEndA":

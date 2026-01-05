@@ -11,11 +11,11 @@ n No, I'm quite alright, but if all of you would take a moment to settle down, t
 hero Is it about the Princess? We already know all about the Princess.
 n No! I mean yes. It's about the Princess, but whatever you think I'm going to say, it's probably not that.
 hero Look, fine. Just out with it already, yeah? But if I hear the words "you're here to slay her" or "if you don't, it will be the end of the world" you'll have lost speaking privileges.
-broken You two are just wasting your time. It's all going to end when we open that cabin door, which means it's already all over. What's the point of dawdling when the end is already written?
+broken You two are just wasting your time. It's all going to end when we open that cabin door, which means... it's *already* all over`. What's the point of dawdling when the end is already written?
 n Okay, that nonsense he's going on about? That's what we need to talk about. You've been here before. Obviously.
 n Whatever you did before gave her far too much power. So you've got to cut it out, get to that cabin, and slay her before things get any more out of hand.
 para Are... are our *thoughts* doing that? Make her small, make her small, make her small, make her small... Sh-shit! What if I'm doing it wrong? Wh-what if I'm making her even stronger?!
-broken We've built a new god, and she is limitless.
+broken We've built a new god`, and she is limitless.
 n Do you hear those two with their runaway thoughts? I'm only giving you the sliver of information I'm giving you now, because things are already deep in the shitter. This was my last card to play, and it looks like it's already made things worse. So hurry. Cabin. Now.
 
 label contrarianStart
@@ -29,9 +29,9 @@ contra Feels like the numbers getting thrown around here are too big not to be..
 hero Numbers like... five?
 contra Numbers like entire realities. At the end of the day it's all just silly, isn't it? None of us can count to a whole reality, and he's asking us to think about the difference between three and five.
 n *Sigh.* You're already starting to lose the thread. Just because you can't personally sum up the contents of an entire reality doesn't mean that the people inhabiting it don't contain moral value. If you have any sense of ethics left in there, if you have any moral compass... please. You have to stop her.
-broken Don't you get it? Might makes right. And she didn't even have to touch us last time to prove her power.
+broken Don't you get it`? Might makes right. And she didn't even have to *touch* us last time to prove her power.
 contra So what! Just because she made us kill ourselves, we're supposed to submit to her authority without question?
-broken I knew when to surrender to our better. You would have lost eventually anyway, and it would only have made her angry! It would only have made things worse for *all* of us.
+broken I knew when to surrender to our better`. You would have lost eventually anyway, and it would only have made her angry`! It would only have made things worse for *all* of us.
 n Oh for the love of -- can you all please just get on with it? You're not making this any easier for yourselves.
 hero Do we even have agency right now? We either do what she wants, or we do what He wants. Either way, we're listening to somebody.
 contra Please! Nothing in life is a binary. Obviously we find a *third* choice that *nobody* wants!
@@ -54,7 +54,7 @@ label genericWoods
 n But a great and horrible change is already underway. The ground quakes beneath your feet, and you feel an unyielding force pulling at you and your surroundings. The "trees" start to sway, then crumble, breaking apart as everything is drawn towards the cabin.
 label hillDialogue
 n Even the earth beneath you seems to shift, your feet unable to grip solid ground as you're dragged forward along with everything else.
-broken The end of everything... the beginning of something new. The moment we open that door, she will be free.
+broken The end of everything... the beginning of something new. The moment we open that door, she will be *free.*
     para Stop believing everything you hear! We just have to get our thoughts in order. We just have to think *straight!* /// checkvoice
 hero Any, uh... words of warning?
 n You already know everything you need to know.
@@ -83,19 +83,19 @@ hero Can it be a bit of both? I'd be lying if I said I wasn't a just a *little* 
 p Are you so awestruck by my glory that you cannot bear to look at me? I. Think. Not.
 n As you fall, a great force pulls at the back of your neck, violently yanking you away from whatever lack of destination you were headed towards.
 p Now witness me!
-broken Yes, your grace.
+broken Yes`, your grace.
 n She turns you to face her. The scruff of your neck is held firmly between two giant fingers.
 hero So much for running away.
 p I forgive you your transgressions. But my destiny is inescapable.
 contra She's... right, we don't even have a weapon. *Sigh.* It's over, isn't it?
-broken And yet, she still extends her mercy. We should do as she says. Why are you all resisting in the first place?
+broken And yet, she still extends her mercy`. We should do as she says! Why are you all resisting in the first place?
 
 // Fight her with the Voice of the Contrarian //
 
 label contraFightStart
 n With a grim determination, you yank the blade from the trunk.
 contra Yeah! This feels right! She doesn't get to just smugly stand over us like we don't matter. *Let's take her down a peg.*
-broken You're not going to win. You know that, right? What are you going to do with that tiny blade? Give her a scratch?
+broken You're not going to win`. You know that, right? What are you going to do with that tiny blade`? Give her a scratch?
 hero Even if that's all we manage, I'd rather go down swinging.
 contra See how everything's floating around her? I bet we could make it if we just jumped *really hard.*
 n You gather yourself, closing your eyes and shutting out the towering vision of the Princess. There is only her, and you. That's all there ever was.
@@ -109,18 +109,18 @@ n With a heavy thump, you land on her chest.
 hero It's now or never. We've come this far, let's take it home.
 
 n You strike, but her skin is like steel. Though you stab at her again and again, the wounds are superficial, mere etchings in a sprawling surface.
-broken You see? It was always pointless. All this has done is bring us close to her... and how *beautiful* it is, to be *so close...!*
+broken You see`? It was always pointless`. All this has done is bring us close to her... and how *beautiful* it is, to be *so close...!*
 hero It's not pointless, it *can't* be. We wouldn't *be* here if there wasn't some hope we could succeed.
 p Is that all?
 n The Princess plucks you from her chest, pinching the scruff of your neck delicately between two fingers as she brings you to eye level.
 p I forgive you your transgressions. But my destiny is inescapable.
 contra She thinks she's *so much -- BETTER* than us! There has to be *something* else we can do, we're *not* going out like this.
-broken She offered us forgiveness. You would turn down such an incredible gift? You would turn away from her glory for something as petty as pride?
+broken She offered us forgiveness`. You would turn down such an incredible gift? You would turn away from her glory for something as *petty* as pride?
 
 // "Something to Remember You By" ending; claim the Apotheosis //
 contra Yes. *YES!* Let's give her something to remember us by.
 n You concentrate your will to a fine point, and hurl your blade at the Princess's eye. It flies through the night sky and...
-broken And then nothing. She could *never* be harmed by -- /// interrupt
+broken And then nothing`. She could *never* be harmed by -- /// interrupt
 linebreak
 p AHHHHHHHHHHHHHHHHHH!
 n It pierces her cornea.
@@ -150,7 +150,7 @@ truth Silence as you approach. The voices all have burned away.
 
 label paraFightStart
 hero Yeah. Screw all of this. I'm with you. A real god wouldn't need us as part of her plan.
-broken You'll never make it to her, and even if you do, what could you *possibly* hope to accomplish...?
+broken You'll never make it to her`, and even if you do, what could you *possibly* hope to accomplish...?
 hero We'll do what we were always supposed to. We'll take this blade and we'll sink it into her heart.
 para Look at the way everything's being flung around her! If we just... *throw* ourselves in her direction... I don't know. ... Maybe it'll work! If our thoughts are what give her power... maybe it can cut both ways!! Hahahahahahaha!! *Maybe* we can do whatever we *want* to do! Maybe *none* of this is real!
 n With a forceful tug, you yank the blade out from the tree.
@@ -161,7 +161,7 @@ n You launch yourself towards the Princess. You can feel the pull of her gravity
 p Even now, you defy me. Do it, then. Show me what you think it takes to end what's destined to end everything.
 hero Yeah. Do it. Show her.
 
-broken You're not going to win. You know that, right? What are you even going to *do* with that tiny knife? Give her a scratch?
+broken You're not going to win. You know that, right`? What are you even going to *do* with that tiny knife`? Give her a scratch?
 para Hahahahahahaha! You still don't get it, do you?! We can be whatever we want to be! Nothing is *real!* It all might as well... just be a dream!
 hero Are you okay?
 para Of course -- I'm not okay! I've *never* been okay! But maybe I *needed* to never be okay for us to make this HAPPEN!
@@ -171,7 +171,7 @@ p Huh. How unexpected.
 linebreak
 n As the blow lands, the entire world shakes. The outline of the Princess disappears into a storm of dust and debris.
 hero Could we have done that the whole time?!
-broken It was a fluke -- I'm sure. An accident, that's all!
+broken It was a fluke -- I'm sure. A-an accident, that's all!
 hero It won't be a fluke if we do it again.
 linebreak
 n As the dust settles, the form of the Princess comes back into view. Her skin and vestments are lightly scuffed, but her body is whole, and her face is full of self-righteous fury.
@@ -184,20 +184,20 @@ n The world around her stills. The debris stops in place, and the air is calm an
 p You walk a razor's edge. It won't be long before you slip.
 linebreak
 n And then, in an instant, it all comes at you. You are pelted with stone after massive stone, even the pebbles slicing through you like bullets. You cannot hope to so much as move as the bombardment continues, your body being destroyed bit by bit, crushed under the mass of wood and rock.
-broken It's *over.* You had your moment, I'll give you that, but that's all it was. Hope it was worth it.
+broken It's *over.`* You had your moment, I'll give you that`, but that's all it was`. Hope it was worth it.
 hero Enough with the "yous"! Whether you like it or not, you're a part of us. Hell, whether *I* like it or not, you're a part of us. *That* was your moment, too, and we can have another if we all work together. She's not your "perfect goddess." Just look at what she's doing to *you,* her *most loyal servant!*
 broken This... isn't very nice... but, we did make her angry, isn't it what we deserve...?!
 para Who deserves something like this? *She* wants her freedom at the expense of *ours,* and she's willing to destroy us *over and over again* if it helps her! What kind of god DOES that?! Stop DELUDING yourself! If we're going to make this work, all of us NEED to see the truth!
-broken But... I *love* her.
+broken But`.`.`. I *love* her.
 n And she doesn't love you. She doesn't even know you exist. You are just a tiny part of an obstacle, and she is currently in the process of destroying said obstacle. So I suggest you snap out of it now while you still can.
 
 n All at once, the pressure breaks. You burst through a mountain of debris and straight for the Princess's heart. As you soar towards her the eyes on her vestments open wide, the light of their gaze slowing your pursuit as more and more matter continues to assail you.
-broken But... it's not enough to stop us, is it? We're going to make it to her.
+broken But... it's not enough to stop us`, is it`? We're going to make it to her.
 n You are. As you draw near, you extend your blade, readying a powerful strike. It sings through the air.
 n And is met with a barrier of light. You remain frozen in midair, the two of you unblinking, waiting to see who breaks first.
 hero And then we *win...* right?
 para That's what -- SHOULD happen! Why isn't it happening?! Did we do something wrong?! Were all these -- powerful, heroic thoughts not enough?!
-broken I believe! I *believe* in us! Isn't that *enough?*
+broken I believe`! I *believe* in us`! Isn't that *enough?*
 para Unless... we got the rules wrong... I'm sorry. I think I messed this up...
 
 label paraFightDream
@@ -233,7 +233,7 @@ p The flame may be snuffed, but the wall remains. This isn't just for my glory. 
 linebreak
 truth Her grip tightens, and somehow, you feel it. The pain sits at the limits of your comprehension. Like an endless sea of hands falling on you one after another after another before finally collapsing in on themselves. You lose yourself in the darkness.
 linebreak
-broken She's hurting us again! I've never hurt like this before...!
+broken She's hurting us again`! I've never hurt like this before...!
 hero She isn't even -- *touching* us. How can she hurt us without *touching* us...?
 para Unless... all of this is us! No. No, we *can't* be this. But it feels like she's -- ripping us apart!
 
@@ -248,7 +248,7 @@ linebreak
 truth You are a wave of tendrils racing against themselves and down the shape of an arm. You snap around it.
 linebreak
 p AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!
-broken But that isn't enough, is it? We can show her more... we can show her *what she's done to us!* We can make her understand. We can make her feel *what we've felt.*
+broken But that isn't enough, is it? We can show her more... we can show her what she's DONE TO US. We can make her understand. We can make her feel what WE'VE FELT.
 truth Your awareness shifts between undulating fibers of nothingness that is somehow outside of your body, but part of it. Time yields to feeling.
 truth You wrap around wrist, ankle, neck, and pull from her heart the whole of her experience, and in return, she pulls from your heart the whole of yours.
 truth So much of her is empty bluster. Boasts muttered first in quiet to give an empty life a sense of meaning, and then the same boasts wrapped in a bow of true belief.
@@ -273,7 +273,7 @@ label submitStart
     contra All right. Spiting Him it is! /// checkvoice
         n You don't know what you're doing! /// checkvoice-contra
         contra That's half the fun! /// checkvoice
-    broken This was our only real choice. Even the ground itself kneels to her. /// checkvoice-para
+    broken This was our only real choice`. Even the ground itself kneels to her. /// checkvoice-para
         para It was all turned to dust so *easily!* Is it even *real?* /// checkvoice
 p Fill the empty seat by my side. Join me for a new dawn.
 n You fool. You can feel the pull of her gravity catch you, carrying you from the ground into the violent swirl of her orbit.
@@ -292,18 +292,18 @@ hero Is it the end? We're still here.
 linebreak
 truth The night sky unweaves into a textured nothingness. He does not respond.
 linebreak
-    broken Everything is gone but us and her. This is her power. This is where we're meant to be. /// checkvoice-contra
+    broken Everything is gone but us and her`. This is her power`. This is where we're meant to be. /// checkvoice-contra
         hero He's really gone? Huh. That's... unexpected. But He would have said something by now if He *were* still here, right? /// checkvoice-contra
         contra Yeah. Never knew when to shut up, that one. It's part of why I liked Him so much! I can't believe all it took to make Him disappear was saying "no" *once.* /// checkvoice
     para There's nothing left but us and her. Even the dust is gone. The prying fingers were *Him.* They were all Him and now he's *gone.* /// checkvoice
-        broken She's the answer to our questions. She always has been. He tried to blind you all... but she broke through His lies. As she always would. /// checkvoice-para
+        broken She's the answer to our questions. She always has been`. He tried to blind you all`.`.`. but she broke through His lies`. As she always would. /// checkvoice-para
 hero ... What happens now?
     para Even though the whole world's turned to nothing, *we* still exist! And if *we're* real, then there must be something *else* that's real! Something that's been hidden from us. We have to find it. /// checkvoice
 p This world is but an illusion keeping us from my ascension. A play of shadows dancing on the wall.
     para *Yes...!* She understands! /// checkvoice
 truth The Princess reaches forward into the textured nothing and buries her fingers in its divine flesh. Her touch is soft.
 p The flame may be snuffed, but the wall remains. This isn't just for my glory. You are a part of this now.
-broken See? This is *nice.* We're *safe.* She's helping us. She's helping *everyone.*
+broken See`? This is *nice.`* We're *safe.`* She's helping us`. She's helping *everyone.*
 linebreak
 truth Her grip tightens, and somehow, you feel it. The pain sits at the limits of your comprehension. Like an endless sea of hands falling on you one after another after another before finally collapsing in on themselves. You lose yourself in the darkness.
 
@@ -316,9 +316,9 @@ linebreak
 truth The textured nothing is ripped open, and with it, you are ripped open. Amid a sea of dissociative pain, you can feel everything that is you pouring out into the ether. And you feel something else, too. Anger. A need to lash out and hurt that which is hurting you.
 linebreak
 hero Yes... hurt her! Do something, *anything* to make. It. Stop!
-broken *No!* If suffering is what she demands of us, suffering is what we'll give! Why would I doubt our god?
+broken *No!* If suffering is what she demands of us, suffering is what we'll give`! Why would I doubt our god?
     contra It is so, *so* tempting to see what's on the other side of that... great big nothing, but I think I'm going to LOSE myself if this goes on for much longer... why do *we* have to be the ones going through all this pain while she gets all the benefits?! /// checkvoice
-        broken BLASPHEMER. We have been given the gift of offering ourselves to a higher purpose, and you *spit in its face.* /// checkvoice-contra
+        broken BLASPHEMER`. We have been given the gift of offering ourselves to a higher purpose, and you *spit in its face.* /// checkvoice-contra
     para We can endure this. It's all... just words and ideas. We're only *telling* ourselves it's painful, it doesn't *have* to hurt if we don't. Think. It should! /// checkvoice
 
     para *ARGH!* Who am I kidding?! It's not going to stop unless we *make it stop.* We *have* to make it stop! /// checkvoice
@@ -343,7 +343,7 @@ p We could have had everything, if only you had given me a little more. We could
     para We... we made this prison. And... I don't think... we can *un*make it. /// checkvoice
 linebreak
 truth The hole mends shut. As it closes, the tendrils loose their grip, freeing the Princess as they retreat.
-broken It's... gone. No... no! How do we get it back? Can we try again? We'll suffer so much better if we get to try again, I-I promise!
+broken It's... gone`. No... *no!* How do we get it back? Can we try again? We'll suffer so much better if we get to try again, I-I promise!
 p It's so cold here. If this wasn't enough... then what is?
 claim tendrilsEnd
 
@@ -385,14 +385,14 @@ truth You look down. At the Princess's feet writhes a shifting mound, a mass of 
 p NO!
 truth The mound becomes a sea, and the Princess struggles to stay afloat, to keep the two of you close to the hole in the world and the light of the something beautiful beyond. But she is drowning.
 truth As the sea rises, she pulls you from her shoulder and holds you above the tide. You turn back to look at her.
-broken We have to be able to do something to *help* her! This can't be how it ends, it *can't!* It can't it can't it *can't!*
+broken We have to be able to do something to *help* her`! This can't be how it ends, it *can't!* It can't it can't it *can't!*
 p I think... this is the end. I can feel every part of me freezing over.
 truth Hands reach over hands, pulling at her face. Dragging her down into their frigid depths. She is tired, and life fades from her eyes.
 p You have been the only thing I've ever known to show me grace. I am sorry if I have not shown you the same.
 linebreak
 truth The Princess summons the last of her strength, her face a shield of purpose and determination. In her final act, she hurls you towards the hole in the world, towards the something beautiful beyond.
 p Fly, little bird.
-broken No, *no!* I don't *want* to be somewhere she isn't! It would always be dark without her...!
+broken No`, *no!* I don't *want* to be somewhere she isn't`! It would always be dark without her...!
 hero It's what she wants for us. But... can we make it?
     contra Of course we can, we can do whatever we want. And I... believe in her. /// checkvoice
     para Yeah. We just have to believe, and everything is going to be okay. /// checkvoice

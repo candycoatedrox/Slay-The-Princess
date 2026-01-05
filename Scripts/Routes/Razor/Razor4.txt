@@ -5,8 +5,8 @@ bladeswitch start
 label startBlade
 hunted Everything feels like it finally fits, doesn't it? We're up here which is different, and different is good. And our steel claw is already in our hand.
 contra Oho! What if we throw it out the window?
-stubborn Over my dead body.
-broken That wouldn't be very hard. We've died a lot. But I can't say I mind anymore.
+stubborn OVER MY DEAD BODY.
+broken That won't be very hard. We've died a lot`. But I can't say I mind anymore.
 smitten Besides, what better way to die so very many times than at the sharp hands of a beautiful woman.
 skeptic I'm sure I can think of a better way to die.
 cold Eh, they're all the same, really.
@@ -18,7 +18,7 @@ label startNoBlade
 hunted No steel claw though.
 contra Was tossing it the only thing we've done that was permanent? That's a sick joke, universe. A sick, sick joke.
 skeptic If it's gone for good, then maybe we never actually needed it.
-stubborn That's what I've been telling you all. We can do this without it. We're tougher than steel.
+stubborn That's what I've been TELLING you all! We can do this WITHOUT it. We're TOUGHER THAN STEEL.
 para Yeah. Mind over matter.
 smitten Who needs violence when you have love?
 cold Who needs love when you've mastered yourself?
@@ -26,19 +26,19 @@ broken Who needs anything when we don't matter?
 oppo Well, boys? Are we ready?
 label startJoin
 n There are entirely too many of you. How many times have you been here?! This isn't good, this is -- /// interrupt
-cheated How about you stick to describing things, and we'll stick to doing them?
+cheated How about you stick to *describing* things, and we'll stick to doing 'em?
 bladeswitch stubbornStart
 
 label stubbornStartBlade
-stubborn Yeah. Leave it to the pros. We'll notch up that win in no time.
+stubborn YEAH. Leave it to the pros. We'll notch up that win in NO TIME.
 jumpto startJoin2
 
 label stubbornStartNoBlade
-stubborn Yeah. Leave it to the pros.
+stubborn YEAH. Leave it to the pros.
 label startJoin2
 smitten Narrator! We heroically stride through the door and towards our destined final encounter with our star-crossed lover!
 n Fine by me. You walk to the door and onto the basement stairs, only -- /// interrupt
-cheated It's more of a slide? We know.
+hero It's more of a slide? We know.
 n Fine. I'll just shut up and speed this whole thing along.
 n ... Are you sure you don't want me to describe the stairs? Or this room? Or anything? It feels like I'm hardly a part of this.
 bladeswitch stairs
@@ -71,7 +71,7 @@ n She becomes a wave of blood and viscera, pieces of her splattering against the
 p Are you ready for what comes next?
 hero Holy *shit!*
 smitten She's... gorgeous! Absolutely divine!
-stubborn Yes! Behold, the perfect woman!
+stubborn YES! BEHOLD, THE *PERFECT WOMAN.*
 contra Do you think we can throw *her* out the window?
 cold That looked... painful.
 skeptic How is she still alive?
@@ -79,8 +79,8 @@ hunted Heart's still beating. That's all she needs.
 para This is fake! This is all fake! That's all! Just made up!
     oppo She doesn't even have a back anymore. How are we supposed to stab her in it? /// hasblade
     oppo I'd say we bow down to her right now if that had ever even slightly worked for us. /// noblade
-broken This is all just a sick joke. I hate existing.
-cheated We're screwed. I quit! I'm done! Forget it!
+broken This is all just a sick joke. I *hate* existing.
+cheated We're SCREWED. I-I quit! I'm DONE! FORGET it!
 linebreak
 truth They begin to talk over one another. Their arguments go in circles, never leading anywhere, and all the while the noise builds until it is nearly unbearable. You can barely even hear yourself think.
 

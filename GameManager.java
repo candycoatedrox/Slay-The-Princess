@@ -1482,11 +1482,11 @@ public class GameManager {
     public void toggleNowPlaying() {
         if (this.showNowPlaying) {
             this.showNowPlaying = false;
-            settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications ON.]");
+            settingsMenu.setDisplay("nowPlaying", "[Turn soundtrack notifications ON.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been disabled.]");
         } else {
             this.showNowPlaying = true;
-            settingsMenu.setDisplay("now playing", "[Turn soundtrack notifications OFF.]");
+            settingsMenu.setDisplay("nowPlaying", "[Turn soundtrack notifications OFF.]");
             IOHandler.wrapPrintln("[Soundtrack notifications have been enabled.]");
         }
     }
@@ -1497,11 +1497,11 @@ public class GameManager {
     public void toggleSlowPrint() {
         if (this.globalSlowPrint) {
             this.globalSlowPrint = false;
-            settingsMenu.setDisplay("slow print", "[Set print speed to SLOW.]");
+            settingsMenu.setDisplay("slowPrint", "[Set print speed to SLOW.]");
             IOHandler.wrapPrintln("[Slow printing has been disabled.]");
         } else {
             this.globalSlowPrint = true;
-            settingsMenu.setDisplay("slow print", "[Set print speed to INSTANT.]");
+            settingsMenu.setDisplay("slowPrint", "[Set print speed to INSTANT.]");
             IOHandler.wrapPrintln("[Slow printing has been enabled.]");
         }
     }
@@ -1512,11 +1512,11 @@ public class GameManager {
     public void toggleAutoAdvance() {
         if (this.autoAdvance) {
             this.autoAdvance = false;
-            settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue ON.]");
+            settingsMenu.setDisplay("autoAdvance", "[Turn auto-advancing dialogue ON.]");
             IOHandler.wrapPrintln("[Dialogue will now automatically advance.]");
         } else {
             this.autoAdvance = true;
-            settingsMenu.setDisplay("auto advance", "[Turn auto-advancing dialogue OFF.]");
+            settingsMenu.setDisplay("autoAdvance", "[Turn auto-advancing dialogue OFF.]");
             IOHandler.wrapPrintln("[Dialogue will no longer automatically advance.]");
             IOHandler.wrapPrintln("[Press enter to advance dialogue.]");
         }

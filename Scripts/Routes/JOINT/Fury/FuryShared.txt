@@ -4,7 +4,7 @@ n You're on a path in the woods, and at the end of the path -- okay, what the *h
 broken *Continued sobbing.*
 hero I think he's upset.
 stubborn And what's he got to be upset about? We just killed a GOD!
-broken Exactly! You heathens destroyed the most beautiful thing that ever was and ever will be.
+broken Exactly`! You *heathens* destroyed the most beautiful thing that ever was and ever will be.
 hero I can't say I have much sympathy for you. She was bad for us, and you almost got us killed.
 stubborn You're being too generous. He DID get us killed.
 n All right, enough chatter. I've got a *thing* I'm supposed to do, and if you don't mind, I'd like to do it without any more *interruptions.*
@@ -17,14 +17,14 @@ n You're on a path in the woods, and at the end of that path -- /// interrupt
 voice3switch Start
 
 label coldStart
-cold I think I've heard this one before. Does it involve a Princess? Are you trying to get us to do your dirty work?
+cold I think I've heard this one before`. Does it involve a Princess`? Are you trying to get us to do your dirty work?
 n ... Yes. So you've been here before. And died here before.
 hero ... Yeah... twice.
 stubborn And it's going to be a lot MORE than that if we don't SUCK IT UP and actually FIGHT HER this time.
 n You didn't fight her.
-cold She wanted a rematch, and we wanted to see what would happen if we didn't give it to her. She got so very, very angry with us, and you got so very angry with us, too. It was amusing.
+cold She wanted a rematch`, and we wanted to see what would happen if we didn't give it to her`. She got so very`, very angry with us`, and you got so very angry with us, too`. It was amusing.
 hero I'm sorry, you thought that was *amusing?* I thought we were breaking a cycle of violence! I thought we were practicing pacifism in the face of mortal peril! I thought we were being *brave.* Heroic, even.
-cold Oh, you're funny. There's no such thing as heroism when you can never truly die. All we did was look at the same old thing from another angle.
+cold Oh, you're funny`. There's no such thing as heroism when you can never truly die`. All we did was look at the same old thing from another angle.
 stubborn Oh, will BOTH of you just SHUT UP?
 n *Sigh.* As we've now established, you've already been here, and based on your behavior, I think we can all agree that things are not going well.
 n Look. You're nearing the point of no return. Whatever happens next, that's it, there won't be anymore "do-overs," so you'd better take things seriously.
@@ -44,21 +44,21 @@ jumpto startJoin
 
 label brokenStart
     stubborn ALL RIGHT! Change of plans. NO more hesitation. No more DYING. We're taking the fight STRAIGHT TO HER. /// ifsource-pathetic
-        broken If we had a chance against her, we already missed it, didn't we? She got stronger, and we stayed the same. /// ifsource-pathetic
+        broken If we had a chance against her, we already missed it, didn't we`? She got stronger`, and we stayed the same. /// ifsource-pathetic
     stubborn ALL RIGHT! Change of plans. NO more hesitation. No more DYING. We're taking the fight STRAIGHT TO HER. /// tookblade
-        broken If we had a chance against her, we already missed it, didn't we? She got stronger, and we stayed the same. /// tookblade
+        broken If we had a chance against her, we already missed it, didn't we`? She got stronger`, and we stayed the same. /// tookblade
     stubborn All right! Change of plans. We're taking the blade this time, and we're *not hiding upstairs.* /// ifsource-upstairs leftblade
-        broken Who cares about the blade? If we had a chance against her, we already missed it, didn't we? She got stronger, and we stayed the same. /// ifsource-upstairs leftblade
+        broken Who cares about the blade? If we had a chance against her, we already missed it, didn't we`? She got stronger`, and we stayed the same. /// ifsource-upstairs leftblade
 stubborn We've seen her bleed. Whatever she is, she started out mortal, which means she probably is still mortal, which means we can WIN. We just didn't take things seriously enough last time.
-broken If that's what you want, then fine. Enjoy being beaten to death again and again and again.
+broken If that's what you want, then fine`. Enjoy being beaten to death again and again and again.
 jumpto startJoin
 
 label startJoin
 n Well this is just great. *Sigh.* Let me cut to the chase. Clearly you've already been here.
 hero Yeah, you think?
     contra What does "here" even mean, though? You've told us about the path and the Princess and all of that already, but this is a very different path than the last one. /// checkvoice
-    broken Actually, I don't think we have been here. /// checkvoice
-        broken This is all different, isn't it? /// checkvoice
+    broken A-actually, I don't think we *have* been here. /// checkvoice
+        broken This is all... different`, isn't it? /// checkvoice
 hero That's a good point. Everything here is a little... off.
 label startLateJoin
 n *Sigh.* Look. If the world around you is changing, especially all the way out here, then that means you're nearing the point of no return. Whatever happens next, that's it, there won't be anymore "do-overs," so you'd better take things seriously.
@@ -70,14 +70,14 @@ hero Yeah! You *stabbed* us last time. *Repeatedly.*
 broken It didn't even work. It doesn't count.
 stubborn WE DIED!
 hero If *you* didn't submit to her, for all we know, that wouldn't have happened!
-broken It's the punishment you all deserved for not listening to me. To *her.*
+broken It's the punishment you all deserved for not listening to me`. To *her.*
 hero Aside from our sulking friend, I don't think you have much to worry about. You're still the one in charge here, and I don't think that's ever going to change.
 stubborn The SECOND he tries something, I'll put a stop to it.
 
 label coldPulledWoods
-cold I've never made you do anything you didn't want to do yourself. It'll be interesting to see what's happened to her. She was so fiery last time... I wonder if we've managed to douse that flame.
+cold I've never made you do anything you didn't want to do yourself`. It'll be interesting to see what's happened to her`. She was so fiery last time... I wonder if we've managed to douse that flame.
 stubborn YOU'D BETTER HOPE NOT. I LIKED her spark.
-cold "Hope not?" Is that some kind of threat? What could you possibly do to me?
+cold "Hope not?`" Is that some kind of threat`? What could you possibly do to me?
 stubborn Wouldn't YOU like to find out, you chilly little FREAK!
 hero Come on, let's not fight. We've done enough of that already.
 
@@ -96,9 +96,9 @@ hero Yeah, but is there something... *after* the end?
 n How am I supposed to know? The end means finality. It's not like I can just peek on over to the other side and tell you what it's like there. If there even is a there.
     contra Isn't it your job to know things? Maybe we need a better Narrator who can actually answer our questions... /// checkvoice
         n It's my job to guide you through your task and to state the facts of what's happening. That hardly requires *omniscience,* and besides, I'm the best you're going to get, because I'm the only one here who can do my job. /// checkvoice-contra
-    cold We've seen the "other side," and if you'd really like to know, there's nothing there. A pause. A breath. And then we're back in the woods again. /// checkvoice
+    cold We've seen the "other side,`" and if you'd really like to know`, there's nothing there`. A pause`. A breath`. And then we're back in the woods again. /// checkvoice
         n Good for you. But *your* opinion on the matter doesn't count. /// checkvoice-cold
-        cold How convenient. As soon as you get an answer to life's great mysteries, it doesn't count. /// checkvoice
+        cold How convenient`. As soon as you get an answer to life's great mysteries`, it doesn't count. /// checkvoice
         n *Sigh.* Moving on. /// checkvoice-cold
     stubborn It doesn't MATTER, because we're going to WIN. /// checkvoice-broken
         n Now that's exactly the sort of mindset I like to see. Don't let yourself be consumed with self-doubt. Don't flirt with oblivion. Just focus on the present, and everything will be absolutely fine. /// checkvoice-broken
@@ -112,7 +112,7 @@ n It isn't long before you find yourself at the end of the path, staring up at t
 hero That's it? No final words of advice?
 n I'd rather not waste any more time. I'm sure that... any advice I'd give at this point is something you've already heard.
     contra Don't be so hard on yourself. We all wind up in creative ruts now and then. I'm sure if you put your mind to it you could think of something worth telling us. /// checkvoice
-    broken If there's still a Princess at the cabin, m-maybe we can salvage things. Maybe if we just grovel and apologize things can go back to how they were before...! /// ifsource-tower
+    broken If there's still a Princess at the cabin, m-maybe we can salvage things`. Maybe if we just grovel and apologize things can go back to how they were before...! /// ifsource-tower
         stubborn Oh, cut it out, will you? We need to be TOUGH right now, and you're making it SO MUCH HARDER than it has to be. So stop. WHINING. /// ifsource-tower
     stubborn That's fine by me. Let's get moving, I'm itching for a rematch. /// ifsourcenot-tower checknovoice-contra
 
@@ -124,7 +124,7 @@ n But that is how it was. Now, there is a growth that has overtaken it. A viscou
 hero That's horrible.
     broken You did this. /// ifsource-tower
     contra I think it's kind of nice. Makes the room feel *alive,* doesn't it? /// checkvoice
-    cold It's just meat. If you cut us open, I'm sure we'd look the same inside. /// checkvoice
+    cold It's just meat`. If you cut us open`, I'm sure we'd look the same inside. /// checkvoice
         hero That's *why* it's horrible. /// checkvoice-cold
         cold And that attitude is why you're miserable. /// checkvoice
     stubborn It doesn't matter. /// checkvoice-broken ifsourcenot-tower
@@ -144,7 +144,7 @@ label mirrorAsk
             n What? /// nomirrorask checkvoice-contra
             hero There's *clearly* a mirror. /// nomirrorask checkvoice-contra
         stubborn Just TELL US WHERE THE DOOR IS. I'd like to get back to FIGHTING, and if you want us to KILL her so bad I'm SURE you feel the same. No more messing around. /// nomirrorask checknovoice-contra
-            cold Oh, you're so impatient. We can look around the meat shack if we want to. It's not like the Princess will be leaving without us. /// checkvoice
+            cold Oh, you're so impatient`. We can look around the meat shack if we want to`. It's not like the Princess will be leaving without us. /// checkvoice
 n *Sigh.* I don't know what to tell you! There isn't a mirror, because I would *know* if there was a mirror. You're either seeing things or you're confused on the definitions of "door" and "mirror." Or you're seeing things. That seems *far* more likely.
 stubborn What are you trying to say, exactly?
     broken He thinks we've lost it. That we're succumbing to madness. That something in us has... broken. /// checkvoice
@@ -205,13 +205,13 @@ label approachMirror
             hero The mirror. /// nomirrortouch checkfalse
             n What are you talking about? You're standing in front of a door. Whatever non-door thing you think you're looking at, it isn't real, because if it were real, I'd know about it. /// nomirrortouch checkfalse
             hero But it has to be real. It's right there! /// nomirrortouch checkfalse
-    broken Smash it. Smash it to pieces. It's the *only* thing *keeping* us from Her! /// ifsource-tower
+    broken Smash it`. Smash it to pieces. It's the *only* thing *keeping* us from Her! /// ifsource-tower
         hero Don't you want to know what we'll see in there? We won't be able to see anything if we smash it. /// ifsource-tower
         stubborn Nah, I'm with him on this one. SMASH IT! LET'S GET VIOLENT ALREADY! /// ifsource-tower
     contra Does it matter if it's actually real or not? Talking about it gets under His skin, and that's all that matters. We should talk about it even more! /// checkvoice
     stubborn Let's just SMASH it and get it OVER with! I'm ready to get VIOLENT. /// ifsourcenot-tower
         hero We won't be able to see what's in there if we smash it... /// ifsourcenot-tower
-    cold It's just a mirror. What we do with it doesn't really matter. /// checkvoice
+    cold It's just a mirror`. What we do with it doesn't really matter. /// checkvoice
 n Do whatever you want with it. The mirror isn't real, so how you handle it doesn't matter aside from wasting dangerous amounts of time.
 
 label wipeMirror
@@ -243,7 +243,7 @@ p See how you've soured my once divine melody.
 broken She's so... *angry* with us...! Why... *why* did you desecrate her? Why couldn't I *stop* you?
 hero You've got to stop thinking about her like that, it isn't doing *anyone* any good.
 stubborn She's not some untouchable God, she's an abomination, and we're going to put an end to her ONCE AND FOR ALL.
-broken Whatever she is now is *our fault.* If she's an abomination, then what does that make us?
+broken Whatever she is now is *our fault.`* If she's an abomination, then what does that make us?
     hero She was going to end the *world* last time! /// knowledge
     stubborn It doesn't MATTER what we are. She needs slaying, and we've got the means to do it, so LET'S GET A MOVE ON. /// noknowledge
 n If I might interject, you didn't make her into an abomination. She's always been what she is. It's why you're here, and it's why your task is so important.
@@ -254,8 +254,8 @@ label pacifismStairs
 p So you've returned after denying me the salvation of combat? Are you here to gloat? Are you here to mock what I've become?
 p Do you think that if you let me kill you enough times, I'll suddenly soften and repent for sins that live solely in your head?
 p Well, we've tried that, haven't we? Now come down and see what your refusal has done to me. See how much you can bear to witness the consequences of your actions.
-    cold Oh. We've changed her, have we? I'm intrigued. /// checkvoice
-    broken It cuts both ways. We've both hurt each other. /// checkvoice
+    cold *Oh.`* We've changed her, have we`? I'm intrigued. /// checkvoice
+    broken It cuts both ways`. We've both hurt each other. /// checkvoice
 
 label unarmedStairs
 p So you've returned. Do you intend to weakly claw your fingers across my skin? Or have you finally decided to try and kill me properly?
@@ -267,7 +267,7 @@ p And so you've returned. Do you intend to cower and hide again? Or have you fin
 p I think you'll find it won't be so simple. I've... changed. The way your body broke and bled against the walls of this temple... it woke something in me.
 label stairsJoin
     contra Do you hear that? Sounds like we *got* to her last time. Let's keep pushing, see what else we can make happen. /// checkvoice
-    broken It cuts both ways. We've both hurt each other. /// checkvoice
+    broken It cuts both ways`. We've both hurt each other. /// checkvoice
 
 // Basement //
 
@@ -276,7 +276,7 @@ n You make your way to the bottom of the stairs.
 linebreak
 n The chamber's walls are painted in blood, a deep sickening red that drips down in clotted streams onto the charred corpses that make up its floor. This place reeks of torment, of ripped skin and burning bone.
 n The Princess stands in its center, muscles flayed and bare and weeping, draped in a tattered dress of her own skin. Her heart beats from its place in her open chest.
-    broken She's been... hollowed out. Just like us. /// checkvoice ifsourcenot-tower
+    broken She's been... hollowed out`. Just like us. /// checkvoice ifsourcenot-tower
 p Do you know what I'm going to do to you?
 n There's not so much a moment of hesitation before she steps forward. Her chains pull taut, holding fast as she strains against them. The cuff around her wrist digs deeper into her skin. Blood drips from the place where metal meets flesh.
 n And then, with a nauseating sound, the skin tears. It plops to the ground, and she pulls her red, glistening arm free from her bindings.
@@ -284,12 +284,12 @@ n She is loose, and she is coming for you.
 stringautojump BasementStart
 
 label towerBasementStart
-broken Let her end it. It's the punishment you all deserve for what you did to her. It's the punishment *I* deserve for letting it happen...
+broken Let her end it. It's the punishment you all deserve for what you did to her`. It's the punishment *I* deserve for letting it happen...
 stubborn Screw that! We can WIN. We've done it before and we'll do it again, only THIS time, we'll make it out the other side. Hell, she's practically done most of the work FOR us!
 jumpto basementStartJoin
 
 label coldBasementStart
-cold I like this one. Let's see her do her worst. Let's see if she can make us actually feel something.
+cold I like this one`. Let's see her do her worst`. Let's see if she can make us actually feel something.
 hero Uh... whatever she wants to make us feel, I think it's going to be *bad.*
 cold But bad is so much more interesting than numb.
 stubborn Gah! Stop it with all this talk about FEELINGS. The only FEELING that matters is the RUSH OF VICTORY.
@@ -301,7 +301,7 @@ stubborn That's right. No fear. She's bigger than the last time but she's pullin
 jumpto basementStartJoin
 
 label brokenBasementStart
-broken She's only trying to connect with us. Wouldn't you want to dig for a spark once you lost it? To try to reignite something, even if it hurts?
+broken She's only trying to connect with us`. Wouldn't you want to dig for a spark once you lost it`? To try to reignite something, even if it hurts?
 label basementStartJoin
     hero We don't even have a weapon. /// noblade
         stubborn It doesn't matter. I refuse to go out any way that isn't KICKING AND SCREAMING. /// noblade
@@ -361,12 +361,12 @@ stringautojump UnwoundStart
 // Cold or Broken (Adversary) //
 
 label coldUnwoundStart
-cold Huh. It's like I said. Our insides do look like the cabin. In the end, we're all just meat.
+cold Huh`. It's like I said`. Our insides do look like the cabin`. In the end`, we're all just meat.
 stubborn "In the end?" Just because she's ripped us open doesn't mean this is over.
 hero How is it *not* over?
 p Don't think that I'll allow you death here. I've made that mistake before. No. You will suffer until you see in me what I have seen in you.
 n That's how. It would seem, somehow, that she is keeping you alive.
-cold A challenge, then. Sure. Let's see how far we can take this.
+cold A challenge, then`. Sure`. Let's see how far we can take this.
 
 label brokenUnwoundStart
 broken This is the only way it could have gone, really.
@@ -383,12 +383,12 @@ p It's better that way. Words get us nowhere.
 jumpto coldBrokenJoin
 
 label dieColdBroken
-    broken Yes. I think that would be for the best. /// checkvoice
+    broken Yes`. I think that would be for the best. /// checkvoice
 hero Can we even *do* that? Is death the sort of thing we can just... decide to do?
 n *Sigh.* You do your best to die, but try though you might, you find yourself... unable to perish.
 stubborn GOOD. Because we're NOT a QUITTER.
 n Yes, hopefully this means there's still a chance for the world here.
-    broken Don't you get it? It's too late. We've both changed too much. We're not the challenge she wants anymore. The spark is gone. /// checkvoice
+    broken Don't you get it? It's too late. We've both changed too much`. We're not the challenge she wants anymore`. The spark is gone. /// checkvoice
 p I can feel you attempting to slip away. Is that what you want, then? Are you so terrified of my desires that you'd prefer any escape at all? Are you so terrified of me that you prefer death to my company?
 label silentColdBroken
 p At least you're quiet now. At least you haven't fallen back on words.
@@ -494,11 +494,11 @@ truth You do not get the chance to watch her die. Nor will you ever. It's time f
 // Broken (Tower) //
 
 label towerUnwoundStart
-broken You should all just be grateful she's decided to keep us alive. Even in her defilement she is merciful.
+broken You should all just be grateful she's decided to keep us alive`. Even in her defilement she is merciful.
 stubborn WE'RE NOT OUT FOR THE COUNT JUST YET.
     break /// hasblade
 hero But we didn't even bring a weapon!
-broken Yes. Because we knew it was *over.*
+broken Yes`. Because we knew it was *over.*
 p No weapon this time... it's almost as if you were planning on dying here. As if I'd grant you such a mercy. No, we're going to make this last forever.
 p Let's see how deep we need to dig to find the defiant little spark of your soul. This will hurt you.
 
@@ -521,7 +521,7 @@ jumpto towerFinalTalk
 
 label insidesTower
 stubborn Oh, yes, because BEGGING is going to help with THIS one.
-broken It's better than the alternative. She's in control here. Without her mercy, there's nothing we can do.
+broken It's better than the alternative`. She's in control here`. Without her mercy, there's nothing we can do.
 hero I don't think she wants to give us *mercy.*
 p I didn't think I'd see you begging so quickly. How pathetic. In another life, I might have even thought it was adorable. But all it does now is fill me with contempt.
 jumpto towerFinalTalk
@@ -543,7 +543,7 @@ label towerFinalTalk
 broken Just submit already...! What is there left for us to *do...?*
 
 label submitTower
-broken Yes. It *is* hopeless. This is what we *deserve.*
+broken Yes`. It *is* hopeless. This is what we *deserve.*
 stubborn PATHETIC. I can't BELIEVE we have to share a body.
 p Let's see how deep we need to dig to find the defiant little spark of your soul. This will hurt you.
 
@@ -556,7 +556,7 @@ n As you swing for her heart, what's left of you... explodes.
 
 label quantumStartJoin
 hero So that's it? It's over? Just... like that?
-broken Of course it's over. It's *been* over since the very first moment we laid eyes on her...
+broken Of course it's over`. It's *been* over since the very first moment we laid eyes on her...
 p This is the final note of your discordant melody. You will not return again, because you will live in that single tone forever.
 stubborn No. NO! It's NOT over! We're a GOD KILLER! We've returned from DEATH ITSELF *TWICE.*
 broken Didn't you hear her? We're not dead.
@@ -573,7 +573,7 @@ stubborn We're BETTER THAN HER! You made things happen last time. So MAKE THEM H
 
 label worseQuantumStart
 stubborn Who said anything about getting to a new cabin? NO. We make something new, *HERE.*
-broken It won't matter if you do. She'll just pull us apart again...
+broken It won't matter if you do`. She'll just pull us apart again...
 stubborn And PREFERABLY, we make something without *HIM.*
 
 label quantumStartSlayAttempt
@@ -634,18 +634,18 @@ n Y-yes, o-of course. Pristine blade grasped firmly in your hands, you fly towar
 hero We might actually do it this time!
 p I can feel that body of yours slicing through the air. How many more times will I have to scatter you?
 n As she turns towards you, the very essence of your being begins to flake away, your muscles, then organs, then nerves laid bare and screaming as the rest of you is stripped of substance.
-cold Oh, boo hoo. It's just a body.
+cold Oh, boo hoo`. It's just a body.
 stubborn IT JUST NEEDS TO LAST LONG ENOUGH TO *SINK THIS BLADE INTO HER HEART.*
 n But it doesn't last. You are disintegrated. Everything goes dark -- /// interrupt
 linebreak
 truth But there is no you to die.
 p How many times do I need to pulverize you before you finally understand. You are nothing! An empty void that dared to dream it was alive!
 quietcreep
-cold That feels... *right.*
+cold That feels`.`.`. *right.*
 stubborn *IF WE'RE NOTHING, THEN WHY ARE WE STILL HERE?!*
 cold Because we always have been.
 hero If we're nothing, then how can we do anything?
-cold The same way we always have. Being nothing has never stopped us. Now end this. End *her.*
+cold The same way we always have`. Being nothing has never stopped us`. Now end this`. End *her.*
 p You cannot win if you cannot be!
 
 // "Quantum Beak" ending; claim the Fury //
@@ -654,10 +654,10 @@ truth A force races towards the Princess' exposed heart. Threads of texture pull
 p How?! I've scattered the atoms you clung to and there was nothing there to find! You can't exist!
 truth The threads pierce her heart and cradle her spirit.
 stubborn IT'S OVER.
-p Oh. I think I understand you now. I'm sorry. I didn't mean to do the things I did to you. I... don't think I knew what I was doing.
+p Oh`. I think I understand you now`. I'm sorry`. I didn't mean to do the things I did to you. I... don't think I knew what I was doing.
 hero She sounds genuine.
 cold They always do in the end.
-p It's cold. But... I'm going to be okay, right?
+p It's... cold. But... I'm going to be okay`, right?
 claim genericEnd
 
 // She continues to unwind you (Thirty-Trillion Cells) //
@@ -672,9 +672,9 @@ p ARE YOU STILL THERE? ARE YOU STILL YOU?
 n Then two are peeled away. Then four.
 stubborn This is nothing. NOTHING!
 n Eight. Sixteen. Thirty-two. Sixty-four.
-    cold Ah, so the waiting is the torture. I do hate dull things. /// checkvoice
+    cold Ah, so the waiting is the torture`. I do hate dull things. /// checkvoice
     broken Whatever is... happening to us, it's happening... faster. /// ifsource-tower
-    broken Whatever she does to us, we shouldn't hate her. She's been hurt so badly. /// checkvoice ifsourcenot-tower
+    broken Whatever she does to us, we shouldn't hate her`. She's been hurt so badly. /// checkvoice ifsourcenot-tower
     contra Oh, is this a waiting game now? ... I *hate* waiting games. /// checkvoice
 n One-hundred-and-twenty-eight. Two-hundred-and-fifty-six. Five-hundred-and-twelve.
 p ARE YOU STILL THERE? ARE YOU STILL YOU?
@@ -686,10 +686,10 @@ n Sixteen-thousand-three-hundred-eighty-four. Thirty-two-thousand-seven-hundred-
 stubborn You can't just COUNT us into oblivion!
 n One-hundred-thirty-one-thousand-seventy-two. Two-hundred-sixty-two-thousand-one-hundred-forty-four. Five-hundred-twenty-four-thousand-two-hundred-eighty-eight.
 hero What happens when it gets higher? Like... *really* higher?
-    cold We die, probably. /// checkvoice
+    cold We die`, probably. /// checkvoice
         stubborn Or NOTHING HAPPENS! Just like nothing is happening now. /// checkvoice-cold
     stubborn NOTHING. Just like nothing's happening now. /// checkvoice-broken
-        broken But something *is* happening now. Something in us is... liquifying. Something that started small, but that keeps getting *bigger.* /// checkvoice
+        broken But something *is* happening now`. Something in us is... liquifying`. Something that started small, but that keeps getting *bigger.* /// checkvoice
     contra I dunno. They'll probably get even higher! There's a lot of numbers out there.
 linebreak
 n One-million-forty-eight-thousand. The hundreds don't matter anymore.
@@ -697,23 +697,23 @@ p ARE YOU STILL THERE? ARE YOU STILL YOU?
 n Two-million-ninety-six-thousand. Four-million-one-hundred-ninety-two-thousand. Eight-million-three-hundred-eighty-four-thousand.
 hero I don't like this... waiting.
     cold You're going to give up before you even start hurting, aren't you? /// checkvoice
-    broken Waiting for something to happen. But it's taking *so long.* /// checkvoice
+    broken Waiting for something to happen`. But it's taking *so long.* /// checkvoice
     contra Yeah... I'm out. /// checkvoice
 n Sixteen-million-seven-hundred-sixty-eight-thousand. Thirty-three-million-five-hundred-thirty-six-thousand. Sixty-seven-million-seventy-two-thousand. Your eyes are useless. One-hundred-thirty-four-million. The thousands don't matter anymore. Your blood begins to go places it shouldn't.
 p ARE YOU STILL THERE? ARE YOU STILL YOU?
 stubborn There's the pain, I can feel it now. But we can HANDLE this. We CAN'T LET HER WIN!
-    cold If you make this about winning and losing, you're going to lose. You're too connected to your body. /// checkvoice
-    broken We can't handle anything. We're at her mercy. /// ifsource-tower
-    broken Fighting the pain is just the same as wallowing in it. This doesn't have to be something where you win or lose. We just have to accept it. *Listen* to it. /// checkvoice ifsourcenot-tower
+    cold If you make this about winning and losing`, you're going to lose`. You're too connected to your body. /// checkvoice
+    broken We can't handle anything`. We're at her mercy. /// ifsource-tower
+    broken Fighting the pain is just the same as wallowing in it`. This doesn't have to be something where you win or lose`. We just have to accept it`. *Listen* to it. /// checkvoice ifsourcenot-tower
 linebreak
 n Two-hundred-sixty-eight-million. We don't need to count anymore. Your lungs fill with liquid. You smell things you shouldn't. You choke on pieces of what used to be you.
 stubborn Doesn't matter! Because WE'RE STILL ALIVE!
 n You are deconstructed. You are reconstructed. A square you. A round you. A you with too many legs. A you with many mouths which won't stop screaming. Then all of it pressed into a ball, tightly packed into the size of a fist.
 hero What does "you" even mean anymore? We just keep changing into horrible things we can't control -- make it stop. *Please,* make it stop. *Please make it stop.*
     stubborn "You" means we EXIST! And if we exist, then there has to be a way for us to win. Otherwise this would just be POINTLESS! It would ALL just be... POINTLESS TORTURE! /// checknovoice-broken
-        cold Yes. She's *torturing* us. That's the whole point of this exchange. Haven't you been paying attention? /// checkvoice-cold
+        cold Yes. She's *torturing* us. That's the whole point of this exchange`. Haven't you been paying attention? /// checkvoice-cold
     stubborn "You" means we EXIST! There HAS to still be a way for us to win. Otherwise this would be POINTLESS and all this torture would be for NOTHING. /// checkvoice-broken
-        broken You're right about one thing. It *is* torture. But it isn't pointless. The whole point *is* that it's torture. /// checkvoice
+        broken You're right about one thing`. It *is* torture`. But it isn't pointless`. The whole point *is* that it's torture. /// checkvoice
 p ARE YOU STILL THERE? ARE YOU STILL YOU?
     broken ... no. /// ifsource-tower
 
@@ -727,7 +727,7 @@ p ARE YOU STILL THERE...? ARE YOU STILL YOU?
     cold *Sigh.* /// checkvoice
 stubborn Yes.
 n You are stretched into a line, twelve feet long. Then twenty-four. Then forty-eight. The line gets thinner as you get longer. A mile. Two. Four. Eight.
-p ARE YOU STILL THERE...? ARE YOU STILL YOU?
+p ARE YOU STILL THERE...`? ARE YOU STILL YOU?
 stubborn ... Yes.
 n Sixteen. Thirty-two.
 stubborn ...
@@ -750,10 +750,10 @@ n You are whole again, and in your body—the same body you arrived in. The Prin
 
     p We're so different. How could I ever hope for you to understand me? /// ifsource-tower
     p If only you could see what I see. If only you could remember what I remember. If only you weren't so weak. /// ifsourcenot-tower
-        p If only I could make you better. But... maybe I can. /// ifsourcenot-tower
+        p If only I could make you better`. But... maybe I can. /// ifsourcenot-tower
 n She stands, arms outstretched, neck craned, gaze transfixed on something unseen above you both.
     p But perhaps there is a way to grant you understanding. Perhaps there is a way to make myself whole once more. /// ifsource-tower
-    p This will all be worth it. It has to be. /// ifsourcenot-tower
+    p This will all be worth it`. It has to be. /// ifsourcenot-tower
 linebreak
 n You are unwound again.
 n But it's different this time. Nothing slithers into your cells. You can feel something changing inside of you, but you see her changing, too.
@@ -778,15 +778,15 @@ truth The tethers that started to form between you have snapped. Your union has 
 
 label cellsSurvive
 n One hundred-and-twenty-eight.
-    cold I'm still here. I'm still "me." /// checkvoice
+    cold I'm still here`. I'm still "me." /// checkvoice
     broken I'm still here. /// checkvoice
 linebreak
 n You are stretched and stretched and stretched, until you are longer than the world itself. You wrap around it again and again and again. A tense line of microcosmic tissue, held together by forces that are far too weak for the task they've been given.
-p ARE YOU... STILL THERE? ARE YOU STILL *YOU...?*
+p ARE YOU STILL THERE...`? ARE YOU STILL *YOU...?*
     cold Do I have to keep answering? /// checkvoice
-    broken I'm going to stick around. As long as you need me to. /// checkvoice
+    broken I'm going to stick around`. As long as you need me to. /// checkvoice
 n And then the forces disappear. The bonds holding your cells together break. You are a thirty-trillion little pieces, all of them separate, and all of them falling.
-p Are you still there? ... Are you still you?
+p Are you still there`? ... Are you still you?
 n You sit in these thirty-trillion places, each second passing in each of them before you arrive at the next. Each second passing as one million years.
 n And so you wait.
 linebreak
@@ -795,38 +795,38 @@ linebreak
 n And then, all at once, there is a great rewinding, and all of the disparate pieces that once were you fall dutifully back into place.
 n You are whole again, and in your body—the body you had before all of this happened—and the Princess sits against the wall, her dress of skin more tattered than before, her face sullen and disappointed.
 p You left me. And there's nothing I can do to bring you back.
-    cold Oh...! She's been like me this whole time. She's just been... hiding it. /// checkvoice
-    broken She's just like us. A piece of her is missing. /// checkvoice
+    cold Oh`.`.`.`! She's been like me this whole time`. She's just been... hiding it. /// checkvoice
+    broken She's just like us`. A piece of her is missing. /// checkvoice
 
 label hereSurvive
 p So you are. And yet I still feel so alone.
 
 label openSurvive
-p There *is* no world outside of us. And there *is* no us.
+p There *is* no world outside of us`. And there *is* no us.
 
 label careSurvive
-p How? It's... all I've known.
+p How`? It's... all I've known.
 
 label moreSurvive
-p How? Violence and pain are... all I've known.
+p How`? Violence and pain are... all I've known.
 
 label noFightSurvive
-p Oh... all this time I thought I understood something about you. But I didn't. Now what?
+p Oh... all this time I thought I understood something about you`. But I didn't`. Now what?
 
 label upToYouSurvive
 p Then here I stay.
 
 label goalSurvive
-p I don't know. I just wanted something back. Something that was missing. I don't really know what it is, I just know that it's still gone.
+p I don't know. I just wanted something back`. Something that was missing`. I don't really know what it is, I just know that it's still gone.
 
 label offSurvive
-p Different... I am, yes. We were doing... all that for such a long time, I'm... tired now.
+p Different... I am`, yes`. We were doing... all that for such a long time, I'm... tired now.
 
 label awfulSurvive
 p Hah. So I did do something to you, after all.
 
 label allSurvive
-p Yes. I think I'm finished now. There's nothing more for me to do to you.
+p Yes. I think I'm finished now`. There's nothing more for me to do to you.
 
 label leaveTellSurvive
 p Alone?
@@ -848,22 +848,22 @@ n Are you serious? You're just offering her your hand?
 n *Sigh.* You cross the room towards the Princess, extending your hand to her.
 n Her eyes, deep wells of buried sorrow, meet yours for a moment. You despicable fiend.
 n And then she takes your hand in hers. You're going to end the world, don't you *get it?* I can't let that happen, I can't let you *leave,* I have to -- /// interrupt
-    cold You have to what? Stop us? /// checkvoice
+    cold You have to what`? Stop us? /// checkvoice
         n You leave me no other choice. /// checkvoice-cold
         cold You are nothing but a witness. /// checkvoice
-    broken You can't stop us. We've been through enough. You don't scare us. /// checkvoice
+    broken You can't stop us`. We've been through enough`. You don't scare us`. /// checkvoice
 n I... I... fine. You and the Princess climb the stairs out of the basement together, in silence.
-    cold No embellishments? No flowery text describing what kind of silence we share? You've really given up, haven't you? /// checkvoice
-    broken It's okay. We're almost there. /// checkvoice
+    cold No embellishments? No flowery text describing what kind of silence we share`? You've really given up`, haven't you? /// checkvoice
+    broken It's okay`. We're almost there. /// checkvoice
 n I'm tired.
-    cold What a shame, but you should really keep going. You have a job to do, don't you? /// checkvoice
+    cold What a shame`, but you should really keep going`. You have a job to do`, don't you? /// checkvoice
     broken I know. /// checkvoice
 n *Sigh.* And then you cross the upstairs of the cabin, to the door, which you open.
 quietcreep
 n And then you step outside and into the ruins of the world you left...
-    cold ... Behind? So He's gone, too. It's just you and me now. /// checkvoice
-    broken ... Behind. He's gone, too. It's just the three of us now. /// checkvoice
-p Is this... the world? It's so... cold.
+    cold ... Behind`? So He's gone, too`. It's just you and me now. /// checkvoice
+    broken ... Behind`. He's gone, too`. It's just the three of us now. /// checkvoice
+p Is this..`. the world`? It's so... cold.
 claim genericEnd
 
 label genericEndFirstVessel
@@ -875,7 +875,7 @@ truth You do not get the chance to respond, nor will you ever. It's time to leav
 // Leave without the Princess //
 
 label noOffer
-p And you did. Go, then.
+p And you did`. Go, then.
 jumpto abandonEnd
 
 label dunnoOffer
@@ -883,25 +883,25 @@ p I don't think either of us knows who we are.
 jumpto abandonEnd
 
 label aloneTellSurvive
-p Go, then. I'm sorry.
+p Go, then`. I'm sorry.
 
 // "Leave her behind" ending; claim the Fury //
 label abandonEnd
 n You turn back towards the stairs, putting the Princess forever out of your mind.
 p ... Alone.
-    cold Then we're done here. It's over. On to the next thing. /// checkvoice
-    broken Maybe going our separate ways is the only way things can ever get better. At least... this can be over. /// checkvoice
+    cold Then we're done here`. It's over`. On to the next thing. /// checkvoice
+    broken Maybe going our separate ways is the only way things can ever get better`. At least... this can be over. /// checkvoice
 n Over? You do know that this really doesn't *solve* anything, right?
-    cold We don't need a resolution. We've never needed one. Whatever we are, we're here, forever. /// checkvoice
+    cold We don't need a resolution`. We've never needed one`. Whatever we are`, we're here, forever. /// checkvoice
     broken It doesn't have to solve anything. /// checkvoice
 quietcreep
 n But this isn't over! She'll find a way out! If you don't turn around and finish this right now, she'll bring about the end of the entire...
-    cold And He's gone, too. It's just you and me now. /// checkvoice
-    broken And He's gone, too. It's just you and me now. /// checkvoice
+    cold And He's gone, too`. It's just you and me now. /// checkvoice
+    broken And He's gone, too`. It's just you and me now. /// checkvoice
 linebreak
 truth As you climb to the top of the stairs, you realize that there is no top of the stairs to reach. At least not anymore.
 truth Her voice quietly whispers from behind you.
-p I feel so cold. Is it because you're gone?
+p I feel so cold`. Is it because you're gone?
 claim abandonEnd
 
 label abandonEndFirstVessel
@@ -918,8 +918,8 @@ n Right! The blade! After all of that, it's still here waiting for you. You pick
 n The Princess doesn't look up as you cross the room.
 n Nor does she look up as you bury the weapon in her heart...
 quietcreep
-p Huh. I felt that. It's cold.
-    cold Hm. I felt that too, a little. Isn't that something. /// checkvoice
+p Huh`. I felt that`. It's cold.
+    cold Hm`. I felt that too`, a little`. Isn't that something. /// checkvoice
     broken So did we. /// checkvoice
 claim slayEnd
 
@@ -935,8 +935,8 @@ label approachEnd
 truth Silence as you approach.
 
 label surviveMirror
-    cold So that's a wrap. I didn't think we'd ever get here. There's only one thing left to do. /// checkvoice
-    broken So the world's gone, and she's gone with it. There's only one thing left for you to do here. You need to look at yourself. Whatever you see, it's going to be okay. /// checkvoice
+    cold So that's a wrap`. I didn't think we'd ever get here`. There's only one thing left to do. /// checkvoice
+    broken So the world's gone, and she's gone with it`. There's only one thing left for you to do here`. You need to look at yourself`. Whatever you see`, it's going to be okay`. /// checkvoice
 
 truth The voice falls silent as you approach.
 

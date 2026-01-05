@@ -1,51 +1,51 @@
 hero If He doesn't remember what happened, then maybe it's best to keep it that way.
 n You know I can hear you, right? It's going to be a lot harder than you think to keep secrets from me.
-broken What does it matter what He knows? There's nothing we can do to stop her. She's just going to kill us again.
+broken What does it matter what He knows? There's nothing we can do to stop her`. She's just going to kill us again.
 n She is *not* going to kill you unless you let her. But slaying the Princess and saving the world is going to be much more difficult than it has to be if you spend the whole time second guessing yourself.
 
 label assume
     jumpto assumeUnharmed /// ifsource-unharmed
-broken Of course we died. She didn't feel pain. She didn't feel much of anything, did she? And she broke every bone in our body before she decided to let us die.
+broken Of course we died`. She didn't feel pain`. She didn't feel much of anything`, did she`? And she broke every bone in our body before she decided to let us die.
 jumpto assumeJoin
 
 label assumeUnharmed
 broken Of course we died. We couldn't land a *single* blow on her and she broke every bone in our body before she decided to let us die.
 label assumeJoin
-broken What were we supposed to do to stop her then? What are we supposed to do to stop her now? It's pointless.
+broken What were we supposed to do to stop her then? What are we supposed to do to stop her now`? It's *pointless.*
 n She's *just* a Princess. Slaying her shouldn't have been difficult, but congratulations. You've been given another chance to actually do this right.
 
 label assume2
-broken If she ended the entire world, why should we even bother? We might as well just walk up to that cabin, break her chains, and let her do whatever she wants. It's all the same in the end.
+broken If she ended the entire world, why should we even bother`? We might as well just walk up to that cabin, break her chains, and let her do whatever she wants`. It's all the same in the end.
 n Just because she's capable of ending the world doesn't mean that you're not capable of slaying her. Both of those things can be true at the same time. So chin up, I believe in you.
 
 label princessHowDangerPessimist
-broken We're not. We might as well just pledge ourselves to her and stop pretending that we're capable of doing anything in this situation. She probably doesn't even need to try to overpower us.
+broken We're not. We might as well just pledge ourselves to her and stop pretending that we're capable of doing anything in this situation`. She probably doesn't even need to try to overpower us.
 jumpto pessimismComment
 
 label princessQuotePessimist
-broken Or we could pledge ourselves to her and stop pretending that we're capable of doing anything in this situation. She probably doesn't even need to try to overpower us.
+broken Or we could pledge ourselves to her and stop pretending that we're capable of doing *anything* in this situation`. She probably doesn't even need to try to overpower us.
 label pessimismComment
 hero Can we tone down the pessimism just a smidge?
-broken I'm not being a pessimist. I'm just being realistic.
+broken I'm not being a pessimist`. I'm just being realistic.
 hero You're being annoying.
 n Just ignore their bickering, and whatever you do, don't "pledge yourself to her." I cannot stress enough how absolutely *catastrophic* that would be for everyone. Yourself included.
     jumpto hillDialoguePessimistJoin /// check
 
 label princessSpecial
-broken Who cares if *you* think we're special? As far as I can tell, the only thing special about us is that we get to experience painfully dying all over again.
+broken Who cares if *you* think we're special`? As far as I can tell, the only thing special about us is that we get to experience painfully dying all over again.
 
 label princessCagey
 n The less you know about her, the better.
 
 label princessCageyPessimist
-broken Even if He's hiding something, I doubt it would help us. I'm sure knowing what He knows would only make things worse.
+broken Even if He's hiding something, I doubt it would help us`. I'm sure knowing what He knows would only make things worse.
 jumpto pessimismComment
 
 // Hill dialogue //
 
 label hillDialogue
     jumpto princessHowDangerPessimist /// check
-broken Lying? Cheating? Why would she even bother? She didn't need to do anything like that last time.
+broken Lying? Cheating`? Why would she even bother? She didn't need to do anything like that last time.
 hero She caught us off-guard last time. We'll be fine. Let's just keep our wits about us.
 n At least one of you still has a shred of sense. Just make sure you listen to *him* and not that... whiner.
 
@@ -65,13 +65,13 @@ broken So much for getting out of here...
 // Cabin //
 
 label cabinIntro
-broken If that's what you want... I guess I don't have a say here.
+broken If that's what you want`.`.`. I guess I don't have a say here.
 linebreak
 nowplaying The Tower
 n The interior of the cabin is larger and more grandiose than its humble exterior would suggest. The only furniture of note is a massive marble altar with a pristine blade perched on its edge.
 n The blade is your implement. You'll need it if you want to do this right.
 hero Why do we feel so... *small?*
-broken We don't feel small. We *are* small.
+broken We don't feel small`. We *are* small.
 
 label cabinDifferent
 hero *Very* different.
@@ -86,33 +86,28 @@ label askMirror
 n That's because there isn't a mirror. There's the altar, the blade sitting on the altar, and the door to the basement. There's nothing else in here.
 
 label askMirrorStart
-broken Who cares if there's a mirror? We're all going to die anyway, and I'm sure that if we looked in there we'd just see something sad and miserable looking back at us. We don't need any reminders of what we are. It would only make things worse.
+broken Who cares if there's a mirror`? We're all going to die anyway`, and I'm sure that if we looked in there`, we'd just see something sad and miserable looking back at us`. We don't need any reminders of what we are`. It would only make things worse.
 n *Sigh.* For the last time, you're not going to die unless you let it happen. And luckily for you, there isn't a mirror, so no one needs to worry about confronting a grisly visage any time in the near future.
 n Though, for what it's worth, if there were a mirror, I'm sure that you wouldn't find anything "sad" or "miserable" in it looking back at you. You probably look perfectly normal.
 hero "Probably?" Do you not know what we look like?
-broken He knows. He just doesn't have the heart to tell us.
+broken He knows`. He just doesn't have the heart to tell us.
 
 label mirrorHandsome
-broken Please don't. I'd rather the Princess kill us again than see how dreadful we are.
+broken Please don't`. I'd rather the Princess kill us again than see how dreadful we are.
 hero I care less about what we look like and more about whether we're being lied to. If He's willing to lie about something as innocuous as a mirror, what else is He hiding from us?
 n I'm not lying to you. Use your eyes, there is no mirror. Why would I lie about something so meaningless? What good would it even do?
 
 label mirrorGone
-broken We should count ourselves lucky. Some things are better left unseen.
+broken We should count ourselves lucky`. Some things are better left unseen.
 
 // Stairs //
 
-label stairsNoBlade
-hero No blade this time? Yeah. Maybe she'll be more receptive if we're unarmed.
-broken Blade. No blade. It doesn't matter.
-linebreak
-jumpto stairsStartJoin
-
 label stairsStart
-    jumpto stairsNoBlade /// noblade
-label stairsStartJoin
+    hero No blade this time? Yeah. Maybe she'll be more receptive if we're unarmed. /// noblade
+        broken Blade`. No blade`. It doesn't matter. /// noblade
+        linebreak /// noblade
 n The door to the basement creaks open, revealing a spiral staircase, its steps almost as deep as you are tall. The smell of incense drifts up from below. For a moment, you almost feel at ease.
-broken Huh. This is actually.... kind of nice.
+broken Huh`. This is actually... kind of nice.
 n It's still a stone basement. If the Princess lives here, slaying her is probably doing her a favor.
 n Her booming voice rolls up the stairs.
 p Is that a guest I hear? Don't linger on the stairs. *Come down and witness me.*
@@ -121,7 +116,7 @@ hero You weren't kidding when you said it was "booming." She wasn't like this la
 label stairsStartNoBlade
 n You shouldn't have come down here unarmed.
 label stairsJoin
-broken We need to get down there. She wants us to see her. We... need to see her.
+broken We need to get down there`. She wants us to see her. We... need to see her.
 hero Should we be worried about your sudden change in attitude? Just a few minutes ago you were going on about how pointless everything was, now you *want* to go down there?
 n It doesn't matter what that little voice says. He's not the one making the decisions... Though if his ramblings get you to the Princess, they get you to the Princess.
 
@@ -130,7 +125,7 @@ n It doesn't matter what that little voice says. He's not the one making the dec
 label basementStart
 n Making your way down the spiral staircase is a time consuming and exhausting effort, every step requiring you to clamber over one edge before dropping to the next. But soon, the end comes into view, and you tumble to the bottom, entering the vast, temple-like room beyond.
 n The Princess towers over you, almost glowing in the weak starlight, her figure framed by a stained glass window. Her long hair billows around her, and a chain binds her wrist to the far wall.
-broken The chain is nothing to her. It might as well be a toy for all the good it would do. I told you it was pointless to resist her.
+broken The chain is nothing to her`. It might as well be a toy for all the good it would do. I told you it was pointless to resist her.
 p The little bird has returned to me. I wonder what he wants.
 bladeswitch basementStart
 
@@ -142,14 +137,14 @@ label dropWilling
 n The blade slips from your fingers and clatters uselessly to the floor.
 hero We didn't have to do that.
 n And yet you did.
-broken She's so much more than us. You wouldn't understand what it feels like to be in her presence.
+broken She's so much more than us`. You wouldn't understand what it feels like to be in her presence.
 jumpto dropJoin
 
 label dropForced
 n As if on command, the blade slips from your grasp. It clatters uselessly to the floor.
 hero But we *didn't* drop it. We decided to grip it tighter, remember? Are you really just going to let that happen to us?
 n I have a duty to report facts as facts, and the fact is that you dropped the blade.
-broken Of course we dropped it. She's so much more than us. You wouldn't understand what it feels like to be in her presence.
+broken Of course we dropped it`. She's so much more than us`. You wouldn't understand what it feels like to be in her presence.
 jumpto dropJoin
 
 label dropJoin
@@ -159,7 +154,7 @@ jumpto basementStartJoin
 label basementStartNoBlade
 p I see your hands are empty. You've already given up, haven't you? You aren't even going to try and kill me. How sweet.
 p And more than a little disappointing.
-broken She's... disappointed in us?
+broken She's... *disappointed* in us?
 jumpto basementStartJoin
 
 label basementStartJoin
@@ -192,7 +187,7 @@ hero Well that gives away the game, doesn't it?
     jumpto startKnowsDestinySharedLoop /// sharedloop
 n It does. But why did she say "the last time we met?" That's not right. That can't be right.
 hero She's right. We've been here before.
-broken And we've died here before. Pitifully. We might as well do what she asks of us and help her. She's inevitable. Can't you feel it?
+broken And we've died here before`. Pitifully`. We might as well do what she asks of us and help her`. She is inevitable`. Can't you feel it?
 hero He's being melodramatic, but he's not exactly wrong, is he? What are we supposed to do to stop her?
 n Well I'll be damned. That's not good.
 label startKnowsDestinyJoin
@@ -202,7 +197,7 @@ n The stakes of the situation should be perfectly clear to everyone now. And if 
 label startKnowsDestinySharedLoop
 n It certainly does. And beyond that, it more than lends credence to our conversation in the woods. I don't love the thought that in some other reality you failed to destroy her, but what's done is done, and I can only hope it helped you learn a valuable lesson.
 n You are the only one who can deal with her. And if you don't... well, she's let you know what will happen, hasn't she?
-broken Then you shouldn't have trusted us with her destruction. She is inevitable. Can't you feel it?
+broken Then you shouldn't have trusted us with her destruction`. She is inevitable`. Can't you feel it?
 hero He's being melodramatic, but he's not exactly wrong, is he? What are we supposed to do to stop her?
 jumpto startKnowsDestinyJoin
 
@@ -223,7 +218,7 @@ p SPEAK.
     jumpto startSharedLoop /// sharedloop
 n "The last time we met?"
 n Nobody should have "met" her before this. You should be the first. You're the only one I trust to deal with her.
-broken Then you shouldn't have trusted us. There was nothing we could do to stop her then, and there's nothing we can do to stop her now.
+broken Then you shouldn't have trusted us`. There was nothing we could do to stop her then`, and there's nothing we can do to stop her now.
 hero He's being melodramatic, but yeah, we've been here before, and she absolutely destroyed us. What are we even supposed to do to stop her?
 n That's... worrying. Whatever you do, don't tell her why you're here. It's best not to give her any ideas.
 
@@ -232,11 +227,11 @@ n "The last time we met?" I suppose that lends credence to our conversation in t
 
 label motiveCantRefuse
 n Are you serious? Just -- just don't say anything! How hard can it be to not say anything?
-broken You haven't felt her angelic fingers run along the edges of your mind. You haven't felt her nails dig into your thoughts.
+broken You haven't felt her angelic fingers run along the edges of your mind`. You haven't felt her nails dig into your thoughts.
 
 label motiveNoStutter
 p YOU WILL.
-broken Just do it already... it will feel so much better to do as she says.
+broken Just do it already`.`.`. it will feel so much better to do as she says.
 
 label motiveNoForce
 p Such firm resistance. How surprising.
@@ -259,7 +254,7 @@ label motiveShareJoin
 p Something about that thought wraps itself around my heart. It feels like a fundamental truth to my being that I'd somehow forgotten.
 p The collapse of the old is a necessary prelude to the birth of the new, and the world as it is now is overdue for alterations.
 p It's time for me to seize my destiny, and you, little bird, will help me seize it.
-broken She's inevitable. There's nothing else for us to do but help her. Maybe she'll be nice to us.
+broken She's inevitable`. There's nothing else for us to do but help her`. Maybe she'll be nice to us.
 
 label motiveShareBlade
 p Meekness. Despair. But a hint at something more. A small taste of stubborn resistance.
@@ -300,7 +295,7 @@ label refuseNoBlade
 p You poor, deluded thing. Don't think you can muster up the strength to defy me now. You already submitted the moment you entered this temple without the will to end me.
 hero Wha -- what is she talking about?
 n She's talking about your ridiculous decision to come down here unarmed. But it doesn't matter, don't let her talk you into bowing down to her or whatever it is she thinks she can make you do. You can still go back and get the blade from upstairs. You can still stop her.
-broken But we're already here, and we already made our choice, and there are so many tall stairs between us and that altar...
+broken But we're already here`, and we already made our choice, and there are so many tall stairs between us and that altar...
 n You're right about one thing: you already made your choice, and your choice was to defy her. I don't care how many stairs there are or how tall they are. You're going to turn around, right now, take the blade, and save the damn world.
 p Even now your vessel twitches and trembles, consumed by conflict with yourself.
 p But that part of you standing in hopeless defiance isn't the only thing resisting me, is it? There's something else in there. Someone else. A greasy film sheltering your heart.
@@ -319,9 +314,9 @@ hero Uh... are you okay?
 np I'm fine. I've always been fine.
 truth The words echo both in and outside of your head as he speaks softly, as if in some sort of dreamlike trance, in complete unison with the Princess.
 hero No no no, this isn't right! What do we do? We can't just let her control us like this!
-broken I've been trying to tell you this whole time. It isn't about can or can't. It isn't even about will or won't. There is only one path in front of us, and we will walk it.
+broken I've been trying to tell you this whole time`. It isn't about can or can't. It isn't even about will or won't`. There is only one path in front of us, and we will walk it.
 hero We'll -- we'll just refuse!
-broken Not even He could refuse her in the end. What are you supposed to do? We're all prisoners here. Some of us are just willing to embrace our chains.
+broken Not even He could refuse her in the end`. What are you supposed to do? We're all prisoners here`. Some of us are just willing to embrace our chains.
 
 label refuseBlade
 p I see.
@@ -357,11 +352,11 @@ np All you need to do is believe it's been done.
 
 label pledgeBelieve
 np You poor, wretched little thing. You already do believe. You've always believed. All you have to do is open the last door to your heart.
-broken It's easy. And once you let her in, you'll be safe and free forever.
+broken It's easy`. And once you let her in`, you'll be safe and free forever.
 hero Please. Don't do this.
 
 label pledgeSorry
-broken There's nothing to be sorry about. This is how it was always going to be, and it is good.
+broken There's nothing to be sorry about`. This is how it was always going to be`, and it is good.
 hero All right. I'm done with this. I'm just going to sit in the corner. Let me know if we get our agency back.
 
 label pledgeBreak
@@ -384,14 +379,14 @@ truth But you do not take her hand. Something has taken her away, and it's left 
 label resistBlade
 p Perhaps you need another lesson in submitting to your betters.
 p PICK UP THAT NEEDLE.
-broken Do it. It's what she wants.
+broken Do it`. It's what she wants.
 n No objections here.
 hero We don't know what she's planning, and I don't like that we don't know what she's planning, but we might as well pick up the blade.
 n As your eye falls on the blade, you feel a weight, some divine hand that sits unperceived by your senses, but that manages to push you towards its desires like an unseen puppeteer.
 
 n You reach forward and grasp the blade.
 p STAND.
-broken This one's easy! See, this isn't so bad.
+broken This one's easy`! See`? This isn't so bad.
 hero Okay. Yeah. We can do that. We were probably gonna stand anyway.
 
 n You can feel a creaking tension between body and will as you slowly rise to your feet, like two foes forced into an unhappy truce.
@@ -401,6 +396,7 @@ p TAKE THAT KNIFE IN YOUR HAND AND SLIT YOUR THROAT.
 hero What?!
 n You don't have to listen to her. You're armed. Just steel your nerves, step forward, and end this.
 
+broken Oh`, we'll end this all right.
 n Your hand lifts the blade and brings it towards your throat -- okay, I apologize for the unclear language. End *her.*
 
 // Continue resisting //
@@ -427,7 +423,7 @@ p Or you can pathetically struggle against yourself until the floor of this temp
 n You continue to approach the Princess, even as the repeated gouges of your blade expose bone and muscle to the open air of the basement.
 hero You know, this would be a lot easier if you gave us a hand!
 n My influence only goes so far, and I can only juggle so many things at once. The best I can do right now is to continue to drive you forward. Believe me, this whole ordeal would be so much easier if I didn't have to contend with free will.
-broken You're the one making things difficult. You're the one making us hurt. She doesn't want to hurt us. She's just doing what she has to.
+broken You're the one making things difficult. You're the one making us hurt`. She doesn't want to hurt us`. She's just doing what she has to.
 p STOP.
 n As you finish crossing the room, you fall to your knees at the Princess' feet, your chest heaving as your blood pools in the crevices of the stone floor, the coppery taste coating your throat.
 n The Princess kneels down, lifting your chin with her finger as her face lowers to yours.
@@ -442,7 +438,7 @@ label advance2NoOffer
 hero That's a little demeaning, isn't it?
 label advance2Join
 n Yes, how *thoughtful* of her.
-broken It's a mercy. Take it.
+broken It's a mercy`. Take it.
 hero I think he's given up whatever say he had at the start of all this.
 n At least one of you is sane. She's within striking distance, and she's only negotiating now because she knows you have what it takes to put an end to her. Seize the moment before it's too late.
 
@@ -467,7 +463,7 @@ n But you don't give her any time to recover. Your heart pounding with determina
 n As you find your target again and again, she laughs, crude emotion breaking through her once stony composure as your blade cuts her flesh.
 hero We can do this, can't we?
 n You always could. The decision to give you this task was not made lightly. You're here for a reason.
-broken It's not too late to pick up the pieces. It's not too late to toss that blade aside and beg for forgiveness.
+broken It's not too late to pick up the pieces. I-it's not too late to toss that blade aside and beg for forgiveness.
 hero Shut up.
 p I can't believe you would actually strike me. You -- /// interrupt
 p You heathen! You worm! You defiler! You don't know the consequences of your arrogance!
@@ -479,7 +475,7 @@ n You lie there, broken, beyond pain, unable to even see what she's done to you.
 p You made me use my hands! I... I can feel myself twisting into something new. Something dull, something defiled. What have you done to me?
 broken You're monsters and conspirators. I can't *bear* to watch this.
 n The Princess has been nothing but cruel to you. You should feel liberated by her fall.
-broken But I don't feel liberated. I feel empty.
+broken But I don't feel liberated`. I feel empty.
 hero Aside from the pain, *I* feel fine.
 unlock towerSlay
 n She collapses to the floor. Her glassy eyes watch, unblinking, yet somehow still full of anguish and fear, as the two of you perish together.
@@ -515,7 +511,7 @@ hero No no no no no no no!
 
 label slaySelfJoin
 p When I see you again, you'll free me from my chains, and deliver me to the destiny that lies beyond this place.
-broken We will. I promise.
+broken We will`. I promise.
 p I know you will.
 linebreak
 np Everything goes dark, and you die.

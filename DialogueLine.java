@@ -3,10 +3,8 @@ public class DialogueLine {
     protected String line;
     protected boolean isInterrupted;
     
-    private static final String COMMA = ",";
-    private static final String DASH = "-";
     private static final String PUNCTUATION = ".,?!:;-";
-    private static final String DELAYCHARS = "?!*\"')";
+    private static final String DELAYCHARS = "?!:;*\"')";
 
     // --- CONSTRUCTORS ---
 
@@ -61,14 +59,20 @@ public class DialogueLine {
      */
     public void print(boolean pauseAtPunctuation) {
         char[] chars = IOHandler.wordWrap(this).toCharArray();
+        long activeWaitTime;
         int punctDelayLength = 0;
+        boolean doubleTimeFlag = false;
 
         long waitTime = 30;
         long commaWaitTime = 150;
         long punctWaitTime = 200;
-        long activeWaitTime;
 
         for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '`') {
+                doubleTimeFlag = true;
+                continue;
+            }
+            
             System.out.print(chars[i]);
             try {
                 if (punctDelayLength != 0 && isDelayChar(chars[i])) {
@@ -84,8 +88,8 @@ public class DialogueLine {
                         activeWaitTime = waitTime;
                     }
                 } else if (pauseAtPunctuation && isPunctuation(chars[i])) {
-                    if (isDash(chars[i])) {
-                        if (!isDash(chars[i-1])) {
+                    if (chars[i] == '-') {
+                        if (chars[i-1] != '-') {
                             activeWaitTime = waitTime;
                         } else if (i == chars.length - 1) {
                             if (this.isInterrupted) activeWaitTime = commaWaitTime;
@@ -110,7 +114,7 @@ public class DialogueLine {
                         } else {
                             activeWaitTime = waitTime;
                         }
-                    } else if (isComma(chars[i])) {
+                    } else if (chars[i] == ',') {
                         if (isDelayChar(chars[i+1])) {
                             punctDelayLength = 1;
                             activeWaitTime = waitTime;
@@ -130,6 +134,11 @@ public class DialogueLine {
                 }
             } catch (IndexOutOfBoundsException e) {
                 activeWaitTime = waitTime;
+            }
+
+            if (doubleTimeFlag) {
+                activeWaitTime *= 2;
+                doubleTimeFlag = false;
             }
 
             try {
@@ -154,14 +163,20 @@ public class DialogueLine {
      */
     public void print(boolean pauseAtPunctuation, double speedMultiplier) {
         char[] chars = IOHandler.wordWrap(this).toCharArray();
+        long activeWaitTime;
         int punctDelayLength = 0;
+        boolean doubleTimeFlag = false;
 
         long waitTime = (long)(30 / speedMultiplier);
         long commaWaitTime = (long)(150 / speedMultiplier);
         long punctWaitTime = (long)(200 / speedMultiplier);
-        long activeWaitTime;
 
         for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '`') {
+                doubleTimeFlag = true;
+                continue;
+            }
+
             System.out.print(chars[i]);
             try {
                 if (punctDelayLength != 0) {
@@ -177,8 +192,8 @@ public class DialogueLine {
                         activeWaitTime = waitTime;
                     }
                 } else if (pauseAtPunctuation && isPunctuation(chars[i])) {
-                    if (isDash(chars[i])) {
-                        if (!isDash(chars[i-1])) {
+                    if (chars[i] == '-') {
+                        if (chars[i-1] != '-') {
                             activeWaitTime = waitTime;
                         } else if (i == chars.length - 1) {
                             if (this.isInterrupted) activeWaitTime = commaWaitTime;
@@ -203,7 +218,7 @@ public class DialogueLine {
                         } else {
                             activeWaitTime = punctWaitTime;
                         }
-                    } else if (isComma(chars[i])) {
+                    } else if (chars[i] == ',') {
                         if (i == chars.length - 1) {
                             activeWaitTime = commaWaitTime;
                         } else if (isDelayChar(chars[i+1])) {
@@ -227,6 +242,11 @@ public class DialogueLine {
                 }
             } catch (IndexOutOfBoundsException e) {
                 activeWaitTime = waitTime;
+            }
+
+            if (doubleTimeFlag) {
+                activeWaitTime *= 2;
+                doubleTimeFlag = false;
             }
 
             try {
@@ -270,24 +290,6 @@ public class DialogueLine {
     @Override
     public String toString() {
         return this.line;
-    }
-
-    /**
-     * Checks if a given character is a comma
-     * @param c the character to check
-     * @return true if c is a comma; false otherwise
-     */
-    private static boolean isComma(char c) {
-        return COMMA.contains(Character.toString(c));
-    }
-
-    /**
-     * Checks if a given character is a dash
-     * @param c the character to check
-     * @return true if c is a dash; false otherwise
-     */
-    private static boolean isDash(char c) {
-        return DASH.contains(Character.toString(c));
     }
 
     /**

@@ -2,10 +2,10 @@ p And you still don't have a weapon! That's funny! That's a joke! I'm going to k
 contra Yes, that was extremely silly of whoever did that. Probably a bad idea!
 hero That was you!
 contra I know! I'm just trying to add some levity to this.
-cheated Well, since all of this was your idea, how about you figure out how to get us out of it?
+cheated Well, since all of this was your idea, how 'bout YOU figure out how to get us out of it?
 contra Oh, guys like us don't get to make any decisions, you should know that.
-cheated I decided to pick up that blade, and *you* decided to throw it out the window.
-    broken This is why we've already lost. Can't even stop bickering with ourself. How are we supposed to beat her without a weapon? She's so sharp. /// checkvoice
+cheated *I* decided to pick up that blade, and *you decided* to throw it out the window.
+    broken This is why we've already lost. Can't even stop bickering with ourself. How are we supposed to beat her without a weapon`? She's so sharp. /// checkvoice
     para I take it back. Having my own corner clearly isn't working because I can still hear you three yelling at each other. She's going to kill us again, you know. Especially if we keep fighting with ourself. We need to get rid of our thoughts. /// checkvoice
 n Your internal bickering is cut short by the wet sound of slicing meat. From the Princess's arms erupt twin blades, glistening with her blood, the empty flesh of her arms flopping at her elbows like torn sleeves. The chain clatters to the floor.
 p You're going to make me walk over to you, aren't you?
@@ -16,9 +16,9 @@ cheated All right, I'm out of ideas... What're we doing?
 label stubbornMenu
 hero We're fighting her? Are you forgetting the part where the cheeky one thought it'd be funny to throw our only weapon out the window?
 contra I mean, it *was* funny. Even she said it was funny.
-cheated Oh, *yes!* It was absolutely *hilarious!*
+cheated Oh, yes! It was absolutely *hilarious!*
 contra We'll all be laughing together once we're out of here.
-    broken If we make it out of here. But I don't know. That seems unlikely. /// checkvoice
+    broken If we make it out of here, but... I don't know`. That seems unlikely. /// checkvoice
     para Do any of us think we can hurt her like this? /// checkvoice
 
 label stubbornMaybe
@@ -32,11 +32,11 @@ hero Here goes... we can make this work.
     broken And what if we don't? /// checkvoice
     para Yeah. Mind over matter, mind over matter, mind over matter -- what if she's lying? What if she isn't going to give us a free shot? /// checkvoice
 p Your fist slams into the Princess's face, and she recoils in pain.
-cheated Huh. We actually did something to her!
+cheated Huh. We actually *did* something to her!
 p Ow ow ow ow ow! That hurt! What are your bones made of, metal?
 p Because mine are.
 n Before you can react, she returns a punch of her own, only it isn't really a "punch."
-cheated Yes, we all know she has swords for arms. We have eyes.
+cheated Yes, we all know she has swords for arms. We *have eyes.*
 n Well, she skewers you.
 linebreak
 truth Everything goes dark.
@@ -44,13 +44,13 @@ hero Ow.
 p Ribbons! I'm going to make you ribbons! This is so much fun and I want to celebrate.
 linebreak
 truth All of a sudden, everything comes back into focus. The Princess stands in front of you with a manic grin on her face.
-stubborn It would have worked if we punched harder.
+stubborn It would have worked if we PUNCHED harder.
 
 
 label oppoMenu
-    broken *Can* we talk this out? I think she wants to kill us. /// checkvoice
+    broken *Can* we talk this out? I think she wants to kill us...! /// checkvoice
     para Can we trust someone who wants us dead? /// checkvoice
-cheated Exactly. I think she established that at some point between stabbing us to death and directly telling us, just now, that she was going to kill us.
+cheated Exactly. I think she established that at some point *between* stabbing us to death and *directly telling us,* just now, that she was going to kill us.
 
 label oppoStabbing
 p Nope! But I don't need anyone to tell me that. I know I'm good at what I do! The best, I think.
@@ -60,7 +60,7 @@ p Hey, what gives? Are you trying to get on my good side?
 label oppoJoin
 contra Is this what it's like dealing with me?
 cheated Yeah, it is. You're the worst one of us. You know that, right?
-    broken We're screwed. Again. I'll see you all when we die. /// checkvoice
+    broken We're screwed`. Again`. I'll see you all when we die. /// checkvoice
         contra Really? I'm the worst one? Do you hear how whiny and un-fun *he* is? /// checkvoice-broken
     para Don't rank us! The last thing we need is to be arguing with ourselves while -- /// interrupt checkvoice
 n But you never finish that argument before the Princess closes the distance.
@@ -78,7 +78,7 @@ truth Everything goes dark.
 hero Ow.
 linebreak
 truth All of a sudden, everything comes back into focus. The Princess stands in front of you with a manic grin on her face.
-broken We deserved it. Can't even surrender right.
+broken We deserved it`. Can't even surrender right.
 
 
 label smittenMenu
@@ -88,9 +88,9 @@ hero Yeah... do we have to flirt with the murderous monster?
 contra Of course we do! I'm into it. The one making the decisions is into it. Are you not?
 hero ... I don't think so? I don't know.
 cheated I could go either way, honestly.
-    broken She doesn't want us. /// checkvoice
+    broken She doesn't want *us.* /// checkvoice
         contra You're just saying that because you want her to be into you. /// checkvoice-broken
-        broken I know. I thought I was being obvious. /// checkvoice
+        broken I know`. I thought I was being obvious. /// checkvoice
     para Maybe it'll work! Maybe it'll throw her off. I know I'd be thrown off if she started flirting with us. /// checkvoice
         contra Yeah, because you'd be into it. /// checkvoice-para
         para No comment. /// checkvoice
@@ -105,7 +105,7 @@ hero Panic where? Up the slide that dropped us down here?
 p I'm coming to get you!
 contra Nah, I'm with the decider. It defeats the whole point of panicking if we think about what we're doing, and I don't know if you've been listening, but she's coming to get us! So panic! Give in to the chaos!
 broken Oh yes, the chaos of dying. How fun.
-cheated Stop whining and do it!
+cheated Stop *whining* and *do it!*
 
 
 label coldMenu

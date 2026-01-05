@@ -1646,7 +1646,6 @@ public class Script {
         return currentDirectory;
     }
 
-    /*
     public static void main(String[] args) {
         GameManager manager = new GameManager();
         IOHandler parser = new IOHandler(manager);
@@ -1659,13 +1658,9 @@ public class Script {
             System.out.println(a + ", " + script.labels.get(a));
         }
 
-        manager.toggleAutoAdvance();
-        script.runConditionalSection("strConditionTest", "revival");
-        script.runConditionalSection("strConditionTest", "mutual");
-        script.runConditionalSection("strConditionTest", "normal");
-        script.runConditionalSection("strConditionTest", "other");
+        //manager.toggleAutoAdvance();
+        script.runSection("elipsesSpeedTest");
     }
-    */
 
 }
 

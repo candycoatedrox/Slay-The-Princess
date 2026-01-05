@@ -3,21 +3,21 @@ n You're on a path in the woods -- /// interrupt
 skeptic See? That wasn't so bad. And now we've got another chance to get to the bottom of things. Bit by bit we're starting to unravel this place.
 cold There are so many more threads to pull once you stop feeling.
 hero That's a little dark, buddy. Are you feeling okay?
-cold I'm feeling nothing. And I like that just fine.
+cold I'm feeling nothing`. And I like that just fine.
 jumpto startJoin
 
 label burnedStart
 n You're on a path in the woods -- /// interrupt
 smitten You horrid monster! Do you think just because we've returned to the woods you've earned my *forgiveness?* Our beloved had best be alive and well when we return to the cabin, or you'll never know the end of my wrath!
-cold She won't be alive and well when we return to that cabin, because she's dead. We killed her.
+cold She won't be alive and well when we return to that cabin`, because she's dead`. We killed her.
 smitten *You* killed her! And so *I killed you.*
-cold And you clearly didn't do a good enough job. I'm still here.
+cold And you clearly didn't do a good enough job`. I'm still here.
 hero Oh, and I'm still here too.
 smitten If you lot get to be blessed with seemingly eternal life, that must mean *she's* still there, waiting for us to throw ourselves at her feet in remorse!
-cold I doubt it. I think I'm better at killing than you are.
+cold I doubt it`. I think I'm better at killing than you are.
 label startJoin
 n So you've been here before. Of course you've been here before. What count is it this time? Two?
-cold It's our third. What gave it away?
+cold It's our third`. What gave it away?
 n Your open discussions.
 sourceswitch Start2
 
@@ -27,8 +27,8 @@ label drownedStart2
 n I'm afraid not. Whatever other versions of me you've met in those other lifetimes were just that. Other versions of me. I just wish I'd been the first.
 skeptic So you knew how all this worked. Why didn't you ever tell us? We could have used it to our advantage.
 n That's because there is no using it to your advantage. The more information you have, the harder it will be for you to succeed.
-cold It's not like it was that difficult to slay her last time. She may have put up a fight, but her flesh is still softer than our blade.
-cold And now she's dead. And I doubt she'll be able to do much of anything from the grave.
+cold It's not like it was that difficult to slay her last time`. She may have put up a fight`, but her flesh is still softer than our blade.
+cold And now she's dead`. And I doubt she'll be able to do much of anything from the grave.
 n You already slew her? And you survived?
 cold Yes.
 n Then why, pray tell, are you here?
@@ -36,7 +36,7 @@ n Then why, pray tell, are you here?
     hero Oh, I know that one! We killed ourself. /// checkfalse
 n Why?!
 cold Because you thought trying to stuff us away in a corner for eternity was a suitable reward.
-cold Was it not? What better reward is there than eternal bliss? You should have been happy.
+n Was it not? What better reward is there than eternal bliss? You should have been happy.
 skeptic There were still answers that we needed to find.
 n It was actually working... and you killed yourself. I can't believe it. You ruined everything!
 skeptic How does us dying ruin everything? What aren't you telling us?!
@@ -45,14 +45,14 @@ skeptic And if the world isn't saved, then that means she isn't dead.
 
 label burnedStart2
 smitten I couldn't care less about what he knows. Every second we stand around arguing in the woods is a second that I'm anxiously worrying about *her.* Take us to the cabin, and take us there now! With each passing moment our relationship may be damaged even further... though I fear the rift between us may already be *permanent...!*
-cold And if it is permanent, then what? You'll kill us again?
+cold And if it is permanent`, then what`? You'll kill us again?
 smitten Oh, you just wait and see! My vengeance will echo the *depths* of my bereavement!
 hero Don't provoke him. I'd prefer it if we didn't die again. I'm not fond of dying.
-cold Why not? You've already done it twice.
+cold Why not`? You've already done it twice.
 hero It was unpleasant.
 cold It was only unpleasant because you think it's *supposed* to be unpleasant.
 smitten I'll make you feel what I feel if it's the last thing I do! And mark my words, you won't like it when it happens!
-cold Oh! How *exciting.* I'd love to see you try.
+cold Oh`! How *exciting.`* I'd love to see you try.
 n Can I -- /// interrupt
 // not now Narrator they're hate flirting //
 smitten Well I'm not *just* going to try. I'm going to actually *do it!*
@@ -72,7 +72,7 @@ n *Sigh.* Forget I said anything. I've probably already made things worse. And I
 hero Oh, come on! Tell us your secrets. Haven't we been through enough? Don't we deserve to know?
 n No.
 skeptic Is there a reason it would be raining?
-cold If there is, it doesn't matter. If a bit of rain is the best her "influence" can conjure, then we have nothing to worry about. A drenched corpse is still a corpse.
+cold If there is`, it doesn't matter`. If a bit of rain is the best her "influence" can conjure`, then we have nothing to worry about`. A drenched corpse is still a corpse.
 
 label burnedDifferentPath
 n If this isn't the same path in the woods you're used to, that means that her influence is already spreading, and you're running out of time.
@@ -82,7 +82,7 @@ hero Don't mind him. I don't think he's doing too well.
 smitten I-I'm doing better than any of you! I'm doing *great!* She's *alive!*
 cold "Influence" doesn't require life.
 hero But if things restarted, why wouldn't she be alive?
-cold Who said they restarted? All they've done is changed.
+cold Who said they restarted`? All they've done is changed.
 smitten I shan't listen to the vile mutterings of you serpents. *Onward!* Our living, breathing Princess awaits us!
 
 label noCabinPath
@@ -90,18 +90,18 @@ n She'll find a way out eventually, and the world will still end. The only way t
     skeptic We already know He wants us to slay her. Anything He says is tainted by His motivations. /// checkvoice
     smitten Again, He makes her out to be a monster. I'm tired of all this slander! She's never hurt anyone in her life except for us, and that was our fault. /// checkvoice
         hero We don't know that, she could have done all sorts of things we weren't around to see. /// checkvoice-smitten
-cold Turn around and leave, go to the cabin, I'm fine with either. So long as we don't just do the same thing again. That would be boring.
+cold Turn around and leave, go to the cabin`, I'm fine with either`. So long as we don't just do the same thing again`. That would be boring.
 
 label chargePath
 smitten Oh, it's clear, you murderer. Though I should remind you that you're not as "in charge" as you seem to think you are.
-cold I'm sure his outburst last time was just a fluke. I wouldn't worry about him. Besides, if he kills us again, he kills us again. It doesn't matter. He'll tire out eventually. The flame of passion always burns out in the end.
+cold I'm sure his outburst last time was just a fluke`. I wouldn't worry about him`. Besides, if he kills us again, he kills us again. It doesn't matter`. He'll tire out eventually`. The flame of passion always burns out in the end.
 smitten Spoken like a true cynic.
 n Enough bickering. Just stay focused, and get to the cabin.
 
 label noWantPath
 n That's great to hear, but it doesn't matter, because you still died.
 skeptic No hard feelings, right?
-cold Of course not. No feelings at all.
+cold Of course not`. No feelings at all.
 hero Speak for yourself.
 skeptic What, you wanted us to stay in the happiness void forever? I doubt that.
 
@@ -110,7 +110,7 @@ skeptic What, you wanted us to stay in the happiness void forever? I doubt that.
 label drownedHill
 n I'm sure you've already heard my words of warning in one of your "past lives." You've already managed to slay her once, just... *sigh.* Don't muck it up this time, all right?
 skeptic What we do is entirely up to us.
-cold And we have all those mysteries to unravel, isn't that right?
+cold And we have all those mysteries to unravel`, isn't that right?
 n You aren't here to solve a mystery. You're here to save the world.
 skeptic That's what you say, but how can we be sure?
 cold We can't be sure of anything except what's right in front of us.
@@ -129,11 +129,11 @@ n I'm sure you've already heard my words of warning in one of your "past lives."
 smitten Oh, we'll muck it up, all right. We'll get our happy ending, even if it damns each and every person who's ever lived!
 n *Sigh.* Whatever you do, don't let him influence a single decision. He's clearly lost it.
 hero I hate that I'm agreeing with Him on anything, but I really don't like being at the whims of someone so... unstable. It's stressful.
-cold Yes, having all of those feelings isn't very productive, is it? But we're just passengers here. Why stress over something you can't control?
+cold Yes`, having all those feelings isn't very productive, is it`? But we're just passengers here`. Why stress over something you can't control?
 hero You're saying that like stress is just something you can turn off.
-cold It is. It's easy. Whatever happens, happens.
+cold It is. It's easy`. Whatever happens`, happens.
 smitten Are you even alive? What's the point of doing anything if you're not going to feel a single emotion.
-cold I don't know. I just exist, and that's fine with me.
+cold I don't know`. I just exist`, and that's fine with me.
 n This is horribly unproductive. The cabin -- and your extremely important destiny -- await.
 
 // Cabin //
@@ -143,7 +143,7 @@ n As soon as you enter the cabin, you're struck by an overwhelming scent of deca
 n But you're not alone. You can feel something watching you. There is a figure faintly outlined against the rotting wood of the wall.
 hero Is that... *her?*
 skeptic It's like she isn't even there.
-cold See? We killed her.
+cold See`? We killed her.
 skeptic You're right. Maybe she doesn't reset like us. She certainly doesn't look the same as she did last time.
 n Before you can make a move, the figure is gone, vanishing behind the door on the far side of the room.
 jumpto askDoor
@@ -191,7 +191,7 @@ n You're clearly hallucinating. But I'd rather not get into it with you right no
 label approachMirror
 n You make your way to the door at the end of the room, stopping just in front of it. You must think you're looking at that "mirror" you mentioned earlier. The one that doesn't exist. *Sigh.* Just reach forward and open the door.
     hero It's still so hazy. We should try and clean it off. /// mirrortouch
-        cold Yes, trying to touch it does seems to be the magic spell to get it out of our way. /// mirrortouch
+        cold Yes`, trying to touch it does seems to be the magic spell to get it out of our way. /// mirrortouch
     hero It's so hazy. We should try and clean it off. /// nomirrortouch
     skeptic Maybe it won't disappear this time and we'll finally get a good look at ourselves. We should explore every option. /// checkvoice
 
@@ -199,7 +199,7 @@ label wipeMirror
     smitten It's time for all of you to see what we've become. /// checkvoice
 n You reach forward and place your hand on the door to the basement. The handle is just a little to your right, and a little down.
     skeptic Yeah. We can see it now. /// checkvoice
-cold So much for our reflection. We didn't need to see ourselves anyway. I'm much more interested in seeing other things.
+cold So much for our reflection`. We didn't need to see ourselves anyway`. I'm much more interested in seeing other things.
     smitten I see... we are too hideous for even a mirror to behold. We can only hope she might still see some good in us. /// checkvoice
 hero No way left to go but down.
 
@@ -210,8 +210,7 @@ n The door to the basement groans open. The air is foul and wet, so thick that y
 n A wispy figure watches you from the bottom of the stairs, face veiled in shadows, legs submerged up to her shins in dark waters.
 hero There she is again.
 skeptic Barely.
-cold She's just an old memory.
-n Your eyes lock for a brief moment, then she vanishes around the corner.
+jumpto stairsStartJoin
 
 label burnedStairsStart
 n The door to the basement creaks open, revealing an antique staircase lit by weak torchlight. The air here is so stale it practically stands still, as if the very molecules of this place have been fossilized, trapped for eons until your arrival.
@@ -219,6 +218,7 @@ n Even the blaze of the torches can't penetrate the odorless air, as if they'd r
 n A wispy figure watches you from the bottom of the stairs, face veiled in shadow.
 hero There she is again.
 smitten My love!
+label stairsStartJoin
 cold She's just an old memory.
 n Your eyes lock for a brief moment, then she vanishes around the corner.
 
@@ -229,7 +229,7 @@ hero Do you think she's upset with us? I don't like being here unarmed after wha
     smitten Of course she's livid! And with good reason. /// checkvoice
     skeptic She doesn't seem fully there. I'm not sure she's even capable of being upset. /// checkvoice
 hero You aren't helping.
-cold Are you scared of a little ghost? What's she going to do, *look at us until we feel bad?* She can look all she wants. It won't do anything.
+cold Are you scared of a little ghost`? What's she going to do`, *look at us until we feel bad?`* She can look all she wants`. It won't do anything.
 
 label stairsExploreB
 n Don't just tell her you're unarmed! *Sigh.* Not that it matters. You receive no response.
@@ -240,7 +240,7 @@ jumpto stairsExploreJoin
 label drownedBasementStart
 n As you descend the final step, the form of the Princess comes into view. A bloated body floating face down in slowly rising waters, her wrist still bound to the wall by a heavy chain.
 n This cell is a dark and isolated place, with not so much as a window to allow starlight to penetrate the gloom.
-cold See? She's dead.
+cold See`? She's dead.
 skeptic She's not just dead. It looks like she's been rotting. So killing her does stick... mostly. But if she's dead, then what are we supposed to do?
 n She's not dead. You clearly just believe she is.
 skeptic Her corpse is floating right in front of us, you can stop it with the mind games.
@@ -258,7 +258,7 @@ p Bold of you to come back here after what you did.
 label burnedBasementStart
 n As you descend the final step, the form of the Princess comes into view. A skeletal body lying in a heap on the floor, her wrist still bound to the wall by a heavy chain.
 n This cell is a dark and isolated place, with not so much as a window to allow starlight to penetrate the gloom.
-cold See? She's dead.
+cold See`? She's dead.
 smitten No! What foul trickery is this? How can this be? We just saw her alive and well a moment ago, floating away transparently!
 hero Whatever we saw was a ghost. I thought we were all on the same page.
 cold Do try to keep up.
@@ -267,7 +267,7 @@ n Your thoughts are interrupted by the sound of a slamming door and a clicking l
 n You turn to see the shade of the Princess, staring down at you from the top of the stairs, clutching a brightly burning torch -- /// interrupt
 label basementStartJoin
 n So that's where the blade is! It's already in her heart. And yet she... isn't dead.
-cold She *is* dead. Have you never heard of a ghost before?
+cold She *is* dead`. Have you never heard of a ghost before?
 n Oh, for the love of -- can we not waste time arguing over the semantics of what is and isn't "dead?" She is clearly *conscious,* she clearly just slammed the door on you, and she clearly has a weapon -- *your* pristine blade sticking out of her chest. This is extremely bad. Catastrophic, even.
 hero Yeah, dead or not, what are we supposed to do about her? Slaying, or, er, destroying -- if we want to be a little more *death-neutral* -- seems off the table.
     sourceswitch BasementStart2
@@ -292,7 +292,7 @@ label drownedTimer1
 n But she doesn't answer your question. All she does is watch you in shadowed silence.
 hero Do you hear that trickling sound? The water's rising, isn't it?
 n It is. And it's rising fast.
-cold Oh, that's interesting. We've never drowned before. I wonder how it'll feel.
+cold Oh, that's interesting`. We've never drowned before`. I wonder how it'll feel.
 hero Bad, I bet!
 skeptic I don't think dying ever feels good.
 n Yes, how astute. Dying is bad, and you should avoid it. How about you stop trying to talk to her and *do something* instead?
@@ -304,7 +304,7 @@ skeptic Yeah. Let's think. Where is it coming from?
 n It's coming from some unseen place.
 hero Does it really matter where it's coming from? Because I can *feel* it rising, I don't think we have much time to sleuth.
 skeptic Yes, it matters! Maybe we can find a way out. Maybe we can figure out a way to make this work. This is just a puzzle. We can solve it.
-cold Some things aren't puzzles to be solved. Sometimes you're doomed from the start. Most people are.
+cold Some things aren't puzzles to be solved`. Sometimes you're doomed from the start`. Most people are.
 n Yes, most people are doomed, but, in case you need reminding, *everyone* will be doomed forever unless you stop her.
 
 label drownedTimer3
@@ -335,12 +335,12 @@ label drownedEnd
 n You come to a moment later, suspended in darkness, disorientated, only aware of the surface of the water and the emptiness above. And, of course, the Princess, hovering above you, watching in silence as you struggle to stay afloat in the icy depths. There's no way out.
 hero It's so dark! And cold! I think our limbs are slowing down, how much longer can we do this?!
 skeptic Just keep breathing. We'll figure this out.
-cold Or we won't. It doesn't matter either way.
+cold Or we won't`. It doesn't matter either way.
 n But you don't have time to figure anything out. Something cold and clammy wraps around your ankle.
 n You're dragged under, only able to take one last hopeful gulp of air before your head is plunged into the freezing depths.
 n As you sink below the surface, you see it. Or rather, you see her. The body you found floating when you first arrived. Its hand is locked around your ankle, the heavy chains pulling you both down into the unfeeling, suffocating nothingness.
 hero I get it! We shouldn't have killed her! Just get it away from us, please!
-cold The past is the past. There's no changing it. There's nothing to fix.
+cold The past is the past`. There's no changing it`. There's nothing to fix.
 skeptic And there's not a lot we can do about the present, either. Not unless we think. Like we should have been doing all along!
 n But there is no thinking as you drown. You desperately try to pull yourself back to the surface again, and again, and again, your icy limbs flailing desperately against the grip of her rotting corpse. And all the while her ghastly figure stares down at you, expressionless, as unfeeling as the weight around your ankle.
 unlock greyDrowned
@@ -358,7 +358,7 @@ truth But your lungs don't fill. Nor will they ever. It's time for you to leave.
 
 label burnedTimer1
 n The fire grows quickly, devouring the basement, dancing up the walls and painting every surface with strokes of flame. You're choked by smoke, and the air around you grows uncomfortably warm.
-cold We've never burned to death before. I wonder how it's going to feel.
+cold We've never burned to death before`. I wonder how it's going to feel.
 hero Bad! I bet it'll feel really, really bad!
 n Yes, it will be terrible, so you'd better come up with something to do and fast. Your personal safety is far from the only thing she's threatening right now.
 smitten I think a bit of fiery passion is good for the world. You're just trying to spoil her fun.
@@ -372,7 +372,7 @@ hero I don't want to burn to death! We... w-we don't have to, right?
 label burnedTimer3
 n The flames lick at your form, stripping layers of you away, causing your skin to blister and pop and crisp. As you burn, the Princess glides to your side, her ghostly form blackening as she, too, succumbs.
 hero This is terrible! We're going to die!
-cold I'd savor this feeling if I were you. Soon enough we won't have nerves.
+cold I'd savor this feeling if I were you`. Soon enough we won't have nerves.
 smitten And we'll get to die with *her.* After what you made us do last time, this is as sweet an end as we could hope for.
 n She clutches you close to her chest, her eyes bright and her smile wide with manic affection, watching as the flames take you away.
 
@@ -389,7 +389,7 @@ p Dying apart kept us apart. Dying together will keep us together.
 
 label burnedDie
 p It's okay. I'm going to burn, too. And then we won't hurt anymore.
-cold She's right about that last part. Burning doesn't hurt forever.
+cold She's right about the last part`. Burning doesn't hurt forever.
 
 label burnedWrong
 p You just think you don't. Sometimes someone else makes decisions for you, and those decisions are for the best. You should know that.
@@ -423,11 +423,11 @@ n You turn to see the Princess, face bright and smile wide with manic affection.
 label burnedEnd
 n The pain is unbearable at first. Every inch of you screams as your flesh is stripped away, your muscles stiffening as they're cooked, your blood boiling in your veins.
 n But it isn't long before the flames take your nerves, and with them, your ability to feel much of anything.
-cold See? That wasn't so bad.
+cold See`? That wasn't so bad.
 hero It *was* so bad! But somehow, the nothing is so much worse.
 cold You'll get used to it.
 smitten There are still the feelings of the heart. Those never go away.
-cold Oh, they always do in the end. You just haven't experienced enough. Eventually you'll want them to stop, too. You'll *make* them stop. Trust me.
+cold Oh, they always do in the end`. You just haven't experienced enough`. Eventually you'll want them to stop, too`. You'll *make* them stop`. *Trust me.*
 quietcreep
 n The Princess' smile never fades. Her skin peels away, and then her muscle, until all you can see is her charring skull, locked in an eternal grin.
 unlock greyBurned
@@ -446,9 +446,9 @@ label abort
     skeptic Sure. We've already seen what happens if we slay her, we might as well explore our surroundings. Get a lay of the land. /// checkvoice
     smitten You can't run from your consequences forever. One way or another, you'll have to face what you've done! /// checkvoice
 quietcreep
-cold Let's see what we can find. It's bound to be more interesting than doing the same thing over again.
+cold Let's see what we can find`. It's bound to be more interesting than doing the same thing over again.
 n Wait... something isn't right. Can you still hear me? You're supposed to wind up back at the cabin again, but everything is getting... fuzzy.
 hero W-what's going on? Where are we?
-cold I don't know. But it feels like... home.
+cold I don't know`. But it feels like... *home.*
     skeptic Did we do this? Is this the end of the world? Was there ever even a world to end? /// checkvoice
     smitten Of course. Oblivion is what we deserve. /// checkvoice

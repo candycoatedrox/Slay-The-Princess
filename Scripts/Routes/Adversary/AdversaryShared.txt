@@ -1,6 +1,6 @@
 hero If He doesn't remember what happened, then maybe it's best to keep it that way.
 n You know I can hear you, right? It's going to be a lot harder than you think to keep secrets from me.
-stubborn That's fine. It doesn't matter if He can hear us. The only thing that matters is marching up to that cabin and *winning.*
+stubborn That's fine. It doesn't matter if He can hear us. The only thing that matters is marching up to that cabin and WINNING.
 n That's the spirit. There's no point in squabbling when the real threat is just up that hill.
 
 label assume
@@ -8,27 +8,28 @@ hero We did our best with the information we were given. And we *did* kill her.
 n And yet you still died, didn't you? So congratulations. You've been given another chance to actually do this right.
 
 label assume2
-stubborn Ugh. Enough with the talking! We've got a fight to win. Nothing. Else. Matters.
+stubborn UGH! Enough with the talking! We've got a FIGHT to win. Nothing. Else. Matters!
 n I couldn't agree more. The cabin, and your destined confrontation with the Princess, awaits.
 
 label princessImpatient
-stubborn Oh this is *maddening.* Why do you keep asking questions?
+stubborn Oh this is MADDENING. WHY do you keep asking questions?
 n There's nothing wrong with getting the full picture of what's going on here.
-stubborn Sure there is. It's wasting time and energy that would be better spent fighting.
+stubborn Sure there is. It's WASTING time and energy that would be BETTER spent fighting.
 
 label princessSpecial
 n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
 hero Oh. I didn't know we were *special.*
-stubborn Of course we're special.
+stubborn Yeah. I like the sound of that.
+n Of course you're special. Why else would you be here?
 
 label princessCagey
-stubborn What else would we even *need* to know? We've got all the reason we need for a rematch.
+stubborn What else would we even need to know? We've got all the reason we need for a rematch.
 n Exactly. The less you know about her, the better.
 
 // Hill dialogue //
 
 label hillDialogue
-stubborn "Lying" and "cheating" doesn't sound like her at all. Not that it matters, it's not like she can lie or cheat in the middle of a fight.
+stubborn "Lying" and "cheating" doesn't sound like her at all. Not that it MATTERS, it's not like she can lie or cheat in the middle of a FIGHT.
 hero Are you sure about that?
 n The point of my warning wasn't to start an argument over what circumstances the Princess is capable of lying in. It was to give you some broadly applicable advice.
 n The Princess will do and say whatever she thinks it will take to get her out of there. So don't trust her. Ever. Are we clear?
@@ -37,16 +38,17 @@ stubborn Crystal. Let's just get on with it already.
 // Abort attempt //
 
 label abortStart
-stubborn We can't just leave, we're supposed to fight her! Where are you going?
+stubborn We can't just LEAVE, we're supposed to FIGHT HER! Where are you going?!
 
 label abortReturn
-stubborn Oh, about *time.* I can't believe you were about to run away.
+stubborn Oh, about TIME. I can't believe you were about to run away.
 
 // Cabin //
 
 label cabinIntro
 nowplaying The Adversary
 n The cabin is tighter than its exterior would suggest. Its cold stone walls press in on you, as if trying to forcefully direct you towards your destination. The only furniture of note is a black-iron altar with a pristine blade perched on its edge.
+    stubborn See? Even the CABIN has the right idea. Let's. Get. Moving! /// check
 n The blade is your implement. You'll need it if you want to do this right.
 
 label takeBlade
@@ -58,15 +60,16 @@ label askMirror
 n That's because there isn't a mirror. There's the altar, the blade sitting on the altar, and the door to the basement. There's nothing else in here.
 
 label askMirrorStart
-stubborn Oh, stop bickering and just get on with it. Who even cares if there's a mirror?
+    stubborn You already wasted SO much time in the woods! WHO EVEN CARES if there's a mirror? /// check
+    stubborn Oh, STOP BICKERING and just GET ON WITH IT. Who even cares if there's a mirror? /// checkfalse
 
 label mirrorGone
-stubborn And now it's gone, so all of us can stop arguing about it and get to fightin'.
+stubborn And now it's GONE! So all of us can STOP ARGUING about it and GET TO FIGHTIN'.
 
 // Stairs //
 
 label stairsStart
-    stubborn No blade this time? Right then, fisticuffs it is. Probably more fair to her anyway. Wouldn't want to feel like we cheated our way to a win. /// noblade
+    stubborn No blade this time? RIGHT then, fisticuffs it is. Probably more fair to her anyway. Wouldn't want to feel like we CHEATED our way to a win. /// noblade
         n As long as you can still get the job done... and don't forget that the blade is waiting for you upstairs if you happen to change your mind. /// noblade
         linebreak /// noblade
 label stairsStartJoin
@@ -74,7 +77,7 @@ n The door to the basement creaks open, revealing a rough stone staircase, its w
 n Her fierce voice carries up the stairs.
 p Is that another challenger? *Finally.* It's been ages since I've had a good fight.
 hero This isn't what she sounded like last time. Her voice is a little deeper, almost threatening.
-stubborn Good. Sounds like my kind of Princess.
+stubborn GOOD. Sounds like MY KIND OF PRINCESS.
 n As much as I appreciate the enthusiasm, just make sure you don't let your bloodlust get to your head. You need to stay focused and keep your wits about you. Remember you're here to *slay* the Princess, not to have a good fight.
 linebreak
 n As you descend the final step, the form of the Princess comes into view, a large shackle leading from her wrist to the basement wall.
@@ -114,11 +117,11 @@ n Of course I'm not okay! As far as we're all concerned, the fate of *my* world 
 
 label apathyNarratorProof
 n You're joking, right? I'm just going to pretend that you're joking.
-stubborn Yeah. You'd better be joking. We can't win unless you take this seriously.
+stubborn Yeah. You'd BETTER be joking. We CAN'T WIN unless YOU take this SERIOUSLY.
 
 label gaslightNarratorProof
 n Don't try to lie to me. Just... *please,* take this seriously.
-stubborn Agreed. We can't win unless you treat this fight with the gravity it deserves.
+stubborn Agreed. We can't win unless YOU treat this fight with the GRAVITY IT DESERVES.
 
 label worryNarratorProof
 n Great. Now focus up and *do it,* then.
@@ -146,12 +149,12 @@ p Aside from your empty hands, you look exactly the same.
 
 label memoryDistantMenuBlade
 p Oh, I remember you, alright. Best three minutes of my life. So why don't we do it again?
-stubborn See? She wants to fight us again. There's no reason for us to stand around talking.
+stubborn See? She wants to fight us again! There's no reason for us to stand around talking.
 
 label memoryDistantMenuNoBlade
 p Oh, I remember you, alright. Best three minutes of my life. So why don't we do it again? Or are you scared I'm going to put you down for good this time?
 
-stubborn Are you just going to let her talk to us like that? We're not scared.
+stubborn Are you just going to let her talk to us like that? We're not SCARED.
 n I think my position on violence in this situation is already more than clear, but you really shouldn't let yourself be goaded so easily. There's more at risk in this encounter than your fragile ego.
 hero I agree. If we're going to fight her, we need a weapon.
 
@@ -175,7 +178,7 @@ label seriousFreeOfferBlade
 p But you're going to have to *fight me to the death.*
 hero Nevermind.
 n There is no happy ending here where everyone makes it out of this place alive. You either deal with her here, right now, or she'll eventually find her way out. Whether she even wants to leave is hardly relevant. This cabin won't last forever.
-stubborn Hear that? Between Him and her, that should be all the motivation you need. Now stop standing there and fight her!
+stubborn Hear that? Between Him and her, that should be all the motivation you need. Now stop STANDING THERE and FIGHT HER!
 n No. Stop standing there and *slay* her.
 jumpto seriousFreeOfferJoin
 
@@ -183,20 +186,20 @@ label seriousFreeOfferNoBlade
 p As long as you go back upstairs, pick up that knife, and *fight me to the death.*
 hero Nevermind.
 n There is no happy ending here where everyone makes it out of this place alive. You either deal with her here, right now, or she'll eventually find her way out. Whether she even wants to leave is hardly relevant. This cabin won't last forever.
-stubborn Hear that? Between Him and her, that should be all the motivation you need. Now pick up the blade and fight her!
+stubborn Hear that? Between Him and her, THAT should be all the motivation you need. Now pick up the blade and FIGHT HER!
 n No. Pick up the blade and *slay* her.
 label seriousFreeOfferJoin
 hero You're being a bit semantic, aren't you?
 n I am, but it's an important distinction. If you're going to see this through, you need to hold the right intent. This isn't a sparring match, it is a lethal confrontation that will decide the future of *everything.*
-stubborn Fine. As long as it leads to a fight, do whatever He just said.
+stubborn Fine. As long as it leads to a fight, do... whatever He just said.
 
 label wantFreeOffer
 p I want the two of us to fight to the death. I want to feel your knife split my flesh, and I want to hear your bones snap beneath my fists.
 p Is that really too much to ask?
 hero Yeah. Especially that last part.
-stubborn Don't be such a coward.
+stubborn *Scoff.* Don't be such a COWARD.
 hero I'm just being... cautious. If it comes to violence, we can find a way to deal with her that doesn't involve throwing our life away. I'd rather not die again, and I find it... deeply disturbing that you seem to *relish* the thought of it.
-stubborn Because it doesn't matter if we die again! It'll just be another opportunity to have the fight of our life.
+stubborn Because it doesn't MATTER if we die again! It'll just be another opportunity to have the FIGHT OF OUR LIFE.
 hero We don't know that for sure, and I'd rather not bet on it...
 
 label whyFreeOffer
@@ -210,7 +213,7 @@ p There's nothing out there for me. The only thing I care about is right here.
 p All I want is to keep knowing what it feels like to kill you and be *killed* by you.
 p I want to feel that knife split me open. I want to feel your bones snap beneath my fists.
 n I think I'll just let the Princess speak for herself here. Leaving her in the basement isn't an answer. You have to make a choice.
-stubborn And there's only one choice worth making. Fight her! Win!
+stubborn And there's only one choice worth making. FIGHT HER. WIN!
 
 label unpackDistantMenu
 p What is there to unpack? I was dead and now I'm not and the same goes for you. There. Unpacking done.
@@ -240,7 +243,7 @@ n You take a cautious step towards the Princess. Unarmed. I wish I could believe
 label closeStartJoin
 n You stop a few feet short of her reach, her chains taut as she stares down at you.
 hero She's a lot bigger than I thought she was.
-stubborn Why do you sound so scared? We can take her.
+stubborn Why do you sound so scared? We can take her!
 p Well? What do you want? Because every second we waste talking is a second we could spend killing each other instead.
 
 label closeBreakChains
@@ -251,11 +254,11 @@ bladeswitch closeBreakChains
 
 label closeBreakChainsBlade
 n You took the blade. How about you use it?
-stubborn Exactly. We do exactly what I've been telling you to do since the second we got here. We fight her, we kill her, we win.
+stubborn Exactly. We do EXACTLY what I've been telling you to do since the second we got here. We fight her, we KILL her, we *WIN.*
 
 label closeBreakChainsNoBlade
 n Oh, if only there were some sort of weapon you could use to fight a world-ending monstrosity... I wonder where you might find one of those.
-stubborn Just do exactly what I've been telling you to do since the second we got here. Take the blade, fight her, kill her, and *win.*
+stubborn Just do exactly what I've been telling you to do since the second we got here. Take the blade, fight her, KILL her, and *WIN.*
 
 label closeBreakChainsJoin
 p What, did you think you were safe standing right outside my grasp? The only reason I haven't drawn blood is because I want to make sure that your heart is in it. I don't like fighting someone with a weak spirit.
@@ -308,12 +311,12 @@ p I like it. It's so cramped. Like the only way out of here is through each othe
 label botherAfterDied
 p Gah! I care, okay? I guess I just care differently than you. When I saw you come back down here, I thought you would understand! I thought that we would want the same thing.
 p But all you've done is ask me annoying little questions. It's like you don't even want to enjoy being alive.
-stubborn I wish she could hear ME right now. I want to enjoy being alive! I want to fight!
+stubborn I wish she could hear ME right now. I want to enjoy being alive! I WANT TO FIGHT!
 
 label whyCloseMenu
 p We don't, because I know why we're here. We're here to kill each other.
 hero "We're here to kill *each other?*" It sounds like she doesn't care if she dies here. Maybe we can use that to our advantage.
-stubborn How boring. I'm not interested in watching you try and outwit her, I'm interested in overpowering her. We shouldn't need to use any dirty little tricks to win.
+stubborn How *boring.* I'm not interested in watching you try and *outwit her,* I'm interested in *overpowering* her. We shouldn't NEED to use any dirty little tricks to win.
 
 label literalWhyHere
 p And then what? I'm still going to want to coat these walls in our blood. I know what I am. I don't need answers.
@@ -329,7 +332,7 @@ label noEndWhyHere
 p The world. Ha! If there's a world I haven't seen it. There's you, and there's me, and there's the ground beneath our feet.
 hero Okay, that's not right. There's definitely a world. We've seen it with our own eyes!
 n That's right. Don't let her drop the stakes of this situation.
-stubborn That's right, it's good to have a goal. It's good to have something to fight for.
+stubborn That's right, it's good to have a goal! It's good to have something to fight FOR.
 
 label reasonCloseMenu
 p I don't need to care, because I already know what I am. I've already found my purpose.
@@ -341,14 +344,14 @@ label closeGrinJoin
 n The Princess flashes a sinister grin.
 p You.
 hero Does she mean... her purpose is killing us?
-stubborn No, she means *fighting* us. She means both of us getting stronger through sheer pain and will, with the fear of death no longer able to hold us back.
+stubborn No, she means FIGHTING us. She means both of us getting stronger through sheer PAIN AND WILL, the fear of death NO LONGER ABLE TO HOLD US BACK.
 bladeswitch closeGrin
 
 label closeGrinBlade
-stubborn Just start stabbing her already! I'm sick of all this anticipation. We're *ready.*
+stubborn Just. Start. STABBING her already! I'm SICK of all this ANTICIPATION! WE'RE *READY.*
 
 label closeGrinNoBlade
-stubborn Just go and pick up the blade already. I'm sick of all this anticipation. We're *ready.*
+stubborn Just go and pick up the BLADE already! I'm SICK of all this anticipation. WE'RE *READY.*
 
 label retrieveCloseMenu
 p I'll be waiting, but you'd better not be wasting my time.
@@ -363,7 +366,7 @@ stubborn Oh, we'll make it count, alright.
 label directStart
 n You can feel flesh give way before a sudden impact blunts your momentum, your weapon tightly lodged in the bone of her arm. She grins at you from behind her guard.
 hero Pull it out. We'll try a different angle.
-stubborn No. We can do this. Just. Keep. Pushing.
+stubborn No. We can DO this. JUST. KEEP. PUSHING.
 hero We're not going to win if her weapon's stuck in our arm.
 
 label unlodgeDirect
@@ -390,12 +393,12 @@ label understandingKnowledge
         n That's not what's going on. There's an entire world at stake here! /// check
 
 label understandingAgree
-stubborn Yes! The fate of the world doesn't matter. The only thing that matters is this fight. The only thing that matters is getting *stronger.* And the only way to get stronger is to *win.* Even if it takes us forever to get there.
+stubborn Yes! The fate of the world doesn't matter. The only thing that matters is this FIGHT. The only thing that matters is getting STRONGER. And the only way to get stronger is to WIN. Even if it takes us FOREVER to get there.
 
 label understandingOther
-p Don't you all get it? The fate of the world doesn't matter. The only thing that matters is this fight.
+stubborn Don't you all get it? The fate of the world doesn't matter. The only thing that MATTERS is this FIGHT!
 p And look at us. We're both so much stronger than we were last time. Think about how much more we can become. Nothing is better than this.
-stubborn She's right. Imagine how much further we can push each other. Imagine how strong we can be.
+stubborn She's right. Imagine how much further we can push each other. Imagine how STRONG we can be!
 n I warned you on the stairs and I'll warn you again. Don't get caught up in emotion. Remember why you're here.
 p Ugh. I hate using words. They're so clumsy.
 
@@ -406,10 +409,10 @@ label pushCont
 n Your balance is suddenly thrown off as the Princess pulls you into her knee.
 n It collides with your ribs and you feel them splinter, cracking like wet wood from the impact.
     n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// notbroken
-stubborn We're fine.
+stubborn We're FINE!
 n But you barely have enough time to notice before the Princess follows up and smashes her forehead against yours.
 n Your grip loosens from the impact, the blade still wedged in her arm as you tumble to the cold stone floor.
-stubborn I said we're *fine.*
+stubborn I said we're FINE.
 n I didn't say you weren't fine. I was just describing what happened.
 hero You might not have said as much, but you certainly implied it.
 n It really doesn't matter. The Princess glances down at the blade embedded in her arm, and with near total ignorance to pain, slides it out of its sinewy prison.
@@ -421,9 +424,9 @@ p How much more proof do you need? Would it help to watch me rise from the dead 
 p Fine. Go ahead. Stab me in the heart. See what happens.
 n The Princess throws open her arms, exposing her chest. Is... she really just going to let you slay her? *Do it.* Do it *right now* before she changes her mind.
 hero Hold on. What if this is a trick? If she's leaving herself open like this, there's only one way we can strike at her. For all we know she's three steps ahead of us.
-stubborn Three steps ahead of us? Have you met her? This isn't a trick.
+stubborn Three steps ahead of us? Have you MET her? This isn't a trick!
 hero And how would you know that?
-stubborn Because *I* wouldn't think to trick us. So why would she?
+stubborn Because *I* wouldn't think to trick us. So *why would she?*
 n That's a great point. So please, stop hesitating and end this now.
 
 label openingFail
@@ -445,7 +448,7 @@ n You're walking a thin line, "Hero."
 p *Is* there more to life? When you're not here I feel empty and alone. When we're not fighting I feel... stuck. Like there's something important I'm supposed to be doing, like I'm being shoved into a space where I don't fit.
 p But when we fight each other... when we fight each other it's like this *wave* of feeling.
 p Like everything I break in you and everything you break in me is important, like we're really, *truly* communicating.
-stubborn Life is suffering, and we will feel every inch of it, and we will persevere...!
+stubborn Life is suffering, and we will feel every inch of it, and WE WILL PERSEVERE...!
 hero Can't say I'm a fan of whatever... weird bond those two have.
 n Nor am I. It's dangerous. But maybe you can use it to your advantage.
 
@@ -472,7 +475,7 @@ stubborn *Sniff.*
 n I'm sorry, are you *crying?*
 p *Sniff.*
 hero Is *she* crying?
-stubborn *Sniffling.* Are you two *not?* That was some *goddamned POETRY!*
+stubborn *Sniffling.* Are you two *not?* That was some GODDAMNED *POETRY!*
 p I'm ready whenever you are.
 
 label attackPenultimate
@@ -480,25 +483,25 @@ n You and the Princess attack each other once again, each of you dealing a singl
 hero Wait, does that mean we're...?
 n Dead. Or, rather, about to be dead. As your blade pierces her sternum, the Princess buries her fist into the soft meat of your organs. You feel a few horrifically painful pops, a gush of fluid, and... it's over. It's finally over.
 linebreak
-stubborn No it's not. We're just getting started.
+stubborn No it's not. We're *just getting started.*
 n But it is over. Dead is dead. I know this isn't the happiest ending for you, but you saved the entire world from ruin. There are few better endings than that.
-stubborn Well? Are you going to listen to him, or are you going to listen to me? Get. Up.
+stubborn Well? Are you going to listen to Him, or are you going to listen to *me?* GET. UP.
 
 n Wait. No, that can't be right.
 n Your eyes bolt open, and you push yourself back to your feet... alive.
-stubborn Ha! I told you. I told you this wasn't over.
+stubborn HA! I TOLD you. I TOLD you this wasn't over.
 hero What about her? That blade went right through her heart...
-stubborn What *about* her? If we're fine, then she's fine.
+stubborn What about her? If we're fine, then she's fine.
 n No, she's *dead.* She *has* to be -- NO!
 truth The Princess lifts her head, flashing you an unhinged grin.
 n *Great.* We're all shit out of luck, aren't we?
-stubborn I knew it! I *told* you we should all believe in her! This is *perfect!*
+stubborn I knew it! I TOLD you we should all believe in her! This is PERFECT!
 n The Princess rises from the ground, staggering slightly, one hand wrapped around the hilt of the blade still buried in her heart.
 p We don't even need to start over anymore, do we? Let's go again!
 
 label noDie
 n She pulls the weapon from her chest, barely wincing, and hurls it at your feet.
-stubborn You know what to do. Again!
+stubborn You know what to do. AGAIN!
 hero But she came back! What's the point of fighting her if she can just do that?
 n All of you need to settle down! This whole situation is coming dangerously close to untethering. She clearly never actually died. You just missed her heart, that's all.
 hero Oh. We just missed her heart. Of course! That's all. You were the one who said we hit her heart! You were the one who said it was "finally over!"
@@ -509,7 +512,7 @@ n I never said I knew *everything.*
 label noDieExplore
 n Nothing. It means nothing. I shouldn't have said that.
 hero But you did say it, so it means something.
-stubborn Oh stop bickering over nothing. Our destiny is right in front of us. Pick up the blade, and go to her!
+stubborn Oh, stop BICKERING over nothing. Our destiny is right in front of us. Pick up the blade, and GO TO HER!
 n Okay fine. That is what I meant by 'untethering.' Do you hear him rambling on about destiny? He's lost the thread, and if you lose the thread, you won't be able to save the world.
 hero And what is *that* supposed to mean?
 n I don't have to answer that, and I'm not going to answer that.
@@ -527,7 +530,7 @@ label cantDieJoin
 unlock advyFight
 hero I. I don't like that resignation. Are you sure we can't just unthink it?
 n Yes. Like I said, I'm afraid some thoughts can't be unthought. I'll be back in a moment. I'm going to pour myself a stiff drink. If I'm going to see the end of everything, I'd rather not be sober.
-stubborn So I was right! Why are all of you so glum? This is perfect, isn't it? We get to experience greatness and battle and triumph forever.
+stubborn So I was *right!* Why are all of you so glum? This is PERFECT, isn't it? We get to experience greatness and BATTLE and *TRIUMPH* forever.
 n Well, I think it was the stubborn one who said your destiny awaits, right?
 hero No no no. No. Hold on, there has to be another way. What if we just leave her down here? What if we run away? What if we convince her to *not* end the world?
 n You can't reason with her. Ending the world is her fundamental nature. It's not a decision she can flip on and off. It *is* her.
@@ -551,20 +554,22 @@ label directEndStartFromOpening
     hero That's a lot of flowery description coming from someone who thinks he already knows how this is going to play out. /// check
         n Oh indulge me, will you? Me knowing how this is going to play out is exactly why I'm being flowery. Let me have just this one thing, alright? /// check
         hero Alright. /// check
-stubborn Here it comes. The big finish.
+stubborn HERE IT COMES. THE BIG FINISH.
 n Free from hesitation, you close the distance, both you and the Princess ready to end each other.
 n Your blade digs into her neck, grinding against her vertebrae as her fist connects with your body and -- /// interrupt
 linebreak
 n Wait, no, really?
 hero What happened? Why did everything go dark?
 n You died. That blow was apparently lethal. How anticlimactic.
-stubborn You don't get it, do you? We're not dead. We're stronger than this. So stop whining and get up.
+stubborn You don't GET it, do you? We're NOT dead. We're STRONGER than this. So STOP WHINING and GET UP.
 n Saying "get up" is not going to change the fact that you're dead. How dense are you?
-stubborn Funny that you're calling me dense when you still haven't figured it out. We can't be dead. We're just like her. All of you need to wake up, and enter the new world.
+stubborn Funny that you're calling ME dense when YOU still haven't figured it out! We CAN'T be dead! We're just like her. All of you need to WAKE UP, and ENTER THE NEW WORLD.
 hero You know... maybe he has a point. If we're *dead* dead, how are we still talking?
 n Because you being dead is reality! Because it says *right here* that you're -- /// interrupt
 
+stubborn Well?
 n Alive.
+stubborn That's right.
 p I thought I lost you there, but you've figured things out, haven't you? Good. The two of us can finally be together.
 
 label directEndStartOther
@@ -572,7 +577,7 @@ n Free from hesitation, you close the distance, both you and the Princess aiming
 n Your blade digs into her neck, grinding against her vertebrae as her fist connects with your body. The impact forces the air from your lungs, stars dancing in front of your eyes as you fail to keep your bearing.
 linebreak
 n You both collapse to the ground before either of you has a chance to survey the damage.
-stubborn And then we get up.
+stubborn And then we GET UP.
 
 n Yes. And then you get up.
 p That was a good one. More!
@@ -619,9 +624,9 @@ p See you soon.
 unlock advyBait
 n And then she stumbles back into the wall, the blade still lodged firmly in her chest. She collapses to the ground.
 n She's dead. It's over. It's finally over.
-stubborn But... but it can't be over! She said she'd be back!
+stubborn But... but it CAN'T be over! She said she'd be BACK!
 hero I know the two of you had some sort of weird... bond. But look on the bright side. Now we don't have to die! Isn't that nice?
-stubborn No! It's not nice! I wanted to fight her forever! This... this is shit! It's not fair!
+stubborn No! It's not "NICE!" ... I-I wanted to fight her forever! This... this is SHIT! It's not FAIR!
 n Life isn't fair, but what's done is done, and whether you like it or not, the entire world is in your debt for saving it from ruin. I'm sure in due time you'll learn to live with yourself.
 hero Let's just get out of here.
 n Yes, that sounds like a splendid idea.
@@ -636,16 +641,17 @@ hero I'm not the only one who just saw her eyes open, right?
 n What are you talking about, for the millionth time she's -- /// interrupt
 p Hahahaha! Yes! I told you I'd be back!
 n ... Alive. We're shit out of luck, aren't we?
+stubborn I KNEW it! I TOLD you all we should believe in her! This is PERFECT!
 p And you waited for me. I knew I could count on you, I knew we were *connected.*
 n The Princess staggers to her feet, one hand wrapped around the hilt of the blade you buried in her heart.
 p We don't even need to start over anymore, do we? Let's go again!
 
 label leaveOpening
 n Thank you for listening to reason. For a second there I was concerned you'd bought into that stubborn one's madness.
-stubborn Madness? I'm the only sane one here! I understand what we're supposed to be! The rest of you are in denial!
+stubborn *Madness?* I-I'm the only sane one here! I understand what we're supposed to BE! The rest of you are in DENIAL!
 n You turn your back to the Princess and make your way to the base of the stairs. It's time for you to move on to a new, safer chapter of your life.
 label openingCont
-stubborn I'm telling you, she's coming back. She said she's coming back.
+stubborn I'm telling you, she's. Coming. Back. She said she's coming back.
 n She's not.
 stubborn She is!
 n She's not. Coming. Back. She's DEAD. Your blade is embedded in her heart. You slew her. It's over. I don't know how many more times or how many different ways I need to express this objective reality before it finally makes its way through your dense skull.
@@ -658,7 +664,7 @@ stringautojump OpeningCont
 label leaveOpeningCont
 p Hahahaha! Yes! I told you I'd be back!
 hero What was that?
-stubborn You know what that was.
+stubborn YOU KNOW WHAT THAT WAS.
 n Yes. That's the sound of the entire world being shit out of luck.
 p Are you walking away from me? You didn't think this would work, did you? I can't believe you were just going to leave me here.
 n You turn around to see the Princess stumbling to her feet, one hand wrapped around the hilt of the blade you buried in her heart.
@@ -669,10 +675,10 @@ p You're not getting out of this that easy.
 label retrieveStart
 n You make your way back up the stairs to the cabin above. The Princess, surprisingly true to her word, lets you leave.
 n The blade remains where you left it on the wrought-iron altar.
-stubborn Great. Now pick it up and march back down there. I'm tired of us constantly moving in circles instead of fighting her like we're supposed to.
+stubborn Great. Now pick it up and MARCH BACK DOWN THERE. I'm tired of us constantly moving in CIRCLES instead of *FIGHTING HER* LIKE WE'RE SUPPOSED TO.
 
 label exploreRetrieve
-stubborn Me. I say that.
+stubborn Me! *I* say that!
 n Staying up here doesn't solve anything. All it does is kick the can down the road. If you don't deal with her now, she will find a way a out.
     hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// brokechains
     hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// notbroken
@@ -688,23 +694,23 @@ n Did you pick up the blade just to mess with me? Is your brain that numb to the
 
 label stayRetrieve
 n ... Fine. You stay up here. Nothing happens. Are you done? Are you ready to finally start taking this seriously?
-stubborn I'm ready to start taking this seriously. Put me in charge.
+stubborn I'M ready to start taking this seriously. Put ME in charge!
 n Oh how I wish I could, because literally anyone else making decisions would be better than this, but unfortunately that's beyond the scope of my abilities.
 hero Is she really just going to wait down there forever? She's got to start getting impatient eventually -- /// interrupt
 n Your thoughts are interrupted by the sound of the Princess furiously stomping her way up the stairs.
     hero But what about her chains?! /// notbroken
-        stubborn What *about* them? They're clearly not holding her back any longer. /// notbroken
-stubborn Hahaha. Yes! Yes! We're finally going to get our rematch and there's nothing you can do to stop it.
+        n  What *about* them? They're clearly not holding her back any longer. /// notbroken
+stubborn HAHAHA. YES! *YES!* We're finally going to get our rematch and there's NOTHING you can do to stop it.
 label leaveRetrieve
 p I'm tired of waiting. You thought you could just leave me down there, didn't you? But I can feel you trembling on the other side of this door. There's nowhere left for you to run.
 
 label returnFailRetrieve
-stubborn We're not going back down there without the blade.
+stubborn We're NOT going back down there without the blade.
 
 label returnRetrieve
 n Blade in hand, you make your way back down the basement stairs.
 n You find the Princess waiting for you, just where you left her.
-stubborn See? I knew we could trust her. I told you we could trust her.
+stubborn See? I *knew* we could trust her. I TOLD you we could trust her.
 p Glad to see you finally stopped having cold feet. I could barely wait, my skin is practically crawling with anticipation.
 p Fight me. NOW.
 
@@ -717,12 +723,12 @@ n Your legs refuse to stand strong beneath you, your head swims and your ears ri
 n Your mind and body both hesitating, the Princess smashes into you. You failed to draw first blood, and you'll never have the chance to draw second. Everything goes dark, and you die. I'm sorry.
 hero That's it?
 n That's it.
-stubborn Bullshit! Whatever. We'll do better next time.
+stubborn BULLSHIT! I -- *Whatever.* We'll do better next time.
 
 label fightStart
 n Finally ready to complete your destined task, you launch off the wet stone floor of the basement and catapult yourself headlong towards the Princess.
 hero Here we go. Let's make this count.
-stubborn Oh, we'll make it count, alright.
+stubborn OHH, WE'LL MAKE IT COUNT, ALRIGHT.
 n As you bridge the gap, your blade slashes across the Princess's chest, splitting skin and drawing a jagged line of bright red blood.
 n But she's unfazed by your onslaught. Her expression barely changes as her fist collides with your ribs, cracking them like twigs and driving you right back down to the basement floor.
     n You can hear her chains snap as you struggle to recover from the impact. /// notbroken
@@ -737,7 +743,7 @@ p So don't be afraid. Don't hesitate. Kill me!
 n Don't let her get into your head. You've only got one shot at this.
 label fightProofJoin
 hero She's huge, but that probably means she's slower than us. Take it slow, think it through, and don't panic. Bleeding her out is our best course of action.
-stubborn Don't listen to them. She understands something that they don't. The only way to win, the only way out of this, is *through her.*
+stubborn Don't listen to them. She understands something that they don't. The only way to win, the only way out of this, is THROUGH. HER.
 
 label fightStrike
 n If that's your plan, then that's your plan. You push yourself off the ground, ignoring the pain in your ribs as you charge at the Princess once more.
@@ -753,7 +759,7 @@ label dodgeSecondAttack
 n You push yourself off the ground and attack the Princess, trying to bait an opening.
 label dodgeEndJoin
 n You do your best to outplay her, slashing out and leaving red cuts in the tattered remains of her white dress, but you have little room to maneuver. For every glancing blow you manage to land, she slams you against the wall in retaliation, each impact threatening to be the last.
-stubborn This weak little dance isn't working. Just toughen up and overpower her!
+stubborn This... weak little dance isn't working. Just toughen up and OVERPOWER HER!
 hero She's throwing us around like a ragdoll. I think "overpowering her" is a little out of the question.
 p Did you think you could stop me with a few cuts? All this dancing around is doing nothing but annoying me. I own this place. And I own you.
 n The Princess' arm shoots forward, her palm wrapping around your head, fingers gripping your skull.
@@ -768,13 +774,13 @@ n Everything goes dark, and you die.
 label unarmedStart
 n *Sigh.* I guess we'll have to see how this goes...
 n Your hands empty, you charge the Princess.
-stubborn Quit the pessimism, will you?
+stubborn Quit the PESSIMISM, will you?
 hero Right? It's almost like you don't want us to beat her.
 n No. Look. I'm rooting for you. I really am. I'm just doing my best to keep my expectations grounded. You don't have a weapon. You're supposed to have a weapon.
 stubborn We'll be fine. Just watch.
 n You attack, fists raised, and the two of you fall into combat. Your clawed fingers tear into her flesh, and her fists and elbows return the blows in kind, bruises blossoming in her wake and blood vessels rupturing in vivid sprays of gore.
 p Not bad. You're tougher than I thought you'd be.
-stubborn Hear that? She respects us. We can pull this off!
+stubborn Hear that? She RESPECTS us. We can PULL THIS OFF!
 hero Yeah... yeah! You're right!
 p But without that knife you'll never be enough.
 n Her knee connects with your sternum with a loud, violent crack. The wind leaves your lungs, and as you struggle for breath, you can feel something flooding in to fill the space. Hot blood, suffocating you from the inside.
@@ -783,7 +789,7 @@ linebreak
 n You don't so much as see her movement before she deals the killing blow. Everything goes dark, and you die.
 hero Are... are you serious? That's it?
 n That's it.
-stubborn Like hell it is! We're not giving up that easy, now GET UP!
+stubborn Like hell it is! We're not giving up that easy, now GET! UP!
 n Didn't you hear me? You're dead. There's no getting up from that.
 
 n Wait... no, that's not right you're -- /// interrupt
@@ -796,7 +802,7 @@ label faceUnarmedPhase1
 p You don't. I don't even know how you're talking to me!
 n You raise your hands and touch the front of your head. She's... not wrong.
 hero What?!?!? What did she do? What are we missing?
-stubborn Who cares if we're missing our face? We can fight just fine without one.
+stubborn WHO CARES if we're missing our face?! We can fight JUST FINE without one!
 
 label retrieveUnarmedPhase1
 n The Princess breaks into a wide grin.
@@ -827,14 +833,14 @@ linebreak
 n She lands another devastating -- no, lethal -- blow. Everything goes dark. Again. And you die. Again.
 stubborn You know what I'm going to say.
 hero That we're not dead?
-stubborn Yeah. That we're not dead. Come on. Get up. If we can just keep going, we're bound to wear her down eventually.
+stubborn Yeah. That we're not dead. COME ON. GET UP. If we can just keep going, we're BOUND to wear her down eventually.
 hero Are you sure she can't do what we're doing right now?
     stubborn Of course I'm sure. We're *special,* remember? /// check
     stubborn There's only one way to find out. /// checkfalse
 
 label unarmedDiePhase1
-stubborn You can't just... decide to die like that! Not when we're so close.
-stubborn You! Annoying Man Who Tells Us To Do Things! You're not just going to let this happen, are you? We can't slay the Princess if we're dead!
+stubborn You can't just... DECIDE to die like that! Not when we're SO CLOSE!
+stubborn YOU! Annoying Man Who Tells Us To Do Things! You're not just going to let this happen, are you? We can't "slay the Princess" if we're dead!
 n What do you want me to do? I have a duty to report facts as facts, and the fact is that you decided to die. If you have a problem with it, take it up with the one making the decisions.
 jumpto unarmedDie
 
@@ -851,9 +857,9 @@ p B-Bodies aren't supposed to look like that!
 n An uncharacteristic terror seems to grip her voice.
 hero Have we ever seen her afraid before?
 n No, we haven't.
-stubborn This is how we win. We can do this forever.
+stubborn THIS IS HOW WE WIN. We can do this FOREVER.
 p I'm going to put you out of your misery. I don't like looking at you like this. You're all twitching. And wrong.
-stubborn I'd like to see her try. We're invincible!
+stubborn I'D LIKE TO SEE HER TRY. We're INVINCIBLE!
 n Her fist flies towards where your face used to be, your twisted body incapable of moving out of the way. And then you see nothing.
 linebreak
 hero Everything goes dark and we die?
@@ -867,7 +873,7 @@ stubborn Yeah. I quit.
 
 label refuseStart
 n What are you trying to do? Do you think pacifism is going to win her over? Because it won't.
-stubborn Right! This isn't fun. This isn't interesting. It's pathetic and cowardly and boring.
+stubborn Right! This isn't fun. This isn't interesting. It's PATHETIC and COWARDLY and BORING.
 
 label refuseStartBlade
 p Oh, you tease. I can't believe you'd go to all the trouble to bring a knife down here and then refuse to use it.
@@ -879,7 +885,7 @@ p Is that so? Let's see if you still feel that way once I start beating you.
 label refuseBreakChains
 hero She's still bound by those chains. All we have to do is take a step back and she won't be able to do anything to us.
 n All that does is put the two of you at another impasse. You can't stall forever.
-stubborn Ha! Do you really think those chains will stop her? She's not the type to hand out empty threats. She's honest. It's what makes her so interesting.
+stubborn HA! Do you really think those chains will stop her? She's not the type to hand out empty threats. She's honest. It's what makes her so *interesting.*
 hero But she has to be bluffing, right? If she isn't bluffing then why is she still -- /// interrupt
 n You step back as she steps forward, her bindings creaking ominously.
 n And then they snap. It was only a matter of time. But she's loose.
@@ -899,7 +905,7 @@ n You stand your ground as the Princess thunders across the basement floor, her 
 
 label refuseCommit
 n You don't see the impact, and you can't say for sure if you even feel it. But you hear your bones splinter, and you can feel your feet leave the floor as you're hurled bodily into the unflinching stone wall.
-stubborn We're fine.
+stubborn WE'RE FINE.
 hero Are we fine? Are we really?
 n No. You're obviously not fine. Your body is broken.
     jumpto refuseCommitBladeFromFight /// check
@@ -923,7 +929,7 @@ label refuseCommitNoBlade
 p Enough games. Go upstairs, pick up that knife, and fight me.
 
 label stuckRefuse
-stubborn Stop moping. You're fine. Now get up.
+stubborn Stop MOPING, you're FINE. Now GET. UP.
 p What are you made of, tissue paper? I didn't hit you that hard.
 
 label killMeRefuse
@@ -953,7 +959,7 @@ p See you soon.
 
 label fleeBladeStand
 n You grab the blade from the floor and do your best to scramble up the stairs before the Princess can reach you.
-stubborn You coward!
+stubborn You COWARD!
 p Oh no you don't!
 n Your broken bones scream in protest, muscles nearly seizing with the shock, and she's so close on your heels you can almost feel her heavy breath steaming the back of your neck.
 n But you manage, just barely, to throw yourself over the threshold and slam the heavy stone doors behind you.
@@ -970,7 +976,7 @@ p Because why would you... why wouldn't you...
 p Gah!
 n The Princess's shoulders tense with fury as she storms towards you.
 n You can see her face flush, her knuckles going white as she clenches her fists, her entire body trembling with a burning rage.
-stubborn I can't believe you're making me watch this.
+stubborn I can't BELIEVE you're making me watch this.
 p Fine. If you want to die like a pathetic little worm, you can die like a pathetic little worm.
 hero I guess I'll see you all next time.
     n She grabs you by the throat and slams your body against the wall. Her eye twitches as her grip tightens around your neck. /// check
@@ -1000,7 +1006,7 @@ n Her grip hardens, and you feel a horrific pop in your neck.
 n She releases you, your numb body crumpling to the stone floor as your vision starts to fade.
 p ... what am I supposed to do without you?
 hero I guess I'll see you all next time... I can say that now, right? We're dead?
-stubborn Great. I can't wait to be stuck in this useless body all over again.
+stubborn Great. I can't wait to be stuck in this USELESS BODY all over again.
 linebreak
     n I won't be seeing you, but I suppose something like me will. Everything goes dark, and you die. /// check
     n Everything goes dark, and you die. /// checkfalse
@@ -1009,7 +1015,7 @@ linebreak
 
 label freeStart
 n I'm sorry, did I hear that right? Did you just say you're going to try and free her?
-stubborn She doesn't even want to be free!
+stubborn She doesn't even WANT to be free!
 n Exactly. So beyond the apocalyptic *moral* implications of letting her out, how do you even think that's going to work?
 hero I mean, we have a weapon, right? We could always just cut her out, yeah?
 n While she's trying to kill you?
@@ -1020,12 +1026,12 @@ n No. It's not.
 
 n Actually, no. You're not. I have a responsibility to the *world* here, and I'm not just going to let you throw yourself into a scenario where the literal best outcome is the end of everything.
 n Until you come up with *any other idea,* your body remains standing rigidly in place.
-stubborn What do you think you're doing?! You can't just order our body around like it's some sort of... doll!
+stubborn What do you think you're doing?! You can't just ORDER OUR BODY AROUND like it's some sort of... DOLL!
 n Watch me! Your left arm lifts towards the ceiling, and your hand twists into an obscene gesture! See? I can make you do whatever I want.
-stubborn So what, you barely managed to lift our arm.
+stubborn So what? You barely managed to lift our arm!
 p What are you doing? What is that? Why are you moving so... weird?
 n The Princess, taken aback, flashes her own rude gesture in return.
-stubborn Hey. You. Decision-maker. I want us to fight her as much as he wants us to kill her, but this is... boorish. Just ignore him. If you want to try and free her, *I* don't think there's much he can do to actually *stop* you.
+stubborn Hey. You. Decision-maker. I want us to fight her as much as he wants us to kill her, but this is... boorish. Just ignore Him. If you want to try and free her, *I* don't think there's much He can do to actually *stop* you.
 
 n You know what? Fine. Blade in hand, you charge forward to try and free the Princess from her bindings.
 p Finally! I have no idea what you were just doing, but I'm glad it's over.
@@ -1036,9 +1042,9 @@ linebreak
 n Everything goes dark, and you die.
 hero Really? In just one blow?
 n Yes.
-stubborn Oh, come on, that's hardly fair! We're not dead, you're just -- you're just flipping the table over!
+stubborn Oh *come on,* THAT'S hardly fair! We're not DEAD, you're just -- you're just flipping the table over!
 n It is what it is. You're dead. Finished. Over.
-stubborn *Grumbling.* All right. Fine, this whole thing's a frustrating mess anyways. We're better off with a fresh start. I'll see you two next time.
+stubborn *Grumbling.* All right. Fine, this whole thing's a... frustrating mess anyways. We're better off with a fresh start. I'll see you two next time.
 
 // Attempt to flee from the Princess //
 
@@ -1054,10 +1060,10 @@ hero Let's get out of here, quick!
 bladeswitch fleeStartFree
 
 label fleeStartFreeBlade
-stubborn Turn around and fight her. It's the only way out of this!
+stubborn Turn around and FIGHT HER. It's the ONLY way out of this.
 
 label fleeStartFreeNoBlade
-stubborn The blade's still upstairs. Getting it is the only thing that matters right now.
+stubborn The blade's still upstairs. Getting it is the ONLY THING that matters right now.
 
 label fleeExplore
 hero Er, how about we get the hell out of -- /// interrupt
@@ -1070,13 +1076,7 @@ jumpto fleeEndJoin
 
 label fleeRunSuccess
 n You do your best to scramble up the stairs before the Princess can reach you.
-bladeswitch fleeRunSuccess
-
-label fleeRunSuccessBlade
-stubborn You coward!
-jumpto fleeRunSuccessNoBlade
-
-label fleeRunSuccessNoBlade
+    stubborn You... COWARD! /// hasblade
 n You can practically feel her steamy breath on the back of your neck, but you manage, just barely, to throw yourself over the threshold and slam the heavy stone doors behind you.
 n You're safe. If only for a moment.
 
@@ -1101,7 +1101,7 @@ jumpto fleeEndJoin
 label fleeEndJoin
 linebreak
 n *Sigh.* It doesn't matter, because everything goes dark, and you die. Great job.
-stubborn No, come on. We can't be dead! We didn't even get a chance to fight her...
+stubborn No. Come on, we can't be DEAD! We didn't even get a chance to FIGHT her!
 
 label fleeChooseDieCont
 n I'm not the one who decided you should die here. If you have a problem, take it up with the one making the choices.
@@ -1116,11 +1116,11 @@ n Dead is dead, but maybe you'll have better luck next time.
 // Flee upstairs //
 
 label upstairsNoBlade
-stubborn The blade. Take the blade from the altar.
+stubborn The blade. TAKE THE BLADE FROM THE ALTAR.
 
 label upstairsTakeBlade
 n You take the blade from the altar.
-stubborn Finally!
+stubborn *FINALLY!*
 
 label upstairsLeaveBlade
 hero Are you sure about that?
@@ -1137,17 +1137,17 @@ hero We're fine... right?
 bladeswitch upstairsStart
 
 label upstairsStartBlade
-stubborn Of course we are. Any second now she's going to break through that entryway, and we're finally going to get to do what we came here to do.
+stubborn Of course we are! Any second now she's going to break through that entryway, and we're FINALLY GOING TO GET TO DO WHAT WE *CAME HERE* TO DO!
 n Another impact shakes the cabin, a massive gash splitting its way up the stone doors.
 jumpto upstairsStartJoin
 
 label upstairsStartNoBlade
-stubborn If we had a weapon we'd be fine.
+stubborn If we had a WEAPON, we'd BE fine!
 n Yes, you should probably pick up the blade, shouldn't you?
 hero I know I'd feel a lot safer with it.
 n But before you can act, another impact shakes the cabin, a massive gash splitting its way up the stone doors.
 label upstairsStartJoin
-stubborn Here she comes.
+stubborn HERE SHE COMES.
 n The doors explode outwards, shards of stone clattering against the walls as the Princess emerges from the basement.
     p After everything we've been through, I can't believe this is going to end with you cowering in a corner. You're pathetic. /// noblade
     p At least you finally have a weapon. Good. /// hasblade leftblade
@@ -1162,11 +1162,11 @@ jumpto upstairsDieEnd
 // Leads to Chapter III: The Eye of the Needle with the Voice of the Hunted //
 label upstairsFightEnd
 n You do your best to defend yourself from her onslaught, but you're sorely outmatched. For every wound you inflict on her, she inflicts two on you, until finally, you're no longer able to so much as stand. Your body is giving out.
-stubborn "Giving out?" No, nobody's giving out, we're just getting started!
+stubborn "Giving out?" No, nobody's GIVING OUT, we're just getting started!
 hero Don't be delusional. It's over.
 n You fall to your knees.
 p Is... is that it? You're supposed to be tougher than this. Come on! Get up! Keep fighting me!
-stubborn No, this isn't right! Listen to me! Listen to her! We can do this.
+stubborn No, this isn't RIGHT! Listen to me! Listen to HER! We can DO THIS!
 hero We can't.
 p Why. Won't. You. Get. UP?!
 n She kicks you in the chest, splinters from your shattered ribs stabbing into your heart and lungs. Your vision starts to swim. Finally, her face, twisted into an expression of disappointment and fury, fades.
@@ -1176,7 +1176,7 @@ n Everything goes dark, and you die.
 // Leads to Chapter III: The Fury with the Voice of the Broken //
 label upstairsDieEnd
 n She is merciless. With every blow comes a bloom of fresh pain, igniting nerves you didn't know you even had, your skin bruising and splitting and bleeding as her fists rain down relentlessly. But thankfully, you won't have to bear this agony for much longer. Your body has its limits, and she has found them.
-stubborn I hate this.
+stubborn I *hate* this.
 n With your body a shapeless pulp, her fingers wrap around what's left of your neck.
     n The blade falls from your limp grip as she lifts you off the ground. /// hasblade
 

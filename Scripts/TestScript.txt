@@ -59,11 +59,23 @@ hero And it's three, too.
 label strConditionTest
 linebreak
 n How did you die?
-stringswitchjump revival testRevival mutual testMutual
+stringautojump Test
+
+label normalTest
+label otherTest
 cheated You lied and told us she didn't have a weapon, and then she started stabbing us to death!
 
-label testRevival
+label revivalTest
 cheated We stabbed her in the heart and she just got back up and started stabbing us to death!
 
-label testMutual
+label mutualTest
 cheated You lied and told us she didn't have a weapon, and then she started stabbing us to death! At least we got her too, though.
+
+label slowTest
+linebreak
+broken You can't stop us`. We've been through enough`. You don't scare us`.
+
+label elipsesSpeedTest
+linebreak
+broken Test...
+broken Test`.`.`.
