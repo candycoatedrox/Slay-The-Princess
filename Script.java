@@ -46,6 +46,7 @@ public class Script {
 
     // Player-dependent variables used during Chapter 3 only
     private boolean abandoned2;
+    private boolean adversaryFaceExplore;
     private boolean spectrePossessAsk;
     private boolean spectreCantWontAsk;
     private boolean spectreEndSlay;
@@ -846,6 +847,7 @@ public class Script {
         if (this.isChapter3) this.adversaryTookBlade = chapter3.adversaryTookBlade();
         if (this.isChapter3) this.adversaryChainsBroken = chapter3.adversaryChainsBroken();
         this.abandoned2 = (this.isChapter3) ? chapter3.abandoned2() : false;
+        this.adversaryFaceExplore = (this.isChapter3) ? chapter3.adversaryFaceExplore() : false;
         this.spectrePossessAsk = (this.isChapter3) ? chapter3.spectrePossessAsk() : false;
         this.spectreCantWontAsk = (this.isChapter3) ? chapter3.spectreCantWontAsk() : false;
         this.spectreEndSlay = (this.isChapter3) ? chapter3.spectreEndSlay() : false;
@@ -1226,6 +1228,11 @@ public class Script {
                 if (!this.abandoned2) return false;
             } else if (m.equals("noabandon")) {
                 if (this.abandoned2) return false;
+
+            } else if (m.equals("faceask")) {
+                if (!this.adversaryFaceExplore) return false;
+            } else if (m.equals("nofaceask")) {
+                if (this.adversaryFaceExplore) return false;
 
             } else if (m.equals("possessask")) {
                 if (!this.spectrePossessAsk) return false;
@@ -1854,6 +1861,11 @@ Generic modifiers available for all lines (except comments and labels):
             Checks whether the player tried to abandon the Spectre or the Nightmare before running the line.
       - noabandon
             Checks whether the player did not try to abandon the Spectre or the Nightmare before running the line.
+
+      - faceask
+            Checks whether the player asked about their missing face while fighting the Adversary unarmed before running the line.
+      - nofaceask
+            Checks whether the player did not ask about their missing face while fighting the Adversary unarmed before running the line.
             
       - possessask
             Checks whether the Spectre asked to possess the player before running the line.

@@ -25,6 +25,7 @@ public class ChapterII extends StandardCycle {
     private boolean abandoned2 = false;
     private boolean adversaryTookBlade = false;
     private boolean adversaryChainsBroken = false;
+    private boolean adversaryFaceExplore = false;
     private boolean spectrePossessAsk = false;
     private boolean spectreCantWontAsk = false;
     private boolean spectreEndSlayAttempt = false;
@@ -248,7 +249,7 @@ public class ChapterII extends StandardCycle {
         manager.updateTracker();
 
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, adversaryTookBlade, adversaryChainsBroken, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerHeartStopped);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, adversaryTookBlade, adversaryChainsBroken, adversaryFaceExplore, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerHeartStopped);
             ending = chapter3.runChapter();
         }
 
@@ -2166,6 +2167,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "face":
+                    this.adversaryFaceExplore = true;
                     noFaceExplore.set(false);
                     mainScript.runSection("faceUnarmedPhase1");
                     break;
@@ -2563,12 +2565,7 @@ public class ChapterII extends StandardCycle {
         }
 
         mainScript.runSection("upstairsDieCont");
-
-        if (this.adversaryTookBlade) {
-            return ChapterEnding.DEADISDEAD;
-        } else {
-            return ChapterEnding.DEADISDEADUPSTAIRS;
-        }
+        return ChapterEnding.DEADISDEADUPSTAIRS;
     }
 
 

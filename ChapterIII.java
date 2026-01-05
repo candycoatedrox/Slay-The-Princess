@@ -16,6 +16,7 @@ public class ChapterIII extends StandardCycle {
     private final boolean abandoned2;
     private final boolean adversaryTookBlade;
     private final boolean adversaryChainsBroken;
+    private final boolean adversaryFaceExplore;
     private final boolean spectrePossessAsk;
     private final boolean spectreCantWontAsk;
     private final boolean spectreEndSlay;
@@ -31,7 +32,7 @@ public class ChapterIII extends StandardCycle {
      * @param route the Chapters the player has visited so far during this route
      * @param cantTryAbort whether the player has already tried (and failed) to abort this route
      */
-    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean adversaryTookBlade, boolean adversaryChainsBroken, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerForcedBlade, boolean prisonerHeartStopped) {
+    public ChapterIII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, String source2, boolean sharedLoop, boolean sharedLoopInsist, boolean mirrorComment, boolean touchedMirror, boolean isHarsh, boolean knowsDestiny, Voice ch2Voice, boolean abandoned2, boolean adversaryTookBlade, boolean adversaryChainsBroken, boolean adversaryFaceExplore, boolean spectrePossessAsk, boolean spectreCantWontAsk, boolean spectreEndSlay, boolean prisonerForcedBlade, boolean prisonerHeartStopped) {
         super(manager, parser, route, cantTryAbort, prevEnding);
 
         this.source = source2;
@@ -46,9 +47,9 @@ public class ChapterIII extends StandardCycle {
         this.ch2Voice = ch2Voice;
         
         this.abandoned2 = abandoned2;
-        // UPDATE SCRIPT FOR NEW VARIABLES
         this.adversaryTookBlade = adversaryTookBlade;
         this.adversaryChainsBroken = adversaryChainsBroken;
+        this.adversaryFaceExplore = adversaryFaceExplore;
         this.spectrePossessAsk = spectrePossessAsk;
         this.spectreCantWontAsk = spectreCantWontAsk;
         this.spectreEndSlay = spectreEndSlay;
@@ -186,6 +187,14 @@ public class ChapterIII extends StandardCycle {
      */
     public boolean adversaryChainsBroken() {
         return this.adversaryChainsBroken;
+    }
+
+    /**
+     * Accessor for adversaryFaceExplore
+     * @return whether or not the player asked about their missing face while fighting the Adversary unarmed in Chapter II
+     */
+    public boolean adversaryFaceExplore() {
+        return this.adversaryFaceExplore;
     }
 
     /**
@@ -1109,45 +1118,873 @@ public class ChapterIII extends StandardCycle {
             - Stubborn + Contrarian (Adversary)
          */
 
+        boolean foughtUnarmed = false;
         switch (this.prevEnding) {
             case STRIKEMEDOWN:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
                 this.source = "pacifism";
+                break;
 
             case HEARNOBELL:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
                 this.source = "unarmed";
+                foughtUnarmed = true;
+                break;
 
+            case DEADISDEADUNARMED:
+                foughtUnarmed = true;
             case DEADISDEAD:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
                 this.source = "pathetic";
+                break;
 
             case DEADISDEADUPSTAIRS:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryAdversary");
                 this.source = "upstairs";
+                break;
 
             default:
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryTower");
                 this.source = "tower";
         }
 
+        String voiceCombo;
+        if (this.prevEnding == ChapterEnding.GODKILLER) {
+            voiceCombo = "tower";
+            mainScript.runSection("towerStart");
+        } else {
+            voiceCombo = ch3Voice.toString();
+            mainScript.runSection("advyStart");
+        }
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "pulled", "(Explore) It feels like I'm being pulled in a hundred different directions. You'd better all listen to me when the time comes to make a choice."));
+        activeMenu.add(new Option(this.manager, "noReturn", "(Explore) If we hit this \"point of no return\" you mentioned... then what happens?"));
+        activeMenu.add(new Option(this.manager, "proceedA", "No matter what happens next, it seems like all our answers are in the cabin. Let's see this through. [Proceed to the cabin.]"));
+        activeMenu.add(new Option(this.manager, "proceedB", "[Silently proceed to the cabin.]"));
+        activeMenu.add(new Option(this.manager, "abort", this.cantTryAbort, "I'm done with this. Bye! [Turn around and leave.]", 0));
 
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "pulled":
+                    mainScript.runSection(voiceCombo + "PulledWoods");
+                    break;
 
+                case "noReturn":
+                    mainScript.runSection("noReturnWoods");
+                    break;
 
+                case "cGoHill":
+                case "proceedA":
+                case "proceedB":
+                    this.repeatActiveMenu = false;
+                    break;
 
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+                case "cGoLeave":
+                    if (cantTryAbort.check()) {
+                        parser.printDialogueLine("You have already tried that.");
+                        break;
+                    }
+                case "abort":
+                    if (!this.canAbort) {
+                        cantTryAbort.set();
+                        parser.printDialogueLine(CANTSTRAY);
+                        break;
+                    }
 
-        // PLACEHOLDER
-        return null;
+                    mainScript.runSection("abort");
+                    this.abortVessel(true);
+                    return ChapterEnding.ABORTED;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Proceed to the cabin
+        this.currentLocation = GameLocation.HILL;
+        mainScript.runSection("hillDialogue");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed into the cabin.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cGoCabin":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+                
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Enter the cabin
+        this.currentLocation = GameLocation.CABIN;
+        this.withBlade = true;
+        this.mirrorPresent = true;
+        mainScript.runSection("cabinIntro");
+
+        Condition currentMirrorComment = new Condition();
+        InverseCondition noCurrentMirrorComment = currentMirrorComment.getInverse();
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "mirrorA", "(Explore) It's that mirror again. And this time it's blocking the door.", this.mirrorComment, noCurrentMirrorComment));
+        activeMenu.add(new Option(this.manager, "mirrorB", "(Explore) You didn't mention the mirror last time either. Why?", this.mirrorComment, noCurrentMirrorComment));
+        activeMenu.add(new Option(this.manager, "mirrorC", "(Explore) How are we supposed to get to the basement? There's no door. There's just a mirror where the door used to be.", !this.mirrorComment, noCurrentMirrorComment));
+        activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
+        activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "mirrorA":
+                case "mirrorB":
+                case "mirrorC":
+                    currentMirrorComment.set();
+                    mainScript.runSection("mirrorAsk");
+                    break;
+
+                case "cTake":
+                    activeMenu.setCondition("take", false);
+                case "take":
+                    this.withBlade = false;
+                    mainScript.runSection("takeBlade");
+
+                    if (this.hasVoice(Voice.CONTRARIAN)) {
+                        this.threwBlade = true;
+                        OptionsMenu subMenu = new OptionsMenu(true);
+                        activeMenu.add(new Option(this.manager, "no", "No. We absolutely did not throw the blade out the window."));
+                        activeMenu.add(new Option(this.manager, "decisions", "Hey, I thought I was the one who made the decisions around here."));
+                        activeMenu.add(new Option(this.manager, "override", "So, what, you can all just override me now?"));
+                        activeMenu.add(new Option(this.manager, "hellYeah", "Hell yeah, that kicked ass. Love when my tenants throw things out of windows when I'm not paying attention."));
+                        activeMenu.add(new Option(this.manager, "silent", "[Let it go.]"));
+
+                        this.activeOutcome = parser.promptOptionsMenu(subMenu);
+                        switch (activeOutcome) {
+                            case "no":
+                            case "decisions":
+                            case "override":
+                                mainScript.runSection(activeOutcome + "Throw");
+                                break;
+
+                            default: mainScript.runSection("throwJoin");
+                        }
+                    } else {
+                        this.hasBlade = true;
+                    }
+
+                    break;
+
+                case "cGoStairs":
+                case "cApproachMirror":
+                case "approach":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Approach the mirror
+        this.currentLocation = GameLocation.MIRROR;
+        mainScript.runConditionalSection("approachMirror", currentMirrorComment);
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "wipe", "[Wipe the mirror clean.]"));
+        activeMenu.add(new Option(this.manager, "smash", "[Smash it.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "wipe":
+                case "smash":
+                    this.repeatActiveMenu = false;
+                    mainScript.runConditionalSection(activeOutcome + "Mirror", foughtUnarmed, voiceCombo);
+                    break;
+
+                case "cApproachAtMirrorFail":
+                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    break;
+
+                default: super.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Enter the basement
+        this.currentLocation = GameLocation.STAIRS;
+        this.withBlade = false;
+        this.mirrorPresent = false;
+        this.touchedMirror = true;
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "cont", "[Continue down the stairs.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cGoBasement":
+                case "cont":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Continue down the stairs
+        this.currentLocation = GameLocation.BASEMENT;
+        this.withPrincess = true;
+        this.canSlayPrincess = true;
+        mainScript.runConditionalSection("basementStart", voiceCombo);
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "taunt", "\"Given up on destroying the world, have we?\"", source.equals("tower") && this.knowsDestiny));
+        activeMenu.add(new Option(this.manager, "happened", "\"What happened to you?\""));
+        activeMenu.add(new Option(this.manager, "wait", "\"Wait! We don't have to do this!\""));
+        activeMenu.add(new Option(this.manager, "sorry", "\"I'm sorry, okay? I'm sorry for what I did to you!\""));
+        activeMenu.add(new Option(this.manager, "listen", "\"Please just listen to me!\""));
+        activeMenu.add(new Option(this.manager, "round3A", "\"This isn't over until I say it's over. I'm taking you out.\" [Round three.]", source.equals("unarmed")));
+        activeMenu.add(new Option(this.manager, "slayA", "\"I'm going to end you.\" [Slay the Princess.]", this.hasBlade && !source.equals("pacifism")));
+        activeMenu.add(new Option(this.manager, "slayB", "[Slay the Princess.]", this.hasBlade && !source.equals("pacifism")));
+        activeMenu.add(new Option(this.manager, "round3B", "[Round three.]", source.equals("unarmed")));
+        activeMenu.add(new Option(this.manager, "back", "[Fight back.]", (!this.hasBlade && !source.equals("unarmed") || (this.hasBlade && source.equals("pacifism")))));
+        activeMenu.add(new Option(this.manager, "let", "[Let her end you.]"));
+
+        boolean earlyApology = false;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+
+            // Redirect slay command to the appropriate options
+            if (activeOutcome.equals("cSlayPrincess")) {
+                if (source.equals("pacifism")) {
+                    this.activeOutcome = "back";
+                } else {
+                    this.activeOutcome = "slayB";
+                }
+            } else if (activeOutcome.equals("cSlayPrincessNoBladeFail")) {
+                if (source.equals("unarmed")) {
+                    this.activeOutcome = "round3B";
+                } else {
+                    this.activeOutcome = "back";
+                }
+            }
+
+            switch (activeOutcome) {
+                case "sorry":
+                    earlyApology = true;
+                case "taunt":
+                case "happened":
+                case "wait":
+                case "listen":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection(activeOutcome + "Basement");
+                    break;
+
+                case "round3A":
+                case "slayA":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("chargeTalkBasement");
+                    break;
+
+                case "round3B":
+                case "slayB":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("chargeBasement");
+                    break;
+
+                case "back":
+                    this.repeatActiveMenu = false;
+
+                    if (this.hasBlade) {
+                        mainScript.runSection("noFightBasement");
+                    } else {
+                        mainScript.runSection("fightBackBasement");
+                    }
+                    
+                    break;
+
+                case "let":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("letEndBasement");
+                    this.hasBlade = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // You are unwound
+        if (!source.equals("tower")) this.hasBlade = false;
+        mainScript.runConditionalSection("unwoundStart", voiceCombo);
+
+        switch (voiceCombo) {
+            case "tower":
+                if (this.hasBlade) {
+                    return this.furyTower(earlyApology);
+                } else {
+                    return this.furyUnwinding();
+                }
+
+            case "contrarian": return this.furyContra();
+        }
+        
+        // With the Voice of the Cold or Broken (from the Adversary)
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "talkA", "\"And what am I supposed to see?\""));
+        activeMenu.add(new Option(this.manager, "talkB", "\"You're a monster.\""));
+        activeMenu.add(new Option(this.manager, "talkC", "\"Please, just talk to me! Can we not use words to settle our differences? We're both here for a reason. It's more important for us to figure that out than to fight.\""));
+        activeMenu.add(new Option(this.manager, "talkD", "\"You won't win.\""));
+        activeMenu.add(new Option(this.manager, "die", "[Attempt to die.]"));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+        switch (activeOutcome) {
+            case "die":
+            case "silent":
+                mainScript.runSection(activeOutcome + "ColdBroken");
+                break;
+
+            default: mainScript.runSection("talkAttemptGeneric");
+        }
+
+        return this.furyUnwinding();
+    }
+
+    /**
+     * The player is unwound with the Voice of the Contrarian, pushing onward to attack the Fury unarmed
+     * @return the ending reached by the player
+     */
+    private ChapterEnding furyContra() {
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "talkA", "(Explore) \"Numb?! You ripped your own skin off!\""));
+        activeMenu.add(new Option(this.manager, "talkB", "(Explore) \"If you want a challenge, how about you play fair?\""));
+        activeMenu.add(new Option(this.manager, "talkC", "(Explore) \"Do you think this is enough to stop me?\""));
+        activeMenu.add(new Option(this.manager, "talkD", "(Explore) \"What happened to you? You're so much colder than you were before.\""));
+        activeMenu.add(new Option(this.manager, "giveUp", "[Give up.]"));
+        activeMenu.add(new Option(this.manager, "push", "[Ignore her and push forward.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu, true)) {
+                case "cSlayPrincessNoBladeFail":
+                case "cProceed":
+                case "push":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "talkA":
+                case "talkB":
+                case "talkC":
+                case "talkD":
+                    mainScript.runSection("talkAttemptGeneric");
+                    return this.furyUnwinding();
+
+                case "giveUp":
+                    mainScript.runSection("contraGiveUp1");
+                    return this.furyUnwinding();
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Ignore her and push forward
+        mainScript.runSection("contraPush1");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) Guys, I'm not sure we've got this one."));
+        activeMenu.add(new Option(this.manager, "giveUp", "[Give up.]"));
+        activeMenu.add(new Option(this.manager, "push", "[Take another step.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu, true)) {
+                case "cSlayPrincessNoBladeFail":
+                case "cProceed":
+                case "push":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "explore":
+                case "giveUp":
+                    mainScript.runSection("contraGiveUp2");
+                    return this.furyUnwinding();
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Take another step
+        mainScript.runSection("contraPush2");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) \"Mr. Anatomy\" has a point. How *can* we move without any muscle?"));
+        activeMenu.add(new Option(this.manager, "giveUp", "[You don't have any muscle. Give up.]"));
+        activeMenu.add(new Option(this.manager, "push", "[Take another step.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu, true)) {
+                case "cSlayPrincessNoBladeFail":
+                case "cProceed":
+                case "push":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "explore":
+                case "giveUp":
+                    mainScript.runSection("contraGiveUp3");
+                    return this.furyUnwinding();
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Take another step
+        mainScript.runSection("contraPush3");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) This is too much. It isn't going to work. Wouldn't it be better to just start over and try again?"));
+        activeMenu.add(new Option(this.manager, "giveUp", "[You've done enough. It's time to die.]"));
+        activeMenu.add(new Option(this.manager, "heart", "[Reach for her heart.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu, true)) {
+                case "cSlayPrincessNoBladeFail":
+                case "cProceed":
+                case "heart":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "explore":
+                    mainScript.runSection("contraGiveUp3");
+                    return this.furyUnwinding();
+
+                case "giveUp":
+                    mainScript.runSection("contraGiveUp4");
+                    return this.furyUnwinding();
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Reach for her heart
+        mainScript.runSection("contraHeart");
+        this.removeVoice(Voice.NARRATOR);
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cSlayPrincessNoBladeFail":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        // Slay the Princess
+        mainScript.runSection();
+        return ChapterEnding.GOINGTHEDISTANCE;
+    }
+
+    /**
+     * The player is unwound with the Voice of the Broken (from the Tower)
+     * @param earlyApology whether the player apologized to the Fury at the bottom of the stairs
+     * @return the ending reached by the player
+     */
+    private ChapterEnding furyTower(boolean earlyApology) {
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "insides", "(Explore) \"You damned cheater! Give me my insides back!\""));
+        activeMenu.add(new Option(this.manager, "threat", "(Explore) \"I killed you last time, I swear on everything that I'm going to find a way to kill you again!\""));
+        activeMenu.add(new Option(this.manager, "talkA", "(Explore) \"I only killed you last time because you were going to end the world! We can talk ourselves back from this ledge.\""));
+        activeMenu.add(new Option(this.manager, "talkB", "(Explore) \"I'm sorry for what I did to you, but you did horrible things to me, too.\""));
+        activeMenu.add(new Option(this.manager, "talkC", "(Explore) \"Where is all of this supposed to end? We can't just keep killing each other forever.\""));
+        activeMenu.add(new Option(this.manager, "engage", "[This is no time for words. Step forward and engage your enemy.]"));
+
+        String firstTalkAttempt = "";
+        int submitCount = 0;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "insides":
+                case "threat":
+                    this.repeatActiveMenu = false;
+                    firstTalkAttempt = this.activeOutcome;
+                    mainScript.runSection("towerTalkFail");
+                    break;
+
+                case "talkA":
+                case "talkB":
+                    submitCount += 1;
+                case "talkC":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("towerTalkFail");
+                    break;
+
+                case "cSlayPrincess":
+                case "engage":
+                    return this.furyQuantum(false);
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Attempt to talk
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "sorry", "(Explore) \"I'm sorry, okay? I'm sorry for what I did!\""));
+        activeMenu.add(new Option(this.manager, "insides", "(Explore) \"I said, give me my insides back! ... Please?\"", firstTalkAttempt.equals("insides")));
+        activeMenu.add(new Option(this.manager, "threat", "(Explore) \"I said, I'm going to kill you!\"", firstTalkAttempt.equals("threat")));
+        activeMenu.add(new Option(this.manager, "stop", "(Explore) \"We have to stop hurting each other!\""));
+        activeMenu.add(new Option(this.manager, "endGame", "(Explore) \"What's your end game here? Are we supposed to keep torturing each other forever?\""));
+        activeMenu.add(new Option(this.manager, "engage", "[This is no time for words. Step forward and engage your enemy.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "sorry":
+                case "stop":
+                    this.repeatActiveMenu = false;
+                    submitCount += 2;
+                    mainScript.runConditionalSection(activeOutcome + "Tower", earlyApology);
+                    break;
+
+                case "insides":
+                    this.repeatActiveMenu = false;
+                    submitCount += 1;
+                    mainScript.runSection("insidesTower");
+                    break;
+
+                case "endGame":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("endGameTower");
+                    break;
+
+                case "threat":
+                    mainScript.runSection("threatTower");
+                    return this.furyQuantum(true);
+
+                case "cSlayPrincess":
+                case "engage":
+                    return this.furyQuantum(false);
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Final choice
+        this.canSlayPrincess = submitCount < 2;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "submit", "[It's hopeless. Submit.]"));
+        activeMenu.add(new Option(this.manager, "fight", submitCount >= 2, "[Seize control of your broken body and lay waste to your foe.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "submit":
+                    mainScript.runSection("submitTower");
+                    return this.furyUnwinding();
+
+                case "cSlayPrincess":
+                case "fight":
+                    return this.furyQuantum(false);
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player attempts to fight the Fury head-on (only accessible from the Tower)
+     * @param lateJoin whether to skip the first section of dialogue
+     * @return the ending reached by the player
+     */
+    private ChapterEnding furyQuantum(boolean lateJoin) {
+        this.canSlayPrincess = false;
+        if (!lateJoin) mainScript.runSection("quantumStart");
+        mainScript.runSection("quantumStartJoin");
+
+        Condition noEncouragement = new Condition(true);
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "lose", "(Explore) How are we supposed to lose this one?", noEncouragement));
+        activeMenu.add(new Option(this.manager, "cant", "(Explore) I can't do anything right now. She's not letting me.", noEncouragement));
+        activeMenu.add(new Option(this.manager, "worse", "(Explore) She's going to get worse. She gets worse every time we get to a new cabin."));
+        activeMenu.add(new Option(this.manager, "die", "[Shed this vessel for the next.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "lose":
+                case "cant":
+                    noEncouragement.set(false);
+                case "worse":
+                    mainScript.runSection(activeOutcome + "QuantumStart");
+                    break;
+
+                case "die":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: mainScript.runSection("quantumFail");
+            }
+        }
+
+        // Shed this vessel for the next
+        this.removeVoice(Voice.BROKEN);
+        mainScript.runSection("quantumSequence1");
+        
+        int deathNum = 1;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "die2", "[Die again.]"));
+        activeMenu.add(new Option(this.manager, "die3", "[And again.]", activeMenu.get("die2")));
+        activeMenu.add(new Option(this.manager, "die4", "[AGAIN!]", activeMenu.get("die3")));
+        activeMenu.add(new Option(this.manager, "end", "[End this.]", activeMenu.get("die4")));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "die4":
+                    this.canSlayPrincess = true;
+                    this.addVoice(Voice.COLD);
+                case "die2":
+                case "die3":
+                    deathNum += 1;
+                    mainScript.runSection("quantumSequence" + deathNum);
+                    break;
+                
+                case "cSlayPrincess":
+                case "end":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: mainScript.runConditionalSection("quantumFail", deathNum > 1);
+            }
+        }
+
+        // End her
+        mainScript.runSection("quantumEnd");
+        return ChapterEnding.QUANTUMBEAK;
+    }
+
+    /**
+     * The player is unwound by the Fury
+     * @return the ending reached by the player
+     */
+    private ChapterEnding furyUnwinding() {
+        mainScript.runSection("cellsStart");
+        // Voice of the Contrarian is gone at this point; Voice of the Broken gives up if he's from the Tower
+        this.removeVoice(Voice.CONTRARIAN);
+        if (source.equals("tower")) this.removeVoice(Voice.BROKEN);
+
+        mainScript.runSection();
+        // Voice of the Hero is gone
+        this.removeVoice(Voice.HERO);
+
+        if (!this.hasAnyVoice(Voice.COLD, Voice.BROKEN)) {
+            // Fail to survive the unwinding
+            this.activeMenu = new OptionsMenu(true);
+            activeMenu.add(new Option(this.manager, "fakeA", true, "\"Why did you keep me alive?\""));
+            activeMenu.add(new Option(this.manager, "fakeB", true, "\"I've been here so long.\""));
+            activeMenu.add(new Option(this.manager, "fakeC", true, "\"Everyone is gone.\""));
+            activeMenu.add(new Option(this.manager, "fakeD", true, "\"There's no one else here.\""));
+            activeMenu.add(new Option(this.manager, "fakeE", true, "\"I can't feel anything anymore.\""));
+            activeMenu.add(new Option(this.manager, "fakeF", true, "\"But still, I'm here. Watching.\""));
+            activeMenu.add(new Option(this.manager, "silent", "[There is nothing for you to say.]"));
+            parser.promptOptionsMenu(activeMenu, "There is nothing for you to say.");
+
+            mainScript.runSection();
+            return ChapterEnding.IFYOUCOULDUNDERSTAND;
+        }
+
+        // Survive the unwinding
+        // Remaining Voice: Cold or Broken (from the Adversary)
+        Condition noExplore = new Condition(true);
+        Condition niceMenuNotSeen = new Condition(true);
+        OptionsMenu subMenu;
+        
+        this.canSlayPrincess = true;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "here", "(Explore) \"I'm not gone. I'm right here.\"", noExplore));
+        activeMenu.add(new Option(this.manager, "care", "(Explore) \"I never stopped caring about you. But you have to let go of all of that pain.\"", noExplore, niceMenuNotSeen));
+        activeMenu.add(new Option(this.manager, "more", "(Explore) \"There's more to life than violence and pain. We can be more than that, if you want.\"", niceMenuNotSeen));
+        activeMenu.add(new Option(this.manager, "noFight", "(Explore) \"I didn't like fighting you when we first met. I still don't want to do that.\"", niceMenuNotSeen));
+        activeMenu.add(new Option(this.manager, "goal", "(Explore) \"What were you hoping to accomplish with all of that?\""));
+        activeMenu.add(new Option(this.manager, "off", "(Explore) \"You seem so... off. It's like you're a completely different person than you were when you started pulling me apart.\""));
+        activeMenu.add(new Option(this.manager, "awful", "(Explore) \"That was awful. I hated every second of it.\"", noExplore));
+        activeMenu.add(new Option(this.manager, "all", "(Explore) \"So that's all you've got, huh?\"", noExplore));
+        activeMenu.add(new Option(this.manager, "offer", "\"I'm going to leave now. I was hoping you'd come with me.\""));
+        activeMenu.add(new Option(this.manager, "leaveTell", "\"I'm going to leave now.\""));
+        activeMenu.add(new Option(this.manager, "leaveSilent", "[Turn and leave.]"));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", this.hasBlade));
+
+        OptionsMenu offerMenu = new OptionsMenu(true);
+        offerMenu.add(new Option(this.manager, "hand", "[Give her your hand.]"));
+        offerMenu.add(new Option(this.manager, "no", "\"No. I just wanted to hurt you back.\""));
+        offerMenu.add(new Option(this.manager, "dunno", "\"No. And I don't know why I said that.\""));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "here":
+                case "awful":
+                case "all":
+                    noExplore.set(false);
+                    mainScript.runSection(activeOutcome + "Survive");
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "offer", "\"All I did was stop the violence. You can stop it, too. Just leave with me.\""));
+                    subMenu.add(new Option(this.manager, "open", "\"At some point you have to open your eyes and see the rest of the world. You have to see the world outside of us.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+                    
+                    switch (parser.promptOptionsMenu(subMenu)) {
+                        case "offer":
+                            mainScript.runSection("offerASurvive");
+
+                            this.activeOutcome = parser.promptOptionsMenu(offerMenu);
+                            switch (activeOutcome) {
+                                case "hand":
+                                    mainScript.runSection("togetherEnd");
+                                    return ChapterEnding.NEWLEAFWEATHEREDBOOK;
+                                
+                                default:
+                                    mainScript.runSection(activeOutcome + "Offer");
+                                    return ChapterEnding.LEAVEHERBEHIND;
+                            }
+
+                        case "open":
+                            mainScript.runSection("openSurvive");
+                            break;
+                    }
+
+                    break;
+
+                case "care":
+                    noExplore.set(false);
+                case "more":
+                case "nofight":
+                    niceMenuNotSeen.set(false);
+                    mainScript.runSection(activeOutcome + "Survive");
+
+                    subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "offer", "\"You could always leave with me.\""));
+                    subMenu.add(new Option(this.manager, "you", "\"That's up to you.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+                    
+                    switch (parser.promptOptionsMenu(subMenu)) {
+                        case "offer":
+                            mainScript.runSection("offerASurvive");
+
+                            this.activeOutcome = parser.promptOptionsMenu(offerMenu);
+                            switch (activeOutcome) {
+                                case "hand":
+                                    mainScript.runSection("togetherEnd");
+                                    return ChapterEnding.NEWLEAFWEATHEREDBOOK;
+                                
+                                default:
+                                    mainScript.runSection(activeOutcome + "Offer");
+                                    return ChapterEnding.LEAVEHERBEHIND;
+                            }
+
+                        case "you":
+                            mainScript.runSection("upToYouSurvive");
+                            break;
+                    }
+
+                    break;
+
+                case "goal":
+                case "off":
+                    mainScript.runSection(activeOutcome + "Survive");
+                    break;
+
+                case "offer":
+                    mainScript.runSection("offerBSurvive");
+
+                    this.activeOutcome = parser.promptOptionsMenu(offerMenu);
+                    switch (activeOutcome) {
+                        case "hand":
+                            mainScript.runSection("togetherEnd");
+                            return ChapterEnding.NEWLEAFWEATHEREDBOOK;
+                        
+                        default:
+                            mainScript.runSection(activeOutcome + "Offer");
+                            return ChapterEnding.LEAVEHERBEHIND;
+                    }
+
+                case "leaveTell":
+                    mainScript.runSection("leaveTellSurvive");
+
+                    subMenu = new OptionsMenu();
+                    subMenu.add(new Option(this.manager, "aloneA", "\"Yes.\""));
+                    subMenu.add(new Option(this.manager, "aloneB", "\"If you'll let me.\""));
+                    subMenu.add(new Option(this.manager, "offerB", "\"I was hoping you'd come with me.\""));
+                    subMenu.add(new Option(this.manager, "offerC", "\"That's up to you.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Turn and leave.]"));
+
+                    while (repeatActiveMenu) {
+                        this.activeOutcome = parser.promptOptionsMenu(subMenu);
+                        switch (activeOutcome) {
+                            case "aloneA":
+                            case "aloneB":
+                                mainScript.runSection("aloneTellSurvive");
+                            case "cGoStairs":
+                            case "silent":
+                                mainScript.runSection("abandonEnd");
+                                return ChapterEnding.LEAVEHERBEHIND;
+
+                            case "offerB":
+                            case "offerC":
+                                mainScript.runSection(activeOutcome + "Survive");
+
+                                this.activeOutcome = parser.promptOptionsMenu(offerMenu);
+                                switch (activeOutcome) {
+                                    case "hand":
+                                        mainScript.runSection("togetherEnd");
+                                        return ChapterEnding.NEWLEAFWEATHEREDBOOK;
+                                    
+                                    default:
+                                        mainScript.runSection(activeOutcome + "Offer");
+                                        return ChapterEnding.LEAVEHERBEHIND;
+                                }
+                            
+                            default: super.giveDefaultFailResponse();
+                        }
+                    }
+
+                    break;
+
+                case "cGoStairs":
+                case "leaveSilent":
+                    mainScript.runSection("abandonEnd");
+                    return ChapterEnding.LEAVEHERBEHIND;
+
+                case "cTakeHasBladeFail":
+                case "cSlayPrincess":
+                case "slay":
+                    mainScript.runSection("slayEnd");
+                    return ChapterEnding.HINTOFFEELING;
+                
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
     }
 
 

@@ -72,6 +72,18 @@ public abstract class Cycle {
     }
 
     /**
+     * Checks whether any one of a given array of Voices is currently present
+     * @param voices the Voices to check for
+     * @return true if any Voice in voices is currently present; false otherwise
+     */
+    public boolean hasAnyVoice(Voice... voices) {
+        for (Voice v : voices) {
+            if (this.currentVoices.get(v)) return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the number of Voices the player currently has, excluding the Narrator and the Princess
      * @return the number of Voices the player currently has, excluding the Narrator and the Princess
      */

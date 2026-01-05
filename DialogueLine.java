@@ -6,7 +6,7 @@ public class DialogueLine {
     private static final String COMMA = ",";
     private static final String DASH = "-";
     private static final String PUNCTUATION = ".,?!:;-";
-    private static final String DELAYCHARS = "?!*\"'";
+    private static final String DELAYCHARS = "?!*\"')";
 
     // --- CONSTRUCTORS ---
 

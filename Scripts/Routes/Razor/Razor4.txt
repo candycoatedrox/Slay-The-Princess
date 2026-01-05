@@ -70,22 +70,15 @@ n The Princess's skin twists, splitting into red blooms of raw meat as it stretc
 n She becomes a wave of blood and viscera, pieces of her splattering against the walls. All that remains in the center of the room is a skeleton of blades. A heart beats furiously in its cage of a chest.
 p Are you ready for what comes next?
 hero Holy *shit!*
-smitten She's gorgeous! Absolutely divine!
+smitten She's... gorgeous! Absolutely divine!
 stubborn Yes! Behold, the perfect woman!
 contra Do you think we can throw *her* out the window?
 cold That looked... painful.
 skeptic How is she still alive?
 hunted Heart's still beating. That's all she needs.
 para This is fake! This is all fake! That's all! Just made up!
-bladeswitch voicesCont
-
-label voicesContBlade
-oppo She doesn't even have a back anymore. How are we supposed to stab her in it?
-jumpto voicesContJoin
-
-label voicesContNoBlade
-oppo I'd say we bow down to her right now if that had ever even slightly worked for us.
-label voicesContJoin
+    oppo She doesn't even have a back anymore. How are we supposed to stab her in it? /// hasblade
+    oppo I'd say we bow down to her right now if that had ever even slightly worked for us. /// noblade
 broken This is all just a sick joke. I hate existing.
 cheated We're screwed. I quit! I'm done! Forget it!
 linebreak
@@ -148,6 +141,9 @@ label endNoBladeNotFirstVessel
 truth Not another word is spoken. It's time for you to leave. Memory returns.
 
 // Mirror //
+
+label approachEnd
+truth You do so.
 
 label mirrorGaze
 truth Silence as you reach towards the glass. It's time for you to see what's in it.

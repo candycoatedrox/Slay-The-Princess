@@ -33,6 +33,7 @@ public enum ChapterEnding {
     HEARNOBELL("advyUnarmed", true, Chapter.FURY, Voice.CONTRARIAN),
     DEADISDEAD("advyDead", Chapter.FURY, Voice.BROKEN),
     DEADISDEADUPSTAIRS("advyUpstairs", Chapter.FURY, Voice.BROKEN),
+    DEADISDEADUNARMED("advyUnarmedDie", Chapter.FURY, Voice.BROKEN),
     THREADINGTHROUGH("advyDodge", Chapter.NEEDLE, Voice.HUNTED),
     FREEINGSOMEONE("advyFree", Chapter.NEEDLE, Voice.SKEPTIC),
 

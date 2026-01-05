@@ -635,7 +635,7 @@ public class ScriptScanner extends Script {
                         errorsFound.add(new ScriptError(lineIndex, 8, 7, prefix));
                 }
 
-            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("tookblade") || m.equals("brokechains") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("heartstop")) {
+            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("tookblade") || m.equals("brokechains") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("faceask") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("heartstop")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -645,7 +645,7 @@ public class ScriptScanner extends Script {
 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, prefix));
 
-            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("leftblade") || m.equals("notbroken") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("noheartstop")) {
+            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("leftblade") || m.equals("notbroken") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nofaceask") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("noheartstop")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -979,6 +979,9 @@ public class ScriptScanner extends Script {
 
             case "abandoned": return "noabandon";
             case "noabandon": return "abandoned";
+
+            case "faceask": return "nofaceask";
+            case "nofaceask": return "faceask";
 
             case "possessask": return "nopossessask";
             case "nopossessask": return "possessask";

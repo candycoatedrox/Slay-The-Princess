@@ -489,6 +489,7 @@ public abstract class StandardCycle extends Cycle {
                 mainScript.runClaimSection("mirror");
                 break;
 
+            case IFYOUCOULDUNDERSTAND:
             case WATERSTEEL:
             case FORMLESS:
                 this.activeMenu = new OptionsMenu();
@@ -506,6 +507,7 @@ public abstract class StandardCycle extends Cycle {
                     }
                 }
 
+                mainScript.runSection("approachEnd");
                 break;
 
             default:
@@ -661,7 +663,9 @@ public abstract class StandardCycle extends Cycle {
         manager.updateVoicesMet(voicesMet);
         this.clearVoices();
 
-        if (prevEnding == ChapterEnding.WATERSTEEL || prevEnding == ChapterEnding.FORMLESS) {
+        if (prevEnding == ChapterEnding.IFYOUCOULDUNDERSTAND) {
+            // No dialogue
+        } if (prevEnding == ChapterEnding.WATERSTEEL || prevEnding == ChapterEnding.FORMLESS) {
             mainScript.runSection("mirrorGaze");
         } else if (this.isFirstVessel || (manager.nClaimedVessels() == 1 && manager.hasClaimedAnyVessel(Vessel.RAZORFULL, Vessel.RAZORHEART))) {
             secondaryScript.runSection("gazeFirst");

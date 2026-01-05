@@ -7,6 +7,7 @@ public class Finale extends Cycle {
     private final Vessel[] vessels;
     private final ChapterEnding[] endings;
 
+    // Information about the Heart Princess
     private final boolean firstHarsh;
     private final boolean strangerHeart;
     private final Chapter firstPrincess2;
@@ -469,6 +470,7 @@ public class Finale extends Cycle {
      */
     private void finalMirror() {
         // starts right after mirror shatters
+        // use isHarsh to indicate angry here
 
 
 
