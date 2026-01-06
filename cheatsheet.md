@@ -188,13 +188,13 @@ Syntax: `SLAY [target]`
 ## TAKE
 `TAKE`: Take the blade.
 
-Syntax: `TAKE [blade]`
+Syntax: `[TAKE / GET] [blade]`
 
 **Arguments:**
   - `[blade]`: The blade.
 
 **Variations:**
-  - `TAKE [PRISTINE BLADE / THE BLADE / BLADE]`: Take the blade.
+  - `[TAKE / GET] [PRISTINE BLADE / THE BLADE / BLADE]`: Take the blade.
 
 ## DROP
 `DROP`: Drop the blade.
@@ -210,13 +210,13 @@ Syntax: `DROP [blade]`
 ## THROW
 `THROW`: Throw the blade out the window.
 
-Syntax: `THROW [blade]`
+Syntax: `[TOSS / THROW] [blade]`
 
 **Arguments:**
   - `[blade]`: The blade.
 
 **Variations:**
-  - `THROW [PRISTINE BLADE / THE BLADE / BLADE]`: Throw the blade out the window.
+  - `[TOSS / THROW] [PRISTINE BLADE / THE BLADE / BLADE]`: Throw the blade out the window.
 
 # Content Warnings
 Content warnings can be viewed at any time in game using the `SHOW` command.

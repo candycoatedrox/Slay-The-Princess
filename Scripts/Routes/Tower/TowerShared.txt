@@ -425,7 +425,7 @@ hero You know, this would be a lot easier if you gave us a hand!
 n My influence only goes so far, and I can only juggle so many things at once. The best I can do right now is to continue to drive you forward. Believe me, this whole ordeal would be so much easier if I didn't have to contend with free will.
 broken You're the one making things difficult. You're the one making us hurt`. She doesn't want to hurt us`. She's just doing what she has to.
 p STOP.
-n As you finish crossing the room, you fall to your knees at the Princess' feet, your chest heaving as your blood pools in the crevices of the stone floor, the coppery taste coating your throat.
+n As you finish crossing the room, you fall to your knees at the Princess's feet, your chest heaving as your blood pools in the crevices of the stone floor, the coppery taste coating your throat.
 n The Princess kneels down, lifting your chin with her finger as her face lowers to yours.
 p Your devotion is misplaced. You've surrendered to delusion. But something about your defiant spirit speaks to me. You are different than you were before.
 p Perhaps, if you've learned your lesson, I can spare you from the release of death.
@@ -456,7 +456,7 @@ p It's time for us to seize my destiny.
 // Leads to Chapter III: The Fury with the Voice of the Stubborn //
 label advanceSlay
 broken *No!*
-n Yes. Though your body trembles, struggling to defend itself in the face of the Princess' overwhelming will, you finally manage to break through, darting to her side before she can react.
+n Yes. Though your body trembles, struggling to defend itself in the face of the Princess's overwhelming will, you finally manage to break through, darting to her side before she can react.
 n The wind of your freedom rushes through you, and you channel it into a decisive blow, stabbing into the soft flesh of her ankle and severing the tendons in an act of unyielding defiance.
 n She falls to the floor, crashing unceremoniously to her knees.
 n But you don't give her any time to recover. Your heart pounding with determination, you plunge your blade into her chest.

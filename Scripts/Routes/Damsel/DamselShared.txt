@@ -181,7 +181,7 @@ hero By destroying the world?
 smitten Apparently, yes!
 
 label silentEndWorld
-n The Princess' eyes quiver as she waits for your response.
+n The Princess's eyes quiver as she waits for your response.
 p I... didn't? End the world?
 p I didn't end the world!
 n She's clearly just saying what she thinks you want to hear.
@@ -353,7 +353,7 @@ p We'll bring ruin to everyone and everything! Nothing will be left standing in 
 hero Okay. So whatever we do next, we should *not* let her out.
 
 label silentEndWorldDecon
-n The Princess' eyes quiver as she waits for your response.
+n The Princess's eyes quiver as she waits for your response.
 
 p I... don't? Want to the world?
 p I don't want to end the world!
@@ -554,12 +554,12 @@ n But you ignore the pleas of the foolish little voice and press on. The Princes
 label deconSlay
 n You turn the tip of your blade towards the unsuspecting Princess. Thank you.
 smitten Wait... no! You barbarian, what are you doing?
-n But you ignore the pleas of the foolish little voice, and strike. The Princess' eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
+n But you ignore the pleas of the foolish little voice, and strike. The Princess's eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
 
 label cabinSlay
 n You take the blade from the table, turning its tip towards the unsuspecting Princess. Thank you.
 smitten Wait! No! You barbarian! What are you doing?
-n But you ignore the pleas of the foolish little voice, and strike. The Princess' eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
+n But you ignore the pleas of the foolish little voice, and strike. The Princess's eyes grow wide with terror as the blade falls, but she does absolutely nothing to stop you.
 
 // Leads to Chapter III: The Grey with the Voice of the Cold //
 label slayMain

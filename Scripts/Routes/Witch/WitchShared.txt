@@ -335,7 +335,7 @@ label backStabUgh
 oppo Oh, you're no fun. But at least you get how important it is that we leave this basement at the top of the pecking order.
 label backStabJoin
 unlock witchBetray
-n You plunge the blade deep into the Princess' back, driving her to her knees amid the roots.
+n You plunge the blade deep into the Princess's back, driving her to her knees amid the roots.
 oppo Would you look at that! No need to thank me. But... y'know... please, do thank me.
 p Of course you'd betray me the moment I turned my back on you.
 p Don't think you're leaving here alive, wretch!
@@ -390,7 +390,7 @@ hero How?
 oppo Well, she was going to betray us, wasn't she? And we struck first!
 hero Our back is broken.
 oppo But we gave it our all! No regrets! Besides, she's got to have it as bad as us, right?
-n The Princess' body twitches as she tries to get up.
+n The Princess's body twitches as she tries to get up.
 oppo Oho! So she *does* have it as bad as us.
 
 label betrayalContLeadBlade
@@ -418,7 +418,7 @@ oppo And what's that?
 hero She was clearly planning to betray us. And if she was in front of us, she would've gotten to the blade first.
 oppo Ugh. You're right, aren't you? I thought this whole thing was ironclad, but really it was doomed from the start, wasn't it?
 label betrayalContLead2Join
-n The Princess' body twitches as she tries to get up.
+n The Princess's body twitches as she tries to get up.
 oppo Ohoho! So she's got it as bad as us.
 
 label betrayalEndBrokenShare
@@ -539,9 +539,8 @@ n You're going to get everyone killed. You know that, right? *Sigh.* But of cour
 n You toss the blade at the Princess's feet.
 n She eyes it with suspicion before kneeling down to pick it up.
 p I wouldn't have done that. Why did you?
-
-label offerCommitBasementNotFree
-n You hear a clanging of metal against the dirt floor, and the chains fall from the Princess' wrist.
+    break /// chainsfree
+n You hear a clanging of metal against the dirt floor, and the chains fall from the Princess's wrist.
 hero She could have gotten out of those the whole time! That sneaky little...
     oppo A woman after my own heart. It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now. /// check
     oppo It's a shame we just gave her a weapon, because if I were her, I'd use it on us right now. /// checkfalse
@@ -603,7 +602,7 @@ n The cabin is smaller than it was before. And it's getting even smaller, and sm
 oppo That's fine. We'll just leave!
 n I'm sure you'd like to do that. But unfortunately, there is no longer a front door. The roots have already closed over the only possible exit. What little light peaks through the holes that were once windows is growing weaker as the cabin continues to close in on itself.
 hero Shit. What do we do?!
-n As your mind races for an answer, you hear the Princess' voice crackle up the stairs.
+n As your mind races for an answer, you hear the Princess's voice crackle up the stairs.
 p Do you hear that, you loathsome thing? Those are the roots of the wild, and they're coming to choke the breath from your lungs and squeeze the life out of you!
 
 // Fight her //
@@ -624,14 +623,14 @@ label fightStartSilentJoin
 oppo So much for finding an easy way out! I can't believe you're making us work for it.
 p Better a violent fool than a plotting coward. Better for me, at least.
 
-label fightStartFree
+label fightStart
 unlock witchFight
+    jumpto fightStartNotFree /// notfree
 p As you close the distance, readying your strike, she throws a fistful of dirt into your eyes.
 jumpto fightStartJoin
 
 label fightStartNotFree
-unlock witchFight
-n As you close the distance, readying your strike, the Princess' chain falls from her wrist.
+n As you close the distance, readying your strike, the Princess's chain falls from her wrist.
 n She takes advantage of your split second of surprise, and throws a fistful of dirt into your eyes.
 hero She could have gotten out of those the whole time! That sneaky little...
     oppo A woman after my own heart, really. It's a shame we're playing opposite teams. /// checkfalse
@@ -753,7 +752,7 @@ label crushedFight
 n The roots twist around you both, binding your limbs and rendering you helpless. As your fates close in, all you can do is watch her, and all she can do is watch you.
 n At first it's almost gentle, the two of you lifted delicately off the ground. But the cradle of the growing roots soon gives way to tightness, and that tightness gives way to bulging pressure as they begin to constrict.
 n The sound of creaking wood is drowned out by the snaps and pops of your bones, pain flooding your senses as you feel your skin deform, being shaped unnaturally by the living basement.
-n Tears well up in the Princess' eyes, her own bones splintering and flesh swelling with trapped blood, but still she smiles through it all.
+n Tears well up in the Princess's eyes, her own bones splintering and flesh swelling with trapped blood, but still she smiles through it all.
 p I can't wait to do this again, you wretched little thing. I hate you... but I wouldn't have it any other way.
 n The pressure is unbearable. You can't breathe, your vision swimming with red, your head pounding as everything tightens.
 linebreak

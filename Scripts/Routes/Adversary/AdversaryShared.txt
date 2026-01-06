@@ -408,7 +408,7 @@ p Yes! You're right! We don't even need to talk about it!
 label pushCont
 n Your balance is suddenly thrown off as the Princess pulls you into her knee.
 n It collides with your ribs and you feel them splinter, cracking like wet wood from the impact.
-    n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// notbroken
+    n As she strikes you again you hear the whine of straining metal, and then a snap -- it would appear that she's loose. /// notfree
 stubborn We're FINE!
 n But you barely have enough time to notice before the Princess follows up and smashes her forehead against yours.
 n Your grip loosens from the impact, the blade still wedged in her arm as you tumble to the cold stone floor.
@@ -680,8 +680,8 @@ stubborn Great. Now pick it up and MARCH BACK DOWN THERE. I'm tired of us consta
 label exploreRetrieve
 stubborn Me! *I* say that!
 n Staying up here doesn't solve anything. All it does is kick the can down the road. If you don't deal with her now, she will find a way a out.
-    hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// brokechains
-    hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// notbroken
+    hero Those doors are made of stone. She's strong, yeah, but is she smash-through-stone strong? /// chainsfree
+    hero Those doors are made of stone and she's still in chains. She's strong, yeah, but is she break-her-chains-and-smash-through-stone strong? /// notfree
 stubborn Wouldn't it be exciting if she was?
 hero Here's another idea. What if we just leave?
 n Absolutely not. If you leave, she'll leave, and that'll be the end of everything as we know it.
@@ -698,8 +698,8 @@ stubborn I'M ready to start taking this seriously. Put ME in charge!
 n Oh how I wish I could, because literally anyone else making decisions would be better than this, but unfortunately that's beyond the scope of my abilities.
 hero Is she really just going to wait down there forever? She's got to start getting impatient eventually -- /// interrupt
 n Your thoughts are interrupted by the sound of the Princess furiously stomping her way up the stairs.
-    hero But what about her chains?! /// notbroken
-        n  What *about* them? They're clearly not holding her back any longer. /// notbroken
+    hero But what about her chains?! /// notfree
+        n  What *about* them? They're clearly not holding her back any longer. /// notfree
 stubborn HAHAHA. YES! *YES!* We're finally going to get our rematch and there's NOTHING you can do to stop it.
 label leaveRetrieve
 p I'm tired of waiting. You thought you could just leave me down there, didn't you? But I can feel you trembling on the other side of this door. There's nowhere left for you to run.
@@ -731,7 +731,7 @@ hero Here we go. Let's make this count.
 stubborn OHH, WE'LL MAKE IT COUNT, ALRIGHT.
 n As you bridge the gap, your blade slashes across the Princess's chest, splitting skin and drawing a jagged line of bright red blood.
 n But she's unfazed by your onslaught. Her expression barely changes as her fist collides with your ribs, cracking them like twigs and driving you right back down to the basement floor.
-    n You can hear her chains snap as you struggle to recover from the impact. /// notbroken
+    n You can hear her chains snap as you struggle to recover from the impact. /// notfree
 label fightCont
 stubborn She almost looks... disappointed in us. W-why is she disappointed in us?!
 p Oh. You don't actually get it, do you?
@@ -739,7 +739,7 @@ p That knife may be sharp, but you clearly don't want to kill me.
 p It's not fun if you hesitate. It's not fun if you try and trick me and make me bleed out. It's only fun if you go straight for the heart.
 p You need to put everything you have into seeing me dead... or what's the point?
 p So don't be afraid. Don't hesitate. Kill me!
-    n Don't let her get into your head. Reincarnation or not, this world needs you to win. /// check
+    n Don't let her get into your head. Reincarnation or not, this world needs you to win. /// narrproof
 n Don't let her get into your head. You've only got one shot at this.
 label fightProofJoin
 hero She's huge, but that probably means she's slower than us. Take it slow, think it through, and don't panic. Bleeding her out is our best course of action.
@@ -762,7 +762,7 @@ n You do your best to outplay her, slashing out and leaving red cuts in the tatt
 stubborn This... weak little dance isn't working. Just toughen up and OVERPOWER HER!
 hero She's throwing us around like a ragdoll. I think "overpowering her" is a little out of the question.
 p Did you think you could stop me with a few cuts? All this dancing around is doing nothing but annoying me. I own this place. And I own you.
-n The Princess' arm shoots forward, her palm wrapping around your head, fingers gripping your skull.
+n The Princess's arm shoots forward, her palm wrapping around your head, fingers gripping your skull.
 p How disappointing.
 n She squeezes, the pressure unbearable as her fingers dig into your scalp. The last thing you hear is the unsettling crack of your skull and the sickening churn of what was your grey matter.
 linebreak
@@ -846,9 +846,9 @@ jumpto unarmedDie
 
 // Grants you the Voice of the Broken //
 label unarmedDie
-    n It's over, but maybe you'll have better luck next time. /// check
+    n It's over, but maybe you'll have better luck next time. /// narrproof
     jumpto unarmedDieNarratorProof /// check
-    n It's over. /// checkfalse
+    n It's over. /// noproof
 
 // Grants you the Voice of the Contrarian //
 label unarmedPhase2
@@ -920,7 +920,7 @@ label refuseCommitBlade
 p Enough games. Pick up that knife and fight me.
 n Your eyes, swimming with a concussed delirium, look down in confusion at your now empty hands.
 label refuseCommitBladeJoin
-n It takes you a moment to drag your vision across the floor before you manage to pick it out among the stalagmites littering the basement. It's sitting at the Princess' feet.
+n It takes you a moment to drag your vision across the floor before you manage to pick it out among the stalagmites littering the basement. It's sitting at the Princess's feet.
 p Here. Let me lend you a hand.
 n She bends to the floor and pinches the tip of the weapon between her fingers. She stares down at it in mocking disgust before hurling it towards you.
 n It lands at your feet with a pathetic, tinny clatter.
@@ -1008,8 +1008,8 @@ p ... what am I supposed to do without you?
 hero I guess I'll see you all next time... I can say that now, right? We're dead?
 stubborn Great. I can't wait to be stuck in this USELESS BODY all over again.
 linebreak
-    n I won't be seeing you, but I suppose something like me will. Everything goes dark, and you die. /// check
-    n Everything goes dark, and you die. /// checkfalse
+    n I won't be seeing you, but I suppose something like me will. Everything goes dark, and you die. /// narrproof
+    n Everything goes dark, and you die. /// noproof
 
 // Attempt to free the Princess //
 
@@ -1107,11 +1107,8 @@ label fleeChooseDieCont
 n I'm not the one who decided you should die here. If you have a problem, take it up with the one making the choices.
 
 label fleeEnd
-    jumpto fleeEndNarratorProof /// check
-n Dead is dead.
-
-label fleeEndNarratorProof
-n Dead is dead, but maybe you'll have better luck next time.
+    n Dead is dead, but maybe you'll have better luck next time. /// narrproof
+    n Dead is dead. /// noproof
 
 // Flee upstairs //
 

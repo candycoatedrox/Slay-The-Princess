@@ -206,8 +206,8 @@ skeptic Us. Her. But mostly us. If He didn't have his limits, we wouldn't be her
 
 label intentionsMenu
 p Yes. Your intentions. You have a knife. What are you going to do with it? Why are you here?
-    p There isn't a keyhole in these shackles, and I don't see any keys in your hands, either. So I'm afraid my only way out is another surgical removal. /// check
-    p There isn't a keyhole in these shackles, so I'm afraid my only way out is surgical removal. /// checkfalse
+    p There isn't a keyhole in these shackles, and I don't see any keys in your hands, either. So I'm afraid my only way out is another surgical removal. /// narrproof
+    p There isn't a keyhole in these shackles, so I'm afraid my only way out is surgical removal. /// noproof
 hero Is she forgetting about the shackle on her neck?!
 skeptic Or does she think she'd survive a beheading?
 n You're right. Maybe she's delusional. All the more reason not to trust her.
@@ -218,7 +218,7 @@ label memoryMenu
 p Oh? Are we acknowledging that? I thought we weren't going to give away the game. But yeah. I remember.
 
 label afterDiedMenu
-    p Oh? Are we talking about that? I thought we weren't going to give away the game. But sure, I'll fill you in. /// checkfalse
+    p Oh? Are we talking about that? I thought we weren't going to give away the game. But sure, I'll fill you in. /// noproof
 p Nothing happened. You died. I went upstairs. I couldn't leave. I found myself in a new place, in chains again. More of them.
 p And now you're back.
 skeptic Is that really all she knows?
@@ -254,15 +254,16 @@ n There are none.
 skeptic The pros are that we can't trust Him, possibly even more than we can't trust her, and whatever she has planned could do something to mess with what He has planned. Or maybe they're both screwing us over in their own ways.
 
 label noGiveBMenu
-    p Sure, let's talk about what happened. Because what happened is exactly my issue. /// check
-    p Oh? Are we talking about that? I thought we weren't going to give away the game. /// checkfalse
-        p But sure, let's talk about what happened. Because what happened is exactly my issue. /// checkfalse
+    p Sure, let's talk about what happened. Because what happened is exactly my issue. /// narrproof
+    p Oh? Are we talking about that? I thought we weren't going to give away the game. /// noproof
+        p But sure, let's talk about what happened. Because what happened is exactly my issue. /// noproof
+
 label noGiveJoin
-    p The last time we met, your body tried to kill me. /// check
+    p The last time we met, your body tried to kill me. /// narrproof
 p If you take a moment to imagine yourself in my position, I think you'll understand why letting you near me with that thing is untenable.
 p So be a good bird and hand it over.
-    p And if being nice isn't enough motivation? Well, I think you're aware that I'm not afraid to resort to violence. /// check
-    p And if being nice isn't enough motivation? Well, I'm not afraid to resort to violence. /// checkfalse
+    p And if being nice isn't enough motivation? Well, I think you're aware that I'm not afraid to resort to violence. /// narrproof
+    p And if being nice isn't enough motivation? Well, I'm not afraid to resort to violence. /// noproof
 p If you come near me with that thing I will strangle you with these chains.
 hero She doesn't beat around the bush, does she?
 n Yes, it's almost like she's a fundamentally bad person who wishes to inflict pain on others.
@@ -417,8 +418,8 @@ p I am not a damsel to be helplessly murdered!
 n As you move to strike at the Princess, she stands, her chains clinking as she wraps them around her fists.
 n In an instant they're around your neck, both of you dropping to the ground as she pulls them taut, bracing her body against yours as you struggle uselessly.
 p Drop it or you die!
-    hero I thought this was going to be a safe move, but she's going to kill us again! Just listen to her! Do what she says! /// check
-    hero I thought this was going to be a safe move, but she's going to kill us! Just listen to her! Do what she says! /// checkfalse
+    hero I thought this was going to be a safe move, but she's going to kill us again! Just listen to her! Do what she says! /// narrproof
+    hero I thought this was going to be a safe move, but she's going to kill us! Just listen to her! Do what she says! /// noproof
 jumpto strangleJoin
 
 label sitTooClose
@@ -433,9 +434,9 @@ n In an instant they're around your neck, both of you dropping to the ground as 
 n The metal chains constrict around your windpipe as the Princess heaves with a muscled intensity.
 p Drop the knife or you die!
 hero What is she doing?! We weren't trying to attack her!
-    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if she walked up to us with a blade again, after what happened between us? /// check
-    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if the roles were reversed? /// checkfalse
-        hero I don't know! How about we think about the nuances of interpersonal relationships when we're not being strangled?! /// checkfalse
+    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if she walked up to us with a blade again, after what happened between us? /// narrproof
+    skeptic I can see where she might have gotten the wrong idea. She doesn't have much agency here. Would we have trusted her if the roles were reversed? /// noproof
+        hero I don't know! How about we think about the nuances of interpersonal relationships when we're not being strangled?! /// noproof
 jumpto strangleJoin
 
 label strangleJoin
@@ -477,7 +478,7 @@ n And especially when your promised reward is not, in fact, empty, and is worth 
 label giveBladeStart
 p Slide it over.
 n No. Absolutely not. I am not letting you hand your only weapon over to the *world-ending* Princess. Until you come up with any other idea -- like, say, I don't know, doing your job and slaying her -- you remain rigidly in place.
-    jumpto giveBladeProof /// check
+    jumpto giveBladeProof /// narrproof
 skeptic Do you think this will work? Interesting that you're only having us remain in place. It's almost like there are very real limits to your power.
 n I don't know what you're talking about.
 skeptic The world ends if we fail, right? Her killing us might not be our only failure state, if you catch my meaning.
@@ -536,7 +537,7 @@ n Her head twists slowly to the side, flopping to her shoulder, and her neck... 
 n The remaining tissue is not enough to hold the weight of her severed head. It stretches and tears, until finally, it falls to the floor, completely free. It bounces a few times before rolling to a stop at your feet.
 label headJoin
 hero Oh no oh no o-oh no what did we do? C-can we put it back? *Please* tell me we can put it back.
-n The Princess' eyes stare up at you. Dead. Congratulations. You saved the world.
+n The Princess's eyes stare up at you. Dead. Congratulations. You saved the world.
 skeptic Huh. So I guess that's it. What a way to go. But she is gone, isn't she?
 hero I. Hate. This. Can we just -- get out of here now. *Please.*
 n Of course. The Princess is slain, and the world is saved. Whenever you're ready you can proceed to your reward.
@@ -546,7 +547,7 @@ skeptic Look, I'm just not ready to put my guard down. It's best to keep sharp. 
 n You're just wasting your energy. The danger has passed, and now we can all relax and enjoy your reward!
 
 // "Talking Heads" ending; claim the Prisoner's head //
-n Ugh. Fine. You pick up the Princess' severed head, its neck stump still oozing bodily fluids, then make your way back upstairs to the first floor of the cabin.
+n Ugh. Fine. You pick up the Princess's severed head, its neck stump still oozing bodily fluids, then make your way back upstairs to the first floor of the cabin.
 skeptic Did you see that? I could have sworn she moved.
 n She didn't. She's dead.
 hero But... what if she's not?
@@ -571,7 +572,7 @@ claim end
 label slainStart
 skeptic ... Fine. But if we're leaving, then we're taking the blade. I feel... exposed without it.
 linebreak
-n With your work done, you remove the blade from the Princess' corpse and make your way back upstairs, closing the door to the basement behind you. You can think of it as sealing yourself off from an unpleasant chapter of your life. It's all uphill from here!
+n With your work done, you remove the blade from the Princess's corpse and make your way back upstairs, closing the door to the basement behind you. You can think of it as sealing yourself off from an unpleasant chapter of your life. It's all uphill from here!
 skeptic The windows. Do you see that? We used to be able to see the outside world from up here, but now it's just... empty.
 skeptic The door! Check the door!
 

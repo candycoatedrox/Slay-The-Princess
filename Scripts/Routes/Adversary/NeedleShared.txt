@@ -148,11 +148,11 @@ p Do you have more fight in you than last time? That was such a disappointing sh
 
 label tauntStairs
 p That's not how this works. I'm all chained up, remember? How about you come down here and fight me.
-    hero Those chains were nothing to her last time... /// brokechains
-        hunted And they'll be nothing to her this time. But we need to show ourselves first. To make her boil over. /// brokechains checkvoice
-        skeptic They're a part of the setup. Like our blade. Just a formality, but one that needs its own introduction, a whole show of the Princess, or whatever she is, being locked away for her alleged crimes. /// brokechains checkvoice
-    hunted We'll need to show ourselves. Make her boil over and forget her metal bindings. /// notbroken checkvoice
-    skeptic Don't worry about the chains. I've got a plan. /// notbroken checkvoice
+    hero Those chains were nothing to her last time... /// chainsfree
+        hunted And they'll be nothing to her this time. But we need to show ourselves first. To make her boil over. /// chainsfree checkvoice
+        skeptic They're a part of the setup. Like our blade. Just a formality, but one that needs its own introduction, a whole show of the Princess, or whatever she is, being locked away for her alleged crimes. /// chainsfree checkvoice
+    hunted We'll need to show ourselves. Make her boil over and forget her metal bindings. /// notfree checkvoice
+    skeptic Don't worry about the chains. I've got a plan. /// notfree checkvoice
     stubborn Fine by me. /// checkvoice-hunted
     stubborn Yeah. We'll just have to get her to break 'em. /// checkvoice-skeptic
 

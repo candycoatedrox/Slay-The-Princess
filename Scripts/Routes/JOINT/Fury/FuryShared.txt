@@ -650,7 +650,7 @@ p You cannot win if you cannot be!
 
 // "Quantum Beak" ending; claim the Fury //
 label quantumEnd
-truth A force races towards the Princess' exposed heart. Threads of texture pulled from an all-encompassing nothing.
+truth A force races towards the Princess's exposed heart. Threads of texture pulled from an all-encompassing nothing.
 p How?! I've scattered the atoms you clung to and there was nothing there to find! You can't exist!
 truth The threads pierce her heart and cradle her spirit.
 stubborn IT'S OVER.

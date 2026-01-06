@@ -46,14 +46,17 @@ public abstract class StandardCycle extends Cycle {
      * Constructor for a Chapter 2 or 3
      * @param manager the GameManager to link this StandardCycle to
      * @param parser the IOHandler to link this StandardCycle to
+     * @param hasTriedAbort whether the player has already tried (and failed) to abort this route
+     * @param route the Chapters the player has visited so far during this route
+     * @param prevEnding the ending of the previous chapter
      */
-    protected StandardCycle(GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, ChapterEnding prevEnding) {
+    protected StandardCycle(GameManager manager, IOHandler parser, ArrayList<Chapter> route, boolean hasTriedAbort, ChapterEnding prevEnding) {
         super(manager, parser);
 
         this.isFirstVessel = manager.nClaimedVessels() == 0;
         this.canAbort = manager.nClaimedVessels() < 2;
 
-        this.cantTryAbort = cantTryAbort;
+        this.cantTryAbort = new Condition(hasTriedAbort);
 
         this.activeChapter = prevEnding.getNextChapter();
         this.route = route;
@@ -387,7 +390,8 @@ public abstract class StandardCycle extends Cycle {
      * Runs the mirror sequence after claiming a vessel
      */
     protected void mirrorSequence(ChapterEnding prevEnding) {
-        this.secondaryScript = new Script(this.manager, this.parser, "Mirror/MirrorGeneric");
+        this.secondaryScript = manager.getMirrorScript();
+        secondaryScript.updateReusedScriptFlags();
 
         this.hasBlade = false;
 
@@ -598,7 +602,7 @@ public abstract class StandardCycle extends Cycle {
                                 secondaryScript.runConditionalSection("explore", this.nVoices());
 
                                 boolean repeatSub = true;
-                                OptionsMenu subMenu = new OptionsMenu();
+                                this.subMenu = new OptionsMenu();
                                 subMenu.add(new Option(this.manager, "comfortA", "(Explore) It's not the end. Whatever's on the other side is going to be nice."));
                                 subMenu.add(new Option(this.manager, "cruel", "(Explore) It's the end for you, but not for me."));
                                 subMenu.add(new Option(this.manager, "comfortB", "(Explore) I'll see you on the other side. It's going to be okay."));
@@ -702,7 +706,8 @@ public abstract class StandardCycle extends Cycle {
      */
     protected void theSpacesBetween(ChapterEnding prevEnding) {
         this.activeChapter = Chapter.SPACESBETWEEN;
-        this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
+        this.mainScript = manager.getIntermissionScript();
+        mainScript.updateReusedScriptFlags();
 
         this.currentLocation = GameLocation.PATH;
         mainScript.runConditionalSection(manager.nClaimedVessels());
@@ -797,7 +802,6 @@ public abstract class StandardCycle extends Cycle {
 
         secondaryScript.runConditionalSection(manager.nVesselsAborted());
 
-        OptionsMenu subMenu;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "dream", "(Explore) \"You're that thing I met in the space outside of the woods, aren't you? I thought that was a dream.\"", manager.nVesselsAborted() != 0));
         activeMenu.add(new Option(this.manager, "what", "(Explore) \"What are you?\""));
@@ -829,7 +833,7 @@ public abstract class StandardCycle extends Cycle {
                 case "what":
                     secondaryScript.runSection("what");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "explore", "(Explore) \"Solitary lights? What do you mean?\""));
                     subMenu.add(new Option(this.manager, "youThink", "\"What do you think I am?\""));
                     subMenu.add(new Option(this.manager, "dunno", "\"I don't know what I am.\""));
@@ -861,7 +865,7 @@ public abstract class StandardCycle extends Cycle {
                 case "princess":
                     secondaryScript.runSection("princess");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "press", "\"But were you always the Princess, or are you just making her a part of yourself?\""));
                     subMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
 
@@ -920,7 +924,7 @@ public abstract class StandardCycle extends Cycle {
                 case "destroy":
                     secondaryScript.runSection("destroy");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "press", "\"You're being semantic. What are you going to do if I help you?\""));
                     subMenu.add(new Option(this.manager, "silent", "[Let it be.]"));
 
@@ -933,7 +937,7 @@ public abstract class StandardCycle extends Cycle {
                     // The original game has a creative gimmick here where, if you choose to wait forever, the game will quit out. When you reopen it, instead of starting on the main menu, the game will start right where you left off, and the Shifting Mound will comment on how long the game was closed for.
                     // Unfortunately, I have no idea how to replicate any of that here, and it would be insanely complicated to figure out (I would need to implement an entire save-and-load system...), so this option is just stuck being kind of weird and lame.
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "wait", true, "[Wait forever.]"));
                     subMenu.add(new Option(this.manager, "forget", "\"Okay. I'm ready. Make me forget.\""));
                     parser.promptOptionsMenu(subMenu);
@@ -1053,7 +1057,7 @@ public abstract class StandardCycle extends Cycle {
 
                     secondaryScript.runSection("refuse");
 
-                    OptionsMenu subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "wait", true, "[Wait.]"));
                     subMenu.add(new Option(this.manager, "no", "[You have no need to wait.]"));
                     parser.promptOptionsMenu(subMenu);
@@ -1131,7 +1135,6 @@ public abstract class StandardCycle extends Cycle {
         activeMenu.add(manager.getIntermissionAttackMound());
         activeMenu.add(manager.getIntermissionAttackSelf());
 
-        OptionsMenu subMenu;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -1148,7 +1151,7 @@ public abstract class StandardCycle extends Cycle {
                     talked.set();
                     secondaryScript.runSection("worse");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "more", "\"If anything, it makes me like you more. I don't know what that says about me.\""));
                     subMenu.add(new Option(this.manager, "distant", "\"No, not really. It all seems so distant as soon as I'm near you.\""));
                     subMenu.add(new Option(this.manager, "meh", "\"I have no opinion one way or another on the matter.\""));
@@ -1210,7 +1213,7 @@ public abstract class StandardCycle extends Cycle {
 
                     secondaryScript.runSection("refuse");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "wait", true, "[Continue to wait. Forever.]"));
                     subMenu.add(new Option(this.manager, "no", "[There is no waiting forever.]"));
                     parser.promptOptionsMenu(subMenu);
@@ -1287,7 +1290,6 @@ public abstract class StandardCycle extends Cycle {
         activeMenu.add(manager.getIntermissionAttackMound());
         activeMenu.add(manager.getIntermissionAttackSelf());
 
-        OptionsMenu subMenu;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -1318,7 +1320,7 @@ public abstract class StandardCycle extends Cycle {
                         secondaryScript.runConditionalSection("narratorNotMet", freed);
                     }
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "fact", "(Explore) \"He does. I don't know why, but I know this for a fact.\""));
                     subMenu.add(new Option(this.manager, "dunno", "(Explore) \"He does. I don't know what I'm going to do when I find him.\""));
                     subMenu.add(new Option(this.manager, "answers", "(Explore) \"He does. And when I find him, you and I are finally going to have answers.\""));
@@ -1333,7 +1335,7 @@ public abstract class StandardCycle extends Cycle {
                     talked.set();
                     secondaryScript.runSection(activeOutcome);
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "wait", true, "[Wait forever.]"));
                     subMenu.add(new Option(this.manager, "no", "[There is no waiting forever.]"));
                     parser.promptOptionsMenu(subMenu);

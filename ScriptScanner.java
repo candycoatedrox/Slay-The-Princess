@@ -635,7 +635,7 @@ public class ScriptScanner extends Script {
                         errorsFound.add(new ScriptError(lineIndex, 8, 7, prefix));
                 }
 
-            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("tookblade") || m.equals("brokechains") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("faceask") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("heartstop")) {
+            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("chainsfree") || m.equals("tookblade") || m.equals("narrproof") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("faceask") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("headwatch") || m.equals("goodseen") || m.equals("heartstop") || m.equals("cutroute")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -645,7 +645,7 @@ public class ScriptScanner extends Script {
 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, prefix));
 
-            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("leftblade") || m.equals("notbroken") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nofaceask") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("noheartstop")) {
+            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("notfree") || m.equals("leftblade") || m.equals("noproof") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nofaceask") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("nowatch") || m.equals("goodnotseen") || m.equals("noheartstop") || m.equals("nocut")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -960,10 +960,13 @@ public class ScriptScanner extends Script {
             case "tookblade": return "leftblade";
             case "leftblade": return "tookblade";
 
-            case "brokechains": return "notbroken";
-            case "notbroken": return "brokechains";
+            case "chainsfree": return "notfree";
+            case "notfree": return "chainsfree";
 
             // Checks that apply during Chapter 2 only
+            case "narrproof": return "noproof";
+            case "noproof": return "narrproof";
+
             case "drop1": return "nodrop1";
             case "nodrop1": return "drop1";
 
@@ -995,8 +998,17 @@ public class ScriptScanner extends Script {
             case "forcedblade": return "noforce";
             case "noforce": return "forcedblade";
 
+            case "headwatch": return "nowatch";
+            case "nowatch": return "headwatch";
+
+            case "goodseen": return "goodnotseen";
+            case "goodnotseen": return "goodseen";
+
             case "heartstop": return "noheartstop";
             case "noheartstop": return "heartstop";
+
+            case "cutroute": return "nocut";
+            case "nocut": return "cutroute";
 
             // Condition checks
             case "check": return "checkfalse";

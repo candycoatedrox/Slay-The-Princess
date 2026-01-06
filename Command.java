@@ -3,13 +3,11 @@ import java.util.Arrays;
 public enum Command {
     HELP("help", "Display all available commands or information on a given command.", true, "", "help", "show", "toggle", "go", "walk", "enter", "leave", "turn", "slay", "take", "drop", "throw"),
     SHOW("show", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", true, "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
-    VIEW("view", "Display content warnings (general, by chapter, or for the current chapter) or the Achievement Gallery.", true, "", "general", "generic", "all", "full", "game", "full game", "full-game", "by chapter", "by-chapter", "chapter by chapter", "chapter-by-chapter", "chapters", "all chapters", "current", "active", "chapter", "current chapter", "active chapter", "route", "current route", "active route", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     DIRECTGALLERY("", "View the Achievement Gallery.", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     SETTINGS("settings", "View and change settings.", true, ""),
     TOGGLE("toggle", "Toggle a given setting.", true, "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow", "slow print", "slow dialogue", "instant print", "instant dialogue", "auto", "auto advance", "auto-advance", "advance", "auto dialogue"),
     RESET("reset", "Reset achievements.", true, "", "achievements", "gallery", "achievement gallery", "achievements gallery"),
     GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
-    WALK("walk", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
     ENTER("enter", "Enter a given location or the nearest appropriate location.", "", "cabin", "basement"),
     LEAVE("leave", "Leave the current location.", "", "cabin", "basement", "woods", "path"),
@@ -89,17 +87,24 @@ public enum Command {
         switch (this) {
             case GO:
             case DIRECTGO:
-            case WALK:
                 displayPrefix = "[GO / WALK]";
                 break;
 
             case SHOW:
-            case VIEW:
                 displayPrefix = "[SHOW / VIEW]";
                 break;
 
             case DIRECTGALLERY:
                 displayPrefix = "GALLERY";
+                break;
+
+            case TAKE:
+                displayPrefix = "[TAKE / GET]";
+                break;
+
+            case THROW:
+                displayPrefix  = "[THROW / TOSS]";
+                break;
 
             default:
                 displayPrefix = this.getPrefix().toUpperCase();
@@ -119,7 +124,6 @@ public enum Command {
                 break;
                 
             case SHOW:
-            case VIEW:
                 s += "[SHOW / VIEW] [warnings] [target] [warnings]\n\n";
 
                 s += "- Arguments -\n";
@@ -183,7 +187,6 @@ public enum Command {
 
             case GO:
             case DIRECTGO:
-            case WALK:
                 s += "[GO / WALK] [direction]\n";
                 s += "\"[GO / WALK]\" is optional. > [direction] functions exactly the same.\n\n";
 
@@ -268,13 +271,13 @@ public enum Command {
                 break;
 
             case TAKE:
-                s += "TAKE [blade]\n\n";
+                s += "[TAKE / GET] [blade]\n\n";
 
                 s += "- Arguments -\n";
                 s += "  - [blade]: The blade.\n\n";
 
                 s += "- Variations -\n";
-                s += "  - TAKE [PRISTINE BLADE / THE BLADE / BLADE]: Take the blade.\n";
+                s += "  - [TAKE / GET] [PRISTINE BLADE / THE BLADE / BLADE]: Take the blade.\n";
                 break;
 
             case DROP:
@@ -288,13 +291,13 @@ public enum Command {
                 break;
 
             case THROW:
-                s += "THROW [blade]\n\n";
+                s += "[TOSS / THROW] [blade]\n\n";
 
                 s += "- Arguments -\n";
                 s += "  - [blade]: The blade.\n\n";
 
                 s += "- Variations -\n";
-                s += "  - THROW [PRISTINE BLADE / THE BLADE / BLADE]: Throw the blade out the window.\n";
+                s += "  - [TOSS / THROW] [PRISTINE BLADE / THE BLADE / BLADE]: Throw the blade out the window.\n";
                 break;
 
             default:
@@ -337,22 +340,24 @@ public enum Command {
         if (DIRECTGALLERY.argumentIsValid(command)) return DIRECTGALLERY;
         switch (command) {
             case "help": return HELP;
-            case "show": return SHOW;
-            case "view": return VIEW;
+            case "show":
+            case "view": return SHOW;
             case "settings": return SETTINGS;
             case "toggle": return TOGGLE;
             case "reset": return RESET;
-            case "go": return GO;
-            case "walk": return WALK;
+            case "go":
+            case "walk": return GO;
             case "proceed": return PROCEED;
             case "enter": return ENTER;
             case "leave": return LEAVE;
             case "turn": return TURN;
             case "approach": return APPROACH;
             case "slay": return SLAY;
-            case "take": return TAKE;
+            case "take":
+            case "get": return TAKE;
             case "drop": return DROP;
-            case "throw": return THROW;
+            case "throw":
+            case "toss": return THROW;
 
             default: return null;
         }

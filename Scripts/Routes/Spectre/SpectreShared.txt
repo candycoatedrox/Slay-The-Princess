@@ -212,14 +212,14 @@ label sorryBMenuPossessAsk
 p Of course there is! You can give me the only thing I've ever wanted -- a way out of this basement. The place won't let me leave.
 
 label trickMenu
-    jumpto trickMenuConfirmed /// checkfalse
+    jumpto trickMenuProof /// narrproof
     jumpto trickMenuSharedLoop /// sharedloop
 n Okay... I didn't want to be open to the idea, but there's no denying it now. You've clearly been here before.
 cold Oh`? What tipped you off`? Was it the corpse?
 n It doesn't matter. The only thing that matters is that nobody "tricked you." I've done nothing but give you wholly accurate information, and I'm sure whatever version of me you met in whatever other world you came from gave you accurate information, as well.
 jumpto trickMenuJoin
 
-label trickMenuConfirmed
+label trickMenuProof
 n Nobody "tricked you." I'm sure that other me gave you wholly accurate information that you wisely chose to act on.
 jumpto trickMenuJoin
 
@@ -316,15 +316,10 @@ p And, what? You just believed that? You killed me without giving it any thought
 hero That's rich coming from her. Every time she touches us, it's like we freeze over.
 cold She's right, though. But that's neither here nor there. What's done is done`. What we do from this point forward is all that matters`. Let's try not to let emotion get the better of us.
 
-label wrongConfirmedEndWorldSoft
-n So there really was a last time, and you really did manage to slay her. I would have liked to think I was the first, but there's no point living in denial...
-hero The... first?
-n It doesn't matter. The only thing that matters is this:
-jumpto wrongJoin
-
 label wrongEndWorldSoft
-    jumpto wrongConfirmedEndWorldSoft /// check
-label wrongJoin
+    n So there really was a last time, and you really did manage to slay her. I would have liked to think I was the first, but there's no point living in denial... /// noproof
+        hero The... first? /// noproof
+        n It doesn't matter. The only thing that matters is this: /// noproof
 n Don't underestimate your own capabilities. If you truly managed to slay her last time, that doesn't mean she wasn't a threat. It means that you did something heroic.
 n Threats come in all shapes and sizes. A misspoken word could bring about the end of everything just as much as a blade or even the mere existence of an idea.
 n You were chosen for this job for a reason.
@@ -432,13 +427,8 @@ label noPossessAskHarsh
 p Try it. See what happens.
 hero I don't like how she said that. It sounds dangerous.
 cold Is anything "dangerous,`" if we can never really die?
-    jumpto noPossessAskNoConfirm /// check
-n Look. You and the Princess clearly have a history, and that history clearly involves death. But aside from some horrifying implications, I don't care what's already happened between the two of you.
-jumpto noPossessAskJoin
-
-label noPossessAskNoConfirm
-n Aside from some horrifying implications, I don't really care what's already happened between you and the Princess.
-label noPossessAskJoin
+    n Aside from some horrifying implications, I don't really care what's already happened between you and the Princess. /// narrproof
+    n Look. You and the Princess clearly have a history, and that history clearly involves death. But aside from some horrifying implications, I don't care what's already happened between the two of you. /// noproof
 n And you don't know that you can never really die. Maybe you could only come back once! And even then, there are fates that come close to death in their terror.
 cold What a strange thing to say`. Isn't the turn of phrase`, "fates *worse* than death?"
 n There are no fates worse than the finality of death. Anyone who says otherwise is a fool.
@@ -723,7 +713,7 @@ cold One way or another, this is all going to end`. Wouldn't it be nice if He en
 p I guess we'll just have to see what happens when we leave. But if I'm stuck in here, I'll be making some renovations. It's too crowded.
 
 label possessUpstairs
-n *Sigh.* Your legs weary with the weight of the Princess' spectral form, and clumsy with the cold that still pervades them, stumble towards the stairs.
+n *Sigh.* Your legs weary with the weight of the Princess's spectral form, and clumsy with the cold that still pervades them, stumble towards the stairs.
 p I'm just trying to get home. You don't have to act like it's the end of the world.
 n But that's exactly what you leaving this place is going to be.
 p You don't know that!

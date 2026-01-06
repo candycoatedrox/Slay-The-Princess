@@ -280,7 +280,7 @@ n You don't even have a weapon. So I'm afraid you're out of luck, which unfortun
 n Your vision fades as she tears open the membrane of your soul.
 linebreak
 p GET UP.
-n You're awake, eyes once again fixed on the long hallway, your vision swimming as the Princess' command reverberates inside your skull. Her voice is all-encompassing. You feel... wrong.
+n You're awake, eyes once again fixed on the long hallway, your vision swimming as the Princess's command reverberates inside your skull. Her voice is all-encompassing. You feel... wrong.
 p I SAID GET UP.
 hero It's so *cramped* in here. Like there's some sort of growth, trying to push us all out.
 n I know. You rise to your feet, though the pain in your ankle is blinding. Your body slumps against the wall, desperately leaning into it for support.
@@ -329,7 +329,7 @@ p ALL I'M DOING IS REAPING WHAT YOU'VE SOWN.
 para We don't *have* to let her out. I've been storing up a little bit of will since she forced her way in here. Take it and throw us all into the basement! It's better than giving her what she wants.
 label noConsentJoin
 p YOU WOULDN'T DARE! MOVE! NOW!
-n Your body, still slumped against the wall, trapped between the Princess' overwhelming will and the blinding pain of your splintered ankle, takes an excruciating step towards the cabin door. The movement is stiff, your body reduced to a marionette, pulled reluctantly along by your strings.
+n Your body, still slumped against the wall, trapped between the Princess's overwhelming will and the blinding pain of your splintered ankle, takes an excruciating step towards the cabin door. The movement is stiff, your body reduced to a marionette, pulled reluctantly along by your strings.
 p IT'S NOT THAT BAD. THE PAIN FEELS GOOD. BECAUSE I KNOW YOU FEEL IT TOO.
 
 // Throw yourself into the abyss //

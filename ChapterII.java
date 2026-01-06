@@ -7,6 +7,8 @@ public class ChapterII extends StandardCycle {
     
     // Variables that are used in all chapters
     private final Voice ch2Voice;
+    private final Condition canAskMirror = new Condition(true);
+    private final Condition canApproachMirror = new Condition(true);
     private final Condition cantUnique3 = new Condition(manager.demoMode());
     private final Condition cantJoint3 = new Condition(manager.demoMode());
     private String source = "";
@@ -15,25 +17,55 @@ public class ChapterII extends StandardCycle {
     private boolean threwBlade = false;
     private boolean skipHillDialogue = false;
 
-    // Variables that persist from Chapter 1
+    // Flags that persist from Chapter 1
     private final boolean droppedBlade1; // Used in Adversary
     private final boolean whatWouldYouDo; // Used in Damsel
     private final boolean rescuePath; // Used in Witch
 
-    // Variables used in specific chapters
-    private boolean forestSpecial = false;
-    private int forestAskCount; // Used in Adversary
-    private int princessAskCount; // Used in Adversary
+    // Flags used in multiple Chapters
+    private boolean playerWounded = false; // Used in Adversary, Beast
+    private final Condition narratorProof = new Condition(); // Used in Adversary, Spectre, Prisoner
+    private final InverseCondition narratorNoProof = narratorProof.getInverse(); // Used in Adversary, Spectre, Prisoner
 
-    // Variables that persist in Chapter 3
+    // Flags used in The Adversary
+    private boolean forestSpecial = false;
+    private int forestAskCount = 0;
+    private int princessAskCount = 0;
+    private Condition adversaryNoFreeOffer;
+
+    // Flags used in The Tower
+    private GlobalInt towerResistCount;
+    private NumCondition towerNoResist;
+    private InverseCondition towerResisted;
+    private NumCondition towerResisted2;
+    private GlobalInt towerSubmitCount;
+    private NumCondition towerNoSubmit;
+    private InverseCondition towerSubmitted;
+
+    // Flags used in The Spectre
+    private boolean spectreShareDied = false;
+    private Condition spectreNoEndWorldExplore;
+
+    // Variables used in The Beast
+    private OptionsMenu beastCantWildMenu;
+
+    // Flags used in The Witch
+    private boolean witchHeartComment = false;
+
+    // Variables used in The Damsel
+    private String damselEndWorldResponse;
+
+    // Flags that persist in Chapter 3
+    private final Condition freeFromChains2 = new Condition(false);
     private boolean abandoned2 = false;
     private boolean adversaryTookBlade = false;
-    private boolean adversaryChainsBroken = false;
     private boolean adversaryFaceExplore = false;
     private boolean spectrePossessAsk = false;
     private boolean spectreCantWontAsk = false;
     private boolean spectreEndSlayAttempt = false;
     private boolean prisonerForcedBlade = false;
+    private boolean prisonerWatchedHead = false;
+    private boolean prisonerGoodEndingSeen = false;
     private boolean prisonerHeartStopped = false;
 
     // --- CONSTRUCTOR ---
@@ -43,11 +75,15 @@ public class ChapterII extends StandardCycle {
      * @param prevEnding the ending of the previous chapter
      * @param manager the GameManager to link this chapter to
      * @param parser the IOHandler to link this chapter to
-     * @param voicesMet the Voices the player has encountered so far during this cycle
-     * @param cantTryAbort whether the player has already tried (and failed) to abort this route
+     * @param route the Chapters the player has visited so far during this route
+     * @param isHarsh whether the Princess is currently hostile in Chapters where it varies
+     * @param knowsDestiny whether the Princess knows she's (allegedly) going to end the world
+     * @param droppedBlade1 whether the player dropped the blade in Chapter I
+     * @param whatWouldYouDo whether the player asked the Princess what she would do if she left the cabin in Chapter I
+     * @param rescuePath whether the player started to free the Princess in Chapter I
      */
-    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, Condition cantTryAbort, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
-        super(manager, parser, route, cantTryAbort, prevEnding);
+    public ChapterII(ChapterEnding prevEnding, GameManager manager, IOHandler parser, ArrayList<Chapter> route, boolean isHarsh, boolean knowsDestiny, boolean droppedBlade1, boolean whatWouldYouDo, boolean rescuePath) {
+        super(manager, parser, route, false, prevEnding);
 
         this.isHarsh = isHarsh;
         this.knowsDestiny = knowsDestiny;
@@ -74,7 +110,7 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Accessor for source
-     * @return the current "source" of the active chapter
+     * @return the "source" of the active Chapter
      */
     public String getSource() {
         return this.source;
@@ -129,19 +165,27 @@ public class ChapterII extends StandardCycle {
     }
 
     /**
+     * Checks whether the Narrator has proof that you have been here before
+     * @return whether or not the Narrator has proof that you have been here before
+     */
+    public boolean narratorProof() {
+        return narratorProof.check();
+    }
+
+    /**
+     * Accessor for freeFromChains2
+     * @return whether or not the Princess freed herself from her chains in Chapter II
+     */
+    public boolean freeFromChains2() {
+        return freeFromChains2.check();
+    }
+
+    /**
      * Accessor for adversaryTookBlade
      * @return whether or not the player took the blade before entering the basement in Chapter II: The Adversary
      */
     public boolean adversaryTookBlade() {
         return this.adversaryTookBlade;
-    }
-
-    /**
-     * Accessor for adversaryChainsBroken
-     * @return whether or not the player tried to abandon the Spectre or the Nightmare in Chapter II
-     */
-    public boolean adversaryChainsBroken() {
-        return this.adversaryChainsBroken;
     }
 
     // --- COMMANDS ---
@@ -253,7 +297,7 @@ public class ChapterII extends StandardCycle {
         manager.updateTracker();
 
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, abandoned2, adversaryTookBlade, adversaryChainsBroken, adversaryFaceExplore, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerHeartStopped);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, freeFromChains2.check(), abandoned2, adversaryTookBlade, adversaryFaceExplore, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerWatchedHead, prisonerGoodEndingSeen, prisonerHeartStopped);
             ending = chapter3.runChapter();
         }
 
@@ -643,20 +687,20 @@ public class ChapterII extends StandardCycle {
         }
 
         boolean pleadLeave = false; // Used in Nightmare
-        OptionsMenu askMenu = new OptionsMenu();
-        askMenu.add(new Option(this.manager, "teleport", "(Explore) If anything, the world ended *after* I slew her. When I tried to leave, everything was gone.", this.activeChapter == Chapter.SPECTRE));
-        askMenu.add(new Option(this.manager, "tips", tipsText, !tipsText.equals("")));
-        askMenu.add(new Option(this.manager, "howDanger", howDangerText, !howDangerText.equals("")));
-        askMenu.add(new Option(this.manager, "quote", quoteText, !quoteText.equals("")));
-        askMenu.add(new Option(this.manager, "basement", "(Explore) Who locked her in that basement? What *is* this place?"));
-        askMenu.add(new Option(this.manager, "whyMe", "(Explore) If people locked her away, why couldn't *they* slay her? Why is this falling on me?", askMenu.get("basement")));
-        askMenu.add(new Option(this.manager, "cagey", "(Explore) You're being cagey. What aren't you telling me?", false));
-        askMenu.add(new Option(this.manager, "return", "Nevermind."));
+        this.subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "teleport", "(Explore) If anything, the world ended *after* I slew her. When I tried to leave, everything was gone.", this.activeChapter == Chapter.SPECTRE));
+        subMenu.add(new Option(this.manager, "tips", tipsText, !tipsText.equals("")));
+        subMenu.add(new Option(this.manager, "howDanger", howDangerText, !howDangerText.equals("")));
+        subMenu.add(new Option(this.manager, "quote", quoteText, !quoteText.equals("")));
+        subMenu.add(new Option(this.manager, "basement", "(Explore) Who locked her in that basement? What *is* this place?"));
+        subMenu.add(new Option(this.manager, "whyMe", "(Explore) If people locked her away, why couldn't *they* slay her? Why is this falling on me?", subMenu.get("basement")));
+        subMenu.add(new Option(this.manager, "cagey", "(Explore) You're being cagey. What aren't you telling me?", false));
+        subMenu.add(new Option(this.manager, "return", "Nevermind."));
 
         String outcome;
         boolean repeatMenu = true;
         while (repeatMenu) {
-            outcome = parser.promptOptionsMenu(askMenu);
+            outcome = parser.promptOptionsMenu(subMenu);
             switch (outcome) {
                 case "teleport":
                     mainScript.runSection("princessTeleport");
@@ -676,7 +720,7 @@ public class ChapterII extends StandardCycle {
 
                 case "howDanger":
                     this.princessAskCount += 1;
-                    askMenu.setCondition("quote", false);
+                    subMenu.setCondition("quote", false);
 
                     if (this.activeChapter == Chapter.RAZOR) {
                         mainScript.runSection("princessHowDanger");
@@ -715,7 +759,7 @@ public class ChapterII extends StandardCycle {
 
                 case "quote":
                     this.princessAskCount += 1;
-                    askMenu.setCondition("howDanger", false);
+                    subMenu.setCondition("howDanger", false);
                     
                     secondaryScript.runSection("princessQuote");
 
@@ -845,9 +889,9 @@ public class ChapterII extends StandardCycle {
             }
 
             if (this.princessAskCount == 1) {
-                askMenu.setDisplay("return", "That's all.");
+                subMenu.setDisplay("return", "That's all.");
             } else if (this.princessAskCount == 2) {
-                askMenu.setCondition("cagey", true);
+                subMenu.setCondition("cagey", true);
             }
         }
 
@@ -870,19 +914,19 @@ public class ChapterII extends StandardCycle {
         mainScript.runSection("abortStart");
         secondaryScript.runSection("abortStart");
 
-        OptionsMenu leaveMenu = new OptionsMenu();
-        leaveMenu.add(new Option(this.manager, "ugh", "Okay, fine. You're persistent. I'll go to the cabin and I'll slay the Princess. Ugh!"));
-        leaveMenu.add(new Option(this.manager, "maybe", "Okay, fine. I'll go to the cabin and I'll talk to the Princess. Maybe I'll slay her. Maybe I won't. I guess we'll see."));
-        leaveMenu.add(new Option(this.manager, "lie", "(Lie) Yes, I definitely know where I'm going."));
-        leaveMenu.add(new Option(this.manager, "nope", "Nope!"));
-        leaveMenu.add(new Option(this.manager, "notGoing", "The only thing that matters is where I'm not going. (The cabin. I am not going to the cabin.)"));
-        leaveMenu.add(new Option(this.manager, "nihilist", "I'm actually pretty okay with the world ending. I relish the coming of a new dawn beyond our own. Gonna go walk in the opposite direction now!"));
-        leaveMenu.add(new Option(this.manager, "quiet", "[Quietly continue down the path away from the cabin.]"));
+        this.subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "ugh", "Okay, fine. You're persistent. I'll go to the cabin and I'll slay the Princess. Ugh!"));
+        subMenu.add(new Option(this.manager, "maybe", "Okay, fine. I'll go to the cabin and I'll talk to the Princess. Maybe I'll slay her. Maybe I won't. I guess we'll see."));
+        subMenu.add(new Option(this.manager, "lie", "(Lie) Yes, I definitely know where I'm going."));
+        subMenu.add(new Option(this.manager, "nope", "Nope!"));
+        subMenu.add(new Option(this.manager, "notGoing", "The only thing that matters is where I'm not going. (The cabin. I am not going to the cabin.)"));
+        subMenu.add(new Option(this.manager, "nihilist", "I'm actually pretty okay with the world ending. I relish the coming of a new dawn beyond our own. Gonna go walk in the opposite direction now!"));
+        subMenu.add(new Option(this.manager, "quiet", "[Quietly continue down the path away from the cabin.]"));
 
         boolean repeatMenu = true;
         String outcome;
         while (repeatMenu) {
-            outcome = parser.promptOptionsMenu(leaveMenu);
+            outcome = parser.promptOptionsMenu(subMenu);
             switch (outcome) {
                 case "cGoHill":
                 case "ugh":
@@ -924,13 +968,13 @@ public class ChapterII extends StandardCycle {
         this.currentLocation = GameLocation.HILL;
         secondaryScript.runSection("abortClearing");
 
-        leaveMenu = new OptionsMenu();
-        leaveMenu.add(new Option(this.manager, "cabin", "Okay, okay! I'm going into the cabin. Sheesh."));
-        leaveMenu.add(new Option(this.manager, "commit", "[Turn around (again) and leave (again).]"));
+        this.subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "cabin", "Okay, okay! I'm going into the cabin. Sheesh."));
+        subMenu.add(new Option(this.manager, "commit", "[Turn around (again) and leave (again).]"));
 
         repeatMenu = true;
         while (repeatMenu) {
-            outcome = parser.promptOptionsMenu(leaveMenu);
+            outcome = parser.promptOptionsMenu(subMenu);
             switch (outcome) {
                 case "cabin":
                     secondaryScript.runSection("abortReturnMenu2");
@@ -968,11 +1012,8 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player asks the Narrator about the mirror in the cabin during Chapter II
-     * @param canAskMirror whether the player can ask about the mirror (should be true)
-     * @param canApproach whether the player can approach the mirror (should be true)
-     * 
      */
-    private void ch2AskMirror(Condition canAskMirror, Condition canApproach) {
+    private void ch2AskMirror() {
         canAskMirror.set(false);
         this.mirrorComment = true;
         
@@ -1006,24 +1047,24 @@ public class ChapterII extends StandardCycle {
         
         mainScript.runConditionalSection("askMirrorStart", this.forestAskCount >= 2 || this.princessAskCount >= 2); // Condition only matters in Adversary
 
-        OptionsMenu mirrorMenu = new OptionsMenu();
-        mirrorMenu.add(new Option(this.manager, "careLie", "I care about whether I'm being lied to.", defaultCareLie));
-        mirrorMenu.add(new Option(this.manager, "careLieTower", "I care about whether I'm being lied to. There's a mirror.", this.activeChapter == Chapter.TOWER));
-        mirrorMenu.add(new Option(this.manager, "whyLie", "Why *would* you lie about that? What's the point?", defaultWhyLie));
-        mirrorMenu.add(new Option(this.manager, "whyLieNightmare", "Why *would* you lie about there not being a mirror when it's clearly right there? What's the point?", this.activeChapter == Chapter.NIGHTMARE));
-        mirrorMenu.add(new Option(this.manager, "whyLieWitch", "I trust my eyes. Why would He lie about there not being a mirror? What's the point?", this.activeChapter == Chapter.WITCH));
-        mirrorMenu.add(new Option(this.manager, "handsome", "I want to look at myself. I want to see how *handsome* I am.", !defaultHandsomeCare && this.activeChapter != Chapter.STRANGER));
-        mirrorMenu.add(new Option(this.manager, "handsomeCare", "I care. I want to look at myself. I want to see how *handsome* I am.", defaultHandsomeCare));
-        mirrorMenu.add(new Option(this.manager, "handsomeStranger", "I also want to look at myself. I want to see how *handsome* I am.", this.activeChapter == Chapter.STRANGER));
-        mirrorMenu.add(new Option(this.manager, "noMatter", "It doesn't matter.", defaultNoMatter));
-        mirrorMenu.add(new Option(this.manager, "noMatterRight", "You're right. It doesn't matter.", !defaultNoMatter && this.activeChapter != Chapter.TOWER));
-        mirrorMenu.add(new Option(this.manager, "noMatterTower", "It doesn't matter whether there's a mirror.", this.activeChapter == Chapter.TOWER));
-        mirrorMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
-        mirrorMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+        this.subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "careLie", "I care about whether I'm being lied to.", defaultCareLie));
+        subMenu.add(new Option(this.manager, "careLieTower", "I care about whether I'm being lied to. There's a mirror.", this.activeChapter == Chapter.TOWER));
+        subMenu.add(new Option(this.manager, "whyLie", "Why *would* you lie about that? What's the point?", defaultWhyLie));
+        subMenu.add(new Option(this.manager, "whyLieNightmare", "Why *would* you lie about there not being a mirror when it's clearly right there? What's the point?", this.activeChapter == Chapter.NIGHTMARE));
+        subMenu.add(new Option(this.manager, "whyLieWitch", "I trust my eyes. Why would He lie about there not being a mirror? What's the point?", this.activeChapter == Chapter.WITCH));
+        subMenu.add(new Option(this.manager, "handsome", "I want to look at myself. I want to see how *handsome* I am.", !defaultHandsomeCare && this.activeChapter != Chapter.STRANGER));
+        subMenu.add(new Option(this.manager, "handsomeCare", "I care. I want to look at myself. I want to see how *handsome* I am.", defaultHandsomeCare));
+        subMenu.add(new Option(this.manager, "handsomeStranger", "I also want to look at myself. I want to see how *handsome* I am.", this.activeChapter == Chapter.STRANGER));
+        subMenu.add(new Option(this.manager, "noMatter", "It doesn't matter.", defaultNoMatter));
+        subMenu.add(new Option(this.manager, "noMatterRight", "You're right. It doesn't matter.", !defaultNoMatter && this.activeChapter != Chapter.TOWER));
+        subMenu.add(new Option(this.manager, "noMatterTower", "It doesn't matter whether there's a mirror.", this.activeChapter == Chapter.TOWER));
+        subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
+        subMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
 
         boolean repeatMenu = true;
         while (repeatMenu) {
-            switch (parser.promptOptionsMenu(mirrorMenu)) {
+            switch (parser.promptOptionsMenu(subMenu)) {
                 case "careLie":
                     repeatMenu = false;
                     secondaryScript.runSection("mirrorCareLie");
@@ -1069,7 +1110,7 @@ public class ChapterII extends StandardCycle {
                 case "noMatterTower":
                     repeatMenu = false;
                     this.mirrorPresent = false;
-                    canApproach.set(false);
+                    canApproachMirror.set(false);
 
                     if (this.activeChapter == Chapter.PRISONER) {
                         mainScript.runSection("mirrorNoMatterIntro");
@@ -1088,7 +1129,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 default:
@@ -1099,14 +1140,12 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player approaches the mirror in the cabin during Chapter II
-     * @param canAskMirror whether the player can ask about the mirror
-     * @param canApproach whether the player can approach the mirror (should be true)
      */
-    private void ch2ApproachMirror(Condition canAskMirror, Condition canApproach) {
+    private void ch2ApproachMirror() {
         this.touchedMirror = true;
         this.mirrorPresent = false;
         canAskMirror.set(false);
-        canApproach.set(false);
+        canApproachMirror.set(false);
 
         if (this.activeChapter == Chapter.NIGHTMARE) {
             mainScript.runSection("approachMirror");
@@ -1116,12 +1155,12 @@ public class ChapterII extends StandardCycle {
 
         secondaryScript.runSection("approachComment");
 
-        OptionsMenu mirrorMenu = new OptionsMenu();
-        mirrorMenu.add(new Option(this.manager, "wipe", "[Wipe the mirror clean.]"));
+        this.subMenu = new OptionsMenu();
+        subMenu.add(new Option(this.manager, "wipe", "[Wipe the mirror clean.]"));
 
         boolean repeatMenu = true;
         while (repeatMenu) {
-            switch (parser.promptOptionsMenu(mirrorMenu)) {
+            switch (parser.promptOptionsMenu(subMenu)) {
                 case "wipe":
                     repeatMenu = false;
                     break;
@@ -1159,12 +1198,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runConditionalSection("cabinIntro", this.forestAskCount >= 2 || this.princessAskCount >= 2);
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
+        activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", this.canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", this.canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -1173,7 +1210,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -1182,7 +1219,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -1212,23 +1249,19 @@ public class ChapterII extends StandardCycle {
 
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
+        this.adversaryNoFreeOffer = new Condition(true);
+        InverseCondition freeOffer = adversaryNoFreeOffer.getInverse();
         boolean differentComment = false;
         Condition talked = new Condition();
         InverseCondition noTalk = talked.getInverse();
-        Condition narratorProof = new Condition();
-        InverseCondition noProof = narratorProof.getInverse();
         Condition scaredComment = new Condition();
         Condition closerComment = new Condition();
         InverseCondition noCloserComment = closerComment.getInverse();
-        Condition freeOffer = new Condition();
-        InverseCondition noFreeOffer = freeOffer.getInverse();
 
-        OptionsMenu subMenu;
         boolean repeatSub;
-
         this.canSlayPrincess = true;
         this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "proof", "(Explore) I hope you heard all of that, Mr. Narrator. This is a lot different than last time, but last time definitely *happened.*", this.sharedLoop, noProof));
+        activeMenu.add(new Option(this.manager, "proof", "(Explore) I hope you heard all of that, Mr. Narrator. This is a lot different than last time, but last time definitely *happened.*", this.sharedLoop, this.narratorNoProof));
         activeMenu.add(new Option(this.manager, "different", "(Explore) \"You look... different.\""));
         activeMenu.add(new Option(this.manager, "memory", "(Explore) \"So you *do* remember me!\""));
         activeMenu.add(new Option(this.manager, "chat", "(Explore) \"I actually am just here to chat.\"", !this.hasBlade));
@@ -1271,21 +1304,21 @@ public class ChapterII extends StandardCycle {
                     differentComment = true;
                     talked.set();
                     mainScript.runBladeSection("differentDistantMenu");
-                    this.adversaryNarratorProof(narratorProof);
+                    this.adversaryNarratorProof();
                     break;
                     
                 case "memory":
                     talked.set();
                     mainScript.runBladeSection("memoryDistantMenu");
                     if (!this.hasBlade && narratorProof.check()) mainScript.runSection();
-                    this.adversaryNarratorProof(narratorProof);
+                    this.adversaryNarratorProof();
                     break;
                     
                 case "chat":
                     talked.set();
                     scaredComment.set();
                     mainScript.runConditionalSection("chatDistantMenu", this.droppedBlade1);
-                    this.adversaryNarratorProof(narratorProof);
+                    this.adversaryNarratorProof();
                     break;
                     
                 case "scared":
@@ -1295,9 +1328,10 @@ public class ChapterII extends StandardCycle {
                     
                 case "freeOffer":
                     talked.set();
+                    adversaryNoFreeOffer.set(false);
                     mainScript.runSection("freeOfferDistantMenu");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "serious", "\"You don't want to be free? Are you serious?\""));
                     subMenu.add(new Option(this.manager, "want", "\"If you don't want to be free, then what do you want?\""));
                     subMenu.add(new Option(this.manager, "why", "\"Me? Anyone? Why wouldn't you want to be free?\""));
@@ -1311,7 +1345,7 @@ public class ChapterII extends StandardCycle {
 
                         case "want":
                             mainScript.runSection("wantFreeOffer");
-                            this.adversaryNarratorProof(narratorProof);
+                            this.adversaryNarratorProof();
                             break;
 
                         default:
@@ -1323,7 +1357,7 @@ public class ChapterII extends StandardCycle {
                 case "unpack":
                     talked.set();
                     mainScript.runSection("unpackDistantMenu");
-                    this.adversaryNarratorProof(narratorProof);
+                    this.adversaryNarratorProof();
                     break;
                     
                 case "undecided":
@@ -1343,10 +1377,10 @@ public class ChapterII extends StandardCycle {
                     
                 case "slay":
                     mainScript.runSection("directEarlyJoin");
-                    return this.adversaryFightDirect(true, narratorProof, noFreeOffer);
+                    return this.adversaryFightDirect(true);
                     
                 case "attack":
-                    return this.adversaryFight(false, narratorProof, noFreeOffer);
+                    return this.adversaryFight();
                     
                 case "cSlayPrincessNoBladeFail":
                     if (this.cantJoint3.check()) {
@@ -1364,14 +1398,14 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
                     
-                    return this.adversaryFightUnarmed(narratorProof);
+                    return this.adversaryFightUnarmed();
                     
                 case "retrieve":
                     mainScript.runSection("retrieveDistantMenu");
-                    return this.adversaryRetrieveBlade(false, narratorProof, noFreeOffer);
+                    return this.adversaryRetrieveBlade();
                     
                 case "free":
-                    return this.adversaryFree(narratorProof);
+                    return this.adversaryFree();
                     
                 case "cGoStairs":
                     if (this.cantJoint3.check()) {
@@ -1389,7 +1423,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
                     
-                    return this.adversaryFlee(false, narratorProof, noFreeOffer);
+                    return this.adversaryFlee();
             }
         }
 
@@ -1398,7 +1432,7 @@ public class ChapterII extends StandardCycle {
 
         Condition noEndWorldAsk = new Condition(true);
         Condition noAskFree = new Condition(true);
-        Condition chainsNotBroken = new Condition();
+        InverseCondition chainsNotBroken = freeFromChains2.getInverse();
         Condition purposeAsk = new Condition();
         InverseCondition noPurposeAsk = purposeAsk.getInverse();
         Condition whyOrPurpose = new Condition();
@@ -1409,7 +1443,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "spar", "(Explore) \"Can't we just... I don't know, spar a little? Maybe there's a compromise where we can all get what we want, nobody has to die, and the world doesn't have to end.\""));
         activeMenu.add(new Option(this.manager, "noEnd", "(Explore) \"If all you want to do is fight me, does that mean you won't end the world?\"", noEndWorldAsk));
         activeMenu.add(new Option(this.manager, "freeAskA", "(Explore) \"So you're just... fine locked away in here? You really don't want to be free?\"", noAskFree, chainsNotBroken, freeOffer));
-        activeMenu.add(new Option(this.manager, "freeAskB", "(Explore) \"Don't you want to be free?\"", noAskFree, chainsNotBroken, noFreeOffer));
+        activeMenu.add(new Option(this.manager, "freeAskB", "(Explore) \"Don't you want to be free?\"", noAskFree, chainsNotBroken, adversaryNoFreeOffer));
         activeMenu.add(new Option(this.manager, "afterDied", "(Explore) \"What happened after you died?\""));
         activeMenu.add(new Option(this.manager, "why", "(Explore) \"We have to figure out why we're here.\"", noWhyOrPurpose));
         activeMenu.add(new Option(this.manager, "reason", "(Explore) \"You were put down here for a reason. I was sent to kill you for a reason. Don't you care what that reason is?\"", noPurposeAsk));
@@ -1439,9 +1473,8 @@ public class ChapterII extends StandardCycle {
                     
                 case "freeAskA":
                 case "freeAskB":
-                    this.adversaryChainsBroken = true;
-                    chainsNotBroken.set(false);
-                    freeOffer.set();
+                    freeFromChains2.set();
+                    adversaryNoFreeOffer.set(false);
                     noAskFree.set(false);
                     mainScript.runSection(activeOutcome + "CloseMenu");
                     mainScript.runSection("closeBreakChainsJoin");
@@ -1450,7 +1483,7 @@ public class ChapterII extends StandardCycle {
                 case "afterDied":
                     mainScript.runSection("afterDiedCloseMenu");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "singleFile", "(Explore) \"Or... we could just walk single-file out of here.\""));
                     subMenu.add(new Option(this.manager, "wounds", "(Explore) \"You don't have any wounds...\""));
                     subMenu.add(new Option(this.manager, "you", "(Explore) \"You're different...\""));
@@ -1474,7 +1507,7 @@ public class ChapterII extends StandardCycle {
                             
                             case "return":
                                 repeatSub = false;
-                                this.adversaryNarratorProof(narratorProof);
+                                this.adversaryNarratorProof();
                                 break;
                         }
                     }
@@ -1485,7 +1518,7 @@ public class ChapterII extends StandardCycle {
                     whyOrPurpose.set();
                     mainScript.runSection("whyCloseMenu");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "literal", "\"I don't mean 'why are we here existentially,' I mean, quite literally, why are you in this basement? Who sent me here to kill you? Why me? Why you? There are answers out there and we need to find them.\""));
                     subMenu.add(new Option(this.manager, "reason", "\"You were put down here for a reason. I was sent to kill you for a reason. Don't you care what that reason is?\""));
                     subMenu.add(new Option(this.manager, "want", "\"We're here because some people want me to kill you.\""));
@@ -1519,11 +1552,11 @@ public class ChapterII extends StandardCycle {
                 case "cSlayPrincess":
                 case "attackA":
                 case "attackB":
-                    return this.adversaryFight(false, narratorProof, noFreeOffer);
+                    return this.adversaryFight();
                     
                 case "retrieve":
                     mainScript.runSection("retrieveCloseMenu");
-                    return this.adversaryRetrieveBlade(false, narratorProof, noFreeOffer);
+                    return this.adversaryRetrieveBlade();
                     
                 case "refuse":
                 case "silent":
@@ -1536,10 +1569,10 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
                     
-                    return this.adversaryPacifism(false, narratorProof, noFreeOffer);
+                    return this.adversaryPacifism(false);
                     
                 case "free":
-                    return this.adversaryFree(narratorProof);
+                    return this.adversaryFree();
                     
                 case "cGoStairs":
                     if (this.cantJoint3.check()) {
@@ -1556,7 +1589,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    return this.adversaryFlee(false, narratorProof, noFreeOffer);
+                    return this.adversaryFlee();
                     
                 default: this.giveDefaultFailResponse(activeOutcome);
             }
@@ -1567,9 +1600,8 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The Narrator finally accepts that the player and the Adversary have met before (if He hasn't already)
-     * @param narratorProof whether the Narrator has accepted that you've been here before
      */
-    private void adversaryNarratorProof(Condition narratorProof) {
+    private void adversaryNarratorProof() {
         if (narratorProof.check()) return;
 
         narratorProof.set();
@@ -1588,11 +1620,9 @@ public class ChapterII extends StandardCycle {
     /**
      * The player fights the Adversary head-on
      * @param immediate whether the player immediately attacked the Princess or hesitated
-     * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @param noFreeOffer whether the player has already offered to free the Princess
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFightDirect(boolean immediate, Condition narratorProof, AbstractCondition noFreeOffer) {
+    private ChapterEnding adversaryFightDirect(boolean immediate) {
         mainScript.runSection("directStart");
 
         this.activeMenu = new OptionsMenu();
@@ -1627,7 +1657,6 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runConditionalSection("pushDirect", immediate);
 
-        InverseCondition noProof = narratorProof.getInverse();
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "agree", "\"I do.\""));
         activeMenu.add(new Option(this.manager, "lie", "(Lie) \"I do.\""));
@@ -1675,14 +1704,14 @@ public class ChapterII extends StandardCycle {
         }
 
         mainScript.runSection("pushCont");
-        this.adversaryChainsBroken = true;
+        freeFromChains2.set();
 
         Condition canUnderstanding = new Condition(true);
         this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "proof", "(Explore) I hope you heard all of that, Mr. Narrator. This is a lot different than last time, but last time definitely *happened.*", this.sharedLoop, noProof));
+        activeMenu.add(new Option(this.manager, "proof", "(Explore) I hope you heard all of that, Mr. Narrator. This is a lot different than last time, but last time definitely *happened.*", this.sharedLoop, this.narratorNoProof));
         activeMenu.add(new Option(this.manager, "jumpGun", "(Explore) \"Aren't you jumping the gun a little here? We each died *once.* That doesn't mean we're *immortal.*\""));
         activeMenu.add(new Option(this.manager, "metaphor", "(Explore) \"Were you being metaphorical when you said that nothing exists outside of us? There's more to the world than just this cabin. I saw trees and everything on my way here.\""));
-        activeMenu.add(new Option(this.manager, "freeOffer", "(Explore) \"Don't you want to be free, though? Isn't there more to life than waking up chained in a basement and fighting to the death in an endless loop?\"", noFreeOffer));
+        activeMenu.add(new Option(this.manager, "freeOffer", "(Explore) \"Don't you want to be free, though? Isn't there more to life than waking up chained in a basement and fighting to the death in an endless loop?\"", adversaryNoFreeOffer));
         activeMenu.add(new Option(this.manager, "dontGet", "(Explore) \"Is that what you meant when you said I 'understood?' Because if that's the case then I absolutely don't get it. I'm not even sure there's an 'it' to get!\"", activeMenu.get("metaphor"), canUnderstanding));
         activeMenu.add(new Option(this.manager, "song", "(Explore) \"Yes! The two of us are a chorus of notes building on top of each other forever. The song we write in our blood will be the most beautiful music ever written!\"", activeMenu.get("metaphor"), canUnderstanding));
         activeMenu.add(new Option(this.manager, "refuse", this.cantJoint3, "\"Actually, I think I'm done fighting you. I don't think this is healthy for either of us.\""));
@@ -1738,19 +1767,20 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "freeOffer":
+                    adversaryNoFreeOffer.set(false);
                     canUnderstanding.set(false);
                     mainScript.runSection("freeOfferPush");
 
-                    OptionsMenu freeMenu = new OptionsMenu();
-                    freeMenu.add(new Option(this.manager, "oh", "\"Oh I get it, so you're like some sort of psychosexual sadomasochist. That makes sense.\""));
-                    freeMenu.add(new Option(this.manager, "chance", "\"There will always be another chance to for us to kill each other.\""));
-                    freeMenu.add(new Option(this.manager, "fine", "\"There's no getting through to you, is there? Fine.\""));
-                    freeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
-                    freeMenu.add(new Option(this.manager, "attack", "\"Okay, sure, I get it now. Let's do this.\" [Pick up the blade and attack her again.]\""));
+                    this.subMenu = new OptionsMenu();
+                    subMenu.add(new Option(this.manager, "oh", "\"Oh I get it, so you're like some sort of psychosexual sadomasochist. That makes sense.\""));
+                    subMenu.add(new Option(this.manager, "chance", "\"There will always be another chance to for us to kill each other.\""));
+                    subMenu.add(new Option(this.manager, "fine", "\"There's no getting through to you, is there? Fine.\""));
+                    subMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+                    subMenu.add(new Option(this.manager, "attack", "\"Okay, sure, I get it now. Let's do this.\" [Pick up the blade and attack her again.]\""));
 
                     boolean repeatMenu = true;
                     while (repeatMenu) {
-                        this.activeOutcome = parser.promptOptionsMenu(freeMenu);
+                        this.activeOutcome = parser.promptOptionsMenu(subMenu);
                         switch (activeOutcome) {
                             case "oh":
                             case "chance":
@@ -1789,7 +1819,7 @@ public class ChapterII extends StandardCycle {
                     }
 
                     mainScript.runSection("refuseCommitFromFight");
-                    return this.adversaryPacifism(true, narratorProof, noFreeOffer);
+                    return this.adversaryPacifism(true);
 
                 case "cTakeHasBladeFail":
                 case "cSlayPrincess":
@@ -1983,12 +2013,9 @@ public class ChapterII extends StandardCycle {
 
     /**
      * After not initially taking the blade, the player chooses to retrieve it from upstairs
-     * @param wounded whether the player is already wounded
-     * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @param noFreeOffer whether the player has already offered to free the Princess
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryRetrieveBlade(boolean wounded, Condition narratorProof, AbstractCondition noFreeOffer) {
+    private ChapterEnding adversaryRetrieveBlade() {
         this.currentLocation = GameLocation.CABIN;
         this.withPrincess = false;
         this.withBlade = true;
@@ -2030,7 +2057,7 @@ public class ChapterII extends StandardCycle {
                     
                     if (this.hasBlade) mainScript.runSection("fleeRetrieveTookBlade");
                     mainScript.runSection("stayRetrieve");
-                    return this.adversaryFleeUpstairs(wounded, true);
+                    return this.adversaryFleeUpstairs(true);
 
                 case "cGoHill":
                     if (this.cantJoint3.check() || !activeMenu.hasBeenPicked("explore")) {
@@ -2049,7 +2076,7 @@ public class ChapterII extends StandardCycle {
                     
                     if (this.hasBlade) mainScript.runSection("fleeRetrieveTookBlade");
                     mainScript.runSection("leaveRetrieve");
-                    return this.adversaryFleeUpstairs(wounded, true);
+                    return this.adversaryFleeUpstairs(true);
 
                 case "cGoStairs":
                     if (!this.hasBlade) {
@@ -2082,24 +2109,21 @@ public class ChapterII extends StandardCycle {
             }
         }
 
-        return this.adversaryFight(wounded, narratorProof, noFreeOffer);
+        return this.adversaryFight();
     }
 
     /**
      * The player chooses to fight the Adversary after hesitating
-     * @param wounded whether the player is already wounded
-     * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @param noFreeOffer whether the player has already offered to free the Princess
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFight(boolean wounded, Condition narratorProof, AbstractCondition noFreeOffer) {
-        if (wounded) {
+    private ChapterEnding adversaryFight() {
+        if (this.playerWounded) {
             mainScript.runSection("fightWounded");
             return ChapterEnding.DEADISDEAD;
         }
 
-        mainScript.runConditionalSection("fightStart", narratorProof);
-        this.adversaryChainsBroken = true;
+        mainScript.runSection("fightStart");
+        freeFromChains2.set();
 
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "bait", manager.demoMode(), "[Bait an opening and outmaneuver her.]", 0));
@@ -2122,7 +2146,7 @@ public class ChapterII extends StandardCycle {
                 case "cSlayPrincess":
                 case "strike":
                     mainScript.runSection("fightStrike");
-                    return this.adversaryFightDirect(false, narratorProof, noFreeOffer);
+                    return this.adversaryFightDirect(false);
 
                 case "cGoStairs":
                     if (this.cantJoint3.check()) {
@@ -2140,7 +2164,7 @@ public class ChapterII extends StandardCycle {
                     }
                     
                     mainScript.runSection("fleeRunFail");
-                    mainScript.runConditionalSection("fleeEnd", narratorProof);
+                    mainScript.runSection("fleeEnd");
                     return ChapterEnding.DEADISDEAD;
             }
         }
@@ -2150,18 +2174,17 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player attempts to fight the Adversary unarmed, leading to Chapter III: The Fury
-     * @param narratorProof whether the Narrator has accepted that you've been here before
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFightUnarmed(Condition narratorProof) {
+    private ChapterEnding adversaryFightUnarmed() {
         mainScript.runSection("unarmedStart");
 
-        OptionsMenu deathMenu = new OptionsMenu(true);
-        deathMenu.add(new Option(this.manager, "getUp", "[Get up.]", 0));
-        deathMenu.add(new Option(this.manager, "die", "[Die.]"));
+        this.subMenu = new OptionsMenu(true);
+        subMenu.add(new Option(this.manager, "getUp", "[Get up.]", 0));
+        subMenu.add(new Option(this.manager, "die", "[Die.]"));
 
-        if (parser.promptOptionsMenu(deathMenu).equals("die")) {
-            mainScript.runConditionalSection("unarmedDie", narratorProof);
+        if (parser.promptOptionsMenu(subMenu).equals("die")) {
+            mainScript.runConditionalSection("unarmedDie");
             return ChapterEnding.DEADISDEAD;
         }
 
@@ -2202,8 +2225,8 @@ public class ChapterII extends StandardCycle {
             }
         }
 
-        if (parser.promptOptionsMenu(deathMenu).equals("die")) {
-            mainScript.runConditionalSection("unarmedDiePhase1", narratorProof);
+        if (parser.promptOptionsMenu(subMenu).equals("die")) {
+            mainScript.runSection("unarmedDiePhase1");
             return ChapterEnding.DEADISDEAD;
         }
 
@@ -2214,13 +2237,11 @@ public class ChapterII extends StandardCycle {
     /**
      * The player simply refuses to fight the Adversary, leading to Chapter III: The Fury
      * @param fromFight whether the player stopped in the middle of fighting the Princess
-     * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @param noFreeOffer whether the player has already offered to free the Princess
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryPacifism(boolean fromFight, Condition narratorProof, AbstractCondition noFreeOffer) {
-        if (!this.adversaryChainsBroken) {
-            this.adversaryChainsBroken = true;
+    private ChapterEnding adversaryPacifism(boolean fromFight) {
+        if (!freeFromChains2.check()) {
+            freeFromChains2.set();
             mainScript.runSection("refuseBreakChains");
 
             this.canSlayPrincess = this.hasBlade;
@@ -2237,11 +2258,11 @@ public class ChapterII extends StandardCycle {
                 switch (activeOutcome) {
                     case "cSlayPrincess":
                     case "attack":
-                        return this.adversaryFight(false, narratorProof, noFreeOffer);
+                        return this.adversaryFight();
 
                     case "retrieve":
                         mainScript.runSection("refuseRetrieve");
-                        return this.adversaryRetrieveBlade(false, narratorProof, noFreeOffer);
+                        return this.adversaryRetrieveBlade();
 
                     case "cGoStairs":
                         if (this.hasBlade) {
@@ -2249,7 +2270,7 @@ public class ChapterII extends StandardCycle {
                             break;
                         }
                     case "flee":
-                        return this.adversaryFlee(false, narratorProof, noFreeOffer);
+                        return this.adversaryFlee();
 
                     case "refuse":
                     case "silent":
@@ -2262,6 +2283,7 @@ public class ChapterII extends StandardCycle {
             }
         }
 
+        this.playerWounded = true;
         mainScript.runConditionalSection("refuseCommit", fromFight);
 
         boolean isStanding = false;
@@ -2305,7 +2327,7 @@ public class ChapterII extends StandardCycle {
 
                             case "retrieve":
                                 mainScript.runSection("retrieveStand");
-                                return this.adversaryRetrieveBlade(true, narratorProof, noFreeOffer);
+                                return this.adversaryRetrieveBlade();
 
                             case "refuse":
                             case "silent":
@@ -2315,14 +2337,14 @@ public class ChapterII extends StandardCycle {
 
                             case "fleeNoBlade":
                                 mainScript.runSection("fleeNoBladeStand");
-                                return this.adversaryRetrieveBlade(true, narratorProof, noFreeOffer);
+                                return this.adversaryRetrieveBlade();
 
                             case "fleeBlade":
                                 mainScript.runSection("fleeBladeStand");
-                                return this.adversaryFleeUpstairs(true, false);
+                                return this.adversaryFleeUpstairs(false);
 
                             case "attack":
-                                return this.adversaryFight(true, narratorProof, noFreeOffer);
+                                return this.adversaryFight();
 
                             case "cTakeHasBladeFail":
                                 this.giveDefaultFailResponse();
@@ -2357,17 +2379,15 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "funny", "\"I just think it's kind of funny...\""));
         activeMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
-        mainScript.runConditionalSection(parser.promptOptionsMenu(activeMenu) + "RefuseEnd", narratorProof);
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "RefuseEnd");
         return ChapterEnding.STRIKEMEDOWN;
     }
 
     /**
      * The player attempts to free the Adversary, leading to Chapter III: The Eye of the Needle
-     * @param wounded whether the player is already wounded
-     * @param narratorProof whether the Narrator has accepted that you've been here before
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFree(Condition narratorProof) {
+    private ChapterEnding adversaryFree() {
         mainScript.runSection("freeStart");
 
         Option attack = new Option(this.manager, "attack", "[Attack the Princess.]");
@@ -2384,7 +2404,7 @@ public class ChapterII extends StandardCycle {
                 
                 case "cSlayPrincess":
                 case "attack":
-                    return this.adversaryFight(false, narratorProof, new Condition());
+                    return this.adversaryFight();
 
                 default: this.giveDefaultFailResponse();
             }
@@ -2415,7 +2435,7 @@ public class ChapterII extends StandardCycle {
                 case "attack7":
                 case "attack8":
                 case "attack9":
-                    return this.adversaryFight(false, narratorProof, new Condition());
+                    return this.adversaryFight();
 
                 default: this.giveDefaultFailResponse();
             }
@@ -2427,17 +2447,14 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player attempts to flee from the Adverary
-     * @param wounded whether the player is already wounded
-     * @param narratorProof whether the Narrator has accepted that you've been here before
-     * @param noFreeOffer whether the player has already offered to free the Princess
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFlee(boolean wounded, Condition narratorProof, AbstractCondition noFreeOffer) {
-        boolean brokeFree = !this.adversaryChainsBroken;
-        this.adversaryChainsBroken = true;
+    private ChapterEnding adversaryFlee() {
+        boolean notFree = !freeFromChains2.check();
+        freeFromChains2.set();
         this.activeMenu = new OptionsMenu();
 
-        if (brokeFree) {
+        if (notFree) {
             mainScript.runSection("fleeStartNotFree");
             
             activeMenu.add(new Option(this.manager, "explore", "(Explore) Okay, team. What are we thinking?"));
@@ -2456,7 +2473,7 @@ public class ChapterII extends StandardCycle {
                         break;
 
                     case "turn":
-                        return this.adversaryFight(wounded, narratorProof, noFreeOffer);
+                        return this.adversaryFight();
 
                     case "dodge":
                         if (!manager.confirmContentWarnings(Chapter.NEEDLE)) {
@@ -2470,7 +2487,7 @@ public class ChapterII extends StandardCycle {
                     case "cGoStairs":
                     case "run":
                         mainScript.runSection("fleeRunSuccess");
-                        return this.adversaryFleeUpstairs(wounded, false);
+                        return this.adversaryFleeUpstairs(false);
 
                     case "die":
                         this.repeatActiveMenu = false;
@@ -2515,21 +2532,19 @@ public class ChapterII extends StandardCycle {
         }
 
         // You die
-        mainScript.runConditionalSection("fleeEnd", narratorProof);
+        mainScript.runSection("fleeEnd");
         return ChapterEnding.DEADISDEAD;
     }
 
     /**
      * The player manages to flee from the Adversary and make it upstairs
-     * @param wounded whether the player is already wounded
      * @param retrieve whether the player originally went upstairs to retrieve the blade
-     * @param lateJoin whether to skip the first portion of dialogue
      * @return the ending reached by the player
      */
-    private ChapterEnding adversaryFleeUpstairs(boolean wounded, boolean retrieve) {
+    private ChapterEnding adversaryFleeUpstairs(boolean retrieve) {
         this.currentLocation = GameLocation.CABIN;
         this.withPrincess = false;
-        this.adversaryChainsBroken = true;
+        freeFromChains2.set();
 
         if (retrieve) {
             mainScript.runSection("upstairsRetrieveStart");
@@ -2568,7 +2583,7 @@ public class ChapterII extends StandardCycle {
         }
 
         if (this.hasBlade) {
-            if (wounded) {
+            if (this.playerWounded) {
                 mainScript.runSection("upstairsDieWounded");
             } else {
                 mainScript.runSection("upstairsFightEnd");
@@ -2592,8 +2607,13 @@ public class ChapterII extends StandardCycle {
     private ChapterEnding tower() {
         // You gain the Voice of the Broken
 
-        GlobalInt resistCount = new GlobalInt();
-        GlobalInt submitCount = new GlobalInt();
+        this.towerResistCount = new GlobalInt();
+        this.towerNoResist = new NumCondition(towerResistCount, 0);
+        this.towerResisted = towerNoResist.getInverse();
+        this.towerResisted2 = new NumCondition(towerResistCount, 1, 2);
+        this.towerSubmitCount = new GlobalInt();
+        this.towerNoSubmit = new NumCondition(towerSubmitCount, 0);
+        this.towerSubmitted = towerNoSubmit.getInverse();
         boolean tookBlade = false;
 
         switch (this.prevEnding) {
@@ -2612,12 +2632,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -2626,7 +2644,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -2635,7 +2653,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -2660,7 +2678,7 @@ public class ChapterII extends StandardCycle {
         this.currentLocation = GameLocation.STAIRS;
         this.withBlade = false;
         this.mirrorPresent = false;
-        if (!this.hasBlade) submitCount.increment();
+        if (!this.hasBlade) towerSubmitCount.increment();
         mainScript.runSection("stairsStart");
 
         this.activeMenu = new OptionsMenu();
@@ -2699,14 +2717,14 @@ public class ChapterII extends StandardCycle {
                     case "cDrop":
                     case "drop":
                         this.repeatActiveMenu = false;
-                        submitCount.increment();
+                        towerSubmitCount.increment();
                         mainScript.runSection("dropWilling");
                         break;
 
                     case "cSlayPrincessFail":
                     case "tighten":
                         this.repeatActiveMenu = false;
-                        resistCount.increment();
+                        towerResistCount.increment();
                         mainScript.runSection("dropForced");
                         break;
 
@@ -2725,8 +2743,8 @@ public class ChapterII extends StandardCycle {
 
         switch (parser.promptOptionsMenu(activeMenu)) {
             case "no":
-                if (resistCount.equals(2)) {
-                    resistCount.increment();
+                if (towerResistCount.equals(2)) {
+                    towerResistCount.increment();
                     mainScript.runSection("kneelResistAgain");
                 } else {
                     mainScript.runSection("kneelResistFirst");
@@ -2735,7 +2753,7 @@ public class ChapterII extends StandardCycle {
                 break;
 
             case "kneel":
-                submitCount.increment();
+                towerSubmitCount.increment();
                 mainScript.runSection("kneelWilling");
                 break;
         }
@@ -2748,12 +2766,12 @@ public class ChapterII extends StandardCycle {
             mainScript.runBladeSection("start");
 
             this.activeMenu = new OptionsMenu(true);
-            activeMenu.add(new Option(this.manager, "cantRefuse", "(Explore) I don't think I can refuse her. Sorry.", new NumCondition(resistCount, 0)));
-            activeMenu.add(new Option(this.manager, "noStutter", "(Explore) \"N-no. I w-won't t-tell you.\"", new OrCondition(new NumCondition(resistCount, 1, 0), new NumCondition(submitCount, 1, 0))));
+            activeMenu.add(new Option(this.manager, "cantRefuse", "(Explore) I don't think I can refuse her. Sorry.", towerNoResist));
+            activeMenu.add(new Option(this.manager, "noStutter", "(Explore) \"N-no. I w-won't t-tell you.\"", new OrCondition(towerNoResist, towerSubmitted)));
             activeMenu.add(new Option(this.manager, "shareMotive", "\"You're supposed to end the world.\""));
-            activeMenu.add(new Option(this.manager, "noForce", this.cantUnique3, "\"I said NO!\"", 0, activeMenu.get("shareMotive"), tookBlade, new NumCondition(resistCount, 1, 2)));
-            activeMenu.add(new Option(this.manager, "no", this.cantUnique3, "\"No.\"", 0, new NumCondition(submitCount, 0)));
-            activeMenu.add(new Option(this.manager, "silent", new ConditionList(manager.demoMode(), new NumCondition(submitCount, 0)), "[Remain silent.]", 0));
+            activeMenu.add(new Option(this.manager, "noForce", this.cantUnique3, "\"I said NO!\"", 0, activeMenu.get("shareMotive"), tookBlade, towerResisted2));
+            activeMenu.add(new Option(this.manager, "no", this.cantUnique3, "\"No.\"", 0, towerNoSubmit));
+            activeMenu.add(new Option(this.manager, "silent", new ConditionList(manager.demoMode(), towerNoSubmit), "[Remain silent.]", 0));
 
             this.repeatActiveMenu = true;
             while (repeatActiveMenu) {
@@ -2763,7 +2781,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     
                     case "noStutter":
-                        resistCount.increment();
+                        towerResistCount.increment();
                         mainScript.runSection("motiveNoStutter");
                         break;
                     
@@ -2781,7 +2799,7 @@ public class ChapterII extends StandardCycle {
 
                         this.repeatActiveMenu = false;
                         mainScript.runSection("motiveNoForce");
-                        return this.towerResistBlade(resistCount, submitCount, false);
+                        return this.towerResistBlade(false);
                     
                     case "no":
                         if (!manager.confirmContentWarnings("forced self-mutilation, forced suicide", true)) {
@@ -2790,17 +2808,17 @@ public class ChapterII extends StandardCycle {
                         }
 
                         this.repeatActiveMenu = false;
-                        return this.towerResistBlade(resistCount, submitCount, false);
+                        return this.towerResistBlade(false);
                     
                     case "silent":
-                        if (submitCount.equals(0)) {
+                        if (towerSubmitCount.equals(0)) {
                             if (!manager.confirmContentWarnings("forced self-mutilation, forced suicide", true)) {
                                 this.cantUnique3.set();
                                 break;
                             }
 
                             mainScript.runSection("motiveSilentNoSubmit");
-                            return this.towerResistBlade(resistCount, submitCount, false);
+                            return this.towerResistBlade(false);
                         }
 
                         this.repeatActiveMenu = false;
@@ -2818,8 +2836,8 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "selfDetermination", "(Explore) \"Just because you're supposed to end the world doesn't mean you actually have to do it. You can be whatever you want to be.\""));
         activeMenu.add(new Option(this.manager, "questions", "(Explore) \"I have questions for you before I decide to do anything.\"", noPriestOffer));
         activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What happened to you after I died?\"", noPriestOffer));
-        activeMenu.add(new Option(this.manager, "refuseNoBladeA", this.cantUnique3, "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", 0, !tookBlade, new NumCondition(resistCount, 1, 1)));
-        activeMenu.add(new Option(this.manager, "refuseNoBladeB", this.cantUnique3, "\"No. I won't take part in this.\" [Refuse her.]", 0, !tookBlade, new NumCondition(submitCount, 1, 1)));
+        activeMenu.add(new Option(this.manager, "refuseNoBladeA", this.cantUnique3, "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", 0, !tookBlade, towerResisted));
+        activeMenu.add(new Option(this.manager, "refuseNoBladeB", this.cantUnique3, "\"No. I won't take part in this.\" [Refuse her.]", 0, !tookBlade, towerResisted));
         activeMenu.add(new Option(this.manager, "refuseBlade", manager.demoMode(), "\"I'm not going to help you end the world. I don't care if something new comes after. I just can't let you do that.\"", tookBlade));
         activeMenu.add(new Option(this.manager, "pledge", "\"I'm yours to command.\" [Pledge yourself to her.]"));
 
@@ -2854,7 +2872,7 @@ public class ChapterII extends StandardCycle {
 
                 case "refuseBlade":
                     mainScript.runSection("refuseBlade");
-                    return this.towerResistBlade(resistCount, submitCount, priestOffer);
+                    return this.towerResistBlade(priestOffer);
 
                 case "pledge":
                     mainScript.runSection("menuPledge");
@@ -2919,9 +2937,10 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player attempts to resist the Tower after bringing down the blade, leading to Chapter III: The Apotheosis / The Fury
+     * @param priestOffer whether the Princess has already offered the player a place at her side as a priest
      * @return the ending reached by the player
      */
-    private ChapterEnding towerResistBlade(GlobalInt resistCount, GlobalInt submitCount, boolean priestOffer) {
+    private ChapterEnding towerResistBlade(boolean priestOffer) {
         mainScript.runSection("resistBlade");
 
         this.activeMenu = new OptionsMenu();
@@ -2960,17 +2979,13 @@ public class ChapterII extends StandardCycle {
 
         parser.promptOptionsMenu(activeMenu);
         mainScript.runSection();
-
-        NumCondition resisted = new NumCondition(resistCount, 1, 2);
-        NumCondition submitted = new NumCondition(submitCount, 1, 0);
-        NumCondition noSubmit = new NumCondition(submitCount, 0);
         
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "self", "[Slay yourself.]", 0));
-        activeMenu.add(new Option(this.manager, "resist", "[Resist.]", resisted, submitted));
-        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", noSubmit));
+        activeMenu.add(new Option(this.manager, "resist", "[Resist.]", towerResisted2, towerSubmitted));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", towerNoSubmit));
 
-        this.canSlayPrincess = noSubmit.check();
+        this.canSlayPrincess = towerNoSubmit.check();
         this.canSlaySelf = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -2996,8 +3011,8 @@ public class ChapterII extends StandardCycle {
         
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "self", "[Slay yourself.]", 0));
-        activeMenu.add(new Option(this.manager, "push", "[Push forward.]", resisted, submitted));
-        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", noSubmit));
+        activeMenu.add(new Option(this.manager, "push", "[Push forward.]", towerResisted2, towerSubmitted));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", towerNoSubmit));
 
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -3024,8 +3039,8 @@ public class ChapterII extends StandardCycle {
         
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "pledge", "\"I'm yours.\" [Pledge yourself to her.]"));
-        activeMenu.add(new Option(this.manager, "resist", "\"I. Said. NO!\" [Resist.]", 0, submitted));
-        activeMenu.add(new Option(this.manager, "slay", this.cantJoint3, "[Slay the Princess.]", noSubmit));
+        activeMenu.add(new Option(this.manager, "resist", "\"I. Said. NO!\" [Resist.]", 0, towerSubmitted));
+        activeMenu.add(new Option(this.manager, "slay", this.cantJoint3, "[Slay the Princess.]", towerNoSubmit));
 
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
@@ -3072,10 +3087,10 @@ public class ChapterII extends StandardCycle {
     /**
      * The Tower forces the player to kill themself, leading to Chapter III: The Apotheosis
      * @param tookBlade whether the player took the blade in the cabin
+     * @param lateJoin whether to skip the first section of dialogue
      * @return the ending reached by the player (indicating which Voice to gain in The Apotheosis)
      */
     private ChapterEnding towerSlaySelf(boolean tookBlade, boolean lateJoin) {
-
         if (!lateJoin) {
             mainScript.runSection("slaySelf");
             mainScript.runSection("slaySelfCont");
@@ -3101,17 +3116,16 @@ public class ChapterII extends StandardCycle {
         // You gain the Voice of the Cold
 
         this.isHarsh = false;
+        this.spectreNoEndWorldExplore = new Condition(true);
 
         if (!this.chapter2Intro(false, true, true)) return ChapterEnding.ABORTED;
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -3120,7 +3134,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -3129,7 +3143,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -3200,24 +3214,20 @@ public class ChapterII extends StandardCycle {
 
         // Conversation menu
 
-        boolean shareDied = false;
         boolean deathComment = false;
-        Condition narratorUnconfirmed = new Condition(true);
         Condition noBonesAsk = new Condition(true);
         Condition noApology = new Condition(true);
         Condition noIfOnly = new Condition(true);
-        Condition noWorldEndExplore = new Condition(true);
         Condition thoughtsHarsh = new Condition();
         Condition homeComment = new Condition();
         InverseCondition noHomeComment = homeComment.getInverse();
         Condition possessionAsk = new Condition();
         InverseCondition noPossessionAsk = possessionAsk.getInverse();
-        OptionsMenu subMenu;
 
         // 22 EXPLORE OPTIONS + 6 ACTION OPTIONS IN SOFT MENU. GOD DAMN.
         // THERE ARE 35 TOTAL OPTIONS IN THIS MENU. SEND HELP
         this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "confirmLoop", "(Explore) See, this is exactly what I was trying to tell you about in the woods. This already happened. We killed her.", this.sharedLoop, narratorUnconfirmed, isSoft));
+        activeMenu.add(new Option(this.manager, "confirmLoop", "(Explore) See, this is exactly what I was trying to tell you about in the woods. This already happened. We killed her.", this.sharedLoop, this.narratorNoProof, isSoft));
         activeMenu.add(new Option(this.manager, "notDead", "(Explore) \"I killed you! What are you doing not being dead?\"", isSoft));
         activeMenu.add(new Option(this.manager, "body", "(Explore) \"Your body's right there, though. Your *dead* body.\"", activeMenu.get("notDead"), isSoft));
         activeMenu.add(new Option(this.manager, "whyBack", "(Explore) \"Do you know why you came back?\"", isSoft));
@@ -3233,12 +3243,12 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "ifOnlySoft", "(Explore) \"If I knew I'd wind up having to talk to you again, I wouldn't have slain you.\"", noIfOnly, isSoft));
         activeMenu.add(new Option(this.manager, "alsoDead", "(Explore) \"I died too and I'm not floating around like you are. What happened? Why am I different? Why are you different?\""));
         activeMenu.add(new Option(this.manager, "bonesAsk", "(Explore) \"What if I buried your bones outside?\"", thoughtsHarsh, noBonesAsk));
-        activeMenu.add(new Option(this.manager, "worldEndHarsh", "(Explore) \"Of course I attacked you. You're supposed to end the world. That's why I killed you last time, too.\"", noWorldEndExplore, isHostile));
+        activeMenu.add(new Option(this.manager, "worldEndHarsh", "(Explore) \"Of course I attacked you. You're supposed to end the world. That's why I killed you last time, too.\"", spectreNoEndWorldExplore, isHostile));
         activeMenu.add(new Option(this.manager, "howHurt", "(Explore) \"You're dead. Or at least mostly dead. What can you even do to hurt me?\""));
         activeMenu.add(new Option(this.manager, "teleport", "(Explore) \"After I killed you, this cabin... I want to say it teleported? It wasn't in the woods anymore, time stopped meaning anything, and I had to kill myself to escape.\"", isSoft));
-        activeMenu.add(new Option(this.manager, "worldEndA", "(Explore) \"Before I agree to anything, we need to talk about what happens after you leave this place. I was told you'd end the world.\"", noWorldEndExplore, possessionAsk, isSoft));
-        activeMenu.add(new Option(this.manager, "worldEndB", "(Explore) \"I guess I should tell you why I was sent to kill you. You were going to end the world.\"", noWorldEndExplore, isSoft));
-        activeMenu.add(new Option(this.manager, "worldEndC", "(Explore) \"I was told you were going to end the world.\"", noWorldEndExplore, isSoft));
+        activeMenu.add(new Option(this.manager, "worldEndA", "(Explore) \"Before I agree to anything, we need to talk about what happens after you leave this place. I was told you'd end the world.\"", spectreNoEndWorldExplore, possessionAsk, isSoft));
+        activeMenu.add(new Option(this.manager, "worldEndB", "(Explore) \"I guess I should tell you why I was sent to kill you. You were going to end the world.\"", spectreNoEndWorldExplore, isSoft));
+        activeMenu.add(new Option(this.manager, "worldEndC", "(Explore) \"I was told you were going to end the world.\"", spectreNoEndWorldExplore, isSoft));
         activeMenu.add(new Option(this.manager, "wantB", "(Explore) \"Okay, clearly slaying you isn't going to work. What do you want?\"", noPossessionAsk, isSoft));
         activeMenu.add(new Option(this.manager, "wantHarsh", "(Explore) \"What do you want from me?\"", noPossessionAsk, isHostile));
         activeMenu.add(new Option(this.manager, "walls", "(Explore) \"If you can go through walls, can't you just leave on your own?\"", homeComment, isSoft));
@@ -3279,7 +3289,7 @@ public class ChapterII extends StandardCycle {
 
             switch (activeOutcome) {
                 case "confirmLoop":
-                    narratorUnconfirmed.set(false);
+                    narratorProof.set();
                     mainScript.runSection("confirmLoopMenu");
                     break;
 
@@ -3305,7 +3315,7 @@ public class ChapterII extends StandardCycle {
                     possessionAsk.set();
                     mainScript.runSection("helpMenu");
 
-                    switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, false)) {
+                    switch (this.spectrePossessAsk(false)) {
                         case 1:
                             return this.spectrePossess();
 
@@ -3324,7 +3334,7 @@ public class ChapterII extends StandardCycle {
                 case "victim":
                     mainScript.runSection("victimMenu");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "defend", "(Explore) \"That knife could have been for anything!\""));
                     subMenu.add(new Option(this.manager, "return", "(Return) [Leave it at that.]"));
 
@@ -3332,7 +3342,7 @@ public class ChapterII extends StandardCycle {
                     break;
                     
                 case "grovel":
-                    shareDied = true;
+                    this.spectreShareDied = true;
                     mainScript.runConditionalSection("grovelMenu", homeComment);
                     break;
                     
@@ -3344,7 +3354,7 @@ public class ChapterII extends StandardCycle {
                     } else {
                         mainScript.runSection("sorryBMenuPossessAsk");
 
-                        switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, true)) {
+                        switch (this.spectrePossessAsk(true)) {
                             case 1:
                                 return this.spectrePossess();
 
@@ -3357,10 +3367,10 @@ public class ChapterII extends StandardCycle {
                     
                 case "trick":
                     homeComment.set();
-                    mainScript.runConditionalSection("trickMenu", narratorUnconfirmed);
-                    narratorUnconfirmed.set(false);
+                    mainScript.runSection("trickMenu");
+                    narratorProof.set();
 
-                    switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, true)) {
+                    switch (this.spectrePossessAsk(true)) {
                         case 1:
                             return this.spectrePossess();
 
@@ -3371,7 +3381,7 @@ public class ChapterII extends StandardCycle {
                     break;
                     
                 case "alsoDead":
-                    shareDied = true;
+                    this.spectreShareDied = true;
                     mainScript.runConditionalSection("alsoDeadMenu", possessionAsk);
                     if (!possessionAsk.check() && !this.isHarsh) homeComment.set();
                     break;
@@ -3386,7 +3396,7 @@ public class ChapterII extends StandardCycle {
                     break;
                     
                 case "teleport":
-                    shareDied = true;
+                    this.spectreShareDied = true;
                     mainScript.runSection("teleportMenu");
                     break;
                     
@@ -3396,7 +3406,7 @@ public class ChapterII extends StandardCycle {
                     if (noPossessionAsk.check()) {
                         possessionAsk.set();
 
-                        switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, true)) {
+                        switch (this.spectrePossessAsk(true)) {
                             case 1:
                                 return this.spectrePossess();
 
@@ -3416,8 +3426,7 @@ public class ChapterII extends StandardCycle {
                 case "worldEndB":
                 case "worldEndC":
                 case "worldEndHarsh":
-                    noWorldEndExplore.set(false);
-                    this.spectreShareTask(narratorUnconfirmed, shareDied);
+                    this.spectreShareTask();
                     break;
                     
                 case "wantA":
@@ -3426,7 +3435,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runConditionalSection(activeOutcome + "Menu", homeComment);
                     homeComment.set();
 
-                    switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, true)) {
+                    switch (this.spectrePossessAsk(true)) {
                         case 1:
                             return this.spectrePossess();
 
@@ -3440,7 +3449,7 @@ public class ChapterII extends StandardCycle {
                     possessionAsk.set();
                     mainScript.runSection("wantHarshMenu");
 
-                    switch (this.spectrePossessAsk(noWorldEndExplore, narratorUnconfirmed, shareDied, true)) {
+                    switch (this.spectrePossessAsk(true)) {
                         case 1:
                             return this.spectrePossess();
 
@@ -3572,11 +3581,10 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player tells the Princess that she's allegedly going to end the world
-     * @param narratorUnconfirmed whether the Narrator has finally agreed that you've been here before
-     * @param shareDied whether the player has mentioned that they died
      */
-    private void spectreShareTask(Condition narratorUnconfirmed, boolean shareDied) {
-        OptionsMenu subMenu = new OptionsMenu(true);
+    private void spectreShareTask() {
+        spectreNoEndWorldExplore.set(false);
+        this.subMenu = new OptionsMenu(true);
         boolean repeatSub = true;
 
         if (this.isHarsh) {
@@ -3593,7 +3601,7 @@ public class ChapterII extends StandardCycle {
                     case "end1":
                     case "end2":
                     case "yesNo":
-                        mainScript.runConditionalSection(activeOutcome + "EndWorldHarsh", shareDied);
+                        mainScript.runConditionalSection(activeOutcome + "EndWorldHarsh", this.spectreShareDied);
                         break;
 
                     case "return":
@@ -3625,8 +3633,8 @@ public class ChapterII extends StandardCycle {
 
                     case "wrong":
                         firstOption.set(false);
-                        mainScript.runConditionalSection("wrongEndWorldSoft", narratorUnconfirmed);
-                        narratorUnconfirmed.set(false);
+                        mainScript.runSection("wrongEndWorldSoft");
+                        narratorProof.set();
                         break;
 
                     case "whatDo":
@@ -3638,7 +3646,7 @@ public class ChapterII extends StandardCycle {
                         break;
 
                     case "whatDo3":
-                        mainScript.runConditionalSection("whatDo3EndWorldSoft", shareDied);
+                        mainScript.runConditionalSection("whatDo3EndWorldSoft", this.spectreShareDied);
                         break;
                     
                     case "return":
@@ -3653,13 +3661,10 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The Spectre asks the player to let her possess them
-     * @param noWorldEndExplore whether the player has already told the Spectre she's allegedly going to end the world
-     * @param narratorUnconfirmed whether the Narrator has finally agreed that you've been here before
-     * @param shareDied whether the player has mentioned that they died
      * @param lateJoin whether to skip the first bit of dialogue
      * @return 0 if the player decides to ask more questions; 1 if they agree to let the Spectre possess them; 2 otherwise
      */
-    private int spectrePossessAsk(Condition noWorldEndExplore, Condition narratorUnconfirmed, boolean shareDied, boolean lateJoin) {
+    private int spectrePossessAsk(boolean lateJoin) {
         spectrePossessAsk = true;
         mainScript.runConditionalSection("possessAskSwitch", lateJoin);
 
@@ -3679,7 +3684,7 @@ public class ChapterII extends StandardCycle {
         possessMenu.add(new Option(this.manager, "wont", "(Explore) \"You *won't* hitch a ride if I say no, or you *can't* hitch a ride?\"", possessMenu.get("no"), !this.isHarsh));
         possessMenu.add(new Option(this.manager, "temp", "(Explore) \"This would just be temporary, right? You'll leave once we're out of the cabin?\""));
         possessMenu.add(new Option(this.manager, "control", "(Explore) \"If... if I let you in, do I still get to be in control?\""));
-        possessMenu.add(new Option(this.manager, "worldEnd", "\"Before I agree to anything, we need to talk about what happens after you leave this place. I was told you'd end the world.\"", noWorldEndExplore));
+        possessMenu.add(new Option(this.manager, "worldEnd", "\"Before I agree to anything, we need to talk about what happens after you leave this place. I was told you'd end the world.\"", spectreNoEndWorldExplore));
         possessMenu.add(new Option(this.manager, "agree", agreeDisplay));
         possessMenu.add(new Option(this.manager, "refuse", this.cantJoint3, "\"The answer's no.\""));
         possessMenu.add(new Option(this.manager, "return", "(Return) \"I need to think on this.\""));
@@ -3689,8 +3694,8 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(possessMenu);
             switch (activeOutcome) {
                 case "no":
-                    mainScript.runConditionalSection("noPossessAsk" + moodSuffix, narratorUnconfirmed);
-                    if (this.isHarsh) narratorUnconfirmed.set(false);
+                    mainScript.runSection("noPossessAsk" + moodSuffix);
+                    if (this.isHarsh) narratorProof.set();
                     break;
 
                 case "wont":
@@ -3710,8 +3715,7 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "worldEnd":
-                    noWorldEndExplore.set(false);
-                    this.spectreShareTask(narratorUnconfirmed, shareDied);
+                    this.spectreShareTask();
                     return 0;
 
                 case "agree":
@@ -3944,12 +3948,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -3958,7 +3960,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -3967,7 +3969,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -4456,7 +4458,6 @@ public class ChapterII extends StandardCycle {
         this.canDropBlade = true;
         this.canThrowBlade = true;
         boolean comeBackComment = false;
-        boolean bladeGone = false;
         Condition biologyComment = new Condition();
         InverseCondition noBiologyComment = biologyComment.getInverse();
 
@@ -4507,7 +4508,7 @@ public class ChapterII extends StandardCycle {
 
                 case "biology":
                     biologyComment.set();
-                    mainScript.runConditionalSection("biologySlain", bladeGone);
+                    mainScript.runConditionalSection("biologySlain", this.threwBlade);
                     break;
 
                 case "cTake":
@@ -4520,7 +4521,7 @@ public class ChapterII extends StandardCycle {
                 case "drop":
                 case "throw":
                     this.hasBlade = false;
-                    bladeGone = true;
+                    this.threwBlade = true;
                     mainScript.runSection(activeOutcome + "Slain");
                     if (biologyComment.check()) mainScript.runSection("bladeGoneBiology");
                     break;
@@ -4532,7 +4533,7 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "wait":
-                    if (biologyComment.check() && bladeGone) {
+                    if (biologyComment.check() && this.threwBlade) {
                         this.repeatActiveMenu = false;
                         mainScript.runConditionalSection("waitEndSlain", comeBackComment);
                     } else {
@@ -4559,7 +4560,7 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "cSlaySelfNoBladeFail":
-                    if (bladeGone) {
+                    if (this.threwBlade) {
                         mainScript.runSection("cantSuicide");
                         break;
                     }
@@ -4604,12 +4605,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -4618,7 +4617,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -4627,7 +4626,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -4808,12 +4807,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -4822,7 +4819,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -4831,7 +4828,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -4861,8 +4858,8 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("encounterStart");
 
-        OptionsMenu cantWildMenu = new OptionsMenu(true);
-        cantWildMenu.add(new Option(this.manager, "dodge", "[Dodge.]", 0));
+        this.beastCantWildMenu = new OptionsMenu(true);
+        beastCantWildMenu.add(new Option(this.manager, "dodge", "[Dodge.]", 0));
 
         int stallCount = 0;
         this.activeMenu = new OptionsMenu(true);
@@ -4878,7 +4875,7 @@ public class ChapterII extends StandardCycle {
             if (stallCount >= 2) {
                 if (!manager.hasVisited(Chapter.WILD)) {
                     this.repeatActiveMenu = false;
-                    this.beastCantBeEaten(cantWildMenu);
+                    this.beastCantBeEaten();
                     break;
                 }
 
@@ -4896,7 +4893,7 @@ public class ChapterII extends StandardCycle {
 
                 case "attack":
                 case "haveTo":
-                    if (manager.hasVisited(Chapter.WILD)) return this.beastToDen(true, false);
+                    if (manager.hasVisited(Chapter.WILD)) return this.beastToDen(true);
 
                     mainScript.runSection("eatenStartOther");
                     return this.beastEaten(true, false);
@@ -4908,7 +4905,7 @@ public class ChapterII extends StandardCycle {
                 case "freeze":
                     if (!manager.hasVisited(Chapter.WILD)) {
                         this.repeatActiveMenu = false;
-                        this.beastCantBeEaten(cantWildMenu);
+                        this.beastCantBeEaten();
                         break;
                     }
 
@@ -4975,6 +4972,8 @@ public class ChapterII extends StandardCycle {
 
                     if (manager.demoMode()) activeMenu.setGreyedOut("dodge", true);
                     break;
+
+                case 4: this.playerWounded = true;
             }
 
             for (stallCount = 0; stallCount < stallLimit; stallCount++) {
@@ -5020,7 +5019,7 @@ public class ChapterII extends StandardCycle {
                             
                             if (manager.hasVisited(Chapter.WILD)) {
                                 mainScript.runSection("forceSkeptic");
-                                return this.beastToDen(true, phase > 3);
+                                return this.beastToDen(true);
                             } else {
                                 mainScript.runSection("eatenStartRun");
                                 return this.beastEaten(false, false);
@@ -5045,7 +5044,8 @@ public class ChapterII extends StandardCycle {
             if (attackResult != null) return attackResult;
         }
 
-        return this.beastToDen(true, true);
+        this.playerWounded = true;
+        return this.beastToDen(true);
     }
 
     /**
@@ -5078,7 +5078,7 @@ public class ChapterII extends StandardCycle {
 
                     if (manager.hasVisited(Chapter.WILD)) {
                         mainScript.runSection("forceSkeptic");
-                        return this.beastToDen(true, phase > 3);
+                        return this.beastToDen(true);
                     } else {
                         mainScript.runSection("eatenStartRun");
                         return this.beastEaten(false, false);
@@ -5086,7 +5086,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cSlayPrincess":
                 case "attack":
-                    return this.beastToDen(false, phase > 3);
+                    return this.beastToDen(false);
 
                 case "playDead":
                     if (manager.hasVisited(Chapter.WILD)) {
@@ -5127,27 +5127,25 @@ public class ChapterII extends StandardCycle {
 
     /**
      * Overrides the player's decision if they would be eaten by the Beast but have already encountered the Wild
-     * @param cantWildMenu the options menu to show to the player
      */
-    private void beastCantBeEaten(OptionsMenu cantWildMenu) {
+    private void beastCantBeEaten() {
         this.cantJoint3.set();
         parser.printDialogueLine(WORNPATH);
-        parser.promptOptionsMenu(cantWildMenu, new DialogueLine("[You have no other option.]"));
+        parser.promptOptionsMenu(this.beastCantWildMenu);
         parser.printDialogueLine(WORNPATHHERO);
     }
 
     /**
      * The player manages to avoid being eaten by the Beast, leading to Chapter III: The Den
      * @param skepticPath whether the player continued dodging the Beast's attacks (granting them the Voice of the Skeptic) or fought back (granting them the Voice of the Stubborn)
-     * @param wounded whether the player has already been wounded by the Beast
      * @return the ending reached by the player
      */
-    private ChapterEnding beastToDen(boolean skepticPath, boolean wounded) {
+    private ChapterEnding beastToDen(boolean skepticPath) {
         if (skepticPath) {
-            mainScript.runConditionalSection("denSkeptic", wounded);
+            mainScript.runConditionalSection("denSkeptic", this.playerWounded);
             return ChapterEnding.FLIGHT;
         } else {
-            if (wounded && !manager.hasVisited(Chapter.WILD)) {
+            if (this.playerWounded && !manager.hasVisited(Chapter.WILD)) {
                 mainScript.runSection("eatenStartFight");
                 return this.beastEaten(false, false);
             } else {
@@ -5406,12 +5404,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -5420,7 +5416,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -5429,7 +5425,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -5496,9 +5492,7 @@ public class ChapterII extends StandardCycle {
         
         mainScript.runSection("basementStartShareSwitch");
 
-        boolean heartComment = false;
-        Condition witchFree = new Condition();
-        InverseCondition witchChained = witchFree.getInverse();
+        InverseCondition witchChained = freeFromChains2.getInverse();
         Condition apologized = new Condition();
         InverseCondition noApology = apologized.getInverse();
         Condition leaveMentioned = new Condition();
@@ -5522,8 +5516,8 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "cutB", "(Explore) \"I guess I'll cut you out of here.\"", this.hasBlade, leaveMentioned, witchChained));
         activeMenu.add(new Option(this.manager, "getOutB", "(Explore) \"Can't you get out of those on your own? Those chains didn't stop you last time.\"", !source.equals("betrayal"), witchChained));
         activeMenu.add(new Option(this.manager, "free", "(Explore) \"If you could have gotten out this whole time, what do you even need me for? The cabin isn't locked.\"", false));
-        activeMenu.add(new Option(this.manager, "betray", "(Explore) \"Why do I have a nagging feeling you're going to stab me in the back if I help you out of here?\"", witchFree, leaveNotMentioned));
-        activeMenu.add(new Option(this.manager, "stairs", "\"Okay. Let's leave.\" [Leave with the Princess.]", witchFree));
+        activeMenu.add(new Option(this.manager, "betray", "(Explore) \"Why do I have a nagging feeling you're going to stab me in the back if I help you out of here?\"", freeFromChains2, leaveNotMentioned));
+        activeMenu.add(new Option(this.manager, "stairs", "\"Okay. Let's leave.\" [Leave with the Princess.]", freeFromChains2));
         activeMenu.add(new Option(this.manager, "offer", this.cantUnique3, "\"I don't want to hurt you, but clearly there's some broken trust. Take this as a gesture of my good will.\" [Give her the blade.]", this.hasBlade));
         activeMenu.add(new Option(this.manager, "leave", this.cantJoint3, "\"I don't trust you. Not enough to free you, and definitely not enough to get close to you. I'm leaving. Bye.\" [Leave her in the basement.]", 0));
         activeMenu.add(new Option(this.manager, "slayYap", this.cantJoint3, "\"I'd like to be straightforward with my intentions. I didn't care for how you treated me last time, and I think you might be a danger to the world. I'm going to attack you now.\" [Slay the Princess.]", 0, this.hasBlade));
@@ -5561,15 +5555,17 @@ public class ChapterII extends StandardCycle {
                     break;
                     
                 case "getOutB":
-                    witchFree.set();
-                    mainScript.runConditionalSection("getOutBMenu", heartComment);
+                    freeFromChains2.set();
+                    mainScript.runConditionalSection("getOutBMenu", witchHeartComment);
+                    witchHeartComment = true;
                     break;
 
                 case "getOutA":
                 case "cutA":
                 case "cutB":
-                    witchFree.set();
-                    mainScript.runConditionalSection("cutMenu", heartComment);
+                    freeFromChains2.set();
+                    mainScript.runConditionalSection("cutMenu", witchHeartComment);
+                    witchHeartComment = true;
                     break;
                     
                 case "stairs":
@@ -5577,7 +5573,7 @@ public class ChapterII extends StandardCycle {
                     
                 case "offer":
                     if (this.witchGiveBladeStart()) {
-                        return this.witchGiveBlade(false, witchFree.check(), heartComment);
+                        return this.witchGiveBlade(false);
                     }
 
                     break;
@@ -5598,7 +5594,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    return this.witchToWild(false, witchFree.check(), heartComment);
+                    return this.witchToWild(false);
                     
                 case "slayYap":
                     if (manager.hasVisited(Chapter.WILD)) {
@@ -5611,7 +5607,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    return this.witchToWild(true, witchFree.check(), heartComment);
+                    return this.witchToWild(true);
                     
                 case "cSlayPrincess":
                     if (this.cantJoint3.check()) {
@@ -5629,7 +5625,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    return this.witchToWild(true, witchFree.check(), heartComment);
+                    return this.witchToWild(true);
 
                 default: this.giveDefaultFailResponse(activeOutcome);
             }
@@ -5662,7 +5658,7 @@ public class ChapterII extends StandardCycle {
 
                 case "offer":
                     if (this.witchGiveBladeStart()) {
-                        return this.witchGiveBlade(false, true, true);
+                        return this.witchGiveBlade(false);
                     }
 
                     break;
@@ -5845,14 +5841,14 @@ public class ChapterII extends StandardCycle {
      * @return true if the player commits to giving the Witch the blade; false otherwise
      */
     private boolean witchGiveBladeStart() {
-        OptionsMenu offerMenu = new OptionsMenu(true);
-        offerMenu.add(new Option(this.manager, "commit", "This isn't a democracy. We're giving her the blade. [Give her the blade.]", 0));
-        offerMenu.add(new Option(this.manager, "backOut", "Haha. Yeah, nevermind, that was such a silly idea. I'm not going to give her the blade. She clearly hates us. [Don't do it.]"));
+        this.subMenu = new OptionsMenu(true);
+        subMenu.add(new Option(this.manager, "commit", "This isn't a democracy. We're giving her the blade. [Give her the blade.]", 0));
+        subMenu.add(new Option(this.manager, "backOut", "Haha. Yeah, nevermind, that was such a silly idea. I'm not going to give her the blade. She clearly hates us. [Don't do it.]"));
 
-        switch (parser.promptOptionsMenu(offerMenu)) {
+        switch (parser.promptOptionsMenu(subMenu)) {
             case "commit":
                 if (!manager.confirmContentWarnings(Chapter.THORN)) {
-                    offerMenu.setGreyedOut("commit", true);
+                    subMenu.setGreyedOut("commit", true);
                     break;
                 }
 
@@ -5870,16 +5866,15 @@ public class ChapterII extends StandardCycle {
     /**
      * The player gives the Witch the blade as a gesture of good will, leading to Chapter III: The Thorn
      * @param fromStairs whether the player offered to leave with the Witch and is at the stairs
-     * @param witchFree whether the Witch has freed herself from her chains
-     * @param heartComment whether the Voice of the Opportunist has made a comment about the Witch being "a woman after [his] own heart"
      * @return the ending reached by the player
      */
-    private ChapterEnding witchGiveBlade(boolean fromStairs, boolean witchFree, boolean heartComment) {
+    private ChapterEnding witchGiveBlade(boolean fromStairs) {
         if (fromStairs) {
             mainScript.runSection("offerCommitStairs");
         } else {
-            mainScript.runSection("offerCommitBasement");
-            if (!witchFree) mainScript.runConditionalSection("offerCommitBasementNotFree", heartComment);
+            mainScript.runConditionalSection("offerCommitBasement", witchHeartComment);
+            freeFromChains2.set();
+            witchHeartComment = true;
         }
 
         boolean smittenFlag = false;
@@ -5916,11 +5911,9 @@ public class ChapterII extends StandardCycle {
     /**
      * The player chooses to either fight the Witch or leave the basement alone, leading to Chapter III: The Wild
      * @param fight whether the player chose to fight the Witch
-     * @param witchFree whether the Witch has freed herself from her chains
-     * @param heartComment whether the Voice of the Opportunist has made a comment about the Witch being "a woman after [his] own heart"
      * @return the ending reached by the player
      */
-    private ChapterEnding witchToWild(boolean fight, boolean witchFree, boolean heartComment) {
+    private ChapterEnding witchToWild(boolean fight) {
         String jumpSuffix = (fight) ? "Fight" : "Flee";
 
         boolean fightContinue = false;
@@ -5930,12 +5923,9 @@ public class ChapterII extends StandardCycle {
             this.canSlayPrincess = true;
             sucksDisplay += "They're pressing in on you! This sucks!\"";
             sorryDisplay += " I'm sorry!\"";
-
-            if (witchFree) {
-                mainScript.runSection("fightStartFree");
-            } else {
-                mainScript.runConditionalSection("fightStartNotFree", heartComment);
-            }
+            mainScript.runConditionalSection("fightStart", witchHeartComment);
+            freeFromChains2.set();
+            witchHeartComment = true;
         } else {
             this.currentLocation = GameLocation.CABIN;
             this.withPrincess = false;
@@ -6148,12 +6138,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         Condition canThrow = new Condition();
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "throw", "(Explore) [Throw the blade out the window.]", canThrow));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
@@ -6163,12 +6151,12 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -6182,7 +6170,7 @@ public class ChapterII extends StandardCycle {
 
                     mainScript.runSection("takeBlade");
 
-                    OptionsMenu subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "keep", "[Keep your grip as it is.]"));
                     subMenu.add(new Option(this.manager, "reverse", "[Hold the blade the other way.]"));
 
@@ -6603,12 +6591,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -6617,7 +6603,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -6626,7 +6612,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -6684,8 +6670,6 @@ public class ChapterII extends StandardCycle {
 
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
-        Condition narratorProof = new Condition();
-        InverseCondition narratorNoProof = narratorProof.getInverse();
         Condition locked = new Condition();
         InverseCondition notLocked = locked.getInverse();
 
@@ -6751,7 +6735,7 @@ public class ChapterII extends StandardCycle {
                 break;
 
             case "closer":
-                mainScript.runConditionalSection("sitTooClose", narratorProof);
+                mainScript.runSection("sitTooClose");
                 return this.prisonerStrangled(false);
         }
 
@@ -6801,11 +6785,11 @@ public class ChapterII extends StandardCycle {
                 case "inspect":
                     mainScript.runSection("inspectMenu");
 
-                    OptionsMenu inspectMenu = new OptionsMenu(true);
-                    inspectMenu.add(new Option(this.manager, "inspect", "[Inspect the shackle.]"));
-                    inspectMenu.add(new Option(this.manager, "return", "[Let it go.]"));
+                    this.subMenu = new OptionsMenu(true);
+                    subMenu.add(new Option(this.manager, "inspect", "[Inspect the shackle.]"));
+                    subMenu.add(new Option(this.manager, "return", "[Let it go.]"));
 
-                    switch (parser.promptOptionsMenu(inspectMenu)) {
+                    switch (parser.promptOptionsMenu(subMenu)) {
                         case "inspect":
                             this.prisonerChained();
                             return ChapterEnding.PRISONEROFMIND;
@@ -6827,7 +6811,7 @@ public class ChapterII extends StandardCycle {
                 case "intentionsB":
                     talked.set();
                     askedIntentions.set();
-                    mainScript.runConditionalSection("intentionsMenu", narratorProof);
+                    mainScript.runSection("intentionsMenu");
                     break;
 
                 case "memory":
@@ -6839,7 +6823,7 @@ public class ChapterII extends StandardCycle {
 
                 case "afterDied":
                     talked.set();
-                    mainScript.runConditionalSection("afterDiedMenu", narratorProof);
+                    mainScript.runSection("afterDiedMenu");
                     if (narratorNoProof.check()) mainScript.runSection("narratorProof");
                     narratorProof.set();
                     break;
@@ -6854,14 +6838,20 @@ public class ChapterII extends StandardCycle {
                 case "noGiveA":
                 case "noGiveC":
                     noGiveExplore.set();
-                    mainScript.runConditionalSection("noGiveJoin", narratorProof);
+                    mainScript.runSection("noGiveJoin");
                     if (narratorNoProof.check()) mainScript.runSection("narratorProof");
                     narratorProof.set();
                     break;
 
                 case "noGiveB":
                     noGiveExplore.set();
-                    mainScript.runConditionalSection("noGiveBMenu", narratorProof);
+                    mainScript.runSection("noGiveBMenu");
+
+                    boolean narrProofPrev = narratorProof.check();
+                    narratorProof.set();
+
+                    mainScript.runSection("noGiveJoin");
+                    if (!narrProofPrev) mainScript.runSection("narratorProof");
                     break;
 
                 case "distrust":
@@ -6881,11 +6871,11 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "giveBlade":
-                    mainScript.runConditionalSection("giveBladeStart", narratorProof);
+                    mainScript.runSection("giveBladeStart");
                     return this.prisonerDecapitate();
 
                 case "cutAttempt":
-                    mainScript.runConditionalSection("attemptCut", narratorProof);
+                    mainScript.runSection("attemptCut");
                     return this.prisonerStrangled(false);
 
                 case "slayA":
@@ -6899,7 +6889,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    mainScript.runConditionalSection(activeOutcome + "Start", narratorProof);
+                    mainScript.runSection(activeOutcome + "Start");
                     return this.prisonerStrangled(true);
 
                 case "cSlayPrincess":
@@ -6917,7 +6907,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    mainScript.runConditionalSection("attackJoin", narratorProof);
+                    mainScript.runSection("attackJoin");
                     return this.prisonerStrangled(true);
 
                 case "leaveA":
@@ -7077,7 +7067,9 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "away", "[Look away.]"));
         activeMenu.add(new Option(this.manager, "watch", "[Watch in uneasy silence.]"));
 
-        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "Head");
+        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+        if (activeOutcome.equals("watch")) this.prisonerWatchedHead = true;
+        mainScript.runSection(activeOutcome + "Head");
 
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "leave", this.cantUnique3, "[Leave the basement to claim your reward.]", 0));
@@ -7131,10 +7123,10 @@ public class ChapterII extends StandardCycle {
 
     /**
      * With the Prisoner dead, the player leaves the basement
-     * @param selfSlain whether the Princess decapitated herself (indicating which Chapter this leads to)
+     * @param decapitated whether the Princess decapitated herself (indicating which Chapter this leads to)
      * @return the ending reached by the player
      */
-    private ChapterEnding prisonerSlain(boolean selfSlain) {
+    private ChapterEnding prisonerSlain(boolean decapitated) {
         this.currentLocation = GameLocation.CABIN;
         this.hasBlade = true;
         mainScript.runSection("slainStart");
@@ -7193,6 +7185,7 @@ public class ChapterII extends StandardCycle {
                 case "acceptA":
                 case "acceptB":
                 case "acceptC":
+                    this.prisonerGoodEndingSeen = true;
                     mainScript.runConditionalSection("slainAccept", suggestion);
 
                     // Option names here correspond to which Voice you gain in The Cage
@@ -7236,7 +7229,7 @@ public class ChapterII extends StandardCycle {
             }
         }
         
-        if (!selfSlain) {
+        if (!decapitated) {
             if (activeOutcome.equals("cheated")) this.prisonerHeartStopped = true;
             return ChapterEnding.COLDLYRATIONAL;
         } else {
@@ -7262,12 +7255,10 @@ public class ChapterII extends StandardCycle {
 
         mainScript.runSection("cabinIntro");
 
-        Condition canAskMirror = new Condition(true);
-        Condition canApproach = new Condition(true);
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "mirror", "(Explore) You didn't say anything about the mirror on the wall.", canAskMirror));
         activeMenu.add(new Option(this.manager, "different", "(Explore) This whole cabin is different than last time.", this.sharedLoopInsist));
-        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproach));
+        activeMenu.add(new Option(this.manager, "approach", "(Explore) [Approach the mirror.]", canApproachMirror));
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]"));
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -7276,7 +7267,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "mirror":
-                    this.ch2AskMirror(canAskMirror, canApproach);
+                    this.ch2AskMirror();
                     break;
 
                 case "different":
@@ -7285,7 +7276,7 @@ public class ChapterII extends StandardCycle {
 
                 case "cApproachMirror":
                 case "approach":
-                    this.ch2ApproachMirror(canAskMirror, canApproach);
+                    this.ch2ApproachMirror();
                     break;
 
                 case "cTake":
@@ -7317,9 +7308,8 @@ public class ChapterII extends StandardCycle {
         mainScript.runSection("basementStart");
 
         boolean howFree = false;
-        String endWorldResponse = "";
+        this.damselEndWorldResponse = "";
 
-        OptionsMenu subMenu;
         this.canSlayPrincess = true;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "killed", "(Explore) \"You killed me last time and it hurt a lot! Why did you do that?\""));
@@ -7354,18 +7344,18 @@ public class ChapterII extends StandardCycle {
                 case "end":
                     mainScript.runSection("endWorldAsk");
 
-                    subMenu = new OptionsMenu(true);
+                    this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "save", "\"No? I don't want the world to end.\""));
                     subMenu.add(new Option(this.manager, "neutral", "\"I have no feelings one way or another about the world ending.\""));
                     subMenu.add(new Option(this.manager, "burn", "\"Honestly, the world sucks. People are a plague and I hope you brought a slow and painful ruin to them all.\""));
                     subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
-                    endWorldResponse = parser.promptOptionsMenu(subMenu);
-                    mainScript.runSection(endWorldResponse + "EndWorld");
+                    this.damselEndWorldResponse = parser.promptOptionsMenu(subMenu);
+                    mainScript.runSection(damselEndWorldResponse + "EndWorld");
                     break;
 
                 case "rescue":
-                    return this.damselRescue(howFree, endWorldResponse);
+                    return this.damselRescue(howFree);
 
                 case "cSlayPrincess":
                     if (manager.demoMode()) {
@@ -7397,10 +7387,9 @@ public class ChapterII extends StandardCycle {
     /**
      * The player decides to rescue the Damsel
      * @param howFree whether the player asked how they could free her
-     * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
      * @return the ending reached by the player
      */
-    private ChapterEnding damselRescue(boolean howFree, String endWorldResponse) {
+    private ChapterEnding damselRescue(boolean howFree) {
         mainScript.runConditionalSection("rescueStart", howFree);
 
         this.canSlayPrincess = false;
@@ -7415,12 +7404,12 @@ public class ChapterII extends StandardCycle {
                 case "want":
                     if (!manager.confirmContentWarnings("derealization")) break;
 
-                    return this.damselDeconSequence(endWorldResponse);
+                    return this.damselDeconSequence();
 
                 case "cGoStairs":
                 case "leave":
                     mainScript.runSection("leaveStart");
-                    return this.damselLeave(endWorldResponse);
+                    return this.damselLeave();
 
                 case "cSlayPrincessNoBladeFail":
                     mainScript.runSection("slayHeroFail");
@@ -7439,10 +7428,9 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player asks the Damsel what she wants, triggering the sequence that might lead to claiming the Deconstructed Damsel
-     * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
      * @return the ending reached by the player
      */
-    private ChapterEnding damselDeconSequence(String endWorldResponse) {
+    private ChapterEnding damselDeconSequence() {
         mainScript.runConditionalSection("whatWant", this.whatWouldYouDo);
 
         GlobalInt depersonCount = new GlobalInt();
@@ -7511,18 +7499,18 @@ public class ChapterII extends StandardCycle {
                 case "endWorld":
                     mainScript.runSection("endWorldDecon");
 
-                    if (endWorldResponse.isEmpty()) {
+                    if (damselEndWorldResponse.isEmpty()) {
                         mainScript.runConditionalSection("endWorldDeconFirst", depersonCount);
                         if (!depersonCount.equals(0)) parrotComment.set();
 
-                        OptionsMenu subMenu = new OptionsMenu(true);
+                        this.subMenu = new OptionsMenu(true);
                         subMenu.add(new Option(this.manager, "save", "\"No? I don't want the world to end.\""));
                         subMenu.add(new Option(this.manager, "neutral", "\"I have no feelings one way or another about the world ending.\""));
                         subMenu.add(new Option(this.manager, "burn", "\"Honestly, the world sucks. People are a plague and I hope you brought a slow and painful ruin to them all.\""));
                         subMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
-                        endWorldResponse = parser.promptOptionsMenu(subMenu);
-                        switch (endWorldResponse) {
+                        this.damselEndWorldResponse = parser.promptOptionsMenu(subMenu);
+                        switch (damselEndWorldResponse) {
                             case "silent":
                                 mainScript.runSection("silentEndWorldDecon");
                                 break;
@@ -7539,7 +7527,7 @@ public class ChapterII extends StandardCycle {
                                 break;
 
                             default:
-                                mainScript.runSection(endWorldResponse + "EndWorldDecon");
+                                mainScript.runSection(this.damselEndWorldResponse + "EndWorldDecon");
 
                                 if (depersonCount.equals(0)) {
                                     depersonCount.increment();
@@ -7552,7 +7540,7 @@ public class ChapterII extends StandardCycle {
                         break;
                     } else {
                         skipDepersonComment = true;
-                        mainScript.runSection(endWorldResponse + "WorldDecon");
+                        mainScript.runSection(this.damselEndWorldResponse + "WorldDecon");
                     }
 
                     break;
@@ -7566,7 +7554,7 @@ public class ChapterII extends StandardCycle {
                         mainScript.runSection("leaveStartDeconA");
                     }
 
-                    return this.damselLeave(endWorldResponse);
+                    return this.damselLeave();
 
                 case "cSlayPrincess":
                     if (manager.demoMode()) {
@@ -7599,10 +7587,9 @@ public class ChapterII extends StandardCycle {
 
     /**
      * The player leaves the basement with the Damsel
-     * @param endWorldResponse how the player responds to the Princess asking if she was "supposed to end the world," if they triggered the question
      * @return the ending reached by the player
      */
-    private ChapterEnding damselLeave(String endWorldResponse) {
+    private ChapterEnding damselLeave() {
         boolean tookBlade = this.hasBlade;
         this.hasBlade = false;
         this.canSlayPrincess = false;
@@ -7696,7 +7683,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runSection("staySuggest");
 
                     this.activeMenu = new OptionsMenu(true);
-                    activeMenu.add(new Option(this.manager, "nonchalance", this.cantUnique3, "\"Your nonchalance about the fate of the world has me a bit worried. That's why I want to stay here.\"", 0, !endWorldResponse.isEmpty()));
+                    activeMenu.add(new Option(this.manager, "nonchalance", this.cantUnique3, "\"Your nonchalance about the fate of the world has me a bit worried. That's why I want to stay here.\"", 0, !damselEndWorldResponse.isEmpty()));
                     activeMenu.add(new Option(this.manager, "trust", this.cantUnique3, "\"Trust me. It'll be better for both of us if we stay. We can be happy here. We just have to want it.\"", 0));
                     activeMenu.add(new Option(this.manager, "leave", "\"You're right. We're leaving.\""));
                     activeMenu.add(new Option(this.manager, "silent", this.cantUnique3, "[Remain silent.]", 0));

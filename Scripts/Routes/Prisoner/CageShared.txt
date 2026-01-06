@@ -1,0 +1,288 @@
+n You're on a path in the woo -- /// interrupt
+voice3switch Start
+
+label cheatedStart
+cheated ARE YOU FUCKING KIDDING ME?! We had *everything* we ever could have wanted and YOU KILLED US?
+skeptic We didn't have "everything we ever could have wanted." That's just what He *told* us. *I* want the truth, not some made-up eternal happiness.
+cheated But it was NICE! Who gives a SHIT about truth?!
+skeptic I DO. He said we were happy, but what does happiness like that even *mean?* It was just another prison.
+cheated And this isn't?! There are *chains everywhere!*
+skeptic That just means we're on the right track, you numbskull. That we're *finally* starting to see reality for what it is.
+hero Can you two stop fighting? It's not very productive.
+n No. It *isn't,* is it? So let's focus up.
+jumpto cheaBrokenJoin
+
+label brokenStart
+hero See? All done. That wasn't so bad, was it, buddy?
+broken But it *was* so bad...`! I don't... *like dying.* I don't like being cold... and alone in the dark.
+hero I don't think anybody *likes* dying, but hey, at least it's over...! We got better! And now we can move on. Things will work out this time, I *know* it.
+skeptic Oh, don't coddle him. For all we know, we'll have to die *hundreds* of times to get to the bottom of things. Maybe even *thousands.* He needs to toughen up.
+    broken Toughen up?`! You're both *freaks!`* I'm having a *rational reaction* to what just happened. I'm *normal,* a *normal person* gets traumatized from dying`! And from watching someone... cut her own head off. /// headwatch
+    broken Toughen up?`! You're both *freaks!`* I'm *normal,* a *normal person* gets traumatized from *dying!`* And from having to listen to someone... cut her own head off`! Those... *sounds...* are still echoing in my ears... /// nowatch
+hero Hold on, did you say *thousands?* How can it possibly take us thousands of lives to find a way out of here?
+skeptic Obviously we need a large sample size... i-in order to figure out our optimal plan! We need *statistical significance!*
+n I'll have you know that *my reality* is not a *datapoint* in your misguided attempt at an experiment!
+label cheaBrokenJoin
+n *Sigh.* You've clearly already been here before, and judging by how *deranged* you all are, you've already been here more than once. I'll spare you my full introduction, but I *would* like remind you that the people in my world are living, breathing, *suffering* entities, and not pawns for you to sacrifice in pursuit of some vague truth.
+
+label paranoidStart
+para Chains everywhere. This is different. This is *new.*
+hero It's worse, is what it is.
+skeptic We're finally starting to see reality for what it is. This place is a *prison,`* and she's not the only inmate.
+para You're acting like reality is this static... *thing,* but this world is constantly changing around us. How can you be so sure that *you* aren't breathing the prison into existence? That by feeling the walls closing in on you, that's exactly what they do?!
+skeptic What a crock of pretentious bullshit. Reality is as solid as the ground beneath our feet. And if we just examine it, if we apply enough *scientific rigor,* if we THINK hard enough`, we'll find a way out of here for good. Don't you *see?* We're already making progress!
+para And what if looking at it is enough to make it change? Where does that leave us?
+n It leaves you *exactly* where you are right now, and presumably exactly where you've been before.
+n *Sigh.* I'll spare you my full introduction, since you've clearly already heard it at least once, but I *would* like to remind you that the people in my world are living, breathing, *suffering* entities and not pawns for you to sacrifice in pursuit of some vague truth.
+
+label bladeWoods
+skeptic Huh. I... hadn't actually noticed.
+hero Holding it's starting to feel... natural, isn't it?
+voice3switch BladeWoods
+
+label cheatedBladeWoods
+cheated It doesn't MATTER if we spawn with it or have to trudge all the way up to the cabin to get it. It's not even a "blade" really, it's just a dinky little knife! The REAL threat here can kill us without it anyway!
+skeptic I didn't. Kill us. Without reason!
+cheated Well you still killed us!
+jumpto bladeWoodsJoin
+
+label brokenBladeWoods
+broken Holding a weapon shouldn't feel so natural`. It's proof that we're being guided by an unfeeling *lunatic.`* We need to try *talking* to her...!
+skeptic Oh, should we talk about our *feelings?* That'll get us nowhere, trust me. They're too easy for her to manipulate, too *illogical.* We can't puzzle our way out of things if we *listen to our heart.*
+broken I don't think I even need to comment on that`. What a sorry`, sorry voice you are.
+jumpto bladeWoodsJoin
+
+label paranoidBladeWoods
+para Of course it feels natural. We've had it with us *every time.* We've made it part of us.
+skeptic Don't be *weird,* it's just a tool, not some mystical object. Though starting with it feels like an indication that we're on the right track.
+label bladeWoodsJoin
+n This is... strange, you're not supposed to *start* with the blade. It says right here that you're supposed to find it at the cabin. ... Oh well! I suppose that doesn't make much sense, anyway... it's *better* if you start with a weapon, so this is probably for the best.
+
+label voidWoods
+    n So I didn't mishear you earlier... that doesn't make any *sense,* though. She's not supposed to be... suicidal! /// checkvoice-broken
+        n More importantly, if she did "cut her own head off," why are you here?! You shouldn't have died, you should be enjoying your reward! /// checkvoice-broken
+    n So you actually managed to slay her, yet you still found your way back here? Absolutely unbelievable. What on earth is wrong with you? /// checknovoice-broken
+skeptic We weren't satisfied with your happy little prison.
+n But... it has happy right there in the name!
+hero It wasn't actually very happy.
+    jumpto cheatedSureWoods /// checkvoice-cheated
+    para He's right. You can't just TELL us we're happy and expect us to go along with it. You were trying to dictate our emotions, how are we supposed to trust someone who does that?! /// checkvoice
+        skeptic Damn right. I have about as much trust for Him as I have for her. /// checkvoice-para
+        hero Then who are we supposed to trust? We have to trust someone *eventually,`* right? /// checkvoice-para
+        paraskep NO! /// checkvoice
+jumpto narratorSighWoodsJoin
+
+label sureWoods
+    n So I didn't mishear you earlier... that doesn't make any *sense,* though. She's not supposed to be... suicidal! /// checkvoice-broken
+    n She... what?! Why would she ever do *that?* She's not supposed to be *suicidal.* That doesn't make any sense whatsoever. /// checknovoice-broken
+n More importantly, if she did "cut her own head off," why are you here?! You shouldn't have died, you should be enjoying your reward!
+voice3switch SureWoods
+
+label cheatedSureWoods
+cheated I was FINE with it! But that spiteful bastard gave us a heart attack and killed us. For *no reason!*
+skeptic I had a *great* reason, we were stuck with no answers! And now we're not. You're *welcome.*
+cheated And you don't think we're stuck now? We're still in a cage, it's just *bigger!*
+hero You know, if you think about it`, isn't life just... a really big cage?
+n Oh don't you start philosophizing! Just get to the cabin and settle this already!
+
+label brokenSureWoods
+broken I don't think we were happy`. I don't think we *can* be happy here.
+skeptic Oh, so *now* you're on team "dying was good?" Took you long enough.
+jumpto narratorSighWoodsJoin
+
+label paranoidSureWoods
+para We killed ourself. Obviously. You were *insisting* that we were happy, but we knew we weren't. We could see right through you.
+skeptic Yeah, what he said. We weren't about to be stuck somewhere, being fed nonstop *bullshit* forever. We want *answers,* and we weren't gonna find them in your fake little paradise.
+n There are no *answers* to find! If she was dead, then that was it, *that* was the solution! All you managed to do was reset the board, and you put the pieces back all wrong while you were at it. This is probably worse for you, if I had to guess.
+skeptic HA. So there IS a board.
+jumpto narratorSighWoodsJoin
+
+label happyWoods
+n Eternal bliss...? But you wouldn't have found eternal bliss unless you actually *killed* her.
+    hero Actually, she... killed herself`. Cut her own head off`. It was *awful.* /// checknovoice-broken
+        skeptic It was convenient. *Too* convenient. /// checknovoice-broken
+        jumpto sureWoods /// checknovoice-broken
+n Or if she... killed *herself?* Now that I think about it I... do seem to recall you saying something to that effect`. I suppose that wasn't a joke, then.
+n You said she cut her own head off, didn't you?
+hero Yeah. It was... *awful.*
+n Well, as little sense as that makes, I have to ask, *why* are you *here?!* You shouldn't have died! You should be -- enjoying your reward!
+jumpto brokenSureWoods
+
+label narratorSighWoodsJoin
+n *Sigh.* Well, what's done is done, and you're here now. There's no use arguing. Just get to the cabin and *settle this.* Try not to kill yourself this time?
+
+label tossStart
+n Are you serious?! The blade... is your implement. You're going to need it if you want to do things right!
+    cheated You know what? Yeah. *Screw* this! We won't play along with any of you. /// checkvoice
+    broken Do it. She can't talk to us at knife-point. That's no way to get a real conversation started. /// checkvoice
+        skeptic You're all being ridiculous. Why would we disarm ourselves at a time like this?! Don't. You. Dare. /// checknovoice-para
+    para We *can't* toss it! It's the only way we can protect ourself`! It's an *extension* of us, and we shouldn't go around throwing our pieces away. /// checkvoice
+        skeptic He's right. *Weird,* but right. Don't. You. Dare. /// checkvoice-para
+
+skeptic Are you even LISTENING to me? Does my opinion count for nothing?! We're *never getting out of here* if you don't LISTEN! I'm intervening, we're NOT. Tossing. The blade.
+    broken You don't have to listen to him`. He hasn't gotten us anywhere. /// checkvoice
+
+label paraSkepMutiny
+skeptic Too bad. This is a *mutiny.*
+hero Hey, you can't just do that! We're not supposed to be able to *make* our own decisions!
+    skeptic Yeah? Well, I did it last time. /// forcedblade
+hero What if I stop you? Maybe *I* can make choices too.
+skeptic Good luck with *that.* I've got backup this time, haven't I?
+para Yeah! Alliance of convenience! We're *not* throwing it away. It's important!
+hero Hey, what are you -- Are you *serious?!* That's no fair, let me go!
+para Sorry! Has to be done.
+
+skeptic Great. Was that so hard? We need to keep our wits *sharp.*
+para Yes. You've made the right choice. The blade is the only control we have in this world.
+n Yes, great. Now will you get to the cabin already? In case you've forgotten, the Princess, the fate of the entire world, et cetera et cetera.
+
+label tossBlade
+n Without another word, you *foolishly* hurl your only chance at victory far off into the woods, never to be seen again.
+skeptic "Never to be seen again?" All we did was toss it into the woods! There's nothing stopping us from picking it back up.
+n Oh, but there is something stopping you from picking it back up: the fact that you already made your decision. As much as I'd *like* to turn back the clock, we'll all just have to suffer the consequences of what you've done. That's how decisions work.
+    cheated Huh. That felt... good! Best thing we've done in ages! Whatever this bullshit world throws at us next, we'll always have this tiny victory. /// checkvoice
+    broken You did the right thing. /// checkvoice
+
+label tossKeepBlade
+    broken I did my best to warn you. /// checkvoice
+    skeptic Good. We need to keep our wits *sharp.* /// checknovoice-para
+    para Good. This blade keeps us safe, it gives us *options.* If someone tries to pull our strings, we'll be able to cut them. /// checkvoice
+n Yes, great. Now will you get to the cabin already? In case you've forgotten, the Princess, the fate of the entire world, et cetera et cetera.
+
+label alreadyTossed
+n *Sigh.* You already did, remember?
+
+label tossSecondAttempt
+n The decision's already been made. It's too late to change your mind.
+skeptic Yeah. We're keeping it.
+
+// Hill dialogue //
+
+label hillDialogue
+n You stand at the edge of a cliff. An abyss yawns beneath you, empty and endless, the only path forward a rusted metal bridge. The cabin looms on its far side. I think you already know what waits for you within.
+    cheated *Great.* A creaky old bridge and a bottomless ravine! Because getting to the cabin was *too easy* last time. I wonder what other SICK JOKES are waiting for us. Maybe that ravine doesn't even go anywhere! It'd be par for the course if we slipped and wound up *falling forever.* /// checkvoice
+    broken It's dreary`, but of course it is`. We're dreary`. And so is she. /// checkvoice
+    para It's like the world *itself* doesn't want us to reach her. /// checkvoice
+skeptic There's nothing to find out here. Time to check in with the missus.
+n I'm going to pretend you didn't just call her that.
+
+// Cabin //
+
+label cabinIntro
+n Every surface of the cabin is draped in chains, the air filled with the mock birdsong of metallic clinks. Where there should be walls, you can see only endless ropes of metal, with hooks dangling from their ends. A fitting cage for a monster destined to end the world.
+    n There's nothing for you to do but step forward into the basement. You already have your weapon. Your objective awaits. /// hasblade
+    n There's nothing for you to do but step forward into the basement. You already foolishly threw away your weapon, but still, your objective awaits. /// noblade
+    jumpto mirrorFirstComment /// nomirror2
+    jumpto mirrorAgainCheated /// checkvoice-cheated
+skeptic Huh. That mirror's back again. *Why?*
+n What mirror? There is no mirror. The only thing of note here is the door to the basement.
+    jumpto mirrorParaJoin /// checkvoice-para
+broken It doesn't matter`. What are we going to do, look at ourself`? I've had enough introspection.
+skeptic But it *does* matter! It's obviously important, it *has* to be. Otherwise it wouldn't BE here!
+jumpto mirrorCommentJoin
+
+label mirrorAgainCheated
+cheated Oh, not the DAMN MIRROR AGAIN! I *hate* the mirror. It gets us nowhere!
+n "The... mirror -- ?"
+cheated "What mirror? There IS no mirror! WHY would I LIE about there being a mirror?" Whose FUCKING idea was this? It's *awful.*
+skeptic I'm sure whoever put it there put it there for a reason. It's obviously important. It *has* to be.
+jumpto mirrorCommentJoin
+
+label mirrorFirstComment
+hero And... how are we supposed to *get* to the basement? I don't see a way down. All I see is a mirror.
+n What mirror? There is no mirror. The only thing of note here is the door to the basement.
+    jumpto mirrorParaJoin /// checkvoice-para
+    cheated Oh, don't you lie to us! We can trust our eyes, and I am NOT going to stand around *arguing* over a stupid mirror. /// checkvoice
+    broken It doesn't matter`. What are we going to do, look at ourself`? I've had enough introspection`, I want to see someone else`. I want to see her. /// checkvoice
+        skeptic But it *does* matter! It's obviously important, it *has* to be. Otherwise it wouldn't BE here! /// checkvoice-broken
+jumpto mirrorCommentJoin
+
+label mirrorParaJoin
+skeptic It clearly serves some *purpose,* but... what? Is there something about us we're supposed to see? Can it be a... tool of some kind?
+para *Or* is it a distraction? Something *meant* to confuse us?
+hero Can we *please* stop talking about the mirror? I'd rather not spend more time in this room than I have to. It's *creepy.*
+
+label mirrorCommentJoin
+n *Sigh.* I'm not going to waste time arguing with you. Just get to the basement, okay? The door's on the other side of the room.
+hero Then, uh... I guess there's nowhere for us to go but... forward!
+
+label approachMirror
+n You step out onto the floor. Or... what should have been a floor.
+hero "Should have been?"
+n Yes, unfortunately. You realize, too late, that there is no floor beneath the metal. There is only a loose web of chains suspended over some unseen space. An unseen space that you are now rapidly plummeting through.
+    cheated Oh now this is just absolute BULLSHIT. Can't even walk across a room now without being *plunged into an abyss!* /// checkvoice
+        skeptic You're too emotional, it makes us *sloppy.* We have to focus on details right now, and we can't focus on details if you're RAGING about every little thing that happens! /// checkvoice-cheated
+        hero Are we supposed to focus on details while we're *falling into a bottomless pit?* /// checkvoice-cheated
+        skeptic Don't be ridiculous, it obviously has a bottom! /// checkvoice-cheated
+    broken She's bringing us back to her. /// checkvoice
+        skeptic Or we just happened to fall through an unstable floor. She's a prisoner here, how much agency do you think she *has?* /// checkvoice-broken
+        broken More than you'd like, I'm sure. /// checkvoice
+    para Nothing's solid here, is it? It's all just a shifting mass waiting for us to drop our guard! /// checkvoice
+jumpto basementStart
+
+// Basement //
+
+label basementStart
+linebreak
+n Your fall is suddenly, painfully halted as rusty chains pull taut against your skin, their hooks digging into your muscle.
+n You find yourself suspended in what appears to be a vast, dark space, the glinting of yet more chains merely hinting at its full dimensions. You dangle a few feet off the bare concrete floor.
+n If the Princess lives here, slaying her would probably be doing her a favor.
+linebreak
+n As your eyes adjust to your new surroundings, you make out a figure standing in the gloom, obscured in shadow. She watches you with the stillness of the grave.
+skeptic Easy now. We don't know what sort of situation we're dealing with. We should let *her* make the first move. Let *observation* give us an advantage.
+
+label basementTalkAttempt
+n But you are met with only silence, save for the creaks and groans of metal as it sways in the stale air around you. The hooks slowly shift in your skin, the pain coming in waves as you continue to dangle helplessly.
+    cheated Screw this. This is making me bloody anxious. It's like... it's like she knows how unfair this all is, and now she's having fun with it. She's *mocking* us! /// checkvoice
+        hero By... not saying anything? /// checkvoice-cheated
+        cheated YES! /// checkvoice
+    broken She won't even speak to us`. *We* did this. /// checkvoice
+    para What if the chains don't have to be real? What if they *aren't* real! /// checkvoice
+        skeptic UGH! They feel plenty real to me! Yeah, it would be *nice* if we could just *tell ourselves* the chains aren't lodged in all our joints and they'd *magically go away,* but I'm afraid that's wishful thinking. /// checkvoice-para
+        para Well, maybe wishful thinking is what we need! Maybe they're real but maybe... maybe we can cut through them! /// checkvoice
+        hero It's worth a try. /// checkvoice-para
+
+label cutStart
+n You clumsily rotate the blade in your palm, pressing it against the chains lodged in your wrist.
+para And it slices through them, right? ... Right?
+hero Y-yeah, what he said. It slices through!
+skeptic Now hold on. Let's not rush to conclusions. How would that *ever* work?
+para It just... does?
+n It doesn't.
+para Maybe the only reason it isn't working is because SOMEONE doesn't believe we can do it!
+skeptic They're metal chains, and nothing we've done has worked so far. Maybe if you gave me a *good reason* to believe we should try again, I'd believe it was worth trying again. But until then, I'm going to believe our *eyes.* This isn't getting us anywhere.
+para Erm... you should believe it because you... sh-should! We don't have anything better to do!
+hero Um, um... maybe they're... rusty! He... did say they were rusty, didn't He?
+skeptic He did, didn't He? All right, I'm game. We cut again.
+n You bring your blade against the chains again, and this time you manage to cut into the metal. Its hook remains embedded in your flesh, but your arm falls from the mass of chains, free from the Princess's bindings.
+hero *Yes!* Will you look at that.
+skeptic That... worked?
+para And why shouldn't the rest be the same, then?
+
+label attackAttempt
+skeptic What? But she's so far away.
+n And you're bound. You do your best to swing your blade arm towards the Princess. But, unsurprisingly, the act gets you nowhere.
+
+label encounterStart
+linebreak
+    n But before you can make much progress, the Princess takes a step forward. As she moves, the heavy chains shift, tightening and tearing at your flesh, your joints screaming in agony as the rusted hooks dig deeper. Stars dance in your eyes as the chain wrapped around your neck threatens to choke you. /// nocut cutroute
+        n As you attempt to move, the Princess takes a slow step forward. As she does so, the heavy chains shift, tightening and tearing at your flesh, your joints screaming in agony as the rusted hooks dig deeper. Stars dance in your eyes as the chain wrapped around your neck threatens to choke you. /// check
+        n The Princess takes a slow step forward. As she does so, the heavy chains shift, tightening and tearing at your flesh, your joints screaming in agony as the rusted hooks dig deeper. Stars dance in your eyes as the chain wrapped around your neck threatens to choke you. /// nocut checkfalse
+n As your vision comes back into focus, your eyes fall on the body of the Princess, finally emerged from the shadows.
+hero "The body of the Princess" is a... *weird* way to describe a person!
+n It's only accurate. The form in front you is a body. Draped in raiments of chains, her head dragging along behind her in an iron cage.
+n The head stares up at you, but says nothing. And the chains squeeze ever tighter.
+    cheated Oh, we're being strangled *already?* You haven't given us a chance to do a damned THING! What's the point of ANY of this if we don't even get to make a single choice? /// checkvoice
+        n I'm not here to "give you chances." I'm here to set the stage, and to dictate to you what happens. I can advise you on the correct course of action, but there are limits to my direct involvement. The "choices," if that's what you'd like to call them, have always been yours. /// checkvoice-cheated
+        skeptic A riddle while we're dying, isn't that just like you? Now to figure out what exactly you mean by "choices..." /// checkvoice-cheated
+        hero Oh, for the love of -- STOP THINKING AND *DO SOMETHING!* /// checkvoice-cheated
+    skeptic So much for talking it out. Doesn't seem like she's too interested, does it? /// checkvoice-broken
+        hero We still have that blade! Maybe there's something we can do to get out of this! /// checkvoice-broken hasblade
+            broken What good would it do us`? We should have gotten rid of it`. She'll never trust us now`, not after everything we've done. /// checkvoice hasblade
+        broken It's not too late`. You threw away that blade for a reason`. Now talk to her. /// checkvoice
+    para Just keep going. She's a head in a cage! We're not going to be able to talk our way out of this! The only thing we can do is keep sawing our way to freedom! /// cutroute
+
+// Abort the vessel //
+
+label abort
+n Are you serious?! Fine. You walk away from the the cabin. Let's see how that goes for you.

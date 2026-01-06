@@ -454,7 +454,7 @@ para Do you think you can just wrest control away from us? This body is barely f
 n Sh-shit...
 para Heart. Lungs. Liver. Nerves. Heart...
 linebreak
-n With a flick of the Princess' wrist, the stairs slide back into place. I can't believe you're making me watch you damn everyone to torment and oblivion.
+n With a flick of the Princess's wrist, the stairs slide back into place. I can't believe you're making me watch you damn everyone to torment and oblivion.
 bladeswitch leave Start
 
 label leaveBladeStart
@@ -738,7 +738,7 @@ n Unlike you, I'm not *capable* of being lonely.
 hero Aw, sure you are! Give it some time without us and I'm sure you'll start feeling lonely.
 
 label takeSlain
-n You remove the blade from the Princess' body. What, exactly, are you planning on doing with it?
+n You remove the blade from the Princess's body. What, exactly, are you planning on doing with it?
 
 label dropSlain
 hero Oh no, what are you *doing?*

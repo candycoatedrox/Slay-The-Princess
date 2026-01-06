@@ -384,7 +384,6 @@ public class IOHandler implements Closeable {
                 commandOutcome += "Meta";
                 break;
             case SHOW:
-            case VIEW:
                 commandOutcome += manager.show(argument);
                 break;
             case DIRECTGALLERY:
@@ -412,7 +411,6 @@ public class IOHandler implements Closeable {
                 commandOutcome += "Meta";
                 break;
             case GO:
-            case WALK:
                 commandOutcome += cycle.go(argument);
                 break;
             case DIRECTGO:

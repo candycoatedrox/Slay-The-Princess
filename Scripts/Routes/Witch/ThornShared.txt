@@ -396,7 +396,7 @@ p You can't leave without me, can you? Isn't that funny. Isn't that so funny! Th
 p You know, just to make sure things are little more permanent, I think I'm going to take this particular needle out of the picture.
 oppo She wouldn't.
     cheated It's only fair. We were going to leave her with no way out. She's returning the kindness. /// checkvoice
-n Thorns slice into the Princess' hands, lacerating what little skin remains, as she raises the blade to her mouth.
+n Thorns slice into the Princess's hands, lacerating what little skin remains, as she raises the blade to her mouth.
 oppo Take it! Take it now before she swallows it out of spite!
 
 label leaveRush

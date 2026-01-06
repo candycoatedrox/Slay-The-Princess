@@ -36,6 +36,8 @@ public class GameManager {
     private final InverseCondition noGoodEndingAttempt = goodEndingAttempted.getInverse();
 
     // Variables used in the Spaces Between
+    private final Script mirrorScript;
+    private final Script intermissionScript;
     private boolean mirrorScaredFlag = false;
     private int moundFreedom = 0;
     private int moundSatisfaction = 0;
@@ -77,6 +79,9 @@ public class GameManager {
 
         this.voicesMet = new HashMap<>();
         for (Voice v : Voice.TRUEVOICES) if (v != Voice.HERO) this.voicesMet.put(v, false);
+        
+        this.mirrorScript = new Script(this, this.parser, "Mirror/MirrorGeneric");
+        this.intermissionScript = new Script(this, this.parser, Chapter.SPACESBETWEEN.getScriptFile());
 
         this.settingsMenu = this.createSettingsMenu();
         this.showMenu = this.createShowMenu();
@@ -356,6 +361,22 @@ public class GameManager {
      */
     public InverseCondition noGoodEndingAttempt() {
         return this.noGoodEndingAttempt;
+    }
+
+    /**
+     * Accessor for mirrorScript
+     * @return the Script used for visiting the mirror at the end of a StandardCycle
+     */
+    public Script getMirrorScript() {
+        return this.mirrorScript;
+    }
+
+    /**
+     * Accessor for intermissionScript
+     * @return the Script used for all dialogue shared between all visits to the Spaces Between
+     */
+    public Script getIntermissionScript() {
+        return this.intermissionScript;
     }
 
     /**
@@ -705,13 +726,13 @@ public class GameManager {
                 break;
             
             case 2:
-                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, new ArrayList<>(), new Condition(), harsh, false, false, false, false);
+                this.currentCycle = new ChapterII(startFromEnding, this, this.parser, new ArrayList<>(), harsh, false, false, false, false);
                 break;
 
             case 3:
             case 4:
             case 0:
-                this.currentCycle = new ChapterIII(startFromEnding, this, this.parser,  new ArrayList<>(), new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false, false, false, false, false);
+                this.currentCycle = new ChapterIII(startFromEnding, this, this.parser,  new ArrayList<>(), new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false, false, false, false, false, false, false);
                 break;
 
             default: throw new RuntimeException("Invalid starting chapter");
@@ -1196,7 +1217,7 @@ public class GameManager {
         for (Command c : Command.values()) {
             switch (c) {
                 case DIRECTGO:
-                case WALK: break;
+                case DIRECTGALLERY: break;
 
                 default: IOHandler.wrapPrintln("  - " + c.getPrefix().toUpperCase() + ": " + c.getDescription());
             }

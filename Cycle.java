@@ -14,6 +14,7 @@ public abstract class Cycle {
 
     // Utility variables for option menus
     protected OptionsMenu activeMenu;
+    protected OptionsMenu subMenu;
     protected boolean repeatActiveMenu = false;
     protected String activeOutcome;
     protected boolean reverseDirection = false;
@@ -149,7 +150,7 @@ public abstract class Cycle {
 
     /**
      * Accessor for touchedMirror
-     * @return whether or not the player approached the mirror in Chapter II
+     * @return whether or not the player approached the mirror in Chapter II or III
      */
     public boolean touchedMirror() {
         return this.touchedMirror;
@@ -157,7 +158,7 @@ public abstract class Cycle {
 
     /**
      * Accessor for isHarsh
-     * @return whether the Princess is currently hostile in chapters where it varies
+     * @return whether the Princess is currently hostile in Chapters where it varies
      */
     public boolean isHarsh() {
         return this.isHarsh;
