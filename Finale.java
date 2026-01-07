@@ -202,23 +202,34 @@ public class Finale extends Cycle {
      */
     private void giveDefaultFailResponseMound(String outcome) {
         switch (outcome) {
-            case "cGoCabin":
+            case "cMeta": break;
+
+
             case "cGoFail":
-            case "cProceed":
             case "cEnterFail":
             case "cLeaveFail":
+            case "cGoLeave":
+            case "cGoPath":
+            case "cGoHill":
+            case "cGoCabin":
+            case "cGoStairs":
+            case "cGoBasement":
+            case "cProceed":
                 parser.printDialogueLine(new DialogueLine("There is nowhere for you to go."));                
                 break;
+
 
             case "cApproachAtMirrorFail":
                 parser.printDialogueLine(new DialogueLine("You watched the mirror shatter into pieces."));
                 break;
 
             case "cApproachMirrorFail":
+            case "cApproachMirror":
                 parser.printDialogueLine(new DialogueLine("You watched the mirror shatter for good."));
                 break;
 
             case "cApproachHerFail":
+            case "cApproachHer":
                 if (this.withPrincess) {
                     parser.printDialogueLine(new DialogueLine("You are already with her."));
                 } else {
@@ -227,31 +238,40 @@ public class Finale extends Cycle {
 
                 break;
 
+
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":
             case "cSlayPrincessFail":
+            case "cSlayPrincess":
                 parser.printDialogueLine(new DialogueLine("You cannot attempt to slay her now."));
                 break;
 
             case "cSlaySelfNoBladeFail":
             case "cSlaySelfFail":
+            case "cSlaySelf":
                 parser.printDialogueLine(new DialogueLine("You cannot slay yourself now."));
                 break;
+
             
             case "cTakeFail":
+            case "cTake":
                 parser.printDialogueLine(new DialogueLine("The pristine blade is not here."));
                 break;
 
             case "cDropNoBladeFail":
+            case "cDropFail":
+            case "cDrop":
                 parser.printDialogueLine(new DialogueLine("You do not have the blade."));
                 break;
 
             case "cThrowNoBladeFail":
+            case "cThrowFail":
+            case "cThrow":
                 parser.printDialogueLine(new DialogueLine("You do not have the blade."));
                 break;
 
-            default:
-                parser.printDialogueLine("You have no other options.");
+
+            default: parser.printDialogueLine("You have no other options.");
         }
     }
 
@@ -274,6 +294,11 @@ public class Finale extends Cycle {
                 break;
 
             case "cGoFail":
+            case "cGoLeave":
+            case "cGoPath":
+            case "cGoCabin":
+            case "cGoStairs":
+            case "cGoBasement":
             case "cProceed":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
@@ -304,7 +329,9 @@ public class Finale extends Cycle {
                 
                 break;
 
+
             case "cApproachMirrorFail":
+            case "cApproachMirror":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -315,6 +342,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cApproachHerFail":
+            case "cApproachHer":
                 if (this.withPrincess) {
                     if (this.strangerHeart) {
                         parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
@@ -355,6 +383,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cSlayPrincessFail":
+            case "cSlayPrincess":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -375,6 +404,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cSlaySelfFail":
+            case "cSlaySelf":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -396,6 +426,7 @@ public class Finale extends Cycle {
                 break;
             
             case "cTakeFail":
+            case "cTake":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -416,6 +447,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cDropFail":
+            case "cDrop":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -436,6 +468,7 @@ public class Finale extends Cycle {
                 break;
                 
             case "cThrowFail":
+            case "cThrow":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -445,8 +478,8 @@ public class Finale extends Cycle {
 
                 break;
 
-            default:
-                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+
+            default: parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
         }
     }
 

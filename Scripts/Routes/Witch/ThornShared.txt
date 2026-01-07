@@ -275,12 +275,12 @@ unlock thornTrust
 n The tip of your blade only manages to touch her sternum before it stops moving entirely. A single drop of blood trickles down her chest as the two of you stare into each others' eyes.
 n Come on. Just push it a little further. *Sigh.* But you can't, can you?
 p I knew this was coming. I can't believe I ever let myself hope for better. This was always going to be us, wasn't it?
-claim genericEnd
+claim sharedEnd
 
-label genericEndFirstVessel
+label sharedEndFirstVessel
 truth You do not have an opportunity to respond. Something has taken her away, and it's left something else in her place.
 
-label genericEndNotFirstVessel
+label sharedEndNotFirstVessel
 truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
 
 // Cut her free //
@@ -371,7 +371,7 @@ quietcreep
 p What do we do now?
 p Wh -- where's everything going?
 p Why is it so cold?
-claim genericEnd
+claim sharedEnd
 
 // Attempt to leave //
 
@@ -408,7 +408,7 @@ oppo It's better than letting her eat it and losing it forever!
 unlock thornTrust
 n You just manage to reach her hand, grasping it firmly in yours, before the thorns finally trap you in place. Blood trickles down your arm, mingling with hers. The two of you lock eyes.
 p We're stuck like this, aren't we? I knew this was always going to be how it ended.
-claim genericEnd
+claim sharedEnd
 
 label leaveNothing
 n You stand in place among the thorns, inert, merely watching as the Princess swallows your only way out of this place.
@@ -421,7 +421,7 @@ oppo She actually did it.
 n Blood trickles down the corner of her mouth. Then flows from between her lips.
 n She smiles.
 p There. Isn't this just perfect?
-claim genericEnd
+claim sharedEnd
 
 label leaveBladeFirstVessel
 truth But in your commitment to leaving things unresolved, you have no chance at resolution. Something has taken her away, and it's left something else in her place.

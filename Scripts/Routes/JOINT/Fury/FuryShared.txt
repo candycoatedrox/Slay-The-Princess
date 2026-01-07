@@ -658,7 +658,7 @@ p Oh`. I think I understand you now`. I'm sorry`. I didn't mean to do the things
 hero She sounds genuine.
 cold They always do in the end.
 p It's... cold. But... I'm going to be okay`, right?
-claim genericEnd
+claim sharedEnd
 
 // She continues to unwind you (Thirty-Trillion Cells) //
 
@@ -864,12 +864,12 @@ n And then you step outside and into the ruins of the world you left...
     cold ... Behind`? So He's gone, too`. It's just you and me now. /// checkvoice
     broken ... Behind`. He's gone, too`. It's just the three of us now. /// checkvoice
 p Is this..`. the world`? It's so... cold.
-claim genericEnd
+claim sharedEnd
 
-label genericEndFirstVessel
+label sharedEndFirstVessel
 truth You do not get the chance to respond. Something has taken her away, and it's left something else in her place.
 
-label genericEndNotFirstVessel
+label sharedEndNotFirstVessel
 truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
 
 // Leave without the Princess //

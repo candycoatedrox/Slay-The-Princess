@@ -162,10 +162,16 @@ public abstract class StandardCycle extends Cycle {
         }
 
         switch (outcome) {
-            case "cMeta":
-                break;
+            case "cMeta": break;
+
 
             case "cGoFail":
+            case "cGoLeave":
+            case "cGoPath":
+            case "cGoHill":
+            case "cGoCabin":
+            case "cGoStairs":
+            case "cGoBasement":
             case "cProceed":
                 parser.printDialogueLine(new VoiceDialogueLine("There's nowhere to go that way."));
                 break;
@@ -192,11 +198,13 @@ public abstract class StandardCycle extends Cycle {
                 break;
                 
             case "cApproachMirrorFail":
+            case "cApproachMirror":
                 parser.printDialogueLine(new VoiceDialogueLine("What are you talking about? There isn't a mirror."));
                 if ((this.mirrorComment || this.touchedMirror) && this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's... actually right this time. The mirror really isn't here."));
                 break;
 
             case "cApproachHerFail":
+            case "cApproachHer":
                 parser.printDialogueLine(new VoiceDialogueLine("...What?"));
                 break;
                 
@@ -210,6 +218,7 @@ public abstract class StandardCycle extends Cycle {
                 break;
 
             case "cSlayPrincessFail":
+            case "cSlayPrincess":
                 // The Narrator doesn't have a line here because there is no universe in which He would ever say no to you trying to slay the Princess if you have the opportunity.
                 // Unfortunately for Him, sometimes I can't let you slay her in the middle of certain menus. Too bad, Narrator.
                 super.giveDefaultFailResponse(outcome);
@@ -227,6 +236,7 @@ public abstract class StandardCycle extends Cycle {
                 break;
 
             case "cSlaySelfFail":
+            case "cSlaySelf":
                 parser.printDialogueLine(new VoiceDialogueLine("Are you insane?! Absolutely not."));
                 if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's right. We don't need to make such a... rash decision."));
                 break;
@@ -259,6 +269,7 @@ public abstract class StandardCycle extends Cycle {
                 break;
 
             case "cDropFail":
+            case "cDrop":
                 parser.printDialogueLine(new VoiceDialogueLine("You can't drop the blade now. You're here for a reason. Finish the job."));
                 break;
 
@@ -272,11 +283,13 @@ public abstract class StandardCycle extends Cycle {
                 break;
                 
             case "cThrowFail":
+            case "cThrow":
                 parser.printDialogueLine(new VoiceDialogueLine("Are you insane?! Absolutely not."));
                 if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Why would we even do that? That seems... silly."));
                 break;
 
-            default: parser.printDialogueLine(new VoiceDialogueLine("You have to make a decision."));
+
+            default: this.giveDefaultFailResponse();
         }
     }
 
@@ -288,7 +301,7 @@ public abstract class StandardCycle extends Cycle {
         if (!this.hasVoice(Voice.NARRATOR)) {
             super.giveDefaultFailResponse();
         } else {
-            parser.printDialogueLine(new VoiceDialogueLine("You have to make a decision."));
+            parser.printDialogueLine(new VoiceDialogueLine("You have no other choice."));
         }
     }
 
@@ -390,6 +403,7 @@ public abstract class StandardCycle extends Cycle {
      * Runs the mirror sequence after claiming a vessel
      */
     protected void mirrorSequence(ChapterEnding prevEnding) {
+        this.activeChapter = Chapter.SPACESBETWEEN;
         this.secondaryScript = manager.getMirrorScript();
         secondaryScript.updateReusedScriptFlags();
 
@@ -402,7 +416,6 @@ public abstract class StandardCycle extends Cycle {
         this.canSlaySelf = false;
         this.canDropBlade = false;
 
-        this.activeChapter = Chapter.SPACESBETWEEN;
         this.currentLocation = GameLocation.BEFOREMIRROR;
         this.mirrorPresent = true;
         this.removeVoice(Voice.NARRATOR);
@@ -496,6 +509,7 @@ public abstract class StandardCycle extends Cycle {
             case IFYOUCOULDUNDERSTAND:
             case WATERSTEEL:
             case FORMLESS:
+            case NOEXIT:
                 this.activeMenu = new OptionsMenu();
                 activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
 

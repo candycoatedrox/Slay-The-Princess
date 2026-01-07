@@ -28,7 +28,7 @@ public class Script {
     private boolean knowsDestiny;
 
     // Gameplay-dependent flags used during Chapter 2 or 3
-    private Voice ch2Voice;
+    private String ch2Voice = "";
     private String chapterSource = "";
     private boolean sharedLoop;
     private boolean sharedLoopInsist;
@@ -45,7 +45,7 @@ public class Script {
     private boolean rescuePath;
 
     // Gameplay-dependent flags used during Chapter 3 only
-    private Voice ch3Voice;
+    private String ch3Voice = "";
     private boolean abandoned2;
     private boolean adversaryFaceExplore;
     private boolean spectrePossessAsk;
@@ -119,6 +119,14 @@ public class Script {
     }
 
     // --- ACCESSORS & CHECKS ---
+
+    /**
+     * Returns the name of the file linked to this Script
+     * @return the name of the file linked to this Script
+     */
+    public String getFileName() {
+        return source.getName();
+    }
 
     /**
      * Returns the number of lines in this script
@@ -817,7 +825,7 @@ public class Script {
         this.isHarsh = false;
         this.knowsDestiny = false;
 
-        this.ch2Voice = null;
+        this.ch2Voice = "";
         this.chapterSource = "";
         this.sharedLoop = false;
         this.sharedLoopInsist = false;
@@ -830,7 +838,7 @@ public class Script {
         this.whatWouldYouDo = false;
         this.rescuePath = false;
         
-        this.ch3Voice = null;
+        this.ch3Voice = "";
         this.abandoned2 = false;
         this.adversaryFaceExplore = false;
         this.spectrePossessAsk = false;
@@ -849,6 +857,8 @@ public class Script {
     private void initializeChapterFlags() {
         this.currentCycle = manager.getCurrentCycle();
         this.noCycle = this.currentCycle == null;
+        this.isChapter2 = this.currentCycle instanceof ChapterII;
+        this.isChapter3 = this.currentCycle instanceof ChapterIII;
 
         if (this.currentCycle != null) {
             this.firstVessel = currentCycle.isFirstVessel();
@@ -858,10 +868,10 @@ public class Script {
             this.isHarsh = currentCycle.isHarsh();
             this.knowsDestiny = currentCycle.knowsDestiny();
 
-            if (this.currentCycle instanceof ChapterII) {
+            if (this.isChapter2) {
                 ChapterII chapter2 = (ChapterII)this.currentCycle;
 
-                this.ch2Voice = chapter2.ch2Voice();
+                this.ch2Voice = chapter2.ch2Voice().toString();
                 this.chapterSource = chapter2.getSource();
                 this.sharedLoop = chapter2.sharedLoop();
                 this.sharedLoopInsist = chapter2.sharedLoopInsist();
@@ -872,10 +882,10 @@ public class Script {
                 this.droppedBlade1 = chapter2.droppedBlade1();
                 this.whatWouldYouDo = chapter2.whatWouldYouDo();
                 this.rescuePath = chapter2.rescuePath();
-            } else if (this.currentCycle instanceof ChapterIII) {
+            } else if (this.isChapter3) {
                 ChapterIII chapter3 = (ChapterIII)this.currentCycle;
 
-                this.ch2Voice = chapter3.ch2Voice();
+                this.ch2Voice = chapter3.ch2Voice().toString();
                 this.chapterSource = chapter3.getSource();
                 this.sharedLoop = chapter3.sharedLoop();
                 this.sharedLoopInsist = chapter3.sharedLoopInsist();
@@ -883,7 +893,7 @@ public class Script {
                 this.freeFromChains2 = chapter3.freeFromChains2();
                 this.adversaryTookBlade = chapter3.adversaryTookBlade();
 
-                this.ch3Voice = chapter3.ch3Voice();
+                this.ch3Voice = chapter3.ch3Voice().toString();
                 this.abandoned2 = chapter3.abandoned2();
                 this.adversaryFaceExplore = chapter3.adversaryFaceExplore();
                 this.spectrePossessAsk = chapter3.spectrePossessAsk();
@@ -903,6 +913,8 @@ public class Script {
     private void updateChapterFlags() {
         this.currentCycle = manager.getCurrentCycle();
         this.noCycle = this.currentCycle == null;
+        this.isChapter2 = this.currentCycle instanceof ChapterII;
+        this.isChapter3 = this.currentCycle instanceof ChapterIII;
 
         if (this.currentCycle != null) {
             this.hasBlade = currentCycle.hasBlade();
@@ -911,7 +923,7 @@ public class Script {
             this.isHarsh = currentCycle.isHarsh();
             this.knowsDestiny = currentCycle.knowsDestiny();
 
-            if (this.currentCycle instanceof ChapterII) {
+            if (this.isChapter2) {
                 ChapterII chapter2 = (ChapterII)this.currentCycle;
                 
                 this.sharedLoop = chapter2.sharedLoop();
@@ -920,7 +932,7 @@ public class Script {
                 this.narratorProof = chapter2.narratorProof();
                 this.adversaryTookBlade = chapter2.adversaryTookBlade();
                 this.freeFromChains2 = chapter2.freeFromChains2();
-            } else if (this.currentCycle instanceof ChapterIII) {
+            } else if (this.isChapter3) {
                 ChapterIII chapter3 = (ChapterIII)this.currentCycle;
 
                 this.cageCutRoute = chapter3.cageCutRoute();
@@ -1209,21 +1221,13 @@ public class Script {
 
             } else if (m.startsWith("voice2-")) {
                 if ((this.isChapter2 || this.isChapter3) && args.length == 2) {
-                    if (Voice.getVoice(args[1]) != null) {
-                        if (this.ch2Voice != Voice.getVoice(args[1])) return false;
-                    } else {
-                        return false;
-                    }
+                    if (!ch2Voice.equals(args[1])) return false;
                 } else {
                     return false;
                 }
             } else if (m.startsWith("voice2not-")) {
                 if ((this.isChapter2 || this.isChapter3) && args.length == 2) {
-                    if (Voice.getVoice(args[1]) != null) {
-                        if (this.ch2Voice == Voice.getVoice(args[1])) return false;
-                    } else {
-                        return false;
-                    }
+                    if (ch2Voice.equals(args[1])) return false;
                 } else {
                     return false;
                 }
@@ -1299,21 +1303,13 @@ public class Script {
 
             } else if (m.startsWith("voice3-")) {
                 if (this.isChapter3 && args.length == 2) {
-                    if (Voice.getVoice(args[1]) != null) {
-                        if (this.ch3Voice != Voice.getVoice(args[1])) return false;
-                    } else {
-                        return false;
-                    }
+                    if (!ch3Voice.equals(args[1])) return false;
                 } else {
                     return false;
                 }
             } else if (m.startsWith("voice3not-")) {
                 if (this.isChapter3 && args.length == 2) {
-                    if (Voice.getVoice(args[1]) != null) {
-                        if (this.ch3Voice == Voice.getVoice(args[1])) return false;
-                    } else {
-                        return false;
-                    }
+                    if (ch3Voice.equals(args[1])) return false;
                 } else {
                     return false;
                 }

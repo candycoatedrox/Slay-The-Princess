@@ -25,9 +25,13 @@ public class ChapterIII extends StandardCycle {
     private final boolean prisonerGoodEndingSeen;
     private final boolean prisonerHeartStopped;
 
+    // Flags used in The Princess and the Dragon
+    private boolean dragonInPrincess = false;
+    private boolean dragonBodyDownstairs = false;
+
     // Flags used in The Cage
-    private boolean cageCutRoute;
-    private boolean cageNoBladeMentioned;
+    private boolean cageCutRoute = false;
+    private boolean cageNoBladeMentioned = false;
 
     /**
      * Constructor
@@ -136,6 +140,7 @@ public class ChapterIII extends StandardCycle {
             case DRAGON:
                 this.withPrincess = true;
                 this.currentLocation = GameLocation.BASEMENT;
+                this.dragonInPrincess = true;
                 this.removeVoice(Voice.NARRATOR);
                 this.addVoice(Voice.PRINCESS);
         }
@@ -335,6 +340,19 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             default: super.showContentWarnings(argument);
+        }
+    }
+
+    /**
+     * Prints a generic response to a command failing or being unavailable
+     * @param outcome the String representation of the outcome of the attempted command
+     */
+    @Override
+    protected void giveDefaultFailResponse(String outcome) {
+        if (this.dragonInPrincess && mainScript.getFileName().equals("DragonShared.txt")) { // Double check the file with the responses is loaded
+            this.giveDefaultFailResponsePrincess(outcome);
+        } else {
+            super.giveDefaultFailResponse(outcome);
         }
     }
 
@@ -867,6 +885,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.withBlade = true;
         this.mirrorPresent = true;
         mainScript.runSection("cabinIntro");
@@ -1274,6 +1293,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.withBlade = true;
         this.mirrorPresent = true;
         mainScript.runSection("cabinIntro");
@@ -2378,6 +2398,92 @@ public class ChapterIII extends StandardCycle {
     // - Chapter III: The Princess and the Dragon -
 
     /**
+     * Prints a generic response to a command failing or being unavailable from the Princess during the Princess and the Dragon
+     * @param outcome the String representation of the outcome of the attempted command
+     */
+    protected void giveDefaultFailResponsePrincess(String outcome) {
+        switch (outcome) {
+            case "cMeta":
+                break;
+
+
+            case "cGoFail":
+            case "cEnterFail":
+            case "cGoLeave":
+            case "cGoPath":
+            case "cGoHill":
+            case "cGoCabin":
+            case "cGoStairs":
+            case "cGoBasement":
+            case "cProceed":
+                mainScript.runMoodSection("defaultResponseGo");
+                break;
+                
+            case "cLeaveFail":
+                mainScript.runMoodSection("defaultResponseLeave");
+                break;
+
+
+            case "cApproachAtMirrorFail":
+            case "cApproachMirrorFail":
+            case "cApproachMirror":
+                mainScript.runMoodSection("defaultResponseApproachMirror");
+                break;
+
+            case "cApproachHerFail":
+            case "cApproachHer":
+                mainScript.runMoodSection("defaultResponseApproachHer");
+                break;
+
+
+            case "cSlayNoPrincessFail":
+            case "cSlayPrincessNoBladeFail":
+            case "cSlayPrincessFail":
+            case "cSlayPrincess":
+                mainScript.runMoodSection("defaultResponseSlayPrincess");
+                break;
+
+            case "cSlaySelfNoBladeFail":
+            case "cSlaySelfFail":
+            case "cSlaySelf":
+                if (this.dragonBodyDownstairs) {
+                    mainScript.runMoodSection("defaultResponseSlaySelfWithDragon");
+                } else {
+                    mainScript.runMoodSection("defaultResponseSlaySelf");
+                }
+
+                break;
+
+
+            case "cTakeHasBladeFail":
+            case "cTakeFail":
+            case "cTake":
+                if (this.dragonBodyDownstairs) {
+                    mainScript.runMoodSection("defaultResponseTakeWithDragon");
+                } else {
+                    mainScript.runMoodSection("defaultResponseTake");
+                }
+
+                break;
+
+            case "cDropNoBladeFail":
+            case "cDropFail":
+            case "cDrop":
+                mainScript.runMoodSection("defaultResponseDrop");
+                break;
+
+            case "cThrowNoBladeFail":
+            case "cThrowFail":
+            case "cThrow":
+                mainScript.runMoodSection("defaultResponseThrow");
+                break;
+
+
+            default: this.giveDefaultFailResponse();
+        }
+    }
+
+    /**
      * Runs Chapter III: The Princess and the Dragon
      * @return the ending reached by the player
      */
@@ -2522,6 +2628,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.mirrorPresent = true;
         mainScript.runSection("cabinIntro");
 
@@ -2802,10 +2909,10 @@ public class ChapterIII extends StandardCycle {
 
         // Enter "the cabin"
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
+        this.withBlade = true;
         this.touchedMirror = true;
         this.mirrorPresent = false;
-        this.touchedMirror = true;
-        this.withBlade = true;
         mainScript.runConditionalSection("proceed", nothingAttempt);
 
         this.activeMenu = new OptionsMenu();
@@ -3515,6 +3622,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.withBlade = true;
         this.mirrorPresent = true;
         mainScript.runSection("cabinIntro");
@@ -4026,6 +4134,7 @@ public class ChapterIII extends StandardCycle {
      */
     private ChapterEnding wildWounded() {
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.hasBlade = true;
         this.withPrincess = true;
         this.canSlayPrincess = true;
@@ -4152,6 +4261,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.mirrorPresent = true;
         mainScript.runSection("cabinIntro");
 
@@ -4518,7 +4628,7 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "proceedB", "[Silently proceed to the cabin.]"));
         activeMenu.add(new Option(this.manager, "abort", this.cantTryAbort, "I'm done with this. Bye! [Turn around and leave.]", 0));
 
-        boolean forcedKeepBlade = false;
+        boolean tossBladeAttempt = false;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -4539,7 +4649,7 @@ public class ChapterIII extends StandardCycle {
                 case "cDrop":
                 case "cThrow":
                 case "toss":
-                    forcedKeepBlade = this.cageTossBladeAttempt();
+                    tossBladeAttempt = this.cageTossBladeAttempt();
                     this.canDropBlade = false;
                     this.canThrowBlade = false;
                     break;
@@ -4625,6 +4735,7 @@ public class ChapterIII extends StandardCycle {
         // Approach the mirror, falling into the basement
         this.currentLocation = GameLocation.BASEMENT;
         this.mirrorPresent = false;
+        this.touchedMirror = true;
         mainScript.runSection("approachMirror");
 
         boolean moveAttempt = false;
@@ -4678,6 +4789,8 @@ public class ChapterIII extends StandardCycle {
                             case "cut":
                                 this.repeatActiveMenu = false;
                                 this.cageCutRoute = true;
+                                mainScript.runSection("cut1");
+                                break;
 
                             default: this.giveDefaultFailResponse();
                         }
@@ -4702,23 +4815,134 @@ public class ChapterIII extends StandardCycle {
 
         mainScript.runConditionalSection("encounterStart", moveAttempt);
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "help", "(Explore) \"What is your problem with me? I've only ever tried to help you.\""));
+        activeMenu.add(new Option(this.manager, "fix", "(Explore) \"Let me down! Killing me isn't going to fix anything.\""));
+        activeMenu.add(new Option(this.manager, "noBlade", "(Explore) \"Look, I didn't even bring a knife. I just wanted to talk to you.\"", !this.hasBlade));
+        activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What... happened to you?\""));
+        activeMenu.add(new Option(this.manager, "head", "(Explore) \"You cut your own head off last time. You can't be mad at me about that!\""));
+        activeMenu.add(new Option(this.manager, "cutFail", "(Explore) [Attempt to cut yourself free.]", this.hasBlade && !this.cageCutRoute));
+        activeMenu.add(new Option(this.manager, "swing", "(Explore) [Swing your blade.]"));
+        activeMenu.add(new Option(this.manager, "cutCont", "(Explore) [Keep cutting.]", this.cageCutRoute));
+        activeMenu.add(new Option(this.manager, "silent", "(Explore) [Remain silent.]"));
 
+        boolean helpMentioned = false;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "help":
+                    helpMentioned = true;
+                case "fix":
+                case "happened":
+                case "head":
+                    this.repeatActiveMenu = false;
+                    this.cageCutRoute = false;
+                    mainScript.runSection(activeOutcome + "Menu1");
+                    break;
 
+                case "noBlade":
+                    this.repeatActiveMenu = false;
+                    this.cageNoBladeMentioned = true;
+                    mainScript.runSection("noBladeMenu1");
+                    break;
 
+                case "cutFail":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("cutFailMenu1");
+                    break;
 
+                case "cSlayPrincess":
+                case "swing":
+                    this.repeatActiveMenu = false;
+                    this.cageCutRoute = false;
+                    mainScript.runSection("swingMenu1");
+                    break;
 
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+                case "cutCont":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("cut2");
+                    break;
 
-        // PLACEHOLDER
-        return null;
+                case "silent":
+                    this.repeatActiveMenu = false;
+                    this.cageCutRoute = false;
+                    mainScript.runSection("silentMenu1");
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        this.canDropBlade = true;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "cut", "[Cut yourself free.]", this.cageCutRoute));
+        activeMenu.add(new Option(this.manager, "none", "(Explore) \"None of this is my fault. I haven't done anything to you except give you my weapon, twice.\""));
+        activeMenu.add(new Option(this.manager, "body", "(Explore) \"'She?' Are you talking about your body as if it's a separate person? It's you.\""));
+        activeMenu.add(new Option(this.manager, "help", "(Explore) \"Nothing that's happened to you is my fault. Again, I keep trying to help you.\"", helpMentioned));
+        activeMenu.add(new Option(this.manager, "watcher", "(Explore) \"What do you mean, you're just a watcher? You cut your own head off last time. You made that decision.\""));
+        activeMenu.add(new Option(this.manager, "choices", "(Explore) \"You've made choices. And you've never stopped. You're choosing violence right now.\""));
+        activeMenu.add(new Option(this.manager, "drop", "(Explore) [Drop the blade.]", this.hasBlade));
+        activeMenu.add(new Option(this.manager, "silent", "(Explore) [Say nothing.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cut":
+                    mainScript.runSection("cut3");
+                    this.cageSlay();
+                    return ChapterEnding.RIDDLEOFSTEEL;
+
+                case "none":
+                case "body":
+                case "help":
+                case "watcher":
+                case "choices":
+                case "silent":
+                    this.repeatActiveMenu = false;
+                    this.cageCutRoute = false;
+                    mainScript.runSection(activeOutcome + "Menu2");
+                    break;
+
+                case "cDrop":
+                case "drop":
+                    this.repeatActiveMenu = false;
+                    this.hasBlade = false;
+                    this.cageCutRoute = false;
+                    mainScript.runSection("dropMenu2");
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        if (this.threwBlade) return this.cageEmpty();
+
+        this.hasBlade = false;
+        this.canDropBlade = false;
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "forced", "(Explore) \"I didn't want to take the knife with me. I was *forced* to.\"", tossBladeAttempt && this.hasBlade));
+        activeMenu.add(new Option(this.manager, "setup", "(Explore) \"You're setting me up to fail. I can't make real choices strung up like this, and you're refusing to make any choices at all.\""));
+        activeMenu.add(new Option(this.manager, "will", "(Explore) \"Us choosing the same moves every time we play isn't an indictment of anyone's free will. It's just how things happened to play out. I could have thrown away that knife in the woods if I wanted to. But I chose to come here with it.\"", !tossBladeAttempt));
+        activeMenu.add(new Option(this.manager, "supposed", "(Explore) \"What was I supposed to have done? Did you want me to carry your severed head out of the cabin with me? I thought you were *dead.*\""));
+        activeMenu.add(new Option(this.manager, "beg", "(Explore) \"Please. Just stop walking forward. I'm going to die if you don't stop.\""));
+        activeMenu.add(new Option(this.manager, "silent", "(Explore) [Say nothing.]"));
+
+        // You are decapitated
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "Menu3");
+        this.removeVoice(Voice.NARRATOR);
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "ripped", "\"I didn't let go. You ripped my head off.\""));
+        activeMenu.add(new Option(this.manager, "do", "\"What are we supposed to do now?\""));
+        activeMenu.add(new Option(this.manager, "pattern", "\"You didn't cut yourself free. My body is still the one with the knife. Doesn't that mean this is different? Doesn't that mean I broke your pattern?\""));
+        activeMenu.add(new Option(this.manager, "head", "\"This isn't nicer! I'm a severed head.\""));
+        activeMenu.add(new Option(this.manager, "guess", "\"I thought that would be the end of me. I guess this isn't so bad.\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "Decapitate");
+        return ChapterEnding.NOEXIT;
     }
 
     /**
@@ -4777,6 +5001,99 @@ public class ChapterIII extends StandardCycle {
             mainScript.runSection("tossBlade");
             return false;
         }
+    }
+
+    /**
+     * The player is given the chance to free the Cage after tossing the blade in the woods
+     * @return the ending reached by the player
+     */
+    private ChapterEnding cageEmpty() {
+        mainScript.runConditionalSection("emptyStart", this.cageNoBladeMentioned);
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "where", "\"Yeah, is that right? I bring you the knife? Where do you think it is?\""));
+        activeMenu.add(new Option(this.manager, "already", "\"You clearly weren't listening to me earlier, because I already told you I threw away that knife. I ditched it before I even got to the cabin.\"", this.cageNoBladeMentioned));
+        activeMenu.add(new Option(this.manager, "chose", "\"There's no grand scheme guiding us along a predetermined path. We're both agents of chaos who make our own choices. And this time, I chose to talk to you. Unarmed.\""));
+        activeMenu.add(new Option(this.manager, "pattern", "\"Your pattern's broken. I'm unarmed.\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Silently wave your empty hands.]"));
+
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "EmptyStart");
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "you", "\"You've been the one listening to me. You made yourself stop. And now you can decide to finally let me down.\""));
+        activeMenu.add(new Option(this.manager, "guard", "\"What do you actually want? The only way we can get out of here is if you drop your guard. Just like I did.\""));
+        activeMenu.add(new Option(this.manager, "know", "\"I think you know what it's supposed to mean.\""));
+        activeMenu.add(new Option(this.manager, "talk", "\"Well? Are you ready to talk?\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "EmptyCont");
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "take", "[Take your Princess from her cage.]"));
+        parser.promptOptionsMenu(activeMenu);
+
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "take", "[Take hold of the chain.]"));
+        parser.promptOptionsMenu(activeMenu);
+        
+        mainScript.runSection();
+
+        this.currentLocation = GameLocation.CABIN;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "will", "(Explore) \"You know, it's funny. All of this talk about free will, and I feel like I'm locked into this outcome.\""));
+        activeMenu.add(new Option(this.manager, "leave", "[Step into your freedom.]"));
+        activeMenu.add(new Option(this.manager, "drop", "[Drop her.]", activeMenu.get("will")));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "will":
+                    mainScript.runSection("willExploreEmpty");
+                    break;
+
+                case "cGoHill":
+                case "leave":
+                    mainScript.runSection("freeEnd");
+                    return ChapterEnding.ALLEGORYOFCAGE;
+
+                case "drop":
+                    mainScript.runSection("willEnd");
+                    return ChapterEnding.FREEWILL;
+
+                default: mainScript.runSection("emptyEndDefault");
+            }
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * The player cuts themselves free from the chains and slays the Cage
+     */
+    private void cageSlay() {
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "fakeA", true, "The pieces fall into place."));
+        activeMenu.add(new Option(this.manager, "fakeB", true, "For every permutation, there is a pattern."));
+        activeMenu.add(new Option(this.manager, "fakeC", true, "And when the pattern is learned, the illusion dissolves."));
+        activeMenu.add(new Option(this.manager, "fakeD", true, "But was the pattern always there, or were you the ones who wrote it in the sand?"));
+        activeMenu.add(new Option(this.manager, "fakeE", true, "The writers must follow their own script."));
+        activeMenu.add(new Option(this.manager, "give", "[Give her your implement.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "give":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Give her your implement
+        mainScript.runSection();
     }
 
 
@@ -4876,6 +5193,7 @@ public class ChapterIII extends StandardCycle {
 
         // Enter the cabin
         this.currentLocation = GameLocation.CABIN;
+        this.knowsBlade = true;
         this.mirrorPresent = true;
         mainScript.runSourceSection("Cabin");
 

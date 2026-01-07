@@ -242,23 +242,6 @@ n But you are met with only silence, save for the creaks and groans of metal as 
         para Well, maybe wishful thinking is what we need! Maybe they're real but maybe... maybe we can cut through them! /// checkvoice
         hero It's worth a try. /// checkvoice-para
 
-label cutStart
-n You clumsily rotate the blade in your palm, pressing it against the chains lodged in your wrist.
-para And it slices through them, right? ... Right?
-hero Y-yeah, what he said. It slices through!
-skeptic Now hold on. Let's not rush to conclusions. How would that *ever* work?
-para It just... does?
-n It doesn't.
-para Maybe the only reason it isn't working is because SOMEONE doesn't believe we can do it!
-skeptic They're metal chains, and nothing we've done has worked so far. Maybe if you gave me a *good reason* to believe we should try again, I'd believe it was worth trying again. But until then, I'm going to believe our *eyes.* This isn't getting us anywhere.
-para Erm... you should believe it because you... sh-should! We don't have anything better to do!
-hero Um, um... maybe they're... rusty! He... did say they were rusty, didn't He?
-skeptic He did, didn't He? All right, I'm game. We cut again.
-n You bring your blade against the chains again, and this time you manage to cut into the metal. Its hook remains embedded in your flesh, but your arm falls from the mass of chains, free from the Princess's bindings.
-hero *Yes!* Will you look at that.
-skeptic That... worked?
-para And why shouldn't the rest be the same, then?
-
 label attackAttempt
 skeptic What? But she's so far away.
 n And you're bound. You do your best to swing your blade arm towards the Princess. But, unsurprisingly, the act gets you nowhere.
@@ -281,6 +264,401 @@ n The head stares up at you, but says nothing. And the chains squeeze ever tight
             broken What good would it do us`? We should have gotten rid of it`. She'll never trust us now`, not after everything we've done. /// checkvoice hasblade
         broken It's not too late`. You threw away that blade for a reason`. Now talk to her. /// checkvoice
     para Just keep going. She's a head in a cage! We're not going to be able to talk our way out of this! The only thing we can do is keep sawing our way to freedom! /// cutroute
+
+label helpMenu1
+p What makes you think I have a problem with you`? Because I'm a head in a cage`? Don't be silly`. That's what I've always been.
+p It's not like you're any different.
+jumpto menu1Join
+
+label fixMenu1
+p In another life I would have said it was cute that you think I have a say here`. I don't have a say`. Neither do you`. You of all people should know that.
+jumpto menu1Join
+
+label noBladeMenu1
+p You're pleading with me as if I have a say over anything that happens here`. Shouldn't you know by now that I don't?
+p And neither do you.
+jumpto menu1Join
+
+label happenedMenu1
+p Nothing happened`. I think I've always been like this`. Outside of everything`. A helpless observer to the things that are done to me.
+p The only difference is that my eyes are finally open.
+jumpto menu1Join
+
+label headMenu1
+p Mad at you`? I'm not mad at you`. I know you didn't have anything to do with that`. Not outside of your designated role, of course.
+jumpto menu1Join
+
+label cutFailMenu1
+n You try to move your arm, but the hooks buried deep in your wrist and elbow keep you firmly, painfully, in place. You do your best to rotate the knife in your palm, but it only clinks against the metal chain, unable to so much as leave a scratch.
+jumpto menu1Join
+
+label swingMenu1
+n You try to move your arm, but do little more than rotate the hook planted firmly in your wrist. It is an excruciating and fruitless attempt, which the Princess doesn't so much as acknowledge.
+jumpto menu1Join
+
+label silentMenu1
+hero Are -- you *sure* we don't want to say anything...?!
+skeptic No, that's great! It's smart. We can't THINK our way out of this if we're talking.
+    cheated Yeah, because *thinking* our way out of things has worked for us. *Ever.* /// checkvoice
+    broken Thinking just closes us off`. We can't get out of here alone`, and she can't read our mind. /// checkvoice
+    para We're just wasting time! She has the complete upper hand, and we're just letting ourselves DANGLE here until she's DONE with us! Then what do you think will happen? Do you want to *die again?!* /// checkvoice
+        skeptic QUIET! You're *not helping.* I can DO this, I just need to *concentrate.* /// checkvoice-para
+jumpto menu1Join
+
+label menu1Join
+n The body takes another step towards you, the chains around you tightening, the hooks boring deeper into your flesh. They constrict dangerously around your throat. You find it harder to breathe.
+p I don't think she's happy you're here`. But what do I know`? I'm just a set of eyes and ears`. I don't make choices`. At least not any that matter.
+    cheated Oh, well isn't that just *convenient.* /// checkvoice
+        skeptic It makes sense to me. She's a severed head. What control could she possibly have over her body? There's no connections, no nerves. ... Huh. So bodies can work on their own. /// checkvoice-cheated
+        cheated You know, I wouldn't *mind* that actually. *Maybe* when the chain pops our *useless head off,* we'll get to run around without it! /// checkvoice
+    broken The poor thing... she thinks it's easier to be detached`. But buried pain is still pain`, whether she knows it or not. /// checkvoice
+    para She won't kill us if we just... K-KEEP CUTTING! We just have to get our neck free! /// cutroute
+    hero I don't want to die like this! I *don't want to die like this!* Somebody *do something* before she kills us! ... *Please!* /// checkvoice-para nocut
+        para We're *stuck* here! What are any of us supposed to do?! *Reason* with her? I don't think she's acting rationally! I think she's lost it! /// checkvoice nocut
+    n This was all doomed from the start, wasn't it? /// nocut
+
+label noneMenu2
+n And when the time comes, you'll 'give it to me' again`, and then she'll do something horrible with it`. I wonder what it'll be this time.
+jumpto menu2Join
+
+label bodyMenu2
+p That's what I used to think`, but time alone has taught me the truth`. I'm not my body`. I'm just the thing that watches it.
+p There's so much pain that comes from tricking yourself into thinking you have a choice`. But none of us have choices`. And knowing that has made me feel so`.`.`. free.
+jumpto menu2Join
+
+label helpMenu2
+p And where has all that trying gotten us`? I'm still here`. And now I'm a head`, dragged along by a tired body`. And you're just as stuck as I am.
+jumpto menu2Join
+
+label watcherMenu2
+p What's the point of making a choice if it all ends the same way`? I'm still stuck, and you're just as stuck as I am.
+jumpto menu2Join
+
+label choicesMenu2
+p You're not looking at things right`. Your eyes are fixed on the distraction`, instead of on the hand working the illusion.
+skeptic I see... you know, maybe she's on to something. Maybe being a head means you can really focus on figuring out the *truth.*
+n Oh, don't you start!
+jumpto menu2Join
+
+label dropMenu2
+p You're a step ahead of me`. That means you finally get it`. I'm happy for you`. I really am.
+jumpto menu2Join
+
+label silentMenu2
+p Silence`. Then maybe you finally get it.
+jumpto menu2Join
+
+label menu2Join
+p Everything we witness is just another shade of the same, endless cycle`. I wake up in chains.
+    n The body steps forward. Your bindings tighten again, but you've almost sawn through the first layer of links. /// cutroute
+    n The body steps forward. Your bindings tighten again. /// nocut
+p You come to me, knife in hand.
+    break /// threwblade
+    n The body steps forward as the first links break, but the pressure on your neck is becoming unbearable. /// cutroute
+        para Come on, come on, come on...! /// cutroute
+    n The body steps forward. The pressure on your limbs is becoming unbearable. /// nocut
+p You give me your implement.
+    jumpto cutFree /// cutroute
+    n The pressure is finally too much. Your fist unfolds as your joints swell with trapped blood, and your pristine blade tumbles helplessly to the ground. /// hasblade
+    p See`? You already did that one. /// noblade
+        n You begin to black out. /// noblade
+p I cut myself 'free.'
+    cheated Hehe -- hehehehehehe! Hehe -- heh... well, at least she gets it! This whole damn thing's a pile of flaming bullshit and there's nothing we can do to put it out! /// checkvoice
+    broken She's right`. We're trapped in a cycle`. And I think it's too late for us to get out. /// checkvoice
+    para Hahahahahaha... she's not insane, is she! No, she's... she's just *right!* It's all... it's all been the *same!* Haha -- ha -- h -- the whole time, it's all been the *same.* We *never* had a say! /// checkvoice
+
+label forcedMenu3
+p So you understand exactly how unfair this all is`. Give in with me`. None of this is up to us.
+jumpto decapitateStart
+
+label setupMenu3
+p You're just starting to see the walls`. And you don't have to struggle against something inevitable`. You can give in with me`. None of this is up to us.
+jumpto decapitateStart
+
+label willMenu3
+p Just because you refuse to see the walls doesn't mean they aren't there`. Give in with me`. It's so much easier to let the world happen to you.
+jumpto decapitateStart
+
+label supposedMenu3
+p That is what I wanted`, but you didn't do it`. And I don't think you could have done it`. The walls are what the walls are`. So give in with me`. None of this is up to us.
+jumpto decapitateStart
+
+label begMenu3
+p We're both going to die`. And dying won't stop us from doing this again`. And again`. And again.
+label silentMenu3
+p It would be so much easier if you just gave in with me.
+jumpto decapitateStart
+
+// You are decapitated //
+
+label decapitateStart
+n She steps forward yet again. And the chains dig into you, your nerves screaming, your heart pounding, your lungs desperate for air.
+hero I don't... think we can hold on to you much longer.
+    cheated Like I said, the girl's right. This whole thing is *rigged.* /// checkvoice
+    broken I think we're about to break... /// checkvoice
+    para How many... times will we have to do this`? I'm`.`.`. *tired.* /// checkvoice
+p This is all getting so predictable`, isn't it`? Pop. /// interrupt
+pause 500
+linebreak
+truth You're falling, the world is spinning. And then you hit the ground, your body light in a way that is sickeningly wrong, and roll to a stop. The sound of rattling chains and a heavy thud as the rest of what was once you falls to the ground somewhere nearby.
+truth You are unable to take action, unable to defend yourself, unable to even look around as the Princess's body steps towards you, one slow, rhythmic step after another.
+truth It stoops down to pick you up and then --
+truth A shadow rises behind the body, blade glinting.
+p And now`, the cut.
+linebreak
+truth It strikes, and it strikes true, and the body drops its cage in pain.
+truth They descend on each other in a maelstrom of chains and hooks and feathers and blood, fighting their way deeper into the shadows until all you're left to witness are the sounds of violence.
+p See`? You only ever *thought* you were in control`. Isn't it so much nicer to let go?
+
+label rippedDecapitate
+p My *body* ripped your body's head off`. *I* didn't have anything to do with it.
+p You get it`. It's not like you're responsible for what your body is doing to mine now`. You and I just watch`. Like we've been doing since the beginning.
+jumpto decapitateEnd
+
+label doDecapitate
+p We watch`. Just like we've been doing since the beginning.
+jumpto decapitateEnd
+
+label patternDecapitate
+p Huh`. I guess you're right`. Pattern must be wrong then.
+p Maybe if we keep watching, we'll figure it out`. And we've got nothing else to do but watch.
+jumpto decapitateEnd
+
+label headDecapitate
+p And what's wrong with that`? It's really not that different from how it's always been`. Just watching things play out`. It's who we are`. Only now`, we can be honest with ourselves.
+jumpto decapitateEnd
+
+label guessDecapitate
+p I told you`. It really isn't`. And now nothing's stopping you from enjoying the show.
+jumpto decapitateEnd
+
+label silentDecapitate
+truth You say nothing, and the Princess smiles with a knowing silence.
+jumpto decapitateEnd
+
+// "No Exit" ending; claim the Cage //
+label decapitateEnd
+truth And so you and the Princess watch as your bodies weave in and out of the shadows, performing their lethal dance.
+p Look at us go`. Aren't we beautiful?
+truth The movement is gorgeous, primal, uninhibited. Steel crashing against steel and flesh rolling off of flesh.
+p It's all going to come to a head soon.
+p ...
+p Hah`. Head.
+truth And at last, the climax plays out. Your body, wreathed in chains and shadows, makes its final move, but so does hers. Chain shatters spine and blade pierces heart.
+p I guess I'll see you next time.
+quietcreep
+truth Both hers and yours collapse, their dance complete.
+truth Blood drips from the Princess's mouth, and she coughs.
+p It's cold`, but that's always been us, hasn't it`? Cold isn't bad.
+claim sharedEnd
+
+label sharedEndFirstVessel
+truth You do not get the chance to respond. Something has ripped her from you, and it's left something else in her place.
+
+label sharedEndNotFirstVessel
+truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+label approachEnd
+truth You approach the mirror.
+
+// Toss the blade in the woods and free her //
+
+label emptyStart
+    hero But... that's not right. We didn't bring the knife, we even told her that earlier! /// check
+    hero But that's not... right. We didn't bring the knife. /// checkfalse
+
+label whereEmptyStart
+p It's obviously right in your...
+p It's gone, isn't it`? But that's not right.
+jumpto emptyStartJoin
+
+label alreadyEmptyStart
+p Oh`. Yeah`. You did say that.
+jumpto emptyStartJoin
+
+label choseEmptyStart
+label patternEmptyStart
+p But that's not right`. That's not the reality I've been looking at.
+p You shouldn't... have been able to do that.
+jumpto emptyStartJoin
+
+label silentEmptyStart
+p No knife`. But that's... not right.
+jumpto emptyStartJoin
+
+label emptyStartJoin
+n The body marching towards you comes to a lurching stop.
+p Huh`. She stopped`. What is that supposed to mean?
+
+label youEmptyCont
+label guardEmptyCont
+p You make it sound so easy`, but it can't... be that easy`. Not after all that... violent repetition.
+jumpto emptyContJoin
+
+label knowEmptyCont
+p What`? Like the answer's obvious`? Like it's staring me right in the face`? Just like you?
+jumpto emptyContJoin
+
+label talkEmptyCont
+p And is talking supposed to fix our problems`? Is talking supposed to end all the violent repetition?
+jumpto emptyContJoin
+
+label silentEmptyCont
+p You're staring at me like the answer is self-evident`. But it *can't* be`. Not after all that violent repetition.
+jumpto emptyContJoin
+
+label emptyContJoin
+p *Oh.*
+linebreak
+n Suddenly, the chains loosen, the hooks sliding from your skin. You come crashing to the floor. And as the chains rain down around you, her body falls, too.
+n The room settles into comforting silence. No more rattling of chains, no more slow, deliberate footsteps from the Princess's body. Only the soft click of the latch as it opens the door of the cage.
+p So that's... really all it took?
+    skeptic The truth was right there the whole time. We just needed to believe we were better than this. I feel like a fool, really, but it's... always the most *complicated* problems that tend to have the simplest solutions. /// checkvoice-cheated
+    skeptic The truth was right there the whole time. We just needed to believe we were *better* than this. But`.`.`. that can't be it! It's supposed to be more *complicated* than that! /// checkvoice-broken
+        broken I've been *telling you that* since the moment we got here`. At least you finally decided to listen to me. /// checkvoice
+        skeptic I... guess you were right. It's usually the most complicated problems that have the simplest solutions. /// checkvoice-broken
+n That is absolutely *not* how this works!
+skeptic Looks like we've seen through your lies at last, *Mr. The Narrator.* If that even is your real name.
+    cheated Oh, *shut up.* We got lucky. And you *especially* got lucky. /// checkvoice
+        hero *Both of you* talk too much. Give her a chance to say what she wants to say. I'm *sick* of treating this like some puzzle or bullshit game. /// checkvoice-cheated
+    broken Shhh. Hush`. Let her talk. /// checkvoice
+p I want you to take me out of this place`. That's all I've *ever* wanted.
+n The Princess's body doesn't stand, instead holding the cage aloft, beckoning you to come near. If you take her out of there, if you carry her to freedom, it's the *end of the entire world.* You know that, right?
+    cheated Fine by me! This world is bullshit anyways. The rest of us will find one that's better. /// checkvoice
+    broken It's the end of *a* world. Your world. But not ours. Sometimes you need to break things to build something better. /// checkvoice
+hero Besides, we already made our choice, all the way back in the woods. Nothing *you* can do about it now.
+n I suppose not. You know, I think a part of me always knew this was doomed from the start. I'm narrating on borrowed time, aren't I?
+n But even if I'm doomed to go, I might as well make sure you have a *proper ending.* Go on, then.
+
+n You cautiously approach the kneeling body, and extend your hand, bruised and bleeding from the trials that brought you to this point.
+n And then you take her from her prison. She looks up at you, and for the first time since you laid eyes on her, she smiles. Warmly.
+p I have... no idea how we're supposed to leave.
+n But the body points, and you follow its finger to a lone chain dangling from the doorway that sits far, far above you.
+    cheated Are we supposed to climb up? While *holding* her? /// checkvoice
+p I'll pull us out of here`, if you just hold on.
+    broken Then let's leave`. There's nothing left for us here. /// checkvoice
+skeptic I'm game.
+hero So am I.
+n Then... get on with it.
+
+n You wrap your hand in the chain, holding tight as it starts to move, and... holding the Princess close to you. Together`, you rise out of the pit.
+p I'm sorry... if I made this harder than it had to be.
+n You glance back towards the Princess's body, doing its part as it hoists you up. It grows smaller, and smaller, slowly disappearing back into the shadows of the basement.
+p No, that's -- not right`. There shouldn't be an if`. I'm sorry`. I made this harder than it had to be.
+skeptic Maybe she has a point, in a way. Our bodies don't matter.
+p We're almost there`. I can smell the night air.
+    cheated That bit of light feels like it's *mocking* us. At any moment, she could just drop the whole thing and send us *crashing down.* /// checkvoice
+        hero I don't think that's gonna happen, mate. /// checkvoice-cheated
+        cheated It'd be par for the course. /// checkvoice
+    broken She's sacrificed a lot to get here`. More than we did`, I think. /// checkvoice
+n And then the chain stops its ascent, depositing you safely in the cabin doorway. I guess you never closed it behind you. Well, there's only one thing left for you to do.
+p Shall we?
+
+label willExploreEmpty
+p I mean, what's the alternative`? Dropping me to prove a point?
+n Huh. I... hadn't even considered that. Should it be an option? *Can* it be an option?
+    broken No`. It's *not* an option`. We're not cruel for the sake of being cruel. /// checkvoice
+p I'm joking, by the way`. ... Please don't drop me.
+    cheated I mean`.`.`. we *could...* /// checkvoice
+        hero Hell. No. Don't you even joke. /// checkvoice-cheated
+        cheated Who's joking? But fine, I see I'm outnumbered, as usual. Have it your way. /// checkvoice
+skeptic It would certainly be a new data point...
+n It probably wouldn't work anyways. It'd make that perfectly good *blade* you threw out *completely* meaningless.
+
+label emptyEndDefault
+n *Sigh.* You have no other choice.
+
+// Leave the cabin with her //
+
+label freeEnd
+n And so you step into a world ended by your hand. What a travesty. Goodbye. It's been...
+hero ... Awful? Is He still there?
+skeptic I think He's gone.
+    cheated Ha. Haha. Hahahahahaha! We did it! That wasn't so bad! ... Now I -- I guess we'll need to find a *new* game to play. /// checkvoice
+    broken Yes. He is. Which means we're finally free, I think. /// checkvoice
+quietcreep
+p Thank you`, *so much.`* I didn't think this was possible`. But here we are.
+p It's a little cold out here`, isn't it?
+claim sharedEnd
+
+// Drop her head into the basement //
+
+label willEnd
+    broken No... no, you *can't!* /// checkvoice
+n Hah! Well. I'll be damned. Did I just... will that option into existence?
+hero After everything?!
+    cheated Ha. So... this is what it's like to dish it out. It, uh... feels bad. That's not how I thought it would feel. /// checkvoice
+skeptic You sure kept your cards close to your chest. Smartly played. We haven't seen what happens if -- *we're* the ones that beat her. But we'll... see what happens now.
+    broken We're a monster`, aren't we`? Maybe we always have been. /// checkvoice
+n Well, no time for taking it back, it's done! You let go of the Princess's head, and watch as she *plunges* into the abyss. I can't believe I was all doom-and-gloom just a moment ago. Congratulations! You might just have saved the entire world...
+quietcreep
+p All of that, just to take it all away`. You're cold.
+claim willEnd
+
+label willEndFirstVessel
+truth As she plummets, the Princess is taken. And something else is left in her place.
+
+label willEndNotFirstVessel
+truth As she plummets, the Princess is taken from you. It's time to leave. Memory returns.
+
+// Cut yourself free //
+
+label cut1
+n You clumsily rotate the blade in your palm, pressing it against the chains lodged in your wrist.
+para And it slices through them, right? ... Right?
+hero Y-yeah, what he said. It slices through!
+skeptic Now hold on. Let's not rush to conclusions. How would that *ever* work?
+para It just... does?
+n It doesn't.
+para Maybe the only reason it isn't working is because SOMEONE doesn't believe we can do it!
+skeptic They're metal chains, and nothing we've done has worked so far. Maybe if you gave me a *good reason* to believe we should try again, I'd believe it was worth trying again. But until then, I'm going to believe our *eyes.* This isn't getting us anywhere.
+para Erm... you should believe it because you... sh-should! We don't have anything better to do!
+hero Um, um... maybe they're... rusty! He... did say they were rusty, didn't He?
+skeptic He did, didn't He? All right, I'm game. We cut again.
+n You bring your blade against the chains again, and this time you manage to cut into the metal. Its hook remains embedded in your flesh, but your arm falls from the mass of chains, free from the Princess's bindings.
+hero *Yes!* Will you look at that.
+skeptic That... worked?
+para And why shouldn't the rest be the same, then?
+
+label cut2
+para Yes! The links are weak. They can't handle the strain! I-isn't that right?
+n You know, it's rather annoying for you to dictate what I'm going to say next.
+skeptic But *is* that what happens? Do the links break?
+n Yes. Luckily for you, they were too thoroughly rusted to hold much longer. Your other arm breaks free.
+jumpto menu1Join
+
+label cut3
+n You continue your efforts, furiously working to sever the chain strangling your neck.
+p Look at you scurry`. As if anything you do is going to change the outcome`. Don't you get it`? This is all the same.
+jumpto menu2Join
+
+label cutFree
+n As the words leave her mouth, your blade slices through the final chains. You come crashing down.
+hero Well, at least we're not being *strangled* anymore.
+skeptic Hold on... did you hear what she said? We... "give her our implement."
+hero Yeah? What of it?
+skeptic This whole thing's been a RIDDLE! Blade! Heart! NOW!
+
+n Blade flashing, you rush towards the Princess.
+n Her body continues its slow march towards you, never changing course even as you sink your weapon into its heart.
+n Its... hand wraps around yours, its flesh cold and its grip firm. But it does not try to wrench itself free. It instead... drives the blade *deeper* into its own chest.
+p I cut myself free.
+n The body collapses to its knees. And as it crumples, life seeming to leave it at last, the door of the cage creaks open. The head of the Princess tumbles out.
+n Congratulations! It would seem that you *actually* managed to see this through. All that's left is to watch her perish...
+quietcreep
+p This... is different`. Maybe I got the pattern wrong`. Or maybe... I finally got it right.
+skeptic We... we did it. We figured it out. We won.
+skeptic Why... don't I feel like it means anything?
+hero I just feel... bad. It's... not much of a victory, is it?
+para I don't think there *is* such a thing for us`. At least... not here`. This was just another trap. Hahahahaha... no matter what we do`, we just... keep losing ground.
+p I'm cold`. But I think that's good`. I think I can finally rest.
+claim slayEnd
+
+label slayEndFirstVessel
+truth You do not get the chance to respond. Something has taken her away, and it's left something else in her place.
+
+label slayEndNotFirstVessel
+truth You do not get the chance to respond. Nor will you ever. It's time to leave. Memory returns.
 
 // Abort the vessel //
 

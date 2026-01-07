@@ -781,10 +781,16 @@ public abstract class Cycle {
      */
     protected void giveDefaultFailResponse(String outcome) {
         switch (outcome) {
-            case "cMeta":
-                break;
+            case "cMeta": break;
+
 
             case "cGoFail":
+            case "cGoLeave":
+            case "cGoPath":
+            case "cGoHill":
+            case "cGoCabin":
+            case "cGoStairs":
+            case "cGoBasement":
             case "cProceed":
                 parser.printDialogueLine(new DialogueLine("You cannot go that way now."));                
                 break;
@@ -797,11 +803,13 @@ public abstract class Cycle {
                 parser.printDialogueLine(new DialogueLine("You cannot leave a place you are not in."));
                 break;
 
+
             case "cApproachAtMirrorFail":
                 parser.printDialogueLine(new DialogueLine("You are already at the mirror."));
                 break;
 
             case "cApproachMirrorFail":
+            case "cApproachMirror":
                 parser.printDialogueLine(new DialogueLine("There is no mirror."));
                 break;
 
@@ -813,7 +821,7 @@ public abstract class Cycle {
                 }
 
                 break;
-                
+
 
             case "cSlayNoPrincessFail":
                 parser.printDialogueLine(new DialogueLine("The Princess is not here."));
@@ -824,6 +832,7 @@ public abstract class Cycle {
                 break;
 
             case "cSlayPrincessFail":
+            case "cSlayPrincess":
                 parser.printDialogueLine(new DialogueLine("You cannot attempt to slay her now."));
                 break;
 
@@ -832,6 +841,7 @@ public abstract class Cycle {
                 break;
 
             case "cSlaySelfFail":
+            case "cSlaySelf":
                 parser.printDialogueLine(new DialogueLine("You cannot slay yourself now."));
                 break;
                 
@@ -853,6 +863,7 @@ public abstract class Cycle {
                 break;
 
             case "cDropFail":
+            case "cDrop":
                 parser.printDialogueLine(new DialogueLine("You cannot drop the blade now."));
                 break;
 
@@ -861,11 +872,12 @@ public abstract class Cycle {
                 break;
                 
             case "cThrowFail":
+            case "cThrow":
                 parser.printDialogueLine(new DialogueLine("You cannot throw the blade now."));
                 break;
 
-            default:
-                parser.printDialogueLine("You have no other choice.");
+
+            default: this.giveDefaultFailResponse();
         }
     }
 

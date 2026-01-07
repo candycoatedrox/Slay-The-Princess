@@ -1,0 +1,69 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Abort the vessel //
+
+label abort
+
+
+
+
+
+
+
+
+// Default fail responses //
+
+label defaultResponseGoHarsh
+
+label defaultResponseGoSoft
+
+label defaultResponseLeaveHarsh
+
+label defaultResponseLeaveSoft
+
+label defaultResponseApproachMirrorHarsh
+
+label defaultResponseApproachMirrorSoft
+
+label defaultResponseApproachHerHarsh
+
+label defaultResponseApproachHerSoft
+
+label defaultResponseSlayPrincessHarsh
+
+label defaultResponseSlayPrincessSoft
+
+label defaultResponseSlaySelfHarsh
+
+label defaultResponseSlaySelfSoft
+
+label defaultResponseSlaySelfWithDragonHarsh
+
+label defaultResponseSlaySelfWithDragonSoft
+
+label defaultResponseTakeHarsh
+
+label defaultResponseTakeSoft
+
+label defaultResponseTakeWithDragonHarsh
+
+label defaultResponseTakeWithDragonSoft
+
+label defaultResponseDropHarsh
+
+label defaultResponseDropSoft
+
+label defaultResponseThrowHarsh
+
+label defaultResponseThrowSoft
