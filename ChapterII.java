@@ -4089,15 +4089,18 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "nothing", "[Do nothing.]"));
         activeMenu.add(new Option(this.manager, "back", "[Go back the way you came.]"));
 
+        this.canLeftRight = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
+                case "cGoLeft":
                 case "left":
                     this.repeatActiveMenu = false;
                     mainScript.runSection("startLeft");
                     break;
 
+                case "cGoRight":
                 case "right":
                     this.repeatActiveMenu = false;
                     mainScript.runSection("startRight");
@@ -4121,6 +4124,7 @@ public class ChapterII extends StandardCycle {
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
         
         this.withPrincess = true;
+        this.canLeftRight = false;
         mainScript.runSection("encounterStart");
 
         boolean turnOffComment = false;
@@ -5523,6 +5527,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "slayYap", this.cantJoint3, "\"I'd like to be straightforward with my intentions. I didn't care for how you treated me last time, and I think you might be a danger to the world. I'm going to attack you now.\" [Slay the Princess.]", 0, this.hasBlade));
         activeMenu.add(new Option(this.manager, "slaySilent", this.cantJoint3, "[Slay the Princess.]", 0, this.hasBlade));
 
+        this.canGiveBlade = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -5571,7 +5576,9 @@ public class ChapterII extends StandardCycle {
                 case "stairs":
                     return this.witchStairs();
                     
+                case "cGive":
                 case "offer":
+                    this.canGiveBlade = false;
                     if (this.witchGiveBladeStart()) {
                         return this.witchGiveBlade(false);
                     }
@@ -5648,6 +5655,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "implore", "(Explore) \"You're the one who said you can't leave here without me, which means I hold all the cards. Either you go first, or we stay here. Up to you!\"", activeMenu.get("explore"), witchNotFirst));
         activeMenu.add(new Option(this.manager, "silent", "\"[Step onto the stairs.]\""));
 
+        this.canGiveBlade = !this.cantUnique3.check();
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -5656,7 +5664,9 @@ public class ChapterII extends StandardCycle {
                     mainScript.runSection("leaveStartExplore");
                     break;
 
+                case "cGive":
                 case "offer":
+                    this.canGiveBlade = false;
                     if (this.witchGiveBladeStart()) {
                         return this.witchGiveBlade(false);
                     }
@@ -6224,10 +6234,12 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "center", "[Take the center staircase.]"));
         activeMenu.add(new Option(this.manager, "right", "[Take the gentle stairs to the right.]"));
 
+        this.canLeftRight = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
+                case "cGoLeft":
                 case "left":
                     this.repeatActiveMenu = false;
                     firstSchism = "harsh";
@@ -6238,6 +6250,7 @@ public class ChapterII extends StandardCycle {
                     firstSchism = "neutral";
                     break;
                     
+                case "cGoRight":
                 case "right":
                     this.repeatActiveMenu = false;
                     firstSchism = "gentle";
@@ -6257,6 +6270,7 @@ public class ChapterII extends StandardCycle {
 
         this.currentLocation = GameLocation.BASEMENT;
         this.withPrincess = true;
+        this.canLeftRight = false;
         mainScript.runConditionalSection(firstSchism + "Stairs", firstSchism);
 
         String setNewSchism = "";

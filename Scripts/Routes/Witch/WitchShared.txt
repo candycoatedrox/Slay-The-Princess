@@ -526,7 +526,7 @@ oppo You abstain?! She's going to kill us if we give it to her!
 
 label offerBackOut
 n Good.
-p Oh? Have you decided to rescind your "gesture?" I wouldn't trust me with it, either.
+p Oh? Have you decided to rescind your 'gesture?' I wouldn't trust me with it, either.
 
 label offerCommitStairs
 n You're going to get everyone killed. You know that, right? *Sigh.* But of course you do.

@@ -30,10 +30,12 @@ public abstract class Cycle {
     protected boolean knowsBlade = false; // The Narrator knows you know about the blade
     protected boolean withBlade = false; // Determines whether TAKE BLADE works
     protected boolean mirrorPresent = false;
+    protected boolean canLeftRight = false;
     protected boolean canApproachHer = false;
     protected boolean canSlayPrincess = false;
     protected boolean canSlaySelf = false;
     protected boolean canDropBlade = false;
+    protected boolean canGiveBlade = false;
     protected boolean canThrowBlade = false;
 
     // Variables that persist between all chapters
@@ -410,7 +412,7 @@ public abstract class Cycle {
             case "forward":
             case "forwards":
             case "f":
-                switch (this.currentLocation.getForward(this.reverseDirection)) {
+                switch (currentLocation.getForward(this.reverseDirection)) {
                     case LEAVING: return "GoLeave";
                     case PATH: return "GoPath";
                     case HILL: return "GoHill";
@@ -422,7 +424,7 @@ public abstract class Cycle {
                 }
             
             case "forwardTRUE":
-                switch (this.currentLocation.getForward()) {
+                switch (currentLocation.getForward()) {
                     case LEAVING: return "GoLeave";
                     case HILL: return "GoHill";
                     case CABIN: return "GoCabin";
@@ -436,7 +438,7 @@ public abstract class Cycle {
             case "backward":
             case "backwards":
             case "b":
-                switch (this.currentLocation.getBackward(this.reverseDirection)) {
+                switch (currentLocation.getBackward(this.reverseDirection)) {
                     case LEAVING: return "GoLeave";
                     case PATH: return "GoPath";
                     case HILL: return "GoHill";
@@ -448,7 +450,7 @@ public abstract class Cycle {
                 }
                 
             case "backTRUE":
-                switch (this.currentLocation.getBackward()) {
+                switch (currentLocation.getBackward()) {
                     case LEAVING: return "GoLeave";
                     case PATH: return "GoPath";
                     case HILL: return "GoHill";
@@ -460,20 +462,28 @@ public abstract class Cycle {
             case "inside":
             case "in":
             case "i":
-                return (this.currentLocation.canGoInside()) ? this.go("forwardTRUE") : "GoFail";
+                return (currentLocation.canGoInside()) ? this.go("forwardTRUE") : "GoFail";
 
             case "outside":
             case "out":
             case "o":
-                return (this.currentLocation.canGoOutside()) ? this.go("backTRUE") : "GoFail";
+                return (currentLocation.canGoOutside()) ? this.go("backTRUE") : "GoFail";
+
+            case "left":
+            case "l":
+                return (this.canLeftRight) ? "GoLeft" : "GoFail";
+
+            case "right":
+            case "r":
+                return (this.canLeftRight) ? "GoRight" : "GoFail";
 
             case "down":
             case "d":
-                return (this.currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
+                return (currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
 
             case "up":
             case "u":
-                return (this.currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
+                return (currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
 
             case "":
                 if (secondPrompt) {
@@ -692,7 +702,7 @@ public abstract class Cycle {
     /**
      * Attempts to let the player drop the blade
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
-     * @return "cFail" if argument is invalid; "cDropHasBladeFail" if the player already has the blade; "cDropFail" if the player cannot take the blade right now; "cDrop" otherwise
+     * @return "cFail" if argument is invalid; "cDropNoBladeFail" if the player already has the blade; "cDropFail" if the player cannot take the blade right now; "cDrop" otherwise
      */
     public String drop(String argument) {
         return this.drop(argument, false);
@@ -728,6 +738,50 @@ public abstract class Cycle {
 
             default:
                 manager.showCommandHelp(Command.DROP);
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player give the blade to the Princess
+     * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player already has the blade; "cGiveFail" if the player cannot take the blade right now; "cGive" otherwise
+     */
+    public String give(String argument) {
+        if (argument.startsWith("her ")) argument = argument.substring(4);
+        return this.give(argument, false);
+    }
+
+    /**
+     * Attempts to let the player give the blade to the Princess
+     * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveFail" if the player cannot drop the blade right now; "cGive" otherwise
+     */
+    protected String give(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the blade":
+            case "blade":
+            case "pristine blade":
+                if (!this.hasBlade) {
+                    return "GiveNoBladeFail";
+                } else if (!this.canGiveBlade) {
+                    return "GiveFail";
+                } else {
+                    return "Give";
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.GIVE);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to give away?", true);
+                    return this.give(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.GIVE);
                 return "Fail";
         }
     }
@@ -791,6 +845,8 @@ public abstract class Cycle {
             case "cGoCabin":
             case "cGoStairs":
             case "cGoBasement":
+            case "cGoLeft":
+            case "cGoRight":
             case "cProceed":
                 parser.printDialogueLine(new DialogueLine("You cannot go that way now."));                
                 break;
@@ -859,6 +915,8 @@ public abstract class Cycle {
                 break;
 
             case "cDropNoBladeFail":
+            case "cGiveNoBladeFail":
+            case "cThrowNoBladeFail":
                 parser.printDialogueLine(new DialogueLine("You do not have the blade."));
                 break;
 
@@ -867,8 +925,9 @@ public abstract class Cycle {
                 parser.printDialogueLine(new DialogueLine("You cannot drop the blade now."));
                 break;
 
-            case "cThrowNoBladeFail":
-                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+            case "cGiveFail":
+            case "cGive":
+                parser.printDialogueLine(new DialogueLine("You cannot give the blade away now."));
                 break;
                 
             case "cThrowFail":

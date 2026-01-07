@@ -172,6 +172,8 @@ public abstract class StandardCycle extends Cycle {
             case "cGoCabin":
             case "cGoStairs":
             case "cGoBasement":
+            case "cGoLeft":
+            case "cGoRight":
             case "cProceed":
                 parser.printDialogueLine(new VoiceDialogueLine("There's nowhere to go that way."));
                 break;
@@ -271,6 +273,20 @@ public abstract class StandardCycle extends Cycle {
             case "cDropFail":
             case "cDrop":
                 parser.printDialogueLine(new VoiceDialogueLine("You can't drop the blade now. You're here for a reason. Finish the job."));
+                break;
+
+            case "cGiveNoBladeFail":
+                if (this.knowsBlade) {
+                    parser.printDialogueLine(new VoiceDialogueLine("I can't fathom why you would want to give your only weapon to someone who, in case you weren't paying attention, is an *existential threat to the entire world,* but you don't even have it right now."));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("I can't fathom why you would want to give a weapon to someone who, in case you weren't paying attention, is an *existential threat to the entire world,* but you don't even have one right now."));
+                }
+                
+                break;
+
+            case "cGiveFail":
+            case "cGive":
+                parser.printDialogueLine(new VoiceDialogueLine("What? Absolutely not. She's an existential threat to the entire world, you can't just *give her your weapon.*"));
                 break;
 
             case "cThrowNoBladeFail":

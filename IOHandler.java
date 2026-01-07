@@ -444,6 +444,9 @@ public class IOHandler implements Closeable {
             case DROP:
                 commandOutcome += cycle.drop(argument);
                 break;
+            case GIVE:
+                commandOutcome += cycle.give(argument);
+                break;
             case THROW:
                 commandOutcome += cycle.throwBlade(argument);
                 break;
@@ -460,6 +463,8 @@ public class IOHandler implements Closeable {
            - cGoCabin
            - cGoStairs
            - cGoBasement
+           - cGoLeft
+           - cGoRight
            - cGoFail
            - cEnterFail
            - cLeaveFail
@@ -486,6 +491,9 @@ public class IOHandler implements Closeable {
            - cDrop
            - cDropNoBladeFail (you don't even have the blade)
            - cDropFail (can't drop right now)
+           - cGive
+           - cGiveNoBladeFail (you don't even have the blade)
+           - cGiveFail (can't give right now)
            - cThrow
            - cThrowNoBladeFail (you don't even have the blade)
            - cThrowFail (can't throw right now)
@@ -501,6 +509,9 @@ public class IOHandler implements Closeable {
             case "cGoStairs":
             case "cGoBasement":
 
+            case "cGoLeft":
+            case "cGoRight":
+
             case "cProceed":
 
             case "cApproachMirror":
@@ -511,6 +522,7 @@ public class IOHandler implements Closeable {
 
             case "cTake":
             case "cDrop":
+            case "cGive":
             case "cThrow":
 
             case "cGoFail":
@@ -531,6 +543,8 @@ public class IOHandler implements Closeable {
             case "cTakeFail":
             case "cDropNoBladeFail":
             case "cDropFail":
+            case "cGiveFail":
+            case "cGiveNoBladeFail":
             case "cThrowNoBladeFail":
             case "cThrowFail":
                 

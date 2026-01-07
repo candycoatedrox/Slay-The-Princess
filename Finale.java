@@ -214,6 +214,8 @@ public class Finale extends Cycle {
             case "cGoCabin":
             case "cGoStairs":
             case "cGoBasement":
+            case "cGoLeft":
+            case "cGoRight":
             case "cProceed":
                 parser.printDialogueLine(new DialogueLine("There is nowhere for you to go."));                
                 break;
@@ -261,9 +263,9 @@ public class Finale extends Cycle {
             case "cDropNoBladeFail":
             case "cDropFail":
             case "cDrop":
-                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
-                break;
-
+            case "cGiveNoBladeFail":
+            case "cGiveFail":
+            case "cGive":
             case "cThrowNoBladeFail":
             case "cThrowFail":
             case "cThrow":
@@ -299,6 +301,8 @@ public class Finale extends Cycle {
             case "cGoCabin":
             case "cGoStairs":
             case "cGoBasement":
+            case "cGoLeft":
+            case "cGoRight":
             case "cProceed":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
@@ -437,6 +441,7 @@ public class Finale extends Cycle {
                 break;
 
             case "cDropNoBladeFail":
+            case "cGiveNoBladeFail":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -457,7 +462,18 @@ public class Finale extends Cycle {
                 
                 break;
 
-            case "cThrowNoBladeFail":
+            case "cGiveFail":
+            case "cGive":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+                
+                break;
+
+            case "cThrowNoBladeFail": // same Hero line as drop/give but change Contra line
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));

@@ -7,8 +7,8 @@ public enum Command {
     SETTINGS("settings", "View and change settings.", true, ""),
     TOGGLE("toggle", "Toggle a given setting.", true, "warnings", "content warnings", "cws", "trigger warnings", "tws", "now playing", "nowplaying", "np", "music", "soundtrack", "print speed", "printing speed", "dialogue speed", "speed", "slow", "slow print", "slow dialogue", "instant print", "instant dialogue", "auto", "auto advance", "auto-advance", "advance", "auto dialogue"),
     RESET("reset", "Reset achievements.", true, "", "achievements", "gallery", "achievement gallery", "achievements gallery"),
-    GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
-    DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u"),
+    GO("go", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u", "left", "l", "right", "r"),
+    DIRECTGO("", "Move in a given direction.", "forward", "forwards", "f", "back", "backward", "backwards", "b", "inside", "in", "i", "outside", "out", "o", "down", "d", "up", "u", "left", "l", "right", "r"),
     ENTER("enter", "Enter a given location or the nearest appropriate location.", "", "cabin", "basement"),
     LEAVE("leave", "Leave the current location.", "", "cabin", "basement", "woods", "path"),
     PROCEED("proceed", "Press onwards.", ""),
@@ -17,6 +17,7 @@ public enum Command {
     SLAY("slay", "Slay the Princess or yourself.", "the princess", "princess", "self", "yourself", "you", "myself", "me", "ourself", "ourselves", "us"),
     TAKE("take", "Take the blade.", "the blade", "blade", "pristine blade"),
     DROP("drop", "Drop the blade.", "the blade", "blade", "pristine blade"),
+    GIVE("give", "Give the blade away.", "the blade", "blade", "pristine blade"),
     THROW("throw", "Throw the blade out the window.", "the blade", "blade", "pristine blade");
 
     private final String prefix;
@@ -100,6 +101,10 @@ public enum Command {
 
             case TAKE:
                 displayPrefix = "[TAKE / GET]";
+                break;
+
+            case GIVE:
+                displayPrefix = "[GIVE / OFFER]";
                 break;
 
             case THROW:
@@ -198,6 +203,8 @@ public enum Command {
                 s += "  - [GO / WALK] [BACK / BACKWARD / BACKWARDS / B]: Turn back.\n";
                 s += "  - [GO / WALK] [INSIDE / IN / I]: Enter the nearest location, if possible.\n";
                 s += "  - [GO / WALK] [OUTSIDE / OUT / O]: Leave your current location, if possible.\n";
+                s += "  - [GO / WALK] [LEFT / L]: Turn left.\n";
+                s += "  - [GO / WALK] [RIGHT / R]: Turn right.\n";
                 s += "  - [GO / WALK] [DOWN / D]: Descend.\n";
                 s += "  - [GO / WALK] [UP / U]: Ascend.\n";
                 break;
@@ -290,6 +297,16 @@ public enum Command {
                 s += "  - DROP [PRISTINE BLADE / THE BLADE / BLADE]: Drop the blade.\n";
                 break;
 
+            case GIVE:
+                s += "[GIVE / OFFER] [blade]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [blade]: The blade.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - [GIVE / OFFER] [PRISTINE BLADE / THE BLADE / BLADE]: Give the blade away.\n";
+                break;
+
             case THROW:
                 s += "[TOSS / THROW] [blade]\n\n";
 
@@ -356,6 +373,8 @@ public enum Command {
             case "take":
             case "get": return TAKE;
             case "drop": return DROP;
+            case "give":
+            case "offer": return GIVE;
             case "throw":
             case "toss": return THROW;
 

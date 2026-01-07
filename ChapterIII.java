@@ -2415,6 +2415,8 @@ public class ChapterIII extends StandardCycle {
             case "cGoCabin":
             case "cGoStairs":
             case "cGoBasement":
+            case "cGoLeft":
+            case "cGoRight":
             case "cProceed":
                 mainScript.runMoodSection("defaultResponseGo");
                 break;
@@ -2470,6 +2472,17 @@ public class ChapterIII extends StandardCycle {
             case "cDropFail":
             case "cDrop":
                 mainScript.runMoodSection("defaultResponseDrop");
+                break;
+
+            case "cGiveNoBladeFail":
+            case "cGiveFail":
+            case "cGive":
+                if (this.dragonBodyDownstairs) {
+                    mainScript.runMoodSection("defaultResponseGiveWithDragon");
+                } else {
+                    mainScript.runMoodSection("defaultResponseGive");
+                }
+
                 break;
 
             case "cThrowNoBladeFail":
@@ -5081,9 +5094,11 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "fakeE", true, "The writers must follow their own script."));
         activeMenu.add(new Option(this.manager, "give", "[Give her your implement.]"));
 
+        this.canGiveBlade = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cGive":
                 case "give":
                     this.repeatActiveMenu = false;
                     break;
@@ -5093,6 +5108,7 @@ public class ChapterIII extends StandardCycle {
         }
 
         // Give her your implement
+        this.canGiveBlade = false;
         mainScript.runSection();
     }
 

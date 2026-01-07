@@ -23,6 +23,7 @@ chapter) or the Achievement Gallery.
 - [SLAY:](#slay) Slay the Princess or yourself.
 - [TAKE:](#take) Take the blade.
 - [DROP:](#drop) Drop the blade.
+- [GIVE:](#give) Give the blade away.
 - [THROW:](#throw) Throw the blade out the window.
 
 ## HELP
@@ -108,6 +109,8 @@ Syntax: `[GO / WALK] [direction]`
   - `[GO / WALK] [BACK / BACKWARD / BACKWARDS / B]`: Turn back.
   - `[GO / WALK] [INSIDE / IN / I]`: Enter the nearest location, if possible.
   - `[GO / WALK] [OUTSIDE / OUT / O]`: Leave your current location, if possible.
+  - `[GO / WALK] [LEFT / L]:` Turn left.
+  - `[GO / WALK] [RIGHT / R]:` Turn right.
   - `[GO / WALK] [DOWN / D]`: Descend.
   - `[GO / WALK] [UP / U]:` Ascend.
 
@@ -206,6 +209,17 @@ Syntax: `DROP [blade]`
 
 **Variations:**
   - `DROP [PRISTINE BLADE / THE BLADE / BLADE]`: Drop the blade.
+
+## GIVE
+`[GIVE / OFFER]`: Give the blade away.
+
+Syntax: `[GIVE / OFFER] [blade]`
+
+**Arguments:**
+  - `[blade]`: The blade.
+
+**Variations:**
+  - `[GIVE / OFFER] [PRISTINE BLADE / THE BLADE / BLADE]`: Give the blade away.
 
 ## THROW
 `THROW`: Throw the blade out the window.

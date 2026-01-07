@@ -64,6 +64,14 @@ label defaultResponseDropHarsh
 
 label defaultResponseDropSoft
 
+label defaultResponseGiveHarsh
+
+label defaultResponseGiveSoft
+
+label defaultResponseGiveWithDragonHarsh
+
+label defaultResponseGiveWithDragonSoft
+
 label defaultResponseThrowHarsh
 
 label defaultResponseThrowSoft
