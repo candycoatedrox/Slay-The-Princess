@@ -8,7 +8,7 @@ label question1
 n I'm talking about the end of everything as we know it. No more birds, no more trees, and, perhaps most problematically of all, no more people. You have to put an end to her.
 
 label question2
-n Don't linger on the specifics. You have a job to do here. Just get in there and do what needs to be done. We're all counting on you.
+n Don't... linger on the specifics. You have a job to do here. Just get in there and do what needs to be done. We're all counting on you.
 
 label whyDanger
 n *She's* not dangerous. She's just a princess. The danger comes if she gets out. Which she will. Unless *you* do something about it.

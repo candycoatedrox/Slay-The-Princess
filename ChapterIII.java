@@ -910,7 +910,7 @@ public class ChapterIII extends StandardCycle {
                     mainScript.runSection("mirrorAsk");
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -940,10 +940,16 @@ public class ChapterIII extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
+                case "cWipe":
                 case "wipe":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("wipeMirror");
+                    break;
+
+                case "cSmash":
                 case "smash":
                     this.repeatActiveMenu = false;
-                    mainScript.runSection(activeOutcome + "Mirror");
+                    mainScript.runSection("smashMirror");
                     break;
 
                 case "cApproachAtMirrorFail":
@@ -1049,7 +1055,7 @@ public class ChapterIII extends StandardCycle {
             while (repeatActiveMenu) {
                 this.activeOutcome = parser.promptOptionsMenu(activeMenu);
                 switch (activeOutcome) {
-                    case "cTake":
+                    case "cTakeBlade":
                     case "take":
                         this.hasBlade = true;
                         mainScript.runSection(this.ch3Voice + "ChaseTake");
@@ -1318,7 +1324,7 @@ public class ChapterIII extends StandardCycle {
                     mainScript.runSection("mirrorAsk");
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.withBlade = false;
@@ -1371,10 +1377,16 @@ public class ChapterIII extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
+                case "cWipe":
                 case "wipe":
+                    this.repeatActiveMenu = false;
+                    mainScript.runConditionalSection("wipeMirror", foughtUnarmed, voiceCombo);
+                    break;
+
+                case "cSmash":
                 case "smash":
                     this.repeatActiveMenu = false;
-                    mainScript.runConditionalSection(activeOutcome + "Mirror", foughtUnarmed, voiceCombo);
+                    mainScript.runConditionalSection("smashMirror", foughtUnarmed, voiceCombo);
                     break;
 
                 case "cApproachAtMirrorFail":
@@ -2141,7 +2153,7 @@ public class ChapterIII extends StandardCycle {
                     mainScript.runConditionalSection("contraExplore", runAttempt);
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                 case "cSlayPrincessNoBladeFail":
                 case "fight":
                     this.hasBlade = true;
@@ -2429,7 +2441,15 @@ public class ChapterIII extends StandardCycle {
             case "cApproachAtMirrorFail":
             case "cApproachMirrorFail":
             case "cApproachMirror":
-                mainScript.runMoodSection("defaultResponseApproachMirror");
+            case "cWipeFail":
+            case "cWipe":
+            case "cSmashNoStubbornFail":
+            case "cSmashFail":
+            case "cSmash":
+            case "cGazeNoMirrorFail":
+            case "cGazeFail":
+            case "cGaze":
+                mainScript.runMoodSection("defaultResponseMirror");
                 break;
 
             case "cApproachHerFail":
@@ -2458,8 +2478,8 @@ public class ChapterIII extends StandardCycle {
 
 
             case "cTakeHasBladeFail":
-            case "cTakeFail":
-            case "cTake":
+            case "cTakeBladeFail":
+            case "cTakeBlade":
                 if (this.dragonBodyDownstairs) {
                     mainScript.runMoodSection("defaultResponseTakeWithDragon");
                 } else {
@@ -2475,8 +2495,8 @@ public class ChapterIII extends StandardCycle {
                 break;
 
             case "cGiveNoBladeFail":
-            case "cGiveFail":
-            case "cGive":
+            case "cGiveBladeFail":
+            case "cGiveBlade":
                 if (this.dragonBodyDownstairs) {
                     mainScript.runMoodSection("defaultResponseGiveWithDragon");
                 } else {
@@ -2679,6 +2699,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cWipe":
                 case "wipe":
                     this.repeatActiveMenu = false;
                     break;
@@ -2938,7 +2959,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu, "You've already tried everything else.")) {
-                case "cTake":
+                case "cTakeBlade":
                 case "takeA":
                 case "takeB":
                     this.repeatActiveMenu = false;
@@ -3011,6 +3032,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cWipe":
                 case "wipe":
                     this.repeatActiveMenu = false;
                     break;
@@ -3648,7 +3670,7 @@ public class ChapterIII extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -3678,10 +3700,16 @@ public class ChapterIII extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
+                case "cWipe":
                 case "wipe":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("wipeMirror");
+                    break;
+
+                case "cSmash":
                 case "smash":
                     this.repeatActiveMenu = false;
-                    mainScript.runSection(activeOutcome + "Mirror");
+                    mainScript.runSection("smashMirror");
                     break;
 
                 case "cApproachAtMirrorFail":
@@ -3830,7 +3858,7 @@ public class ChapterIII extends StandardCycle {
                     this.repeatActiveMenu = false;
                     break;
                     
-                case "cTakeFail":
+                case "cTakeBladeFail":
                 case "cGoCabin":
                 case "retrieve":
                 case "leave":
@@ -4312,6 +4340,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cWipe":
                 case "wipe":
                     this.repeatActiveMenu = false;
                     break;
@@ -4442,7 +4471,7 @@ public class ChapterIII extends StandardCycle {
                     this.thornBladeAttempt(bladeAttempt, true, notHostile, canBladeAttempt, tookBlade);
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     if (!canBladeAttempt.check()) {
                         mainScript.runSection();
                     }
@@ -4595,7 +4624,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
-                case "cTake":
+                case "cTakeBlade":
                 case "rush":
                     this.repeatActiveMenu = false;
                     mainScript.runSection("leaveRush");
@@ -5098,7 +5127,7 @@ public class ChapterIII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
-                case "cGive":
+                case "cGiveBlade":
                 case "give":
                     this.repeatActiveMenu = false;
                     break;
@@ -5239,11 +5268,28 @@ public class ChapterIII extends StandardCycle {
 
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "wipe", "[Wipe the mirror clean.]"));
-        parser.promptOptionsMenu(activeMenu);
-        mainScript.runSection("wipeMirror");
+        
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cWipe":
+                case "wipe":
+                    this.repeatActiveMenu = false;
+                    break;
 
+                case "cApproachAtMirrorFail":
+                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+        
+        // Wipe the mirror clean
         this.touchedMirror = true;
         this.mirrorPresent = false;
+        mainScript.runSection("wipeMirror");
+        
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -5337,7 +5383,7 @@ public class ChapterIII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
 
             // Redirect to rush options
-            if (activeOutcome.equals("cTake")) {
+            if (activeOutcome.equals("cTakeBlade")) {
                 this.activeOutcome = "Blade";
             } else if (activeOutcome.equals("cGoStairs")) {
                 this.activeOutcome = "Door";

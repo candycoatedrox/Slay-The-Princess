@@ -94,8 +94,125 @@ public abstract class StandardCycle extends Cycle {
     @Override
     public String enter(String argument) {
         String outcome = super.enter(argument);
-        if (this.activeChapter == Chapter.SPACESBETWEEN && outcome.equals("GoCabin")) return "EnterFail";
-        return outcome;
+        if (this.activeChapter == Chapter.SPACESBETWEEN && outcome.equals("GoCabin")) {
+            return "EnterFail";
+        } else {
+            return outcome;
+        }
+    }
+
+    /**
+     * Attempts to let the player wipe the mirror clean
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command if the player is not currently in front of the mirror; "cWipeFail" if the player cannot wipe the mirror clean right now; "cWipe" otherwise
+     */
+    @Override
+    protected String wipe(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the mirror":
+            case "mirror":
+                if (this.currentLocation == GameLocation.MIRROR) {
+                    if (this.mirrorGazeFlag) {
+                        return "WipeFail";
+                    } else {
+                        return "Wipe";
+                    }
+                } else {
+                    return this.approach("mirror");
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.WIPE);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to wipe clean?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.WIPE);
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player smash the mirror
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command if the player is not currently in front of the mirror; "cSmashNoStubbornFail" if the player does not currently have the Voice of the Stubborn; "cSmashFail" if the player cannot smash the mirror right now; "cSmash" otherwise
+     */
+    @Override
+    protected String smash(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the mirror":
+            case "mirror":
+                if (this.currentLocation == GameLocation.MIRROR) {
+                    if (this.mirrorGazeFlag) {
+                        return "SmashFail";
+                    } else if (!this.hasVoice(Voice.STUBBORN)) {
+                        return "SmashNoStubbornFail";
+                    } else {
+                        return "Smash";
+                    }
+                } else {
+                    return this.approach("mirror");
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.SMASH);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to smash?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.SMASH);
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player gaze into their reflection
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command if the player is standing before the mirror at the end of a cycle; redirects to the WIPE command if the player is at the mirror but cannot gaze into their reflection right now; "cGazeNoMirrorFail" if the mirror isn't present; "cGazeFail" if the player otherwise cannot gaze into their reflection right now; "cGaze" otherwise
+     */
+    @Override
+    protected String gaze(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the reflection":
+            case "reflection":
+            case "the mirror":
+            case "mirror":
+                if (this.currentLocation == GameLocation.MIRROR) {
+                    if (this.mirrorGazeFlag) {
+                        return "Gaze";
+                    } else {
+                        return this.wipe("mirror");
+                    }
+                } else if (this.mirrorPresent ||this.currentLocation == GameLocation.BEFOREMIRROR) {
+                    return this.approach("mirror");
+                } else {
+                    return "GazeNoMirrorFail";
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.GAZE);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to gaze into?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.GAZE);
+                return "Fail";
+        }
     }
 
     /**
@@ -201,6 +318,9 @@ public abstract class StandardCycle extends Cycle {
                 
             case "cApproachMirrorFail":
             case "cApproachMirror":
+            case "cGazeNoMirrorFail":
+            case "cGazeFail":
+            case "cGaze":
                 parser.printDialogueLine(new VoiceDialogueLine("What are you talking about? There isn't a mirror."));
                 if ((this.mirrorComment || this.touchedMirror) && this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "He's... actually right this time. The mirror really isn't here."));
                 break;
@@ -208,6 +328,18 @@ public abstract class StandardCycle extends Cycle {
             case "cApproachHerFail":
             case "cApproachHer":
                 parser.printDialogueLine(new VoiceDialogueLine("...What?"));
+                break;
+
+            case "cWipeFail":
+            case "cWipe":
+            case "cSmashFail":
+            case "cSmash":
+                // SHOULD BE INACCESSIBLE; cWipeFail and cSmashFail should only ever be returned without the Narrator there
+                super.giveDefaultFailResponse(outcome);
+                break;
+
+            case "cSmashNoStubbornFail":
+                parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "That seems a bit... aggressive. Let's just wipe it clean."));
                 break;
                 
 
@@ -248,7 +380,7 @@ public abstract class StandardCycle extends Cycle {
                 parser.printDialogueLine(new VoiceDialogueLine("You already have the blade, remember?"));
                 break;
             
-            case "cTakeFail":
+            case "cTakeBladeFail":
                 if (this.knowsBlade) {
                     parser.printDialogueLine(new VoiceDialogueLine("As much as I appreciate your enthusiasm, the blade isn't here right now."));
                 } else {
@@ -257,7 +389,7 @@ public abstract class StandardCycle extends Cycle {
 
                 break;
 
-            case "cTake":
+            case "cTakeBlade":
                 super.giveDefaultFailResponse(outcome);
                 break;
 
@@ -284,8 +416,8 @@ public abstract class StandardCycle extends Cycle {
                 
                 break;
 
-            case "cGiveFail":
-            case "cGive":
+            case "cGiveBladeFail":
+            case "cGiveBlade":
                 parser.printDialogueLine(new VoiceDialogueLine("What? Absolutely not. She's an existential threat to the entire world, you can't just *give her your weapon.*"));
                 break;
 
@@ -434,6 +566,7 @@ public abstract class StandardCycle extends Cycle {
 
         this.currentLocation = GameLocation.BEFOREMIRROR;
         this.mirrorPresent = true;
+        this.mirrorGazeFlag = true;
         this.removeVoice(Voice.NARRATOR);
 
         // Ensure all chapters from this route are unlocked
@@ -682,11 +815,22 @@ public abstract class StandardCycle extends Cycle {
         }
 
         // Gaze into your reflection
-        this.activeMenu = new OptionsMenu(true);
-        activeMenu.add(new Option(this.manager, "gaze", "[Gaze into your reflection.]"));
-        parser.promptOptionsMenu(activeMenu);
-
         this.currentLocation = GameLocation.MIRROR;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "gaze", "[Gaze into your reflection.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cGaze":
+                case "gaze":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+
         this.mirrorPresent = false;
 
         ArrayList<Voice> voicesMet = new ArrayList<>();

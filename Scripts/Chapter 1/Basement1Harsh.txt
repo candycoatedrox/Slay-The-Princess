@@ -201,10 +201,10 @@ n Time passes. You can't be sure if it's days, or months, or years or even decad
 hero Pst! Hey! We're not just going to stay here *forever,* right?
 
 label successExplore
-hero Are we really happy, or is He just telling us we are?
+hero Are we really happy, or is He just... telling us that we are?
 
 label successNotHappy
-hero Good, because I have an idea to get us out of here. Though you're probably not going to like it.
+hero Good, because I have... an idea to get us out of here. Though you're probably not going to like it.
 jumpto suggestSpectre
 
 label successHellNo
@@ -220,7 +220,7 @@ hero Do you not? There's more for us to do, and the only way for us to do it is 
 n Don't you *dare.*
 
 label suggestExplore
-n How astute. You're absolutely correct. Using the blade to kill yourself would kill you and you shouldn't do it.
+n How astute. You are absolutely correct. Using the blade to kill yourself would kill you and you shouldn't do it.
 hero In a sense, we'd die, but looking at things from another angle, are we even really alive anymore? This place... it's nothing! It's absolutely nothing. It's just the same thing, constantly, forever.
 hero I know this is out there, but trust me, I *know* using the blade will work.
 n That little voice didn't want you to slay the Princess. It didn't want you to be *happy.*

@@ -125,6 +125,99 @@ public class Finale extends Cycle {
     }
 
     /**
+     * Attempts to let the player wipe the mirror clean
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command otherwise
+     */
+    @Override
+    protected String wipe(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the mirror":
+            case "mirror":
+                return this.approach(argument);
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.WIPE);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to wipe clean?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.WIPE);
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player smash the mirror
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; "cSmashFail" if the player is in the heart cabin; redirects to the APPROACH command otherwise
+     */
+    @Override
+    protected String smash(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the mirror":
+            case "mirror":
+                switch (this.currentLocation) {
+                    case CABIN:
+                    case STAIRS:
+                    case BASEMENT:
+                        return "SmashFail";
+                    
+                    default: return this.approach("mirror");
+                }
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.SMASH);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to smash?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.SMASH);
+                return "Fail";
+        }
+    }
+
+    /**
+     * Attempts to let the player gaze into their reflection
+     * @param argument the argument given by the player
+     * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command otherwise
+     */
+    @Override
+    protected String gaze(String argument, boolean secondPrompt) {
+        switch (argument) {
+            case "the reflection":
+            case "reflection":
+            case "the mirror":
+            case "mirror":
+                return this.approach(argument);
+            
+            case "":
+                if (secondPrompt) {
+                    manager.showCommandHelp(Command.GAZE);
+                    return "Fail";
+                } else {
+                    parser.printDialogueLine("What do you want to gaze into?", true);
+                    return this.approach(parser.getInput(), true);
+                }
+
+            default:
+                manager.showCommandHelp(Command.GAZE);
+                return "Fail";
+        }
+    }
+
+    /**
      * Attempts to let the player slay either the Princess or themselves
      * @param argument the target to slay
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
@@ -240,6 +333,24 @@ public class Finale extends Cycle {
 
                 break;
 
+            case "cWipeFail":
+            case "cWipe":
+                break;
+
+            case "cSmashNoStubbornFail":
+                break;
+
+            case "cSmashFail":
+            case "cSmash":
+                break;
+
+            case "cGazeNoMirrorFail":
+                break;
+
+            case "cGazeFail":
+            case "cGaze":
+                break;
+
 
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":
@@ -255,8 +366,8 @@ public class Finale extends Cycle {
                 break;
 
             
-            case "cTakeFail":
-            case "cTake":
+            case "cTakeBladeFail":
+            case "cTakeBlade":
                 parser.printDialogueLine(new DialogueLine("The pristine blade is not here."));
                 break;
 
@@ -264,8 +375,8 @@ public class Finale extends Cycle {
             case "cDropFail":
             case "cDrop":
             case "cGiveNoBladeFail":
-            case "cGiveFail":
-            case "cGive":
+            case "cGiveBladeFail":
+            case "cGiveBlade":
             case "cThrowNoBladeFail":
             case "cThrowFail":
             case "cThrow":
@@ -334,8 +445,14 @@ public class Finale extends Cycle {
                 break;
 
 
+            case "cApproachAtMirrorFail":
             case "cApproachMirrorFail":
             case "cApproachMirror":
+            case "cWipeFail":
+            case "cWipe":
+            case "cGazeNoMirrorFail":
+            case "cGazeFail":
+            case "cGaze":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -363,6 +480,18 @@ public class Finale extends Cycle {
                     }
                 }
 
+                break;
+
+            case "cSmashNoStubbornFail":
+            case "cSmashFail":
+            case "cSmash": // same Hero line as approach/wipe/gaze but change Contra line
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+                
                 break;
                 
 
@@ -429,8 +558,8 @@ public class Finale extends Cycle {
 
                 break;
             
-            case "cTakeFail":
-            case "cTake":
+            case "cTakeBladeFail":
+            case "cTakeBlade":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
@@ -462,8 +591,8 @@ public class Finale extends Cycle {
                 
                 break;
 
-            case "cGiveFail":
-            case "cGive":
+            case "cGiveBladeFail":
+            case "cGiveBlade":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));

@@ -435,6 +435,15 @@ public class IOHandler implements Closeable {
             case APPROACH:
                 commandOutcome += cycle.approach(argument);
                 break;
+            case WIPE:
+                commandOutcome += cycle.wipe(argument);
+                break;
+            case SMASH:
+                commandOutcome += cycle.smash(argument);
+                break;
+            case GAZE:
+                commandOutcome += cycle.gaze(argument);
+                break;
             case SLAY:
                 commandOutcome += cycle.slay(argument);
                 break;
@@ -476,6 +485,14 @@ public class IOHandler implements Closeable {
            - cApproachMirrorFail
            - cApproachHer
            - cApproachHerFail
+           - cWipe
+           - cWipeFail
+           - cSmash
+           - cSmashNoStubbornFail (no Voice of the Stubborn)
+           - cSmashFail
+           - cGaze
+           - cGazeNoMirrorFail (mirror isn't even present)
+           - cGazeFail
 
            - cSlayPrincess
            - cSlayNoPrincessFail (Princess isn't even present)
@@ -485,15 +502,15 @@ public class IOHandler implements Closeable {
            - cSlaySelfNoBladeFail (don't have the blade)
            - cSlaySelfFail (can't slay self right now)
 
-           - cTake
+           - cTakeBlade
            - cTakeHasBladeFail (you already have the blade)
-           - cTakeFail (blade isn't here / can't take right now)
+           - cTakeBladeFail (blade isn't here / can't take right now)
            - cDrop
            - cDropNoBladeFail (you don't even have the blade)
            - cDropFail (can't drop right now)
-           - cGive
+           - cGiveBlade
            - cGiveNoBladeFail (you don't even have the blade)
-           - cGiveFail (can't give right now)
+           - cGiveBladeFail (can't give right now)
            - cThrow
            - cThrowNoBladeFail (you don't even have the blade)
            - cThrowFail (can't throw right now)
@@ -516,13 +533,16 @@ public class IOHandler implements Closeable {
 
             case "cApproachMirror":
             case "cApproachHer":
+            case "cWipe":
+            case "cSmash":
+            case "cGaze":
 
             case "cSlayPrincess":
             case "cSlaySelf":
 
-            case "cTake":
+            case "cTakeBlade":
             case "cDrop":
-            case "cGive":
+            case "cGiveBlade":
             case "cThrow":
 
             case "cGoFail":
@@ -532,6 +552,11 @@ public class IOHandler implements Closeable {
             case "cApproachAtMirrorFail":
             case "cApproachMirrorFail":
             case "cApproachHerFail":
+            case "cWipeFail":
+            case "cSmashNoStubbornFail":
+            case "cSmashFail":
+            case "cGazeNoMirrorFail":
+            case "cGazeFail":
                 
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":
@@ -540,10 +565,10 @@ public class IOHandler implements Closeable {
             case "cSlaySelfFail":
                 
             case "cTakeHasBladeFail":
-            case "cTakeFail":
+            case "cTakeBladeFail":
             case "cDropNoBladeFail":
             case "cDropFail":
-            case "cGiveFail":
+            case "cGiveBladeFail":
             case "cGiveNoBladeFail":
             case "cThrowNoBladeFail":
             case "cThrowFail":

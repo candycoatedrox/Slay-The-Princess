@@ -34,6 +34,7 @@ public class Script {
     private boolean sharedLoopInsist;
     private boolean mirrorComment;
     private boolean touchedMirror;
+    private boolean mirrorKnown;
     private boolean threwBlade;
     private boolean freeFromChains2;
     private boolean adversaryTookBlade;
@@ -822,6 +823,7 @@ public class Script {
         this.hasBlade = false;
         this.mirrorComment = false;
         this.touchedMirror = false;
+        this.mirrorKnown = false;
         this.isHarsh = false;
         this.knowsDestiny = false;
 
@@ -905,6 +907,8 @@ public class Script {
                 this.prisonerHeartStopped = chapter3.prisonerHeartStopped();
             }
         }
+
+        this.mirrorKnown = this.mirrorComment || this.touchedMirror;
     }
 
     /**
@@ -938,6 +942,8 @@ public class Script {
                 this.cageCutRoute = chapter3.cageCutRoute();
             }
         }
+
+        this.mirrorKnown = this.mirrorComment || this.touchedMirror;
     }
 
     /**
@@ -954,6 +960,8 @@ public class Script {
             this.mirrorComment = currentCycle.mirrorComment();
             this.touchedMirror = currentCycle.touchedMirror();
         }
+
+        this.mirrorKnown = this.mirrorComment || this.touchedMirror;
     }
 
     /**
@@ -1258,9 +1266,9 @@ public class Script {
                 if (this.touchedMirror) return false;
 
             } else if (m.equals("mirror2")) {
-                if (!this.mirrorComment && !this.touchedMirror) return false;
+                if (!this.mirrorKnown) return false;
             } else if (m.equals("nomirror2")) {
-                if (this.mirrorComment || this.touchedMirror) return false;
+                if (this.mirrorKnown) return false;
 
             } else if (m.equals("threwblade")) {
                 if (!this.threwBlade) return false;

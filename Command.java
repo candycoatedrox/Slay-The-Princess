@@ -14,6 +14,9 @@ public enum Command {
     PROCEED("proceed", "Press onwards.", ""),
     TURN("turn", "Turn back.", "", "around", "back"),
     APPROACH("approach", "Approach the mirror. Or approach her.", "the mirror", "mirror", "her", "the princess", "princess", "hands"),
+    WIPE("wipe", "Wipe the mirror clean.", "the mirror", "mirror"),
+    SMASH("smash", "Smash the mirror.", "the mirror", "mirror"),
+    GAZE("gaze", "Gaze into your reflection.", "the reflection", "reflection", "the mirror", "mirror"),
     SLAY("slay", "Slay the Princess or yourself.", "the princess", "princess", "self", "yourself", "you", "myself", "me", "ourself", "ourselves", "us"),
     TAKE("take", "Take the blade.", "the blade", "blade", "pristine blade"),
     DROP("drop", "Drop the blade.", "the blade", "blade", "pristine blade"),
@@ -266,6 +269,39 @@ public enum Command {
                 s += "  - APPROACH [HER / THE PRINCESS / PRINCESS / HANDS]: Approach her.\n";
                 break;
 
+            case WIPE:
+                s += "WIPE [mirror] [clean]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [mirror]: The mirror.\n";
+                s += "  - [clean]: Optional. Does not affect the way the command functions.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - WIPE [THE MIRROR / MIRROR]: Wipe the mirror clean.\n";
+                s += "  - WIPE [THE MIRROR / MIRROR] CLEAN: Same as > WIPE. Wipe the mirror clean.\n";
+                break;
+
+            case SMASH:
+                s += "SMASH [mirror]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [mirror]: The mirror.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - SMASH [THE MIRROR / MIRROR]: Smash the mirror.\n";
+                break;
+
+            case GAZE:
+                s += "GAZE [into] [reflection]\n\n";
+
+                s += "- Arguments -\n";
+                s += "  - [into]: Into, in, or at.";
+                s += "  - [reflection]: Your reflection, or the mirror.\n\n";
+
+                s += "- Variations -\n";
+                s += "  - GAZE [INTO / IN / AT] [THE REFLECTION / REFLECTION / THE MIRROR / MIRROR]: Gaze into your reflection.\n";
+                break;
+
             case SLAY:
                 s += "SLAY [target]\n\n";
 
@@ -369,6 +405,9 @@ public enum Command {
             case "leave": return LEAVE;
             case "turn": return TURN;
             case "approach": return APPROACH;
+            case "wipe": return WIPE;
+            case "smash": return SMASH;
+            case "gaze": return GAZE;
             case "slay": return SLAY;
             case "take":
             case "get": return TAKE;

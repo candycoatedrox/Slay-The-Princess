@@ -396,6 +396,7 @@ p REMEMBER. YOU OWE ME.
 hero Maybe we should have just left her here. Maybe we should still just leave her here. If she can't get out on her own, then why do we have to do anything?
 n "Hasn't gotten out" and "can't get out" are two very different things.
 cold That'd be dull, anyway`. It's more interesting if we make a choice.
+n Absolutely not.
 
 label possessAskSwitch
 moodswitch possessAsk
@@ -462,7 +463,7 @@ n I can't believe you're even entertaining her right now. I mean, just look at h
 
 label controlPossessAskHarsh
 p THERE'S ONLY ONE WAY TO FIND OUT.
-hero That doesn't sound very reassuring.
+hero That's... not very reassuring.
 cold What's another voice rattling around in here`? We'll be fine.
 hero It's pretty crowded already, wouldn't you say? And she's not exactly friendly.
 cold Neither is He.
@@ -732,7 +733,7 @@ n Not at all. I'll have you know that I do hate you, and I will continue to hate
 jumpto possessUpstairsJoin
 
 label possessUpstairsHarsh
-p It's because He can't stop me. Why do you think He sent you here?
+p It's because He *can't* stop me. Why do you think He sent *you* here?
 n I hate to admit it, but she's not wrong.
 label possessUpstairsJoin
 n It's just the *weight* of it all... it's too much for me to do anything other than describe and dictate.
@@ -751,7 +752,7 @@ p We are NOT going back down there. Keep. Moving.
 label possessSlaySuggest
 n If you have an idea for how to slay her in this state, I'm all ears, but you'll need to be more specific.
 
-// "Hitchhiker" ending; claim the Spectre
+// "Hitchhiker" ending; claim the Spectre //
 label possessForwardTookBlade
 n Blade in hand, you continue slowly to the door, your feet like lead dragging across the floorboards, growing heavier with each step.
 jumpto possessForward
@@ -792,7 +793,7 @@ truth You don't get the chance to respond, nor will you ever. It's time to leave
 
 // Leads to Chapter III: The Princess and the Dragon with the Voice of the Opportunist //
 label exorcismStart
-cold Isn't that an interesting idea.
+cold Isn't *that* an interesting idea.
 n I... hadn't even considered it as an option. Slaying her would slay you. Are you sure you're willing to do that?
 hero Of course we're sure. The decision has already been made.
 n All right, then. Better this than ferrying her out of here.
@@ -807,6 +808,6 @@ n Your skin roils and bucks as she violently pushes against it from the inside. 
     p If only I could drag you with me and make you understand. But that's not the way things get to go for me, is it? /// soft
         cold It would certainly be interesting`. Though being dead does sound dull`. And you are about to be dead`. Again. /// soft
         p Get away from me, you cold little freak! /// soft
-    p Who do you think you are, trying to take me out with you?! Well I'll show you. I can do worse than that little knife. It's not you taking me out, it's me taking you out. I'll tear this body to shreds! /// harsh
+    p Who do you think you are, trying to take me out with you?! Well I'll show you. I can do worse than that little knife. It's not you taking me out, it's me taking you out. I'll tear this body to SHREDS! /// harsh
         cold Wouldn't that be interesting`? I'd like to see you try`. But I think this is the end for all of us. /// harsh
         p I said I'm leaving, you cold little freak! /// harsh

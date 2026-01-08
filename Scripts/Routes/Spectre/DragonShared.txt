@@ -32,9 +32,9 @@ label defaultResponseLeaveHarsh
 
 label defaultResponseLeaveSoft
 
-label defaultResponseApproachMirrorHarsh
+label defaultResponseMirrorHarsh
 
-label defaultResponseApproachMirrorSoft
+label defaultResponseMirrorSoft
 
 label defaultResponseApproachHerHarsh
 

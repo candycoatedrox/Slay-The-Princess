@@ -176,6 +176,42 @@ Syntax: `APPROACH [target]`
   - `APPROACH [THE MIRROR / MIRROR]`: Approach the mirror.
   - `APPROACH [HER / THE PRINCESS / PRINCESS / HANDS]`: Approach her.
 
+## WIPE
+`WIPE`: Wipe the mirror clean.
+
+Syntax: `WIPE [mirror] [clean]`
+
+**Arguments:**
+  - `[mirror]`: The mirror.
+  - `[clean]`: Optional. Does not affect the way the command functions.
+
+**Variations:**
+  - `WIPE [THE MIRROR / MIRROR]`: Wipe the mirror clean.
+  - `WIPE [THE MIRROR / MIRROR] CLEAN`: Same as > WIPE. Wipe the mirror clean.
+
+## SMASH
+`SMASH`: Smash the mirror.
+
+Syntax: `SMASH [mirror]`
+
+**Arguments:**
+  - `[mirror]`: The mirror.
+
+**Variations:**
+  - `SMASH [THE MIRROR / MIRROR]`: Smash the mirror.
+
+## GAZE
+`GAZE`: Gaze into your reflection.
+
+Syntax: `GAZE [into] [reflection]`
+
+**Arguments:**
+  - `[into]`: Into, in, or at.
+  - `[reflection]`: Your reflection, or the mirror.
+
+**Variations:**
+  - `GAZE [INTO / IN / AT] [THE REFLECTION / REFLECTION / THE MIRROR / MIRROR]`: Gaze into your reflection.
+
 ## SLAY
 `SLAY`: Slay the Princess or yourself.
 

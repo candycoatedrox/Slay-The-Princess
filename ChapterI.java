@@ -265,7 +265,7 @@ public class ChapterI extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
 
             switch (this.activeOutcome) {
-                case "cTake":
+                case "cTakeBlade":
                     if (!canHarsh) {
                         parser.printDialogueLine(CANTSTRAY);
                         break;
@@ -2164,7 +2164,7 @@ public class ChapterI extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
-                case "cTake":
+                case "cTakeBlade":
                 case "blade":
                     if (!manager.confirmContentWarnings(Chapter.RAZOR)) break;
                     
@@ -2376,7 +2376,7 @@ public class ChapterI extends StandardCycle {
                     break;
 
                 case "cSlaySelfNoBladeFail":
-                case "cTakeFail":
+                case "cTakeBladeFail":
                 case "cGoStairs":
                 case "anything":
                     repeatSub = false;

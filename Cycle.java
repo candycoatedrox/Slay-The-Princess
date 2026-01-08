@@ -30,6 +30,7 @@ public abstract class Cycle {
     protected boolean knowsBlade = false; // The Narrator knows you know about the blade
     protected boolean withBlade = false; // Determines whether TAKE BLADE works
     protected boolean mirrorPresent = false;
+    protected boolean mirrorGazeFlag = false;
     protected boolean canLeftRight = false;
     protected boolean canApproachHer = false;
     protected boolean canSlayPrincess = false;
@@ -487,7 +488,7 @@ public abstract class Cycle {
 
             case "":
                 if (secondPrompt) {
-                    manager.showCommandHelp("go");
+                    manager.showCommandHelp(Command.GO);
                     return "Fail";
                 } else {
                     parser.printDialogueLine("Where do you want to go?", true);
@@ -495,7 +496,7 @@ public abstract class Cycle {
                 }
 
             default:
-                manager.showCommandHelp("go");
+                manager.showCommandHelp(Command.GO);
                 return "Fail";
         }
     }
@@ -520,7 +521,7 @@ public abstract class Cycle {
                 }
 
             default:
-                manager.showCommandHelp("enter");
+                manager.showCommandHelp(Command.ENTER);
                 return "Fail";
         }
     }
@@ -558,7 +559,7 @@ public abstract class Cycle {
                 }
 
             default:
-                manager.showCommandHelp("leave");
+                manager.showCommandHelp(Command.LEAVE);
                 return "Fail";
         }
     }
@@ -624,7 +625,7 @@ public abstract class Cycle {
             
             case "":
                 if (secondPrompt) {
-                    manager.showCommandHelp("approach");
+                    manager.showCommandHelp(Command.APPROACH);
                     return "Fail";
                 } else {
                     parser.printDialogueLine("What do you want to approach?", true);
@@ -632,7 +633,7 @@ public abstract class Cycle {
                 }
 
             default:
-                manager.showCommandHelp("approach");
+                manager.showCommandHelp(Command.APPROACH);
                 return "Fail";
         }
     }
@@ -640,11 +641,56 @@ public abstract class Cycle {
     /**
      * Attempts to let the player approach the mirror or her
      * @param argument the argument given by the player -- the target to approach
-     * @return "cFail" "cFail" if argument is invalid; "cApproachAtMirrorFail" if attempting to approach the mirror when the player is already at the mirror; "cApproachMirrorFail" if attempting to approach the mirror when it is not present; "cApproachMirror" if otherwise attempting to approach the mirror; "cApproachHerFail" if attempting to approach her when not in the Spaces Between; "cApproachHer" if otherwise attempting to approach her
+     * @return "cFail" if argument is invalid; "cApproachAtMirrorFail" if attempting to approach the mirror when the player is already at the mirror; "cApproachMirrorFail" if attempting to approach the mirror when it is not present; "cApproachMirror" if otherwise attempting to approach the mirror; "cApproachHerFail" if attempting to approach her when not in the Spaces Between; "cApproachHer" if otherwise attempting to approach her
      */
     public String approach(String argument) {
         return this.approach(argument, false);
     }
+
+    /**
+     * Attempts to let the player wipe the mirror clean
+     * @param argument the argument given by the player
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command if the player is not currently in front of the mirror; "cWipeFail" if the player cannot wipe the mirror clean right now; "cWipe" otherwise
+     */
+    public String wipe(String argument) {
+        if (argument.endsWith(" clean")) {
+            argument = argument.substring(0, argument.indexOf(" clean"));
+        }
+        return this.wipe(argument, false);
+    }
+
+    protected abstract String wipe(String argument, boolean secondPrompt);
+
+    /**
+     * Attempts to let the player smash the mirror
+     * @param argument the argument given by the player
+     * @return "cFail" if argument is invalid; redirects to the APPROACH command if the player is not currently in front of the mirror; "cSmashNoStubbornFail" if the player does not currently have the Voice of the Stubborn; "cSmashFail" if the player otherwise cannot smash the mirror right now; "cSmash" otherwise
+     */
+    public String smash(String argument) {
+        return this.smash(argument, false);
+    }
+
+    protected abstract String smash(String argument, boolean secondPrompt);
+
+    /**
+     * Attempts to let the player gaze into their reflection
+     * @param argument the argument given by the player
+     * @return "cFail" if argument is invalid; "cGazeNoMirrorFail" if the mirror isn't present; "cGazeFail" if the player cannot gaze into their reflection right now; "cGaze" otherwise
+     */
+    public String gaze(String argument) {
+        if (argument.startsWith("into ")) {
+            argument = argument.substring(5);
+            return this.gaze(argument, false);
+        } else if (argument.startsWith("in ") || argument.startsWith("at ")) {
+            argument = argument.substring(3);
+            return this.gaze(argument, false);
+        } else {
+            manager.showCommandHelp(Command.GAZE);
+            return "Fail";
+        }
+    }
+
+    protected abstract String gaze(String argument, boolean secondPrompt);
 
     /**
      * Attempts to let the player slay either the Princess or themselves
@@ -654,12 +700,13 @@ public abstract class Cycle {
     public String slay(String argument) {
         return this.slay(argument, false);
     }
+
     protected abstract String slay(String argument, boolean secondPrompt);
 
     /**
      * Attempts to let the player take the blade
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
-     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeFail" if the player cannot take the blade right now; "cTake" otherwise
+     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" otherwise
      */
     public String take(String argument) {
         return this.take(argument, false);
@@ -669,7 +716,7 @@ public abstract class Cycle {
      * Attempts to let the player take the blade
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeFail" if the player cannot take the blade right now; "cTake" otherwise
+     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" otherwise
      */
     protected String take(String argument, boolean secondPrompt) {
         switch (argument) {
@@ -745,7 +792,7 @@ public abstract class Cycle {
     /**
      * Attempts to let the player give the blade to the Princess
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
-     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player already has the blade; "cGiveFail" if the player cannot take the blade right now; "cGive" otherwise
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player already has the blade; "cGiveBladeFail" if the player cannot take the blade right now; "cGiveBlade" otherwise
      */
     public String give(String argument) {
         if (argument.startsWith("her ")) argument = argument.substring(4);
@@ -756,7 +803,7 @@ public abstract class Cycle {
      * Attempts to let the player give the blade to the Princess
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveFail" if the player cannot drop the blade right now; "cGive" otherwise
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveBladeFail" if the player cannot drop the blade right now; "cGiveBlade" otherwise
      */
     protected String give(String argument, boolean secondPrompt) {
         switch (argument) {
@@ -848,91 +895,112 @@ public abstract class Cycle {
             case "cGoLeft":
             case "cGoRight":
             case "cProceed":
-                parser.printDialogueLine(new DialogueLine("You cannot go that way now."));                
+                parser.printDialogueLine("You cannot go that way now.");                
                 break;
 
             case "cEnterFail":
-                parser.printDialogueLine(new DialogueLine("You cannot enter there from where you are now."));
+                parser.printDialogueLine("You cannot enter there from where you are now.");
                 break;
                 
             case "cLeaveFail":
-                parser.printDialogueLine(new DialogueLine("You cannot leave a place you are not in."));
+                parser.printDialogueLine("You cannot leave a place you are not in.");
                 break;
 
 
             case "cApproachAtMirrorFail":
-                parser.printDialogueLine(new DialogueLine("You are already at the mirror."));
+                parser.printDialogueLine("You are already at the mirror.");
                 break;
 
             case "cApproachMirrorFail":
             case "cApproachMirror":
-                parser.printDialogueLine(new DialogueLine("There is no mirror."));
+                parser.printDialogueLine("There is no mirror.");
                 break;
 
             case "cApproachHerFail":
+            case "cApproachHer":
                 if (this.withPrincess) {
-                    parser.printDialogueLine(new DialogueLine("You are already with her."));
+                    parser.printDialogueLine("You are already with her.");
                 } else {
-                    parser.printDialogueLine(new DialogueLine("She is not here."));
+                    parser.printDialogueLine("She is not here.");
                 }
 
                 break;
 
+            case "cWipeFail":
+            case "cWipe":
+                parser.printDialogueLine("You cannot wipe the mirror clean now.");
+                break;
+
+            case "cSmashNoStubbornFail":
+            case "cSmashFail":
+            case "cSmash":
+                parser.printDialogueLine("You cannot smash the mirror now.");
+                break;
+
+            case "cGazeNoMirrorFail":
+                parser.printDialogueLine("There is no mirror for you to gaze into.");
+                break;
+
+            case "cGazeFail":
+            case "cGaze":
+                parser.printDialogueLine("You cannot gaze into your reflection now.");
+                break;
+
 
             case "cSlayNoPrincessFail":
-                parser.printDialogueLine(new DialogueLine("The Princess is not here."));
+                parser.printDialogueLine("The Princess is not here.");
                 break;
 
             case "cSlayPrincessNoBladeFail":
-                parser.printDialogueLine(new DialogueLine("You do not have a weapon."));
+                parser.printDialogueLine("You do not have a weapon.");
                 break;
 
             case "cSlayPrincessFail":
             case "cSlayPrincess":
-                parser.printDialogueLine(new DialogueLine("You cannot attempt to slay her now."));
+                parser.printDialogueLine("You cannot attempt to slay her now.");
                 break;
 
             case "cSlaySelfNoBladeFail":
-                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+                parser.printDialogueLine("You do not have the blade.");
                 break;
 
             case "cSlaySelfFail":
             case "cSlaySelf":
-                parser.printDialogueLine(new DialogueLine("You cannot slay yourself now."));
+                parser.printDialogueLine("You cannot slay yourself now.");
                 break;
                 
 
             case "cTakeHasBladeFail":
-                parser.printDialogueLine(new DialogueLine("The pristine blade is already in your possession."));
+                parser.printDialogueLine("You already have the pristine blade");
                 break;
             
-            case "cTakeFail":
-                parser.printDialogueLine(new DialogueLine("The pristine blade is not here."));
+            case "cTakeBladeFail":
+                parser.printDialogueLine("The pristine blade is not here.");
                 break;
             
-            case "cTake":
-                parser.printDialogueLine(new DialogueLine("You cannot take the blade now."));
+            case "cTakeBlade":
+                parser.printDialogueLine("You cannot take the blade now.");
                 break;
 
             case "cDropNoBladeFail":
             case "cGiveNoBladeFail":
             case "cThrowNoBladeFail":
-                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+                parser.printDialogueLine("You do not have the blade.");
                 break;
 
             case "cDropFail":
             case "cDrop":
-                parser.printDialogueLine(new DialogueLine("You cannot drop the blade now."));
+                parser.printDialogueLine("You cannot drop the blade now.");
                 break;
 
-            case "cGiveFail":
-            case "cGive":
-                parser.printDialogueLine(new DialogueLine("You cannot give the blade away now."));
+            case "cGiveBladeFail":
+            case "cGiveBlade":
+                parser.printDialogueLine("You cannot give the blade away now.");
                 break;
                 
             case "cThrowFail":
             case "cThrow":
-                parser.printDialogueLine(new DialogueLine("You cannot throw the blade now."));
+                parser.printDialogueLine("You cannot throw the blade now.");
                 break;
 
 

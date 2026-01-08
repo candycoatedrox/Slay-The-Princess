@@ -1161,6 +1161,7 @@ public class ChapterII extends StandardCycle {
         boolean repeatMenu = true;
         while (repeatMenu) {
             switch (parser.promptOptionsMenu(subMenu)) {
+                case "cWipe":
                 case "wipe":
                     repeatMenu = false;
                     break;
@@ -1222,7 +1223,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.adversaryTookBlade = true;
@@ -2037,7 +2038,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runSection("exploreRetrieve");
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                 case "take":
                     this.withBlade = false;
                     this.hasBlade = true;
@@ -2560,7 +2561,7 @@ public class ChapterII extends StandardCycle {
                 this.repeatActiveMenu = true;
                 while (repeatActiveMenu) {
                     switch (parser.promptOptionsMenu(activeMenu)) {
-                        case "cTake":
+                        case "cTakeBlade":
                         case "take":
                             this.repeatActiveMenu = false;
                             this.hasBlade = true;
@@ -2656,7 +2657,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -2953,7 +2954,7 @@ public class ChapterII extends StandardCycle {
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
-                case "cTake":
+                case "cTakeBlade":
                 case "take":
                     this.repeatActiveMenu = false;
                     break;
@@ -3146,7 +3147,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -3694,7 +3695,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(possessMenu);
             switch (activeOutcome) {
                 case "no":
-                    mainScript.runSection("noPossessAsk" + moodSuffix);
+                    mainScript.runMoodSection("noPossessAsk");
                     if (this.isHarsh) narratorProof.set();
                     break;
 
@@ -3732,11 +3733,11 @@ public class ChapterII extends StandardCycle {
                         break;
                     }
 
-                    mainScript.runSection("askRefuse" + moodSuffix);
+                    mainScript.runMoodSection("askRefuse");
                     return 3;
 
                 case "return":
-                    mainScript.runSection("returnPossessAsk" + moodSuffix);
+                    mainScript.runMoodSection("returnPossessAsk");
                     return 0;
 
                 default: super.giveDefaultFailResponse();
@@ -3870,7 +3871,7 @@ public class ChapterII extends StandardCycle {
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
-                case "cTake":
+                case "cTakeBlade":
                 case "take":
                     this.withBlade = false;
                     this.hasBlade = true;
@@ -3972,7 +3973,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -4515,7 +4516,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runConditionalSection("biologySlain", this.threwBlade);
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                 case "take":
                     this.hasBlade = true;
                     this.withBlade = false;
@@ -4633,7 +4634,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -4835,7 +4836,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -5432,7 +5433,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -5576,7 +5577,7 @@ public class ChapterII extends StandardCycle {
                 case "stairs":
                     return this.witchStairs();
                     
-                case "cGive":
+                case "cGiveBlade":
                 case "offer":
                     this.canGiveBlade = false;
                     if (this.witchGiveBladeStart()) {
@@ -5664,7 +5665,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runSection("leaveStartExplore");
                     break;
 
-                case "cGive":
+                case "cGiveBlade":
                 case "offer":
                     this.canGiveBlade = false;
                     if (this.witchGiveBladeStart()) {
@@ -6169,7 +6170,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -6629,7 +6630,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -6663,7 +6664,7 @@ public class ChapterII extends StandardCycle {
                         mainScript.runSection("stairsTakeBladeProtest");
                         break;
 
-                    case "cTake":
+                    case "cTakeBlade":
                     case "take":
                         this.repeatActiveMenu = false;
                         mainScript.runSection("stairsTakeBlade");
@@ -7293,7 +7294,7 @@ public class ChapterII extends StandardCycle {
                     this.ch2ApproachMirror();
                     break;
 
-                case "cTake":
+                case "cTakeBlade":
                     activeMenu.setCondition("take", false);
                 case "take":
                     this.hasBlade = true;
@@ -7643,7 +7644,7 @@ public class ChapterII extends StandardCycle {
             while (repeatActiveMenu) {
                 this.activeOutcome = parser.promptOptionsMenu(activeMenu);
                 switch (activeOutcome) {
-                    case "cTake":
+                    case "cTakeBlade":
                     case "cSlayPrincessNoBladeFail":
                         if (this.cantJoint3.check()) {
                             mainScript.runSection("slayAgainAttempt");
