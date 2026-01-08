@@ -495,6 +495,7 @@ public class IOHandler implements Closeable {
            - cGazeFail
 
            - cSlayPrincess
+           - cSlayPrincessDeadFail (Princess is already dead)
            - cSlayNoPrincessFail (Princess isn't even present)
            - cSlayPrincessNoBladeFail (don't have the blade)
            - cSlayPrincessFail (can't slay right now)
@@ -514,6 +515,15 @@ public class IOHandler implements Closeable {
            - cThrow
            - cThrowNoBladeFail (you don't even have the blade)
            - cThrowFail (can't throw right now)
+
+           - cTakeHandDeadFail (Princess is already dead)
+           - cTakeHandNoPrincessFail (Princess isn't even present)
+           - cTakeHandFail (can't take right now)
+           - cTakeHand
+           - cGiveHandDeadFail (Princess is already dead)
+           - cGiveHandNoPrincessFail (Princess isn't even present)
+           - cGiveHandFail (can't give right now)
+           - cGiveHand
         */
 
         /* TEMPLATE CASES FOR COMMANDS:
@@ -558,6 +568,7 @@ public class IOHandler implements Closeable {
             case "cGazeNoMirrorFail":
             case "cGazeFail":
                 
+            case "cSlayPrincessDeadFail":
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":
             case "cSlayPrincessFail":
@@ -572,6 +583,15 @@ public class IOHandler implements Closeable {
             case "cGiveNoBladeFail":
             case "cThrowNoBladeFail":
             case "cThrowFail":
+
+            case "cTakeHandDeadFail":
+            case "cTakeHandNoPrincessFail":
+            case "cTakeHandFail":
+            case "cTakeHand":
+            case "cGiveHandDeadFail":
+            case "cGiveHandNoPrincessFail":
+            case "cGiveHandFail":
+            case "cGiveHand":
                 
             case "cFail":
         */

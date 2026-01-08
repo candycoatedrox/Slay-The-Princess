@@ -270,7 +270,7 @@ n So that's where the blade is! It's already in her heart. And yet she... isn't 
 cold She *is* dead`. Have you never heard of a ghost before?
 n Oh, for the love of -- can we not waste time arguing over the semantics of what is and isn't "dead?" She is clearly *conscious,* she clearly just slammed the door on you, and she clearly has a weapon -- *your* pristine blade sticking out of her chest. This is extremely bad. Catastrophic, even.
 hero Yeah, dead or not, what are we supposed to do about her? Slaying, or, er, destroying -- if we want to be a little more *death-neutral* -- seems off the table.
-    sourceswitch BasementStart2
+sourceswitch BasementStart2
 
 label burnedBasementStart2
 smitten We make amends! She obviously still holds us in her heart. She's bearing a torch for us and everything!

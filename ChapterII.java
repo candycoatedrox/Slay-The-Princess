@@ -1630,6 +1630,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "push", "[Keep pushing.]"));
         activeMenu.add(new Option(this.manager, "unlodge", this.cantUnique3, "[Unlodge the blade and attack her from a different angle.]", 0));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
@@ -1854,6 +1855,8 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "watch", "[Watch her body for a little while longer.]"));
         activeMenu.add(new Option(this.manager, "leave", "[Turn and leave.]"));
 
+        this.princessDead = true;
+        this.princessSlain = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -1863,6 +1866,8 @@ public class ChapterII extends StandardCycle {
                 case "watch":
                 case "leave":
                     this.repeatActiveMenu = false;
+                    this.princessDead = false;
+                    this.princessSlain = false;
                     mainScript.runConditionalSection(activeOutcome + "Opening", activeOutcome);
                     break;
 
@@ -2018,6 +2023,7 @@ public class ChapterII extends StandardCycle {
      */
     private ChapterEnding adversaryRetrieveBlade() {
         this.currentLocation = GameLocation.CABIN;
+        this.princessViolent = false;
         this.withPrincess = false;
         this.withBlade = true;
 
@@ -2131,6 +2137,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "strike", "[Strike at her heart head-on.]"));
         activeMenu.add(new Option(this.manager, "run", this.cantJoint3, "[Run.]", 0));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2200,6 +2207,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "run", "[Run.]"));
         activeMenu.add(new Option(this.manager, "attack", "[Attack the Princess.]"));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2294,6 +2302,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "stand", "[Get up.]", activeMenu.get("stuck")));
         activeMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2336,6 +2345,7 @@ public class ChapterII extends StandardCycle {
                                 mainScript.runSection(activeOutcome + "Stand");
                                 break;
 
+                            case "cGoStairs":
                             case "fleeNoBlade":
                                 mainScript.runSection("fleeNoBladeStand");
                                 return this.adversaryRetrieveBlade();
@@ -2453,6 +2463,7 @@ public class ChapterII extends StandardCycle {
     private ChapterEnding adversaryFlee() {
         boolean notFree = !freeFromChains2.check();
         freeFromChains2.set();
+        this.princessViolent = true;
         this.activeMenu = new OptionsMenu();
 
         if (notFree) {
@@ -2544,6 +2555,7 @@ public class ChapterII extends StandardCycle {
      */
     private ChapterEnding adversaryFleeUpstairs(boolean retrieve) {
         this.currentLocation = GameLocation.CABIN;
+        this.princessViolent = false;
         this.withPrincess = false;
         freeFromChains2.set();
 
@@ -2918,8 +2930,9 @@ public class ChapterII extends StandardCycle {
 
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "explore", "(Explore) \"What happens now?\""));
-        activeMenu.add(new Option(this.manager, "take", "[Take my hand.]"));
+        activeMenu.add(new Option(this.manager, "take", "[Take her hand.]"));
 
+        this.canTakeHand = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu, new VoiceDialogueLine(Voice.NARRATORPRINCESS, "You have no other choice."))) {
@@ -2927,6 +2940,7 @@ public class ChapterII extends StandardCycle {
                     mainScript.runSection("pledgeExplore");
                     break;
 
+                case "cTakeHand":
                 case "take":
                     this.repeatActiveMenu = false;
                     break;
@@ -2975,6 +2989,7 @@ public class ChapterII extends StandardCycle {
         parser.promptOptionsMenu(activeMenu);
         mainScript.runSection();
 
+        this.princessViolent = true;
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "end", "[End this.]"));
 
@@ -3783,6 +3798,7 @@ public class ChapterII extends StandardCycle {
             activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]"));
             activeMenu.add(new Option(this.manager, "die", "[Die.]"));
 
+            this.princessViolent = true;
             this.repeatActiveMenu = true;
             while (repeatActiveMenu) {
                 switch (parser.promptOptionsMenu(activeMenu)) {
@@ -4124,6 +4140,7 @@ public class ChapterII extends StandardCycle {
 
         if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
         
+        this.princessViolent = true;
         this.withPrincess = true;
         this.canLeftRight = false;
         mainScript.runSection("encounterStart");
@@ -4956,6 +4973,7 @@ public class ChapterII extends StandardCycle {
 
         // Figure out how to put warnings for Den in here, considering the game forces you into it in several instances if you've already been to Wild...
 
+        this.princessViolent = true;
         for (int phase = 2; phase < 5; phase++) {
             this.canSlayPrincess = false;
             canTryFlee.set();
@@ -5751,6 +5769,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "trust", "\"We could have gotten out of here if we'd just trusted each other.\""));
         activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
 
+        this.princessViolent = true;
         switch (parser.promptOptionsMenu(activeMenu)) {
             case "broken":
                 brokenShare = true;
@@ -5931,6 +5950,7 @@ public class ChapterII extends StandardCycle {
         String sucksDisplay = "(Explore) \"Come on! They're pressing in on me. ";
         String sorryDisplay = "(Explore) \"I take it all back! I can help you get out of here! You and I can work together! We can be friends.";
         if (fight) {
+            this.princessViolent = true;
             this.canSlayPrincess = true;
             sucksDisplay += "They're pressing in on you! This sucks!\"";
             sorryDisplay += " I'm sorry!\"";
@@ -7025,6 +7045,7 @@ public class ChapterII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding prisonerStrangled(boolean attack) {
+        this.princessViolent = true;
         this.canSlayPrincess = true;
         this.canDropBlade = true;
         this.activeMenu = new OptionsMenu();
@@ -7053,6 +7074,8 @@ public class ChapterII extends StandardCycle {
                         }
                     }
 
+                    this.princessDead = true;
+                    this.princessSlain = true;
                     mainScript.runSection("slayStart");
                     return this.prisonerSlain(false);
 
@@ -7076,6 +7099,7 @@ public class ChapterII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding prisonerDecapitate() {
+        this.princessViolent = false;
         mainScript.runSection("headStart");
 
         this.activeMenu = new OptionsMenu(true);
@@ -7090,6 +7114,7 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "leave", this.cantUnique3, "[Leave the basement to claim your reward.]", 0));
         activeMenu.add(new Option(this.manager, "take", "[Take the Princess with you.]"));
 
+        this.princessDead = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(activeMenu)) {
@@ -7752,11 +7777,13 @@ public class ChapterII extends StandardCycle {
      * The player chooses to slay the Damsel, leading to Chapter III: The Grey with the Voice of the Cold
      */
     private void damselSlay() {
+        this.princessDead = true;
+        this.princessSlain = true;
         mainScript.runSection("slayMain");
 
         this.activeMenu = new OptionsMenu(true);
-        activeMenu.add(new Option(this.manager, "refuse", "\"I'm the one who makes the decisions here, and I say *no!*\""));
-        activeMenu.add(new Option(this.manager, "ok", "\"If that's what you want to do, let's see what happens.\""));
+        activeMenu.add(new Option(this.manager, "refuse", "I'm the one who makes the decisions here, and I say *no!*"));
+        activeMenu.add(new Option(this.manager, "ok", "If that's what you want to do, let's see what happens."));
         activeMenu.add(new Option(this.manager, "silent", "[Remain silent.]"));
 
         mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "Slay");

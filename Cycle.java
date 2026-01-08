@@ -27,6 +27,7 @@ public abstract class Cycle {
 
     // Utility variables for checking command availability & default responses
     protected boolean withPrincess = false;
+    protected boolean princessDead = false; // Has she died this Chapter?
     protected boolean knowsBlade = false; // The Narrator knows you know about the blade
     protected boolean withBlade = false; // Determines whether TAKE BLADE works
     protected boolean mirrorPresent = false;
@@ -38,6 +39,8 @@ public abstract class Cycle {
     protected boolean canDropBlade = false;
     protected boolean canGiveBlade = false;
     protected boolean canThrowBlade = false;
+    protected boolean canTakeHand = false;
+    protected boolean canOfferHand = false;
 
     // Variables that persist between all chapters
     protected boolean isHarsh = false; // Used in Chapter 1, Spectre, Princess and the Dragon, Nightmare, and the Finale
@@ -706,7 +709,7 @@ public abstract class Cycle {
     /**
      * Attempts to let the player take the blade
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
-     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" otherwise
+     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" if otherwise attempting to take the blade
      */
     public String take(String argument) {
         return this.take(argument, false);
@@ -716,7 +719,7 @@ public abstract class Cycle {
      * Attempts to let the player take the blade
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" otherwise
+     * @return "cFail" if argument is invalid; "cTakeHasBladeFail" if the player already has the blade; "cTakeBladeFail" if the player cannot take the blade right now; "cTakeBlade" if otherwise attempting to take the blade; "cTakeHandDeadFail" if the Princess has already been slain; "cTakeHandNoPrincessFail" if the Princess is not present; "cTakeHandFail" if the player cannot offer their hand right now; "cTakeHand" if otherwise attempting to offer their hand
      */
     protected String take(String argument, boolean secondPrompt) {
         switch (argument) {
@@ -726,9 +729,21 @@ public abstract class Cycle {
                 if (this.hasBlade) {
                     return "TakeHasBladeFail";
                 } else if (!this.withBlade) {
-                    return "TakeFail";
+                    return "TakeBladeFail";
                 } else {
-                    return "Take";
+                    return "TakeBlade";
+                }
+
+            case "hand":
+            case "her hand":
+                if (this.princessDead) {
+                    return "TakeHandDeadFail";
+                } else if (!this.withPrincess) {
+                    return "TakeHandNoPrincessFail";
+                } else if (!this.canTakeHand) {
+                    return "TakeHandFail";
+                } else {
+                    return "TakeHand";
                 }
             
             case "":
@@ -792,7 +807,7 @@ public abstract class Cycle {
     /**
      * Attempts to let the player give the blade to the Princess
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
-     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player already has the blade; "cGiveBladeFail" if the player cannot take the blade right now; "cGiveBlade" otherwise
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveBladeFail" if the player cannot give away the blade right now; "cGiveBlade" if otherwise attempting to give away the blade
      */
     public String give(String argument) {
         if (argument.startsWith("her ")) argument = argument.substring(4);
@@ -803,7 +818,7 @@ public abstract class Cycle {
      * Attempts to let the player give the blade to the Princess
      * @param argument the argument given by the player (should be "the blade", "blade", or "pristine blade")
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveBladeFail" if the player cannot drop the blade right now; "cGiveBlade" otherwise
+     * @return "cFail" if argument is invalid; "cGiveNoBladeFail" if the player does not have the blade; "cGiveBladeFail" if the player cannot give away the blade right now; "cGiveBlade" if otherwise attempting to give away the blade; "cGiveHandDeadFail" if the Princess has already been slain; "cGiveHandNoPrincessFail" if the Princess is not present; "cGiveHandFail" if the player cannot offer their hand right now; "cGiveHand" if otherwise attempting to offer their hand
      */
     protected String give(String argument, boolean secondPrompt) {
         switch (argument) {
@@ -813,9 +828,20 @@ public abstract class Cycle {
                 if (!this.hasBlade) {
                     return "GiveNoBladeFail";
                 } else if (!this.canGiveBlade) {
-                    return "GiveFail";
+                    return "GiveBladeFail";
                 } else {
-                    return "Give";
+                    return "GiveBlade";
+                }
+
+            case "hand":
+                if (this.princessDead) {
+                    return "GiveHandDeadFail";
+                } else if (!this.withPrincess) {
+                    return "GiveHandNoPrincessFail";
+                } else if (!this.canOfferHand) {
+                    return "GiveHandFail";
+                } else {
+                    return "GiveHand";
                 }
             
             case "":
@@ -947,6 +973,12 @@ public abstract class Cycle {
                 break;
 
 
+            case "cSlayPrincessDeadFail":
+            case "cTakeHandDeadFail":
+            case "cGiveHandDeadFail":
+                parser.printDialogueLine("She is already dead.");
+                break;
+
             case "cSlayNoPrincessFail":
                 parser.printDialogueLine("The Princess is not here.");
                 break;
@@ -1001,6 +1033,25 @@ public abstract class Cycle {
             case "cThrowFail":
             case "cThrow":
                 parser.printDialogueLine("You cannot throw the blade now.");
+                break;
+
+
+            case "cTakeHandNoPrincessFail":
+                parser.printDialogueLine("There is no one here.");
+                break;
+
+            case "cTakeHandFail":
+            case "cTakeHand":
+                parser.printDialogueLine("You cannot take her hand now.");
+                break;
+
+            case "cGiveHandNoPrincessFail":
+                parser.printDialogueLine("There is no one here to offer your hand to.");
+                break;
+
+            case "cGiveHandFail":
+            case "cGiveHand":
+                parser.printDialogueLine("You cannot offer her your hand now.");
                 break;
 
 

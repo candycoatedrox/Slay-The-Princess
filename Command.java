@@ -18,9 +18,9 @@ public enum Command {
     SMASH("smash", "Smash the mirror.", "the mirror", "mirror"),
     GAZE("gaze", "Gaze into your reflection.", "the reflection", "reflection", "the mirror", "mirror"),
     SLAY("slay", "Slay the Princess or yourself.", "the princess", "princess", "self", "yourself", "you", "myself", "me", "ourself", "ourselves", "us"),
-    TAKE("take", "Take the blade.", "the blade", "blade", "pristine blade"),
+    TAKE("take", "Take the blade, or an open hand.", "the blade", "blade", "pristine blade", "hand", "her hand"),
     DROP("drop", "Drop the blade.", "the blade", "blade", "pristine blade"),
-    GIVE("give", "Give the blade away.", "the blade", "blade", "pristine blade"),
+    GIVE("give", "Give the blade away, or extend an offered hand.", "the blade", "blade", "pristine blade", "hand"),
     THROW("throw", "Throw the blade out the window.", "the blade", "blade", "pristine blade");
 
     private final String prefix;
@@ -314,13 +314,14 @@ public enum Command {
                 break;
 
             case TAKE:
-                s += "[TAKE / GET] [blade]\n\n";
+                s += "[TAKE / GET] [target]\n\n";
 
                 s += "- Arguments -\n";
-                s += "  - [blade]: The blade.\n\n";
+                s += "  - [target]: The blade, or a hand.\n\n";
 
                 s += "- Variations -\n";
                 s += "  - [TAKE / GET] [PRISTINE BLADE / THE BLADE / BLADE]: Take the blade.\n";
+                s += "  - [TAKE / GET] [HAND / HER HAND]: Take her hand.";
                 break;
 
             case DROP:
@@ -334,13 +335,14 @@ public enum Command {
                 break;
 
             case GIVE:
-                s += "[GIVE / OFFER] [blade]\n\n";
+                s += "[GIVE / OFFER] [target]\n\n";
 
                 s += "- Arguments -\n";
-                s += "  - [blade]: The blade.\n\n";
+                s += "  - [target]: The blade, or a hand.\n\n";
 
                 s += "- Variations -\n";
                 s += "  - [GIVE / OFFER] [PRISTINE BLADE / THE BLADE / BLADE]: Give the blade away.\n";
+                s += "  - [GIVE / OFFER] HAND: Offer her your hand.";
                 break;
 
             case THROW:

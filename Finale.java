@@ -221,14 +221,16 @@ public class Finale extends Cycle {
      * Attempts to let the player slay either the Princess or themselves
      * @param argument the target to slay
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if otherwise attempting to slay themselves
+     * @return "cFail" if argument is invalid; "cSlayPrincessDeadFail" if attempting to slay the Princess when she is already dead; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if otherwise attempting to slay themselves
      */
     @Override
     protected String slay(String argument, boolean secondPrompt) {
         switch (argument) {
             case "the princess":
             case "princess":
-                if (!this.withPrincess) {
+                if (this.princessDead) {
+                    return "SlayPrincessDeadFail";
+                } else if (!this.withPrincess) {
                     return "SlayNoPrincessFail";
                 } else if (!this.hasBlade) {
                     return "SlayPrincessNoBladeFail";
@@ -310,25 +312,25 @@ public class Finale extends Cycle {
             case "cGoLeft":
             case "cGoRight":
             case "cProceed":
-                parser.printDialogueLine(new DialogueLine("There is nowhere for you to go."));                
+                parser.printDialogueLine("There is nowhere for you to go.");                
                 break;
 
 
             case "cApproachAtMirrorFail":
-                parser.printDialogueLine(new DialogueLine("You watched the mirror shatter into pieces."));
+                parser.printDialogueLine("You watched the mirror shatter into pieces.");
                 break;
 
             case "cApproachMirrorFail":
             case "cApproachMirror":
-                parser.printDialogueLine(new DialogueLine("You watched the mirror shatter for good."));
+                parser.printDialogueLine("You watched the mirror shatter for good.");
                 break;
 
             case "cApproachHerFail":
             case "cApproachHer":
                 if (this.withPrincess) {
-                    parser.printDialogueLine(new DialogueLine("You are already with her."));
+                    parser.printDialogueLine("You are already with her.");
                 } else {
-                    parser.printDialogueLine(new DialogueLine("She is not here."));
+                    parser.printDialogueLine("She is not here.");
                 }
 
                 break;
@@ -352,23 +354,29 @@ public class Finale extends Cycle {
                 break;
 
 
+            case "cSlayPrincessDeadFail":
+            case "cTakeHandDeadFail":
+            case "cGiveHandDeadFail":
+                parser.printDialogueLine("She is already dead.");
+                break;
+
             case "cSlayNoPrincessFail":
             case "cSlayPrincessNoBladeFail":
             case "cSlayPrincessFail":
             case "cSlayPrincess":
-                parser.printDialogueLine(new DialogueLine("You cannot attempt to slay her now."));
+                parser.printDialogueLine("You cannot attempt to slay her now.");
                 break;
 
             case "cSlaySelfNoBladeFail":
             case "cSlaySelfFail":
             case "cSlaySelf":
-                parser.printDialogueLine(new DialogueLine("You cannot slay yourself now."));
+                parser.printDialogueLine("You cannot slay yourself now.");
                 break;
 
             
             case "cTakeBladeFail":
             case "cTakeBlade":
-                parser.printDialogueLine(new DialogueLine("The pristine blade is not here."));
+                parser.printDialogueLine("The pristine blade is not here.");
                 break;
 
             case "cDropNoBladeFail":
@@ -380,7 +388,26 @@ public class Finale extends Cycle {
             case "cThrowNoBladeFail":
             case "cThrowFail":
             case "cThrow":
-                parser.printDialogueLine(new DialogueLine("You do not have the blade."));
+                parser.printDialogueLine("You do not have the blade.");
+                break;
+
+
+            case "cTakeHandNoPrincessFail":
+                parser.printDialogueLine("There is no one here.");
+                break;
+
+            case "cTakeHandFail":
+            case "cTakeHand":
+                parser.printDialogueLine("You cannot take her hand now.");
+                break;
+
+            case "cGiveHandNoPrincessFail":
+                parser.printDialogueLine("There is no one here to offer your hand to.");
+                break;
+
+            case "cGiveHandFail":
+            case "cGiveHand":
+                parser.printDialogueLine("You cannot offer her your hand now.");
                 break;
 
 
@@ -495,6 +522,18 @@ public class Finale extends Cycle {
                 break;
                 
 
+            case "cSlayPrincessDeadFail":
+            case "cTakeHandDeadFail":
+            case "cGiveHandDeadFail":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+                
+                break;
+
             case "cSlayNoPrincessFail":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
@@ -566,7 +605,7 @@ public class Finale extends Cycle {
                 } else {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                 }
-                
+
                 break;
 
             case "cDropNoBladeFail":
@@ -614,6 +653,49 @@ public class Finale extends Cycle {
                 
             case "cThrowFail":
             case "cThrow":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+
+                break;
+
+
+            case "cTakeHandNoPrincessFail":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+
+                break;
+
+            case "cTakeHandFail":
+            case "cTakeHand":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+
+                break;
+
+            case "cGiveHandNoPrincessFail":
+                if (this.strangerHeart) {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
+                }
+
+                break;
+
+            case "cGiveHandFail":
+            case "cGiveHand":
                 if (this.strangerHeart) {
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "XXXXXXXX"));
                     parser.printDialogueLine(new VoiceDialogueLine(Voice.CONTRARIAN, "XXXXXXXX"));

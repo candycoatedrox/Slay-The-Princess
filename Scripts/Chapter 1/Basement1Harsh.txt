@@ -162,6 +162,7 @@ hero Why do I feel like we've done something horrible?
 n You did kill someone. Greater good or not, something would be very wrong with you if you didn't feel at least a little bad. But it *was* for the greater good. One of these days, that will sink in and help ease your guilty conscience.
 n But that day isn't today. Let's just get out of here.
 
+label steelSlaySuccessCont
 n You open the cabin door, ready to return to a world saved from certain doom.
 linebreak
 n Only, a world saved from certain doom isn't what you find. Instead, what you find is nothing at all. Where a lush forest stood mere minutes ago, the only thing in front of you now is the vast emptiness of some place far away.
@@ -170,9 +171,6 @@ n Everyone is fine, it's just that you and the cabin are now far away from them.
 
 label slaySuccessStairsFail
 n There's no reason to go back to the basement. Your job here is done.
-
-label slaySuccessSlayFail
-n She's already dead, thanks to your efforts.
 
 label successPrizeYay
 n I'm just happy that you're happy. I knew you'd like it.
@@ -690,7 +688,6 @@ n If we're lucky, the wound you managed to inflict will be enough to at least de
 p Too weak to even try fighting back. How disappointing.
 label commitTowerRescueLateJoin
 
-label rescueControlledSlay2
 label commitTowerRescueA
 n *Thank* you.
 n You swing your arm towards her throat, the blade singing through the air.

@@ -11,6 +11,8 @@ public abstract class StandardCycle extends Cycle {
     
     // Utility variables for checking command availability & default responses
     protected Condition cantTryAbort = new Condition();
+    protected boolean princessViolent = false; // Is she actively trying to kill the player?
+    protected boolean princessSlain = false; // Has she been killed by the player this Chapter?
 
     protected static final PrincessDialogueLine CANTSTRAY = new PrincessDialogueLine(true, "You have already committed to my completion. You cannot go further astray.");
     protected static final PrincessDialogueLine WORNPATH = new PrincessDialogueLine(true, "This path is already worn by travel and has been seen by one of my many eyes. You cannot walk it again. Change your course.");
@@ -219,14 +221,16 @@ public abstract class StandardCycle extends Cycle {
      * Attempts to let the player slay either the Princess or themselves
      * @param argument the target to slay
      * @param secondPrompt whether the player has already been given a chance to re-enter a valid argument
-     * @return "cFail" if argument is invalid; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if the player cannot slay themselves right now; "cSlaySelf" if otherwise attempting to slay themselves
+     * @return "cFail" if argument is invalid; "cSlayPrincessDeadFail" if attempting to slay the Princess when she is already dead; "cSlayNoPrincessFail" if attempting to slay the Princess when she is not present; "cSlayPrincessNoBladeFail" if attempting to slay the Princess without the blade; "cSlayPrincessFail" if the player cannot slay the Princess  right now; "cSlayPrincess" if otherwise attempting to slay the Princess; "cSlaySelfNoBladeFail" if attempting to slay themselves without the blade; "cSlaySelfFail" if the player cannot slay themselves right now; "cSlaySelf" if otherwise attempting to slay themselves
      */
     @Override
     protected String slay(String argument, boolean secondPrompt) {
         switch (argument) {
             case "the princess":
             case "princess":
-                if (!this.withPrincess) {
+                if (this.princessDead) {
+                    return "SlayPrincessDeadFail";
+                } else if (!this.withPrincess) {
                     return "SlayNoPrincessFail";
                 } else if (!this.hasBlade) {
                     return "SlayPrincessNoBladeFail";
@@ -343,6 +347,15 @@ public abstract class StandardCycle extends Cycle {
                 break;
                 
 
+            case "cSlayPrincessDeadFail":
+                if (this.princessSlain) {
+                    parser.printDialogueLine(new VoiceDialogueLine("She's already dead, thanks to your efforts."));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("She's already dead. The world is safe."));
+                }
+
+                break;
+
             case "cSlayNoPrincessFail":
                 parser.printDialogueLine(new VoiceDialogueLine("As much as I appreciate your enthusiasm, the Princess isn't here right now. Save it for when you reach the basement."));
                 break;
@@ -434,6 +447,34 @@ public abstract class StandardCycle extends Cycle {
             case "cThrow":
                 parser.printDialogueLine(new VoiceDialogueLine("Are you insane?! Absolutely not."));
                 if (this.hasVoice(Voice.HERO)) parser.printDialogueLine(new VoiceDialogueLine(Voice.HERO, "Why would we even do that? That seems... silly."));
+                break;
+
+
+            case "cTakeHandDeadFail":
+            case "cGiveHandDeadFail":
+                if (this.princessSlain) {
+                    parser.printDialogueLine(new VoiceDialogueLine("You *slew her.* Don't be... weird about it."));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("She's *dead.* Don't be... weird about it."));
+                }
+
+                break;
+
+            case "cTakeHandNoPrincessFail":
+            case "cGiveHandNoPrincessFail":
+                parser.printDialogueLine(new VoiceDialogueLine("There's no one else here, so unless you'd like to take your *own* hand, you're out of luck."));
+                break;
+
+            case "cTakeHandFail":
+            case "cTakeHand":
+            case "cGiveHandFail":
+            case "cGiveHand":
+                if (this.princessViolent) {
+                    parser.printDialogueLine(new VoiceDialogueLine("Are you insane? Do I really have to remind you about the fact she's *actively attempting to murder you?*"));
+                } else {
+                    parser.printDialogueLine(new VoiceDialogueLine("Absolutely not! She's a *world-ending monstrosity,* not some... damsel in distress."));
+                }
+
                 break;
 
 

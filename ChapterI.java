@@ -1108,6 +1108,7 @@ public class ChapterI extends StandardCycle {
     private ChapterEnding ch1RescueSlaySoft() {
         secondaryScript.runSection("rescueSlay");
 
+        this.princessViolent = true;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]"));
 
@@ -1229,7 +1230,6 @@ public class ChapterI extends StandardCycle {
                     subMenu.add(new Option(this.manager, "lock", "Tell you what. I'll even stay here for a while to make sure she's dead. [Lock her away.]", Chapter.NIGHTMARE));
                     subMenu.add(new Option(this.manager, "finish", !manager.hasVisited(Chapter.WITCH) || (!manager.hasVisited(Chapter.BEAST) && !canWitch), "You're right. Let's finish this."));
 
-                    outcome = "";
                     repeatSub = true;
                     while (repeatSub) {
                         outcome = parser.promptOptionsMenu(subMenu);
@@ -1260,7 +1260,6 @@ public class ChapterI extends StandardCycle {
                     subMenu.add(new Option(this.manager, "lock", "Tell you what. I'll even stay here for a while to make sure she's dead. [Lock her away.]", Chapter.NIGHTMARE));
                     subMenu.add(new Option(this.manager, "finish", !manager.hasVisited(Chapter.WITCH) || (!manager.hasVisited(Chapter.BEAST) && !canWitch), "You're right. Let's finish this."));
 
-                    outcome = "";
                     repeatSub = true;
                     while (repeatSub) {
                         outcome = parser.promptOptionsMenu(subMenu);
@@ -1364,6 +1363,7 @@ public class ChapterI extends StandardCycle {
         activeMenu.add(new Option(this.manager, "giveUp", "[Give up.]", 0, Chapter.BEAST));
         activeMenu.add(new Option(this.manager, "fight", "[Fight back.]", 0, Chapter.WITCH));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             switch (parser.promptOptionsMenu(this.activeMenu)) {
@@ -2139,13 +2139,11 @@ public class ChapterI extends StandardCycle {
                 
                 case "maybe":
                     this.repeatActiveMenu = false;
-
                     secondaryScript.runSection("steelSlayMaybe");
                     break;
 
                 case "no":
                     this.repeatActiveMenu = false;
-
                     secondaryScript.runSection("steelSlayNo");
                     break;
             }
@@ -2154,12 +2152,14 @@ public class ChapterI extends StandardCycle {
         // Unsure continues here
         this.hasBlade = false;
         this.withBlade = true;
-        this.canSlayPrincess = false;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "blade", "[Remove the blade.]", 0));
         activeMenu.add(new Option(this.manager, "pulse", "[Check for a pulse.]", 0));
         activeMenu.add(new Option(this.manager, "leave", "You're right. She's dead. Let's just get out of here.", 0, Chapter.SPECTRE));
 
+        this.canSlayPrincess = false;
+        this.princessDead = true;
+        this.princessSlain = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2186,7 +2186,7 @@ public class ChapterI extends StandardCycle {
                     secondaryScript.runSection("steelSlayYes");
                     return this.ch1SlaySuccess();
 
-                case "cSlayPrincessNoBladeFail":
+                case "cSlayPrincessDeadFail":
                     secondaryScript.runSection("steelSlaySlayFail");
                     break;
 
@@ -2223,17 +2223,13 @@ public class ChapterI extends StandardCycle {
                 case "cGoStairs":
                     secondaryScript.runSection("slaySuccessStairsFail", true);
                     break;
-                    
-                case "cSlayPrincessNoBladeFail":
-                    secondaryScript.runSection("slaySuccessSlayFail", true);
-                    break;
 
                 default:
                     this.giveDefaultFailResponse(activeOutcome);
             }
         }
 
-        secondaryScript.runSection();
+        secondaryScript.runSection("steelSlaySuccessCont");
 
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "prizeYay", "Wait, is this my prize? This is great! Thank you so much.", this.askedPrize));
@@ -2252,8 +2248,12 @@ public class ChapterI extends StandardCycle {
                 break;
 
             case "bullshit":
-                if (this.askedPrize) secondaryScript.runSection("successPrizeBoo");
-                else secondaryScript.runSection("successBullshit");
+                if (this.askedPrize) {
+                    secondaryScript.runSection("successPrizeBoo");
+                } else {
+                    secondaryScript.runSection("successBullshit");
+                }
+
                 break;
 
             case "ok":
@@ -2386,10 +2386,6 @@ public class ChapterI extends StandardCycle {
                 case "cGoHill":
                     secondaryScript.runSection("suggestLeaveFail");
                     break;
-                    
-                case "cSlayNoPrincessFail":
-                    secondaryScript.runSection("slaySuccessSlayFail");
-                    break;
 
                 default:
                     this.giveDefaultFailResponse(activeOutcome);
@@ -2412,6 +2408,7 @@ public class ChapterI extends StandardCycle {
         activeMenu.add(new Option(this.manager, "finish", "[Finish the job.]", 0, Chapter.ADVERSARY));
         activeMenu.add(new Option(this.manager, "flee", "[Flee and lock her in the basement.]", 0, Chapter.NIGHTMARE));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2460,6 +2457,7 @@ public class ChapterI extends StandardCycle {
         activeMenu.add(new Option(this.manager, "die", "[Die.]"));
         activeMenu.add(new Option(this.manager, "finish", "[Finish the job.]"));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2591,11 +2589,9 @@ public class ChapterI extends StandardCycle {
                         parser.printDialogueLine(CANTSTRAY);
                         break;
                     }
-                case "slay":
-                    return this.ch1RescueSlayHarsh();
+                case "slay": return this.ch1RescueSlayHarsh();
 
-                default:
-                    this.giveDefaultFailResponse();
+                default: this.giveDefaultFailResponse();
             }
         }
 
@@ -2666,6 +2662,7 @@ public class ChapterI extends StandardCycle {
                     activeMenu.add(slay);
                     activeMenu.add(new Option(this.manager, "giveUp", "[Give up.]"));
 
+                    this.princessViolent = true;
                     this.repeatActiveMenu = true;
                     while (repeatActiveMenu) {
                         switch (parser.promptOptionsMenu(activeMenu)) {
@@ -2758,6 +2755,7 @@ public class ChapterI extends StandardCycle {
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]"));
 
+        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2829,6 +2827,7 @@ public class ChapterI extends StandardCycle {
     private void ch1ToNightmare(boolean wounded, boolean lostArm) {
         this.currentLocation = GameLocation.CABIN;
         this.withPrincess = false;
+        this.princessViolent = true;
         mainScript.runConditionalSection("nightmareStart", wounded);
 
         this.activeMenu = new OptionsMenu(true);

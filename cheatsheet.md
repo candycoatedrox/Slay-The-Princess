@@ -225,15 +225,16 @@ Syntax: `SLAY [target]`
   - `SLAY [SELF / YOURSELF / YOU / MYSELF / ME / OURSELF / OURSELVES / US]`: Slay yourself.
 
 ## TAKE
-`TAKE`: Take the blade.
+`TAKE`: Take the blade, or an open hand.
 
-Syntax: `[TAKE / GET] [blade]`
+Syntax: `[TAKE / GET] [target]`
 
 **Arguments:**
-  - `[blade]`: The blade.
+  - `[target]`: The blade, or a hand.
 
 **Variations:**
   - `[TAKE / GET] [PRISTINE BLADE / THE BLADE / BLADE]`: Take the blade.
+  - `[TAKE / GET] [HAND / HER HAND]`: Take her hand.
 
 ## DROP
 `DROP`: Drop the blade.
@@ -247,15 +248,16 @@ Syntax: `DROP [blade]`
   - `DROP [PRISTINE BLADE / THE BLADE / BLADE]`: Drop the blade.
 
 ## GIVE
-`[GIVE / OFFER]`: Give the blade away.
+`[GIVE / OFFER]`: Give the blade away, or extend an offered hand.
 
-Syntax: `[GIVE / OFFER] [blade]`
+Syntax: `[GIVE / OFFER] [target]`
 
 **Arguments:**
-  - `[blade]`: The blade.
+  - `[target]`: The blade, or a hand.
 
 **Variations:**
   - `[GIVE / OFFER] [PRISTINE BLADE / THE BLADE / BLADE]`: Give the blade away.
+  - `[GIVE / OFFER] HAND`: Offer her your hand.
 
 ## THROW
 `THROW`: Throw the blade out the window.

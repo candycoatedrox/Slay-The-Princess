@@ -1043,6 +1043,7 @@ public class ChapterIII extends StandardCycle {
 
         // Get her to chase you out of the basement
         this.currentLocation = GameLocation.CABIN;
+        this.princessViolent = true;
         mainScript.runSection("basementLoose");
 
         if (!this.hasBlade) {
@@ -1159,6 +1160,7 @@ public class ChapterIII extends StandardCycle {
      * The player successfully leads the Eye of the Needle out of the cabin with the Voice of the Skeptic
      */
     private void eyeOfNeedleFree() {
+        this.princessViolent = false;
         mainScript.runSection("freeStart");
 
         this.activeMenu = new OptionsMenu(true);
@@ -1502,6 +1504,7 @@ public class ChapterIII extends StandardCycle {
         }
 
         // You are unwound
+        this.princessViolent = true;
         if (!source.equals("tower")) this.hasBlade = false;
         mainScript.runConditionalSection("unwoundStart", voiceCombo);
 
@@ -1898,6 +1901,7 @@ public class ChapterIII extends StandardCycle {
         Condition noExplore = new Condition(true);
         Condition niceMenuNotSeen = new Condition(true);
         
+        this.princessViolent = false;
         this.canSlayPrincess = true;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "here", "(Explore) \"I'm not gone. I'm right here.\"", noExplore));
@@ -1937,9 +1941,11 @@ public class ChapterIII extends StandardCycle {
                         case "offer":
                             mainScript.runSection("offerASurvive");
 
+                            this.canOfferHand = true;
                             this.activeOutcome = parser.promptOptionsMenu(offerMenu);
                             switch (activeOutcome) {
                                 case "hand":
+                                case "cGiveHand":
                                     mainScript.runSection("togetherEnd");
                                     return ChapterEnding.NEWLEAFWEATHEREDBOOK;
                                 
@@ -1971,8 +1977,10 @@ public class ChapterIII extends StandardCycle {
                         case "offer":
                             mainScript.runSection("offerASurvive");
 
+                            this.canOfferHand = true;
                             this.activeOutcome = parser.promptOptionsMenu(offerMenu);
                             switch (activeOutcome) {
+                                case "cGiveHand":
                                 case "hand":
                                     mainScript.runSection("togetherEnd");
                                     return ChapterEnding.NEWLEAFWEATHEREDBOOK;
@@ -1997,8 +2005,10 @@ public class ChapterIII extends StandardCycle {
                 case "offer":
                     mainScript.runSection("offerBSurvive");
 
+                    this.canOfferHand = true;
                     this.activeOutcome = parser.promptOptionsMenu(offerMenu);
                     switch (activeOutcome) {
+                        case "cGiveHand":
                         case "hand":
                             mainScript.runSection("togetherEnd");
                             return ChapterEnding.NEWLEAFWEATHEREDBOOK;
@@ -2033,8 +2043,10 @@ public class ChapterIII extends StandardCycle {
                             case "offerC":
                                 mainScript.runSection(activeOutcome + "Survive");
 
+                                this.canOfferHand = true;
                                 this.activeOutcome = parser.promptOptionsMenu(offerMenu);
                                 switch (activeOutcome) {
+                                    case "cGiveHand":
                                     case "hand":
                                         mainScript.runSection("togetherEnd");
                                         return ChapterEnding.NEWLEAFWEATHEREDBOOK;
@@ -2971,7 +2983,7 @@ public class ChapterIII extends StandardCycle {
         this.withPrincess = true;
         mainScript.runSection();
 
-        this.activeMenu = new OptionsMenu(true);
+        this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "falseA", true, "[You're just an object.]"));
         activeMenu.add(new Option(this.manager, "falseB", true, "[A tool.]"));
         activeMenu.add(new Option(this.manager, "falseC", true, "[You once were something else, a long time ago.]"));
@@ -2979,7 +2991,20 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "falseE", true, "[There is no other ending here.]"));
         activeMenu.add(new Option(this.manager, "take", "[Just take her hand, and set her free.]"));
 
-        parser.promptOptionsMenu(activeMenu, "There is no other ending here.");
+        this.canTakeHand = true;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cTakeHand":
+                case "take":
+                    this.repeatActiveMenu = false;
+                    break;
+                
+                default: parser.printDialogueLine("There is no other ending here.");
+            }
+        }
+
+        // Take her hand
         mainScript.runSection();
         return ChapterEnding.MOMENTOFCLARITY;
     }
@@ -3046,6 +3071,7 @@ public class ChapterIII extends StandardCycle {
         }
 
         this.currentLocation = GameLocation.BASEMENT;
+        this.princessViolent = true;
         this.withPrincess = true;
         this.canSlayPrincess = true;
         this.touchedMirror = true;
@@ -3778,11 +3804,9 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cSlayPrincess":
-                case "fight":
-                    return this.denFight();
+                case "fight": return this.denFight();
 
-                case "lure":
-                    return this.denLure();
+                case "lure": return this.denLure();
 
                 default: this.giveDefaultFailResponse(activeOutcome);
             }
@@ -3796,6 +3820,7 @@ public class ChapterIII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding denFight() {
+        this.princessViolent = true;
         mainScript.runSection("fightStart");
 
         if (this.hasVoice(Voice.SKEPTIC) || !this.hasBlade) return ChapterEnding.UNANSWEREDQUESTIONS;
@@ -3828,6 +3853,7 @@ public class ChapterIII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding denLure() {
+        this.princessViolent = true;
         mainScript.runSection("lureStart");
 
         if (this.hasVoice(Voice.STUBBORN)) return ChapterEnding.UNANSWEREDQUESTIONS;
@@ -3882,6 +3908,7 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "offer", "[Offer her your hand.]"));
         activeMenu.add(new Option(this.manager, "flinch", "[Flinch.]"));
 
+        this.canOfferHand = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -3891,6 +3918,7 @@ public class ChapterIII extends StandardCycle {
                     mainScript.runSection("coupEnd");
                     return ChapterEnding.COUPDEGRACE;
 
+                case "cGiveHand":
                 case "offer":
                     if (this.hasBlade) {
                         mainScript.runSection("offerBlade");
@@ -3913,6 +3941,7 @@ public class ChapterIII extends StandardCycle {
         }
 
         // Offer her your hand
+        this.canOfferHand = false;
         mainScript.runSection("lionStart");
 
         this.activeMenu = new OptionsMenu(true);
@@ -4855,6 +4884,7 @@ public class ChapterIII extends StandardCycle {
             }
         }
 
+        this.princessViolent = true;
         mainScript.runConditionalSection("encounterStart", moveAttempt);
 
         this.activeMenu = new OptionsMenu();
@@ -5068,6 +5098,7 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "talk", "\"Well? Are you ready to talk?\""));
         activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
 
+        this.princessViolent = false;
         mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "EmptyCont");
 
         this.activeMenu = new OptionsMenu(true);
@@ -5289,7 +5320,7 @@ public class ChapterIII extends StandardCycle {
         this.touchedMirror = true;
         this.mirrorPresent = false;
         mainScript.runSection("wipeMirror");
-        
+
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "enter", "[Enter the basement.]"));
 
@@ -5363,9 +5394,10 @@ public class ChapterIII extends StandardCycle {
             activeMenu.add(new Option(this.manager, "Die", "(Explore) \"I'm going to drown!\"", timerIncremented));
             activeMenu.add(new Option(this.manager, "Wrong", "(Explore) \"What's wrong with you? I don't want this!\""));
             activeMenu.add(new Option(this.manager, "Even", "(Explore) \"I only killed you after you killed me first! We're even now! We don't need to do this again.\""));
-            activeMenu.add(new Option(this.manager, "Beg", "(Explore) \"Please! I'm begging you! I'll do anything, just don't let me drown!\""));
+            activeMenu.add(new Option(this.manager, "Beg", "(Explore) \"Please! I'm begging you! I'll do anything, just don't let me drown!\"", timerIncremented));
             activeMenu.add(new Option(this.manager, "Sorry", "(Explore) \"Is this about last time? I'm sorry! Now can you let me out?\""));
         } else {
+            this.princessViolent = true;
             burnedGrudgeComment = false;
             activeMenu.add(new Option(this.manager, "Why", "(Explore) \"Why did you close the door?\""));
             activeMenu.add(new Option(this.manager, "Kill", "(Explore) \"Let me out! Are you trying to kill me?\""));
@@ -5435,6 +5467,7 @@ public class ChapterIII extends StandardCycle {
 
             if (incrementFlag) {
                 deathTimer.increment();
+                if (deathTimer.equals(1) && source.equals("drowned")) this.princessViolent = true;
                 mainScript.runSourceSection("Timer" + deathTimer);
             }
         }
