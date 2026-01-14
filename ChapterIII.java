@@ -28,6 +28,7 @@ public class ChapterIII extends StandardCycle {
     // Flags used in The Princess and the Dragon
     private boolean dragonInPrincess = false;
     private boolean dragonBodyDownstairs = false; // Like the inverse of withPrincess
+    private Condition dragonStartNoLeaveAsk = new Condition(true);
 
     // Flags used in The Cage
     private boolean cageCutRoute = false;
@@ -2434,12 +2435,10 @@ public class ChapterIII extends StandardCycle {
 
 
             case "cGoFail":
-            case "cEnterFail":
             case "cGoLeave":
             case "cGoPath":
             case "cGoHill":
             case "cGoCabin":
-            case "cGoStairs":
             case "cGoBasement":
             case "cGoLeft":
             case "cGoRight":
@@ -2447,7 +2446,8 @@ public class ChapterIII extends StandardCycle {
                 mainScript.runMoodSection("defaultResponseGo");
                 break;
                 
-            case "cLeaveFail":
+            case "cGoStairs":
+                dragonStartNoLeaveAsk.set(false);
                 mainScript.runMoodSection("defaultResponseLeave");
                 break;
 
@@ -2464,11 +2464,6 @@ public class ChapterIII extends StandardCycle {
             case "cGazeFail":
             case "cGaze":
                 mainScript.runMoodSection("defaultResponseMirror");
-                break;
-
-            case "cApproachHerFail":
-            case "cApproachHer":
-                mainScript.runMoodSection("defaultResponseApproachHer");
                 break;
 
 
@@ -2506,24 +2501,21 @@ public class ChapterIII extends StandardCycle {
             case "cDropNoBladeFail":
             case "cDropFail":
             case "cDrop":
-                mainScript.runMoodSection("defaultResponseDrop");
-                break;
-
-            case "cGiveNoBladeFail":
-            case "cGiveBladeFail":
-            case "cGiveBlade":
                 if (this.dragonBodyDownstairs) {
-                    mainScript.runMoodSection("defaultResponseGiveWithDragon");
+                    mainScript.runMoodSection("defaultResponseDrop");
                 } else {
-                    mainScript.runMoodSection("defaultResponseGive");
+                    mainScript.runMoodSection("defaultResponseNoSense");
                 }
-
                 break;
 
             case "cThrowNoBladeFail":
             case "cThrowFail":
             case "cThrow":
-                mainScript.runMoodSection("defaultResponseThrow");
+                if (this.dragonBodyDownstairs) {
+                    mainScript.runMoodSection("defaultResponseThrow");
+                } else {
+                    mainScript.runMoodSection("defaultResponseNoSense");
+                }
                 break;
 
 
@@ -2536,6 +2528,17 @@ public class ChapterIII extends StandardCycle {
             case "cGiveHandFail":
             case "cGiveHand":
                 mainScript.runMoodSection("defaultResponseHand");
+                break;
+
+
+            case "cEnterFail":
+            case "cLeaveFail":
+            case "cApproachHerFail":
+            case "cApproachHer":
+            case "cGiveNoBladeFail":
+            case "cGiveBladeFail":
+            case "cGiveBlade":
+                mainScript.runMoodSection("defaultResponseNoSense");
                 break;
 
 
@@ -2596,7 +2599,7 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "mad", "(Explore) You're not mad at me, are you?"));
         activeMenu.add(new Option(this.manager, "tone", "(Explore) You're different. Your whole mood is different.", notFirstChoice));
         activeMenu.add(new Option(this.manager, "sorry", "(Explore) Sorry I stabbed us.", !earlyApology));
-        activeMenu.add(new Option(this.manager, "out", "(Explore) How are we supposed to get out of here?", notFirstChoice));
+        activeMenu.add(new Option(this.manager, "out", "(Explore) How are we supposed to get out of here?", notFirstChoice, this.dragonStartNoLeaveAsk));
         activeMenu.add(new Option(this.manager, "others", "(Explore) If we're both here, then what happened to the others?"));
         activeMenu.add(new Option(this.manager, "ghost", "(Explore) Are we still a ghost?"));
         activeMenu.add(new Option(this.manager, "supposed", "(Explore) What are we supposed to do? Just wait for something to happen?", noLoopJoke));
@@ -2695,7 +2698,12 @@ public class ChapterIII extends StandardCycle {
                     mainScript.runSection(activeOutcome + "Start");
                     break;
 
-                default: this.giveDefaultFailResponsePrincess(activeOutcome);
+                default:
+                    if (firstChoice.check()) {
+                        this.giveDefaultFailResponse();
+                    } else {
+                        this.giveDefaultFailResponsePrincess(activeOutcome);
+                    }
             }
         }
 

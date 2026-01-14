@@ -819,57 +819,81 @@ truth Your peace does not last, nor can it ever. It's time to leave. Memory retu
 // Default fail responses //
 
 label defaultResponseGoHarsh
+pint In case you forgot, we're shackled to the wall. We can't exactly *wander around around the cabin* right now.
 
 label defaultResponseGoSoft
+pint You... you know we're chained to the wall, right?
 
 label defaultResponseLeaveHarsh
+pint What, like it's that simple? I've been stuck here for as long as you've known me! I don't think the two of us would *be* here right now if I knew how to leave.
 
 label defaultResponseLeaveSoft
+pint I wish we could, but I think we're probably stuck here until something happens.
 
 label defaultResponseMirrorHarsh
+pint What "mirror?" There isn't a mirror down here.
 
 label defaultResponseMirrorSoft
-
-label defaultResponseApproachHerHarsh
-
-label defaultResponseApproachHerSoft
+pint Um... there isn't a mirror here.
 
 label defaultResponseSlayPrincessHarsh
+pint EXCUSE me? This is my body, not yours. *You* don't get to make any decisions here. ESPECIALLY not decisions like THAT.
 
 label defaultResponseSlayPrincessSoft
+pint Wh-what? After everything, you still want to kill me...?
 
 label defaultResponseSlaySelfHarsh
+pint ... I'm going to generously assume you're talking about your *body* and not *me.*
+pint But you're not even here yet. Save it for when you come down those stairs.
 
 label defaultResponseSlaySelfSoft
+pint I'm... going to hope you're talking about your body and not... me, but...
+pint You're not here. We... can't.
 
 label defaultResponseSlaySelfWithDragonHarsh
+pint ... I'm going to generously assume you're talking about your *body* and not *me.*
+pint But with what? You're the one with the weapon here. All we can do is try to defend ourselves when you attack.
 
 label defaultResponseSlaySelfWithDragonSoft
+pint I'm... going to hope you're talking about your body and not... me, but...
+pint Y-you're the one with the weapon. What are we supposed to do?
 
 label defaultResponseTakeHarsh
+pint The knife isn't even here. It's probably upstairs, just like last time.
 
 label defaultResponseTakeSoft
+pint It's... not here. It's probably upstairs, like last time...
 
 label defaultResponseTakeWithDragonHarsh
+pint What, just grab it? Something tells me you wouldn't be willing to give it up so easily.
 
 label defaultResponseTakeWithDragonSoft
+pint I... don't think you'd be willing to hand it over. Or let go of it.
 
 label defaultResponseDropHarsh
+pint Ha. I don't think you can make decisions for them while you're in here.
 
 label defaultResponseDropSoft
-
-label defaultResponseGiveHarsh
-
-label defaultResponseGiveSoft
-
-label defaultResponseGiveWithDragonHarsh
-
-label defaultResponseGiveWithDragonSoft
+pint Are you trying to... tell yourself what to do? You're in here with me, remember?
 
 label defaultResponseThrowHarsh
+pint Ha. I wish, but I don't think you can make decisions for them while you're in here.
+pint Good idea, though. I'll keep that one in mind.
 
 label defaultResponseThrowSoft
+pint Are you trying to... tell yourself what to do? You're in here with me, remember?
+pint I wish we *could* get rid of it so easily, though...
 
 label defaultResponseHandHarsh
+pint What? We're -- we're in the same body right now. You can't... uh, hold my hand. You know that, right?
 
 label defaultResponseHandSoft
+pint H-huh?
+pint I don't... I-I don't think you can hold my hand without... your own body.
+pint But, um... thanks...?
+
+label defaultResponseNoSenseHarsh
+pint That doesn't make any sense.
+
+label defaultResponseNoSenseSoft
+pint What? That... doesn't make any sense.

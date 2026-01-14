@@ -334,7 +334,7 @@ public abstract class StandardCycle extends Cycle {
 
             case "cApproachHerFail":
             case "cApproachHer":
-                parser.printDialogueLine(new VoiceDialogueLine("...What?"));
+                parser.printDialogueLine(new VoiceDialogueLine("... What?"));
                 break;
 
             case "cWipeFail":
