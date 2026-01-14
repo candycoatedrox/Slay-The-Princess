@@ -191,9 +191,6 @@ hero Right, I agree, we can't do anything without a weapon. We can regroup once 
 label tryFleeJoin
 hunted Don't plan ahead. Act on the now. All that matters is that we stay alive.
 
-label cantFlee
-truth You have already tried that.
-
 label noWeapon
 hunted No steel claw. Nothing to fight back with.
 

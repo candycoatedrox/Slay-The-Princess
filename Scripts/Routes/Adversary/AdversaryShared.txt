@@ -18,9 +18,9 @@ stubborn Sure there is. It's WASTING time and energy that would be BETTER spent 
 
 label princessSpecial
 n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
-hero Oh. I didn't know we were *special.*
+hero Oh. I... didn't know we were *special.*
 stubborn Yeah. I like the sound of that.
-n Of course you're special. Why else would you be here?
+n Of course you're special! Why else would you be here?
 
 label princessCagey
 stubborn What else would we even need to know? We've got all the reason we need for a rematch.
@@ -76,7 +76,7 @@ label stairsStartJoin
 n The door to the basement creaks open, revealing a rough stone staircase, its walls pressing at your sides and tightening as you descend. The air seeping from below is heavy and oppressive, with an almost sulfuric odor to it. If the Princess lives here, slaying her would probably be doing her a favor.
 n Her fierce voice carries up the stairs.
 p Is that another challenger? *Finally.* It's been ages since I've had a good fight.
-hero This isn't what she sounded like last time. Her voice is a little deeper, almost threatening.
+hero This isn't what she sounded like last time. Her voice is a little deeper, almost... threatening.
 stubborn GOOD. Sounds like MY KIND OF PRINCESS.
 n As much as I appreciate the enthusiasm, just make sure you don't let your bloodlust get to your head. You need to stay focused and keep your wits about you. Remember you're here to *slay* the Princess, not to have a good fight.
 linebreak
@@ -101,7 +101,7 @@ label narratorProof
 n All right. Fine. If you're not going to address it, I will.
 hero What?
 n You've already met the Princess, the Princess has already met you, and the two of you killed each other. Did... you think that you'd be able to just... openly talk about all that without me noticing?
-hero ... maybe? You did seem to just gloss over the whole thing for a while.
+hero ... Maybe? You did seem to just gloss over the whole thing for a while.
 n Of course I glossed over it! When a colleague says something *insane,* "glossing over it" is one of the best ways to stay focused and keep moving forward. But enough is enough. I believe you. And that's all the more reason to take this seriously.
 jumpto narratorProofJoin
 
@@ -113,7 +113,7 @@ label narratorProofJoin
 n You don't know that whatever brought the two of you back to life isn't a fluke. And beyond that, do you know who *doesn't* remember anything that happened "last time?" *Me.* I. Don't. Remember!
 label narratorProofLateJoin
 hero Are... are you okay?
-n Of course I'm not okay! As far as we're all concerned, the fate of *my* world is still very much on the line! Not all of us have the luxury of jumping over to a *parallel universe* the second we die.
+n OF COURSE I'M NOT OKAY! As far as we're all concerned, the fate of *my* world is still very much on the line! Not all of us have the luxury of jumping over to a *parallel universe* the second we die.
 
 label apathyNarratorProof
 n You're joking, right? I'm just going to pretend that you're joking.
@@ -148,11 +148,11 @@ label differentDistantMenuNoBlade
 p Aside from your empty hands, you look exactly the same.
 
 label memoryDistantMenuBlade
-p Oh, I remember you, alright. Best three minutes of my life. So why don't we do it again?
+p Oh, I remember you, alright. Best three minutes of my *life.* So why don't we do it again?
 stubborn See? She wants to fight us again! There's no reason for us to stand around talking.
 
 label memoryDistantMenuNoBlade
-p Oh, I remember you, alright. Best three minutes of my life. So why don't we do it again? Or are you scared I'm going to put you down for good this time?
+p Oh, I remember you, alright. Best three minutes of my *life.* So why don't we do it again? Or are you scared I'm going to put you down for good this time?
 
 stubborn Are you just going to let her talk to us like that? We're not SCARED.
 n I think my position on violence in this situation is already more than clear, but you really shouldn't let yourself be goaded so easily. There's more at risk in this encounter than your fragile ego.
@@ -217,7 +217,7 @@ stubborn And there's only one choice worth making. FIGHT HER. WIN!
 
 label unpackDistantMenu
 p What is there to unpack? I was dead and now I'm not and the same goes for you. There. Unpacking done.
-p Don't you get it? We've been given free reign to wail on each other *forever.*
+p Don't you get it? We've been given free rein to wail on each other *forever.*
 stubborn Couldn't have said it better myself.
 
 label undecidedDistantMenu
@@ -784,7 +784,7 @@ stubborn Hear that? She RESPECTS us. We can PULL THIS OFF!
 hero Yeah... yeah! You're right!
 p But without that knife you'll never be enough.
 n Her knee connects with your sternum with a loud, violent crack. The wind leaves your lungs, and as you struggle for breath, you can feel something flooding in to fill the space. Hot blood, suffocating you from the inside.
-p You have to want to kill me. Like this.
+p You have to *want* to kill me. Like this.
 linebreak
 n You don't so much as see her movement before she deals the killing blow. Everything goes dark, and you die.
 hero Are... are you serious? That's it?
@@ -796,17 +796,17 @@ n Wait... no, that's not right you're -- /// interrupt
 stubborn Not dead anymore?
 n Yes. Your eyes bolt open and you push yourself back to your feet. You're... alive.
 n The Princess takes a step back and looks down at her pulp-covered fists.
-p I could have sworn I killed you. That's your face splattered on the walls and dripping from my hands.
+p I could have sworn I killed you. That's your FACE splattered on the walls a-and dripping from my hands.
 
 label faceUnarmedPhase1
-p You don't. I don't even know how you're talking to me!
+p You don't. I-I don't even know how you're talking to me!
 n You raise your hands and touch the front of your head. She's... not wrong.
 hero What?!?!? What did she do? What are we missing?
 stubborn WHO CARES if we're missing our face?! We can fight JUST FINE without one!
 
 label retrieveUnarmedPhase1
 n The Princess breaks into a wide grin.
-p No.
+p NO.
 jumpto unarmedPhase1Attack
 
 label runUnarmedPhase1
@@ -832,7 +832,7 @@ p This is getting boring. Are you even trying to keep up with me?
 linebreak
 n She lands another devastating -- no, lethal -- blow. Everything goes dark. Again. And you die. Again.
 stubborn You know what I'm going to say.
-hero That we're not dead?
+hero That we're not dead...?
 stubborn Yeah. That we're not dead. COME ON. GET UP. If we can just keep going, we're BOUND to wear her down eventually.
 hero Are you sure she can't do what we're doing right now?
     stubborn Of course I'm sure. We're *special,* remember? /// check
@@ -852,11 +852,12 @@ label unarmedDie
 
 // Grants you the Voice of the Contrarian //
 label unarmedPhase2
+n Once more, you... push yourself back to your mangled feet.
 p How... how are you still moving? How are you still doing ANYTHING?
 p B-Bodies aren't supposed to look like that!
 n An uncharacteristic terror seems to grip her voice.
 hero Have we ever seen her afraid before?
-n No, we haven't.
+n No. We haven't.
 stubborn THIS IS HOW WE WIN. We can do this FOREVER.
 p I'm going to put you out of your misery. I don't like looking at you like this. You're all twitching. And wrong.
 stubborn I'D LIKE TO SEE HER TRY. We're INVINCIBLE!

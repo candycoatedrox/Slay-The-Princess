@@ -604,6 +604,3 @@ n Everything goes dark, and you die.
 label quietCont
 truth The textured nothingness creeps closer.
     jumpto leaveCont /// check
-
-label slayAgainAttempt
-truth You have already tried that.

@@ -39,9 +39,6 @@ truth You raise your will to end your life. But as it buries into the space your
 truth One of the many hands in front of you reaches forward, and gently touches the side of your face.
 p There's nowhere for you to be but here.
 
-label alreadyTried
-truth You have already tried that.
-
 label forget
 linebreak
 truth Everything goes dark, and you die.
@@ -75,11 +72,8 @@ p Do not mourn her -- she is finally on the other side.
 
 label stranger
 p These ones are a contradiction. A winding kaleidoscope of paths unwalked. They are stretched into a shape not unlike me, but it is a shape they cannot hold.
-p They will make for a rich and vibrant heart.
-
-label strangerFirst
-p These ones are a contradiction. A winding kaleidoscope of paths unwalked. They are stretched into a shape not unlike me, but it is a shape they cannot hold.
-p I am sorry that you met this vessel so early in your journey, but they will make for a rich and vibrant heart.
+    p I am sorry that you met this vessel so early in your journey, but they will make for a rich and vibrant heart. /// firstvessel
+    p They will make for a rich and vibrant heart. /// notfirstvessel
 
 label prisonerHead
 p This one is cold and cynical. She has protected herself when others could not. She will make for a clever heart.

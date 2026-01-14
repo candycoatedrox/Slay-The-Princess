@@ -102,12 +102,12 @@ label princessQuote
 n She *is* just a Princess. Whatever you think happened to you last time, just get it out of your head before you get to the cabin, and you'll be *fine.*
 
 label princessBasement
-n *People* locked her in that basement. And I told you what this place is. It's a path in the woods. Don't overcomplicate things.
+n *People* locked her in that basement. And I told you what this place is. It's a path in the woods! Don't overcomplicate things.
 
 label princessWhyMe
 n Look, I'm not supposed to say this, but it's because you're special. You're the *only* person capable of doing this. Call it a prophecy if that helps, but it's just the way things are.
-hero Oh. I didn't know we were *special.*
-n Of course you're special. Why else would you be here?
+hero Oh. I... didn't know we were *special.*
+n Of course you're special! Why else would you be here?
 
 label princessCagey
 n I've told you everything you need to know, going into more detail would just overcomplicate an otherwise very simple situation and make your job more difficult.

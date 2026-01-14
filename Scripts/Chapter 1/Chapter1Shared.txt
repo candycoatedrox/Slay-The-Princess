@@ -66,7 +66,7 @@ n Don't mention it. It's all part of the job.
 label sweet
 n That's the spirit!
 
-// The hill & the cabin //
+// Hill dialogue //
 
 label hillDialogue
 linebreak
@@ -76,15 +76,15 @@ n She will lie, she will cheat, and she will do everything in her power to stop 
 hero We're not going to go through with this, right? She's a princess. We're supposed to save princesses, not slay them.
 n Ignore him. He doesn't know what he's talking about.
 
+// Cabin //
+
+label cabinIntro
 n The interior of the cabin is almost entirely bare. The air is stale and musty and the floor and walls are painted in a fine layer of dust. The only furniture of note is a plain wooden table. Perched on that table is a pristine blade.
 n The blade is your implement. You'll need it if you want to do this right.
 
 label takeBlade
 nowplaying The World Ender
 n You take the blade from the table. It'd be rather difficult to slay the Princess and save the world without it.
-
-label alreadyTried
-truth You have already tried that.
 
 // Shared basement lines //
 

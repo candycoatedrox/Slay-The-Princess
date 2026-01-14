@@ -22,6 +22,7 @@ public class GameManager {
     private boolean firstHarsh;
     private Chapter firstPrincess2;
     private String firstSource = "";
+    private boolean firstStrangerTossedBlade;
 
     // Global progress trackers
     private final ArrayList<Vessel> claimedVessels;
@@ -267,6 +268,20 @@ public class GameManager {
         this.firstHarsh = harsh;
         this.firstPrincess2 = chapter2;
         this.firstSource = source;
+        this.firstStrangerTossedBlade = false;
+    }
+
+    /**
+     * Stores information about the first Princess the player encounters, to be used in the Finale
+     * @param harsh whether the player took the blade in Chapter 1
+     * @param chapter2 the Chapter 2 the player reached
+     * @param source the Chapter 2's source
+     */
+    public void setFirstPrincess(boolean harsh, Chapter chapter2, String source, boolean threwBlade) {
+        this.firstHarsh = harsh;
+        this.firstPrincess2 = chapter2;
+        this.firstSource = source;
+        this.firstStrangerTossedBlade = threwBlade;
     }
 
     /**
@@ -574,7 +589,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource, this.firstStrangerTossedBlade);
             ending = currentCycle.runChapter();
 
             switch (ending) {
@@ -666,7 +681,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource, this.firstStrangerTossedBlade);
             ending = currentCycle.runChapter();
 
             switch (ending) {
@@ -732,7 +747,7 @@ public class GameManager {
             case 3:
             case 4:
             case 0:
-                this.currentCycle = new ChapterIII(startFromEnding, this, this.parser,  new ArrayList<>(), new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false, false, false, false, false, false, false);
+                this.currentCycle = new ChapterIII(startFromEnding, this, this.parser,  new ArrayList<>(), new Condition(), "normal", false, false, false, false, harsh, false, null, false, false, false, false, false, false, false, false, false, false, false, false);
                 break;
 
             default: throw new RuntimeException("Invalid starting chapter");
@@ -793,7 +808,7 @@ public class GameManager {
         }
 
         if (this.nClaimedVessels() == 5) {
-            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource);
+            this.currentCycle = new Finale(this, this.parser, this.claimedVessels, this.endingsFound, this.firstHarsh, this.firstPrincess2, this.firstSource, this.firstStrangerTossedBlade);
             ending = currentCycle.runChapter();
 
             switch (ending) {

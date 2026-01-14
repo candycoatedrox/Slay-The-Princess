@@ -248,6 +248,49 @@ public class ScriptScanner extends Script {
                 }
 
                 break;
+
+            case "setbool":
+                switch (args.length) {
+                    case 0:
+                        errorsFound.add(new ScriptError(lineIndex, 10, 0, prefix));
+                        break;
+                    case 1:
+                        switch (argument) {
+                            case "true":
+                            case "false": break;
+                            default: errorsFound.add(new ScriptError(lineIndex, 10, 2, argument));
+                        }
+                    default: errorsFound.add(new ScriptError(lineIndex, 10, 1, prefix));
+                }
+
+                break;
+
+            case "setnum":
+                switch (args.length) {
+                    case 0:
+                        errorsFound.add(new ScriptError(lineIndex, 10, 0, prefix));
+                        break;
+                    case 1:
+                        try {
+                            Integer.parseInt(argument);
+                        } catch (NumberFormatException e) {
+                            errorsFound.add(new ScriptError(lineIndex, 10, 3, argument));
+                        }
+                    default: errorsFound.add(new ScriptError(lineIndex, 10, 1, prefix));
+                }
+
+                break;
+
+            case "setstring":
+                switch (args.length) {
+                    case 0:
+                        errorsFound.add(new ScriptError(lineIndex, 10, 0, prefix));
+                        break;
+                    case 1: break;
+                    default: errorsFound.add(new ScriptError(lineIndex, 10, 1, prefix));
+                }
+
+                break;
             
             case "switchjump":
                 if (nArgs == 0) {
@@ -635,7 +678,7 @@ public class ScriptScanner extends Script {
                         errorsFound.add(new ScriptError(lineIndex, 8, 7, prefix));
                 }
 
-            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("chainsfree") || m.equals("tookblade") || m.equals("narrproof") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("faceask") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("headwatch") || m.equals("goodseen") || m.equals("heartstop") || m.equals("cutroute")) {
+            } else if (m.equals("knowledge") || m.equals("sharedloop") || m.equals("sharedinsist") || m.equals("mirrorask") || m.equals("mirrortouch") || m.equals("mirror2") || m.equals("threwblade") || m.equals("chainsfree") || m.equals("tookblade") || m.equals("narrproof") || m.equals("drop1") || m.equals("whatdo1") || m.equals("rescue1") || m.equals("abandoned") || m.equals("faceask") || m.equals("deathshared") || m.equals("possessask") || m.equals("cantwontask") || m.equals("endslay") || m.equals("forcedblade") || m.equals("headwatch") || m.equals("goodseen") || m.equals("heartstop") || m.equals("cutroute")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -645,7 +688,7 @@ public class ScriptScanner extends Script {
 
                 if (args.length != 1) errorsFound.add(new ScriptError(lineIndex, 8, 6, prefix));
 
-            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("notfree") || m.equals("leftblade") || m.equals("noproof") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nofaceask") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("nowatch") || m.equals("goodnotseen") || m.equals("noheartstop") || m.equals("nocut")) {
+            } else if (m.equals("noknowledge") ||m.equals("noshare") || m.equals("noinsist") || m.equals("nomirrorask") || m.equals("nomirrortouch") || m.equals("nomirror2") || m.equals("nothrow") || m.equals("notfree") || m.equals("leftblade") || m.equals("noproof") || m.equals("nodrop1") || m.equals("nowhatdo1") || m.equals("norescue1") || m.equals("noabandon") || m.equals("nofaceask") || m.equals("nodeathshare") || m.equals("nopossessask") || m.equals("nocantwontask") || m.equals("noendslay") || m.equals("noforce") || m.equals("nowatch") || m.equals("goodnotseen") || m.equals("noheartstop") || m.equals("nocut")) {
                 if (presentMods.contains(prefix)) {
                     if (!duplicateMods.contains(prefix)) duplicateMods.add(prefix);
                 } else {
@@ -985,6 +1028,9 @@ public class ScriptScanner extends Script {
 
             case "faceask": return "nofaceask";
             case "nofaceask": return "faceask";
+
+            case "deathshared": return "nodeathshare";
+            case "nodeathshare": return "deathshared";
 
             case "possessask": return "nopossessask";
             case "nopossessask": return "possessask";

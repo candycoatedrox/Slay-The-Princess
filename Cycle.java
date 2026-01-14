@@ -20,6 +20,7 @@ public abstract class Cycle {
     protected boolean reverseDirection = false;
 
     protected boolean hasBlade = false;
+    protected boolean threwBlade = false;
 
     // Variables that are used in all Chapter 2s and 3s
     protected boolean mirrorComment = false;
@@ -45,6 +46,9 @@ public abstract class Cycle {
     // Variables that persist between all chapters
     protected boolean isHarsh = false; // Used in Chapter 1, Spectre, Princess and the Dragon, Nightmare, and the Finale
     protected boolean knowsDestiny = false; // Used in Chapter 1, Adversary, Tower, Fury
+
+    // Dialogue lines
+    protected static final DialogueLine QUIETCREEP = new DialogueLine("A textured nothingness begins to creep into the edges of your vision.");
 
     // --- CONSTRUCTOR ---
 
@@ -144,6 +148,14 @@ public abstract class Cycle {
      */
     public boolean hasBlade() {
         return this.hasBlade;
+    }
+
+    /**
+     * Accessor for threwBlade
+     * @return whether or not the player threw the blade out the window
+     */
+    public boolean threwBlade() {
+        return this.threwBlade;
     }
 
     /**
@@ -1071,7 +1083,7 @@ public abstract class Cycle {
      */
     public void quietCreep() {
         System.out.println();
-        parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision.");
+        parser.printDialogueLine(QUIETCREEP);
         System.out.println();
     }
 

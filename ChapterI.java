@@ -194,7 +194,7 @@ public class ChapterI extends StandardCycle {
                         parser.printDialogueLine(CANTSTRAY);
                         break;
                     } else if (!canStranger) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "leave":
@@ -233,7 +233,7 @@ public class ChapterI extends StandardCycle {
                         parser.printDialogueLine(CANTSTRAY);
                         break;
                     } else if (!canStranger) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
 
@@ -254,7 +254,7 @@ public class ChapterI extends StandardCycle {
         this.currentLocation = GameLocation.CABIN;
         this.knowsBlade = true;
         this.withBlade = true;
-        mainScript.runSection();
+        mainScript.runSection("cabinIntro");
 
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "take", !canHarsh, "(Explore) [Take the blade.]"));
@@ -298,7 +298,7 @@ public class ChapterI extends StandardCycle {
                         parser.printDialogueLine(CANTSTRAY);
                         break;
                     } else if (!canStranger) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
 

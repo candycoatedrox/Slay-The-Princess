@@ -67,6 +67,7 @@ public enum ChapterEnding {
     HITCHHIKER("spectreFree", true, Vessel.SPECTRE, 1, 1, false),
     HEARTRIPPERLEAVE("spectreLeave", Chapter.WRAITH, Voice.PARANOID),
     EXORCIST("spectreSlay", true, Chapter.DRAGON, Voice.OPPORTUNIST),
+    EXORCISTUPSTAIRS("spectreSlay", true, Chapter.DRAGON, Voice.OPPORTUNIST),
     HEARTRIPPER("spectreOffend", Chapter.WRAITH, Voice.CHEATED),
 
     // The Princess and the Dragon

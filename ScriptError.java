@@ -61,6 +61,11 @@ public class ScriptError extends ScriptNote {
             - 6 = multiple ifsource, ifnum, ifstring, voice2, voice3, or negative counterparts checks (different targets)
             - 7 = same argument used for both checkvoice and checknovoice, check extraInfo
             - 8 = checknovoice used with id for speaker
+        - 10 = invalid set condition
+            - 0 = no argument given, check extraInfo
+            - 1 = more than one argument given, check extraInfo
+            - 2 = invalid argument for setbool, check extraInfo
+            - 3 = non-integer argument for setnum, check extraInfo
     */
 
     // --- CONSTRUCTORS ---
@@ -429,6 +434,35 @@ public class ScriptError extends ScriptNote {
                         s += "checknovoice used with same id as speaker ";
                         s += this.extraInfo[0];
                         s += ")";
+                        break;
+                }
+                break;
+
+            case 10:
+                s += "Invalid set condition (";
+                switch (this.subtype) {
+                    case 0:
+                        s += "no argument given for ";
+                        s += this.extraInfo[0];
+                        s += ")";
+                        break;
+                        
+                    case 1:
+                        s += "2+ arguments given for ";
+                        s += this.extraInfo[0];
+                        s += ")";
+                        break;
+
+                    case 2:
+                        s += "invalid argument ";
+                        s += this.extraInfo[0];
+                        s += " used for setbool)";
+                        break;
+
+                    case 3:
+                        s += "non-integer argument ";
+                        s += this.extraInfo[0];
+                        s += " used for setnum)";
                         break;
                 }
                 break;

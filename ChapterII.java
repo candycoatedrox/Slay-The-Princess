@@ -14,7 +14,6 @@ public class ChapterII extends StandardCycle {
     private String source = "";
     private boolean sharedLoop = false;
     private boolean sharedLoopInsist = false;
-    private boolean threwBlade = false;
     private boolean skipHillDialogue = false;
 
     // Flags that persist from Chapter 1
@@ -43,7 +42,6 @@ public class ChapterII extends StandardCycle {
     private InverseCondition towerSubmitted;
 
     // Flags used in The Spectre
-    private boolean spectreShareDied = false;
     private Condition spectreNoEndWorldExplore;
 
     // Variables used in The Beast
@@ -60,6 +58,7 @@ public class ChapterII extends StandardCycle {
     private boolean abandoned2 = false;
     private boolean adversaryTookBlade = false;
     private boolean adversaryFaceExplore = false;
+    private boolean spectreShareDied = false;
     private boolean spectrePossessAsk = false;
     private boolean spectreCantWontAsk = false;
     private boolean spectreEndSlayAttempt = false;
@@ -130,14 +129,6 @@ public class ChapterII extends StandardCycle {
      */
     public boolean sharedLoopInsist() {
         return this.sharedLoopInsist;
-    }
-
-    /**
-     * Accessor for threwBlade
-     * @return whether or not the player threw the blade out the window
-     */
-    public boolean threwBlade() {
-        return this.threwBlade;
     }
 
     /**
@@ -297,7 +288,7 @@ public class ChapterII extends StandardCycle {
         manager.updateTracker();
 
         if (!ending.isFinal()) {
-            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, freeFromChains2.check(), abandoned2, adversaryTookBlade, adversaryFaceExplore, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerWatchedHead, prisonerGoodEndingSeen, prisonerHeartStopped);
+            ChapterIII chapter3 = new ChapterIII(ending, manager, parser, route, cantTryAbort, source, sharedLoop, sharedLoopInsist, mirrorComment, touchedMirror, isHarsh, knowsDestiny, ch2Voice, freeFromChains2.check(), abandoned2, adversaryTookBlade, adversaryFaceExplore, spectreShareDied, spectrePossessAsk, spectreCantWontAsk, spectreEndSlayAttempt, prisonerForcedBlade, prisonerWatchedHead, prisonerGoodEndingSeen, prisonerHeartStopped);
             ending = chapter3.runChapter();
         }
 
@@ -2185,6 +2176,7 @@ public class ChapterII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding adversaryFightUnarmed() {
+        this.princessViolent = true;
         mainScript.runSection("unarmedStart");
 
         this.subMenu = new OptionsMenu(true);
@@ -2207,7 +2199,6 @@ public class ChapterII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "run", "[Run.]"));
         activeMenu.add(new Option(this.manager, "attack", "[Attack the Princess.]"));
 
-        this.princessViolent = true;
         this.repeatActiveMenu = true;
         while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
@@ -2233,6 +2224,8 @@ public class ChapterII extends StandardCycle {
                     break;
             }
         }
+
+        freeFromChains2.set();
 
         if (parser.promptOptionsMenu(subMenu).equals("die")) {
             mainScript.runSection("unarmedDiePhase1");
@@ -3617,7 +3610,7 @@ public class ChapterII extends StandardCycle {
                     case "end1":
                     case "end2":
                     case "yesNo":
-                        mainScript.runConditionalSection(activeOutcome + "EndWorldHarsh", this.spectreShareDied);
+                        mainScript.runSection(activeOutcome + "EndWorldHarsh");
                         break;
 
                     case "return":
@@ -3888,6 +3881,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "cTakeBlade":
+                    activeMenu.setCondition("take", false);
                 case "take":
                     this.withBlade = false;
                     this.hasBlade = true;
@@ -3906,7 +3900,7 @@ public class ChapterII extends StandardCycle {
                     }
 
                     mainScript.runSection("exorcismStart");
-                    return ChapterEnding.EXORCIST;
+                    return ChapterEnding.EXORCISTUPSTAIRS;
 
                 case "cGoHill":
                 case "cont":
@@ -3914,7 +3908,7 @@ public class ChapterII extends StandardCycle {
                     break;
 
                 case "cGoStairs":
-                    mainScript.runSection("possessTurnAround" + moodSuffix);
+                    mainScript.runMoodSection("possessTurnAround");
                     break;
 
                 case "cSlayPrincessNoBladeFail":
@@ -5028,7 +5022,7 @@ public class ChapterII extends StandardCycle {
                     case "cGoStairs":
                         if (!canTryFlee.check()) {
                             stallCount -= 1;
-                            mainScript.runSection("cantFlee");
+                            parser.printDialogueLine(ALREADYTRIED);
                             break;
                         }
                     case "flee":
@@ -6048,7 +6042,6 @@ public class ChapterII extends StandardCycle {
         // You gain the Voice of the Contrarian
 
         this.secondaryScript = new Script(this.manager, this.parser, "Chapter2Shared");
-        if (this.isFirstVessel) manager.setFirstPrincess(this.isHarsh, Chapter.STRANGER, this.source);
 
         secondaryScript.runSection();
         mainScript.runSection();
@@ -6229,13 +6222,13 @@ public class ChapterII extends StandardCycle {
             }
         }
 
+        // Enter the basement
+        if (this.isFirstVessel) manager.setFirstPrincess(this.isHarsh, Chapter.STRANGER, this.source, this.threwBlade);
         this.currentLocation = GameLocation.STAIRS;
         this.withBlade = false;
         this.canThrowBlade = false;
         this.mirrorPresent = false;
         mainScript.runSection("stairsStart");
-
-        if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
         GlobalInt schismCount = new GlobalInt(1);
         NumCondition singleSchism = new NumCondition(schismCount, 1);
@@ -6293,6 +6286,8 @@ public class ChapterII extends StandardCycle {
         this.withPrincess = true;
         this.canLeftRight = false;
         mainScript.runConditionalSection(firstSchism + "Stairs", firstSchism);
+
+        if (manager.trueDemoMode()) return ChapterEnding.DEMOENDING;
 
         String setNewSchism = "";
         boolean newSchismComment = false;
@@ -7672,7 +7667,7 @@ public class ChapterII extends StandardCycle {
                     case "cTakeBlade":
                     case "cSlayPrincessNoBladeFail":
                         if (this.cantJoint3.check()) {
-                            mainScript.runSection("slayAgainAttempt");
+                            parser.printDialogueLine(ALREADYTRIED);
                             break;
                         } else if (manager.demoMode()) {
                             parser.printDialogueLine(DEMOBLOCK);

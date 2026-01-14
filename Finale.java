@@ -31,7 +31,7 @@ public class Finale extends Cycle {
      * @param firstPrincess the first Chapter 2 encountered by the player (not counting aborted routes)
      * @param parser the IOHandler to link this instance of Finale to
      */
-    public Finale(GameManager manager, IOHandler parser, ArrayList<Vessel> vessels, ArrayList<ChapterEnding> endings, boolean firstHarsh, Chapter firstPrincess2, String firstSource) {
+    public Finale(GameManager manager, IOHandler parser, ArrayList<Vessel> vessels, ArrayList<ChapterEnding> endings, boolean firstHarsh, Chapter firstPrincess2, String firstSource, boolean strangerTossedBlade) {
         super(manager, parser);
         this.clearVoices();
 
@@ -45,6 +45,7 @@ public class Finale extends Cycle {
         this.firstHarsh = firstHarsh;
         this.firstPrincess2 = firstPrincess2;
         this.firstSource = firstSource;
+        this.threwBlade = strangerTossedBlade;
         this.strangerHeart = firstPrincess2 == Chapter.STRANGER;
 
         this.mirrorWasCruel = manager.mirrorWasCruel();

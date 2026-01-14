@@ -364,8 +364,7 @@ p So that's where the hostility comes from. I don't know where you got that idea
 
 label end1EndWorldHarsh
 p Well, killer, what does it mean for something to end anyway? You "ended" me, but I'm still right here in front of you, aren't I?
-    jumpto end1HarshCont /// checkfalse
-p You apparently "ended" too, yet here you are. And you don't even look any different.
+    p You apparently "ended" too, yet here you are. And you don't even look any different. /// deathshared
 label end1HarshCont
 p AFTER SEEING WHAT YOU'VE SEEN, HOW CAN YOU BE SURE ANYTHING ENDS?
 cold I see her point`. Everything here is so... impermanent`, always shifting`. The end of one thing just leads to the start of another.

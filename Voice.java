@@ -19,9 +19,9 @@ public enum Voice {
 
     // Princess and the Dragon Voices
     UNKNOWNEXT("???", "dragon", true),
-    HEROEXT("Hero", "heroext", true),
-    COLDEXT("Cold", "coldext", true),
-    OPPOEXT("Opportunist", "oppoext", true),
+    HEROEXT("???", "heroext", true),
+    COLDEXT("???", "coldext", true),
+    OPPOEXT("???", "oppoext", true), // have the Voices show up with just "Hero", "Cold" etc.?
 
     // Two voices speaking at once
     NARRSTUB("The Narrator and the Voice of the Stubborn", "narrstub"),

@@ -91,9 +91,9 @@ label pulledWoodsJoin
 hero I don't think you have much to worry about. You're still the one in charge here, and I don't think that's ever going to change.
 
 label noReturnWoods
-n "Then what happens?" Have you even been listening? It's the end is what happens.
+n "Then what happens?" Have you even been listening? It's the END is what happens.
 hero Yeah, but is there something... *after* the end?
-n How am I supposed to know? The end means finality. It's not like I can just peek on over to the other side and tell you what it's like there. If there even is a there.
+n How am I supposed to know? The end means finality. It's not like I can just peek on over to the other side and tell you what it's like there. If there even IS a there.
     contra Isn't it your job to know things? Maybe we need a better Narrator who can actually answer our questions... /// checkvoice
         n It's my job to guide you through your task and to state the facts of what's happening. That hardly requires *omniscience,* and besides, I'm the best you're going to get, because I'm the only one here who can do my job. /// checkvoice-contra
     cold We've seen the "other side,`" and if you'd really like to know`, there's nothing there`. A pause`. A breath`. And then we're back in the woods again. /// checkvoice
@@ -208,11 +208,11 @@ label approachMirror
     broken Smash it`. Smash it to pieces. It's the *only* thing *keeping* us from Her! /// ifsource-tower
         hero Don't you want to know what we'll see in there? We won't be able to see anything if we smash it. /// ifsource-tower
         stubborn Nah, I'm with him on this one. SMASH IT! LET'S GET VIOLENT ALREADY! /// ifsource-tower
-    contra Does it matter if it's actually real or not? Talking about it gets under His skin, and that's all that matters. We should talk about it even more! /// checkvoice
+    contra Does it matter if it's actually real or not? Talking about it gets under His skin, and that's all that matters! We should talk about it even more! /// checkvoice
     stubborn Let's just SMASH it and get it OVER with! I'm ready to get VIOLENT. /// ifsourcenot-tower
         hero We won't be able to see what's in there if we smash it... /// ifsourcenot-tower
     cold It's just a mirror`. What we do with it doesn't really matter. /// checkvoice
-n Do whatever you want with it. The mirror isn't real, so how you handle it doesn't matter aside from wasting dangerous amounts of time.
+n Do whatever you want with it. The mirror isn't real, so how you handle it doesn't matter aside from wasting *dangerous* amounts of time.
 
 label wipeMirror
 n You reach forward and drag your hand across the door leading to the basement.
@@ -414,12 +414,12 @@ p Let's see what you're really made of. Maybe we can find where your courage dec
 
 label contraPush1
 n Though the ribbons of your unraveled body struggle to coordinate, you manage to put one foot forward.
-p Oh. So there is some challenge left in you. Let's see how long it takes to crush it.
+p Oh. So there IS some challenge left in you. Let's see how long it takes to CRUSH IT.
 n The Princess clenches her fist, and as her knuckles tighten, even more of you becomes undone. Your skin is flayed, your fatty tissue torn from your muscles.
 p What are you? You're clearly not your skin.
 contra Why would we ever be just our skin? We lost *so much* of it last time, we're *obviously* more than that.
 hero Who cares?! I don't like not having skin. It *hurts!*
-stubborn THE PAIN DOESN'T MATTER. JUST. KEEP. WALKING. She CAN'T stop us if we don't LET her!
+stubborn THE PAIN DOESN'T MATTER. JUST. KEEP. WALKING! She CAN'T stop us if we don't LET her!
 
 label contraGiveUp2
 stubborn NO! COME ON! It's just SKIN! What's WRONG with you?
@@ -470,7 +470,7 @@ linebreak
 hero Until... what?
 contra I think He gave up on us.
 stubborn Figures. He always seemed WEAK to me.
-p In the end, you're... nothing. Just like what's left of me.
+p In the end, you're NOTHING`. Just like what's left of me.
 hero But we're still here, aren't we?
 stubborn WHICH MEANS WE AREN'T FINISHED.
 hero What are we supposed to do, hit her with nothing?
@@ -478,9 +478,9 @@ stubcont ...
 stubcont YES.
 
 truth Something, or nothing, bursts forward from the place that is you. Threads in the shape of a pristine blade. They pierce her heart.
-p Huh. I felt that.
+p Huh`. I felt that.
 hero We actually did it.
-stubborn We... actually WON!
+stubborn We... actually WON.
 contra I always knew we had it in us! But... what are we going to do with ourselves now?
 p It's... cold.
 claim contraEnd

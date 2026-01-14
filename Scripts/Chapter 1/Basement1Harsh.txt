@@ -448,7 +448,7 @@ label leaveNevermind
 n There's no "decision" to be made here, but fine.
 
 label enough
-p Oh. Have you decided what to do with me?
+p Oh? Have you decided what to do with me?
 n You know why you're here...
 
 label enoughRescue

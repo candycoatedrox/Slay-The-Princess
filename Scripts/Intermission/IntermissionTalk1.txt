@@ -30,8 +30,10 @@ p Yes. Nerves and fibers to feel the worlds beyond. Perspectives to make my own.
 label end
 p How can the world have ended if we are talking?
 
+// Variation for Stranger pronouns //
 label letOut
-p I'm sorry. There are some changes that can never be undone, there are some tears that can never be unshed. This is not a place that can hold a fragment of a concept. The moment she arrived here, she was going to return to me.
+    p I'm sorry. There are some changes that can never be undone, there are some tears that can never be unshed. This is not a place that can hold a fragment of a concept. The moment she arrived here, she was going to return to me. /// checkfalse
+    p I'm sorry. There are some changes that can never be undone, there are some tears that can never be unshed. This is not a place that can hold a fragment of a concept. The moment they arrived here, they were going to return to me. /// check
 p I promise that it doesn't hurt.
 
 label narrator
@@ -45,8 +47,10 @@ p I have only just now stirred to consciousness. I could not have trapped you he
 label worlds
 p I know only that they are.
 
+// Variation for Stranger pronouns //
 label princess
-p She is part of me, and part of me is her.
+    p She is part of me, and part of me is her. /// checkfalse
+    p They are part of me, and part of me is them. /// check
 
 p You speak in circles. Does it matter where one thing begins and another ends?
 
@@ -55,9 +59,11 @@ p You are familiar, but you are not me. I feel sadness, longing, hope, as I witn
 
 // "What happens now?" //
 
+// Variation for Stranger pronouns //
 label whatNow
 p Nothing, as we are. But I know that there are worlds beyond us, and that we are meant to reach them.
-p There is no exit, but this vessel is a creature of perception. She can make you forget, if only you believe her to be able to.
+    p There is no exit, but this vessel is a creature of perception. She can make you forget, if only you believe her to be able to. /// checkfalse
+    p There is no exit, but this vessel is a creature of perception. They can make you forget, if only you believe them to be able to. /// check
 p Bring me more perspectives, so that I may be whole, and perhaps then we will know our freedom.
 
 label kill
@@ -82,7 +88,9 @@ p If you need time, then I'll wait for you.
 
 // Ending //
 
+// Variation for Stranger pronouns //
 label forget
-p She asks that I tell you to remember her.
+    p She asks that I tell you to remember her. /// checkfalse
+    p They ask that I tell you to remember them. /// check
 p You won't. /// interrupt
 pause 500 1000

@@ -49,6 +49,7 @@ public class Script {
     private String ch3Voice = "";
     private boolean abandoned2;
     private boolean adversaryFaceExplore;
+    private boolean spectreShareDied;
     private boolean spectrePossessAsk;
     private boolean spectreCantWontAsk;
     private boolean spectreEndSlay;
@@ -843,6 +844,7 @@ public class Script {
         this.ch3Voice = "";
         this.abandoned2 = false;
         this.adversaryFaceExplore = false;
+        this.spectreShareDied = false;
         this.spectrePossessAsk = false;
         this.spectreCantWontAsk = false;
         this.spectreEndSlay = false;
@@ -867,6 +869,7 @@ public class Script {
             this.hasBlade = currentCycle.hasBlade();
             this.mirrorComment = currentCycle.mirrorComment();
             this.touchedMirror = currentCycle.touchedMirror();
+            this.threwBlade = currentCycle.threwBlade();
             this.isHarsh = currentCycle.isHarsh();
             this.knowsDestiny = currentCycle.knowsDestiny();
 
@@ -877,7 +880,6 @@ public class Script {
                 this.chapterSource = chapter2.getSource();
                 this.sharedLoop = chapter2.sharedLoop();
                 this.sharedLoopInsist = chapter2.sharedLoopInsist();
-                this.threwBlade = chapter2.threwBlade();
                 this.freeFromChains2 = chapter2.freeFromChains2();
                 this.adversaryTookBlade = chapter2.adversaryTookBlade();
 
@@ -891,13 +893,13 @@ public class Script {
                 this.chapterSource = chapter3.getSource();
                 this.sharedLoop = chapter3.sharedLoop();
                 this.sharedLoopInsist = chapter3.sharedLoopInsist();
-                this.threwBlade = chapter3.threwBlade();
                 this.freeFromChains2 = chapter3.freeFromChains2();
                 this.adversaryTookBlade = chapter3.adversaryTookBlade();
 
                 this.ch3Voice = chapter3.ch3Voice().toString();
                 this.abandoned2 = chapter3.abandoned2();
                 this.adversaryFaceExplore = chapter3.adversaryFaceExplore();
+                this.spectreShareDied = chapter3.spectreShareDied();
                 this.spectrePossessAsk = chapter3.spectrePossessAsk();
                 this.spectreCantWontAsk = chapter3.spectreCantWontAsk();
                 this.spectreEndSlay = chapter3.spectreEndSlay();
@@ -924,6 +926,7 @@ public class Script {
             this.hasBlade = currentCycle.hasBlade();
             this.mirrorComment = currentCycle.mirrorComment();
             this.touchedMirror = currentCycle.touchedMirror();
+            this.threwBlade = currentCycle.threwBlade();
             this.isHarsh = currentCycle.isHarsh();
             this.knowsDestiny = currentCycle.knowsDestiny();
 
@@ -932,7 +935,6 @@ public class Script {
                 
                 this.sharedLoop = chapter2.sharedLoop();
                 this.sharedLoopInsist = chapter2.sharedLoopInsist();
-                this.threwBlade = chapter2.threwBlade();
                 this.narratorProof = chapter2.narratorProof();
                 this.adversaryTookBlade = chapter2.adversaryTookBlade();
                 this.freeFromChains2 = chapter2.freeFromChains2();
@@ -1137,6 +1139,36 @@ public class Script {
 
                 if (this.runModifierChecks(mods)) this.sourceSwitchJump(argument);
                 break;
+
+            case "setbool":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid setbool in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.setBoolCondition(argument);
+                break;
+
+            case "setnum":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid setnum in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.setNumCondition(argument);
+                break;
+
+            case "setstring":
+                if (args.length == 0) {
+                    // Invalid line; print error message and skip to next line
+                    System.out.println("[DEBUG: Invalid setstring in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
+                    break;
+                }
+
+                if (this.runModifierChecks(mods)) this.setStringCondition(argument);
+                break;
             
             case "switchjump":
                 if (this.runModifierChecks(mods)) this.boolSwitchJumpTo(argument);
@@ -1331,6 +1363,11 @@ public class Script {
                 if (!this.adversaryFaceExplore) return false;
             } else if (m.equals("nofaceask")) {
                 if (this.adversaryFaceExplore) return false;
+
+            } else if (m.equals("deathshared")) {
+                if (!this.spectreShareDied) return false;
+            } else if (m.equals("nodeathshare")) {
+                if (this.spectreShareDied) return false;
 
             } else if (m.equals("possessask")) {
                 if (!this.spectrePossessAsk) return false;
@@ -1608,6 +1645,44 @@ public class Script {
     }
 
     /**
+     * Sets the boolean condition of this Script to the given value
+     * @param argument the argument given by the Script
+     */
+    private void setBoolCondition(String argument) {
+        switch (argument) {
+            case "true":
+                this.boolCondition = true;
+                break;
+            case "false":
+                this.boolCondition = false;
+                break;
+            default:
+                System.out.println("[DEBUG: Invalid setbool argument " + argument + " at line " + this.cursor + " in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Sets the int condition of this Script to the given value
+     * @param argument the argument given by the Script
+     */
+    private void setNumCondition(String argument) {
+        try {
+            int newValue = Integer.parseInt(argument);
+            this.intCondition = newValue;
+        } catch (NumberFormatException e) {
+            System.out.println("[DEBUG: Invalid setnum argument " + argument + " at line " + this.cursor + " in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Sets the String condition of this Script to the given value
+     * @param argument the argument given by the Script
+     */
+    private void setStringCondition(String argument) {
+        this.strCondition = argument;
+    }
+
+    /**
      * Moves the cursor to one of two labels depending on a given boolean
      * @param arguments the possible labels to move to
      */
@@ -1838,6 +1913,13 @@ Different functions a script can perform:
   - harshswitch [prefix]
         Runs the section of the script at the label starting with the given prefix and ending with either "Harsh" or "Soft", depending on whether the Princess is currently hostile.
 
+  - setbool [true / false]
+        Sets the boolean condition currently being used by the Script to the given value.
+  - setnum [value]
+        Sets the int condition currently being used by the Script to the given value.
+  - setstring [value]
+        Sets the String condition currently being used by the Script to the given value.
+
   - switchjump [true label] [false label]
         Moves the cursor to the first given label if the boolean condition given in runConditionalSection() is true, or to the second given label if the condition is false (or no condition was given).
 
@@ -1980,6 +2062,11 @@ Generic modifiers available for all lines (except comments and labels):
       - nofaceask
             Checks if the player did not ask about their missing face while fighting the Adversary unarmed before running the line.
             
+      - deathshared
+            Checks if the the player told the Spectre that they died before running the line.
+      - nodeathshare
+            Checks if the player did not the Spectre that they died before running the line.
+            
       - possessask
             Checks if the Spectre asked to possess the player before running the line.
       - nopossessask
@@ -2001,9 +2088,9 @@ Generic modifiers available for all lines (except comments and labels):
             Checks if the Voice of the Skeptic did not force the player to take the blade in Chapter 2 before running the line.
 
       - headwatch
-            Checks if the player chose to watch the Prisoner decapitate herself in Chapter 2 before running the line.
+            Checks if the player chose to watch the Prisoner decapitate herself before running the line.
       - nowatch
-            Checks if the player did not choose to watch the Prisoner decapitate herself in Chapter 2 before running the line.
+            Checks if the player did not choose to watch the Prisoner decapitate herself before running the line.
 
       - goodseen
             Checks if the player saw the Good Ending in Chapter 2 before running the line.

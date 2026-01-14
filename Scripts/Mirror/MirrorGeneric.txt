@@ -10,7 +10,7 @@ label where
     skeptic If there's even a her to find anymore. /// checkvoice
     oppo Does this mean we won? /// checkvoice
 hero You're right. She's gone. It's just us and that... awful thing.
-    stubborn It's like it's mocking us. /// checkvoice
+    stubborn It's like it's MOCKING us. /// checkvoice
     hunted Let's just stay still. /// checkvoice
     smitten I can't believe she was taken away from us! The nerve. /// checkvoice
     para I should feel better with her gone, but I don't. /// checkvoice
@@ -28,7 +28,7 @@ hero He is. Does that mean the world ended?
     contra Then what the hell are we supposed to do? /// checkvoice checkfalse
     contra Again, what the hell are we supposed to do? /// checkvoice check
     para Yeah. No voice needling us anymore. Feels good, but I also feel... itchy. Cold. /// checkvoice
-    stubborn The world didn't end. We're still here. Come on, we just need to keep going! /// checkvoice
+    stubborn The world didn't end. We're still here. Come on, we just need to keep GOING! /// checkvoice
     broken Figures the world would end and leave us with all this nothing. /// checkvoice
     oppo We're at the top of the pecking order now... right, boys? /// checkvoice
     smitten A villain vanquished. /// checkvoice
@@ -42,7 +42,7 @@ jumpto exploreJoinB
 label approachFirstVessel
 hero I'm begging you, don't do this.
 
-hero It's different now! It feels... I don't know. Final.
+hero It's different now! I-it feels... I don't know. Final.
 
 // Following mirrors //
 
@@ -54,7 +54,7 @@ label exploreJoinB
     hunted That thing reeks of death. /// checkvoice
     para It's calling us. And not in a good way. /// checkvoice
     skeptic You're right. Part of me wants the truth, but something stronger is holding me back. Fear. /// checkvoice
-    stubborn Screw the mirror! We just need to find the Princess. /// checkvoice
+    stubborn Screw the mirror! We just need to find the PRINCESS. /// checkvoice
     broken I don't want to look at us. /// checkvoice
     smitten Yes, I fear that we won't like what we'll see. What if we just sit here and preen for a while? That can't hurt, right? /// checkvoice
     cheated It's going to *do* something to us. I can feel it. /// checkvoice

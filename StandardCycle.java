@@ -14,10 +14,13 @@ public abstract class StandardCycle extends Cycle {
     protected boolean princessViolent = false; // Is she actively trying to kill the player?
     protected boolean princessSlain = false; // Has she been killed by the player this Chapter?
 
+    // Dialogue lines
     protected static final PrincessDialogueLine CANTSTRAY = new PrincessDialogueLine(true, "You have already committed to my completion. You cannot go further astray.");
     protected static final PrincessDialogueLine WORNPATH = new PrincessDialogueLine(true, "This path is already worn by travel and has been seen by one of my many eyes. You cannot walk it again. Change your course.");
     protected static final VoiceDialogueLine WORNPATHHERO = new VoiceDialogueLine(Voice.HERO, "Wait... what?!");
     protected static final PrincessDialogueLine DEMOBLOCK = new PrincessDialogueLine(true, "That path is not available to you.");
+    protected static final DialogueLine ALREADYTRIED = new VoiceDialogueLine("You have already tried that.");
+    protected static final DialogueLine QUIETCREEP2 = new DialogueLine("A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.");
 
     // --- CONSTRUCTORS ---
 
@@ -501,9 +504,9 @@ public abstract class StandardCycle extends Cycle {
     public void quietCreep() {
         System.out.println();
         if (this.isFirstVessel && manager.nVesselsAborted() == 0) {
-            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision.");
+            parser.printDialogueLine(QUIETCREEP);
         } else {
-            parser.printDialogueLine("A textured nothingness begins to creep into the edges of your vision. Somehow, it feels familiar.");
+            parser.printDialogueLine(QUIETCREEP2);
         }
         System.out.println();
     }
@@ -1017,12 +1020,27 @@ public abstract class StandardCycle extends Cycle {
 
         secondaryScript.runConditionalSection(manager.nVesselsAborted());
 
+        boolean vesselIsStranger = prevEnding == ChapterEnding.ILLUSIONOFCHOICE;
+        String letOutDisplay = (vesselIsStranger) ? "(Explore) \"Let them out of there!\"" : "(Explore) \"Let her out of there!\"";
+        boolean vesselMetNarrator = false;
+        switch (prevEnding.getVessel()) {
+            case TOWER:
+            case APOTHEOSIS:
+            case WOUNDEDWILD:
+            case NETWORKWILD:
+            case SPECTRE:
+            case PATD:
+            case STENCILPATD:
+            case WRAITH: vesselMetNarrator = true;
+            default: break;
+        }
+
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "dream", "(Explore) \"You're that thing I met in the space outside of the woods, aren't you? I thought that was a dream.\"", manager.nVesselsAborted() != 0));
         activeMenu.add(new Option(this.manager, "what", "(Explore) \"What are you?\""));
         activeMenu.add(new Option(this.manager, "fragile", "(Explore) \"The gift of a fragile vessel?\""));
         activeMenu.add(new Option(this.manager, "end", "(Explore) \"Is this the end of the world?\""));
-        activeMenu.add(new Option(this.manager, "letOut", "(Explore) \"Let her out of there!\""));
+        activeMenu.add(new Option(this.manager, "letOut", letOutDisplay));
         activeMenu.add(new Option(this.manager, "narrator", "(Explore) \"Do you know the Narrator?\""));
         activeMenu.add(new Option(this.manager, "trapped", "(Explore) \"Are you what sent me to slay the Princess? Are you what trapped me here?\""));
         activeMenu.add(new Option(this.manager, "worlds", "(Explore) \"Do you know about the worlds beyond this place?\""));
@@ -1042,7 +1060,7 @@ public abstract class StandardCycle extends Cycle {
                 case "trapped":
                 case "worlds":
                 case "familiar":
-                    secondaryScript.runSection(activeOutcome);
+                    secondaryScript.runConditionalSection(activeOutcome, vesselIsStranger);
                     break;
 
                 case "what":
@@ -1074,11 +1092,11 @@ public abstract class StandardCycle extends Cycle {
                     break;
 
                 case "narrator":
-                    secondaryScript.runConditionalSection("narrator", manager.hasClaimedAnyVessel(Vessel.WOUNDEDWILD, Vessel.NETWORKWILD, Vessel.SPECTRE, Vessel.WRAITH, Vessel.TOWER, Vessel.APOTHEOSIS));
+                    secondaryScript.runConditionalSection("narrator", vesselMetNarrator);
                     break;
 
                 case "princess":
-                    secondaryScript.runSection("princess");
+                    secondaryScript.runConditionalSection("princess", vesselIsStranger);
 
                     this.subMenu = new OptionsMenu(true);
                     subMenu.add(new Option(this.manager, "press", "\"But were you always the Princess, or are you just making her a part of yourself?\""));
@@ -1093,7 +1111,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackMound().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackMound":
@@ -1102,7 +1120,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlaySelfNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackSelf":
@@ -1114,7 +1132,7 @@ public abstract class StandardCycle extends Cycle {
         }
 
         // "What happens now?" continues here
-        secondaryScript.runSection("whatNow");
+        secondaryScript.runConditionalSection("whatNow", vesselIsStranger);
 
         this.activeMenu = new OptionsMenu(true);
         activeMenu.add(new Option(this.manager, "kill", "(Explore) \"Aren't you scared that I'll find a way to kill you?\""));
@@ -1167,7 +1185,7 @@ public abstract class StandardCycle extends Cycle {
         }
 
         // Forget continues here
-        secondaryScript.runSection("forget");
+        secondaryScript.runConditionalSection("forget", vesselIsStranger);
         mainScript.runSection("forget");
     }
 
@@ -1290,7 +1308,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackMound().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackMound":
@@ -1299,7 +1317,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlaySelfNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackSelf":
@@ -1447,7 +1465,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackMound().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackMound":
@@ -1456,7 +1474,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlaySelfNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackSelf":
@@ -1483,6 +1501,19 @@ public abstract class StandardCycle extends Cycle {
 
         secondaryScript.runConditionalSection(freed);
         
+        boolean hasMetNarrator = manager.hasClaimedAnyVessel(Vessel.WOUNDEDWILD, Vessel.NETWORKWILD, Vessel.SPECTRE, Vessel.WRAITH, Vessel.TOWER, Vessel.APOTHEOSIS);
+        switch (prevEnding.getVessel()) {
+            case TOWER:
+            case APOTHEOSIS:
+            case WOUNDEDWILD:
+            case NETWORKWILD:
+            case SPECTRE:
+            case PATD:
+            case STENCILPATD:
+            case WRAITH: hasMetNarrator = true;
+            default: break;
+        }
+
         Condition talked = new Condition();
         InverseCondition noTalk = talked.getInverse();
         InverseCondition refuseExplored = manager.noRefuseExploreMound().getInverse();
@@ -1529,7 +1560,7 @@ public abstract class StandardCycle extends Cycle {
                 case "narrator":
                     talked.set();
 
-                    if (manager.hasClaimedAnyVessel(Vessel.WOUNDEDWILD, Vessel.NETWORKWILD, Vessel.SPECTRE, Vessel.WRAITH, Vessel.TOWER, Vessel.APOTHEOSIS)) {
+                    if (hasMetNarrator) {
                         secondaryScript.runSection("narratorMet");
                     } else {
                         secondaryScript.runConditionalSection("narratorNotMet", freed);
@@ -1567,7 +1598,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlayPrincessNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackMound().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackMound":
@@ -1576,7 +1607,7 @@ public abstract class StandardCycle extends Cycle {
 
                 case "cSlaySelfNoBladeFail": // Override: you don't need the blade
                     if (manager.getIntermissionAttackSelf().hasBeenPicked()) {
-                        mainScript.runSection("alreadyTried");
+                        parser.printDialogueLine(ALREADYTRIED);
                         break;
                     }
                 case "attackSelf":
@@ -1618,11 +1649,7 @@ public abstract class StandardCycle extends Cycle {
                 mainScript.runSection("witch");
                 break;
             case STRANGER:
-                if (this.isFirstVessel) {
-                    mainScript.runSection("stranger");
-                } else {
-                    mainScript.runSection("strangerFirst");
-                }
+                mainScript.runSection("stranger");
                 break;
             case PRISONERHEAD:
                 mainScript.runSection("prisonerHead");

@@ -771,14 +771,3 @@ n And then you pop. Everything goes dark, and you die.
 
 label fightWild
 n You attack the Princess once more, and once more the two of you fall into a vicious brawl. The basement continues to shrink as you fight, but neither of you pay it any more mind. Not until it's too late.
-
-
-
-
-
-
-
-// Miscellaneous //
-
-label alreadyTried
-truth You have already tried that.

@@ -1,26 +1,820 @@
+    truth You feel a violent tear, like the shape that you thought was you was never really a single shape to begin with. Something in the space you occupy has decided to leave, and it has brought you with it. /// harsh
+    truth You feel a dull tear, like strips of meat being delicately peeled from bone. But it doesn't matter how delicate the hands if you are the meat. /// soft
+truth You have been stripped away from yourself. Or stripped away from something that used to be you. Or stripped away from something that used to be important. At the very least, you have been stripped away from something.
+truth It always hurts to forget at first, but then you forget the pain.
+linebreak
+    p Do you think we're DONE, you self-destructive murderer?! /// harsh
+    p We were *so* -- close to leaving and now -- look at you! Look at *me!* I-is this what you wanted? /// soft
+truth The words come from both inside and outside of your head. Before you on the ground is a writhing mass of flesh and scales and feathers.
 
+label mePreMenuHarsh
+pint Oh. *You're* here. Great, maybe you'll finally get to feel what it's like to be me.
+pint And yeah, that's "you." Or what's left of you. ... What an *ugly sight.*
+jumpto preMenuJoinHarsh
 
+label mePreMenuSoft
+pint Oh! You're here, too.
+pint Maybe... trying to slay me was for the best, if it means you could leave those other voices behind`. The two mean ones, at least. ... I feel kind of bad for the nice one.
+pint But we... probably shouldn't think about them too much right now`. They're... a mess, and I don't think we can fix them`. No point in worrying over messes that can't be fixed.
+jumpto preMenuJoin
 
+label wantPreMenuHarsh
+pint Oh, you're here, too. Well, we all have to face consequences for our actions, unintended or not. Sometimes, we even face consequences for doing nothing at all.
+pint Like me, when you came downstairs and stabbed me in the heart. What had I done to deserve that? Then you went and stabbed yourself in the heart just to spite me... I should have seen that one coming, really, but, hey. Now we're here. Stuck together.
+pint That's consequences for you!
+jumpto preMenuJoinHarsh
 
+label wantPreMenuSoft
+pint Oh`! You're here`. I thought I was going to be alone again.
+pint Maybe this is for the best? Maybe if we left together in that body something horrible would have happened to us, maybe... *this* is how we're supposed to be.
+pint I hope... the part of you that decided to stab us isn't the part of you that's with me`. I don't really want to get stabbed a third time.
+jumpto preMenuJoin
 
+label meanPreMenuHarsh
+pint Oh! *You're* here. GREAT.
+pint All *I* meant to do was leave. What happened to *you* and where *you* wound up wasn't exactly a top concern.
+pint At least it seems like it's just you. Those other ones were *unbearable,* especially that murder-happy know-it-all.
+jumpto preMenuJoinHarsh
 
+label meanPreMenuSoft
+pint Oh! You're here`! I thought I was going to be alone again.
+pint I didn't mean to bring you with me`. I'm happy I only seem to have brought you... uh. That's not nice of me to say. They weren't all bad, but... they were definitely mostly bad.
+pint Maybe... this means things between us can get better. Maybe everything that went wrong just... came from them! I hope. Because I really wouldn't like to be stabbed a third time.
+jumpto preMenuJoin
 
+label hearPreMenuHarsh
+pint Oh, wonderful. *You're* here.
+pint At least it seems like it's just you. Those other ones were *unbearable,* especially that murder-happy know-it-all.
+jumpto preMenuJoinHarsh
 
+label hearPreMenuSoft
+pint I can hear you`! So... you left with me?
+pint And it sounds like it's just the two of us now. I hope that means things are going to be better, even if we're still stuck. Maybe everything that was bad between us just... came from them!
+pint I hope. Because I *really* wouldn't like to be stabbed a third time.
+jumpto preMenuJoin
 
+label silentPreMenuHarsh
+pint "Say nothing...?" Was that... you? *Great.* So you hitched a ride.
+pint At least it seems like it's just you. Those other ones were *unbearable,* especially that murder-happy know-it-all.
+jumpto preMenuJoinHarsh
 
+label silentPreMenuSoft
+pint "Say nothing...?" That's *you,* isn't it`! So you left with me. I-I'm not alone!
+pint And it sounds like it's just the two of us now. I hope that means things are going to be better, even if we're still stuck. Maybe everything that was bad between us just... came from them!
+pint I hope. Because I *really* wouldn't like to be stabbed a third time.
+jumpto preMenuJoin
 
+label preMenuJoinHarsh
+pint I'm willing to pretend that you *didn't* just stab yourself to spite me, but don't think I've forgotten a thing. This is an alliance of convenience.
+label preMenuJoin
+linebreak
+truth Gurgling liquid bubbles up from open pockets in the disintegrating mass in front of you. It is trying to speak, but it no longer has the tissue that speech requires.
+    pint Wait... maybe this still counts as leaving together. Come on, lets get the hell out of here! /// harsh
+    pint Wait, if we need to leave together to get out, this -- this could still count! We have to *try!* Before your, um... body... stops being alive. /// soft
 
+label bodyPreMenu2Harsh
+pint What about it? It's dying. And filled with the worst parts of you. Let's just go -- /// interrupt
+jumpto chapterStart
 
-// Abort the vessel //
+label bodyPreMenu2Soft
+pint There's nothing we can do for it now! But we can still try to save *us!* We just have to leave -- /// interrupt
+jumpto chapterStart
 
-label abort
+label agreePreMenu2Harsh
+pint I don't need your permission.
+jumpto preFleeStartJoin
 
+label agreePreMenu2Soft
+pint Okay. Okay. Yeah. Deep breath, Princess. Let's *go.*
+jumpto preFleeStartJoin
 
+label worldPreMenu2Harsh
+pint Are you *kidding* me? You don't actually *believe* that, do you? UGH. I'm not going to argue with you. We're leaving, now -- /// interrupt
+jumpto chapterStart
 
+label worldPreMenu2Soft
+pint I don't *want* to end the world! But you *can't* keep me down here just because someone told you that might -- /// interrupt
+jumpto chapterStart
 
+label herePreMenu2Harsh
+pint I am NOT going to stick around arguing with you while that... thing on the floor melts!
+jumpto preFleeStartJoin
 
+label herePreMenu2Soft
+pint I don't think there's anything for us to figure out down here. I-I think our only answers are out *there!* Come on, let's -- /// interrupt
+jumpto chapterStart
 
+label sorryPreMenu2Harsh
+pint At least you're paying the price now! But how about we not waste time talking about what -- /// interrupt
+jumpto chapterStart
 
+label sorryPreMenu2Soft
+pint It's okay, I'm sure you had your reasons, but I think we have to leave, *now.* Come on, let's -- /// interrupt
+jumpto chapterStart
+
+label silentPreMenu2Harsh
+pint Here we go.
+jumpto preFleeStartJoin
+
+label silentPreMenu2Soft
+pint Okay. That's a yes.
+jumpto preFleeStartJoin
+
+label preFleeStartJoin
+    truth You hurtle towards the cabin door, but time seems to slow down the closer you get. In a moment, you're halfway there, and in two moments you're halfway there again. Halving the distance and halving the distance until the door feels almost within reach. /// ifsource-upstairs
+    truth You hurtle towards the cabin stairs, but time seems to slow down the closer you get. In a moment, you're halfway there, and in two moments you're halfway there again. Halving the distance and halving the distance until the upstairs feels almost within reach. /// ifsource-basement
+    pint Come on, come on, come on! We're so clo -- /// harsh interrupt
+    pint We're not gonna make it, are we? We're gonna be STUCK again, we're -- /// soft interrupt
+jumpto chapterStart
+
+// Chapter start //
+
+label chapterStart
+linebreak 3
+truth You are seated in a room that is empty. A chain digs into your wrist, binding one arm to the wall. It is quiet, and you are alone. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve.
+nowplaying The Princess and the Dragon
+    pint Well`? Are you still there? /// harsh
+    pint Are you still there`? Am... I alone again? /// soft
+
+label loopJoke1
+    pint You have any better ideas? /// harsh
+    pint Well, that's what I've always done. /// soft
+
+label loopJoke2
+    pint You... already said that. /// harsh
+    pint I already told you I don't have any ideas. I... *did* tell you that, right? Sorry if I didn't. /// soft
+
+label loopJoke3
+    pint Oh, no... Please don't make us loop on this. /// harsh
+    pint Um... you're kind of a broken record right now. Are you okay? /// soft
+
+label loopJoke4
+    pint I'm just gonna stop talking until you fix... whatever this is. /// harsh
+    pint Maybe... *sigh.* Maybe if I stop answering you, you'll say something else. /// soft
+
+label loopJokeFinal
+pint ...
+
+label hereStart
+    pint Well, that's something. I guess we're... really stuck together then. /// harsh
+    pint Then at least I won't be lonely! It's nice to hear your voice`. I mean... *think* your voice? /// soft
+
+label startFirstShared
+    pint I guess we're... really stuck together then. /// harsh
+    pint It's nice to hear your voice. I mean... think? Your voice? /// soft
+
+label happenedStart
+    pint You died, probably. And... we're back where I started. /// harsh deathshared
+    pint We're... back where I started. /// harsh nodeathshare
+        pint I think you died, or... the body on the floor died. Sorry...! /// soft deathshared
+        pint We're back at the beginning. *My* beginning. /// soft nodeathshare
+    pint This... is what happened to me last time. /// soft
+
+label madStart
+    pint Like I said, we have an alliance of convenience right now. I wouldn't poke too hard at the edges of that. /// harsh
+    pint I don't know why you did what you did`, but it's hard to be mad when you're... just as stuck as I am. /// soft
+
+label toneStart
+        pint Poking at the edges when I specifically told you not to? *Sigh.* /// check harsh
+    pint We're both stuck here and everything's started over. How about we both just try and make the best of it, okay? /// harsh
+        pint Besides, there's something about you being in here with me that just feels... right. It's hard to stay mad at you like this. /// harsh
+    pint I'm just trying to make the best of things... you could always make the best of things too, if you want. We both have a chance to start over. /// soft
+        pint Besides, there's something about you being in here with me that feels`.`.`. right. I never wanted to be your enemy... /// soft
+
+label tonePushStart
+    pint You really want me to be mad at you, don't you? Too bad. For both of us. /// harsh
+    pint I don't know what to say`. I just... feel fine right now`. I think things happen for a reason`, and if you trying to kill both of us is what it takes for you to finally see what I see`.`.`. then I'm okay with that. /// soft
+
+label sorryStart
+    pint Well, I guess you're paying the price for it, aren't you? /// harsh
+        pint ... /// harsh
+        pint Let's just... call it even for now. /// harsh
+    pint That's okay. I'm sure you had your reasons. I don't think it's good to hold on to the past like that, anyways. It's... better if we choose to move forward, together. /// soft
+
+label outStart
+    pint Hahaha. Are you seriously asking ME that? I've been stuck here for as long as you've known me! I don't think the two of us would *be* here right now if I knew how to leave. /// harsh
+    pint I wish I knew, but I think we're probably stuck here until something happens. /// soft
+
+label othersStart
+    pint There's... four walls around us, and a chain around my wrist. How am I supposed to know about anything that isn't right in front of me? /// harsh
+        pint Maybe they're gone. I guess we'll just have to wait and see. /// harsh
+        pint And if nobody comes by... well, I guess we'll be waiting a long`, *long* time. /// harsh
+    pint I don't know! I hope they're okay. Uh... some of them, at least. I didn't like the one that kept bossing you around. And that quiet one kind of gave me the creeps. /// soft
+        pint I liked that last one, though. He was nice! I hope *he's* okay. /// soft
+
+label ghostStart
+truth Your gaze turns to your hands. Solid. Then translucent. Then solid again.
+    pint Huh. I... don't know. It's like we're one and then the other. /// harsh
+        pint Ugh. Make up your mind already, body, will you? /// harsh
+    pint Maybe? It's like... sometimes we are and sometimes we aren't. Like we're something in between ghost and... not-ghost. /// soft
+
+label waitFirstStart
+    pint I don't think the silent treatment's going to work. I can... feel? You choosing to wait. /// harsh
+    pint So... you *are* there. You're just... choosing not to say anything. Okay. Then I guess we're waiting here. /// soft
+
+label waitStart
+    pint Huh. Did the rest of you get lost? /// harsh
+    pint Waiting has always worked for me before, but... nothing's still happening`. Maybe we just have to wait some more. /// soft
+
+label silentStart
+    pint I don't think the silent treatment's going to work. I can... feel? You choosing not to say anything. /// harsh
+    pint So you *are* there. You're just... choosing not to say anything. Okay. /// soft
+
+label titleAStart
+    pint That's... weird. And isn't how it works for me. But if you want, I guess I can humor you. What do these "title cards" look like? /// harsh
+    pint I've never gotten a title card! What did yours say? /// soft
+
+label titleBStart
+    pint A title card? What on earth are you *talking* about? /// harsh
+    pint You've gotten title cards? What did they say? /// soft
+
+label laughTitle
+    pint Whether I laugh at you depends on the title. I'm not going to make any promises I can't keep. *I* don't lie. /// harsh
+    pint No I won't! I *promise!* I want to know what it's like to be you! /// soft
+
+label promiseTitle
+pint *Sigh.* Okay, fine. I *promise* I won't laugh at you. Now tell me. I wanna know.
+
+label namesTitle
+        pint *Giggling.* Okay. Sorry. Sorry. /// check harsh
+        pint *Giggling.* Some hero you turned out to be. /// checkfalse harsh
+    pint *Giggling.* Well... the first one is sweet. /// soft
+
+label laughShareTitlesHarsh
+pint I wasn't laughing *at* you. I was laughing at...
+
+label meShareTitles
+pint Okay, maybe I was. A little. But this whole... setup is funny, really.
+jumpto shareTitlesHarshJoin
+
+label livesShareTitles
+pint Yes! This whole... setup is funny, really.
+jumpto shareTitlesHarshJoin
+
+label mhmShareTitles
+label silentShareTitles
+pint I was laughing at the... whole situation!
+label shareTitlesHarshJoin
+pint But really, it's like our lives are some cruel little play for someone else's entertainment.
+pint I'm sorry! Okay?
+pint ...
+pint Chapter III. The Princess and the Dragon.
+
+label laughShareTitlesSoft
+pint Look, it would have been... *very* sweet if things didn't turn out so... violent.
+pint But that doesn't mean that things can't get better from here.
+pint I think we need a new title card, though. How about...
+pint Chapter III. The Princess and the Dragon.
+
+label heroShareTitles
+    pint Don't try and make this about "shades of grey" or whatever. I'm the only other person here with you, and you're the villain in *my* story. /// harsh
+        pint I'm -- sorry. I'm being mean again. How about we wipe the slate clean with a new chapter? We could call it... /// harsh
+    pint Well, maybe you're just misguided. And the story's not over yet! We might still find a happy ending`! But... I think it's time we start a new chapter. Hmmm. How about... /// soft
+pint Chapter III. The Princess and the Dragon.
+
+label avoidTitle
+    pint Oh, you're no fun. /// harsh
+        pint What is this, our... third go-round? Hm. /// harsh
+    pint I'm... sorry! /// soft
+        pint This is our... third time here, right? So that would make this chapter three. /// soft
+pint Chapter III. The Princess and the Dragon.
+
+label reverseReveal
+    pint Well, this *is* my story, isn't it? Especially if you're here watching it. /// harsh
+    pint Thanks! I... thought it would be fun. /// soft
+
+label humbleReveal
+        pint You're one to talk, "Hero." /// check harsh
+        pint Yeah. I'm *sure* you didn't get top billing in yours. /// checkfalse harsh
+    pint I don't think Princesses are *supposed* to be humble! I'm royalty, aren't I? /// soft
+
+label birdReveal
+    pint I like to think of you as a dragon. It's close enough. /// harsh
+    pint Well, they're... similar... right? /// soft
+
+label dragonReveal
+    pint Dragons are... *monsters,* you know. *Sigh.* But all right... whatever makes you happy. /// harsh
+    pint Does being called a dragon make you happy? You're... kind of scary looking. Like, *really* scary looking. /// soft
+
+label accurateReveal
+    pint I guess you'll have to wait and see what comes down those stairs. /// harsh
+    pint I think so? You're... kind of scary looking. Like, *really* scary looking. /// soft
+
+label silentReveal
+    pint You're welcome, by the way. /// harsh
+    pint Yeah. That's a real good chapter title, Princess. /// soft
+
+// "You" enter the cabin //
+
+label enterCabin
+linebreak
+truth The click of a latch and creaking hinges, muffled. Something is here.
+    jumpto enterCabinObserved /// check
+truth Your gaze turns to your hands. Solid. Then translucent. Then solid again.
+    pint Huh. I don't think "you" know what we are. It's like we're... one and then the other. /// harsh
+        pint Ugh. Make up your mind already, body, will you? /// harsh
+    pint Huh. It's almost like "you" don't know what we are`. We keep changing. /// soft
+jumpto enterCabinJoin
+
+label enterCabinObserved
+    pint I think that's... "you." /// harsh
+    pint I guess "you" made it back here. /// soft
+truth Your gaze turns back to your hands. They flicker once again.
+    pint We're... still a mess. It's like "you" don't really know what we are. /// harsh
+    pint We're still all... wrong. It's like "you" don't really know what we're supposed to be. /// soft
+label enterCabinJoin
+truth A thump on the floorboards above. And then another. The scraping of metal against a surface. The flickering in your body stops. You are solid.
+    pint So. You took the knife. Of *course* you did. /// harsh
+    pint I know that sound`. That's... the knife`. I guess it's hard to do anything without it. /// soft
+truth Creaking hinges once again, but this time, clear. Closer.
+
+label helloTalkAttempt
+    pint I'm the one in control here. You don't get to put words in my mouth. /// harsh
+    pint Are you... trying to say something out loud? I don't think you can do that while you're in here with me. /// soft
+
+label outTalkAttempt
+    pint I'm the one in control here. You don't get to put words in my mouth. *Especially* not words like those. /// harsh
+        pint We're stuck together. You'd better get used to that idea. /// harsh
+    pint Are you... trying to say something out loud? I don't think you can do that while you're in here with me. /// soft
+        pint I think we're stuck together. So we have to be on the same team. I'd... hoped you were on my side by now. /// soft
+
+label anythingStairsMenu
+truth Silence.
+    pint Apparently not. /// harsh
+    pint I guess not. /// soft
+
+label lookStairsMenu
+    pint You... really don't know, do you`? I guess you'll see soon enough. /// harsh
+    pint Scary. It's... hard to describe. It's hard to look at you. /// soft
+
+label silentStairsMenu
+    pint I guess that body takes after you, even when you're not in it. /// harsh
+    pint Silence. /// soft
+
+label stairsJoin
+truth Movement on the stairs.
+    pint You're always so loud on the way down. /// harsh
+    pint Thump`. Thump`. Thump. /// soft
+truth And then a figure emerges, shrouded in a feathered darkness, the world trailing behind it, its shining blade gleaming against the wooden walls. It stares at you with wild, hollow eyes.
+
+label whatBasementStart
+    pint The dragon. *Obviously.* /// harsh
+    pint You're... you? You've always looked like this. You're scary, sometimes, but... looks only matter so much. /// soft
+
+label outBasementStart
+    pint But... maybe tipping our hand a bit isn't such a bad idea. /// harsh
+    pint But maybe we should let them know you're here with me. Maybe it'll help. /// soft
+
+label tellBasementStart
+    pint Huh.... maybe that's not so terrible an idea. /// harsh
+    pint Okay. Let's... see what happens. /// soft
+
+label dontBasementStart
+    pint Keeping our cards close to our chest, huh? All right. I'll play along. /// harsh
+    pint Do you think they'll get mad? Do you think they'll get... violent? /// soft
+
+label wantBasementStart
+    pint Let's see... /// harsh
+    pint I guess we'll just have to talk to them.
+
+label basementStartAware
+    p You're missing something important, aren't you? /// harsh
+    p I'm... not alone here this time. Part of you stayed with me when we split apart. /// soft
+truth The head on the figure cocks to the side. Is it inquisitive? Suspicious? Hostile? Its emotions are unreadable.
+    p I know, because I have it *right here.* /// harsh
+    p You don't... want to hurt that part of you, do you? /// soft
+jumpto basementStartJoin
+
+label basementStartOther
+    p Back to the same song and dance, aren't we? /// harsh
+    p So, here we are again. I'm back in chains, and you have your knife. So. What are we going to do? /// soft
+truth The head on the figure cocks to the side. Is it inquisitive? Suspicious? Hostile? Its emotions are unreadable.
+    p Well...? What's it going to be this time? /// harsh
+    p I guess we could just... stare... at each other. /// soft
+label basementStartJoin
+truth The silence holds.
+
+label whyTalkMenu
+    pint You're always this quiet. /// harsh
+    pint No, I... don't think so. You've always been a little quiet. /// soft
+jumpto talkMenuJoin
+
+label hateTalkMenu
+    pint Oh, *is* it? Because you do this quiet staring act a lot. Can't say I'm a fan. /// harsh
+    pint Now you know how I felt when I first saw you. But I got used to it pretty quick. I'm sure you will too. /// soft
+jumpto talkMenuJoin
+
+label arguingTalkMenu
+    pint So *that's* what was going on with all that silent staring. /// harsh
+    pint Is *that* why you're always quietly staring? /// soft
+jumpto talkMenuJoin
+
+label silentTalkMenu
+    pint Silence. *Of course.* You really do belong in that body. /// harsh
+    pint Still quiet, huh? Even when you're not in your body, you're... kind of quiet. /// soft
+jumpto talkMenuJoin
+
+label talkMenuJoin
+    p Hey, I'm talking to you! It's rude to have a conversation in front of other people without letting them in on it. /// harsh
+    p I... can't hear what's going on in there anymore now that I'm back in my own body. Do you want to... share your thoughts? I-it'd only be polite, really. /// soft
+
+// "The dragon" finally speaks //
+
+label opportunistStart
+oppoext Oh, you would *like* to hear what we're thinking, *wouldn't you?*
+truth He raises the blade above his head, dangling it by the handle in front of his eyes.
+oppoext But I think *we* hold the power right now.
+    jumpto oppoStartAware /// check
+    p *Do you* hold the power right now? Because I think you're missing a very important part of yourself, so... I wouldn't be too hasty about using that knife. /// harsh
+        heroext Wait, you know about the decider being gone? Okay, well -- that *changes* things, doesn't it? /// harsh
+        jumpto oppoSidebarJoin /// harsh
+truth Silence, as the figure continues to stare with a wild grin, but does not act.
+coldext How dull`. We've already had our discussions in private. I'd rather not keep listening to the rest of you run in circles repeating the same arguments again`, and again`, and again`. It was so much more interesting when we had someone to mediate.
+oppoext I'm sorry, did you just share PRIVILEGED INFORMATION with the enemy?
+heroext Well, it isn't privileged anymore, now is it? Do we *really* need all this secrecy?
+coldext No`. We don't.
+oppoext Uh, yes we do? Sidebar, everyone. Now. Chop chop!
+truth Silence, as the mind in front of you falls back into itself.
+p Um...
+p Um, excuse me...!
+truth Nothing.
+pint They're not listening to me...!
+
+label oppoStartAware
+heroext But she knows about the decider being gone. That would be a *weird* bluff to come up with if it weren't true.
+label oppoSidebarJoin
+oppoext Look, I *love* that you're trying to contribute! But *I* think we need to take a little sidebar.
+heroext But I don't *want* to do a -- /// interrupt
+oppoext *Chuckle.* I'm *so* sorry, this will just be a moment.
+truth Silence, as the mind in front of you falls back into itself.
+    pint Unbelievable. /// harsh
+    pint Well... okay. I guess we wait for an answer. /// soft
+
+label waitOppoMenu
+pint *Absolutely* not.
+jumpto oppoAwareJoin
+
+label rudeHarshOppoMenu
+pint Yeah. This isn't over yet. One second.
+jumpto oppoAwareJoin
+
+label nothingOppoMenu
+jumpto oppoSoftQuietJoin
+
+label rudeSoftOppoMenu
+pint Yeah... But I guess there isn't much we can do about it.
+jumpto oppoSoftQuietJoin
+
+label oppoAssertiveJoin
+    pint *Believe* me, I can be assertive. /// harsh
+    pint But I don't wanna be assertive! /// soft
+        pint ... *Sigh.`* Fine. /// soft
+jumpto oppoAwareJoin
+
+label silentOppoMenu
+    jumpto silentOppoMenuUnaware /// soft
+pint Oh, they're *in* for it if they think we're just going to sit here in silence again. One second.
+label oppoAwareJoin
+    p Hey! I'm *talking* to you? /// harsh
+    p Um... excuse me? /// soft
+coldext My apologies`. They're *really* being quite dull in here.
+truth More silence.
+coldext I think they want to kill you`. At least the new one does`. He's very`, very passionate about it.
+    p Well, he can *try* if he wants, but I'm not so sure you all have it in you. Not without your missing piece. /// harsh
+        oppoext Ahhh, but that just makes it two birds with one stone, doesn't it? How *tempting.* /// harsh
+    p Can you... tell him not to? /// soft
+        oppoext Your opinion has been duly noted, annnnnnnnd disregarded. In fact, I think a decision's been made. Two birds with one stone. How tempting. /// soft
+
+label waitOppoMenuUnaware
+pint Yeah, I guess. It's not very nice, though...!
+jumpto oppoSoftQuietJoin
+
+label rudeOppoMenuUnaware
+pint Exactly. And you know what? I'm not going to let them push us around like this!
+jumpto oppoSoftYellJoin
+
+label assertiveOppoMenuUnaware
+pint You're right. No more Nice Princess for them. I'm going to speak my mind!
+label oppoSoftYellJoin
+p Uh... hello?
+truth Silence.
+p I'm trying to say something...!
+truth Silence again.
+p HEY I *SAID* I'M TALKING NOW, WILL YOU *LISTEN TO ME?!*
+coldext So you are`. And very loudly`. Do you have something to say?
+p Oops! I mean, YEAH! I already know about all that "privileged information," because he's in here. With me.
+coldext *Oh?`* How very interesting.
+heroext Yeah. That *changes* things, doesn't it?
+heroext ... Doesn't it?
+oppoext Oh, it changes things alright. We get to take out two birds with one stone.
+p Wait, what?
+
+label silentOppoMenuUnaware
+pint Okay... I guess we'll just... wait.
+label oppoSoftQuietJoin
+truth And so you wait.
+coldext My apologies`. They're really being quite dull in here.
+truth And wait.
+oppoext We're not being dull! We're *strategizing!* Now if you would all just bear with me.
+truth And wait.
+oppoext And decision made.
+p I... hope it's a good one?
+    oppoext Good for us. Not for you. But *we* get to take out two birds with one stone. /// check
+    oppoext Oh, good for us! But... not so good for you. /// checkfalse
+
+label opportunistAttackStart
+oppoext From what I remember, it was pretty *easy* to kill you the first time around. And this time you're back to being... very... ah, what's the word?
+coldext Fleshy?
+oppoext Yes! Exactly! That's *precisely* the word I was looking for. You're fleshy now! No more of that incorporeality. *Trust* me. I wouldn't be doing this if I didn't think it would be easy.
+moodswitch oppoAttackStart
+
+label oppoAttackStartHarsh
+p Bring it then. But you caught me off guard the first time. It's not going to happen again.
+oppoext Well`! What can I say`? I'd -- back off if I wasn't already overcommitted, so... I guess I'll just have to... pretend that you're bluffing! Which you maybe -- *probably* are!
+p Having second thoughts?
+oppoext Shut up!
+truth You can feel yourself shrink and then grow, vacilating between small and large, weak and powerful, as the thing in front of you attacks, blade raised and wings spreading.
+jumpto oppoAttackStartJoin
+
+label oppoAttackStartSoft
+p And... *are* you doing this?
+oppoext Oh, I most *definitely* am.
+truth You feel small as the monster in front of you attacks, blade raised and wings spreading.
+label oppoAttackStartJoin
+heroext Uhh -- before anything happens, I just wanted to let you all know that we are *not* all on board with this.
+oppoext Now, now. We *voted.*
+heroext It was *not* a majority decision.
+oppoext But we did have a plurality!
+heroext *He* shouldn't count!
+oppoext Says who?
+heroext Says *me!* He's not one of us!
+oppoext He's been here since the beginning! The old chum really deserves a say! Besides, you'll all thank us when this is finally over, and we are *officially* on top. But enough chatter.
+coldext Oh`, so you've finally decided to do something, have you?
+linebreak
+truth Silence, for just a moment, as cold eyes regard you.
+truth And then silence still as soft eyes hesitate.
+
+label firstChoiceStartShared
+n Oh! ... You're different.
+oppo You're BAAAACK! JUST as I INTENDED! I-I was never cut out for leadership, really.
+
+// Opportunist stabs the harsh Princess //
+
+label stabHarshStart
+truth But the hesitation doesn't last, and you feel the sharp sting of cold metal sliding deep into your chest, but you can feel something else too...
+truth Rage, flowing from your heart and balling up in closed fists. You throw them at the thing's face and --
+linebreak
+n -- You can feel bone crack as her fist collides with your jaw, and then a thud as you tumble across the room.
+cold You are *such a disappointment.*
+oppo I'd like to see *you* do better.
+n The Princess rips the blade from her chest, and, fury in her eyes, cuts herself loose from her bindings.
+
+label endHarshStab
+n The Princess's hand trembles as she charges at you. But charge she does.
+hero Uh... I'm not sure "kill me" counts as good leadership.
+oppo It's certainly decisive. I just LOVE that about this guy. *Much* better than the choices I would make.
+cold Oh`! *Wow!`* You actually managed to say something I *agreed* with.
+n As she closes the distance, she raises the blade to strike and...
+hero Kills us?
+n Lets it fall to her side. She doesn't make eye contact as she speaks.
+p I almost... *killed* you there.
+n And then she looks up at you with fierceness in her gaze.
+p This had *better* not be a trick. And you're not getting *this* back.
+n She turns her back on you and... hurls the blade through the basement window, never to be seen again -- no no no no *NO!* You need the blade to deal with her!
+cold Then I guess we won't be doing your dirty work.
+hero Yeah!
+p You have *no idea* how good it felt to get rid of that thing.
+
+label harshTakeHand
+n Are you serious?! Eugh.
+cold Well`? Are you going to say what happens`? You already said yourself that we won't be killing her.
+n Grrrrrrrrrrrr. *Fine.* You take her remaining hand in yours.
+jumpto leaveJoinHarsh
+
+label whatFinalHarsh
+p We leave, obviously. There's... nothing left for either of us here.
+jumpto harshHandAlt
+
+label leaveFinalHarsh
+p Yeah. There's nothing left for either of us here.
+jumpto harshHandAlt
+
+label silentFinalHarsh
+p Come on. Let's just... go. There's nothing left for either of us here.
+label harshHandAlt
+n The Princess reaches forward and clasps her remaining hand in yours. Eugh.
+jumpto leaveJoinHarsh
+
+// Opportunist stabs the soft Princess //
+
+label stabSoftStart
+truth You can feel the sharp sting of cold metal sliding deep into your chest, but you can feel something else, too.
+truth Fear as your legs wobble, then as --
+linebreak
+n -- Princess collapses against the wall.
+oppo See? That was *easy!*
+hero It was *too* easy. It felt bad.
+oppo Don't feel bad! Life is all about taking the easy wins! You don't think the people at the top got there because they *worked* for it, do you?
+hero I mean, of *course* they did? Hard work is important.
+cold Eh`. Hard work often goes unappreciated`. Why bother?
+oppo Yeah! Screw hard work! I guarantee you that anyone who's anyone has done *nothing* but take shortcuts.
+hero Am I supposed to find that... impressive?
+oppo Of course you are! I got us here, didn't I?
+n Yes, yes. Everyone's very impressed with your accomplishments, but in case you haven't noticed, she *isn't dead yet.* So how about you finish this *before* you start celebrating yourself?
+p What are you waiting for? You *won,* didn't you? Not that it's hard, executing a helpless captive.
+
+label sorrySoftStab
+p That's... that's *you* in that body again, isn't it`? I thought it felt a little empty in here.
+p I'm hurt, but I'll live. If... you'll let me`. Will you? Or are you still going to kill me?
+
+label backSoftStab
+p You're right. It's quiet again. Are you... still going to kill me?
+n Absolutely. Nothing of substance has changed. She remains a threat to the entire world.
+
+label noSoftStab
+p Then the only thing left to do is cut me out of here.
+jumpto leaveLateJoinSoft
+
+label softDropBlade
+n Are you... *sigh.* The blade tumbles uselessly from your hands and clatters to the floor`. You're different, aren't you?
+oppo You're BAAAACK! JUST as I INTENDED! I-I was never cut out for leadership, really.
+p Oh... it's *you* in there now, isn't it`? I thought it got a little quiet`. What happens now?
+
+// Leave the soft Princess behind //
+
+label abandonSoftStart
+oppo You're BAAAACK! JUST as I INTENDED! I-I was never cut out for leadership, really.
+oppo And that's a *brilliant* plan. Who ever needed violence anyway?
+n Inaction is still a choice. If you turn around and leave, you're damning *everyone* to death.
+oppo But we're not damning *ourself.*
+n You're part of everyone!
+cold Are we now?
+p That must be you in that body again, but... you're just turning around and leaving? What about me? What am I supposed to do here?
+hero She sounds so sad.
+
+label figureAbandonSoft
+p I'm bleeding and chained to a wall!
+jumpto abandonSoftEnd
+
+label bodyAbandonSoft
+p Well, I guess you have it.
+jumpto abandonSoftEnd
+
+label abandonSoftEnd
+quietcreep
+n This is not a resolution.
+hero I don't know. It... kind of feels like it is.
+oppo Yeah! We got our decider back! And we didn't die. I feel on top of the world right now.
+    p You're not even going to answer me`. What did I ever do to deserve you? /// check
+    p What did I ever do to deserve you? /// checkfalse
+cold Nothing.
+p It's so cold and empty here.
+claim abandonSoftEnd
+
+label abandonSoftEndFirstVessel
+truth But as you look over your shoulder, you do not find her. Something has taken her away, and it's left something else in her place.
+
+label abandonSoftEndNotFirstVessel
+truth But as you look over your shoulder, you do not find her, nor will you ever. It's time to leave. Memory returns.
+
+// She stabs you, or you stab her again //
+
+label waitHarshStab
+p Then I just have to make this next one count!
+label silentHarshStab
+n As she closes the distance, she raises the blade to strike and...
+hero Kills us?
+n Well, she certainly stabs you, and it certainly hurts.
+n But the knife doesn't leave your body. As you grab her wrists, she drives the weapon deeper and deeper into your chest. Your knees buckle from the pain, and as she forcefully pushes you to the ground -- /// interrupt
+jumpto stencilEnd
+
+label softSlayBetrayJoin
+oppo A leader after my own heart.
+label softSlay
+hero I guess... we're really seeing this through, then.
+n You certainly are. Blade raised, you leap towards the Princess with killing intent.
+    p Oh. I guess you changed your mind`. That's... really sad. /// noblade
+    p I didn't think you'd want to kill me anymore`. Not after everything we've been through together`. Are you sure that's what you want? /// hasblade check
+    p That's... *you* in there again, isn't it`? I didn't think you'd want to kill me anymore`. Not after everything we've been through together. /// hasblade checkfalse
+n But you ignore her words, and as the blade sinks into soft tissue -- /// interrupt
+setbool false
+jumpto stencilEnd
+
+label softCutFree
+n You go to cut the Princess from her bindings`. And as the blade slices into her wrist -- /// interrupt
+linebreak
+truth You are pulled back across the threshold.
+pint Oh, I... felt that. You're back!
+truth Menace permeates the hollow eyes in front of you.
+pint ... Oh no you're -- back!
+oppoext Sorry, girlie`, but we're seeing this through.
+truth The monster in front of you pulls the blade back and drives it into your heart.
+setbool true
+jumpto stencilEnd
+
+label stencilEnd
+linebreak
+truth You are torn between two places.
+    p Wait! I can... feel you in there. I'm pulling you out. /// harsh check
+    p I'm taking you back. /// harsh checkfalse
+    pint Don't leave me! /// soft check
+    pint Come back to me! /// soft checkfalse
+linebreak
+truth You are power and you are weakness. You are hope and you are despair. You are acceptance and you are rejection.
+truth You are the canvas and you are the painter.
+truth You are the victim and you are the victimizer. You are life and you are death. The Hero and the Princess. The Princess and the Dragon.
+hero Don't let us die here!
+truth You slam the door in your own face.
+n Don't let *everything* die here. You have to end this.
+truth His words are empty. Hollow echoes. The ravings of a ghost.
+n *Please.*
+linebreak
+truth But He is already gone. The threads all tie themselves together into a loop that does not end.
+    pint Does... this mean we're together? /// harsh
+    pint We're back together again. /// soft
+quietcreep
+truth You look at your hands, tattered and stained in memories.
+hero Maybe`. Why were we fighting each other?
+    pint You started it. /// harsh
+    pint I don't know. /// soft
+cold We needed something to do.
+    pint I guess we did. /// harsh
+    pint Then I guess we need something to do... again. /// soft
+oppo To -- new beginnings!
+    pint Do you feel... cold? /// harsh
+    pint I didn't think being together would feel so... cold`. It shouldn't... feel like this`. I-it didn't before. /// soft
+claim sharedEnd
+
+// Leave with her //
+
+label leaveJoinHarsh
+oppo Yeah? A-and... what does it feel like? Is it... nice?
+n Why do you want to know?
+oppo You can -- tell a lot of things about someone from their handshake! I want to know more about the person we decided, *unanimously,* to throw our lot in with.
+n Ugh. WHATEVER. It's rough, but still tender.
+oppo Ahh, the hand of someone who's suffered, but hasn't forgotten what it's like to have a heart. That'll do.
+p Come on. Let's... get out of here.
+n Hand in hand, you and the Princess... leave the basement together. *Sigh.*
+jumpto leaveEnd
+
+label silentLeaveSoft
+p Okay. Quiet it is. That's fine. I can do the talking for both of us.
+label suggestLeaveSoft
+p Well... what if we try again, only we do it right this time? We can leave together, and... we can even do it in two separate bodies.
+label leaveJoinSoft
+n Absolutely not!
+cold I don't think there's much *you* can do about it if that's the choice he makes.
+n But --
+cold *No.`* I think I'd like to see what happens.
+p Okay. I'd like that. But we still have to get me out of these chains.
+label leaveLateJoinSoft
+    p You should give the knife to me though. What if you using it kicks you out of your body again? /// hasblade
+    p I know that dropping the knife was like, this... big symbolic gesture for you, but we still need it. Just for a minute. /// noblade
+        p You should... give it to me though. What if you using it kicks you out of your body again? /// noblade
+oppo Okay. *Listen.* I know you're in charge again... but this is *obviously* a trick. We can't trust her. We *literally just stabbed her.*
+hero Someone's going to have to take a leap of faith eventually...
+
+label softGiveBlade
+    n Fine. Whatever. You stoop to the floor and pick up the pristine blade, only *rather* than using it for your *intended* purpose, you... /// noblade
+        cold Go on. /// noblade
+n You hand it to the Princess`, who gingerly cuts herself free from her bindings`. You... *maniac.*
+n Then, as her chains clatter to the floor, she turns her back on you and hurls the blade through the basement window, never to be seen again! No no no no no no no! You need the blade to deal with her!
+p *Sigh.* I'm... *so* glad that's behind us. Come on. Let's get out of here.
+n She reaches forward and... takes your hand in hers before... excitedly pulling you towards the basement stairs.
+oppo Yeah`? And... what does it feel like`? Is it... nice?
+n Why do you want to know?
+oppo You can -- tell a lot of things about someone from their handshake! I want to know more about the person we decided, *unanimously,* to throw our lot in with.
+n Ugh. Whatever. It's delicate and tender.
+oppo Ahh. So even through everything, she hasn't forgotten what it's like to have a heart. That'll do.
+n *Sigh.* The two of you rush up the basement stairs`.`.`. together. Eugh.
+jumpto leaveEnd
+
+label leaveEnd
+hero Welcome back, by the way.
+cold Yes`. We all missed you so very much.
+oppo *I* missed you the most.
+hero You weren't even here until he was gone.
+n Whatever, it doesn't matter. If you step through that door, you're damning *every single person alive.* You do realize that, yes?
+oppo Who cares!
+    p In case you hadn't noticed, I... lost a hand down there. Would you mind? /// harsh
+    p One last door and... then we're free. /// soft
+        p I, uh... I'm down a hand, so... You'll have to be the one to open it. /// soft
+
+n You twist the doorknob in your hand... and step forward into the world you've *damned.`* You and the Princess fall to the ground`, exhausted.
+n I hope this all comes back to *bite* you, do you hear`? I hope you're forced to feel the weight of all the regret there's ever been...
+linebreak
+truth But He doesn't finish His thought before disappearing entirely. And you find yourself free of any of the regrets he wished upon you.
+    p Finally`. This... is nice`. This is *so nice.* /// harsh
+        p But... it's also cold... /// harsh
+    p I didn't think I'd ever get to *be* happy`. But I think I am. /// soft
+        p I just didn't realize that being happy would feel so... cold. /// soft
+claim sharedEnd
+
+label sharedEndFirstVessel
+truth Your peace does not last. Something has ripped her from you, and it's left something else in her place.
+
+label sharedEndNotFirstVessel
+truth Your peace does not last, nor can it ever. It's time to leave. Memory returns.
 
 // Default fail responses //
 
@@ -75,3 +869,7 @@ label defaultResponseGiveWithDragonSoft
 label defaultResponseThrowHarsh
 
 label defaultResponseThrowSoft
+
+label defaultResponseHandHarsh
+
+label defaultResponseHandSoft
