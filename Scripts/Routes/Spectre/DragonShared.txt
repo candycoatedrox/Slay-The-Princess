@@ -69,7 +69,7 @@ pint I'm willing to pretend that you *didn't* just stab yourself to spite me, bu
 label preMenuJoin
 linebreak
 truth Gurgling liquid bubbles up from open pockets in the disintegrating mass in front of you. It is trying to speak, but it no longer has the tissue that speech requires.
-    pint Wait... maybe this still counts as leaving together. Come on, lets get the hell out of here! /// harsh
+    pint Wait... maybe this still counts as leaving together. Come on, let's get the hell out of here! /// harsh
     pint Wait, if we need to leave together to get out, this -- this could still count! We have to *try!* Before your, um... body... stops being alive. /// soft
 
 label bodyPreMenu2Harsh
@@ -131,7 +131,9 @@ jumpto chapterStart
 
 label chapterStart
 linebreak 3
-truth You are seated in a room that is empty. A chain digs into your wrist, binding one arm to the wall. It is quiet, and you are alone. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve.
+truth You are seated in a room that is empty. A chain digs into your wrist, binding one arm to the wall. It is quiet, and you are alone. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. /// interrupt
+
+linebreak
 nowplaying The Princess and the Dragon
     pint Well`? Are you still there? /// harsh
     pint Are you still there`? Am... I alone again? /// soft
@@ -258,26 +260,30 @@ label shareTitlesHarshJoin
 pint But really, it's like our lives are some cruel little play for someone else's entertainment.
 pint I'm sorry! Okay?
 pint ...
-pint Chapter III. The Princess and the Dragon.
+linebreak
+pint Chapter III`. The Princess and the Dragon.
 
 label laughShareTitlesSoft
 pint Look, it would have been... *very* sweet if things didn't turn out so... violent.
 pint But that doesn't mean that things can't get better from here.
 pint I think we need a new title card, though. How about...
-pint Chapter III. The Princess and the Dragon.
+linebreak
+pint Chapter III`. The Princess and the Dragon.
 
 label heroShareTitles
     pint Don't try and make this about "shades of grey" or whatever. I'm the only other person here with you, and you're the villain in *my* story. /// harsh
         pint I'm -- sorry. I'm being mean again. How about we wipe the slate clean with a new chapter? We could call it... /// harsh
     pint Well, maybe you're just misguided. And the story's not over yet! We might still find a happy ending`! But... I think it's time we start a new chapter. Hmmm. How about... /// soft
-pint Chapter III. The Princess and the Dragon.
+linebreak
+pint Chapter III`. The Princess and the Dragon.
 
 label avoidTitle
     pint Oh, you're no fun. /// harsh
         pint What is this, our... third go-round? Hm. /// harsh
     pint I'm... sorry! /// soft
         pint This is our... third time here, right? So that would make this chapter three. /// soft
-pint Chapter III. The Princess and the Dragon.
+linebreak
+pint Chapter III`. The Princess and the Dragon.
 
 label reverseReveal
     pint Well, this *is* my story, isn't it? Especially if you're here watching it. /// harsh
@@ -378,6 +384,7 @@ label wantBasementStart
     pint I guess we'll just have to talk to them.
 
 label basementStartAware
+linebreak
     p You're missing something important, aren't you? /// harsh
     p I'm... not alone here this time. Part of you stayed with me when we split apart. /// soft
 truth The head on the figure cocks to the side. Is it inquisitive? Suspicious? Hostile? Its emotions are unreadable.
@@ -386,6 +393,7 @@ truth The head on the figure cocks to the side. Is it inquisitive? Suspicious? H
 jumpto basementStartJoin
 
 label basementStartOther
+linebreak
     p Back to the same song and dance, aren't we? /// harsh
     p So, here we are again. I'm back in chains, and you have your knife. So. What are we going to do? /// soft
 truth The head on the figure cocks to the side. Is it inquisitive? Suspicious? Hostile? Its emotions are unreadable.
@@ -415,6 +423,7 @@ label silentTalkMenu
 jumpto talkMenuJoin
 
 label talkMenuJoin
+linebreak
     p Hey, I'm talking to you! It's rude to have a conversation in front of other people without letting them in on it. /// harsh
     p I... can't hear what's going on in there anymore now that I'm back in my own body. Do you want to... share your thoughts? I-it'd only be polite, really. /// soft
 
@@ -465,7 +474,7 @@ label rudeSoftOppoMenu
 pint Yeah... But I guess there isn't much we can do about it.
 jumpto oppoSoftQuietJoin
 
-label oppoAssertiveJoin
+label assertiveOppoMenu
     pint *Believe* me, I can be assertive. /// harsh
     pint But I don't wanna be assertive! /// soft
         pint ... *Sigh.`* Fine. /// soft
@@ -475,6 +484,7 @@ label silentOppoMenu
     jumpto silentOppoMenuUnaware /// soft
 pint Oh, they're *in* for it if they think we're just going to sit here in silence again. One second.
 label oppoAwareJoin
+linebreak
     p Hey! I'm *talking* to you? /// harsh
     p Um... excuse me? /// soft
 coldext My apologies`. They're *really* being quite dull in here.
@@ -496,6 +506,7 @@ jumpto oppoSoftYellJoin
 label assertiveOppoMenuUnaware
 pint You're right. No more Nice Princess for them. I'm going to speak my mind!
 label oppoSoftYellJoin
+linebreak
 p Uh... hello?
 truth Silence.
 p I'm trying to say something...!
@@ -512,6 +523,7 @@ p Wait, what?
 label silentOppoMenuUnaware
 pint Okay... I guess we'll just... wait.
 label oppoSoftQuietJoin
+linebreak
 truth And so you wait.
 coldext My apologies`. They're really being quite dull in here.
 truth And wait.
@@ -533,12 +545,14 @@ p Bring it then. But you caught me off guard the first time. It's not going to h
 oppoext Well`! What can I say`? I'd -- back off if I wasn't already overcommitted, so... I guess I'll just have to... pretend that you're bluffing! Which you maybe -- *probably* are!
 p Having second thoughts?
 oppoext Shut up!
+linebreak
 truth You can feel yourself shrink and then grow, vacilating between small and large, weak and powerful, as the thing in front of you attacks, blade raised and wings spreading.
 jumpto oppoAttackStartJoin
 
 label oppoAttackStartSoft
 p And... *are* you doing this?
 oppoext Oh, I most *definitely* am.
+linebreak
 truth You feel small as the monster in front of you attacks, blade raised and wings spreading.
 label oppoAttackStartJoin
 heroext Uhh -- before anything happens, I just wanted to let you all know that we are *not* all on board with this.
@@ -819,7 +833,7 @@ truth Your peace does not last, nor can it ever. It's time to leave. Memory retu
 // Default fail responses //
 
 label defaultResponseGoHarsh
-pint In case you forgot, we're shackled to the wall. We can't exactly *wander around around the cabin* right now.
+pint In case you forgot, we're shackled to the wall. We can't exactly *wander around the cabin* right now.
 
 label defaultResponseGoSoft
 pint You... you know we're chained to the wall, right?

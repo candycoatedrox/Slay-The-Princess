@@ -57,13 +57,16 @@ public class Script {
     private boolean prisonerWatchedHead;
     private boolean prisonerGoodEndingSeen;
     private boolean prisonerHeartStopped;
-    private boolean cageCutRoute;
+    private Condition cageCutRoute = EMPTYCONDITION;
+    private Condition happySmittenKnown = EMPTYCONDITION;
+    private Condition happyGetUpAttempt = EMPTYCONDITION;
 
     // Given conditions for checks
     private boolean boolCondition = false;
     private int intCondition = 100;
     private String strCondition = "";
 
+    private static final Condition EMPTYCONDITION = new Condition();
     private static final DialogueLine CLAIMFOLD = new DialogueLine("Something reaches out and folds her into its myriad arms.");
 
     // --- CONSTRUCTORS ---
@@ -852,7 +855,9 @@ public class Script {
         this.prisonerWatchedHead = false;
         this.prisonerGoodEndingSeen = false;
         this.prisonerHeartStopped = false;
-        this.cageCutRoute = false;
+        this.cageCutRoute = EMPTYCONDITION;
+        this.happySmittenKnown = EMPTYCONDITION;
+        this.happyGetUpAttempt = EMPTYCONDITION;
     }
 
     /**
@@ -864,7 +869,11 @@ public class Script {
         this.isChapter2 = this.currentCycle instanceof ChapterII;
         this.isChapter3 = this.currentCycle instanceof ChapterIII;
 
-        if (this.currentCycle != null) {
+        if (this.noCycle) {
+            this.cageCutRoute = EMPTYCONDITION;
+            this.happySmittenKnown = EMPTYCONDITION;
+            this.happyGetUpAttempt = EMPTYCONDITION;
+        } else {
             this.firstVessel = currentCycle.isFirstVessel();
             this.hasBlade = currentCycle.hasBlade();
             this.mirrorComment = currentCycle.mirrorComment();
@@ -876,7 +885,12 @@ public class Script {
             if (this.isChapter2) {
                 ChapterII chapter2 = (ChapterII)this.currentCycle;
 
-                this.ch2Voice = chapter2.ch2Voice().toString();
+                try {
+                    this.ch2Voice = chapter2.ch2Voice().toString();
+                } catch (NullPointerException e) {
+                    this.ch2Voice = "";
+                }
+                
                 this.chapterSource = chapter2.getSource();
                 this.sharedLoop = chapter2.sharedLoop();
                 this.sharedLoopInsist = chapter2.sharedLoopInsist();
@@ -886,17 +900,31 @@ public class Script {
                 this.droppedBlade1 = chapter2.droppedBlade1();
                 this.whatWouldYouDo = chapter2.whatWouldYouDo();
                 this.rescuePath = chapter2.rescuePath();
+                
+                this.cageCutRoute = EMPTYCONDITION;
+                this.happySmittenKnown = EMPTYCONDITION;
+                this.happyGetUpAttempt = EMPTYCONDITION;
             } else if (this.isChapter3) {
                 ChapterIII chapter3 = (ChapterIII)this.currentCycle;
 
-                this.ch2Voice = chapter3.ch2Voice().toString();
+                try {
+                    this.ch2Voice = chapter3.ch2Voice().toString();
+                } catch (NullPointerException e) {
+                    this.ch2Voice = "";
+                }
+
                 this.chapterSource = chapter3.getSource();
                 this.sharedLoop = chapter3.sharedLoop();
                 this.sharedLoopInsist = chapter3.sharedLoopInsist();
                 this.freeFromChains2 = chapter3.freeFromChains2();
                 this.adversaryTookBlade = chapter3.adversaryTookBlade();
 
-                this.ch3Voice = chapter3.ch3Voice().toString();
+                try {
+                    this.ch3Voice = chapter3.ch3Voice().toString();
+                } catch (NullPointerException e) {
+                    this.ch3Voice = "";
+                }
+
                 this.abandoned2 = chapter3.abandoned2();
                 this.adversaryFaceExplore = chapter3.adversaryFaceExplore();
                 this.spectreShareDied = chapter3.spectreShareDied();
@@ -907,10 +935,35 @@ public class Script {
                 this.prisonerWatchedHead = chapter3.prisonerWatchedHead();
                 this.prisonerGoodEndingSeen = chapter3.prisonerGoodEndingSeen();
                 this.prisonerHeartStopped = chapter3.prisonerHeartStopped();
+                this.cageCutRoute = chapter3.cageCutRoute();
+                this.happySmittenKnown = chapter3.happySmittenKnown();
+                this.happyGetUpAttempt = chapter3.happyGetUpAttempt();
+            } else {
+                this.cageCutRoute = EMPTYCONDITION;
+                this.happySmittenKnown = EMPTYCONDITION;
+                this.happyGetUpAttempt = EMPTYCONDITION;
             }
         }
 
         this.mirrorKnown = this.mirrorComment || this.touchedMirror;
+    }
+
+    /**
+     * Updates the source of the current Chapter
+     */
+    public void updateChapterSource() {
+        this.currentCycle = manager.getCurrentCycle();
+        this.noCycle = this.currentCycle == null;
+        this.isChapter2 = this.currentCycle instanceof ChapterII;
+        this.isChapter3 = this.currentCycle instanceof ChapterIII;
+
+        if (this.isChapter2) {
+            this.chapterSource = ((ChapterII)this.currentCycle).getSource();
+        } else if (this.isChapter3) {
+            this.chapterSource = ((ChapterIII)this.currentCycle).getSource();
+        } else {
+            this.chapterSource = "";
+        }
     }
 
     /**
@@ -920,7 +973,6 @@ public class Script {
         this.currentCycle = manager.getCurrentCycle();
         this.noCycle = this.currentCycle == null;
         this.isChapter2 = this.currentCycle instanceof ChapterII;
-        this.isChapter3 = this.currentCycle instanceof ChapterIII;
 
         if (this.currentCycle != null) {
             this.hasBlade = currentCycle.hasBlade();
@@ -938,10 +990,6 @@ public class Script {
                 this.narratorProof = chapter2.narratorProof();
                 this.adversaryTookBlade = chapter2.adversaryTookBlade();
                 this.freeFromChains2 = chapter2.freeFromChains2();
-            } else if (this.isChapter3) {
-                ChapterIII chapter3 = (ChapterIII)this.currentCycle;
-
-                this.cageCutRoute = chapter3.cageCutRoute();
             }
         }
 
@@ -1405,9 +1453,19 @@ public class Script {
                 if (this.prisonerHeartStopped) return false;
 
             } else if (m.equals("cutroute")) {
-                if (!this.cageCutRoute) return false;
+                if (!cageCutRoute.check()) return false;
             } else if (m.equals("nocut")) {
-                if (this.cageCutRoute) return false;
+                if (cageCutRoute.check()) return false;
+
+            } else if (m.equals("smittenknown")) {
+                if (!happySmittenKnown.check()) return false;
+            } else if (m.equals("nosmitten")) {
+                if (happySmittenKnown.check()) return false;
+
+            } else if (m.equals("getupattempt")) {
+                if (!happyGetUpAttempt.check()) return false;
+            } else if (m.equals("nogetup")) {
+                if (happyGetUpAttempt.check()) return false;
 
             // Checks on given conditions
                 
@@ -1416,18 +1474,6 @@ public class Script {
             } else if (m.equals("checkfalse")) {
                 if (this.boolCondition) return false;
 
-            } else if (m.startsWith("ifnum")) {
-                if (args.length == 2) {
-                    try {
-                        targetInt = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException e) {
-                        targetInt = 0;
-                    }
-                } else {
-                    targetInt = 0;
-                }
-
-                if (this.intCondition != targetInt) return false;
             } else if (m.startsWith("ifnumnot")) {
                 if (args.length == 2) {
                     try {
@@ -1439,7 +1485,21 @@ public class Script {
                     targetInt = 0;
                 }
 
+                //IOHandler.wrapPrintln("[DEBUG: num = " + this.intCondition + "; target = " + targetInt + "; check should return " + (this.intCondition != targetInt) + "]");
                 if (this.intCondition == targetInt) return false;
+            } else if (m.startsWith("ifnum")) {
+                if (args.length == 2) {
+                    try {
+                        targetInt = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        targetInt = 0;
+                    }
+                } else {
+                    targetInt = 0;
+                }
+
+                //IOHandler.wrapPrintln("[DEBUG: num = " + this.intCondition + "; target = " + targetInt + "; check should return " + (this.intCondition == targetInt) + "]");
+                if (this.intCondition != targetInt) return false;
 
             } else if (m.startsWith("ifstring-")) {
                 if (!strCondition.equals(args[1])) return false;
@@ -1787,11 +1847,19 @@ public class Script {
     private void printDialogueLine(String characterID, String line, String[] modifiers) {
         Voice v = Voice.getVoice(characterID);
         boolean isInterrupted = false;
-        
-        if (!this.runModifierChecks(modifiers, v)) return;
+        double speedMultiplier = 1;
+
+        boolean checkResult = this.runModifierChecks(modifiers, v);
+        //System.out.println("[DEBUG: modifier checks returned " + checkResult + "]");
+        if (!checkResult) return;
+        //System.out.println("[DEBUG: checks passed, printing line]");
 
         for (String m : modifiers) {
-            if (m.equals("interrupt")) isInterrupted = true;
+            if (m.equals("interrupt")) {
+                isInterrupted = true;
+            } else if (m.equals("slow")) {
+                speedMultiplier = 0.5;
+            }
         }
 
         if (v == null) {
@@ -1804,7 +1872,7 @@ public class Script {
                 System.out.println("[DEBUG: Invalid character ID in file " + source.getName() + " at line " + (this.cursor + 1) + "]");
             }
         } else {
-            parser.printDialogueLine(new VoiceDialogueLine(v, line, isInterrupted));
+            parser.printDialogueLine(v, line, isInterrupted, speedMultiplier);
         }        
     }
 
@@ -1847,7 +1915,8 @@ public class Script {
         }
 
         //manager.toggleAutoAdvance();
-        script.runSection("elipsesSpeedTest");
+        //manager.toggleSlowPrint();
+        script.runSection("heaTest");
     }
 
 }
@@ -1862,7 +1931,7 @@ Indentation is usually used to indicate conditional lines, e.g. dialogue that on
 
 Including " /// " at the end of the line allows you to toggle additional modifiers for all lines except for comments and labels:
     regular line /// modA modB ...
-Multiple modifiers  can be used together, separated by spaces.
+Multiple modifiers can be used together, separated by spaces.
 All functions share the same modifiers: a variety of conditional checks that must pass before running the line. Dialogue lines also have several exclusive modifiers.
 
 Different functions a script can perform:
@@ -1942,6 +2011,8 @@ Different functions a script can perform:
                 Checks whether the player has the speaker's voice before printing.
           - interrupt
                 The line is interrupted.
+          - slow
+                Prints the line at half speed.
 
 Generic modifiers available for all lines (except comments and labels):
 
@@ -2106,6 +2177,16 @@ Generic modifiers available for all lines (except comments and labels):
             Checks if the player is attempting to cut themselves out of their chains in The Cage before running the line.
       - nocut
             Checks if the player is not attempting to cut themselves out of their chains in The Cage before running the line.
+
+      - smittenknown
+            Checks if the Voice of the Skeptic has figured out the shadow's identity in Happily Ever After before running the line.
+      - nosmitten
+            Checks if the player has not figured out the shadow's identity in Happily Ever After before running the line.
+
+      - getupattempt
+            Checks if the player has attempted to get out of their seat in Happily Ever After before running the line.
+      - nogetup
+            Checks if the player has not attempted to get out of their seat in Happily Ever After before running the line.
     
     - Checks on a given condition -
       - check

@@ -53,7 +53,7 @@ public class IOHandler implements Closeable {
         if (manager.autoAdvance()) {
             System.out.println();
         } else {
-            this.input.nextLine();
+            input.nextLine();
         }
     }
 
@@ -75,15 +75,19 @@ public class IOHandler implements Closeable {
      */
     public void printDivider(boolean wait) {
         if (manager.globalSlowPrint()) {
-            DIVIDER.print(false, 1.75);
+            if (wait) {
+                DIVIDER.print(false, 1.75);
+                this.waitForInput();
+            } else {
+                DIVIDER.println(false, 1.75);
+            }
         } else {
-            wrapPrint(DIVIDER);
-        }
-
-        if (wait) {
-            System.out.print("\n");
-        } else {
-            this.waitForInput();
+            if (wait) {
+                wrapPrint(DIVIDER);
+                this.waitForInput();
+            } else {
+                wrapPrintln(DIVIDER);
+            }
         }
     }
 
@@ -101,15 +105,19 @@ public class IOHandler implements Closeable {
      */
     public void printDialogueLine(DialogueLine line, double speedMultiplier) {
         if (manager.globalSlowPrint()) {
-            line.print(speedMultiplier);
+            if (line.isInterrupted()) {
+                line.println(speedMultiplier);
+            } else {
+                line.print(speedMultiplier);
+                this.waitForInput();
+            }
         } else {
-            wrapPrint(line);
-        }
-
-        if (line.isInterrupted()) {
-            System.out.print("\n");
-        } else {
-            this.waitForInput();
+            if (line.isInterrupted()) {
+                wrapPrintln(line);
+            } else {
+                wrapPrint(line);
+                this.waitForInput();
+            }
         }
     }
 
@@ -119,16 +127,72 @@ public class IOHandler implements Closeable {
      */
     public void printDialogueLine(DialogueLine line) {
         if (manager.globalSlowPrint()) {
-            line.print();
+            if (line.isInterrupted()) {
+                line.println();
+            } else {
+                line.print();
+                this.waitForInput();
+            }
         } else {
-            wrapPrint(line);
+            if (line.isInterrupted()) {
+                wrapPrintln(line);
+            } else {
+                wrapPrint(line);
+                this.waitForInput();
+            }
         }
+    }
 
-        if (line.isInterrupted()) {
-            System.out.print("\n");
-        } else {
-            this.waitForInput();
-        }
+    /**
+     * Prints a given String as a DialogueLine
+     * @param speaker the Voice speaking this dialogue line
+     * @param line the dialogue line to print as a String
+     * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    public void printDialogueLine(Voice speaker, String line, boolean isInterrupted, double speedMultiplier) {
+        VoiceDialogueLine lineDialogue = new VoiceDialogueLine(speaker, line, isInterrupted);
+        this.printDialogueLine(lineDialogue, speedMultiplier);
+    }
+
+    /**
+     * Prints a given String as a DialogueLine
+     * @param speaker the Voice speaking this dialogue line
+     * @param line the dialogue line to print as a String
+     * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
+     */
+    public void printDialogueLine(Voice speaker, String line, boolean isInterrupted) {
+        this.printDialogueLine(speaker, line, isInterrupted, 1);
+    }
+
+    /**
+     * Prints a given String as a DialogueLine
+     * @param speaker the Voice speaking this dialogue line
+     * @param line the dialogue line to print as a String
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    public void printDialogueLine(Voice speaker, String line, double speedMultiplier) {
+        this.printDialogueLine(speaker, line, false, speedMultiplier);
+    }
+
+    /**
+     * Prints a given String as a DialogueLine
+     * @param speaker the Voice speaking this dialogue line
+     * @param line the dialogue line to print as a String
+     */
+    public void printDialogueLine(Voice speaker, String line) {
+        this.printDialogueLine(speaker, line, false, 1);
+    }
+
+    /**
+     * Prints a given String as a DialogueLine
+     * @param line the dialogue line to print as a String
+     * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    public void printDialogueLine(String line, boolean isInterrupted, double speedMultiplier) {
+        DialogueLine lineDialogue = new DialogueLine(line, isInterrupted);
+        this.printDialogueLine(lineDialogue, speedMultiplier);
     }
 
     /**
@@ -137,8 +201,16 @@ public class IOHandler implements Closeable {
      * @param isInterrupted whether to go straight into printing the next line or wait for player input after printing this line
      */
     public void printDialogueLine(String line, boolean isInterrupted) {
-        DialogueLine lineDialogue = new DialogueLine(line, isInterrupted);
-        this.printDialogueLine(lineDialogue);
+        this.printDialogueLine(line, isInterrupted, 1);
+    }
+
+    /**
+     * Prints a given String as a DialogueLine
+     * @param line the dialogue line to print as a String
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    public void printDialogueLine(String line, double speedMultiplier) {
+        this.printDialogueLine(line, false, speedMultiplier);
     }
 
     /**
@@ -146,7 +218,7 @@ public class IOHandler implements Closeable {
      * @param line the dialogue line to print as a String
      */
     public void printDialogueLine(String line) {
-        this.printDialogueLine(line, false);
+        this.printDialogueLine(line, false, 1);
     }
 
     // --- OPTIONS HANDLING ---
@@ -688,45 +760,12 @@ public class IOHandler implements Closeable {
     // --- WRAPAROUND MANAGEMENT ---
 
     /**
-     * Returns a given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     * Returns a given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words; ignores indicator characters (`)
      * @param s the String to modify
      * @return the given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
      */
     public static String wordWrap(String s) {
-        String wrappedLine = "";
-        String[] lines = s.split("\n");
-        String[] wordsInLine;
-        int columnInLine;
-
-        for (int i = 0; i < lines.length; i++) {
-            if (i != 0) {
-                wrappedLine += "\n";
-            }
-
-            columnInLine = 0;
-            wordsInLine = lines[i].split(" ");
-
-            for (int j = 0; j < wordsInLine.length; j++) {
-                if (j != 0) {
-                    columnInLine += 1;
-                }
-
-                columnInLine += wordsInLine[j].length();
-
-                if (columnInLine > WRAPCOLUMNS) {
-                    wrappedLine += "\n" + wordsInLine[j];
-                    columnInLine = wordsInLine[j].length();
-                } else {
-                    if (j != 0) {
-                        wrappedLine += " ";
-                    }
-
-                    wrappedLine += wordsInLine[j];
-                }
-            }
-        }
-
-        return wrappedLine;
+        return wordWrapIgnoreIndicator(s.replace("`", ""));
     }
 
     /**
@@ -739,12 +778,68 @@ public class IOHandler implements Closeable {
     }
 
     /**
+     * Returns the String representation of a given DialogueLine with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words; ignores indicator characters (`)
+     * @param line the DialogueLine to modify
+     * @return the String representation of a given DialogueLine with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
+    public static String wordWrapIgnoreIndicator(DialogueLine line) {
+        return wordWrapIgnoreIndicator(line.toString());
+    }
+
+    /**
      * Returns the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
      * @param menu the OptionsMenu to modify
      * @return the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
      */
     public static String wordWrap(OptionsMenu menu) {
         return wordWrap(menu.toString());
+    }
+
+    /**
+     * Returns the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words; ignores indicator characters (`)
+     * @param menu the OptionsMenu to modify
+     * @return the String representation of a given OptionsMenu with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
+    public static String wordWrapIgnoreIndicator(OptionsMenu menu) {
+        return wordWrapIgnoreIndicator(menu.toString());
+    }
+
+    /**
+     * Returns a given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     * @param s the String to modify
+     * @return the given String with line breaks inserted such that it will only wrap around to a new line at word boundaries, not in the middle of words
+     */
+    public static String wordWrapIgnoreIndicator(String s) {
+        String wrappedLine = "";
+        String[] lines = s.split("\n");
+        String[] wordsInLine;
+        int columnInLine;
+        int wordLength;
+
+        for (int i = 0; i < lines.length; i++) {
+            if (i != 0) wrappedLine += "\n";
+            columnInLine = 0;
+            wordsInLine = lines[i].split(" ");
+
+            for (int j = 0; j < wordsInLine.length; j++) {
+                wordLength = wordsInLine[j].replace("`", "").length();
+                if (j != 0)  columnInLine += 1;
+                columnInLine += wordLength;
+
+                if (columnInLine > WRAPCOLUMNS) {
+                    wrappedLine += "\n" + wordsInLine[j];
+                    columnInLine = wordLength;
+                } else {
+                    if (j != 0) {
+                        wrappedLine += " ";
+                    }
+
+                    wrappedLine += wordsInLine[j];
+                }
+            }
+        }
+
+        return wrappedLine;
     }
 
     /**

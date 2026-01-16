@@ -1591,7 +1591,7 @@ public class GameManager {
     public static void main(String[] args) {
         GameManager manager = new GameManager();
         manager.globalSlowPrint = false;
-        manager.debugRunGame(ChapterEnding.ILLUSIONOFCHOICE);
+        manager.debugRunGame(ChapterEnding.EXORCIST);
         
         /*
         IOHandler parserStatic = manager.parser;

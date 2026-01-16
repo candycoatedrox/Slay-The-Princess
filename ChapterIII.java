@@ -31,8 +31,18 @@ public class ChapterIII extends StandardCycle {
     private Condition dragonStartNoLeaveAsk = new Condition(true);
 
     // Flags used in The Cage
-    private boolean cageCutRoute = false;
+    private Condition cageCutRoute = new Condition();
     private boolean cageNoBladeMentioned = false;
+
+    // Flags used in Happily Ever After
+    private GlobalInt happyTorchesLit = new GlobalInt(4);
+    private boolean happyTorchFlag = false;
+    private Condition happyCanTorchComment = new Condition();
+    private Condition happySmittenKnown = new Condition();
+    private Condition happyDinnerOver = new Condition();
+    private Condition happyGamesOver = new Condition();
+    private Condition happyGetUpAttempt = new Condition();
+    private Condition happySlayAttempt = new Condition();
 
     /**
      * Constructor
@@ -144,6 +154,7 @@ public class ChapterIII extends StandardCycle {
 
             case HAPPY:
                 this.currentLocation = GameLocation.CABIN;
+                this.mirrorPresent = true;
                 this.removeVoice(Voice.SMITTEN);
                 break;
         }
@@ -291,8 +302,24 @@ public class ChapterIII extends StandardCycle {
      * Accessor for cageCutRoute
      * @return whether the player is attempting to cut themselves out of their chains in Chapter III: The Cage
      */
-    public boolean cageCutRoute() {
+    public Condition cageCutRoute() {
         return this.cageCutRoute;
+    }
+
+    /**
+     * Accessor for happySmittenKnown
+     * @return whether the Voice of the Skeptic has figured out the shadow's identity in Epilogue: Happily Ever After
+     */
+    public Condition happySmittenKnown() {
+        return this.happySmittenKnown;
+    }
+
+    /**
+     * Accessor for happyGetUpAttempt
+     * @return whether the player has attempted to get out of their seat in Epilogue: Happily Ever After
+     */
+    public Condition happyGetUpAttempt() {
+        return this.happyGetUpAttempt;
     }
 
     // --- COMMANDS ---
@@ -956,7 +983,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse(activeOutcome);
@@ -1227,6 +1254,7 @@ public class ChapterIII extends StandardCycle {
                 this.secondaryScript = new Script(this.manager, this.parser, "Routes/JOINT/Fury/FuryTower");
                 this.source = "tower";
         }
+        mainScript.updateChapterSource();
 
         String voiceCombo;
         if (this.prevEnding == ChapterEnding.GODKILLER) {
@@ -1395,7 +1423,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse(activeOutcome);
@@ -2554,6 +2582,7 @@ public class ChapterIII extends StandardCycle {
         // "You" have Cold + Opportunist, but you do not have any of the voices at the start of the Chapter
 
         this.source = (this.prevEnding == ChapterEnding.EXORCISTUPSTAIRS) ? "upstairs" : "basement";
+        mainScript.updateChapterSource();
 
         mainScript.runSection();
 
@@ -2580,6 +2609,10 @@ public class ChapterIII extends StandardCycle {
         mainScript.runMoodSection(this.activeOutcome + "PreMenu2");
 
         // "You" die, and the chapter starts
+        IOHandler.wrapPrintln("This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve. This is what you deserve.");
+        parser.waitForInput();
+        mainScript.runSection();
+
         boolean observedHands = false;
         boolean stillMadAsked = false;
         GlobalInt loopJokeCount = new GlobalInt();
@@ -2831,6 +2864,7 @@ public class ChapterIII extends StandardCycle {
                 case "silent":
                     this.repeatActiveMenu = false;
                     mainScript.runSection(activeOutcome + "StairsMenu");
+                    break;
 
                 default: this.giveDefaultFailResponsePrincess(activeOutcome);
             }
@@ -2839,6 +2873,8 @@ public class ChapterIII extends StandardCycle {
         // "You" enter the basement
         this.dragonBodyDownstairs = true;
         mainScript.runSection("stairsJoin");
+
+        this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "what", "(Explore) What the hell am I?"));
         activeMenu.add(new Option(this.manager, "hello", "\"Hello?\"", !talkAttempt));
         activeMenu.add(new Option(this.manager, "out", "\"Hey! Listen to me! I'm stuck in the Princess's head, you've got to get me out of here!\"", !talkAttempt));
@@ -3241,6 +3277,7 @@ public class ChapterIII extends StandardCycle {
                 break;
             default: this.source = "nightmare";
         }
+        mainScript.updateChapterSource();
 
         String voiceCombo;
         if (this.ch3Voice == Voice.CHEATED) {
@@ -3382,7 +3419,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: this.giveDefaultFailResponse();
@@ -3728,7 +3765,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse();
@@ -4404,7 +4441,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse(activeOutcome);
@@ -4730,6 +4767,7 @@ public class ChapterIII extends StandardCycle {
         } else {
             this.source = "witch";
         }
+        mainScript.updateChapterSource();
 
         mainScript.runSection();
 
@@ -5040,7 +5078,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse();
@@ -5524,7 +5562,7 @@ public class ChapterIII extends StandardCycle {
 
                             case "cut":
                                 this.repeatActiveMenu = false;
-                                this.cageCutRoute = true;
+                                cageCutRoute.set();
                                 mainScript.runSection("cut1");
                                 break;
 
@@ -5558,7 +5596,7 @@ public class ChapterIII extends StandardCycle {
         activeMenu.add(new Option(this.manager, "noBlade", "(Explore) \"Look, I didn't even bring a knife. I just wanted to talk to you.\"", !this.hasBlade));
         activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What... happened to you?\""));
         activeMenu.add(new Option(this.manager, "head", "(Explore) \"You cut your own head off last time. You can't be mad at me about that!\""));
-        activeMenu.add(new Option(this.manager, "cutFail", "(Explore) [Attempt to cut yourself free.]", this.hasBlade && !this.cageCutRoute));
+        activeMenu.add(new Option(this.manager, "cutFail", "(Explore) [Attempt to cut yourself free.]", this.hasBlade && !cageCutRoute.check()));
         activeMenu.add(new Option(this.manager, "swing", "(Explore) [Swing your blade.]"));
         activeMenu.add(new Option(this.manager, "cutCont", "(Explore) [Keep cutting.]", this.cageCutRoute));
         activeMenu.add(new Option(this.manager, "silent", "(Explore) [Remain silent.]"));
@@ -5574,7 +5612,7 @@ public class ChapterIII extends StandardCycle {
                 case "happened":
                 case "head":
                     this.repeatActiveMenu = false;
-                    this.cageCutRoute = false;
+                    cageCutRoute.set(false);
                     mainScript.runSection(activeOutcome + "Menu1");
                     break;
 
@@ -5592,7 +5630,7 @@ public class ChapterIII extends StandardCycle {
                 case "cSlayPrincess":
                 case "swing":
                     this.repeatActiveMenu = false;
-                    this.cageCutRoute = false;
+                    cageCutRoute.set(false);
                     mainScript.runSection("swingMenu1");
                     break;
 
@@ -5603,7 +5641,7 @@ public class ChapterIII extends StandardCycle {
 
                 case "silent":
                     this.repeatActiveMenu = false;
-                    this.cageCutRoute = false;
+                    cageCutRoute.set(false);
                     mainScript.runSection("silentMenu1");
                     break;
 
@@ -5638,7 +5676,7 @@ public class ChapterIII extends StandardCycle {
                 case "choices":
                 case "silent":
                     this.repeatActiveMenu = false;
-                    this.cageCutRoute = false;
+                    cageCutRoute.set(false);
                     mainScript.runSection(activeOutcome + "Menu2");
                     break;
 
@@ -5646,7 +5684,7 @@ public class ChapterIII extends StandardCycle {
                 case "drop":
                     this.repeatActiveMenu = false;
                     this.hasBlade = false;
-                    this.cageCutRoute = false;
+                    cageCutRoute.set(false);
                     mainScript.runSection("dropMenu2");
                     break;
 
@@ -5857,6 +5895,7 @@ public class ChapterIII extends StandardCycle {
         } else {
             this.source = "drowned";
         }
+        mainScript.updateChapterSource();
 
         mainScript.runConditionalSection(this.source + "Start", this.prisonerHeartStopped);
 
@@ -5974,7 +6013,7 @@ public class ChapterIII extends StandardCycle {
                     break;
 
                 case "cApproachAtMirrorFail":
-                    this.giveDefaultFailResponse("cApproachAtMirrorFail");
+                    this.giveDefaultFailResponse(activeOutcome);
                     break;
 
                 default: super.giveDefaultFailResponse();
@@ -6160,22 +6199,548 @@ public class ChapterIII extends StandardCycle {
             - Opportunist
          */
 
+        mainScript.runSection();
 
+        boolean currentMirrorComment = false;
+        Condition noLeaveAttempt = new Condition(true);
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "blade", "(Explore) Does it matter if the blade's here? We didn't use it last time, and the time before that she used it to kill us."));
+        activeMenu.add(new Option(this.manager, "smitten", "(Explore) Hey, where's \"The Voice of the Smitten?\" He was here last time. And it's not like him to be this quiet.", this.hasVoice(Voice.OPPORTUNIST)));
+        activeMenu.add(new Option(this.manager, "mirror", "(Explore) So none of you are going to talk about the mirror?"));
+        activeMenu.add(new Option(this.manager, "approach", "[Approach the mirror.]"));
+        activeMenu.add(new Option(this.manager, "leave", "[Turn around and leave.]", noLeaveAttempt));
 
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "mirror":
+                    currentMirrorComment = true;
+                case "blade":
+                case "smitten":
+                    mainScript.runSection(activeOutcome + "Start");
+                    break;
 
+                case "cGoStairs":
+                case "cApproachMirror":
+                case "approach":
+                    this.repeatActiveMenu = false;
+                    break;
 
+                case "cGoHill":
+                    if (!noLeaveAttempt.check()) {
+                        mainScript.runSection("abortRepeatStart");
+                        break;
+                    }
+                case "leave":
+                    noLeaveAttempt.set(false);
+                    mainScript.runSection("abortAttemptStart");
+                    break;
+            }
+        }
 
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+        // Approach the mirror
+        mainScript.runConditionalSection("approachMirror", currentMirrorComment);
 
-        // PLACEHOLDER
-        return null;
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "reach", "[Reach forward.]"));
+        
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cWipe":
+                case "reach":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                case "cApproachAtMirrorFail":
+                    this.giveDefaultFailResponse(activeOutcome);
+                    break;
+
+                default: super.giveDefaultFailResponse();
+            }
+        }
+        
+        // Reach forward & enter the basement
+        this.currentLocation = GameLocation.STAIRS;
+        this.mirrorPresent = false;
+        mainScript.runConditionalSection("reachMirror", noLeaveAttempt);
+        this.touchedMirror = true;
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed up the stairs.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cGoBasement":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+        }
+
+        // Continue up the stairs
+        this.currentLocation = GameLocation.BASEMENT; // Not a basement in this chapter but whatever
+        this.withBlade = true;
+        this.withPrincess = true;
+        // MENTION SHADOW IN DESCRIPTION?
+        mainScript.runSection("hallStart");
+
+        NumCondition noTorchesOut = new NumCondition(this.happyTorchesLit, 4);
+        InverseCondition torchesOut = noTorchesOut.getInverse();
+        NumCondition oneTorchOut = new NumCondition(this.happyTorchesLit, 3);
+
+        Condition dinnerEaten = new Condition();
+        InverseCondition noDinner = happyDinnerOver.getInverse();
+        InverseCondition noGames = happyGamesOver.getInverse();
+
+        boolean defensiveFlag = false;
+        boolean defensiveComment = false;
+        Condition shadowComment = new Condition();
+        InverseCondition noShadowComment = shadowComment.getInverse();
+        Condition otherHimMention = new Condition();
+        OrCondition himMentioned = new OrCondition(shadowComment, otherHimMention);
+        Condition himAsked = new Condition();
+        InverseCondition himNotAsked = himAsked.getInverse();
+        OrCondition himKnown = new OrCondition(this.happySmittenKnown, himMentioned);
+        Condition shadowTorchesKnown = new Condition();
+        Condition noTorchesComment = new Condition(true);
+        Condition happyAsked = new Condition();
+        Condition canAskWhatDo = new Condition(true);
+        InverseCondition noGetUpAttempt = happyGetUpAttempt.getInverse();
+
+        // THIS MENU HAS 20 EXPLORE OPTIONS...
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "smittenSkeptic", "(Explore) \"Hey! Smitten! You were real chatty last time. Don't you have anything to say?\"", this.happySmittenKnown));
+        activeMenu.add(new Option(this.manager, "smittenOppo", "(Explore) \"Hey! Shadow! Don't you have anything to say?\"", this.hasVoice(Voice.OPPORTUNIST), himAsked));
+        activeMenu.add(new Option(this.manager, "happened", "(Explore) \"What just happened? Did you make that torch go out?\"", this.happyCanTorchComment, oneTorchOut, noTorchesComment));
+        activeMenu.add(new Option(this.manager, "wrong", "(Explore) \"I don't think you did anything wrong. I think you just said something you wanted to say.\"", this.happyCanTorchComment, oneTorchOut, noTorchesComment));
+        activeMenu.add(new Option(this.manager, "torch", "(Explore) \"It's just a torch. Don't worry about it. We still have plenty of light.\"", this.happyCanTorchComment, torchesOut));
+        activeMenu.add(new Option(this.manager, "right", "(Explore) \"This place isn't right. We have to put the rest of them out. We have to get rid of that shadow.\"", this.happyCanTorchComment, torchesOut, shadowTorchesKnown));
+        activeMenu.add(new Option(this.manager, "truth", "(Explore) \"We need the truth. You need to tell me how you really feel.\"", happyAsked));
+        activeMenu.add(new Option(this.manager, "everything", "(Explore) \"Do we actually have everything we need? Because it doesn't feel like it, it feels like...\"", false, new OrCondition(dinnerEaten, this.happyGamesOver)));
+        activeMenu.add(new Option(this.manager, "happy", "(Explore) \"Are you actually happy here?\"", new NumCondition(this.happyTorchesLit, 2)));
+        activeMenu.add(new Option(this.manager, "shadowA", "(Explore) \"The shadow holding me down. Is it the same one that set the table?\"", noShadowComment, this.happyDinnerOver, this.happyGetUpAttempt));
+        activeMenu.add(new Option(this.manager, "shadowB", "(Explore) \"The shadow that set the table... is it separate from us?\"", noShadowComment, this.happyDinnerOver));
+        activeMenu.add(new Option(this.manager, "him", "(Explore) \"You said 'he.' Who is he?\"", himMentioned, himNotAsked));
+        activeMenu.add(new Option(this.manager, "place", "(Explore) \"What is this place?\""));
+        activeMenu.add(new Option(this.manager, "supposed", "(Explore) \"What are we supposed to do now?\"", canAskWhatDo, noDinner));
+        activeMenu.add(new Option(this.manager, "dinner", "(Explore) \"You mentioned dinner on the stairs.\"", noDinner));
+        activeMenu.add(new Option(this.manager, "games", "(Explore) \"Well, we ate. What are we supposed to do now?\"", this.happyDinnerOver, noGames));
+        activeMenu.add(new Option(this.manager, "nowWhat", "(Explore) \"Okay, so... we've eaten. We've played games. Now what?\"", this.happyDinnerOver, this.happyGamesOver));
+        activeMenu.add(new Option(this.manager, "cantLeave", "(Explore) \"I can't get up. Something's holding me down.\"", this.happyGetUpAttempt));
+        activeMenu.add(new Option(this.manager, "getUpA", "\"Excuse me.\" [Get up.]", noGetUpAttempt));
+        activeMenu.add(new Option(this.manager, "getUpB", "[Silently push yourself from your seat.]", noGetUpAttempt));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", noGetUpAttempt));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.happyTorchFlag = false;
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "smittenSkeptic":
+                case "smittenOppo":
+                    happyCanTorchComment.set(false);
+                    shadowTorchesKnown.set();
+                    mainScript.runConditionalSection("smittenMenu", himAsked);
+                    
+                    if (this.hasVoice(Voice.SKEPTIC) && !himAsked.check()) {
+                        himAsked.set();
+                        canAskWhatDo.set(false);
+                    }
+
+                    break;
+
+                case "happened":
+                    noTorchesComment.set(false);
+                    defensiveFlag = true;
+                    mainScript.runSection("happenedMenu");
+                    break;
+
+                case "wrong":
+                    noTorchesComment.set(false);
+                    otherHimMention.set();
+                    mainScript.runSection("wrongMenu");
+                    break;
+
+                case "torch":
+                case "right":
+                    mainScript.runSection(activeOutcome + "Menu");
+
+                    if (noDinner.check()) {
+                        dinnerEaten.set(this.happilyEverAfterDinner(false));
+                    } else if (noGames.check()) {
+                        happyGamesOver.set();
+                        this.happyTorchFlag = true;
+                        mainScript.runSection("distractionGames");
+                    } else {
+                        this.happyTorchFlag = true;
+                        mainScript.runSection("distractionFinal");
+                    }
+
+                    break;
+
+                case "everything":
+                    activeMenu.setCondition("right", false);
+                case "truth":
+                    this.happyTorchFlag = true;
+                    mainScript.runSection(activeOutcome + "Menu");
+                    break;
+
+                case "happy":
+                    happyCanTorchComment.set(false);
+                    defensiveFlag = true;
+                    happyAsked.set();
+                    mainScript.runSection("happyMenu");
+                    break;
+
+                case "shadowA":
+                case "shadowB":
+                    happyCanTorchComment.set(false);
+                    defensiveFlag = true;
+                    shadowTorchesKnown.set();
+                    shadowComment.set();
+                    mainScript.runSection("shadowMenu");
+                    break;
+
+                case "him":
+                    himAsked.set();
+                    canAskWhatDo.set(false);
+                    mainScript.runConditionalSection("himMenu", this.happyGetUpAttempt);
+                    happySmittenKnown.set(this.hasVoice(Voice.SKEPTIC));
+                    break;
+
+                case "place":
+                    noTorchesComment.set(false);
+                    mainScript.runSection("placeMenu");
+                    break;
+
+                case "supposed":
+                    dinnerEaten.set(this.happilyEverAfterDinner(false));
+                    break;
+
+                case "dinner":
+                    dinnerEaten.set(this.happilyEverAfterDinner(true));
+                    break;
+
+                case "games":
+                    happyGamesOver.set();
+                    this.happyTorchFlag = true;
+                    mainScript.runSection("gamesMenu");
+                    break;
+
+                case "nowWhat":
+                    this.happyTorchFlag = true;
+                    mainScript.runSection("nowWhatMenu");
+                    break;
+
+                case "cantLeave":
+                    happyCanTorchComment.set(false);
+                    otherHimMention.set();
+                    activeMenu.setCondition("everything", true);
+                    mainScript.runConditionalSection("cantLeaveMenu", this.happyTorchesLit);
+                    break;
+
+                case "cGoStairs":
+                case "cApproachHerFail":
+                    if (happyGetUpAttempt.check()) {
+                        mainScript.runConditionalSection("getUpRepeat", himKnown);
+                        break;
+                    }
+                case "getUpA":
+                case "getUpB":
+                    happyGetUpAttempt.set();
+                    mainScript.runConditionalSection("getUpMenu", false);
+                    break;
+
+                case "cTakeBlade":
+                case "cSlayPrincessNoBladeFail":
+                    if (happyGetUpAttempt.check()) {
+                        mainScript.runConditionalSection("getUpRepeat", himKnown);
+                        break;
+                    }
+                case "slay":
+                    happyGetUpAttempt.set();
+                    mainScript.runConditionalSection("getUpMenu", true);
+                    break;
+                
+                default: this.giveDefaultFailResponse(activeOutcome);
+            }
+
+            if (this.happyTorchFlag) {
+                this.happyTorchFlag = false;
+                this.happilyEverAfterTorches();
+                if (happyTorchesLit.equals(1)) this.repeatActiveMenu = false;
+            } else if (defensiveFlag) {
+                defensiveFlag = false;
+                if (!defensiveComment) mainScript.runSection("defensiveComment");
+                defensiveComment = true;
+            }
+        }
+
+        // The third torch goes out, leaving only one final torch lit
+        boolean danceFlag = false;
+        boolean danceMentioned = false;
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "you", "\"What do you think will happen?\""));
+        activeMenu.add(new Option(this.manager, "anything", "\"Don't worry about what's going to happen. If you could do anything in the world, what would it be? What would *you* choose?\""));
+        activeMenu.add(new Option(this.manager, "real", "\"Whatever the shadows have been showing us isn't real. We need to see what happens when the lights go out.\""));
+        activeMenu.add(new Option(this.manager, "stay", "\"We don't have to let it go out.\""));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+        switch (activeOutcome) {
+            case "you":
+                mainScript.runSection("youTorch");
+
+                this.activeMenu = new OptionsMenu(true);
+                activeMenu.add(new Option(this.manager, "anything", "\"If you could do anything in the world, what would it be? What would *you* choose?\""));
+                activeMenu.add(new Option(this.manager, "needs", "\"If your answer would blow it out, then it needs to be blown out.\""));
+                activeMenu.add(new Option(this.manager, "stay", "\"Then don't say it. We don't have to let it go out.\""));
+                activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+                switch (parser.promptOptionsMenu(activeMenu)) {
+                    case "stay":
+                        mainScript.runSection("stayEnd");
+                        return ChapterEnding.DONTLETITGOOUT;
+
+                    case "anything":
+                        danceFlag = true;
+                        danceMentioned = true;
+                    default: mainScript.runSection(activeOutcome + "Torch");
+                }
+
+                break;
+
+            case "stay":
+                mainScript.runSection("stayEnd");
+                return ChapterEnding.DONTLETITGOOUT;
+
+            case "anything":
+                danceFlag = true;
+                danceMentioned = true;
+            default: mainScript.runSection(activeOutcome + "Torch");
+        }
+
+        // The final torch goes out
+        InverseCondition noSlayAttempt = happySlayAttempt.getInverse();
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "empty", "I feel empty."));
+        activeMenu.add(new Option(this.manager, "that", "So that's that, huh?"));
+        activeMenu.add(new Option(this.manager, "why", "Why are you crying?"));
+        activeMenu.add(new Option(this.manager, "okay", "Are you okay?"));
+        activeMenu.add(new Option(this.manager, "sucks", "Well this sucks."));
+        activeMenu.add(new Option(this.manager, "here", "You can open your eyes. I'm still here, you know."));
+        activeMenu.add(new Option(this.manager, "nothing", "Nothing's changed. We're just sitting in the dark."));
+        activeMenu.add(new Option(this.manager, "sorry", "I'm sorry, I feel like all of this is my fault."));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", noSlayAttempt));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "empty":
+                case "that":
+                case "why":
+                case "okay":
+                case "sucks":
+                case "here":
+                case "nothing":
+                case "sorry":
+                    this.repeatActiveMenu = false;
+                    mainScript.runConditionalSection("sharedDark", activeOutcome);
+                    break;
+
+                case "silent":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("silentDark");
+                    break;
+
+                case "cTakeBlade":
+                case "cSlayPrincessNoBladeFail":
+                    if (happySlayAttempt.check()) {
+                        parser.printDialogueLine(ALREADYTRIED);
+                        break;
+                    }
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    if (this.happilyEverAfterSlay(false)) return ChapterEnding.FINALLYOVER;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "yes", "\"Of course I do. I don't think I'll ever stop.\""));
+        activeMenu.add(new Option(this.manager, "real", "\"Whatever we had between us wasn't real. This is real.\""));
+        activeMenu.add(new Option(this.manager, "maybe", "\"I don't know if I ever have. But maybe I can now.\""));
+        activeMenu.add(new Option(this.manager, "dunno", "\"I'm not sure I've ever had the chance to figure out how I feel about you. I've just wanted to leave since the moment I found myself in the woods.\""));
+        activeMenu.add(new Option(this.manager, "no", "\"No.\""));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]", noSlayAttempt));
+        activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "yes":
+                case "maybe":
+                case "dunno":
+                case "no":
+                case "silent":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection(activeOutcome + "Stairs");
+                    break;
+
+                case "real":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("realStairs");
+
+                    this.activeMenu = new OptionsMenu(true);
+                    activeMenu.add(new Option(this.manager, "find", "\"I'd like to find out.\""));
+                    activeMenu.add(new Option(this.manager, "us", "\"It's us.\""));
+                    activeMenu.add(new Option(this.manager, "neither", "\"Neither do I.\""));
+                    activeMenu.add(new Option(this.manager, "silent", "[Say nothing.]"));
+
+                    mainScript.runSection(parser.promptOptionsMenu(activeMenu) + "RealStairs");
+                    break;
+
+                case "cTakeBlade":
+                case "cSlayPrincessNoBladeFail":
+                    if (happySlayAttempt.check()) {
+                        parser.printDialogueLine(ALREADYTRIED);
+                        break;
+                    }
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    if (this.happilyEverAfterSlay(true)) return ChapterEnding.FINALLYOVER;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "hand", "[Offer her your hand.]"));
+        activeMenu.add(new Option(this.manager, "leave", "[Leave.]"));
+
+        this.canOfferHand = true;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "cGiveHand":
+                case "hand":
+                    danceFlag = true;
+                    mainScript.runSection("handLeaveMenu");
+                case "cGoStairs":
+                case "leave":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        this.canOfferHand = false;
+        mainScript.runConditionalSection("leaveFinale", this.happySlayAttempt);
+        if (danceFlag) mainScript.runConditionalSection("leaveDance", danceMentioned);
+        mainScript.runSection("leaveEnd");
+
+        if (danceFlag) {
+            return ChapterEnding.IMEANTIT;
+        } else {
+            return ChapterEnding.LEFTCABIN;
+        }
+    }
+
+    /**
+     * The Princess offers dinner to the player
+     * @param askedDirectly whether the player directly asked about dinner, or the Princess brought it up
+     * @return whether or not the player accepts her offer and eats with her
+     */
+    private boolean happilyEverAfterDinner(boolean askedDirectly) {
+        happyDinnerOver.set();
+        this.happyTorchFlag = true;
+        mainScript.runConditionalSection("dinnerStart", this.happyTorchesLit);
+
+        this.subMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "refuse", "[Refuse her hospitality.]"));
+        activeMenu.add(new Option(this.manager, "eat", "[Eat.]"));
+
+        switch (parser.promptOptionsMenu(subMenu)) {
+            case "refuse":
+                activeMenu.setDisplay("games", "Forget about the food. What should we do now?");
+                activeMenu.setDisplay("nowWhat", "Okay, so... we've talked about food. We've played games. Now what?");
+                mainScript.runConditionalSection("refuseDinner", askedDirectly);
+                return false;
+
+            case "eat":
+                mainScript.runSection("eatDinner");
+                return true;
+        }
+
+        throw new RuntimeException("No ending reached");
+    }
+
+    /**
+     * One of the torches in the hall goes out
+     */
+    private void happilyEverAfterTorches() {
+        happyTorchesLit.decrement();
+        happyCanTorchComment.set();
+        mainScript.runConditionalSection("torches" + this.happyTorchesLit, this.happyDinnerOver);
+
+        if (happyTorchesLit.equals(3)) happySmittenKnown.set(this.hasVoice(Voice.SKEPTIC));
+    }
+
+    /**
+     * The player attempts to slay their Happily Ever After
+     * @param stoodUp whether the player has already stood up from the table
+     * @return true if the player commits to slaying the Princess; false otherwise
+     */
+    private boolean happilyEverAfterSlay(boolean stoodUp) {
+        happySlayAttempt.set();
+        mainScript.runSection("slayStart");
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "return", "You're right. What was I thinking?"));
+        activeMenu.add(new Option(this.manager, "slayA", "Don't get cold feet now. This is for the good of everyone. I'm saving the world here. [Slay the Princess.]"));
+        activeMenu.add(new Option(this.manager, "slayB", "I know what I decided to do. [Slay the Princess.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "return":
+                    mainScript.runSection("slayReturn");
+                    if (stoodUp) {
+                        mainScript.runSection("silentDark");
+                    } else {
+                        mainScript.runSection("silentStairs");
+                    }
+
+                    return false;
+
+                case "cTakeBlade":
+                case "cSlayPrincessNoBladeFail":
+                case "slayA":
+                case "slayB":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Slay the Princess
+        mainScript.runConditionalSection("slayEnd", stoodUp);
+        return true;
     }
 }

@@ -2633,6 +2633,7 @@ public class ChapterII extends StandardCycle {
 
             default: this.source = "normal";
         }
+        mainScript.updateChapterSource();
 
         if (!this.chapter2Intro(true, false, false)) return ChapterEnding.ABORTED;
 
@@ -3955,6 +3956,8 @@ public class ChapterII extends StandardCycle {
         // You gain the Voice of the Paranoid
 
         this.source = (this.prevEnding == ChapterEnding.TONIGHTMAREFLED) ? "fled" : "normal";
+        mainScript.updateChapterSource();
+
         if (!this.chapter2Intro(true, false, false)) return ChapterEnding.ABORTED;
 
         mainScript.runSection("cabinIntro");
@@ -4462,6 +4465,7 @@ public class ChapterII extends StandardCycle {
      */
     private ChapterEnding nightmareSlay(boolean falling) {
         this.source = (falling) ? "stairs" : "basement";
+        mainScript.updateChapterSource();
         mainScript.runSection("slayStart");
 
         if (!falling) {
@@ -4618,6 +4622,7 @@ public class ChapterII extends StandardCycle {
                 this.source = "pathetic";
                 if (!this.chapter2Intro(true, false, false)) return ChapterEnding.ABORTED;
         }
+        mainScript.updateChapterSource();
 
         mainScript.runSection("cabinIntro");
 
@@ -5418,6 +5423,7 @@ public class ChapterII extends StandardCycle {
                 this.source = "normal";
                 if (!this.chapter2Intro(true, false, false)) return ChapterEnding.ABORTED;
         }
+        mainScript.updateChapterSource();
 
         mainScript.runSection("cabinIntro");
 

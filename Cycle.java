@@ -495,11 +495,27 @@ public abstract class Cycle {
 
             case "down":
             case "d":
-                return (currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
+                if (this.activeChapter == Chapter.HAPPY) {
+                    switch (this.currentLocation) {
+                        case STAIRS: return "GoCabin";
+                        case BASEMENT: return "GoStairs";
+                        default: return (currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
+                    }
+                } else {
+                    return (currentLocation.canGoDown()) ? this.go("forwardTRUE") : "GoFail";
+                }
 
             case "up":
             case "u":
-                return (currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
+                if (this.activeChapter == Chapter.HAPPY) {
+                    switch (this.currentLocation) {
+                        case STAIRS: return "GoBasement";
+                        case BASEMENT: return "GoFail";
+                        default: return (currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
+                    }
+                } else {
+                    return (currentLocation.canGoUp()) ? this.go("backTRUE") : "GoFail";
+                }
 
             case "":
                 if (secondPrompt) {

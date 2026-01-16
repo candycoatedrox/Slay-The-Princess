@@ -1,0 +1,599 @@
+n You're on a path in the woods -- /// interrupt
+hero Mate, we're *clearly* already in the cabin.
+n Excuse me? You're clearly... oh. Huh. S-so you are. ... How do you know about the cabin? I didn't get to the cabin part of my opening monologue yet.
+hero We've been here before. Well, not *here* here, but I'm sure you know what I'm talking about. You knew about the looping last time.
+    skeptic Not that he was eager to *divulge* that. /// checkvoice
+    oppo Now, now, He's *clearly* disorientated. I'm sure all this new info is going to come as quite a shock to Him. Best if we're gentle. /// checkvoice
+hero And right on cue, here's the new guy. *Welcome!*
+    skeptic Can't say I'm happy to be here. /// checkvoice
+    oppo Thank you, thank you! I'm just happy to be here. /// checkvoice
+n Okay, yes, I get it. You've been here before. That's terrible. You know that, right? Because the only reason you would have been here before is if you failed in whatever world you'd come from. Meaning you doomed an... entire other reality. But I'm sure since you're so well-traveled you know that, yes?
+    skeptic We know that you keep *telling* us that, but we've never seen a world end. As far as I'm concerned, that whole conversation is just *noise.* And I'm stuck on a better question. Where's the *other one?* /// checkvoice
+        n The... *other* one? /// checkvoice-skeptic
+        skeptic Yeah. A certain lovesick fool has been suspiciously quiet. One might even say... *absent.* /// checkvoice
+        hero Oh. You're... right. It's a little quiet here, isn't it? Maybe that's... one of the rules. Maybe only one "bonus voice" is allowed to be here at a time. /// checkvoice-skeptic
+        skeptic "Bonus voice?" I'm just as important as you are. /// checkvoice
+        hero I'm not saying it's a bad thing! All I'm saying is that... it's my third time here, and it's your first. You're not *unwelcome,* but... from my perspective, you're definitely bonus. /// checkvoice-skeptic
+    oppo Well, we know that now, thanks to you! We're all so *lucky* to be stuck with... erm, *working with,* someone so well-informed! You can count on us to do things right from here on out. /// checkvoice
+n I'm going to describe the room now.
+n The interior of the cabin is vast and regal. High-arched windows line the walls, their multicolored glass casting kaleidoscopic patterns across the stone floor. An iron chandelier hangs from the vaulted ceiling, its many candles lit with flickering light, vaguely illuminating the massive room. This is a house fit for royalty.
+n Before you, there's... there isn't a blade, is there`? That's not good.
+
+label bladeStart
+    skeptic I see your point, but it's still an option that's been taken away from us. I. Don't. *Like* losing options. /// checkvoice
+        n Yes, and it's an important one! It's your *implement.* You're going to need it if you want to do this right! And the fact that you're here, right now, *again,* means that you have not yet *done this right!* /// checkvoice-skeptic
+    oppo Now that is some *fine* reasoning. Who *cares* about the blade? I think you're right, we're better off without it! It's not like it's ever been *important.* /// checkvoice
+        n *Sigh.* Of *course* the blade's important! It's your *implement.* You're going to need it if you want to do this right! And the fact that you're here, right now, *again,* means that you have not yet done this right. /// checkvoice-oppo
+hero But it's not there, is it? We don't even get the choice. So... what are we supposed to do?
+n I... don't actually know. I'm sure it'll turn up somewhere, i-it has to. It's part of the whole structure of this place, I think. At the very least it's *important.*
+
+label smittenStart
+hero Yeah... He was a bit of a loud one, wasn't he? Is he... okay?
+oppo We're better off without him, if you ask me. One less opinion we have to contend with. Plus, *he's* the one who got us *into* this whole mess.
+n Is that so? Maybe there is hope for you after all, free from the bad influence of your missing friend.
+
+label mirrorStart
+    skeptic Oh, I see it. I've just been preoccupied with *everything else* going on. Like the fact that we can *rip our own heart out* without deciding that's what we're going to do! /// checkvoice
+        n Is -- that what happened to you last time? How did that even *work?* You'd better not do it again! /// checkvoice-skeptic
+        hero Lucky for you, the one who did it is the one who's gone. /// checkvoice-skeptic
+        n Wonderful. Moving on, I have no idea what you're talking about. There is no mirror. There's only the stained glass windows, the empty table where your blade *should* be, and the door to the basement. /// checkvoice-skeptic
+            hero You said that last time, too, but that hasn't stopped it from showing up again. /// checkvoice-skeptic mirror2
+                skeptic Or *moving.* /// checkvoice mirror2
+            hero Well, there it is! Right in the middle of the room! /// checkvoice-skeptic nomirror2
+    oppo What is there to say about it? It's a mirror. /// checkvoice
+        n Is this some sort of a bit? There is no mirror. There's only the stained glass windows, the empty table where your blade *should* be, and the door to the basement. /// checkvoice-oppo
+        oppo Oh! My bad. *That's* why I haven't been talking about it. /// checkvoice
+            hero *I* see it. Just like I saw it last time. /// checkvoice-oppo mirror2
+            hero *I* see it. /// checkvoice-oppo nomirror2
+        oppo Good for you, buddy! You've got a *sharp* set of eyes on you. /// checkvoice
+n Mirror or no mirror, the door to the basement -- your only way forward -- is just on the other side of the room. How about you walk over there?
+
+label abortAttemptStart
+n As you *foolishly* turn to leave the cabin and *abandon* the world to its ruination, you're...
+n Oh! Isn't that convenient? Er, as you turn around, you're faced with a solid wall. There isn't a way out. It would appear that you're stuck here until you find a resolution to our Princess problem.
+    skeptic Yes. It's *very* convenient, isn't it? /// checkvoice
+        n I assure you, I'm just as surprised as you are. Can't you hear the relief in my voice? I wouldn't be *relieved* if I was the one who set this up. I would have known you were stuck here from the beginning. /// checkvoice-skeptic
+    oppo That *is* convenient! Look at us, crossing off a whole avenue of exploration! Figuring out the rest of this is going to be *so much easier* now that we only have one way left to go! /// checkvoice
+        n You know, I'm starting to like you. /// checkvoice-oppo
+        hero Because he's blowing smoke up your ass? /// checkvoice-oppo
+        n Because he's being *reasonable.* /// checkvoice-oppo
+n Look, it doesn't matter *who* put that wall there, because it's *there.* The only thing for you to do now is find the Princess, and, ideally, find your weapon while you're at it.
+n With nowhere to go but forward, you turn back around, leaving the nonexistent exit behind you.
+
+label abortRepeatStart
+n You turn around, but there is still no exit to be seen.
+hero I don't think a door is going to magically appear while we aren't looking, mate.
+
+label approachMirror
+    jumpto approachMirrorNoComment /// checkfalse
+n You cross the room, stopping just in front of the door to the basement. What, is this about that supposed "mirror?" Just... reach forward and fumble around a bit. I'm sure you'll find the handle.
+    hero Well, shall we have a look at ourselves? Maybe it won't... go away this time. /// mirrortouch
+    hero Well, shall we... have a look at ourselves? /// nomirrortouch
+
+label approachMirrorNoComment
+n You cross the room, stopping just in front of the door to the basement. ... The handle is right there. Do feel free to give it a push as soon as you'd like.
+    hero He couldn't see it last time, I'm sure that hasn't changed. Let's just do our thing, and if it disappears again, it disappears again. /// mirror2
+        skeptic About last time: could He really not see it, or could He... "not see it?" /// mirror2 checkvoice
+            hero I'm not sure that actually matters. /// mirror2 checkvoice-skeptic
+            n See what? What are you all on about? /// mirror2 checkvoice-skeptic
+            hero N-nothing. /// mirror2 checkvoice-skeptic
+        n See what? What are you on about? /// mirror2 checkvoice-oppo
+            oppo Oh! I think I know this one! It's *either* a mirror, or... it's nothing! Depends who you ask. /// mirror2 checkvoice
+            n *What?* /// mirror2 checkvoice-oppo
+            hero Just ignore him. /// mirror2 checkvoice-oppo
+    hero There *is* no door. There's a mirror. /// nomirror2
+        n No there isn't. /// nomirror2
+            skeptic What a strange thing to lie about. /// nomirror2 checkvoice
+                n That's because I'm *not lying!* Look, if you need help, just... raise your hand, and I'll guide it where it needs to go. /// nomirror2 checkvoice-skeptic
+            oppo Mmmm. Now this *is* tricky. My eyes say there's a mirror, but my *brain* says there isn't one. /// nomirror2 checkvoice
+                n Look, if you need help, just... raise your hand and I'll guide it where it needs to go. /// nomirror2 checkvoice-oppo
+
+label reachMirror
+n You reach forward, your hand instinctively wrapping around the handle.
+    hero Figures... /// mirrortouch
+    hero It's... gone. /// nomirrortouch
+        skeptic I don't *like* things disappearing on us. I don't like how... *fluid* reality seems to be. /// nomirrortouch checkvoice
+            hero Neither do I... /// nomirrortouch checkvoice-skeptic
+        oppo I'm just glad we can all agree on a shared reality! /// nomirrortouch checkvoice
+n And then you push the door open. Marvelous. We can proceed.
+jumpto stairsStart
+
+// Stairs //
+
+label stairsStart
+linebreak
+n It would seem that the stairs to the basement don't lead to a basement at all. Rather, they... go up. They're draped in a fine carpet, too, one that feels pleasantly soft against your feet.
+n If the Princess lives here, slaying her would probably -- Ugh. Agh. No, that doesn't work here at all. This place is nice. It's... *fancy,* even! I have to say, whatever you did in your previous lives, I *deeply dislike* how much it's thrown me off my rhythm.
+    oppo Don't worry about it, boss! You're doing *great.* /// checkvoice
+        n I'm not. But I appreciate the encouragement. /// checkvoice-oppo
+hero Well, if all of this has thrown you off your rhythm so much, then maybe we... don't? Have to slay the Princess?
+    n No, you absolutely do. Just because she lives in a nice, exit-less house doesn't mean that she doesn't pose a direct threat to all of reality. It's *in her very nature.* /// checkfalse
+    n No, you absolutely do. Just because she lives in a nice house doesn't mean she doesn't pose a direct threat to all of reality. It's in her very nature. /// check
+    skeptic Am I the only one who remembers how much she *changed* last time? Does she even *have* a nature? /// checkvoice
+        n That is precisely why she poses a threat. /// checkvoice-skeptic
+        hero I dunno, she... got *weird* for a second, yeah, but she didn't... change... *that* -- /// checkvoice-skeptic interrupt
+        n We have to move on. This is a WILDLY dangerous line of reasoning. /// checkvoice-skeptic
+        hero No, no, no, you can't just *say* that and not -- /// checkvoice-skeptic interrupt
+n Her voice, gentle and warm with an undercurrent of fatigue, rolls down the stairs.
+p You're home`. Dinner's ready.
+n As much as I *desperately* want to know what happened last time, we are *not* going to examine it. The more we think, the worse this gets.
+hero Why are you so on-edge? This is *much* nicer than what we're used to. I'd like to have dinner! Dinner sounds nice!
+    oppo Gotta say, I'm with him on this one, boss. When have nice things *ever* been a problem? /// checkvoice
+n That *is* the problem. This isn't supposed to be nice, and she's supposed to be a prisoner! *Sigh.* I need to stop talking. I need to STOP talking. Just... go upstairs, okay?
+    skeptic And don't. Eat. The food. /// checkvoice
+
+// The Hall //
+
+label hallStart
+n This hall, like the one below, is grand and beautiful. Torches bathe the room in warm, comforting light, just enough to illuminate the tapestries along every wall, woven with scenes of chivalry and courtship and romance. The many cloth eyes are fixed on each other, gazes averted from the long table in the center of the room, the Princess seated at its far end.
+n Your pristine blade glints in the weak torchlight, hanging from a golden chain around the Princess's neck.
+n So *that's* where it is! And the tip is already pointed right at her heart! Okay. Everything is falling back into place. All you have to do is cross the room, push down a little, and the entire world is saved! That's easy!
+    skeptic Isn't that... *suspiciously* easy? There has to be a twist. There has to be something *waiting* for us. You saw what happened to her last time, she's NOT what she seems. /// checkvoice
+    oppo Yeah! That *is* easy, isn't it? So... where's the rush? /// checkvoice
+p You're here`! Now we can start being happy together`. Why don't you sit down`? Wouldn't that be nice?
+n As the words leave her mouth, the torches flare and a chair swings in from behind, knocking your legs out from under you. You're forcibly seated at the head of the table.
+p Isn't that better`? It is... better`, right?
+
+// General conversation //
+
+label smittenMenu
+    p Smitten...? /// checkvoice-skeptic
+n The torches flare and the shadow grows for a moment, but you don't receive a response.
+    skeptic No, I *saw* him smile. That's. Him! /// checkvoice
+    oppo Giving us the cold shoulder, I see. Asserting his *dominance* in the power structure. /// checkvoice
+n Regardless, it would seem that he, if there is a "he," isn't something you can talk to.
+    p He says his words are just for me`. But he wants me to ask... isn't this enough`? Isn't this what you wanted him to do? /// check
+        p He... says he's tired`. I don't think he'll answer anything else you have to say. /// check
+            oppo This isn't fair! If I could just talk to him for *two seconds,* I'm sure we could sort this out and figure out a balanced power structure that works better for everyone! But no, he's decided he's above talking to *little guys like us,* huh? /// checkvoice
+        break /// checkvoice-oppo
+        break /// check
+p Oh. You're... talking to the shadow, aren't you?
+skeptic She guessed that right away. She knows what's going on here, I KNEW it!
+jumpto himMenu
+
+label happenedMenu
+p I didn't mean to! I promise`! Everything is fine`! Everything is fine.
+
+label wrongMenu
+p But it *was* wrong`. I took away a piece of our light`. I'm not supposed to do that`. I don't want him to be upset with me.
+
+label torchMenu
+p Yeah`. Yeah`. We... just have to keep the rest lit`. And everything will be okay.
+n The Princess's eyes dart to the floor.
+p We... should do something fun`! Wouldn't that be nice?
+
+label rightMenu
+p W...why would we ever do that`? We need the light, i-it's what keeps us happy.
+p *Sigh...*
+p Oh! I know`! We should do something!
+
+label distractionGames
+p What if we... played a game?
+    skeptic She's trying to distract us. /// checkvoice
+    oppo Yes, I LOVE games! I'm *great* at them. /// checkvoice
+jumpto gamesStart
+
+label distractionFinal
+p How about...
+n The Princess's face drops as she pauses mid-sentence.
+p Haha`.`.`. Would you look at that`? I'm out of ideas.
+
+label truthMenu
+p I`.`.`. I`.`.`. don't -- feel anything.
+
+label everythingMenu
+p Like we've been given everything someone else has told us we wanted`. But it isn't what we want.
+
+label happyMenu
+p The Princess starts to hyperventilate, her quick breaths punctuating the uncomfortable silence between you.
+p *Yes!`* Why wouldn't I be`? L-let's not talk about it!
+
+label shadowMenu
+p We don't have to talk about him. We shouldn't -- talk about him! He's -- fine. We're fine. Everything is *fine.* He just wants us to be *happy.*
+
+label himMenu
+p He's the voice that whispers sweet nothings in my ear`. I think he made this place for us.
+    skeptic It all makes *sense* now. It's HIM, isn't it? HE'S making all of this happen, HE'S the one who's trapped us here! /// checkvoice nosmitten
+        hero *Who?* /// checkvoice-skeptic nosmitten
+        skeptic The lovesick one! The one from last time. He's not *gone.* He's just with her now. *He's* the shadow. /// checkvoice nosmitten
+        unlock happyShadow /// checkvoice-skeptic nosmitten
+    skeptic I was right, wasn't I? I can't believe I was actually right! It *is* him! This is what he became after ripping us open. /// smittenknown
+    oppo Is she talking about a *real voice?* Like us? But... *we're* at the head of the table! We should be in charge! Is he more powerful than we are? /// checkvoice
+        hero Is he the thing holding us down? /// checkvoice-oppo check
+
+label placeMenu
+p It's our happy ending`! Just like you asked for`! It's... everything we're supposed to have ever wanted.
+
+label nowWhatMenu
+p I... I don't know`. But we can't do those other things anymore`, can we`? Maybe we can... just spend time together?
+n The Princess smiles as the two of you wait.
+hero Come on. There *has* to be a way out of this. This can't be the rest of our lives. This... can't be forever.
+n And wait.
+    skeptic We live in a changing world, we know that. *Something* has to happen! /// checkvoice
+    oppo What's the big deal? It's *nice* here. We've... got a lot of space, all our needs are met... We have the respect of *everyone...* in the room...! /// checkvoice
+n And wait.
+    skeptic You keep saying that but we can't wait forever. There *is* no waiting forever. /// checkvoice
+    oppo This is what we *wanted!`* This is what we asked for`. It's *good* to be on top of the world! /// checkvoice
+n And wait.
+linebreak
+p I can't do this anymore.
+n Oh... no. /// slow
+hero Oh no?
+
+label cantLeaveMenu
+n The Princess smiles nervously.
+    p Oh, haha! Yeah! Don't worry about it! That's just how it works here. We don't have to go anywhere anymore. We have... everything we need. /// ifnum-4
+    p Oh, haha! Yeah. Don't -- worry about it. That's just how it works here`. We don't have to go anywhere anymore`. We... have everything we need. /// ifnumnot-4
+p He just wants us to be happy.
+
+label getUpMenu
+n But as you attempt to get up, the torches flare, and shadowed hands pin your wrists to the arms of your too-comfortable seat.
+    n There will be no getting up. There'll be no attempts to slay her. At least not for now. /// check
+    n There will be no getting up. At least not for now. /// checkfalse
+
+label getUpRepeat
+    hero I don't think he's going to let us get up... /// check
+    hero I don't think that shadow is going to let us get up... /// checkfalse
+
+label defensiveComment
+    oppo She's being *defensive...* And we all know being defensive is a sign of *weakness.* /// checkvoice-oppo
+
+// Dinner //
+
+label dinnerStart
+    p Oh, right! Dinner! I'd -- totally forgotten about it. /// ifnum-4
+    p Oh, right! Dinner! I'd -- totally forgotten about it! I'm so sorry! /// ifnum-3
+    p Oh, right! Dinner! I'd... totally forgotten about it. I'm... so sorry. /// ifnum-2
+n The flames burn bright, and a shadow dives across the table. In its wake it leaves a feast.
+p Go ahead and dig in. I'm sure you're hungry.
+    skeptic Remember what I said. /// checkvoice
+        hero Aw, but... it looks so amazing! And after everything we've been through, we could really use a break`. Are you sure we need to be so concerned? /// checkvoice-skeptic
+        skeptic I'm not sure about *anything,* and that's the problem. /// checkvoice
+        n For what it's worth, I generally don't think one should trust strange food that magically appears on a table. But nothing here is exactly what I expected it to be, so... make of that what you will. /// checkvoice-skeptic
+    oppo Am I ever! And *look* at this spread, it's a feast *fit for a king.* /// checkvoice
+        hero *Sigh.* Yeah. And after everything we've been through, we could *use* a break. /// checkvoice-oppo
+        oppo More than that, we *deserve* a break. /// checkvoice
+
+label eatDinner
+n You begin to feast, and the Princess follows suit, her soft smile never fading.
+n The food is more exquisite than you ever could have imagined. You sample countless otherworldly dishes, sauces and bread and hearty stews whose tastes dance across your tongue.
+n You tear at hunks of meat practically melting from the bone, juicy and tender and bursting with flavors you could scarcely begin to describe. Your cup fills itself again and again with a flowery nectar so sweet it tastes like glimmering jewels.
+hero This really is perfect, isn't it?
+n It is the best meal you've ever had.
+n But then it's over`. And you're just as hungry as when you began.
+p Wasn't that perfect? We should do it again.
+linebreak
+n The shadow washes across the table, clearing and replating. The feast is once again laid before you.
+n The food is good, again. You tear into golden, crispy flesh, dab at the slurry of aromatic sauces on your plate with thick-crusted bread, sip your goblet of sparkling gems. But you have done this already.
+    oppo A good meal is still a good meal. And we didn't even have to clear the dishes! I'm happy. /// checkvoice
+n And then it's over`, and you're... just as hungry as when you began.
+p You're still hungry, too, right`? I know this wasn't as good as it was last time, but... we just have to do it again, that's all! It'll be perfect if we just do it again.
+linebreak
+n And so the shadow sweeps over the table, clearing the old and laying out the new`. And so, you do it again.
+n The meat is fine. The bread is... fine. You sample the side dishes, and they're fine, too. You finish your goblet, the liquid within no longer glimmering on your palate, instead leaving your mouth coated in a... tacky film. You put it down, and it fills again. You... do not drink more.
+    hero So we had a mediocre meal. It's not a big deal. /// checkvoice-skeptic
+        skeptic That's the trap! It wasn't mediocre at first. It's *trending down.* /// checkvoice
+        hero We're just... getting a little sick of it, so what? We just have to try something new`, I'm sure we won't be stuck eating the same meal forever... /// checkvoice-skeptic
+    oppo Well, food is food, isn't it? It can't always be amazing. What *matters* is that *we* don't have to make it. Getting other people to do the hard work *always* improves the taste. /// checkvoice
+        hero Does it? Because it seems like the taste is getting worse. And we haven't had to so much as lift a finger. /// checkvoice-oppo
+n Regardless of quality, it's over -- again -- and you're just as hungry as when you began`. Again.
+p No, no. Something was wrong that time`. But maybe I was just... tasting it wrong`. It looks just as good as it did the first time. I-it shouldn't taste like this!
+linebreak
+n Again, the shadow replaces your feast`, and again you eat.
+n The meat is... greasy`. The bread is tough, its crust hurting your jaw as you chew`. The grey vegetables are... barely worth the effort of picking through`. You don't even touch the goblet, its sickly sweet aroma utterly unappealing.
+hero I'm *so tired of eating.*
+    oppo Well... i-it's still free food we didn't have to make... right`? Who am I kidding. We were eating like *kings* and now we're eating like *pigs.* /// checkvoice
+n At least... you still have the memory of how good it was the first time`. Right?
+p ... I'm so tired of this.
+
+label refuseDinner
+    p O... oh`. But you were the one who asked about it! /// check
+        p Agh, sorry... that was snippy. /// check
+p It's okay`, it's okay`, we can figure something else out`. Think, think, think...
+p This is fine`, this is *fine,`* this is fine...
+p This... isn't fine`. This isn't fine at all!
+
+// Games //
+
+label gamesMenu
+p Um... I don't know! Maybe we could... play a game?
+label gamesStart
+p Yeah! That's exactly what we should do!
+n The flames roar, and the shadow comes dancing across the table. It leaves behind an intricate game, its pieces elegant and beautiful and enticing, its simple rules already apparent, even with little explanation.
+p We can probably work together to figure this out as we go. That sounds like a lot of fun, right?
+    skeptic Yet another waste of time. Why all the distractions? What are we being distracted *from?* That's the real game... and I feel like I'm two steps behind. /// checkvoice
+        hero You're overthinking it, mate. I feel like this is just... something to do. We might as well *try* to have some fun. /// checkvoice-skeptic
+    oppo Great, we don't even have a rulebook! That means we can make up as many rules as we want... and we *will!* Don't worry, I am EXCELLENT at cheating. She'll never suspect a thing. /// checkvoice
+        hero I don't think it really matters. This all kind of feels like... we're just filling time, you know? /// checkvoice-oppo
+        oppo What, you don't want to win? To show our prowess in all avenues and accumulate respect`? Wow. You would be *hopeless* without me. Count your lucky stars I'm here. /// checkvoice
+linebreak
+n You and the Princess do, indeed, figure it out as you go. And what a game it is. The tension between turns, the triumphant highs of moves well placed, and the tragic lows of miscalculations and careless plays. The warmth of trust and the cool texture of deception. And then, the climax, as she places her final piece...
+p Oh. I... think we got the rules wrong.
+n And so you start over.
+linebreak
+n Time passes. You play the game. You win.
+    hero Hey hey! Will you look at that! /// checkvoice-skeptic
+    unlock happyGame /// checkvoice-oppo
+        oppo Boom! And there you have it! What did I tell you, am I great at games or am I great at games? /// checkvoice
+p Oh! You won! I guess we can play again.
+linebreak
+n Time passes. You play the game. She wins.
+p OH! I won! I... guess we can play again.
+n There is a long pause`, and the board does not reset.
+p This isn't fun anymore`, is it?
+    skeptic It's never going to stay fun. /// checkvoice
+n You don't need *me* to tell you that it isn't --
+n ... oh. /// slow
+linebreak
+n The Princess visibly panics as another torch sputters.
+p Wait, wait, w-wait! Maybe this... is just too easy`! Maybe if we added more rules and pieces i-it'd be fun again.
+hero Y... yeah`. The game's just... a little simple`. We can *make* it fun again.
+linebreak
+n The shadow descends on the board once again. More pieces are added, their shapes more intricate, their purposes less immediately clear. And the two of you set about discovering the complexities of the game anew.
+n And so you do, and it is fun again. In fact, it's *almost* as fun as the first time you played, and the sputtering torch roars back to life.
+n But then you get used to the additions`, and the feeling starts to fade`, a creeping numbness settling in over the board.
+n More pieces are added`. The feelings flare`. The feelings... fade. The Princess suggests new rules. A glimmer of what could have been excitement flits through your mind`, quickly vanishing as the game progresses`. Your pieces advance in an ever-increasing slog to their destination.
+n Winning and losing become nothing but ends`, and even the end becomes nothing as you roll over into a new game, the board resetting as many times as you can finish. Until finally...
+p I'm... out of ideas`. I'm actually out of ideas this time`. I`.`.`. don't think I can play anymore.
+
+// Torches dialogue //
+
+label torches3
+linebreak
+n As the words leave her mouth, one of the torches on the wall sputters, and then goes out entirely.
+p What just happened? Di-did I do something wrong?
+    skeptic A light went out. Maybe a coincidence, but... maybe not. /// checkvoice
+        skeptic And if they *all* go out, there won't be any shadows left to hold us. /// checkvoice getupattempt
+            hero Won't there be... *more* shadow? /// checkvoice-skeptic getupattempt
+            skeptic No. Just darkness without a shape. /// checkvoice getupattempt
+            n And then it won't be able to hold you any longer. You'll be able to do what you're supposed to. /// checkvoice-skeptic getupattempt
+        skeptic And if they all go out, there won't be any shadows left to set the table. /// checkvoice check nogetup
+            hero Won't there be... *more* shadow? /// checkvoice-skeptic check nogetup
+            skeptic No. Just darkness without a shape. /// checkvoice check nogetup
+    oppo Not a fan of... whatever just happened! I-I don't want to sit in the dark. *Losers* sit in the dark`. I want to sit in a brightly lit, *spacious* room where we can see our beautiful, queenly wife. /// checkvoice
+linebreak
+n As if in response to the dousing of their brother, the other three torches blaze brighter, their flames licking at the walls. Their shadows deepen, dancing angrily across the stone.
+
+label torches2
+linebreak
+n As the words leave the Princess's mouth, another torch goes out. Again, the remaining flames burn brighter, and the shadow dances faster.
+p I'm *happy!* I promise! We're both so, so, happy here! Y-you don't have to be upset!
+n This is`.`.`.` `*`a`w`f`u`l`.*
+    skeptic It's *him,* isn't it? He's making all of this happen. He's the one who's trapped us here. /// checkvoice nosmitten
+        hero *Who?* /// checkvoice-skeptic nosmitten
+        skeptic The lovesick one. The one from last time. He's not *gone.* He's just with her now. *He's* the shadow. /// checkvoice nosmitten
+        unlock happyShadow /// checkvoice-skeptic nosmitten
+    skeptic I think we all know that we're not happy`. We just have to admit it to ourselves. /// smittenknown
+    oppo Isn't it great that we're all having such a lovely time together? We just have to stay positive and *realize how happy we are!* Then all of those lights will stay on and keep showing us -- a-all the cool stuff we have! /// checkvoice
+        hero ... Yeah`. Sure. /// checkvoice-oppo
+
+// One final torch remains lit //
+
+label torches1
+linebreak
+n The third torch sputters out. The Princess's shadow dances furiously against the far wall.
+p There's... just one left`. What's going to happen when it goes out?
+
+label youTorch
+p I'm... too scared to say`. What if my answer is what blows it out?
+
+label needsTorch
+p It does, doesn't it`? Then... that's my answer.
+jumpto finalTorchJoin
+
+label anythingTorch
+p I think`.`.`. I'd like to dance under the stars.
+hero That sounds... lovely.
+p But there aren't any stars here`.` I'd have to leave.
+n As she says that, the shadow rushes forward and tightens its grip on her wrists.
+p I'm not happy here`. I don't think I ever was.
+jumpto finalTorchJoin
+
+label realTorch
+p We do`, don't we?
+p I'm not happy here`. I don't think I ever was.
+jumpto finalTorchJoin
+
+label silentTorch
+p I can't do this anymore.
+jumpto finalTorchJoin
+
+// Choose to keep the final torch lit forever //
+
+// "We Don't Have to Let It Go Out." ending; claim your happily ever after //
+label stayEnd
+n The Princess turns to face the final torch, eyeing it with an empty but gentle fondness.
+p Wouldn't that be nice...`? I love the little life we've built`. And I hope it never ends.
+quietcreep
+truth And it doesn't end, and the flame burns brightly grey eternal.
+    skeptic I suppose... all our worry was for nothing`. It's just playing pretend`. There's nothing wrong with that. /// checkvoice
+    oppo Haha -- w-w-we did it, didn't we`? We found the right answer! We made *everyone happy,* and nobody had to get stabbed`! *Great work, team...!* /// checkvoice
+        hero Yeah`.`.`. everyone... is happy. /// checkvoice-oppo
+p It's always been cold here`, hasn't it?
+claim stayEnd
+
+label stayEndFirstVessel
+truth You do not get the chance to respond. Something has taken her away, and it's left something else in her place.
+
+label stayEndNotFirstVessel
+truth You do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+// The final torch goes out //
+
+label finalTorchJoin
+linebreak
+n The Princess sobs, burying her face in her hands as the final torch blows out.
+
+label sharedDark
+n She raises her head, mascara trailing down her cheeks.
+stringautojump Dark
+
+label emptyDark
+p Me too`. It feels like an important part of me is gone, but I'm still here`. I don't... know what to do with that`. I don't know how we're supposed to pick up the pieces.
+jumpto silentDark
+
+label thatDark
+p Yeah. I guess that's that`. I can't... believe it's over`. It felt like it was supposed to last forever.
+jumpto silentDark
+
+label whyDark
+p I don't know`. It... feels like an important part of me is gone, but I'm still here`. I don't know what to do with that`. I don't know how I'm supposed to pick up the pieces.
+jumpto silentDark
+
+label okayDark
+p No. It... feels like an important part of me is gone`, but I'm still here`. I don't... know what to do with that`. I don't know how I'm supposed to pick up the pieces.
+jumpto silentDark
+
+label sucksDark
+p Yeah. It really, really does.
+jumpto silentDark
+
+label hereDark
+p So you are`. It's dark in here, isn't it?
+jumpto silentDark
+
+label nothingDark
+p That's a... really nice way of putting things`. But it is a *little* different`, isn't it?
+p It's quiet now`. There's no more voice telling me how much he loves me.
+jumpto silentDark
+
+label sorryDark
+p ... Your fault`? We were... all just trying to make things work here`. It just... didn't happen that way.
+p I don't think this is the sort of thing anybody needs to apologize for`. Even if we both feel empty`. Even if an important part of us is gone.
+jumpto silentDark
+
+label silentDark
+n The Princess's eyes dart to the floor.
+p Well... we can't sit here forever`. That part of us is over.
+linebreak
+n The Princess pushes herself from her chair, and you instinctively do the same, waiting by the top of the stairs as she quietly crosses the room.
+p Do you... still care about me?
+
+label yesStairs
+p Oh! I... wasn't expecting you to say that`. I still care about you`, too. So... maybe this wasn't all bad.
+p But I don't think this place is for us anymore`. I think we need to go.
+
+label realStairs
+p I don't know what 'this' is.
+
+label findRealStairs
+p Me too`. And I don't think we're going to find anything here. So`.`.`. I guess it's time for us to leave.
+
+label usRealStairs
+p We can be us... anywhere`. And I think we're both done with being who this place makes us. So`.`.`. I guess it's time for us to leave.
+
+label neitherRealStairs
+p Then... maybe we need to find out for ourselves`. Maybe it's time for us to leave.
+
+label silentRealStairs
+p Yeah`. It's time for us to leave.
+
+label maybeStairs
+p That's... a nice thought.
+p I think this place was bad for us`. It was keeping us... small`. I think it's time for us to go.
+
+label dunnoStairs
+p Then... maybe that's what we should do`. Leave.
+
+label noStairs
+p I guess neither of us really know what it means to care about each other... do we?
+p Maybe we'll learn to, eventually. Or... maybe we won't`. But either way, we aren't going to figure it out here`. I think it's time to leave`. Come on.
+
+label silentStairs
+p It's... a loaded question`, isn't it`? I'm not even sure I know what it means to care about someone.
+p I think figuring that out is going to take time`. And I don't think this is the sort of place where we figure anything out`. It wants to keep us small.
+p Let's just get out of here.
+
+// Leave with her //
+
+label handLeaveMenu
+n As the Princess steps towards the stairs`, you offer her your hand.
+n The corners of her mouth curl into a demure smile`, and she gently takes your hand in hers`. She's... cold`, and a little clammy`. But her skin against yours is the most real thing you have ever felt.
+label leaveFinale
+    hero You're really okay with this, aren't you`? With the end of the world. /// check
+        n I think I have to be. /// check
+    hero You're... offering suprisingly little resistance`. If we leave the cabin, doesn't that... end the world? /// checkfalse
+            skeptic It does if He's telling the truth. /// checkfalse checkvoice
+            oppo He's right, you know. You're giving us some real mixed signals, boss. /// checkfalse checkvoice
+        n Yes, well`. I've seen my fairy-tale ending, and I`.`.`. think there might be worse things than the end of the world. /// checkfalse
+            skeptic It really was just all meaningless blather, then`, wasn't it? /// checkfalse checkvoice
+            oppo Well, this is less work for us, anyways. /// checkfalse checkvoice
+        n Think what you will`. I'm... done fighting. /// checkfalse
+n You and the Princess don't exchange words as you descend the stairs to the cabin's entrance.
+linebreak
+n And then, the two of you step out into the world. I`.`.`. think this is the end of me`. Even if it's not the end of you`. I hope this was worth it`. Genuinely, I do.
+hero He's... really gone`, isn't He?
+    skeptic Yeah`. There's an itching in the back of my head that feels like it's finally been scratched`. No more shadowy figures yanking at our strings`. No more strings`. I guess we're free. /// checkvoice
+    oppo No boss anymore. No one left to tell us what to do. I guess we'll have to be our *own* boss, then. About time! /// checkvoice
+p The stars are... *so beautiful!*
+linebreak
+truth A quiet moment passes over you. A comfortable quiet.
+
+label leaveDance
+    p I meant it, when I said I wanted to dance. /// check
+    p We should dance. /// checkfalse
+linebreak
+nowplaying I Meant It
+truth She gently pulls you forward, and the two of you fall into graceful step. The only rhythm that guides you is the shared thumping of your hearts, beating in perfect unison.
+truth Her face, worn and tired, brightens the faster you move, a soft, sad smile widening and widening until it reflects only genuine affection.
+truth You send her out in a wide spin, and your arms stretch to their limits, only the tenuous grasp of your hand in hers holding you together. You share a gaze that feels like it lasts forever.
+
+label leaveEnd
+quietcreep
+p Thank you for taking me here`. This is nice`, even if it's a little cold outside.
+claim leaveEnd
+
+label leaveEndFirstVessel
+truth But you do not get the chance to respond. Something has taken her away, and it's left something else in her place.
+
+label leaveEndNotFirstVessel
+truth But you do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
+
+// Attempt to slay her //
+
+label slayStart
+n Are... you *sure* you want to do that?
+voice3switch SlayStart
+
+label skepticSlayStart
+hero Isn't this -- what you wanted us to do from the beginning?
+n It is. I just`.`.`. I think I might have made a terrible mistake.
+skeptic A *terrible mistake?* You *sold* this as her being a threat to the entire world. Was that a *lie?*
+n No. It wasn't. I`.`.`. I'm just not sure the world I want is... worth it.
+skeptic This is... this is some sort of trick! You're trying to use reverse psychology on us. Or... what if this is... *reverse*-reverse psychology?
+jumpto slayStartJoin
+
+label opportunistSlayStart
+oppo You're, uh... sending us some real mixed signals, boss.
+n I suppose I am`. I-I'm just worried that I might have... made a terrible mistake.
+hero A -- terrible mistake? Isn't she supposed to end the *entire world?*
+n Yes. And that hasn't changed. `.`.`. I'm just not sure the world I want is worth it.
+hero But... how can a saved world ever be *worse* than one that's... *gone?*
+n See. That's... exactly what I thought.
+label slayStartJoin
+n Think what you will. I'm... only here to guide you`. You're the one who makes the decisions.
+    oppo Well, well, looks like there's nobody around who can tell us what to do anymore. First the shadows got blown out, now even the big-shot Narrator man is having doubts. We don't need to waste our time *slaying her,* we've clearly won. /// checkvoice
+
+label slayReturn
+n I can't believe I'm saying this, but`.`.`. I think this is for the best`. Thank you.
+
+label slayEnd
+    n The Princess doesn't try to flee as murderous intent settles into your eyes. /// check
+        n Nor does she resist as you wrap your fingers around the blade dangling from her neck. /// check
+    n The Princess doesn't try to flee as you cross the room, murderous intent settling into your eyes`. All she does is stand to face you. /// check
+        n She offers no resistance as your fingers wrap around the blade dangling from her neck. /// check
+n As the weapon sinks deep into her heart`, all she manages are three muttered words.
+p It's finally over. /// slow
+quietcreep
+n I didn't think it would be so awful to help you see this through, but`.`.`. all of this was for a reason`. The world is better off without her.
+hero ... I really hope that's true.
+    skeptic We'll never know`, will we? /// checkvoice
+    oppo They always say it's... lonely at the top`. I didn't -- think they actually meant it. /// checkvoice
+p I feel... cold`. But I guess I've felt that way for a long`, long time.
+claim slayEnd
+
+label slayEndFirstVessel
+truth Though you've pierced her heart, you do not see her die. Something has taken her away, and it's left something else in her place.
+
+label slayEndNotFirstVessel
+truth Though you've pierced her heart, you do not see her die. Nor will you ever. It's time for you to leave. Memory returns.

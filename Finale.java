@@ -718,10 +718,14 @@ public class Finale extends Cycle {
      */
     @Override
     public ChapterEnding runChapter() {
+        return ChapterEnding.DEMOENDING; // PLACEHOLDER -- DELETE ONCE YOU START WORKING ON THE FINALE
+
+        /*
         this.finalMirror();
         
         // PLACEHOLDER
         return this.openingConversation();
+        */
     }
 
     // --- SCENES ---

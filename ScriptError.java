@@ -49,8 +49,8 @@ public class ScriptError extends ScriptNote {
             - 7 = more than 1 argument given for voice2, voice3, ifsource, ifnum, ifstring, or negative counterparts, check extraInfo
             - 8 = invalid argument for ifnum or ifnumnot (non-integer), check extraInfo
             - 9 = no argument given for voice2, voice3, ifsource, ifstring, or negative counterparts, check extraInfo
-            - 10 = interrupt used for non-dialogue line
-            - 11 = interrupt attempted with argument
+            - 10 = interrupt or slow used for non-dialogue line, check extraInfo
+            - 11 = interrupt or slow attempted with argument, check extraInfo
         - 9 = conflicting modifiers
             - 0 = any simple check used with negative counterpart, check extraInfo
             - 1 = cycle condition check used for corresponding autoswitch, check extraInfo
@@ -369,11 +369,13 @@ public class ScriptError extends ScriptNote {
                         break;
                         
                     case 10:
-                        s += "interrupt used for non-dialogue line)";
+                        s += this.extraInfo[0];
+                        s += " used for non-dialogue line)";
                         break;
                         
                     case 11:
-                        s += "interrupt used with argument)";
+                        s += this.extraInfo[0];
+                        s += " used with argument)";
                         break;
                 }
                 break;

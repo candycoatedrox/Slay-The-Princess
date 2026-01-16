@@ -75,7 +75,14 @@ label slowTest
 linebreak
 broken You can't stop us`. We've been through enough`. You don't scare us`.
 
-label elipsesSpeedTest
+label ellipsesSpeedTest
 linebreak
 broken Test...
 broken Test`.`.`.
+
+label heaTest
+linebreak
+n You don't need *me* to tell you that it isn't --
+n ... oh. /// slow
+linebreak
+n Oh... no. /// slow

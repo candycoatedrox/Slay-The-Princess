@@ -64,15 +64,126 @@ public class VoiceDialogueLine extends DialogueLine {
     // --- UTILITY ---
 
     /**
+     * Slowly prints this line out
+     * @param pauseAtPunctuation whether to pause for an extended time after punctuation or not
+     * @param speedMultiplier the multiplier to apply to the standard speed of printing a line
+     */
+    @Override
+    public void print(boolean pauseAtPunctuation, double speedMultiplier) {
+        char[] chars = IOHandler.wordWrapIgnoreIndicator(this).toCharArray();
+        int tagLength = speaker.getDialogueTag().length();
+
+        int punctDelayLength = 0;
+        boolean doubleTimeFlag = false;
+
+        long activeWaitTime;
+        long waitTime = 30;
+        long commaWaitTime = 150;
+        long punctWaitTime = 200;
+
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '`') {
+                doubleTimeFlag = true;
+                continue;
+            }
+
+            System.out.print(chars[i]);
+            try {
+                if (punctDelayLength != 0 && isDelayChar(chars[i])) {
+                    if (i == chars.length - 1) {
+                        if (punctDelayLength == 1) activeWaitTime = commaWaitTime;
+                        else activeWaitTime = punctWaitTime;
+                    } else if (!isDelayChar(chars[i+1])) {
+                        if (punctDelayLength == 1) activeWaitTime = commaWaitTime;
+                        else activeWaitTime = punctWaitTime;
+
+                        punctDelayLength = 0;
+                    } else {
+                        activeWaitTime = waitTime;
+                    }
+                } else if (pauseAtPunctuation && isPunctuation(chars[i])) {
+                    if (chars[i] == '-') {
+                        if (chars[i-1] != '-') {
+                            activeWaitTime = waitTime;
+                        } else if (i == chars.length - 1) {
+                            if (this.isInterrupted) activeWaitTime = commaWaitTime;
+                            else activeWaitTime = punctWaitTime;
+                        } else if (Character.isWhitespace(chars[i+1])) {
+                            if (isDelayChar(chars[i+2])) {
+                                punctDelayLength = 2;
+                                activeWaitTime = waitTime;
+                            } else {
+                                activeWaitTime = punctDelayLength;
+                            }
+                        } else if (isDelayChar(chars[i+1])) {
+                            if (isPunctuation(chars[i+1])) {
+                                punctDelayLength = 2;
+                            } else if (this.isInterrupted) {
+                                punctDelayLength = 1;
+                            } else {
+                                punctDelayLength = 2;
+                            }
+
+                            activeWaitTime = waitTime;
+                        } else {
+                            activeWaitTime = waitTime;
+                        }
+                    } else if (chars[i] == ',') {
+                        if (i == chars.length - 1) {
+                            activeWaitTime = commaWaitTime;
+                        } else if (isDelayChar(chars[i+1])) {
+                            punctDelayLength = 1;
+                            activeWaitTime = waitTime;
+                        } else {
+                            activeWaitTime = commaWaitTime;
+                        }
+                    } else {
+                        if (i == chars.length - 1) {
+                            activeWaitTime = punctWaitTime;
+                        } else if (isDelayChar(chars[i+1])) {
+                            punctDelayLength = 2;
+                            activeWaitTime = waitTime;
+                        } else {
+                            activeWaitTime = punctWaitTime;
+                        }
+                    }
+                } else {
+                    activeWaitTime = waitTime;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                activeWaitTime = waitTime;
+            }
+
+            if (doubleTimeFlag) {
+                doubleTimeFlag = false;
+                activeWaitTime *= 2;
+            }
+
+            try {
+                Thread.sleep(activeWaitTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Thread interrupted");
+            }
+
+            if (i == tagLength) {
+                waitTime /= speedMultiplier;
+                commaWaitTime /= speedMultiplier;
+                punctWaitTime /= speedMultiplier;
+                //IOHandler.wrapPrintln("[DEBUG: changing wait times; new times = " + waitTime + "/" + commaWaitTime + "/" + punctWaitTime + "]");
+            }
+        }
+    }
+
+    /**
      * Returns a String representation of this line
      * @return a String representation of this line
      */
     @Override
     public String toString() {
-        if (this.speaker.isExternal()) {
-            return this.speaker.getDialogueTag() + ": \"" + this.line + "\"";
+        if (speaker.isExternal()) {
+            return speaker.getDialogueTag() + ": \"" + this.line + "\"";
         } else {
-            return this.speaker.getDialogueTag() + ": " + this.line;
+            return speaker.getDialogueTag() + ": " + this.line;
         }
     }
 
