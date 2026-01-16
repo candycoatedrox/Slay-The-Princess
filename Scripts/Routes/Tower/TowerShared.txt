@@ -378,6 +378,7 @@ truth But you do not take her hand. Something has taken her away, and it's left 
 
 label resistBlade
 p Perhaps you need another lesson in submitting to your betters.
+nowplaying Supplication
 p PICK UP THAT NEEDLE.
 broken Do it`. It's what she wants.
 n No objections here.
@@ -456,6 +457,7 @@ p It's time for us to seize my destiny.
 // Leads to Chapter III: The Fury with the Voice of the Stubborn //
 label advanceSlay
 broken *No!*
+nowplaying False Idol
 n Yes. Though your body trembles, struggling to defend itself in the face of the Princess's overwhelming will, you finally manage to break through, darting to her side before she can react.
 n The wind of your freedom rushes through you, and you channel it into a decisive blow, stabbing into the soft flesh of her ankle and severing the tendons in an act of unyielding defiance.
 n She falls to the floor, crashing unceremoniously to her knees.

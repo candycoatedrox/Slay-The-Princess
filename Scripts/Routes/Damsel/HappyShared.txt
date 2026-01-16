@@ -1,3 +1,4 @@
+nowplaying Our Happy Ending
 n You're on a path in the woods -- /// interrupt
 hero Mate, we're *clearly* already in the cabin.
 n Excuse me? You're clearly... oh. Huh. S-so you are. ... How do you know about the cabin? I didn't get to the cabin part of my opening monologue yet.
@@ -508,8 +509,10 @@ p Let's just get out of here.
 
 label handLeaveMenu
 n As the Princess steps towards the stairs`, you offer her your hand.
+nowplaying What Remains After the Fire
 n The corners of her mouth curl into a demure smile`, and she gently takes your hand in hers`. She's... cold`, and a little clammy`. But her skin against yours is the most real thing you have ever felt.
 label leaveFinale
+nowplaying What Remains After the Fire
     hero You're really okay with this, aren't you`? With the end of the world. /// check
         n I think I have to be. /// check
     hero You're... offering suprisingly little resistance`. If we leave the cabin, doesn't that... end the world? /// checkfalse

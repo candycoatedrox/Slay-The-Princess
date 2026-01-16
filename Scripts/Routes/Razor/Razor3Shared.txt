@@ -1,3 +1,4 @@
+nowplaying The Razor
 n You're on a path in the woods -- /// interrupt
 cheated No, FUCK that! If we're going to have to keep doing this over and over and over again, we're not starting in the GODDAMN WOODS every time. We're starting in the FUCKING CABIN!
 n You're what?! /// interrupt
@@ -87,6 +88,7 @@ hero I guess it's time for us to see her again.
 n Just stay focused, and you'll be fine.
 linebreak
 n You step forward, but you don't get a chance to linger on the basement stairs. They are smooth and flat and metallic, an unintentional and unfortunately slippery ramp that quickly sends you skittering to the bottom.
+nowplaying Mutually Assured Destruction
 n Your body tumbles onto the basement floor, and the form of the Princess comes into view, standing at a distance. She gives you a wry smile.
 p Hi! It looks like you don't have a way out, so I'm not going to play dumb anymore.
 

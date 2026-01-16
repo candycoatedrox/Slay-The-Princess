@@ -78,6 +78,7 @@ hero We can't just go through with this and listen to Him. She's a princess. We'
 
 // Leads to Chapter II: The Stranger //
 label strangerCommit
+nowplaying Reality Unwound
 n There's always a choice, but let me tell you right now that you're making the *wrong* one for pretty much everyone who's ever lived, as well as for everyone who ever will.
 linebreak
 n And here we go. As you trudge into the woods, something strange starts to happen.

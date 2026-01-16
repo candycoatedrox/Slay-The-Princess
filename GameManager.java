@@ -16,7 +16,7 @@ public class GameManager {
     private boolean autoAdvance = false;
 
     // The song currently "playing"
-    private String nowPlaying;
+    private String nowPlaying = "";
 
     // Information about your first Princess
     private boolean firstHarsh;
@@ -970,7 +970,7 @@ public class GameManager {
             case GOODENDING:
                 playlistText = "----- YOUR SONG -----";
                 playlistText += "\n  1.) The Princess";
-                playlistText += "\n  2.) The World Ender";
+                playlistText += "\n  2.) The World-Ender";
                 // This one isn't an actual song, it's literally a compilation of stock cheering and applause sound effects that plays on loop if you get the Good Ending. And yes, it is included on the playlist screen in the actual game
                 playlistText += "\n  3.) Eternal Bliss (Yay, you did it!)";
                 break;

@@ -111,6 +111,7 @@ n You feel substance for the briefest of moments, but then you feel nothing at a
 label softSlayAttemptJoin
 cold Hm.
 p You're adorable when you're confused.
+nowplaying I'm Taking What I Want
 p But I didn't say you could touch me.
 
 label basementStartWaitBlade
@@ -484,6 +485,7 @@ label leaveAttempt
 n This isn't a solution. Nobody wins here.
 truth You watch horror dawn in her eyes.
 p You're... you're...
+nowplaying I'm Taking What I Want
 hero Oh... she's upset, isn't she?
 p You're abandoning me here?!
 cold It would seem so, yes.
@@ -646,6 +648,8 @@ n She rushes forward... and then she's gone. A sharp chill spreads across your b
 hero I'm not sure I like this. Can we get a do-over?
 n I'm afraid it's too late to stop now. The numbness gives way to a stabbing pain, your muscles twitching and convulsing violently, each involuntary movement causing more waves of agony to ripple across your body.
 n You collapse to the floor, and everything goes dark.
+linebreak
+nowplaying Hitching a Ride
 
 label possessContSoft
 p Come on, you. You've gotta get up. I know everything feels... heavy right now, but we still have to get out of here.

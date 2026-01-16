@@ -3,6 +3,8 @@
     n Wait... something isn't right. Can you still hear me? Everything is getting fuzzy... /// ifnum-3
 
 label voices
+linebreak
+nowplaying Oblivion
 hero Wh-what's going on. Where are we?
 contra We're somewhere interesting for once. /// checkvoice
 cold I don't know. But it feels like home. /// checkvoice

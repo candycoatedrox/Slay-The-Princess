@@ -58,7 +58,7 @@ hero Let's keep an open mind.
 // Cabin //
 
 label cabinIntro
-nowplaying The Stranger
+nowplaying To Be Everything...
 n The cabin interior is wrong, a confusing patchwork of many cabin interiors all projected across what's *almost* the same space. But it's all shifted -- an inch here, a foot there -- such that the seams are never quite visible enough for the place to make any sense.
 n The only furniture of note is a plain table, its legs all the wrong lengths, its material devoid of feature. Perched on that table is a pristine blade.
 n The blade is your implement. You'll need it if you want to do this right.
@@ -167,6 +167,7 @@ n Physical sensations dull and then vanish, until the only things experienced ar
 linebreak
 n Consumption and betrayal. Skepticism and blind devotion. Rivalry and submission. Terror and longing. Pain and unfamiliarity. And at the heart of it all, an emotion that can only be described as -- /// interrupt
 linebreak 2
+nowplaying The Stranger
 stringautojump BasementStart
 
 label harshBasementStart
@@ -437,6 +438,7 @@ n Wait... that's not right.
 contra Go on...
 n You take a step forward. Your foot lands. But it lands... different. You experience a firm footfall, a gentle tread, a confident stride.
 n You can feel yourself rupture. The room spins, your perception multiplying in a sickening kaleidoscope as your very self is pulled in incomprehensibly many directions.
+nowplaying ...Is To Be Nothing
     n All at once you charge forward, knife gleaming to slay the Princess, just as you strike at her bindings and leave her to languish alone. /// hasblade
     n You find the blade suddenly in your hands. All at once you use it to strike at her bindings as you remain upstairs and slay her and leave her to languish alone. /// noblade
 n Is this what the end of the world looks like? What an unbearable mess...

@@ -1,4 +1,5 @@
 label towerStart
+nowplaying The Fury
 broken *Moaning and sobbing.*
 n You're on a path in the woods, and at the end of the path -- okay, what the *hell* is that?
 broken *Continued sobbing.*
@@ -13,6 +14,7 @@ hero If your "thing" is telling us about the Princess, don't waste your breath. 
 jumpto startLateJoin
 
 label advyStart
+nowplaying The Fury
 n You're on a path in the woods, and at the end of that path -- /// interrupt
 voice3switch Start
 
@@ -413,6 +415,7 @@ p Let's see what you're really made of. Maybe we can find where your courage dec
 // Push forward despite the unwinding //
 
 label contraPush1
+nowplaying The Bell
 n Though the ribbons of your unraveled body struggle to coordinate, you manage to put one foot forward.
 p Oh. So there IS some challenge left in you. Let's see how long it takes to CRUSH IT.
 n The Princess clenches her fist, and as her knuckles tighten, even more of you becomes undone. Your skin is flayed, your fatty tissue torn from your muscles.
@@ -588,6 +591,7 @@ label quantumFail
 label quantumSequence1
 n Absolutely not! I refuse to let you just decide to die with your task unfinished. If you die here, the world is doomed!
 linebreak
+nowplaying An Empty Void That Dared to Dream Itself Alive
 truth But you do die. There is a great release as you loose your grip on what's left of your flesh and blood.
 linebreak
 truth And yet, you are still here.
@@ -663,6 +667,8 @@ claim sharedEnd
 // She continues to unwind you (Thirty-Trillion Cells) //
 
 label cellsStart
+linebreak
+nowplaying Thirty-Trillion Cells
 n Something infiltrates you. Though you do not see it, you feel it, slithering into your disaster of a body, seeping into the gaps between your molecules.
 n The body of a sapient creature has, on-average, thirty trillion cells. And each one of those cells is composed of one-hundred-trillion-some-odd atoms.
 n One of those cells is peeled from the others. One-hundred-trillion atoms are gone.
@@ -795,6 +801,7 @@ linebreak
 n And then, all at once, there is a great rewinding, and all of the disparate pieces that once were you fall dutifully back into place.
 n You are whole again, and in your body—the body you had before all of this happened—and the Princess sits against the wall, her dress of skin more tattered than before, her face sullen and disappointed.
 p You left me. And there's nothing I can do to bring you back.
+nowplaying There's Nothing I Can Do to Bring You Back
     cold Oh`.`.`.`! She's been like me this whole time`. She's just been... hiding it. /// checkvoice
     broken She's just like us`. A piece of her is missing. /// checkvoice
 

@@ -329,6 +329,7 @@ n Yes?
 hero Are we... stuck here now?
 n Yes.
 unlock prisonerChain
+nowplaying I Don't Like Small Talk
 p Huh. So it does fit. And I guess it doesn't like your knife. We're stuck here together, aren't we? That's funny.
 hero What are we supposed to do now?
 skeptic Can't even cut ourselves out. Guess we'll... starve.
@@ -508,6 +509,7 @@ n She pulls up her hair, smiling slightly as she raises the blade to her throat.
 
 label headStart
 hero What is she *doing?*
+nowplaying Eyes on Me
 n She doesn't say another word as she cuts into her own neck.
 hero No...!
 
@@ -557,6 +559,7 @@ n You open the cabin door, ready to return to a world saved from certain doom.
 n Only, a world saved from certain doom isn't what you find. Instead, what you find is -- wait, no, that's not right.
 truth The Princess slowly opens her eyes.
 unlock prisonerHead
+nowplaying I Don't Like Small Talk
 p Well played.
 quietcreep
 n This is -- this -- this is the end of the world, isn't it? I always thought I'd at least have time to explain myself before I had to watch it happen, but it's already --

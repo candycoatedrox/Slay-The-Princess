@@ -256,6 +256,7 @@ n Your vision cuts out as your blood begins to coagulate. It's as if every part 
 linebreak
 para Heart. Lungs. Liver. Nerves. Heart. Lungs. Liver. Nerves.
 linebreak
+nowplaying Let. Me. Out.
 n Your lungs pull in a desperate gulp of air as your eyes shoot back open.
 hero What are you doing?
 para I'm *working.* Do you want this body to function, or do you want -- /// interrupt
@@ -413,6 +414,7 @@ jumpto remainLateJoin
 label remainJoin
 p You poor, deluded thing. Do you think a single moment of bravery changes you into something you're not? I am what I am, and you're always going to be a coward.
 label remainLateJoin
+nowplaying Oblivion
 n She raises a hand to her mask and pulls it down. You don't get the chance to see what lies beneath before it envelops you.
 linebreak
 n Like a creeping mold, the complete reality of your existence threads its way through your mind. Birth, death, birth again. Decay and bloom. A million stitches from a million microscopic wounds you've inflicted on everyone you've ever met with every muscle you've moved and every word you've ever spoken.

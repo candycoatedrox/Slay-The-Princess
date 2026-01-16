@@ -1,3 +1,4 @@
+nowplaying The Den
 n You're on a path in the woods -- /// interrupt
 voice3switch Start
 
@@ -193,6 +194,7 @@ label fightFailNotFirstVessel
 truth But you do not get the chance to respond, nor will you ever. It's time to leave. Memory returns.
 
 label fightSuccessStart
+nowplaying Rhythm of the Flesh
 n With the near-silence of a determined predator, the Princess erupts from the shadows.
 n You're quick to react, swinging your blade, its tip intercepting her before she can draw first blood. She recoils, stunned for a brief moment.
 unlock denFight
@@ -351,7 +353,8 @@ truth But this is no true end, and you do not get the chance to see her die. Nor
 label lionStart
 n You reach forward, offering the Princess your hand. How ridiculous. She was about to kill you, do you *really* think getting stuck in a tunnel for less than a minute has fundamentally changed her?
 hunted Yes. She's a victim of her own nature. Just like we are.
-hero If all she wanted was to kill us, she'd have kept trying. But she's hestitating, isn't she?
+hero If all she wanted was to kill us, she'd have kept trying. But she's hesitating, isn't she?
+nowplaying Hand in Claw
 n *Sigh...* Yes. She is. Her eyes shift from faux ferocity, to confusion... to a gentle sadness. She lowers her claw... and places it in your hand. Eugh.
 hero Do you think we can... pull her out of there?
 hunted We have to try. It's a bad death, being stuck in place.

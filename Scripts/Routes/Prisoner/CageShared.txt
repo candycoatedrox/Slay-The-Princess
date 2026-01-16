@@ -1,3 +1,4 @@
+nowplaying The Cage
 n You're on a path in the woo -- /// interrupt
 voice3switch Start
 
@@ -228,6 +229,7 @@ n Your fall is suddenly, painfully halted as rusty chains pull taut against your
 n You find yourself suspended in what appears to be a vast, dark space, the glinting of yet more chains merely hinting at its full dimensions. You dangle a few feet off the bare concrete floor.
 n If the Princess lives here, slaying her would probably be doing her a favor.
 linebreak
+nowplaying A Prison of Flesh
 n As your eyes adjust to your new surroundings, you make out a figure standing in the gloom, obscured in shadow. She watches you with the stillness of the grave.
 skeptic Easy now. We don't know what sort of situation we're dealing with. We should let *her* make the first move. Let *observation* give us an advantage.
 
@@ -409,6 +411,7 @@ linebreak
 truth It strikes, and it strikes true, and the body drops its cage in pain.
 truth They descend on each other in a maelstrom of chains and hooks and feathers and blood, fighting their way deeper into the shadows until all you're left to witness are the sounds of violence.
 p See`? You only ever *thought* you were in control`. Isn't it so much nicer to let go?
+nowplaying An Open Door
 
 label rippedDecapitate
 p My *body* ripped your body's head off`. *I* didn't have anything to do with it.
@@ -512,6 +515,7 @@ p *Oh.*
 linebreak
 n Suddenly, the chains loosen, the hooks sliding from your skin. You come crashing to the floor. And as the chains rain down around you, her body falls, too.
 n The room settles into comforting silence. No more rattling of chains, no more slow, deliberate footsteps from the Princess's body. Only the soft click of the latch as it opens the door of the cage.
+nowplaying An Open Door
 p So that's... really all it took?
     skeptic The truth was right there the whole time. We just needed to believe we were better than this. I feel like a fool, really, but it's... always the most *complicated* problems that tend to have the simplest solutions. /// checkvoice-cheated
     skeptic The truth was right there the whole time. We just needed to believe we were *better* than this. But`.`.`. that can't be it! It's supposed to be more *complicated* than that! /// checkvoice-broken

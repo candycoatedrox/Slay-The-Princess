@@ -1,3 +1,4 @@
+nowplaying The Thorn
 n You're on a path in the woods -- /// interrupt
 voice3switch Start
 
@@ -268,6 +269,7 @@ hero Why?! We finally gained her trust. That took a lot of work!
 oppo Sorry, boys. It looks like we've got our tie-breaker.
 quietcreep
 n Blade safely in hand, you turn it on the Princess, and drive it towards her heart.
+nowplaying A Moment Trapped for All Time
 n But her thistled prison proves to be an impossible obstacle, its thorns digging deeper and deeper into your flesh the closer you come to striking the fatal blow.
     smitten Ha! We're not going to make it. This is what we deserve. Better we trap ourselves in this eternal moment than have her blood on our hands. We still managed to get our romantic end, in a way. /// checkvoice
     cheated Those damned vines are going to stop us, just like they stopped her. Of course! Like we should have expected it to turn out any other way. It's funny, really. I'm laughing. /// checkvoice
@@ -323,6 +325,7 @@ smitten You know as well as I do that we can.
 oppo And we wouldn't want to throw away a chance for a special moment, now would we?
 n If I were only capable of throwing myself off a bridge.
 smitten Well, are you going to describe our steamy, romantic kiss?
+nowplaying A Kiss From a Thorn
 n *SIGH.* You lean in, and you *kiss her.*
 hero ... And?
 n And she reciprocates. Enthusiastically. You kiss. It's done. Are you happy now?
@@ -379,6 +382,7 @@ label leaveStart
 unlock thornLeave
     quietcreep /// hasblade
 p Do you really think you can just wash your hands of all this? Do you really think you can just leave me here?!
+nowplaying A Moment Trapped for All Time
 oppo This is even better than stabbing her. The same reward without any of that nasty effort.
 n It's not "even better." Putting off a choice is always worse than making a committed decision, especially when you already know the right answer.
     smitten It's even more cruel if you ask me. Leaving an incredible soul like hers to languish forever, in pain and alone. How can we bear to live with the guilt? /// checkvoice

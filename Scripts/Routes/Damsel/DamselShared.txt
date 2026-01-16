@@ -281,6 +281,7 @@ truth It's almost as if the light barely casts a shadow on her at all.
     jumpto quietCont /// ifnumnot-1
 
 label depersonComment2
+nowplaying I Just Want to Make You Happy
 hero Is she... *broken?* What's going on?
 n What's going on is she's *lying* to you, only she isn't a good liar. Are you starting to trust me now?
 
@@ -380,16 +381,19 @@ smitten No! She was our perfect match!
 // Leave the basement //
 
 label leaveStart
+nowplaying It Was Always That Easy
 p That sounds perfect.
 
 label leaveStartDeconA
 truth All of a sudden, the Princess looks just as she did a moment ago, back to normal as if nothing happened.
 truth The textured nothingness is gone.
+nowplaying It Was Always That Easy
 p That sounds perfect.
 
 label leaveStartDeconB
 truth All of a sudden, the Princess looks just as she did a moment ago, back to flesh and blood and three-dimensional space as if nothing happened.
 truth The textured nothingness is gone.
+nowplaying It Was Always That Easy
 p That sounds perfect.
 hero Oh, phew, she's back to normal.
 smitten "Normal?" What are you talking about? Our angel has always been like this: absolutely flawless.

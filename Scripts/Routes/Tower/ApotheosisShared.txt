@@ -1,3 +1,4 @@
+nowplaying The Tower
 n You're on a path in the woods. And at the end of that path -- /// interrupt
 voice3switch Start
 
@@ -59,6 +60,7 @@ broken The end of everything... the beginning of something new. The moment we op
 hero Any, uh... words of warning?
 n You already know everything you need to know.
 
+nowplaying The Apotheosis (Live)
 n As you step forward, the cabin explodes.
 n You're flung backwards, violently slamming into a tree as debris rains down around you.
 unlock apoAscend

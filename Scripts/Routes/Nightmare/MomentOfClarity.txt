@@ -1,3 +1,4 @@
+nowplaying The Moment of Clarity
 n You're on a path in the -- /// interrupt
 para Shit! Shit! What -- what the hell was that?! Who are we? What are we doing?!
 broken There was a Princess, I think`. It's all so... fuzzy`. It hurts when I try to remember.
@@ -237,3 +238,5 @@ contra *Finally.* I've just needed to *leave* for *so long!*
 cold Hm`. I thought I would last without them`. I thought I was special...
 oppo Well, it looks like this was a good idea! Something *new* is happening! Well done! Brilliant, even!
 oppo ... Right? Guys?
+linebreak
+nowplaying Oblivion

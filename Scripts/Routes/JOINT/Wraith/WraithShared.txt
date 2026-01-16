@@ -1,3 +1,4 @@
+nowplaying The Wraith
 n You're on a path in the woods -- /// interrupt
     jumpto startCheated /// checkvoice-cheated
 para Shit -- this really doesn't end, does it? It doesn't matter if *we* kill *her,* it doesn't matter if *she* kills *us,* it just goes on, and on, and on, and on, and on.
@@ -167,6 +168,7 @@ label mirrorWipe
 n You reach your arm forward into the pitch black of the opening.
     para *Sigh of relief.* Oh, that was a close one. All that stress and lead-up for nothing... /// checkvoice
     cheated Nothing. Huh. It's like this place read our mind just to mess with us. /// checkvoice
+nowplaying I'm Taking What I'm Owed
     p Whatcha looking at, killer? Staring into the void? Thinking about what it'd be like to die again? I know exactly how you feel. /// ifsource-spectre
     p Hopelessly staring into the void? I'm glad I made a lasting impression. /// ifsource-nightmare
 hero Shit -- where is she?!

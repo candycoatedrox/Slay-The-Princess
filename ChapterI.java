@@ -290,7 +290,7 @@ public class ChapterI extends StandardCycle {
                     this.repeatActiveMenu = false;
                     cantTryAbort.set(false);
                     this.withBlade = false;
-                    manager.addToPlaylist("The World Ender");
+                    manager.addToPlaylist("The World-Ender");
                     return (this.isHarsh) ? this.ch1BasementHarsh() : this.ch1BasementSoft();
 
                 case "cGoHill":

@@ -359,6 +359,7 @@ p I'll be waiting, but you'd better not be wasting my time.
 // Attack the Princess head-on //
 
 label directEarlyJoin
+nowplaying The Song We Write in Our Blood
 n Good. With a singular focus, you launch off the wet stone floor of the basement and catapult yourself headlong towards the Princess.
 hero Here we go. Let's make this count.
 stubborn Oh, we'll make it count, alright.
@@ -718,6 +719,7 @@ p Fight me. NOW.
 
 // Leads to Chapter III: The Fury with the Voice of the Broken //
 label fightWounded
+nowplaying The Song We Write in Our Blood
 n As you attempt to charge towards the Princess, you stumble, your thoughts consumed with the realization of just how much damage she managed to inflict earlier.
 n Your legs refuse to stand strong beneath you, your head swims and your ears ring as the room spins. Your heart pumps erratically. She's ruptured something inside you, something that was clearly very important.
 n Your mind and body both hesitating, the Princess smashes into you. You failed to draw first blood, and you'll never have the chance to draw second. Everything goes dark, and you die. I'm sorry.
@@ -726,6 +728,7 @@ n That's it.
 stubborn BULLSHIT! I -- *Whatever.* We'll do better next time.
 
 label fightStart
+nowplaying The Song We Write in Our Blood
 n Finally ready to complete your destined task, you launch off the wet stone floor of the basement and catapult yourself headlong towards the Princess.
 hero Here we go. Let's make this count.
 stubborn OHH, WE'LL MAKE IT COUNT, ALRIGHT.
@@ -772,6 +775,7 @@ n Everything goes dark, and you die.
 
 // Leads to Chapter III: The Fury //
 label unarmedStart
+nowplaying The Song We Write in Our Blood
 n *Sigh.* I guess we'll have to see how this goes...
 n Your hands empty, you charge the Princess.
 stubborn Quit the PESSIMISM, will you?
@@ -875,6 +879,7 @@ stubborn Yeah. I quit.
 label refuseStart
 n What are you trying to do? Do you think pacifism is going to win her over? Because it won't.
 stubborn Right! This isn't fun. This isn't interesting. It's PATHETIC and COWARDLY and BORING.
+nowplaying The Song We Write in Our Blood
 
 label refuseStartBlade
 p Oh, you tease. I can't believe you'd go to all the trouble to bring a knife down here and then refuse to use it.
@@ -1051,11 +1056,13 @@ stubborn *Grumbling.* All right. Fine, this whole thing's a... frustrating mess 
 
 label fleeStartNotFree
 p Oh, you've got another thing coming if you think you can just turn around and leave.
+nowplaying The Song We Write in Our Blood
 n As you step towards the stairs, you hear the heavy creak of straining metal.
 n And then a snap. She's loose. You have to make a decision, and you have to make it fast.
 
 label fleeStartFree
 p Oh, you've got another thing coming if you think you can just turn around and leave.
+nowplaying The Song We Write in Our Blood
 n As you step towards the stairs, you hear thundering footfalls of the Princess rushing you down.
 hero Let's get out of here, quick!
 bladeswitch fleeStartFree

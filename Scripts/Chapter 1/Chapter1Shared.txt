@@ -83,7 +83,7 @@ n The interior of the cabin is almost entirely bare. The air is stale and musty 
 n The blade is your implement. You'll need it if you want to do this right.
 
 label takeBlade
-nowplaying The World Ender
+nowplaying The World-Ender
 n You take the blade from the table. It'd be rather difficult to slay the Princess and save the world without it.
 
 // Shared basement lines //

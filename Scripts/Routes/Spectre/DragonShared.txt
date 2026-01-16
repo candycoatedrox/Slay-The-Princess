@@ -314,6 +314,7 @@ label silentReveal
 
 label enterCabin
 linebreak
+nowplaying The Life-Taker
 truth The click of a latch and creaking hinges, muffled. Something is here.
     jumpto enterCabinObserved /// check
 truth Your gaze turns to your hands. Solid. Then translucent. Then solid again.
@@ -578,6 +579,7 @@ label stabHarshStart
 truth But the hesitation doesn't last, and you feel the sharp sting of cold metal sliding deep into your chest, but you can feel something else too...
 truth Rage, flowing from your heart and balling up in closed fists. You throw them at the thing's face and --
 linebreak
+nowplaying The World-Ender
 n -- You can feel bone crack as her fist collides with your jaw, and then a thud as you tumble across the room.
 cold You are *such a disappointment.*
 oppo I'd like to see *you* do better.
@@ -603,6 +605,7 @@ label harshTakeHand
 n Are you serious?! Eugh.
 cold Well`? Are you going to say what happens`? You already said yourself that we won't be killing her.
 n Grrrrrrrrrrrr. *Fine.* You take her remaining hand in yours.
+nowplaying What Once Was One
 jumpto leaveJoinHarsh
 
 label whatFinalHarsh
@@ -616,6 +619,7 @@ jumpto harshHandAlt
 label silentFinalHarsh
 p Come on. Let's just... go. There's nothing left for either of us here.
 label harshHandAlt
+nowplaying What Once Was One
 n The Princess reaches forward and clasps her remaining hand in yours. Eugh.
 jumpto leaveJoinHarsh
 
@@ -625,6 +629,7 @@ label stabSoftStart
 truth You can feel the sharp sting of cold metal sliding deep into your chest, but you can feel something else, too.
 truth Fear as your legs wobble, then as --
 linebreak
+nowplaying The World-Ender
 n -- Princess collapses against the wall.
 oppo See? That was *easy!*
 hero It was *too* easy. It felt bad.
@@ -698,6 +703,7 @@ p Then I just have to make this next one count!
 label silentHarshStab
 n As she closes the distance, she raises the blade to strike and...
 hero Kills us?
+nowplaying The Canvas and the Painter
 n Well, she certainly stabs you, and it certainly hurts.
 n But the knife doesn't leave your body. As you grab her wrists, she drives the weapon deeper and deeper into your chest. Your knees buckle from the pain, and as she forcefully pushes you to the ground -- /// interrupt
 jumpto stencilEnd
@@ -710,6 +716,7 @@ n You certainly are. Blade raised, you leap towards the Princess with killing in
     p Oh. I guess you changed your mind`. That's... really sad. /// noblade
     p I didn't think you'd want to kill me anymore`. Not after everything we've been through together`. Are you sure that's what you want? /// hasblade check
     p That's... *you* in there again, isn't it`? I didn't think you'd want to kill me anymore`. Not after everything we've been through together. /// hasblade checkfalse
+nowplaying The Canvas and the Painter
 n But you ignore her words, and as the blade sinks into soft tissue -- /// interrupt
 setbool false
 jumpto stencilEnd
@@ -717,6 +724,7 @@ jumpto stencilEnd
 label softCutFree
 n You go to cut the Princess from her bindings`. And as the blade slices into her wrist -- /// interrupt
 linebreak
+nowplaying The Canvas and the Painter
 truth You are pulled back across the threshold.
 pint Oh, I... felt that. You're back!
 truth Menace permeates the hollow eyes in front of you.
@@ -744,6 +752,7 @@ truth His words are empty. Hollow echoes. The ravings of a ghost.
 n *Please.*
 linebreak
 truth But He is already gone. The threads all tie themselves together into a loop that does not end.
+nowplaying Together Again
     pint Does... this mean we're together? /// harsh
     pint We're back together again. /// soft
 quietcreep
@@ -794,6 +803,7 @@ label softGiveBlade
 n You hand it to the Princess`, who gingerly cuts herself free from her bindings`. You... *maniac.*
 n Then, as her chains clatter to the floor, she turns her back on you and hurls the blade through the basement window, never to be seen again! No no no no no no no! You need the blade to deal with her!
 p *Sigh.* I'm... *so* glad that's behind us. Come on. Let's get out of here.
+nowplaying What Once Was One
 n She reaches forward and... takes your hand in hers before... excitedly pulling you towards the basement stairs.
 oppo Yeah`? And... what does it feel like`? Is it... nice?
 n Why do you want to know?

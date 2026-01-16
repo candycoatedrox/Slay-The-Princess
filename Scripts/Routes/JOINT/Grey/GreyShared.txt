@@ -1,4 +1,5 @@
 label drownedStart
+nowplaying The Grey (Water)
 n You're on a path in the woods -- /// interrupt
 skeptic See? That wasn't so bad. And now we've got another chance to get to the bottom of things. Bit by bit we're starting to unravel this place.
 cold There are so many more threads to pull once you stop feeling.
@@ -7,6 +8,7 @@ cold I'm feeling nothing`. And I like that just fine.
 jumpto startJoin
 
 label burnedStart
+nowplaying The Grey (Fire)
 n You're on a path in the woods -- /// interrupt
 smitten You horrid monster! Do you think just because we've returned to the woods you've earned my *forgiveness?* Our beloved had best be alive and well when we return to the cabin, or you'll never know the end of my wrath!
 cold She won't be alive and well when we return to that cabin`, because she's dead`. We killed her.
@@ -332,6 +334,8 @@ n The Princess eyes you with a disaffected gaze as you rush up the stairs, but y
 n The door bursts open, a powerful wave of water crashing down towards you, and you're swept up in the flood. Your head slams into the basement wall.
 
 label drownedEnd
+linebreak
+nowplaying The Dam Breaks
 n You come to a moment later, suspended in darkness, disorientated, only aware of the surface of the water and the emptiness above. And, of course, the Princess, hovering above you, watching in silence as you struggle to stay afloat in the icy depths. There's no way out.
 hero It's so dark! And cold! I think our limbs are slowing down, how much longer can we do this?!
 skeptic Just keep breathing. We'll figure this out.

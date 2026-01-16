@@ -101,6 +101,7 @@ p I can hear your heart pounding from the bottom of the stairs, fledgling. You'r
 // Encounter //
 
 label encounterStart
+nowplaying I Am So Much More Than You
 n A shiver rushes up your spine and pulls you upright.
 hunted The air's shifting. She's getting ready to pounce. Move, now.
 

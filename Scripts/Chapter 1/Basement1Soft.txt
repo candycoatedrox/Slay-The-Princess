@@ -164,7 +164,7 @@ label compromise
 n Leaving her alive is too risky. If you don't deal with her soon, she *will* find a way out.
 hero So I'm the only one who liked that idea? *Sigh.*
 p One way or another, I'm going to find a way out of here. It would make it easier for both of us if you'd help.
-nowplaying The World Ender
+nowplaying The World-Ender
 p But if you don't, I can promise that you'll regret that decision.
 n You have to make a choice. Let's hope for all our sakes it's the right one.
 
@@ -243,7 +243,7 @@ linebreak
 p I heard the door slam... they locked you down here too, didn't they?
 n There's a slight panic rising in the Princess's voice.
 p If I could just get out of these chains, I *know* we could force our way out of here together.
-nowplaying The World Ender
+nowplaying The World-Ender
 linebreak
 n She barely hesitates before raising her arm to her mouth, her teeth tearing through her limb with the determination of a trapped wolf.
 n As she rips her flesh from her bone, a sound comes from behind you. The clang of bouncing metal.
@@ -392,7 +392,7 @@ label retrieveFromLockA
 n *Thank* you.
 n You turn back to the stairs, intent on retrieving the blade in the cabin.
 p Where are you going?! You can't just leave me here!
-linebreak
+nowplaying The World-Ender
 p Fine! Turn your back on me! But it won't be long before I slip these chains, and once I'm out of here? There'll be *hell* to pay for leaving me behind!
 hero "Slip these chains?" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing.
 n She has to be bluffing. But... hurry.
@@ -415,7 +415,7 @@ p So what? You're going to try and kill me?
 label retrieveSorryJoin
 truth Her voice becomes a low growl.
 p You'll regret this. I promise you. But go ahead. Run along and get whatever you're planning to get.
-nowplaying The World Ender
+nowplaying The World-Ender
 p But you'd better hope that I don't slip these chains before you make it back down here.
 hero "Slip these chains?" She can't, right? She needed our help to get out of here. But do you hear the conviction in her voice? I don't think she's bluffing.
 n She has to be bluffing. But... hurry.

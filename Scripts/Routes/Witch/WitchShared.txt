@@ -239,6 +239,7 @@ label leaveStart
 p Yes. Let's.
 linebreak
 n She creeps forward, taking one cautious step at a time, until you and she are face to face.
+nowplaying It's in Our Nature
 n She never breaks eye-contact, even as the two of you find yourselves face to face.
 n She's silent for a long moment, as if testing to see what you'll do now that she's within arm's reach.
 p After you, darling. You're the one it lets come and go. It's best if I follow.
@@ -531,6 +532,7 @@ p Oh? Have you decided to rescind your 'gesture?' I wouldn't trust me with it, e
 label offerCommitStairs
 n You're going to get everyone killed. You know that, right? *Sigh.* But of course you do.
 n You hand the blade to the Princess, who quickly snatches it from you, her eyes darting between you and the weapon with a nervous curiosity.
+nowplaying It's in Our Nature
 p I wouldn't have done that. Why did you?
 p What do *you* think happens now?
 
@@ -538,6 +540,7 @@ label offerCommitBasement
 n You're going to get everyone killed. You know that, right? *Sigh.* But of course you do.
 n You toss the blade at the Princess's feet.
 n She eyes it with suspicion before kneeling down to pick it up.
+nowplaying It's in Our Nature
 p I wouldn't have done that. Why did you?
     break /// chainsfree
 n You hear a clanging of metal against the dirt floor, and the chains fall from the Princess's wrist.
@@ -625,6 +628,7 @@ p Better a violent fool than a plotting coward. Better for me, at least.
 
 label fightStart
 unlock witchFight
+nowplaying Two Miserable Wretches
     jumpto fightStartNotFree /// notfree
 p As you close the distance, readying your strike, she throws a fistful of dirt into your eyes.
 jumpto fightStartJoin
