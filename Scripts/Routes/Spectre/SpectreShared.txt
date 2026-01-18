@@ -632,15 +632,10 @@ n She crushes it, blood and ruined vascular tissue leaking from between her fing
 
 // Let the Princess possess you //
 
-label possessStartSoft
+label possessStart
 n The Princess swims through the air in front of you, pausing for a brief moment as her dark-rimmed eyes stare deeply into yours. There's a hunger in her gaze.
-p You're really trying to make it up to me, aren't you? Thanks for being a pal, killer. I mean it.
-jumpto possessStartJoin
-
-label possessStartHarsh
-n The Princess swims through the air in front of you, pausing for a brief moment as her dark-rimmed eyes stare deeply into yours. There's a hunger in her gaze.
-p THANKS FOR THE BODY, KILLER.
-label possessStartJoin
+    p You're really trying to make it up to me, aren't you? Thanks for being a pal, killer. I mean it. /// soft
+    p THANKS FOR THE BODY, KILLER. /// harsh
 n What are you doing?! Don't just let her in! How many times do I have to tell you... *sigh.*
 p See you soon.
 linebreak
@@ -650,14 +645,8 @@ n I'm afraid it's too late to stop now. The numbness gives way to a stabbing pai
 n You collapse to the floor, and everything goes dark.
 linebreak
 nowplaying Hitching a Ride
-
-label possessContSoft
-p Come on, you. You've gotta get up. I know everything feels... heavy right now, but we still have to get out of here.
-jumpto possessContJoin
-
-label possessContHarsh
-p Get up. You've still got a job to do.
-label possessContJoin
+    p Come on, you. You've gotta get up. I know everything feels... heavy right now, but we still have to get out of here. /// soft
+    p Get up. You've still got a job to do. /// harsh
 linebreak
 n Your eyes flick back open as you get your bearings, your vision swimming as -- /// interrupt
 p So this is what it's like to be you, huh? Disembodied voice narrating your every move?
@@ -665,26 +654,16 @@ hero So... it doesn't work like that for you?
 cold Clearly it doesn't`, or she wouldn't have commented on it.
 p All these shards of broken glass on the floor... are they also supposed to be you?
 hero Hey! I'm not a shard of broken glass, I'm...
-
-label possessVoiceCommentSoft
-p It's okay. You can finish your thought.
+    p It's okay. You can finish your thought. /// soft
+    p Yeah? Go on. Finish the thought. What are you? /// harsh
 hero I'm... a voice? I'm me, is what I am.
 cold Who cares what we are`? We exist`. That's all that matters.
-p You don't have to fight. We'll all be out of here soon.
+    p You don't have to fight. We'll all be out of here soon. /// soft
+    p Do you have to deal with this annoying bickering all the time? /// harsh
 hero No, it matters! What we are matters! If I'm a "shard of broken glass" then that raises some questions about certain other "voices" in here, too.
 cold I'm clearly the same thing you are.
-p They're not listening to me. Do they not listen to you, either?
-jumpto possessVoiceCommentJoin
-
-label possessVoiceCommentHarsh
-p Yeah? Go on. Finish the thought. What are you?
-hero I'm... a voice? I'm me, is what I am.
-cold Who cares what we are? We exist. That's all that matters.
-p Do you have to deal with this annoying bickering all the time?
-hero No, it matters! What we are matters! If I'm a "shard of broken glass" then that raises some questions about certain other "voices" in here, too.
-cold I'm clearly the same thing you are.
-p Hopefully they'll all go away once we leave this place. I don't know how you can tolerate all of this noise.
-label possessVoiceCommentJoin
+    p They're not listening to me. Do they not listen to you, either? /// soft
+    p Hopefully they'll all go away once we leave this place. I don't know how you can tolerate all of this noise. /// harsh
 hero No, I'm not talking about you, I'm talking about *Him.*
 n You don't need to know what I am. You just need to know that I'm different from you. More important.
 p So you're the one who pulled the strings and made me dead. I can tell you don't belong here. You're barely even there, like the shape of something left behind. You're more of a... memory than a person.
@@ -694,15 +673,9 @@ n I'm just going to ignore her. You push yourself off the ground. The Princess i
 cold Obviously she's nowhere to be seen.
 p Because I'm in here with all of you. Everybody knows that.
 n I'm setting the stage. The room is empty, because you made a spiteful, idiotic, and all around foolish decision.
-
-label possessCont2Soft
-p You don't have to let him get to you. You're better than that. You're starting to make things right.
-jumpto possessCont2Join
-
-label possessCont2Harsh
-p Oh, shut up! Stop trying to manipulate everyone.
-p Or don't, actually. It doesn't really matter, because you won't be around to do this for much longer.
-label possessCont2Join
+    p You don't have to let him get to you. You're better than that. You're starting to make things right. /// soft
+    p Oh, shut up! Stop trying to manipulate everyone. /// harsh
+        p Or don't, actually. It doesn't really matter, because you won't be around to do this for much longer. /// harsh
 n *Sigh.* This is infuriating. Just... whatever you do, you can't leave this place. It's not too late to fix this. Probably.
 
 label possessExploreSoft
@@ -729,6 +702,7 @@ cold I suppose it's all a matter of perspective`.`.`. where does the world end a
 linebreak
 n Against the backdrop of the inane conjecture of meaningless little voices, your body continues its ascent up the stairs, staggering through the open door.
 cold For how much you hate her, you aren't doing a whole lot to stop us from leaving this place.
+moodswitch possessUpstairs
 
 label possessUpstairsSoft
 p Maybe the bossy one doesn't actually hate me. Maybe He even likes me! Or... maybe He just knows that He's been in the wrong. Maybe He's trying to make amends, too.

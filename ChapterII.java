@@ -3675,7 +3675,7 @@ public class ChapterII extends StandardCycle {
      * @return 0 if the player decides to ask more questions; 1 if they agree to let the Spectre possess them; 2 otherwise
      */
     private int spectrePossessAsk(boolean lateJoin) {
-        spectrePossessAsk = true;
+        this.spectrePossessAsk = true;
         mainScript.runConditionalSection("possessAskSwitch", lateJoin);
 
         String moodSuffix;
@@ -3823,12 +3823,7 @@ public class ChapterII extends StandardCycle {
      * @return the ending reached by the player
      */
     private ChapterEnding spectrePossess() {
-        String moodSuffix = (this.isHarsh) ? "Harsh" : "Soft";
-
-        mainScript.runSection("possessStart" + moodSuffix);
-        mainScript.runSection("possessCont" + moodSuffix);
-        mainScript.runSection("possessVoiceComment" + moodSuffix);
-        mainScript.runSection("possessCont2" + moodSuffix);
+        mainScript.runSection("possessStart");
 
         this.canSlayPrincess = true;
         this.activeMenu = new OptionsMenu();
@@ -3841,7 +3836,7 @@ public class ChapterII extends StandardCycle {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
                 case "explore":
-                    mainScript.runSection("possessExplore" + moodSuffix);
+                    mainScript.runMoodSection("possessExplore");
                     break;
 
                 case "cSlayPrincess":
@@ -3870,7 +3865,6 @@ public class ChapterII extends StandardCycle {
         if (!this.hasBlade) this.withBlade = true;
         boolean tookBladeStart = this.hasBlade;
         mainScript.runSection("possessUpstairs");
-        mainScript.runSection("possessUpstairs" + moodSuffix);
 
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "take", "(Explore) [Take the blade.]", !this.hasBlade));

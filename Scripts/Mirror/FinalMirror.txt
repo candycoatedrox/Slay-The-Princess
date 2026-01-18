@@ -1,0 +1,277 @@
+linebreak
+truth Black eyes stare up at you, set behind a long, ravenlike beak that somehow still feels alien. The face reflects in every shard of the mirror at once.
+
+// A shard of the mirror breaks //
+
+label shardBreak
+linebreak
+numautojump shards
+
+label shards10
+truth As the words leave his mouth, one of the larger shards at your feet shatters completely, leaving only ten remaining.
+
+label shards9
+truth Another shard shatters. Nine shards remain.
+
+label shards8
+truth Another shard shatters. Eight shards remain.
+
+label shards7
+truth Another shard shatters. Seven shards remain.
+
+label shards6
+truth Another shard shatters. Six shards remain.
+
+label shards5
+truth Another shard shatters. Five shards remain.
+
+label shards4
+truth Another shard shatters. Four shards remain.
+
+label shards3
+truth Another shard shatters. Three shards remain.
+
+label shards3Quest
+linebreak
+n Soon I'll be gone entirely and you'll be left alone with your final choice. So allow me to make my final request. The Princess contains death itself within her, but I wove you into being with all the power you need to destroy her. Forever. Do it. Slay her, and rid the world of death and suffering.
+truth As he speaks, yet another shard shatters, leaving only two behind.
+
+label shards2
+truth Another shard shatters. Two shards remain.
+
+label shards1
+truth Another shard shatters, leaving only a single face staring up at you.
+
+// Answers to questions //
+
+label happy
+n Oh, did I? That means nothing in the grand scheme of things. This construct you're in contains every possible world at once. The fact that you managed to find one reality among trillions where I was delusional proves nothing.
+
+label torture
+n The inevitability of death is torture. I would gladly put two infinite beings through what you've been through to spare infinite lives from oblivion.
+
+label alone
+n Yes, you will. But it will all be worth it.
+
+label worseThanDeath
+n When I broke the cycle, I made sure that the tear was rough. You carry a part of what should be her, and she carries a part of what should be you. Things won't be as they are now, but they won't be nothing, either.
+    n Besides... anything is better than oblivion. In the end, nobody wants to leave. /// check
+
+label deluded
+n I'm only delusional if I'm wrong. And I'm not wrong. I can't be wrong.
+
+label hubris
+n I do. The people out there are real. No matter what you do to them, no matter what you enable, I want you to remember that.
+
+label deserve
+n Nobody alive has done anything to you. I'm all gone. But if you and the Princess want to smite the rest of them for the crimes of a dead man -- if you really want to be that petty -- there isn't much I can do to stop you.
+
+label slayWorse
+n Of course they won't be worse. I saw a glimpse of a better world, and I did what I could to make it real. Anything is better than oblivion. In the end, nobody wants to leave.
+
+label postPrincess
+n Light. Burdenless. An eternal pattern of forgetfulness leading into the joys of rediscovery. Everyone will be with the ones they love. No more fear, no more howling chaos. Just life. Forever.
+n There's a cruel irony to it all. The only way I could share my dream with the world was to never be able to see it for myself.
+
+label anyoneKnow
+n Of course not. The only way this construct could function was if nobody knew what it was doing. But the bones of the universe are old. It's on the cusp of its dying breath, and the people out there are consumed with thoughts of oblivion.
+n When the patterns are wiped from the sand, when the board is reset, who will remember them? All I've done is give them a chance to live outside of the shadow of the end.
+
+label godReject
+n You are you, and if you had let everything work the way it was supposed to, you never would have woken up to the reality of your true nature. There's no accounting for free will.
+
+label godAccept
+n Yes. You are special. Unique, even. And you still have a task that you need to do. And only you can do it.
+
+label quietReveal
+n You're the Long Quiet, the god I made to rid the world of death.
+
+label narrator
+n "The Narrator." Yes, I suppose that's my job, isn't it? You needed help, after all. An objective voice to guide your blade. But you were never supposed to see me. I wonder how many worlds you damned to extinction to fall this far.
+
+label echoA
+n Oh, I'm nothing like you.
+label echoB
+n I'm an echo, likely one of many. Somebody made you, after all, and I'm what's left of him. Not that I'm the only one who can make that claim. I'm sure you've met many others like me.
+
+label others
+n Of course. And that is by both necessity and design.
+jumpto multiNarratorJoin
+
+label versions
+n You were, and it was by both necessity and design.
+jumpto multiNarratorJoin
+
+label same
+n I haven't, and that's by both necessity and design.
+label multiNarratorJoin
+n This construct you're in exists in many places at once. Any time you failed, any time you thought yourself dead, it would restart and shunt both your consciousness and hers into another world.
+n But you'll be awake soon. And then it won't be able to work like that anymore.
+
+label questions
+n Then ask them, and make it quick. I won't last for long now that you can see me.
+
+label hurt
+n It doesn't hurt. I don't feel pain. Not physically.
+
+label sorry
+n We've already crossed the point of no return. There's no saving me now. Not that there's ever been much of me to save.
+
+label break
+n I'm aware. And if I were you, I'd be more precious about your time.
+
+label answers
+n Her nature is to become what others perceive her to be. If you actually knew what she was, if you knew her capabilities, a single intrusive thought could have instantly ended the entire world.
+
+label part
+n No, I'm not "a part of you," but that's all a matter of perspective, isn't it?
+n From one vantage point I must seem wholly foreign, but from another, well... all the versions of me that have existed have collectively heard your every thought and driven your every action. If that isn't being part of you, then what is?
+
+label containsDeath
+n Because among other things, she is death itself. To rid the world of suffering, to save untold trillions from being lost forever to the cosmic wind, she must be destroyed.
+    n And despite how far you've fallen, you will still have a chance to fulfill your purpose once I'm gone. /// checkfalse
+
+label whatIsShe
+n She is The Shifting Mound, the Ebb and Flow, the Capacity to Change. She is Transformation, or most of it. Her nature is why I had to die, for she becomes that which others perceive her to be. But an echo can't perceive things. Not in the way that people can.
+    n This isn't the end just yet. You can still destroy her and save everyone. You were made to do this single task, and you will still have a chance to fulfill your purpose once I'm gone. /// checkfalse
+
+label whyHide
+n If you actually knew what she was from the start, if you knew her capabilities, a single intrusive thought could have instantly ended the entire world.
+
+label living
+n You never were. You are the Long Quiet, the god I made to rid the world of death. For a time, this construct could help you approximate being alive -- confining your mind to a single reality. But you've experienced far too many lives for it to work much longer.
+
+label intrusiveA
+n It's simple, really: "She can become whatever people perceive her to be? That's easy! I'll just will her into something really small! But wait, what if I accidentally will her into something that ends the world. Oh no, what if just thinking that --"
+n But you wouldn't have finished your hypothetical thought, because she would have already destroyed the world.
+n Luckily for you, as you are now, you won't be able to will her into anything. You don't work the way a living being does. Not anymore.
+
+label intrusiveB
+n It doesn't. As you are now, you won't be able to will her into anything. You don't work the way a living being does. Not anymore.
+
+label will
+n As you are now, you won't be able to will her into anything. You don't work the way a living being does. Not anymore.
+n And as you were before? You couldn't be trusted with the knowledge of what she is. No one could be trusted with that knowledge. Intrusive thoughts have a way of creeping in and ruining everything. It's why I had to die.
+
+label gaslight
+    n Any other version of me you talked to was just that -- a version of me. It wasn't *me.* As to why they lied... /// checkfalse
+n Perhaps they thought that admitting to it would have pushed you to certain realizations that would have made finishing your task impossible. Maybe they were just in denial.
+    n I'm sure many of them were convinced that they *had* to be the first version of them you'd encountered. Anything else would have been too existentially unpleasant. /// soft
+    n I'm sure many of them were convinced that they *had* to be the first version of them that you'd encountered. Anything else would have been too existentially unpleasant. /// harsh
+n And for all I know, each of those other versions of me could have had entirely different understandings of how this construct works. Who's to say which of them are right and which of them are wrong, really?
+n Except for me. I can tell you for a fact that I'm right.
+
+label godAsk
+n No. In life, I was painfully mortal. A witness to the end of days. I held the fear of death in my heart, and saw oblivion threaten the very memory of everything I knew and everyone I loved. I needed to do something.
+n So I made you. And I made her. And I made this place to hold you both.
+
+label seeThis
+n You were either going to have seen all of this, or you weren't going to have seen all of this. This is worse, but you still have an opportunity to save the world. You can still slay her.
+
+label moundReveal
+n She is The Shifting Mound, the Ebb and Flow, the Capacity to Change. She is Transformation, or most of it. Her nature is why I had to die, for she becomes that which others perceive her to be. But an echo can't perceive things. Not in the way that people can.
+n So I tucked a part of myself into the folds of this Construct to guide you.
+
+label moundRevealQuest
+n Seems that every "me" you met did a real shit job of it, though.
+
+label moundRevealNoQuest
+    n Like I said, this isn't the end just yet. You can still destroy her and save everyone. You were made to do this single task, and you will still have a chance to fulfill your purpose once I'm gone. /// check
+    n This isn't the end just yet. You can still destroy her and save everyone. You were made to do this single task, and you will still have a chance to fulfill your purpose once I'm gone. /// checkfalse
+
+label howDie
+n I killed myself. It had to be done, really. None of this would have worked if I were still alive. Nobody living could know about her.
+
+label whyPrincessA
+n I didn't make her a Princess, but I wove the idea of her into something your scattered mind could fathom. You chose for that something to be a princess.
+
+label whyPrincess2
+n Are you asking me to spend my final moments psychoanalyzing you? *Sigh.* Whatever you viewed her as needed to map on some level to what she was. You couldn't just pick something arbitrary and beneath you.
+n I don't know why you settled on a princess, specifically, but clearly a princess is what you wanted.
+jumpto psychoanalyzeJoin
+
+label whyPrincessB
+n Are you asking me to spend my final moments psychoanalyzing you? *Sigh.* She wound up a princess because you wanted her to be a princess. As to why?
+label psychoanalyzeJoin
+n Maybe she needed to be beautiful. Important. Above you, but on a level you could still approach. A herald of things to come.
+n I don't know. Gods are supposed to be beyond comprehension. I really shouldn't try and anthropomorphize you like this.
+
+label abstract
+n With some amount of difficulty. But you're an abstract concept yourself. It would have been preferable if you had destroyed her within the confines of the construct, but when I shaped the two of you, I made sure that you were strong enough to see things through.
+
+label stall
+n It wouldn't work. Her nature as The Shifting Mound makes it so nothing can last forever as it is now. It wouldn't matter how long the two of you waited. Eventually she would find a way to leave. And then everything would change. Everything would face oblivion.
+n And until then, the clock ticks on.
+
+label stall2
+n There is. It's the difference between being stranded on a desert island and being stranded on a desert island with a leopard that can't die.
+n Neither option is great, especially when there's a third option where you get rid of the island and give everyone a chance to finally be happy.
+
+label peopleKnow
+n Of course not. The only way this construct could function was if nobody knew what it was doing. But the bones of the universe are old. It's on the cusp of its dying breath, and the people out there are consumed with thoughts of oblivion.
+n When the patterns are wiped from the sand, when the board is reset, who will remember them? All I've done is give them a chance to live outside of the shadow of the end.
+
+label where
+n A construct.
+label construct
+n It was supposed to keep the two of you trapped here until the job was done. And it was supposed to guide your hand to help you see things through.
+n The construct you're in exists in every world at once. Any time you failed, any time you thought yourself dead, it would restart and shunt both you and her into a new world.
+n But you're waking up to your true nature now. It won't be able to work like that anymore.
+
+label whyDeath
+n If you need to ask that question, there's nothing I can say to move you. You haven't died. You cannot die. So you cannot grasp the abject horror of dying.
+
+label deathGood
+n If that's your belief, there's nothing I can say to move you. You haven't died. You cannot die. So you can't grasp the abject horror of dying.
+
+label plenty
+n You haven't. You've flirted with dying. You've played pretend, but your consciousness is an unbroken stream.
+
+label experience
+n They obviously don't. You experience 'death' the way you do by design and by your unique nature.
+
+label makingUp
+n If you really want to waste valuable time telling me that I'm wrong when we both know I'm not, then that's your prerogative.
+
+label ridDeath
+n By slaying the Princess. Once she's gone, everyone will get to exist exactly as they are. No more fear, no more howling chaos. Just life. Forever.
+
+label shaped
+n The cycle of life and death. The endless pattern of creation and destruction. I tore it in two and shaped the fraying threads into you and her.
+
+// Destroy the mirror //
+
+label destroyMirror
+    truth You don't need answers from the thing that lives in the mirror. /// ifnum-11
+        unlock narrySmash /// ifnum-11
+    truth You have heard enough. /// ifnumnot-11
+    truth The Narrator was right. You are The Long Quiet, a vast and nascent god. And it is finally time for you to wake up. All of this is you. /// check
+    truth You already know what you are. You are The Long Quiet, a vast and nascent god. And it is finally time for you to wake up. All of this is you. /// checkfalse
+unlock mirror4
+
+// Run out of questions //
+
+label timeFinal
+    n So I am. It's like I said, I'm just an echo. And echoes always fade away. You know what you have to do. /// check
+    n So I am, and so it was always going to be. I'm just an echo. And every echo fades away. You know what you have to do. /// checkfalse
+
+label notFinal
+n Well. There's no reasoning with a god. Even one you've woven into existence yourself. I've said my piece and my time is up.
+    n It's like I said, I'm just an echo. And echoes always fade away. /// check
+    n I'm just an echo. And every echo fades away. /// checkfalse
+
+label destroyFinal
+n Are you lying? I can't tell. But I've said my piece, and my time is up.
+jumpto finalEchoShared
+
+label defaultFinal
+n I've said my piece, and my time is up.
+label finalEchoShared
+    n It's like I said, I'm just an echo. And echoes always fade away. You know what you have to do. /// check
+    n I'm just an echo. And every echo fades away. You know what you have to do. /// checkfalse
+
+label finalBreak
+linebreak
+truth As the final fragment of glass shatters, you see yourself with newfound clarity.
+    n The Narrator was right. You are The Long Quiet, a vast and nascent god. And it is finally time for you to wake up. All of this is you. /// check
+    n You are The Long Quiet, a vast and nascent god. And it is finally time for you to wake up. All of this is you. /// checkfalse

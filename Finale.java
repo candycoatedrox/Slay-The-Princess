@@ -15,11 +15,22 @@ public class Finale extends Cycle {
 
     private final boolean mirrorWasCruel;
 
+    // Flags for the mirror conversation
+    private final Condition mirrorNotSmashed = new Condition(true);
+    private final GlobalInt mirrorAngryMeter = new GlobalInt();
+    private final NumCondition mirrorIsAngry = new NumCondition(this.mirrorAngryMeter, 1, 2);
+    private final Condition mirrorDeathReveal = new Condition();
+    private final Condition mirrorConstructReveal = new Condition();
+    private final Condition mirrorConstructExplained = new Condition();
+    private final Condition mirrorMoundReveal = new Condition();
+    private final Condition mirrorWorseThanDeath = new Condition();
+
+    // Counters used during the debate
     private int ynwArguments = 0; // Number of times the player has selected arguments tied to the "Your New World" ending during the debate
     private int silentCount = 0; // Number of the times the player has remained silent during the debate
 
-    private boolean abortedYNW = false;
     private boolean statedGoalSlay = false;
+    private boolean offerYNW = false;
 
     // --- CONSTRUCTOR ---
 
@@ -53,6 +64,21 @@ public class Finale extends Cycle {
         this.activeChapter = Chapter.ENDOFEVERYTHING;
         this.mainScript = new Script(this.manager, this.parser, activeChapter.getScriptFile());
     }
+
+    // --- ACCESSORS & CHECKS ---
+
+    /**
+     * Accessor for isHarsh
+     * @return whether the Princess is currently hostile in Chapters where it varies
+     */
+    @Override
+    public boolean isHarsh() {
+        if (this.currentLocation == GameLocation.MIRROR) {
+            return mirrorIsAngry.check();
+        } else {
+            return this.isHarsh;
+        }
+    }
     
     // --- COMMAND OVERRIDES ---
 
@@ -75,7 +101,6 @@ public class Finale extends Cycle {
             case CABIN:
             case STAIRS:
             case BASEMENT:
-                if (outcome.equals("GoHill")) return "GoFail";
                 break;
         }
 
@@ -165,6 +190,8 @@ public class Finale extends Cycle {
             case "the mirror":
             case "mirror":
                 switch (this.currentLocation) {
+                    case MIRROR: return "Smash";
+ 
                     case CABIN:
                     case STAIRS:
                     case BASEMENT:
@@ -718,14 +745,10 @@ public class Finale extends Cycle {
      */
     @Override
     public ChapterEnding runChapter() {
-        return ChapterEnding.DEMOENDING; // PLACEHOLDER -- DELETE ONCE YOU START WORKING ON THE FINALE
-
-        /*
         this.finalMirror();
         
         // PLACEHOLDER
         return this.openingConversation();
-        */
     }
 
     // --- SCENES ---
@@ -734,14 +757,408 @@ public class Finale extends Cycle {
      * Runs the conversation with the Narrator in the mirror
      */
     private void finalMirror() {
-        // starts right after mirror shatters
-        // use isHarsh to indicate angry here
+        this.mainScript = new Script(this.manager, this.parser, "Mirror/FinalMirror");
+        mainScript.runSection();
+        
+        GlobalInt mirrorShards = new GlobalInt(11);
+        NumCondition shardsBroken = new NumCondition(mirrorShards, -1, 11);
+        GlobalInt revealCount = new GlobalInt();
+        NumCondition hasRevealed = new NumCondition(revealCount, 1, 1);
 
+        Condition questGiven = new Condition();
+        InverseCondition noQuest = questGiven.getInverse();
+        InverseCondition noDeathReveal = mirrorDeathReveal.getInverse();
+        InverseCondition noConstructReveal = mirrorConstructReveal.getInverse();
+        InverseCondition noConstructExplain = mirrorConstructExplained.getInverse();
+        Condition versionsComment = new Condition();
+        Condition creationReveal = new Condition();
+        InverseCondition noMoundReveal = mirrorMoundReveal.getInverse();
+        Condition longQuietReveal = new Condition();
+        InverseCondition noLongQuietReveal = longQuietReveal.getInverse();
+        OrCondition canDeathComment = new OrCondition(this.mirrorDeathReveal, longQuietReveal);
 
+        Condition narratorReveal = new Condition();
+        InverseCondition noNarratorReveal = narratorReveal.getInverse();
+        Condition echoReveal = new Condition();
+        InverseCondition noEchoReveal = echoReveal.getInverse();
+        Condition noMultiNarratorReveal = new Condition(true);
+        Condition intrusiveAsk = new Condition();
+        InverseCondition noIntrusiveAsk = intrusiveAsk.getInverse();
+        boolean seeThisAsk = false;
+        Condition noWhyPrincessReveal = new Condition(true);
+        Condition noSlayWorseComment = new Condition(true);
+        Condition noPeopleAsk = new Condition(true);
+        Condition noGodComment = new Condition(true);
+        InverseCondition noWorseThanDeath = mirrorWorseThanDeath.getInverse();
+        Condition whyKillAsk = new Condition();
+        InverseCondition noWhyKillAsk = whyKillAsk.getInverse();
+        Condition noWhyNoDeathAsk = new Condition(true);
+        Condition diedLotsComment = new Condition();
+        InverseCondition noDiedLotsComment = diedLotsComment.getInverse();
+        Condition noShapedReveal = new Condition(true);
+        Condition tortureComment = new Condition();
+        Condition deludedComment = new Condition();
+        Condition narratorGodAsk = new Condition();
+        InverseCondition noNarratorGodAsk = narratorGodAsk.getInverse();
+        OrCondition canHubrisComment = new OrCondition(this.mirrorConstructExplained, this.mirrorMoundReveal, deludedComment);
 
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "happy", "(Explore) \"In one of my lives, you doubted yourself. You thought that all of this was wrong.\"", manager.hasClaimedVessel(Vessel.HAPPY), new OrCondition(longQuietReveal, questGiven, creationReveal)));
+        activeMenu.add(new Option(this.manager, "torture", "(Explore) \"If you made us, then I want you to know that this has been torture.\"", this.mirrorMoundReveal, longQuietReveal));
+        activeMenu.add(new Option(this.manager, "alone", "(Explore) \"If I destroy Her, won't I be alone?\"", this.mirrorMoundReveal, questGiven));
+        activeMenu.add(new Option(this.manager, "whyKill", "(Explore) \"Why would you want me to destroy the concept of transformation?\"", this.mirrorMoundReveal, noLongQuietReveal, noDeathReveal));
+        activeMenu.add(new Option(this.manager, "worseDeathA", "(Explore) \"If I destroy Her, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, this.mirrorMoundReveal, noWorseThanDeath, whyKillAsk));
+        activeMenu.add(new Option(this.manager, "worseDeathB", "(Explore) \"If you want me to destroy the concept of transformation, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, this.mirrorMoundReveal, noWorseThanDeath, noWhyKillAsk));
+        activeMenu.add(new Option(this.manager, "deluded", "(Explore) \"You're delusional.\"", this.mirrorWorseThanDeath));
+        activeMenu.add(new Option(this.manager, "hubris", "(Explore) \"Do you have anything to say for yourself? For all this hubris?\"", canHubrisComment));
+        activeMenu.add(new Option(this.manager, "deserve", "(Explore) \"After everything you've done to us, do you think anyone deserves to live?\"", canHubrisComment));
+        activeMenu.add(new Option(this.manager, "slayWorse", "(Explore) \"Do you know that things won't just be worse if I destroy Her?\"", this.mirrorMoundReveal, noSlayWorseComment));
+        activeMenu.add(new Option(this.manager, "postPrincess", "(Explore) \"What would it be like to live in a world without Her?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "anyoneKnow", "(Explore) \"Does anyone else know about this? Does anyone else know about *us?*\"", this.mirrorMoundReveal, longQuietReveal, noPeopleAsk));
+        activeMenu.add(new Option(this.manager, "godReject", "(Explore) \"I don't want to be a god. I want to be me.\"", longQuietReveal, noGodComment));
+        activeMenu.add(new Option(this.manager, "godAccept", "(Explore) \"A god. I always knew I was special.\"", longQuietReveal, noGodComment));
+        activeMenu.add(new Option(this.manager, "task", "(Explore) \"I was made to do this single task? Who made me? What am I?\"", noLongQuietReveal, noEchoReveal, questGiven));
+        activeMenu.add(new Option(this.manager, "narrator", "(Explore) \"So you're the Narrator. I was wondering if I'd ever get to see you.\"", noNarratorReveal));
+        activeMenu.add(new Option(this.manager, "echoA", "(Explore) \"What are you? Are you something like me?\"", noEchoReveal, noNarratorGodAsk));
+        activeMenu.add(new Option(this.manager, "echoB", "(Explore) \"If you're not me, then what are you?\"", noEchoReveal, noNarratorGodAsk));
+        activeMenu.add(new Option(this.manager, "others", "(Explore) \"'Others like you.' You've said something like that before. Has every Narrator really been different?\"", noMultiNarratorReveal, echoReveal));
+        activeMenu.add(new Option(this.manager, "questions", "(Explore) \"I have so many questions for you!\""));
+        activeMenu.add(new Option(this.manager, "hurt", "(Explore) \"Does it hurt when pieces of you break off like that?\"", shardsBroken));
+        activeMenu.add(new Option(this.manager, "sorry", "(Explore) \"I'm sorry. I don't want to destroy you. Will it help if I look away or stop asking questions?\"", shardsBroken));
+        activeMenu.add(new Option(this.manager, "break", "(Explore) \"Every time I ask you something, it's like a piece of you breaks.\"", shardsBroken));
+        activeMenu.add(new Option(this.manager, "answers", "(Explore) \"Whenever I've tried getting answers out of you before, you've been absolutely impenetrable. Why are you suddenly being so open?\"", hasRevealed, narratorReveal));
+        activeMenu.add(new Option(this.manager, "part", "(Explore) \"Are you a part of me? Or are you something else?\""));
+        activeMenu.add(new Option(this.manager, "versions", "(Explore) \"'Versions of you.' You've said that before. So I really was meeting different you's.\"", noMultiNarratorReveal, versionsComment));
+        activeMenu.add(new Option(this.manager, "wantSlay", "(Explore) \"You're the one who wanted me to slay the Princess. Why?\"", noNarratorReveal, noDeathReveal));
+        activeMenu.add(new Option(this.manager, "whatIsShe", "(Explore) \"You said She contains death. What is She?\"", this.mirrorDeathReveal, noMoundReveal));
+        activeMenu.add(new Option(this.manager, "whyHide", "(Explore) \"Why couldn't you have told me all of this from the start? I would have helped you destroy Her.\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "living", "(Explore) \"'I don't work the way a living being does? Not anymore?!' Am I not a living being?\"", activeMenu.get("whyHide"), intrusiveAsk));
+        activeMenu.add(new Option(this.manager, "intrusiveA", "(Explore) \"What do you mean a single intrusive thought could have instantly ended the world?\"", activeMenu.get("whyHide"), noIntrusiveAsk));
+        activeMenu.add(new Option(this.manager, "intrusiveB", "(Explore) \"Doesn't telling me this now mean that an intrusive thought could still end the world?\"", activeMenu.get("whyHide"), noIntrusiveAsk));
+        activeMenu.add(new Option(this.manager, "will", "(Explore) \"If She's capable of becoming whatever people believe Her to be, can't I just... will Her into something small?\"", this.mirrorMoundReveal, noIntrusiveAsk));
+        activeMenu.add(new Option(this.manager, "same", "(Explore) \"I've met you many times. Have you been the same you all along?\"", noMultiNarratorReveal));
+        activeMenu.add(new Option(this.manager, "gaslight", "(Explore) \"So you do know about the looping. So many of the times I met you, you denied it as even being a possibility. Why did you lie to me?\"", this.mirrorConstructExplained));
+        activeMenu.add(new Option(this.manager, "whatAmI", "(Explore) \"If you made me, what am I?\"", noLongQuietReveal, echoReveal));
+        activeMenu.add(new Option(this.manager, "godAsk", "(Explore) \"Are you a god? Or... were you a god?\"", longQuietReveal, noNarratorGodAsk));
+        activeMenu.add(new Option(this.manager, "seeThis", "(Explore) \"I wasn't supposed to see all this, was I?\""));
+        activeMenu.add(new Option(this.manager, "needToKnow", "(Explore) \"If you want me to slay Her, I need to know what She actually is.\"", seeThisAsk, noMoundReveal));
+        activeMenu.add(new Option(this.manager, "howDie", "(Explore) \"How did you die?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "whatPrincess", "(Explore) \"What is the Princess? Did you make Her too?\"", creationReveal, noMoundReveal));
+        activeMenu.add(new Option(this.manager, "whyPrincessA", "(Explore) \"Why did you make Her a Princess?\"", this.mirrorMoundReveal, noWhyPrincessReveal));
+        activeMenu.add(new Option(this.manager, "whyPrincess2", "(Explore) \"I chose to make Her a princess? Why couldn't I have made things easier on myself and picked something small or weak like an ant or a slice of bread?\"", activeMenu.get("whyPrincessA")));
+        activeMenu.add(new Option(this.manager, "whyPrincessB", "(Explore) \"Of all things, why is She a Princess? Why couldn't She be an ant or a slice of soggy bread?\"", this.mirrorMoundReveal, noWhyPrincessReveal));
+        activeMenu.add(new Option(this.manager, "abstract", "(Explore) \"How am I supposed to destroy an abstract concept?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "stall", "(Explore) \"What if neither of us leave this place? Does that work? Can we just stay here together and leave the people out there alone?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "stall2", "(Explore) \"Is there a difference between leaving this place and staying here?\"", activeMenu.get("stall")));
+        activeMenu.add(new Option(this.manager, "peopleKnow", "(Explore) \"The people out there beyond the walls of the construct... Do *they* know about this? Do they know what you want me to do to them?\"", this.mirrorConstructReveal, noPeopleAsk));
+        activeMenu.add(new Option(this.manager, "where", "(Explore) \"What is this place? Where are we?\"", noConstructReveal, noConstructExplain));
+        activeMenu.add(new Option(this.manager, "identity", "(Explore) \"And what is my 'true identity?'\"", this.mirrorConstructExplained, noLongQuietReveal));
+        activeMenu.add(new Option(this.manager, "construct", "(Explore) \"You've called this place a construct. What is it supposed to do?\"", this.mirrorConstructReveal, noConstructExplain));
+        activeMenu.add(new Option(this.manager, "whyDeath", "(Explore) \"Why would you want to rid the world of death?\"", canDeathComment, noWhyNoDeathAsk));
+        activeMenu.add(new Option(this.manager, "deathGood", "(Explore) \"I'm pretty sure death is good, actually. Important, even.\"", canDeathComment, noWhyNoDeathAsk));
+        activeMenu.add(new Option(this.manager, "plentyA", "(Explore) \"But I've died plenty of times.\"", activeMenu.get("deathGood"), noDiedLotsComment));
+        activeMenu.add(new Option(this.manager, "plentyB", "(Explore) \"Who cares about dying? I've died plenty of times.\"", canDeathComment, noDiedLotsComment));
+        activeMenu.add(new Option(this.manager, "experience", "(Explore) \"And how do you know everybody else doesn't also experience death the way I do?\"", diedLotsComment));
+        activeMenu.add(new Option(this.manager, "makingUp", "(Explore) \"I think you're wrong. I don't think dying is bad at all, and you're just making all this up as you go.\"", activeMenu.get("experience")));
+        activeMenu.add(new Option(this.manager, "ridDeath", "(Explore) \"How am I supposed to rid the world of death?\"", longQuietReveal, noQuest));
+        activeMenu.add(new Option(this.manager, "shapedA", "(Explore) \"You made us? Out of what?\"", narratorGodAsk, noShapedReveal));
+        activeMenu.add(new Option(this.manager, "shapedB", "(Explore) \"What were we shaped from?\"", activeMenu.get("abstract"), noShapedReveal));
+        activeMenu.add(new Option(this.manager, "smash", "(Explore) [Destroy the mirror.]"));
 
+        boolean shardBreakFlag;
+        while (mirrorShards.greaterThan(1)) {
+            shardBreakFlag = true;
 
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "happy":
+                    mirrorAngryMeter.add(2);
+                    mainScript.runSection(activeOutcome);
+                    break;
 
+                case "torture":
+                    tortureComment.set();
+                    mirrorAngryMeter.increment();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "alone":
+                case "hurt":
+                case "sorry":
+                case "break":
+                case "howDie":
+                case "stall2":
+                case "experience":
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "whyKill":
+                    whyKillAsk.set();
+                case "wantSlay":
+                    mirrorDeathReveal.set();
+                    mainScript.runConditionalSection("containsDeath", questGiven);
+                    questGiven.set();
+                    break;
+
+                case "worseDeathA":
+                case "worseDeathB":
+                    mirrorWorseThanDeath.set();
+                    mainScript.runConditionalSection("worseThanDeath", noSlayWorseComment);
+                    noSlayWorseComment.set(false);
+                    break;
+
+                case "deluded":
+                case "hubris":
+                case "deserve":
+                case "questions":
+                case "stall":
+                case "makingUp":
+                    mirrorAngryMeter.increment();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "slayWorse":
+                    noSlayWorseComment.set(false);
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "postPrincess":
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "anyoneKnow":
+                    mirrorConstructReveal.set();
+                    noPeopleAsk.set(false);
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "godReject":
+                case "godAccept":
+                    noGodComment.set(false);
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "task":
+                case "whatAmI":
+                case "identity":
+                    longQuietReveal.set();
+                    creationReveal.set();
+                    mainScript.runSection("quietReveal");
+                    break;
+
+                case "narrator":
+                    narratorReveal.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "echoA":
+                case "echoB":
+                    echoReveal.set();
+                    creationReveal.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "others":
+                case "versions":
+                case "same":
+                    revealCount.increment();
+                    mirrorConstructReveal.set();
+                    mirrorConstructExplained.set();
+                    noMultiNarratorReveal.set(false);
+                    break;
+
+                case "answers":
+                    intrusiveAsk.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "part":
+                    versionsComment.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "whatIsShe":
+                    revealCount.increment();
+                    mirrorMoundReveal.set();
+                    mainScript.runConditionalSection("whatIsShe", questGiven);
+                    break;
+
+                case "whyHide":
+                    revealCount.increment();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "living":
+                    revealCount.increment();
+                    mirrorConstructReveal.set();
+                    creationReveal.set();
+                    longQuietReveal.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "intrusiveA":
+                    revealCount.increment();
+                case "intrusiveB":
+                    intrusiveAsk.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "will":
+                    revealCount.increment();
+                    intrusiveAsk.set();
+                    break;
+
+                case "gaslight":
+                    revealCount.increment();
+                    mainScript.runConditionalSection("gaslight", versionsComment);
+                    versionsComment.set();
+                    break;
+
+                case "godAsk":
+                    revealCount.increment();
+                    narratorGodAsk.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "seeThis":
+                    seeThisAsk = true;
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "needToKnow":
+                case "whatPrincess":
+                    revealCount.increment();
+                    mirrorConstructReveal.set();
+                    mirrorMoundReveal.set();
+                    mainScript.runSection("moundReveal");
+
+                    if (questGiven.check()) {
+                        mainScript.runSection("moundRevealQuest");
+                    } else {
+                        questGiven.set();
+                        mainScript.runConditionalSection("moundRevealNoQuest", seeThisAsk);
+                    }
+
+                    break;
+
+                case "whyPrincessA":
+                case "whyPrincessB":
+                    noWhyPrincessReveal.set(false);
+                case "whyPrincess2":
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "abstract":
+                    mirrorConstructReveal.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "peopleKnow":
+                    revealCount.increment();
+                    noPeopleAsk.set(false);
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "where":
+                case "construct":
+                    revealCount.increment();
+                    mirrorConstructReveal.set();
+                    mirrorConstructExplained.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "deathGood":
+                    mirrorAngryMeter.increment();
+                case "whyDeath":
+                    noWhyNoDeathAsk.set(false);
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "plentyA":
+                case "plentyB":
+                    mirrorAngryMeter.increment();
+                    diedLotsComment.set();
+                    mainScript.runSection("plenty");
+                    break;
+
+                case "ridDeath":
+                    questGiven.set();
+                    mainScript.runSection(activeOutcome);
+                    break;
+
+                case "shapedA":
+                case "shapedB":
+                    noShapedReveal.set(false);
+                    mainScript.runSection("shaped");
+                    break;
+
+                case "cSmash":
+                case "smash":
+                    mirrorNotSmashed.set(false);
+                    mainScript.runConditionalSection("destroyMirror", longQuietReveal, mirrorShards);
+                    mirrorShards.set(0); // Skip the rest of the menu
+                    break;
+
+                default:
+                    shardBreakFlag = false;
+                    this.giveDefaultFailResponse(activeOutcome);
+            }
+
+            if (shardBreakFlag) {
+                mirrorShards.decrement();
+                mainScript.runConditionalSection("shardBreak", mirrorShards);
+
+                if (mirrorShards.equals(3) && noQuest.check()) {
+                    mirrorShards.decrement();
+                    questGiven.set();
+                    creationReveal.set();
+                    mainScript.runSection("shards3Quest");
+                }
+            }
+        }
+
+        if (mirrorNotSmashed.check()) {
+            this.activeMenu = new OptionsMenu(true);
+            activeMenu.add(new Option(this.manager, "time", "\"I think you're out of time.\""));
+            activeMenu.add(new Option(this.manager, "not", "\"I'm not going to slay Her, and I want you to know that before you die for good.\""));
+            activeMenu.add(new Option(this.manager, "destroy", "\"Rest easy. I'm going to destroy Her.\""));
+            activeMenu.add(new Option(this.manager, "lie", "(Lie) \"Rest easy. I'm going to destroy Her.\""));
+            activeMenu.add(new Option(this.manager, "undecided", "\"I haven't decided what I'm going to do yet. I still have to see what She thinks about all of this.\""));
+            activeMenu.add(new Option(this.manager, "silent", "[Say nothing, and watch him end.]"));
+
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "destroy":
+                case "lie":
+                    mainScript.runConditionalSection("destroyFinal", echoReveal);
+                    break;
+
+                case "undecided":
+                case "silent":
+                    mainScript.runConditionalSection("defaultFinal", echoReveal);
+                    break;
+
+                default: mainScript.runConditionalSection(activeOutcome + "Final", echoReveal);
+            }
+
+            mainScript.runConditionalSection("finalBreak", longQuietReveal);
+        }
+
+        this.currentLocation = GameLocation.PATH;
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin, one last time.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cGoHill":
+                case "proceed":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
 
         manager.unlock(this.vessels[4].getAchievementID());
     }
@@ -786,6 +1203,21 @@ public class Finale extends Cycle {
 
 
 
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
 
         // PLACEHOLDER
         return this.debate();
@@ -848,6 +1280,21 @@ public class Finale extends Cycle {
         // options always available: surrender (not available first Vessel), silent
 
         return menu;
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
     }
 
     /**
@@ -935,6 +1382,22 @@ public class Finale extends Cycle {
         // post debate -- to heart cabin
 
 
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
+
         // PLACEHOLDER
         if (this.strangerHeart) {
             return this.heartCabinStranger();
@@ -957,6 +1420,21 @@ public class Finale extends Cycle {
 
             // ...
         }
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
     }
 
     private void vesselArgumentResponse(Vessel vessel, String nArgument) {
@@ -969,6 +1447,21 @@ public class Finale extends Cycle {
         }
 
         secondaryScript.runSection(vesselID + nArgument);
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
     }
 
     /**
@@ -976,6 +1469,22 @@ public class Finale extends Cycle {
      * @return the ending the player reaches
      */
     private ChapterEnding heartCabin() {
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
+
         // PLACEHOLDER
         return ChapterEnding.PATHINTHEWOODS;
     }
@@ -987,6 +1496,22 @@ public class Finale extends Cycle {
     private ChapterEnding heartCabinStranger() {
         manager.unlock("strangerHeart");
 
+
+
+
+
+
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
 
         // PLACEHOLDER
         return ChapterEnding.PATHINTHEWOODS;

@@ -15,8 +15,8 @@ hero You're right. She's gone. It's just us and that... awful thing.
     smitten I can't believe she was taken away from us! The nerve. /// checkvoice
     para I should feel better with her gone, but I don't. /// checkvoice
     cheated We just can't win. /// checkvoice
-    cold Don't bother looking for her. I'm sure it's just a waste of time. /// checkvoice
-    broken I feel anxious. Does anyone else feel anxious? /// checkvoice
+    cold Don't bother looking for her`. I'm sure it's just a waste of time. /// checkvoice
+    broken I feel anxious`. Does anyone else feel anxious? /// checkvoice
     contra Then what the hell are we supposed to do? /// checkvoice checkfalse
     contra Again, what the hell are we supposed to do? /// checkvoice check
 
@@ -60,8 +60,8 @@ label exploreJoinB
     cheated It's going to *do* something to us. I can feel it. /// checkvoice
     oppo If *he* thinks it's bad, I-I'm with him. /// checkvoice ifnum-2
     oppo If *they* think it's bad, I-I'm with them. /// checkvoice ifnumnot-2
-    cold Ignore him. You have to look. /// checkvoice ifnum-2
-    cold Ignore the cowards. You have to look. /// checkvoice ifnumnot-2
+    cold Ignore him`. You have to look. /// checkvoice ifnum-2
+    cold Ignore the cowards`. You have to look. /// checkvoice ifnumnot-2
 
 label comfort
 hero Okay. If you say so, we'll trust you.
@@ -74,10 +74,10 @@ hero Okay. If you say so, we'll trust you.
     skeptic Feels too good to be true. /// checkvoice
     smitten She'll be there waiting for us, I just know it. /// checkvoice
     oppo Finally. We're going places. /// checkvoice
-    cold Whatever makes you happy. /// checkvoice
+    cold Whatever makes you... happy. /// checkvoice
 
 label cruel
-    cold I would have kept them in the dark, if I were you. /// checkvoice
+    cold I would have kept them in the dark`, if I were you. /// checkvoice
 hero What is that supposed to mean? Whatever awful thing I felt before, it feels so much worse now!
     hunted Death. Real death. /// checkvoice
     broken This is what we all deserve, isn't it? /// checkvoice
@@ -128,4 +128,3 @@ truth But that isn't right. You can't be nothing. You refocus your gaze, and the
 n I think you know what I am.
 truth A crack slides down the center of the mirror, splitting the image in the glass in two.
 truth And then another crack forms, and another, and another, turning the mirror into jagged shards of broken glass.
-linebreak

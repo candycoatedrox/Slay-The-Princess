@@ -299,7 +299,7 @@ public class Script {
 
     /**
      * Executes this script from the cursor until the next break, using a given boolean, int, and String as conditional switches
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param intCondition the int to use as a switch
      * @param strCondition the String to use as a switch
      */
@@ -311,9 +311,48 @@ public class Script {
     }
 
     /**
+     * Executes this script from the cursor until the next break, using a given AbstractCondition, int, and String as conditional switches
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the int to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(AbstractCondition boolCondition, int intCondition, String strCondition) {
+        this.boolCondition = boolCondition.check();
+        this.intCondition = intCondition;
+        this.strCondition = strCondition;
+        this.runSection();
+    }
+
+    /**
+     * Executes this script from the cursor until the next break, using a given boolean, GlobalInt, and String as conditional switches
+     * @param boolCondition the boolean to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(boolean boolCondition, GlobalInt intCondition, String strCondition) {
+        this.boolCondition = boolCondition;
+        this.intCondition = intCondition.check();
+        this.strCondition = strCondition;
+        this.runSection();
+    }
+
+    /**
+     * Executes this script from the cursor until the next break, using a given AbstractCondition, GlobalInt, and String as conditional switches
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(AbstractCondition boolCondition, GlobalInt intCondition, String strCondition) {
+        this.boolCondition = boolCondition.check();
+        this.intCondition = intCondition.check();
+        this.strCondition = strCondition;
+        this.runSection();
+    }
+
+    /**
      * Executes this script starting from a given label and ending at the next break, using a given boolean, int, and String as conditional switches
      * @param labelName the name of the label to start executing at
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param intCondition the int to use as a switch
      * @param strCondition the String to use as a switch
      */
@@ -330,8 +369,65 @@ public class Script {
     }
 
     /**
+     * Executes this script starting from a given label and ending at the next break, using a given AbstractCondition, int, and String as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the int to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(String labelName, AbstractCondition boolCondition, int intCondition, String strCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition.check();
+            this.intCondition = intCondition;
+            this.strCondition = strCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Executes this script starting from a given label and ending at the next break, using a given boolean, GlobalInt, and String as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the boolean to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(String labelName, boolean boolCondition, GlobalInt intCondition, String strCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition;
+            this.intCondition = intCondition.check();
+            this.strCondition = strCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Executes this script starting from a given label and ending at the next break, using a given AbstractCondition, GlobalInt, and String as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(String labelName, AbstractCondition boolCondition, GlobalInt intCondition, String strCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition.check();
+            this.intCondition = intCondition.check();
+            this.strCondition = strCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
      * Executes this script from the cursor until the next break, using a given boolean and int as conditional switches
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param intCondition the int to use as a switch
      */
     public void runConditionalSection(boolean boolCondition, int intCondition) {
@@ -341,9 +437,42 @@ public class Script {
     }
 
     /**
+     * Executes this script from the cursor until the next break, using a given AbstractCondition and int as conditional switches
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the int to use as a switch
+     */
+    public void runConditionalSection(AbstractCondition boolCondition, int intCondition) {
+        this.boolCondition = boolCondition.check();
+        this.intCondition = intCondition;
+        this.runSection();
+    }
+
+    /**
+     * Executes this script from the cursor until the next break, using a given boolean and GlobalInt as conditional switches
+     * @param boolCondition the boolean to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     */
+    public void runConditionalSection(boolean boolCondition, GlobalInt intCondition) {
+        this.boolCondition = boolCondition;
+        this.intCondition = intCondition.check();
+        this.runSection();
+    }
+
+    /**
+     * Executes this script from the cursor until the next break, using a given AbstractCondition and GlobalInt as conditional switches
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     */
+    public void runConditionalSection(AbstractCondition boolCondition, GlobalInt intCondition) {
+        this.boolCondition = boolCondition.check();
+        this.intCondition = intCondition.check();
+        this.runSection();
+    }
+
+    /**
      * Executes this script starting from a given label and ending at the next break, using a given boolean and int as conditional switches
      * @param labelName the name of the label to start executing at
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param intCondition the int to use as a switch
      */
     public void runConditionalSection(String labelName, boolean boolCondition, int intCondition) {
@@ -358,8 +487,59 @@ public class Script {
     }
 
     /**
+     * Executes this script starting from a given label and ending at the next break, using a given AbstractCondition and int as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the int to use as a switch
+     */
+    public void runConditionalSection(String labelName, AbstractCondition boolCondition, int intCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition.check();
+            this.intCondition = intCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Executes this script starting from a given label and ending at the next break, using a given boolean and GlobalInt as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the boolean to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     */
+    public void runConditionalSection(String labelName, boolean boolCondition, GlobalInt intCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition;
+            this.intCondition = intCondition.check();
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
+     * Executes this script starting from a given label and ending at the next break, using a given AbstractCondition and GlobalInt as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param intCondition the GlobalInt to use as a switch
+     */
+    public void runConditionalSection(String labelName, AbstractCondition boolCondition, GlobalInt intCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition.check();
+            this.intCondition = intCondition.check();
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
      * Executes this script from the cursor until the next break, using a given boolean and String as conditional switches
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param strCondition the String to use as a switch
      */
     public void runConditionalSection(boolean boolCondition, String strCondition) {
@@ -369,9 +549,20 @@ public class Script {
     }
 
     /**
+     * Executes this script from the cursor until the next break, using a given AbstractCondition and String as conditional switches
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(AbstractCondition boolCondition, String strCondition) {
+        this.boolCondition = boolCondition.check();
+        this.strCondition = strCondition;
+        this.runSection();
+    }
+
+    /**
      * Executes this script starting from a given label and ending at the next break, using a given boolean and String as conditional switches
      * @param labelName the name of the label to start executing at
-     * @param boolCondition the boolean condition to use as a switch
+     * @param boolCondition the boolean to use as a switch
      * @param strCondition the String to use as a switch
      */
     public void runConditionalSection(String labelName, boolean boolCondition, String strCondition) {
@@ -386,12 +577,40 @@ public class Script {
     }
 
     /**
+     * Executes this script starting from a given label and ending at the next break, using a given AbstractCondition and String as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param boolCondition the AbstractCondition to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(String labelName, AbstractCondition boolCondition, String strCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.boolCondition = boolCondition.check();
+            this.strCondition = strCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
      * Executes this script from the cursor until the next break, using a given int and String as conditional switches
      * @param intCondition the int to use as a switch
      * @param strCondition the String to use as a switch
      */
     public void runConditionalSection(int intCondition, String strCondition) {
         this.intCondition = intCondition;
+        this.strCondition = strCondition;
+        this.runSection();
+    }
+
+    /**
+     * Executes this script from the cursor until the next break, using a given GlobalInt and String as conditional switches
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(GlobalInt intCondition, String strCondition) {
+        this.intCondition = intCondition.check();
         this.strCondition = strCondition;
         this.runSection();
     }
@@ -414,8 +633,25 @@ public class Script {
     }
 
     /**
+     * Executes this script starting from a given label and ending at the next break, using a given GlobalInt and String as conditional switches
+     * @param labelName the name of the label to start executing at
+     * @param intCondition the GlobalInt to use as a switch
+     * @param strCondition the String to use as a switch
+     */
+    public void runConditionalSection(String labelName, GlobalInt intCondition, String strCondition) {
+        try {
+            this.cursor = this.getLabelIndex(labelName);
+            this.intCondition = intCondition.check();
+            this.strCondition = strCondition;
+            this.runSection();
+        } catch (IllegalArgumentException e) {
+            System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
+        }
+    }
+
+    /**
      * Executes this script from the cursor until the next break, using a given boolean as a conditional switch
-     * @param condition the boolean condition to use as a switch
+     * @param condition the boolean to use as a switch
      */
     public void runConditionalSection(boolean condition) {
         this.boolCondition = condition;
@@ -425,7 +661,7 @@ public class Script {
     /**
      * Executes this script starting from a given label and ending at the next break, using a given boolean as a conditional switch
      * @param labelName the name of the label to start executing at
-     * @param condition the boolean condition to use as a switch
+     * @param condition the boolean to use as a switch
      */
     public void runConditionalSection(String labelName, boolean condition) {
         try {
