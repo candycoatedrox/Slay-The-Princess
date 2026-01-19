@@ -86,3 +86,7 @@ n You don't need *me* to tell you that it isn't --
 n ... oh. /// slow
 linebreak
 n Oh... no. /// slow
+
+label replaceTest
+linebreak
+cheated [string] is my least favorite person on this ENTIRE earth.

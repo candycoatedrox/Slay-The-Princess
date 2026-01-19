@@ -2098,6 +2098,12 @@ public class Script {
             }
         }
 
+        line = line.replace("[string]", this.strCondition);
+
+        // find all instances of the form [XXXXX/YYYYY] in the line
+        // REGEX: \[(.*)\/(.*)\]
+        // replace with XXXXX if boolean is true or YYYYY if false
+
         if (v == null) {
             if (characterID.equals("t") || characterID.equals("truth")) {
                 parser.printDialogueLine(line, isInterrupted);
@@ -2151,8 +2157,9 @@ public class Script {
         }
 
         //manager.toggleAutoAdvance();
-        //manager.toggleSlowPrint();
-        script.runSection("heaTest");
+        manager.toggleSlowPrint();
+        script.runConditionalSection("replaceTest", "Contrarian");
+        script.runConditionalSection("replaceTest", "Opportunist");
     }
 
 }
@@ -2241,6 +2248,9 @@ Different functions a script can perform:
   - [character] Dialogue line goes here
   - [character] Dialogue line goes here /// [modifiers]
         The first word specifies the ID of the speaking character, then anything after that is considered the actual dialogue line.
+
+        If a dialogue line includes "[string]", it will be replaced with the String condition given in runConditionalSection().
+        Beware of using this trick without giving the Script a String condition!
 
         Exclusive modifiers:
           - checkvoice
