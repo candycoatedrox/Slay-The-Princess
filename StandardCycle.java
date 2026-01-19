@@ -1715,7 +1715,6 @@ public abstract class StandardCycle extends Cycle {
                 mainScript.runSection("bGrey");
                 break;
             case HAPPY:
-            case HAPPYDRY:
                 mainScript.runSection("happy");
                 break;
         }

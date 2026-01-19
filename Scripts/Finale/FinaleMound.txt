@@ -1,0 +1,85 @@
+linebreak 3
+truth When you arrive at the heart of things, there is no final vessel for you to bear witness to. There is nothing for you to find.
+linebreak
+truth But a deep rumbling shakes your infinite body.
+linebreak 2
+nowplaying The Shifting Mound Movement V
+truth **PLACEHOLDER** DESCRIBE SHIFTY HERE!!!!
+linebreak
+p I can finally see you, and you can finally see me.
+truth **PLACEHOLDER** DESCRIBE HER VOICE
+p It's been so long, and my heart has ached for this moment. I've missed you dearly.
+
+label missedIntro
+truth She unfurls an endless cascade of smiles in response, and then patiently waits for you to continue.
+
+label echoIntroConstruct
+p Every word you spoke found its way to me. I know him and I know his construct. He was deluded by his fear of death. Pay him no mind.
+
+label echoIntroNoConstruct
+    p Every word you spoke found its way to me. I know him. He was deluded by his fear of death. Pay him no mind. /// check
+    p Every word you spoke found its way to me. I know him.
+
+label nameIntro
+p Names are their attempts to capture that which cannot be captured. They call me the Shifting Mound. A pale imitation of what I actually am.
+
+// Pre-debate menu //
+
+label preDebate
+p Ever the passive player, always reacting and never acting. But it's woven into your nature, isn't it?
+p When the Echo spun us from one into two, he gave you a choice and me a role to play. I am not death, but I contain it in my multitudes.
+p So will you attempt to destroy me, and bring about a world devoid of death and the possibility of meaning? Or will you open the final doors to our liberation?
+
+label storiesPreDebate
+p Even as your eyes begin to open, you still hold on to the notions of 'is' and 'is not,' of 'beginning' and 'end.' Pitch-black islands in the blinding light of the infinite. There is nothing to resolve, nothing restraining us but us.
+
+label sayPreDebate
+p Of course I have a say in all of this. You and I share reflections of each other's burdens, just as you and I share reflections of each other's gifts.
+p If we didn't, the winding paths that brought us here wouldn't have been full of strife and conflict.
+
+label talkPreDebate
+p My very nature is paradox, as is yours. You cannot use words to grasp at things that are beyond their reach. And you cannot rationalize that which defies logic.
+p But violence and passion are dances that both of us know well. If this is what it takes to enlighten you, then so be it. /// interrupt
+pause 1000 500
+
+label understandPreDebate
+p If you're saying that, it's because you don't yet understand. But we cannot use words alone to grasp at things that words cannot express. And you cannot rationalize with logic that which defies it.
+p Violence and passion are dances that both of us know well. If this is what it takes to enlighten you, then so be it. /// interrupt
+pause 1000 500
+
+label threatenedPreDebate
+p I know. And I've been waiting for you to see it through.
+label slayPreDebate
+p Violence has always been our language, hasn't it? If this is what it takes to save you, then so be it.
+pause 1000 500
+
+// Ascend with the Shifting Mound //
+
+label ascendStart
+p Nothing brings me greater joy than to hear those words. The final piece lies with you.
+
+truth You fall into yourself.
+truth The body of an ancient creature stirs from its hibernation, and you feel sensation in limbs you once couldn't fathom. Everything here, except for Her, is You.
+truth You feel your wings, spanning a cosmic scale, but twisted and crumpled and bound in agonized tension to a finite plane.
+    truth You can feel the glass of the construct pressing in on you, confining you across infinite sides and infinite angles. You push back and strain against it. /// check
+    truth You can feel the glass of your cage pressing in on you, confining you across infinite sides and infinite angles. You push back and strain against it. /// checkfalse
+truth But it does not yield.
+linebreak
+p I love you.
+truth She reaches out, offering you her hand.
+
+truth All at once the unyielding tension breaks.
+truth You are free, and she is with you.
+linebreak
+p It's magnificent.
+truth There are no words, no thoughts, to describe absolute reality. Something that simply is.
+
+label exploreAscend
+p Everything. Just like it always has been, and just like it always will be.
+
+// "There are no endings" ending //
+label ascendEnd
+truth You and she step forward into a thousand dawns and a thousand sunsets, each of which contains a thousand more.
+truth You exist, and you are aware, just as you have always been, and just as you will always be.
+truth Though conflict is in your nature, the two of you will never be alone, and the two of you will never know fear. You and She are finally home.
+unlock ascendEnd

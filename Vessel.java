@@ -31,8 +31,7 @@ public enum Vessel {
     OPENCAGE(Chapter.CAGE, "An Open Door", "cageClaim"),
     DROWNEDGREY("The Drowned Grey", Chapter.GREY, "The Grey (Water)", "dGreyClaim"),
     BURNEDGREY("The Burned Grey", Chapter.GREY, "The Grey (Fire)", "bGreyClaim"),
-    HAPPY(Chapter.HAPPY, "What Remains After the Fire", "happyClaim"),
-    HAPPYDRY(Chapter.HAPPY, "What Remains After the Fire", "happyClaim");
+    HAPPY(Chapter.HAPPY, "What Remains After the Fire", "happyClaim");
 
     private final String name;
     private final Chapter fromChapter;

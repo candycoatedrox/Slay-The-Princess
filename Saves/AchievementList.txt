@@ -23,8 +23,8 @@ abort4 / Acceptance / This is it.
 oblivion / Just as you once were nothing... / So you have become nothing once again.
 
 --- The End of Everything
-ascendEarly / There are no endings / Only new beginnings.
-ascendLate / Through conflict / We carve meaning.
+ascendEnd / There are no endings / Only new beginnings.
+ascendDebate / Through conflict / We carve meaning.
 resetEnd / You're on a path in the woods... / And at the end of that path is a cabin.
 slayEnd / A new and unending dawn / Slay the Princess.
 slayOopsEnd / A new and unending dawn, and everyone hates you / Slay the Princess, and make some enemies along the way.

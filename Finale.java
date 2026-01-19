@@ -22,15 +22,16 @@ public class Finale extends Cycle {
     private final Condition mirrorDeathReveal = new Condition();
     private final Condition mirrorConstructReveal = new Condition();
     private final Condition mirrorConstructExplained = new Condition();
-    private final Condition mirrorMoundReveal = new Condition();
     private final Condition mirrorWorseThanDeath = new Condition();
+
+    // Flags for the Shifting Mound
+    private boolean moundNameKnown = false;
+    private boolean statedGoalSlay = false;
+    private boolean offerYNW = false;
 
     // Counters used during the debate
     private int ynwArguments = 0; // Number of times the player has selected arguments tied to the "Your New World" ending during the debate
     private int silentCount = 0; // Number of the times the player has remained silent during the debate
-
-    private boolean statedGoalSlay = false;
-    private boolean offerYNW = false;
 
     // --- CONSTRUCTOR ---
 
@@ -260,7 +261,7 @@ public class Finale extends Cycle {
                     return "SlayPrincessDeadFail";
                 } else if (!this.withPrincess) {
                     return "SlayNoPrincessFail";
-                } else if (!this.hasBlade) {
+                } else if (this.currentLocation != GameLocation.HILL && !this.hasBlade) {
                     return "SlayPrincessNoBladeFail";
                 } else if (!this.canSlayPrincess) {
                     return "SlayPrincessFail";
@@ -746,9 +747,7 @@ public class Finale extends Cycle {
     @Override
     public ChapterEnding runChapter() {
         this.finalMirror();
-        
-        // PLACEHOLDER
-        return this.openingConversation();
+        return this.moundStart();
     }
 
     // --- SCENES ---
@@ -772,7 +771,8 @@ public class Finale extends Cycle {
         InverseCondition noConstructExplain = mirrorConstructExplained.getInverse();
         Condition versionsComment = new Condition();
         Condition creationReveal = new Condition();
-        InverseCondition noMoundReveal = mirrorMoundReveal.getInverse();
+        Condition moundReveal = new Condition();
+        InverseCondition noMoundReveal = moundReveal.getInverse();
         Condition longQuietReveal = new Condition();
         InverseCondition noLongQuietReveal = longQuietReveal.getInverse();
         OrCondition canDeathComment = new OrCondition(this.mirrorDeathReveal, longQuietReveal);
@@ -800,21 +800,21 @@ public class Finale extends Cycle {
         Condition deludedComment = new Condition();
         Condition narratorGodAsk = new Condition();
         InverseCondition noNarratorGodAsk = narratorGodAsk.getInverse();
-        OrCondition canHubrisComment = new OrCondition(this.mirrorConstructExplained, this.mirrorMoundReveal, deludedComment);
+        OrCondition canHubrisComment = new OrCondition(this.mirrorConstructExplained, moundReveal, deludedComment);
 
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "happy", "(Explore) \"In one of my lives, you doubted yourself. You thought that all of this was wrong.\"", manager.hasClaimedVessel(Vessel.HAPPY), new OrCondition(longQuietReveal, questGiven, creationReveal)));
-        activeMenu.add(new Option(this.manager, "torture", "(Explore) \"If you made us, then I want you to know that this has been torture.\"", this.mirrorMoundReveal, longQuietReveal));
-        activeMenu.add(new Option(this.manager, "alone", "(Explore) \"If I destroy Her, won't I be alone?\"", this.mirrorMoundReveal, questGiven));
-        activeMenu.add(new Option(this.manager, "whyKill", "(Explore) \"Why would you want me to destroy the concept of transformation?\"", this.mirrorMoundReveal, noLongQuietReveal, noDeathReveal));
-        activeMenu.add(new Option(this.manager, "worseDeathA", "(Explore) \"If I destroy Her, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, this.mirrorMoundReveal, noWorseThanDeath, whyKillAsk));
-        activeMenu.add(new Option(this.manager, "worseDeathB", "(Explore) \"If you want me to destroy the concept of transformation, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, this.mirrorMoundReveal, noWorseThanDeath, noWhyKillAsk));
+        activeMenu.add(new Option(this.manager, "torture", "(Explore) \"If you made us, then I want you to know that this has been torture.\"", moundReveal, longQuietReveal));
+        activeMenu.add(new Option(this.manager, "alone", "(Explore) \"If I destroy Her, won't I be alone?\"", moundReveal, questGiven));
+        activeMenu.add(new Option(this.manager, "whyKill", "(Explore) \"Why would you want me to destroy the concept of transformation?\"", moundReveal, noLongQuietReveal, noDeathReveal));
+        activeMenu.add(new Option(this.manager, "worseDeathA", "(Explore) \"If I destroy Her, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, moundReveal, noWorseThanDeath, whyKillAsk));
+        activeMenu.add(new Option(this.manager, "worseDeathB", "(Explore) \"If you want me to destroy the concept of transformation, how is that existence any better than death? Or even different from death at all? Honestly, it feels worse.\"", this.mirrorDeathReveal, moundReveal, noWorseThanDeath, noWhyKillAsk));
         activeMenu.add(new Option(this.manager, "deluded", "(Explore) \"You're delusional.\"", this.mirrorWorseThanDeath));
         activeMenu.add(new Option(this.manager, "hubris", "(Explore) \"Do you have anything to say for yourself? For all this hubris?\"", canHubrisComment));
         activeMenu.add(new Option(this.manager, "deserve", "(Explore) \"After everything you've done to us, do you think anyone deserves to live?\"", canHubrisComment));
-        activeMenu.add(new Option(this.manager, "slayWorse", "(Explore) \"Do you know that things won't just be worse if I destroy Her?\"", this.mirrorMoundReveal, noSlayWorseComment));
-        activeMenu.add(new Option(this.manager, "postPrincess", "(Explore) \"What would it be like to live in a world without Her?\"", this.mirrorMoundReveal));
-        activeMenu.add(new Option(this.manager, "anyoneKnow", "(Explore) \"Does anyone else know about this? Does anyone else know about *us?*\"", this.mirrorMoundReveal, longQuietReveal, noPeopleAsk));
+        activeMenu.add(new Option(this.manager, "slayWorse", "(Explore) \"Do you know that things won't just be worse if I destroy Her?\"", moundReveal, noSlayWorseComment));
+        activeMenu.add(new Option(this.manager, "postPrincess", "(Explore) \"What would it be like to live in a world without Her?\"", moundReveal));
+        activeMenu.add(new Option(this.manager, "anyoneKnow", "(Explore) \"Does anyone else know about this? Does anyone else know about *us?*\"", moundReveal, longQuietReveal, noPeopleAsk));
         activeMenu.add(new Option(this.manager, "godReject", "(Explore) \"I don't want to be a god. I want to be me.\"", longQuietReveal, noGodComment));
         activeMenu.add(new Option(this.manager, "godAccept", "(Explore) \"A god. I always knew I was special.\"", longQuietReveal, noGodComment));
         activeMenu.add(new Option(this.manager, "task", "(Explore) \"I was made to do this single task? Who made me? What am I?\"", noLongQuietReveal, noEchoReveal, questGiven));
@@ -831,24 +831,24 @@ public class Finale extends Cycle {
         activeMenu.add(new Option(this.manager, "versions", "(Explore) \"'Versions of you.' You've said that before. So I really was meeting different you's.\"", noMultiNarratorReveal, versionsComment));
         activeMenu.add(new Option(this.manager, "wantSlay", "(Explore) \"You're the one who wanted me to slay the Princess. Why?\"", noNarratorReveal, noDeathReveal));
         activeMenu.add(new Option(this.manager, "whatIsShe", "(Explore) \"You said She contains death. What is She?\"", this.mirrorDeathReveal, noMoundReveal));
-        activeMenu.add(new Option(this.manager, "whyHide", "(Explore) \"Why couldn't you have told me all of this from the start? I would have helped you destroy Her.\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "whyHide", "(Explore) \"Why couldn't you have told me all of this from the start? I would have helped you destroy Her.\"", moundReveal));
         activeMenu.add(new Option(this.manager, "living", "(Explore) \"'I don't work the way a living being does? Not anymore?!' Am I not a living being?\"", activeMenu.get("whyHide"), intrusiveAsk));
         activeMenu.add(new Option(this.manager, "intrusiveA", "(Explore) \"What do you mean a single intrusive thought could have instantly ended the world?\"", activeMenu.get("whyHide"), noIntrusiveAsk));
         activeMenu.add(new Option(this.manager, "intrusiveB", "(Explore) \"Doesn't telling me this now mean that an intrusive thought could still end the world?\"", activeMenu.get("whyHide"), noIntrusiveAsk));
-        activeMenu.add(new Option(this.manager, "will", "(Explore) \"If She's capable of becoming whatever people believe Her to be, can't I just... will Her into something small?\"", this.mirrorMoundReveal, noIntrusiveAsk));
+        activeMenu.add(new Option(this.manager, "will", "(Explore) \"If She's capable of becoming whatever people believe Her to be, can't I just... will Her into something small?\"", moundReveal, noIntrusiveAsk));
         activeMenu.add(new Option(this.manager, "same", "(Explore) \"I've met you many times. Have you been the same you all along?\"", noMultiNarratorReveal));
         activeMenu.add(new Option(this.manager, "gaslight", "(Explore) \"So you do know about the looping. So many of the times I met you, you denied it as even being a possibility. Why did you lie to me?\"", this.mirrorConstructExplained));
         activeMenu.add(new Option(this.manager, "whatAmI", "(Explore) \"If you made me, what am I?\"", noLongQuietReveal, echoReveal));
         activeMenu.add(new Option(this.manager, "godAsk", "(Explore) \"Are you a god? Or... were you a god?\"", longQuietReveal, noNarratorGodAsk));
         activeMenu.add(new Option(this.manager, "seeThis", "(Explore) \"I wasn't supposed to see all this, was I?\""));
         activeMenu.add(new Option(this.manager, "needToKnow", "(Explore) \"If you want me to slay Her, I need to know what She actually is.\"", seeThisAsk, noMoundReveal));
-        activeMenu.add(new Option(this.manager, "howDie", "(Explore) \"How did you die?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "howDie", "(Explore) \"How did you die?\"", moundReveal));
         activeMenu.add(new Option(this.manager, "whatPrincess", "(Explore) \"What is the Princess? Did you make Her too?\"", creationReveal, noMoundReveal));
-        activeMenu.add(new Option(this.manager, "whyPrincessA", "(Explore) \"Why did you make Her a Princess?\"", this.mirrorMoundReveal, noWhyPrincessReveal));
+        activeMenu.add(new Option(this.manager, "whyPrincessA", "(Explore) \"Why did you make Her a Princess?\"", moundReveal, noWhyPrincessReveal));
         activeMenu.add(new Option(this.manager, "whyPrincess2", "(Explore) \"I chose to make Her a princess? Why couldn't I have made things easier on myself and picked something small or weak like an ant or a slice of bread?\"", activeMenu.get("whyPrincessA")));
-        activeMenu.add(new Option(this.manager, "whyPrincessB", "(Explore) \"Of all things, why is She a Princess? Why couldn't She be an ant or a slice of soggy bread?\"", this.mirrorMoundReveal, noWhyPrincessReveal));
-        activeMenu.add(new Option(this.manager, "abstract", "(Explore) \"How am I supposed to destroy an abstract concept?\"", this.mirrorMoundReveal));
-        activeMenu.add(new Option(this.manager, "stall", "(Explore) \"What if neither of us leave this place? Does that work? Can we just stay here together and leave the people out there alone?\"", this.mirrorMoundReveal));
+        activeMenu.add(new Option(this.manager, "whyPrincessB", "(Explore) \"Of all things, why is She a Princess? Why couldn't She be an ant or a slice of soggy bread?\"", moundReveal, noWhyPrincessReveal));
+        activeMenu.add(new Option(this.manager, "abstract", "(Explore) \"How am I supposed to destroy an abstract concept?\"", moundReveal));
+        activeMenu.add(new Option(this.manager, "stall", "(Explore) \"What if neither of us leave this place? Does that work? Can we just stay here together and leave the people out there alone?\"", moundReveal));
         activeMenu.add(new Option(this.manager, "stall2", "(Explore) \"Is there a difference between leaving this place and staying here?\"", activeMenu.get("stall")));
         activeMenu.add(new Option(this.manager, "peopleKnow", "(Explore) \"The people out there beyond the walls of the construct... Do *they* know about this? Do they know what you want me to do to them?\"", this.mirrorConstructReveal, noPeopleAsk));
         activeMenu.add(new Option(this.manager, "where", "(Explore) \"What is this place? Where are we?\"", noConstructReveal, noConstructExplain));
@@ -979,7 +979,7 @@ public class Finale extends Cycle {
 
                 case "whatIsShe":
                     revealCount.increment();
-                    mirrorMoundReveal.set();
+                    moundReveal.set();
                     mainScript.runConditionalSection("whatIsShe", questGiven);
                     break;
 
@@ -1029,7 +1029,7 @@ public class Finale extends Cycle {
                 case "whatPrincess":
                     revealCount.increment();
                     mirrorConstructReveal.set();
-                    mirrorMoundReveal.set();
+                    moundReveal.set();
                     mainScript.runSection("moundReveal");
 
                     if (questGiven.check()) {
@@ -1144,6 +1144,8 @@ public class Finale extends Cycle {
             mainScript.runConditionalSection("finalBreak", longQuietReveal);
         }
 
+        this.moundNameKnown = moundReveal.check();
+
         this.currentLocation = GameLocation.PATH;
         this.activeMenu = new OptionsMenu();
         activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin, one last time.]"));
@@ -1167,60 +1169,161 @@ public class Finale extends Cycle {
      * Runs the intiial conversation with the Shifting Mound
      * @return the ending the player reaches
      */
-    private ChapterEnding openingConversation() {
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        parser.printDialogueLine("You find yourself in The Long Quiet once again.");
+    private ChapterEnding moundStart() {
+        this.mainScript = new Script(this.manager, this.parser, "Finale/FinaleMound");
 
-        this.activeMenu = new OptionsMenu();
-        activeMenu.add(new Option(this.manager, "proceed", "[Proceed to the cabin.]"));
+        this.currentLocation = GameLocation.HILL;
+        this.withPrincess = true;
+        mainScript.runSection();
+        manager.unlock(Chapter.ENDOFEVERYTHING);
+
+        Condition firstChoice = new Condition();
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "missed", "(Explore) \"I've missed you too.\"", firstChoice));
+        activeMenu.add(new Option(this.manager, "echo", "(Explore) \"Do you know about the Echo? Did you hear our conversation?\"", this.mirrorNotSmashed));
+        activeMenu.add(new Option(this.manager, "name", "(Explore) \"I'm the Long Quiet. But I don't really know what that means.\""));
+        activeMenu.add(new Option(this.manager, "now", "\"What happens now?\""));
 
         this.repeatActiveMenu = true;
-        while (this.repeatActiveMenu) {
+        while (repeatActiveMenu) {
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "echo":
+                    if (mirrorConstructExplained.check()) {
+                        mainScript.runSection("echoIntroConstruct");
+                    } else {
+                        mainScript.runConditionalSection("echoIntroNoConstruct", this.mirrorDeathReveal);
+                    }
 
-            switch (this.activeOutcome) {
-                case "cGoHill":
-                case "proceed":
+                    break;
+
+                case "now":
                     this.repeatActiveMenu = false;
                     break;
 
-                case "cGoLeave":
-                case "cGoFail":
-                case "cEnterFail":
-                case "cLeaveFail":
-                    parser.printDialogueLine("There is nowhere else for you to go.");
-                    break;
-                    
-                default:
-                    this.giveDefaultFailResponse(this.activeOutcome);
+                case "name": this.moundNameKnown = true;
+                default: mainScript.runSection(activeOutcome + "Intro");
             }
         }
 
+        // "What happens now?"
+        mainScript.runSection("preDebate");
 
-        manager.unlock(Chapter.ENDOFEVERYTHING);
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "stories", "(Explore) \"There's so many stories we've left unfinished. Can we really just leave?\""));
+        activeMenu.add(new Option(this.manager, "say", "(Explore) \"Don't you have a say in all of this? Why is this all falling on me?\""));
+        activeMenu.add(new Option(this.manager, "talk", "(Explore) \"Let's talk this through. I still have so many questions and I need answers before I can make a choice.\""));
+        activeMenu.add(new Option(this.manager, "world", "(Explore) \"If I let you out, an entire world ends for good. I can't do that.\""));
+        activeMenu.add(new Option(this.manager, "point", "(Explore) \"If you were always going to become this, then what was the point of me doing anything? Did it even matter what roads I walked if all of them would have led to this moment?\""));
+        activeMenu.add(new Option(this.manager, "another", "(Explore) \"There has to be another way. This can't just come down to me either destroying you or letting you out. I won't do it.\""));
+        activeMenu.add(new Option(this.manager, "threatened", "\"I told you what was going to happen when we reached this point.\" [Slay the Princess.]", manager.threatenedMound()));
+        activeMenu.add(new Option(this.manager, "slay", "[Slay the Princess.]"));
+        activeMenu.add(new Option(this.manager, "ascend", "\"I think it's time for us to leave this place, but I don't know how to leave or where to go.\""));
 
+        this.canSlayPrincess = true;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            this.activeOutcome = parser.promptOptionsMenu(activeMenu);
+            switch (activeOutcome) {
+                case "stories":
+                case "say":
+                    mainScript.runSection(activeOutcome + "PreDebate");
+                    break;
 
+                case "talk":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("talkPreDebate");
+                    break;
 
+                case "world":
+                case "point":
+                case "another":
+                    this.repeatActiveMenu = false;
+                    mainScript.runSection("understandPreDebate");
+                    break;
 
+                case "threatened":
+                    this.repeatActiveMenu = false;
+                    this.statedGoalSlay = true;
+                    mainScript.runSection("threatenedPreDebate");
+                    break;
 
+                case "cSlayPrincess":
+                case "slay":
+                    this.repeatActiveMenu = false;
+                    this.statedGoalSlay = true;
+                    mainScript.runSection("slayPreDebate");
+                    break;
 
+                case "ascend":
+                    return this.moundAscend(false);
 
+                default: this.giveDefaultFailResponse();
+            }
+        }
 
+        // Trigger the debate
+        return this.moundDebate();
+    }
 
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
+    /**
+     * The player chooses to ascend with the Shifting Mound
+     * @param fromDebate whether the player initiated the debate with the Shifting Mound
+     * @return the ending reached by the player
+     */
+    private ChapterEnding moundAscend(boolean fromDebate) {
+        if (fromDebate) manager.setNowPlaying("The Shifting Mound Movement V");
+        mainScript.runSection("ascendStart");
 
-        // PLACEHOLDER
-        return this.debate();
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "free", "[Free yourself.]"));
+        parser.promptOptionsMenu(activeMenu);
+        mainScript.runConditionalSection(this.mirrorConstructReveal);
+
+        this.activeMenu = new OptionsMenu();
+        activeMenu.add(new Option(this.manager, "hand", "[Take her hand.]"));
+
+        this.canTakeHand = true;
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "cTakeHand":
+                case "hand":
+                    this.repeatActiveMenu = false;
+                    break;
+
+                default: this.giveDefaultFailResponse();
+            }
+        }
+
+        // Take her hand
+        mainScript.runSection();
+
+        this.activeMenu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "explore", "(Explore) \"What happens now?\""));
+        activeMenu.add(new Option(this.manager, "step", "[Step into the Infinite.]"));
+
+        this.repeatActiveMenu = true;
+        while (repeatActiveMenu) {
+            switch (parser.promptOptionsMenu(activeMenu)) {
+                case "explore":
+                    mainScript.runSection("exploreAscend");
+                    break;
+                
+                case "step":
+                    this.repeatActiveMenu = false;
+                    break;
+            }
+        }
+
+        // Step into the Infinite
+        mainScript.runSection("ascendEnd");
+
+        if (fromDebate) {
+            return ChapterEnding.THROUGHCONFLICT;
+        } else {
+            return ChapterEnding.NOENDINGS;
+        }
     }
 
     /**
@@ -1280,29 +1383,15 @@ public class Finale extends Cycle {
         // options always available: surrender (not available first Vessel), silent
 
         return menu;
-
-
-
-
-
-
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
     }
 
     /**
      * Runs the debate with the Shifting Mound
      * @return the ending the player reaches
      */
-    private ChapterEnding debate() {
+    private ChapterEnding moundDebate() {
         this.secondaryScript = new Script(this.manager, this.parser, "Finale/FinaleDebate");
+
         this.activeMenu = this.createDebateMenu();
         Vessel currentVessel;
         ChapterEnding currentEnding;
@@ -1315,7 +1404,7 @@ public class Finale extends Cycle {
             currentVessel = this.vessels[i];
             currentEnding = this.endings[i];
 
-            this.debateShiftingMoundArgument(currentVessel, currentEnding);
+            this.moundDebateRunArgument(currentVessel, currentEnding);
 
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
@@ -1337,7 +1426,7 @@ public class Finale extends Cycle {
                 case "vessel9":
                 case "vessel10":
                     vesselOption = activeOutcome.substring(6);
-                    this.vesselArgumentResponse(currentVessel, vesselOption);
+                    this.moundVesselArgumentResponse(currentVessel, vesselOption);
                     break;
 
                 case "appeal1":
@@ -1410,7 +1499,7 @@ public class Finale extends Cycle {
      * Runs the Shifting Mound's argument for a given Vessel and ChapterEnding and configures the OptionsMenu accordingly to prepare for the player's response
      * @param ending the relevant Chapter ending reached by the player
      */
-    private void debateShiftingMoundArgument(Vessel vessel, ChapterEnding ending) {
+    private void moundDebateRunArgument(Vessel vessel, ChapterEnding ending) {
         switch (vessel) {
             // 1) Run Shifting Mound argument
             // 2) Rename Your New World + vessel-specific arguments
@@ -1437,7 +1526,7 @@ public class Finale extends Cycle {
         */
     }
 
-    private void vesselArgumentResponse(Vessel vessel, String nArgument) {
+    private void moundVesselArgumentResponse(Vessel vessel, String nArgument) {
         // redirect to script label [vessel][nArgument]
 
         String vesselID = "";

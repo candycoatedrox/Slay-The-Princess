@@ -178,7 +178,7 @@ public enum ChapterEnding {
     // Happily Ever After
     IMEANTIT("happyDance", true, Vessel.HAPPY, "I Meant It", 1, 2, false),
     LEFTCABIN("happyFree", Vessel.HAPPY, 1, 1, false),
-    FINALLYOVER("happySlay", true, Vessel.HAPPYDRY, 0, 1, true),
+    FINALLYOVER("happySlay", true, Vessel.HAPPY, 0, 1, true),
     DONTLETITGOOUT("happyStay", true, Vessel.HAPPY, 0, -1, false),
 
     // Misc.
@@ -188,8 +188,8 @@ public enum ChapterEnding {
 
     // The End of Everything (full game endings)
     OBLIVION("oblivion", true),
-    NOENDINGS("ascendEarly", true),
-    THROUGHCONFLICT("ascendLate", true),
+    NOENDINGS("ascendEarly"),
+    THROUGHCONFLICT("ascendDebate"),
     PATHINTHEWOODS("resetEnd", true),
     NEWANDUNENDINGDAWN("slayEnd", true),
     ANDEVERYONEHATESYOU("slayOopsEnd", true),
