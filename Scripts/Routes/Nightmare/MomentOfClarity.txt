@@ -25,17 +25,17 @@ n Yes, obviously they're all wrong. What are you going to do about it?
 
 label howMany
 skeptic Many, many, *many, many* times.
-para It feels like we've been here forever, but it also feels like we've barely been here at all.
+para It feels like we've been here forever, but it also feels like... we've barely been here at all.
 broken It doesn't matter.
 oppo Yes. We just have to do what she says. And then everything will be fine.
 n It won't.
-oppo It will be for us. She said so.
+oppo It will be for us. She *said so.*
 n You're part of everything. If things aren't fine for everything, they won't be fine for you.
-contra There's no difference between Fine and Not Fine, it just goes on and on.
+contra There's no difference between Fine and Not Fine, it just goes on and on!
 
 label decider
 contra What does here even mean, if you really think about it?
-stubborn SHUT UP`. You were here.
+stubborn SHUT UP. You were here.
 broken Every single time.
 oppo You did your best, really. There's just a pecking order.
 smitten And our cruel and beautiful goddess sits atop it`, right where she's always belonged.
@@ -43,12 +43,12 @@ hero You're lucky`. What I would give to be able to forget.
 cold I've tried to keep them numb`, but they're all too soft`. A shame, really.
 
 label notMe
-n Don't think about that too hard. All it will do is weaken your resolve and make it that much harder for you to slay her.
-broken Maybe you're shattered in your own way.
+n Don't think about that too hard. All it will do is weaken your resolve and make it that much harder for you to slay her!
+broken Maybe you're shattered, in your own way.
 skeptic Are you your memories`, or are you the one perceiving the present moment?
 stubborn Ugh. Here you go "philosophizing" again. It never goes anywhere.
 contra Yes, this is *far* from the first time you've asked us about consciousness. "Who am I?"; "What am I?"; "What *is* 'I?'" Who even cares?
-oppo They're good questions. Great questions, even. But they don't have any answers.
+oppo They're good questions. *Great* questions, even. But they don't have any answers.
 hunted And they all just end in quivering torment.
 cheated It doesn't matter what we do. Because we always find her. And if we don't find her, she always finds us.
 broken And then she smashes us into smaller pieces.
@@ -56,7 +56,7 @@ cold If you all just stopped feeling we could have been done with this ages ago.
 n Your thoughts are far too scattered to rein back in. Your only option is to silence them.
 
 label dontGo
-contra We've *tried* that...!
+contra We've triiiied that...!
 hero It doesn't work.
 smitten Our heart's *always* brought us back to her.
 cheated The deck is stacked.
@@ -64,7 +64,7 @@ hunted So many paths and they're all circles.
 
 label sense
 n There's nothing worth making sense of. They're clearly all traumatized.
-skeptic And yet... you aren't`. We break apart and you stay the same.
+skeptic And yet... you aren't`. We break apart`, and you stay the same.
 cheated Yeah, what's your secret? Why can you break the rules when we can't?
 
 label disjointed
@@ -78,12 +78,12 @@ broken He's worse than her.
 label hillApproach
 n You slowly make your way through the umbral forest, bumping against unseen trees as you grasp through the darkness for a way forward.
 n But eventually, you do make it to the cabin, or rather, you make it to the place a cabin should have been. Instead, all you find is an empty hill.
-n No, no. This isn't right. There's a cabin there. There's always supposed to be a cabin there.
+n No, no. This isn't right. There's a cabin there. There's always supposed to be a cabin there!
 truth As he speaks, four walls and a roof appear at the top of the hill. They don't quite make the shape of a cabin, floating as if they aren't quite sure how they're meant to fit together.
 hero *Don't* ask him about the mirror.
 skeptic He always says he never sees it.
 para He *always* lies!
-cheated And he always makes it gone.
+cheated And he *always* makes it gone.
 n Stay focused. You still have a job to do, and it's best not to be distracted by fraying thoughts. There is no mirror. You know that as well as I do.
 hunted She's still here. Buried deep inside the earth.
 cold Just walk up the hill. You always give too much space to the others`. It's why you always lose.
@@ -96,18 +96,18 @@ hero Or you could just give up.
 // "Cabin" dialogue //
 
 label cabinApproach
-n You walk up the hill, hesitating just beyond the bounds of "the cabin."
+n You walk up the hill, hesitating just beyond the bounds of... "the cabin."
 skeptic The cabin that isn't there.
 smitten You've *got* to clean the mirror, haven't you? You've *got* to see what's in it!
-stubborn Smash it to pieces.
-broken She's on the other side`, and we have to let her out. It's the only way we can be free.
-para It's the only way we can have our thoughts back.
+stubborn Smash. It. To. Pieces.
+broken She's on the other side`, and we have to let her out. It's the only way we can be *free.*
+para It's the only way we can have our *thoughts* back.
 contra Just go around it!
 cold Just do something`. It doesn't matter what.
 
 label proceed
 n ... proceed? Proceed to where? I'm afraid you're going to have to be a little more specific.
-    hero That's another new one`. How do you keep coming up with new things`? I hope this works better than nothing did. /// check
+    hero That's another new one`. How do you keep coming up with new things`? I hope this works better than... nothing did. /// check
     hero That's a new one`. Do you think it'll work? /// checkfalse
 oppo Of course it'll work. He always makes the best decisions. It's why he gets to make them!
 cold And it already has worked`. It's gone, don't you see?
@@ -134,7 +134,7 @@ n And closer.
     p I was having some fun! And I guess I wanted to see if I could melt you. /// noabandon
 n And closer.
 truth You can see more arms now. Three, then four, then five.
-    p You were gonna have to stop running eventually. /// abandoned
+    p You were going to have to stop running eventually. /// abandoned
     p Watching over me forever? That was so brave! /// noabandon
 n And closer.
     p Everything stops running eventually. /// abandoned
@@ -150,12 +150,13 @@ p I can even make you a little cage if you want! Gilded and everything!
 p Now don't pause. Don't try to resist. I've already molded you into what I need, and you lost your power so long ago, don't bother working yourself into a frenzy to get it back.
 n Do something! Do *anything* that isn't taking her hand!
 
-n You extend your hand to hers. For all her past cruelties, the moment feels gentle, tender even. I can't believe you just made me say that. I hate you.
+n You extend your hand to hers. For all her past cruelties, the moment feels... gentle`, tender even`. I can't believe you just made me say that. I *hate* you.
 truth As your hands meet, her mask finally shatters completely. The tiny shards of porcelain fade away into nothingness, revealing the endless void beneath.
 n The motion is difficult at first, as if something still resists your efforts, but then that resistance gives way, and it's over.
 p *Ahhhh.*
 quietcreep
 p And that's the end! I wonder what we're going to do next.
+truth The Princess, exhausted, slumps.
 p I didn't think I'd be so... tired.
 p Why is it so cold?
 claim end
@@ -175,7 +176,7 @@ broken She's gone.
 skeptic Yeah`. I can finally think again`. Almost.
 hero That mirror's back...
 contra What does that mean for us?
-cheated I'm sure it'll be whisked away just like her.
+cheated I'm sure it'll be whisked away just like her...
 hunted Maybe it won't be gone`. Things are *different* now, aren't they?
 para It doesn't seem like there's much else to do here.
 stubborn FINALLY. We can smash it.
@@ -192,7 +193,7 @@ label mirrorNotFirstVessel
 truth You step towards the mirror. Its secrets remain hidden. Its mysteries remain unresolved.
 label mirrorJoin
 hero Something tells me that this is the end of the line`, but I don't feel bad about it`. I'm ready.
-broken It feels okay.
+broken It feels... okay.
 para The fear's... gone.
 stubborn I'm done fighting.
 smitten My heart feels... quiet.
@@ -209,7 +210,7 @@ label nothing
 n You do... nothing? You can't just do nothing. You have to do something.
 hero That's... a new one`. Huh. Do you think it'll work?
 broken No`. Nothing ever works.
-oppo *Boo.* You're the worst one!
+oppo *Boooo.* You're the worst one!
 skeptic *He's* not the one who got us into this mess.
 para At least I keep you *breathing* around her.
 oppo See? That's why the sad one's the worst. The jumpy one *tries.*
@@ -219,7 +220,7 @@ stubborn *Great.*
 oppo And *that's* why you're not the top.
 skeptic I want to see what *nothing* does for us`. And right now all of you aren't letting nothing happen.
 cold Hopefully this stuffs all the rest of them someplace quiet`. You need me`, and you need to not have them.
-hunted He'll get you killed by himself.
+hunted He'll get you killed by himself...
 contra Oh, all of us have gotten *all the rest of us killed* at one point or another. That's hardly even a *concern* now.
 n As the little voices bicker amongst themselves, you do your best to stay still in the woods. It is difficult, and the more time you spend waiting, the harder it will be to sharpen your focus when you need it.
 smitten I wonder what we look like right now`. Are we standing? Sitting`? I like to think we have an air of dignity.

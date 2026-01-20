@@ -71,7 +71,7 @@ public enum ChapterEnding {
     HEARTRIPPER("spectreOffend", Chapter.WRAITH, Voice.CHEATED),
 
     // The Princess and the Dragon
-    PRINCESSANDDRAGON("dragonFuse", true, Vessel.PATD, 0, 1, false),
+    PRINCESSANDDRAGON("dragonFuse", true, Vessel.STENCILPATD, 0, 1, false),
     WHATONCEWASONE("dragonFree", true, Vessel.PATD, 1, 1, false),
     OPPORTUNISTATHEART("dragonLeave", true, Vessel.PATD, "The Life-Taker", 0, -1, true),
     
@@ -194,7 +194,7 @@ public enum ChapterEnding {
     NEWANDUNENDINGDAWN("slayEnd", true),
     ANDEVERYONEHATESYOU("slayOopsEnd", true),
     WHATHAPPENSNEXT("leaveEnd", true),
-    YOURNEWWORLD("yourNewWorld");
+    YOURNEWWORLD("qualifiesYNW");
 
     private final String id;
     private final String achievementID;
@@ -207,7 +207,7 @@ public enum ChapterEnding {
     private String playlistSong = "";
     private int freedom = 0;
     private int satisfaction = 0;
-    private boolean yourNewWorld;
+    private boolean qualifiesYNW;
 
     // --- CONSTRUCTORS ---
 
@@ -319,9 +319,9 @@ public enum ChapterEnding {
      * @param playlistSong the song the ending adds to the current playlist
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, String achievementID, Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
+    private ChapterEnding(String id, String achievementID, Vessel v, String playlistSong, int freedom, int satisfaction, boolean qualifiesYNW) {
         this.id = id;
         this.isFinal = true;
         this.achievementID = achievementID;
@@ -331,7 +331,7 @@ public enum ChapterEnding {
         this.playlistSong = playlistSong;
         this.freedom = freedom;
         this.satisfaction = satisfaction;
-        this.yourNewWorld = yourNewWorld;
+        this.qualifiesYNW = qualifiesYNW;
     }
 
     /**
@@ -342,9 +342,9 @@ public enum ChapterEnding {
      * @param playlistSong the song the ending adds to the current playlist
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, boolean hasAchievement, Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
+    private ChapterEnding(String id, boolean hasAchievement, Vessel v, String playlistSong, int freedom, int satisfaction, boolean qualifiesYNW) {
         this.id = id;
         this.isFinal = true;
         this.achievementID = (hasAchievement) ? id : "";
@@ -354,7 +354,7 @@ public enum ChapterEnding {
         this.playlistSong = playlistSong;
         this.freedom = freedom;
         this.satisfaction = satisfaction;
-        this.yourNewWorld = yourNewWorld;
+        this.qualifiesYNW = qualifiesYNW;
     }
 
     /**
@@ -364,10 +364,10 @@ public enum ChapterEnding {
      * @param playlistSong the song the ending adds to the current playlist
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, Vessel v, String playlistSong, int freedom, int satisfaction, boolean yourNewWorld) {
-        this(id, "", v, playlistSong, freedom, satisfaction, yourNewWorld);
+    private ChapterEnding(String id, Vessel v, String playlistSong, int freedom, int satisfaction, boolean qualifiesYNW) {
+        this(id, "", v, playlistSong, freedom, satisfaction, qualifiesYNW);
     }
 
     /**
@@ -377,10 +377,10 @@ public enum ChapterEnding {
      * @param v the Vessel claimed in the ending
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, String achievementID, Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
-        this(id, achievementID, v, "", freedom, satisfaction, yourNewWorld);
+    private ChapterEnding(String id, String achievementID, Vessel v, int freedom, int satisfaction, boolean qualifiesYNW) {
+        this(id, achievementID, v, "", freedom, satisfaction, qualifiesYNW);
     }
 
     /**
@@ -390,10 +390,10 @@ public enum ChapterEnding {
      * @param v the Vessel claimed in the ending
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, boolean hasAchievement, Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
-        this(id, hasAchievement, v, "", freedom, satisfaction, yourNewWorld);
+    private ChapterEnding(String id, boolean hasAchievement, Vessel v, int freedom, int satisfaction, boolean qualifiesYNW) {
+        this(id, hasAchievement, v, "", freedom, satisfaction, qualifiesYNW);
     }
 
     /**
@@ -402,10 +402,10 @@ public enum ChapterEnding {
      * @param v the Vessel claimed in the ending
      * @param freedom the amount the ending alters the Shifting Mound's freedom value
      * @param satisfaction the amount the ending alters the Shifting Mound's satisfaction value
-     * @param yourNewWorld whether the ending qualifies for the "Your New World" ending or not
+     * @param qualifiesYNW whether the ending qualifies for the "Your New World" ending or not
      */
-    private ChapterEnding(String id, Vessel v, int freedom, int satisfaction, boolean yourNewWorld) {
-        this(id, "", v, freedom, satisfaction, yourNewWorld);
+    private ChapterEnding(String id, Vessel v, int freedom, int satisfaction, boolean qualifiesYNW) {
+        this(id, "", v, freedom, satisfaction, qualifiesYNW);
     }
 
     // --- ACCESSORS ---
@@ -492,10 +492,70 @@ public enum ChapterEnding {
     }
 
     /**
-     * Accessor for yourNewWorld
-     * @param yourNewWorld whether this ending qualifies for the "Your New World" ending or not
+     * Accessor for qualifiesYNW
+     * @return whether this ending qualifies for the "Your New World" ending or not
      */
     public boolean qualifiesYNW() {
-        return this.yourNewWorld;
+        return this.qualifiesYNW;
+    }
+
+    /**
+     * Returns the way in which the Shifting Mound approaches the player while presenting the vessel from this ending during the final debate
+     * @return the way in which the Shifting Mound approaches the player while presenting the vessel from this ending during the final debate
+     */
+    public String moundApproachType() {
+        switch (this) {
+            case FAILEDFIGHT:
+            case FAILEDFLEE:
+            case WIDEOPENFIELD:
+            case BLINDLEADINGBLIND:
+            case QUANTUMBEAK:
+            case HINTOFFEELING:
+            case LEAVEHERBEHIND:
+            case NEWLEAFWEATHEREDBOOK:
+            case GOINGTHEDISTANCE:
+            case WATERSTEEL:
+            case DISSOLVINGWILL:
+            case DISSOLVINGWILLACCIDENT:
+            case INSTINCT:
+            case HEROICSTRIKE:
+            case COUPDEGRACE:
+            case LIONANDMOUSE:
+            case HUNGERPANGS:
+            case UNANSWEREDQUESTIONS:
+                return "fierce";
+
+            case HITCHHIKER:
+            case PRINCESSANDDRAGON:
+            case EXORCISTIII:
+            case PASSENGER:
+            case WORLDOFTERROR:
+            case MOMENTOFCLARITY:
+            case ANDALLTHISLONGING:
+            case BURNINGDOWNTHEHOUSE:
+            case ANDTHEYLIVEDHAPPILY:
+                return "horror";
+            
+            case IFYOUCOULDUNDERSTAND:
+            case GRACE:
+            case WINDOWTOUNKNOWN:
+            case SOMETHINGTOREMEMBER:
+            case GODDESSUNRAVELED:
+            case FORMLESS:
+            case WOUNDSLAY:
+            case WOUNDSAVE:
+            case GLIMPSEOFSOMETHING:
+            case ILLUSIONOFCHOICE:
+            case TALKINGHEADS:
+            case PRISONEROFMIND:
+            case NOEXIT:
+            case RIDDLEOFSTEEL:
+            case ALLEGORYOFCAGE:
+            case FREEWILL:
+            case DONTLETITGOOUT:
+                return "hands";
+
+            default: return "dance";
+        }
     }
 }

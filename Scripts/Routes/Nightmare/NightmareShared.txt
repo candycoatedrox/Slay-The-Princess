@@ -86,7 +86,7 @@ n So. Deep breath in, deep breath out. Your task awaits, and only you can do it.
 label cabinDifferent
 hero *Very* different.
     para *He* changed it, didn't He? It's like He's trying to make us doubt our reality. /// mirrorask
-    para I'm not the only one who sees her in the window, right? She knows that we're here. /// nomirrorask
+    para I'm... not the only one who sees her in the window, right?`! She knows that we're here! /// nomirrorask
 n Calm down. Maybe the three of you just *think* everything is different because you haven't been here before. Enough of this past-life nonsense. You haven't died, and you certainly haven't been killed by the Princess.
 n So focus up. A lot's riding on this.
 
@@ -114,7 +114,7 @@ para Did *He* make it go away? Clearly there was something in there worth invest
 // Stairs //
 
 label stairsNoBladeSoft
-para We should have taken the knife. I don't think going down there unarmed is going to do us any favors.
+para Ohh, we should have taken the knife. I don't think going down there unarmed is going to do us any favors...!
 linebreak
 jumpto stairsStartJoin
 
@@ -184,17 +184,12 @@ label basementStart
 n You make your way to the bottom of the stairs.
 linebreak
 n As you emerge, you find yourself between two loose rows of white wooden planks, suspended in nothingness. A smattering of cobblestones, visible against the inky black of the basement, mark where the floor should be, forming vague pathways. At what seems to be the end of the room, they diverge in opposite directions. Left and right.
-para She could be anywhere. And there's nowhere for us to hide. We're completely exposed.
+para She could be *anywhere.* And there's nowhere for us to hide. We're *completely* exposed.
 hero Are you really not going to comment on how *weird* this place is?
-    jumpto basementNoReason /// check
-n No, I'm not. Somebody needs to be the voice of reason here, and it certainly isn't you.
-hero Excuse me? I'm being *incredibly* reasonable. You're the one who's just matter-of-factly describing whatever the hell we're looking at like it's an ordinary basement.
-jumpto basementStartJoin
-
-label basementNoReason
-n No. I'm not.
-label basementStartJoin
-para We're going to die down here. I don't want to die again.
+    n No. I'm not. /// check
+    n No, I'm not. Somebody needs to be the voice of reason here, and it certainly isn't you. /// checkfalse
+        hero Excuse me? I'm being *incredibly* reasonable. You're the one who's just matter-of-factly describing whatever the hell we're looking at like it's an ordinary basement. /// checkfalse
+para We're going to die down here... I don't WANT to die again...!!
 n Please stop saying that. You're only going to make things worse. Just pick a direction and start moving.
 p I wouldn't give it too much thought, if I were you. It doesn't really matter, because either way you go, I'm going to find you.
 
@@ -246,6 +241,7 @@ p No little knife this time? It's almost like... you *want* me to get you.
 jumpto startBladeCommentJoin
 
 label startBladeCommentJoin
+para There HAS to be a way out of this! Think. THINK!
 n What did you do? Pull yourself together, s-she isn't supposed to be like this.
 p I wonder how many times I'll get to play with you before you break.
 
@@ -262,7 +258,7 @@ hero What are you doing?
 para I'm *working.* Do you want this body to function, or do you want -- /// interrupt
 linebreak
 n And then experience stops once more as your body reapproaches death.
-hero Okay, whatever you were doing, please just start doing it again.
+hero Okay, whatever you were doing, *please* just start doing it again.
 para Are you sure about that? Are you sure that's what you want, or do you want to INTERRUPT me some more?
 n You have seconds left.
 hero Yes, I'm sure!
@@ -293,7 +289,7 @@ para HEART. LUNGS. LIVER. NERVES. H-HEART...
 n She slowly runs her velvet glove across the base of your neck. It feels like static and then -- /// interrupt
 linebreak
 para Shit! Shit! Shit! Make her stop!
-hero Hey. Snap out of it.
+hero Hey! Snap out of it.
 para Okay. Deep breath. *Deep breath.* We're fine. Heart. Lungs. Liver. Nerves. Heart...
 linebreak
 n -- you're back.
@@ -437,7 +433,7 @@ hero No no no no! No, no -- what's -- what's happening to us!
 p LET ME OUT!
 linebreak
 n This is all too much. I... can't keep going.
-para You can't keep going? What are you talking about?
+para You can't keep going? Wh... what are you talking about?
 truth But He doesn't respond.
 linebreak
 p Oops... I think I broke you.

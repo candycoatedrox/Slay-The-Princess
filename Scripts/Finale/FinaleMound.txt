@@ -2,6 +2,7 @@ linebreak 3
 truth When you arrive at the heart of things, there is no final vessel for you to bear witness to. There is nothing for you to find.
 linebreak
 truth But a deep rumbling shakes your infinite body.
+truth The ground opens, and a flood of bodies swallows you both.
 linebreak 2
 nowplaying The Shifting Mound Movement V
 truth **PLACEHOLDER** DESCRIBE SHIFTY HERE!!!!
@@ -83,3 +84,7 @@ truth You and she step forward into a thousand dawns and a thousand sunsets, eac
 truth You exist, and you are aware, just as you have always been, and just as you will always be.
 truth Though conflict is in your nature, the two of you will never be alone, and the two of you will never know fear. You and She are finally home.
 unlock ascendEnd
+
+// Reject the Princess entirely (leads to "Your New World" ending) //
+
+label violenceStart

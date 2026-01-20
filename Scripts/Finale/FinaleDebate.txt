@@ -1,0 +1,223 @@
+// Shared lines of argument //
+
+
+// Violence (leads to "Your New World" ending) //
+
+label violenceBroken
+p That cold fire has left your eyes. Are you finally willing to listen?
+linebreak
+
+label violence1
+p You speak of me as if I am a ghost. But I am right in front of you.
+
+label violence2
+p Death is a fantasy. Only those who lack perspective see it as anything other than transformation. You cannot destroy me.
+
+label violence3
+p You have never truly seen me gone. You cannot fathom a world without me!
+
+label violence4
+p The Echo was deluded. A world without me would be an eternal hell.
+
+
+// Appeal to your shared humanity //
+
+label appeal1
+p Oh? Is it not? Perhaps you can enlighten me.
+
+label appeal2
+p You cling to your notion of pain as suffering. There is beauty in ugliness and love in conflict.
+
+label appeal3
+p We *are* the whole of reality.
+
+label appeal4
+p I could ask you the same. There is only room for one of us to be blind here, and I know it to be you. We are each other's mirrors, and are we not divine?
+
+label appeal5
+p Why would I stoop to your level when I am offering you ascension to mine?
+p It's so peaceful here. Beautiful. Eternal, but ever-changing.
+
+
+// Reject her authority //
+
+label lecture1
+p What you mistake for lecture is merely observation. I only want to help you.
+p You can vainly struggle against me, or you can follow the rhythm of our movement and find our freedom.
+
+label lecture2
+p If my words feel meaningless, it's because words are meaningless! If it feels as though I lecture you from above, it is merely because you have refused to climb after me and find where you belong.
+
+label lecture3
+p The only universal truth is that there are no universal truths! There is only you and me, existing in relation to the other.
+p And I will not stop our dance until you understand.
+
+label lecture4
+p They are mere fragments of a whole. They bought into delusion because none of them were able to see past themselves.
+
+label lecture5
+p You cling to things that never truly existed. If it takes all of eternity to break your grip on petty, fickle, fleeting selves, both mine and yours...
+p Then I will break it.
+
+
+// Argue your independence //
+
+label assert1
+p Have you? Or is what you think of as independence merely an illusion? Without me, you can have no contrast. And without contrast, you have no shape.
+
+label assert2
+p Time you've spent away from me is still time spent in reference to me. Even then, both of us are more than our bodies. Am I not in the trees? Am I not in the cabin? Am I not in you?
+
+label assert3
+p You place far too much trust into the ravings of a fearful ignorant soul who overstepped his bounds.
+
+label assert4
+p Intent is nothing. Wisdom is everything. I turn the wheel because suffering is a falsehood. A delusion. It is up to the world to free itself of it.
+p Would you plunge yourself into a cold and empty eternity on faith alone? Would you destroy the only other thing like you to save a world you've never seen?
+
+label assert5A
+p And if I need to spend all of eternity to stop you, then I will gladly do so.
+
+label assert5B
+p If I need to spend all of eternity to show you the error of your ways, then I will gladly do so.
+
+
+// Reject her perspective //
+
+label reject1
+p But violence has defined the flow of everything between us. Do not deny what we are, and do not color our conflict with fear.
+
+label reject2
+p The Echo saw horrors because his eyes were closed. The majesty of being extends beyond any single perspective.
+
+label reject3
+p Their suffering is born of their own delusion.
+
+label reject4
+p I reject the narrow view of impermanence. I cling to nothing. There is no better us for us to be than us. We are reality itself.
+
+label reject5
+p There has never been finality, there is only the unending transformation of my multitudes. But to destroy me is to bring everything to a stop. It is only then that you will have an ending, and that ending is nothingness.
+
+
+// Remain silent //
+
+label silent1
+p But you say nothing.
+
+label silent2
+p And so your quietude continues.
+
+label silent3
+p Is your unbroken silence a lack of an answer, or has your understanding begun to move beyond words?
+
+label silent4
+p Still you hide the contours of your heart from me.
+
+label silent5
+p Your stoicism knows no end.
+
+
+// Approach dialogue //
+
+label danceApproach
+linebreak
+    truth She approaches you playfully, gliding sinuously towards you, and {string} rises from the mound of hands before you. /// checkfalse
+    truth She approaches you playfully, gliding sinuously towards you, and {string} is lifted out of the mound of hands before you. /// check
+linebreak
+
+label fierceApproach
+linebreak
+    truth Her expression contorts into one of pure fury, and she rushes over the bodies between you as if to attack. Just before she reaches you, {string} rises from the mound of hands before you. /// checkfalse
+    truth Her expression contorts into one of pure fury, and she rushes over the bodies between you as if to attack. Just before she reaches you, {string} is lifted out of the mound of hands before you. /// check
+linebreak
+
+label horrorApproach
+linebreak
+    truth She begins to flicker in and out of your vision. You do not see her move as she gets closer -- closer -- *closer,* staring at you with wide, unblinking eyes. Her main body disappears -- and then reappears barely a foot from your face, arms spread wide as if to present {string} as she rises from the mound of hands before you. /// checkfalse
+    truth She begins to flicker in and out of your vision. You do not see her move as she gets closer -- closer -- *closer,* staring at you with wide, unblinking eyes. Her main body disappears -- and then reappears barely a foot from your face, arms spread wide as if to present {string} as she is lifted out of the mound of hands before you. /// check
+linebreak
+
+label handsApproach
+linebreak
+    truth She raises all six of her arms, and every one of her many bodies turns to stare at you as a curtain of hands obscures your vision. When they recede a moment later, she is right in front of you, smiling as {string} rises from the mound of hands before you. /// checkfalse
+    truth She raises all six of her arms, and every one of her many bodies turns to stare at you as a curtain of hands obscures your vision. When they recede a moment later, she is right in front of you, smiling as {string} is lifted out of the mound of hands before you. /// check
+linebreak
+
+
+
+// Reject her offer to surrender //
+
+label refuseSurrender
+p If you need more time to open your eyes, then I will give you all the time in the world.
+linebreak
+
+
+
+// Vessel-specific dialogue //
+
+
+// Adversary //
+
+
+// Eye of the Needle //
+
+
+// Fury //
+
+
+// Tower //
+
+
+// Apotheosis //
+
+
+// Spectre //
+
+
+// Princess and the Dragon //
+
+
+// Wraith //
+
+
+// Nightmare //
+
+
+// Moment of Clarity //
+
+
+// Razor //
+
+
+// Beast //
+
+
+// Den //
+
+
+// Wild //
+
+
+// Witch //
+
+
+// Thorn //
+
+
+// Stranger //
+
+
+// Prisoner //
+
+
+// Cage //
+
+
+// Grey //
+
+
+// Damsel //
+
+
+// Happily Ever After //

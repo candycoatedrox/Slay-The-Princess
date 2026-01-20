@@ -27,11 +27,13 @@ public class Finale extends Cycle {
     // Flags for the Shifting Mound
     private boolean moundNameKnown = false;
     private boolean statedGoalSlay = false;
-    private boolean offerYNW = false;
+    private boolean mercyOffer = false;
 
-    // Counters used during the debate
-    private int ynwArguments = 0; // Number of times the player has selected arguments tied to the "Your New World" ending during the debate
-    private int silentCount = 0; // Number of the times the player has remained silent during the debate
+    // Variables used during the debate
+    private int violenceArguments = 0; // Number of times the player has selected arguments tied to the "Your New World" ending during the debate
+    private int debateEffectiveArguments = 0;
+    private int[] vesselOptionsResistance;
+    private boolean[] vesselOptionsLeaveOffer;
 
     // --- CONSTRUCTOR ---
 
@@ -1167,7 +1169,7 @@ public class Finale extends Cycle {
 
     /**
      * Runs the intiial conversation with the Shifting Mound
-     * @return the ending the player reaches
+     * @return the ending reached by the player
      */
     private ChapterEnding moundStart() {
         this.mainScript = new Script(this.manager, this.parser, "Finale/FinaleMound");
@@ -1331,12 +1333,12 @@ public class Finale extends Cycle {
      * @return the OptionsMenu used during the debate
      */
     private OptionsMenu createDebateMenu() {
-        OptionsMenu menu = new OptionsMenu();
+        OptionsMenu menu = new OptionsMenu(true);
 
         // Up to 3 vessel-specific Your New World options
-        activeMenu.add(new Option(this.manager, "yourNewWorld1", "XXXXX", 0));
-        activeMenu.add(new Option(this.manager, "yourNewWorld2", "XXXXX", 0));
-        activeMenu.add(new Option(this.manager, "yourNewWorld3", "XXXXX", 0));
+        activeMenu.add(new Option(this.manager, "violence1", "XXXXX", 0));
+        activeMenu.add(new Option(this.manager, "violence2", "XXXXX", 0));
+        activeMenu.add(new Option(this.manager, "violence3", "XXXXX", 0));
         
         // Up to 10 vessel-specific options
         activeMenu.add(new Option(this.manager, "vessel1", "XXXXX", 0));
@@ -1386,21 +1388,45 @@ public class Finale extends Cycle {
     }
 
     /**
+     * Initializes the OptionsMenu used when the Shifting Mound encourages you to surrender during the debate
+     * @return the OptionsMenu used when the Shifting Mound encourages you to surrender during the debate
+     */
+    private OptionsMenu createSurrenderMenu() {
+        OptionsMenu menu = new OptionsMenu(true);
+        activeMenu.add(new Option(this.manager, "ascend", "\"I'm ready. I want to leave with you.\" [Stop the fight early and surrender.]"));
+        activeMenu.add(new Option(this.manager, "refuse", "\"I won't leave with you. Not until you see things from my perspective.\"", 0));
+        return menu;
+    }
+
+    /**
      * Runs the debate with the Shifting Mound
-     * @return the ending the player reaches
+     * @return the ending reached by the player
      */
     private ChapterEnding moundDebate() {
         this.secondaryScript = new Script(this.manager, this.parser, "Finale/FinaleDebate");
 
         this.activeMenu = this.createDebateMenu();
+        this.subMenu = this.createSurrenderMenu();
         Vessel currentVessel;
         ChapterEnding currentEnding;
         String vesselOption;
 
+        boolean prevViolenceFlag = false;
+        boolean violenceBrokenComment = false;
+
+        int silenceCount = 0;
+
         // Counts down, starting from *last* Vessel claimed
         for (int i = 4; i >= 0; i--) {
             if (i == 0 && this.strangerHeart) break;
+            if (i == 3) activeMenu.setCondition("surrender", true);
 
+            if (this.violenceArguments > 0 && prevViolenceFlag && !violenceBrokenComment) {
+                violenceBrokenComment = true;
+                secondaryScript.runSection("violenceBroken");
+            }
+
+            prevViolenceFlag = false;
             currentVessel = this.vessels[i];
             currentEnding = this.endings[i];
 
@@ -1408,11 +1434,21 @@ public class Finale extends Cycle {
 
             this.activeOutcome = parser.promptOptionsMenu(activeMenu);
             switch (activeOutcome) {
-                case "yourNewWorld1":
-                case "yourNewWorld2":
-                case "yourNewWorld3":
-                    this.ynwArguments += 1;
-                    secondaryScript.runSection("ynwDebate" + ynwArguments);
+                case "violence1":
+                case "violence2":
+                case "violence3":
+                    this.violenceArguments += 1;
+                    this.debateEffectiveArguments += 1;
+                    prevViolenceFlag = true;
+
+                    if (this.violenceArguments == 5 || (this.strangerHeart && this.violenceArguments == 4)) {
+                        if (this.moundViolenceEnd()) {
+                            return ChapterEnding.YOURNEWWORLD;
+                        }
+                    } else {
+                        secondaryScript.runSection("violence" + this.violenceArguments);
+                    }
+                    
                     break;
 
                 case "vessel1":
@@ -1426,7 +1462,12 @@ public class Finale extends Cycle {
                 case "vessel9":
                 case "vessel10":
                     vesselOption = activeOutcome.substring(6);
-                    this.moundVesselArgumentResponse(currentVessel, vesselOption);
+
+                    if (!this.moundVesselArgumentResponse(i, currentVessel, vesselOption)) {
+                        manager.unlock("ascendDebate");
+                        return this.moundAscend(true);
+                    }
+
                     break;
 
                 case "appeal1":
@@ -1434,6 +1475,12 @@ public class Finale extends Cycle {
                 case "appeal3":
                 case "appeal4":
                 case "appeal5":
+                case "reject1":
+                case "reject2":
+                case "reject3":
+                case "reject4":
+                case "reject5":
+                    this.debateEffectiveArguments += 1;
                 case "lecture1":
                 case "lecture2":
                 case "lecture3":
@@ -1445,30 +1492,26 @@ public class Finale extends Cycle {
                 case "assert4":
                 case "assert5A":
                 case "assert5B":
-                case "reject1":
-                case "reject2":
-                case "reject3":
-                case "reject4":
-                case "reject5":
                     secondaryScript.runSection(activeOutcome);
                     break;
 
                 case "surrender":
-                    // FILL IN
-                    break;
+                    manager.unlock("ascendDebate");
+                    return this.moundAscend(true);
 
                 case "silent":
-                    this.silentCount += 1;
-                    secondaryScript.runSection("silent" + silentCount);
+                    silenceCount += 1;
+                    secondaryScript.runSection("silent" + silenceCount);
                     break;
 
-                // lines of argument: yourNewWorld, appeal, lecture, assert, reject
+                // lines of argument: violence, appeal, lecture, assert, reject
             }
 
             if (i == 4) activeMenu.setCondition("surrender", true); 
         }
 
         // post debate -- to heart cabin
+        // "intermission" -- in felina_fight_0_staging.py
 
 
 
@@ -1497,45 +1540,98 @@ public class Finale extends Cycle {
 
     /**
      * Runs the Shifting Mound's argument for a given Vessel and ChapterEnding and configures the OptionsMenu accordingly to prepare for the player's response
+     * @param vessel the current Vessel presenting the argument
      * @param ending the relevant Chapter ending reached by the player
      */
     private void moundDebateRunArgument(Vessel vessel, ChapterEnding ending) {
+        secondaryScript.runConditionalSection(ending.moundApproachType() + "Approach", vessel.isHeldByMound(), vessel.getNameInDialogue());
+
+        this.vesselOptionsResistance = new int[10];
+        this.vesselOptionsLeaveOffer = new boolean[10];
+
         switch (vessel) {
             // 1) Run Shifting Mound argument
             // 2) Rename Your New World + vessel-specific arguments
             // 3) Set vessel-specific Options true/false
+            // 4) Set this.vesselOptionsResistance and this.vesselOptionsLeaveOffer
 
             // NOTE: Tower/Apotheosis share a lot of code in the original for some reason? Don't do that here
 
             // ...
+
+            // Chapter II Vessels
+            case ADVERSARY:
+                break;
+
+            case TOWER:
+                break;
+
+            case SPECTRE:
+                break;
+
+            case NIGHTMARE:
+                break;
+
+            case BEAST:
+                break;
+
+            case WITCH:
+                break;
+
+            case STRANGER:
+                break;
+
+            case PRISONERHEAD:
+            case PRISONER:
+                break;
+
+            case DAMSEL:
+            case DECONDAMSEL:
+                break;
+
+            // Chapter III vessels
+            case NEEDLE:
+                break;
+
+            case FURY:
+            case REWOUNDFURY:
+                break;
+
+            case APOTHEOSIS:
+                break;
+
+            case PATD:
+            case STENCILPATD:
+                break;
+
+            case WRAITH:
+                break;
+
+            case RAZORFULL:
+            case RAZORHEART:
+                break;
+
+            case DEN:
+                break;
+
+            case NETWORKWILD:
+            case WOUNDEDWILD:
+                break;
+
+            case THORN:
+                break;
+
+            case WATCHFULCAGE:
+            case OPENCAGE:
+                break;
+
+            case DROWNEDGREY:
+            case BURNEDGREY:
+                break;
+
+            case HAPPY:
+                break;
         }
-
-
-
-
-
-
-        // temporary templates for copy-and-pasting
-        /*
-        parser.printDialogueLine("XXXXX");
-        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
-        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
-        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
-        */
-    }
-
-    private void moundVesselArgumentResponse(Vessel vessel, String nArgument) {
-        // redirect to script label [vessel][nArgument]
-
-        String vesselID = "";
-        switch (vessel) {
-            // set vesselID
-            // ...
-        }
-
-        secondaryScript.runSection(vesselID + nArgument);
 
 
 
@@ -1554,8 +1650,96 @@ public class Finale extends Cycle {
     }
 
     /**
+     * Runs the Shifting Mound's response to a vessel-specific response, in some cases giving the player a chance to end the debate early and ascend with her
+     * @param vessel the current Vessel presenting the argument
+     * @param nArgument the number of the argument specific to this Vessel
+     * @return true if the player continues the fight; false if they choose to ascend with the Shifting Mound
+     */
+    private boolean moundVesselArgumentResponse(int vesselNum, Vessel vessel, String nArgument) {
+        // redirect to script label [vessel][nArgument]
+        String vesselID;
+        switch (vessel) {
+            case PRISONERHEAD:
+                vesselID = "prisoner";
+                break;
+
+            case DECONDAMSEL:
+                vesselID = "damsel";
+                break;
+
+            case REWOUNDFURY:
+                vesselID = "fury";
+                break;
+
+            case STENCILPATD:
+                vesselID = "dragon";
+                break;
+
+            case RAZORFULL:
+            case RAZORHEART:
+                vesselID = "razor";
+                break;
+
+            case NETWORKWILD:
+            case WOUNDEDWILD:
+                vesselID = "wild";
+                break;
+
+            case DROWNEDGREY:
+            case BURNEDGREY:
+                vesselID = "grey";
+                break;
+
+            default: vesselID = vessel.getID();
+        }
+
+        int intArgument = Integer.parseInt(nArgument);
+        this.debateEffectiveArguments += this.vesselOptionsResistance[intArgument - 1];
+        secondaryScript.runSection(vesselID + nArgument);
+
+        if (vesselNum < 4 && this.vesselOptionsLeaveOffer[intArgument - 1]) {
+            if (parser.promptOptionsMenu(subMenu).equals("ascend")) {
+                return false;
+            } else {
+                secondaryScript.runSection("refuseSurrender");
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * The 
+     * @return true if the player commits to slaying the Princess; false if the player offers her mercy
+     */
+    private boolean moundViolenceEnd() {
+        mainScript.runSection("violenceStart");
+        
+
+
+
+
+        // DON'T FORGET TO SET mercyOffer IF THE PLAYER OFFERS HER MERCY
+
+
+        // temporary templates for copy-and-pasting
+        /*
+        parser.printDialogueLine("XXXXX");
+        parser.printDialogueLine(new PrincessDialogueLine("XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "(Explore) \"XXXXX\""));
+        activeMenu.add(new Option(this.manager, "q1", "XXXXX"));
+        activeMenu.add(new Option(this.manager, "q1", "\"XXXXX\""));
+        */
+
+        // PLACEHOLDER
+        return false;
+    }
+
+    /**
      * Runs the cabin sequence at the heart of the Shifting Mound (standard version)
-     * @return the ending the player reaches
+     * @return the ending reached by the player
      */
     private ChapterEnding heartCabin() {
 
@@ -1575,12 +1759,12 @@ public class Finale extends Cycle {
         */
 
         // PLACEHOLDER
-        return ChapterEnding.PATHINTHEWOODS;
+        return null;
     }
 
     /**
      * Runs the cabin sequence at the heart of the Shifting Mound (Stranger version)
-     * @return the ending the player reaches
+     * @return the ending reached by the player
      */
     private ChapterEnding heartCabinStranger() {
         manager.unlock("strangerHeart");
@@ -1603,7 +1787,7 @@ public class Finale extends Cycle {
         */
 
         // PLACEHOLDER
-        return ChapterEnding.PATHINTHEWOODS;
+        return null;
     }
 
 }

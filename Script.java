@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner; // Import the Scanner class to read text files
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class Script {
 
@@ -65,6 +67,8 @@ public class Script {
     private boolean boolCondition = false;
     private int intCondition = 100;
     private String strCondition = "";
+
+    private static final Pattern BOOLREPLACEPATTERN = Pattern.compile("\\{(.*)/(.*)\\}");
 
     private static final Condition EMPTYCONDITION = new Condition();
     private static final DialogueLine CLAIMFOLD = new DialogueLine("Something reaches out and folds her into its myriad arms.");
@@ -217,6 +221,7 @@ public class Script {
      * @return true if this script has a label with label as its name; false otherwise
      */
     protected boolean hasLabel(String label) {
+        //System.out.println("RUNNING HASLABEL: " + this.labels.containsKey(label));
         return this.labels.containsKey(label);
     }
 
@@ -227,9 +232,11 @@ public class Script {
      * @throws IllegalArgumentException if the given label does not exist within this Script
      */
     private Integer getLabelIndex(String label) {
+        //System.out.println("RUNNING GETLABELINDEX: " + this.labels.get(label));
         if (this.hasLabel(label)) {
             return this.labels.get(label);
         } else {
+            //System.out.println("RETURNING EXCEPTION FROM GETLABELINDEX");
             throw new IllegalArgumentException("Label " + label + " does not exist");
         }
     }
@@ -293,6 +300,7 @@ public class Script {
             this.cursor = this.getLabelIndex(labelName);
             this.runSection();
         } catch (IllegalArgumentException e) {
+            //System.out.println(e);
             System.out.println("[DEBUG: Label " + labelName + " does not exist in " + source.getName() + "]");
         }
     }
@@ -2098,11 +2106,46 @@ public class Script {
             }
         }
 
-        line = line.replace("[string]", this.strCondition);
+        line = line.replace("{num}", String.valueOf(this.intCondition));
+        line = line.replace("{string}", this.strCondition);
 
-        // find all instances of the form [XXXXX/YYYYY] in the line
-        // REGEX: \[(.*)\/(.*)\]
-        // replace with XXXXX if boolean is true or YYYYY if false
+        // CIRCLE BACK TO THIS LATER
+        //   - DEAL W/ DUPLICATE/NESTED MATCHES
+        //   - DEAL W/ INVALID PATTERN FOR REPLACEFIRST BECAUSE OF RAW {}
+        /*
+        Matcher replaceMatcher = BOOLREPLACEPATTERN.matcher(line);
+        ArrayList<String> replaceInstances = new ArrayList<>();
+        ArrayList<Integer> replaceStartIndexes = new ArrayList<>();
+        ArrayList<Integer> replaceEndIndexes = new ArrayList<>();
+        String[] replacements;
+        String replaceWith;
+        while (replaceMatcher.find()) {
+            replaceInstances.add(replaceMatcher.group());
+            replaceStartIndexes.add(replaceMatcher.start());
+            replaceEndIndexes.add(replaceMatcher.end());
+        }
+        for (String instance : replaceInstances) {
+            instance = instance.substring(cursor)
+            //System.out.println(instance);
+            replacements = instance.split("/");
+            //for (String r : replacements) System.out.println(r);
+
+            if (this.boolCondition) {
+                System.out.println("bool condition true");
+                replaceWith = replacements[1].substring(0, replacements[1].length() - 1);
+            } else {
+                System.out.println("bool condition false");
+                replaceWith = replacements[0].substring(1);
+            }
+
+            System.out.println("replaceWith defined");
+
+            line = line.replaceFirst(instance, replaceWith);
+        }
+        */
+        // find all instances of the form {XXXXX/YYYYY} in the line
+        // REGEX: \{(.*)\/(.*)\}
+        // replace with XXXXX if boolean is false or YYYYY if true
 
         if (v == null) {
             if (characterID.equals("t") || characterID.equals("truth")) {
@@ -2158,8 +2201,9 @@ public class Script {
 
         //manager.toggleAutoAdvance();
         manager.toggleSlowPrint();
-        script.runConditionalSection("replaceTest", "Contrarian");
+
         script.runConditionalSection("replaceTest", "Opportunist");
+        //script.runConditionalSection("replaceTest", true);
     }
 
 }
@@ -2246,11 +2290,19 @@ Different functions a script can perform:
         Moves the cursor to the label "conditionSuffix", where condition is the String condition given in runConditionalSection(); if there is no such label or no String condition was given, continues without jumping.
 
   - [character] Dialogue line goes here
-  - [character] Dialogue line goes here /// [modifiers]
         The first word specifies the ID of the speaking character, then anything after that is considered the actual dialogue line.
 
-        If a dialogue line includes "[string]", it will be replaced with the String condition given in runConditionalSection().
-        Beware of using this trick without giving the Script a String condition!
+        Including a backtick (`) in a line will cause slow printing to pause for twice as long as usual after the next character. Handy for creating extended pauses or indicating slow or lazy speech!
+
+        Dialogue lines can make use of several shortcuts that will be dynamically replaced with a variable when the line is printed:
+          - {num}
+                Will be replaced with the int condition given in runConditionalSection(). Beware of using this trick without giving the Script an int condition!
+          - {string}
+                Will be replaced with the String condition given in runConditionalSection(). Beware of using this trick without giving the Script a String condition!
+          - {[XXXXX]/[YYYYY]}
+                [XXXXX] and [YYYYY] can be anything.
+                Will be replaced with [XXXXX] if the boolean condition given in runConditionalSection() is false, or [YYYYY] if it is true.
+                **THIS ONE DOES NOT CURRENTLY FUNCTION, BUT IS PLANNED!!!**
 
         Exclusive modifiers:
           - checkvoice
@@ -2258,7 +2310,7 @@ Different functions a script can perform:
           - interrupt
                 The line is interrupted.
           - slow
-                Prints the line at half speed.
+                Prints the line at half speed, excluding the character tag.
 
 Generic modifiers available for all lines (except comments and labels):
 

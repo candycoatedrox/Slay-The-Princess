@@ -89,4 +89,4 @@ n Oh... no. /// slow
 
 label replaceTest
 linebreak
-cheated [string] is my least favorite person on this ENTIRE earth.
+cheated {string} is my least favorite person on this ENTIRE earth.
